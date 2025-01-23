@@ -1,0 +1,9 @@
+
+
+.section .rodata
+
+dlabel D_level_25_8007AB0C
+/* 258F8D4 8007AB0C 54525920 */ .word 0x20595254
+/* 258F8D8 8007AB10 41474149 */ .word 0x49414741
+/* 258F8DC 8007AB14 4E002A2A */ .word 0x2A2A004E
+.size D_level_25_8007AB0C, . - D_level_25_8007AB0C
