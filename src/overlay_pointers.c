@@ -27,7 +27,7 @@ extern void (*D_800758C4)(); // g_DrawTime
 
 // Level 0
 void func_level_0_80082068();
-void func_level_0_80080548();
+Moby *func_level_0_80080548();
 void func_level_0_8007D8E0();
 void func_level_0_80081568();
 void func_level_0_80080A0C();
@@ -38,49 +38,49 @@ void func_level_0_8007CED8();
 
 // Level 1
 void func_level_1_8007BFF0();
-void func_level_1_8007B070();
+Moby *func_level_1_8007B070();
 void func_level_1_8007AC8C();
 void func_level_1_8007B8AC();
 void func_level_1_8007B144();
 
 // Level 2
 void func_level_2_8007F490();
-void func_level_2_8007D970();
+Moby *func_level_2_8007D970();
 void func_level_2_8007AD08();
 void func_level_2_8007E990();
 void func_level_2_8007DE34();
 
 // Level 3
 void func_level_3_8007C7B0();
-void func_level_3_8007B0AC();
+Moby *func_level_3_8007B0AC();
 void func_level_3_8007ACC8();
 void func_level_3_8007BC50();
 void func_level_3_8007B180();
 
 // Level 4
 void func_level_4_8007C204();
-void func_level_4_8007B08C();
+Moby *func_level_4_8007B08C();
 void func_level_4_8007ACA8();
 void func_level_4_8007B9F0();
 void func_level_4_8007B160();
 
 // Level 7
 void func_level_7_8007F2F4();
-void func_level_7_8007D970();
+Moby *func_level_7_8007D970();
 void func_level_7_8007AD08();
 void func_level_7_8007E8E4();
 void func_level_7_8007DE34();
 
 // Level 9
 void func_level_9_8007C204();
-void func_level_9_8007B08C();
+Moby *func_level_9_8007B08C();
 void func_level_9_8007ACA8();
 void func_level_9_8007B9F0();
 void func_level_9_8007B160();
 
 // Level 99
 void func_level_99_8007C654();
-void func_level_99_8007B0C0();
+Moby *func_level_99_8007B0C0();
 void func_level_99_8007ACDC();
 void func_level_99_8007BC44();
 void func_level_99_8007B194();
@@ -89,7 +89,7 @@ void func_level_99_8007B194();
 
 // Level 10
 void func_level_10_80088620();
-void func_level_10_800857CC();
+Moby *func_level_10_800857CC();
 void func_level_10_8007D9C8();
 void func_level_10_800873E0();
 void func_level_10_80086134();
@@ -100,7 +100,7 @@ void func_level_10_8007CFC0();
 
 // Level 11
 void func_level_11_8008A3B8();
-void func_level_11_8008772C();
+Moby *func_level_11_8008772C();
 void func_level_11_8007DA78();
 void func_level_11_800892C4();
 void func_level_11_80088098();
@@ -111,14 +111,14 @@ void func_level_11_8007D070();
 
 // Level 12
 void func_level_12_80085594();
-void func_level_12_80082960();
+Moby *func_level_12_80082960();
 void func_level_12_8007AE40();
 void func_level_12_800844A0();
 void func_level_12_80083274();
 
 // Level 13
 void func_level_13_80089ECC();
-void func_level_13_800872A4();
+Moby *func_level_13_800872A4();
 void func_level_13_8007DA54();
 void func_level_13_80088F68();
 void func_level_13_80087E20();
@@ -129,14 +129,14 @@ void func_level_13_8007D04C();
 
 // Level 14
 void func_level_14_80084A10();
-void func_level_14_80081DA8();
+Moby *func_level_14_80081DA8();
 void func_level_14_8007AF94();
 void func_level_14_8008391C();
 void func_level_14_800826F0();
 
 // Level 15
 void func_level_15_80084ED0();
-void func_level_15_8008249C();
+Moby *func_level_15_8008249C();
 void func_level_15_8007CFB4();
 void func_level_15_80084128();
 void func_level_15_80083330();
@@ -148,7 +148,7 @@ void func_level_15_8007B4B0();
 
 // Level 20
 void func_level_20_8008CFA4();
-void func_level_20_8008A258();
+Moby *func_level_20_8008A258();
 void func_level_20_8007E3A0();
 void func_level_20_8008BFF0();
 void func_level_20_8008AE28();
@@ -159,7 +159,7 @@ void func_level_20_8007D998();
 
 // Level 21
 void func_level_21_8008D600();
-void func_level_21_8008A4D0();
+Moby *func_level_21_8008A4D0();
 void func_level_21_8007E240();
 void func_level_21_8008C540();
 void func_level_21_8008B1C0();
@@ -170,7 +170,7 @@ void func_level_21_8007D838();
 
 // Level 22
 void func_level_22_8008BAF8();
-void func_level_22_80088B88();
+Moby *func_level_22_80088B88();
 void func_level_22_8007E240();
 void func_level_22_8008A9A8();
 void func_level_22_80089714();
@@ -181,21 +181,21 @@ void func_level_22_8007D838();
 
 // Level 23
 void func_level_23_80086260();
-void func_level_23_80083608();
+Moby *func_level_23_80083608();
 void func_level_23_8007B4C8();
 void func_level_23_80085184();
 void func_level_23_80083F2C();
 
 // Level 24
 void func_level_24_80087210();
-void func_level_24_800845F0();
+Moby *func_level_24_800845F0();
 void func_level_24_8007AEB8();
 void func_level_24_8008611C();
 void func_level_24_80084EF0();
 
 // Level 25
 void func_level_25_80083BF0();
-void func_level_25_800819BC();
+Moby *func_level_25_800819BC();
 void func_level_25_8007CFB4();
 void func_level_25_80082F58();
 void func_level_25_80082300();
@@ -207,7 +207,7 @@ void func_level_25_8007B4B0();
 
 // Level 30
 void func_level_30_8008E608();
-void func_level_30_8008B2C0();
+Moby *func_level_30_8008B2C0();
 void func_level_30_8007E398();
 void func_level_30_8008D2D0();
 void func_level_30_8008BE98();
@@ -218,35 +218,35 @@ void func_level_30_8007D990();
 
 // Level 31
 void func_level_31_8008DEC0();
-void func_level_31_8008A36C();
+Moby *func_level_31_8008A36C();
 void func_level_31_8007BB00();
 void func_level_31_8008C9D8();
 void func_level_31_8008AF54();
 
 // Level 32
 void func_level_32_8008C73C();
-void func_level_32_8008883C();
+Moby *func_level_32_8008883C();
 void func_level_32_8007B64C();
 void func_level_32_8008B0B0();
 void func_level_32_80089454();
 
 // Level 33
 void func_level_33_8008A8A0();
-void func_level_33_80086DD8();
+Moby *func_level_33_80086DD8();
 void func_level_33_8007B7A8();
 void func_level_33_80089450();
 void func_level_33_80087B40();
 
 // Level 34
 void func_level_34_8008749C();
-void func_level_34_80083AB4();
+Moby *func_level_34_80083AB4();
 void func_level_34_8007AF28();
 void func_level_34_80085F40();
 void func_level_34_80084830();
 
 // Level 35
 void func_level_35_80084390();
-void func_level_35_80081F0C();
+Moby *func_level_35_80081F0C();
 void func_level_35_8007CFB4();
 void func_level_35_800836F8();
 void func_level_35_80082AA0();
@@ -258,7 +258,7 @@ void func_level_35_8007B4B0();
 
 // Level 40
 void func_level_40_8008AB70();
-void func_level_40_80087EF0();
+Moby *func_level_40_80087EF0();
 void func_level_40_8007E18C();
 void func_level_40_80089AB8();
 void func_level_40_800888F8();
@@ -269,35 +269,35 @@ void func_level_40_8007D784();
 
 // Level 41
 void func_level_41_80087944();
-void func_level_41_8008465C();
+Moby *func_level_41_8008465C();
 void func_level_41_8007B5DC();
 void func_level_41_800866D8();
 void func_level_41_800853AC();
 
 // Level 42
 void func_level_42_80087130();
-void func_level_42_80084718();
+Moby *func_level_42_80084718();
 void func_level_42_8007AFBC();
 void func_level_42_800861CC();
 void func_level_42_80085084();
 
 // Level 43
 void func_level_43_80089848();
-void func_level_43_80086B38();
+Moby *func_level_43_80086B38();
 void func_level_43_8007B698();
 void func_level_43_8008869C();
 void func_level_43_80087400();
 
 // Level 44
 void func_level_44_8008A69C();
-void func_level_44_800874FC();
+Moby *func_level_44_800874FC();
 void func_level_44_8007B770();
 void func_level_44_800894B0();
 void func_level_44_80088178();
 
 // Level 45
 void func_level_45_80084844();
-void func_level_45_8008223C();
+Moby *func_level_45_8008223C();
 void func_level_45_8007CFB4();
 void func_level_45_80083BAC();
 void func_level_45_80082F54();
@@ -309,7 +309,7 @@ void func_level_45_8007B4B0();
 
 // Level 50
 void func_level_50_8008BB38();
-void func_level_50_80088E24();
+Moby *func_level_50_80088E24();
 void func_level_50_8007E3C0();
 void func_level_50_8008AA24();
 void func_level_50_800897FC();
@@ -320,35 +320,35 @@ void func_level_50_8007D9B8();
 
 // Level 51
 void func_level_51_800880D4();
-void func_level_51_80084B94();
+Moby *func_level_51_80084B94();
 void func_level_51_8007B4F8();
 void func_level_51_80086D38();
 void func_level_51_800857FC();
 
 // Level 52
 void func_level_52_8008771C();
-void func_level_52_80084620();
+Moby *func_level_52_80084620();
 void func_level_52_8007B4DC();
 void func_level_52_80086438();
 void func_level_52_800850A0();
 
 // Level 53
 void func_level_53_80089820();
-void func_level_53_8008590C();
+Moby *func_level_53_8008590C();
 void func_level_53_8007B510();
 void func_level_53_800881D8();
 void func_level_53_80086754();
 
 // Level 54
 void func_level_54_80086348();
-void func_level_54_800836A8();
+Moby *func_level_54_800836A8();
 void func_level_54_8007AF50();
 void func_level_54_80085254();
 void func_level_54_80084028();
 
 // Level 55
 void func_level_55_80084934();
-void func_level_55_80082028();
+Moby *func_level_55_80082028();
 void func_level_55_8007CFB4();
 void func_level_55_80083B8C();
 void func_level_55_80082D94();
@@ -360,7 +360,7 @@ void func_level_55_8007B4B0();
 
 // Level 60
 void func_level_60_80085CE0();
-void func_level_60_80083568();
+Moby *func_level_60_80083568();
 void func_level_60_8007D938();
 void func_level_60_80084EA0();
 void func_level_60_80083ED8();
@@ -371,28 +371,28 @@ void func_level_60_8007CF30();
 
 // Level 61
 void func_level_61_80088668();
-void func_level_61_80085664();
+Moby *func_level_61_80085664();
 void func_level_61_8007B528();
 void func_level_61_8008747C();
 void func_level_61_80086144();
 
 // Level 62
 void func_level_62_80086004();
-void func_level_62_80083108();
+Moby *func_level_62_80083108();
 void func_level_62_8007AE5C();
 void func_level_62_80084EAC();
 void func_level_62_80083B4C();
 
 // Level 63
 void func_level_63_800854B4();
-void func_level_63_80082F24();
+Moby *func_level_63_80082F24();
 void func_level_63_8007AD64();
 void func_level_63_80084634();
 void func_level_63_800836F0();
 
 // Level 64
 void func_level_64_80086264();
-void func_level_64_80083690();
+Moby *func_level_64_80083690();
 void func_level_64_8007AD4C();
 void func_level_64_80085230();
 void func_level_64_800840FC();
