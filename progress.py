@@ -18,7 +18,7 @@ for commit in commits:
     # Get the date of the commit
     # Make it UTC to avoid timezone issues
     date = commit.committed_datetime
-    date = datetime.datetime(date.year, date.month, date.day, date.hour, 0, 0, tzinfo=datetime.timezone.utc)
+    date = datetime.datetime(date.year, date.month, date.day, 0, 0, 0, tzinfo=datetime.timezone.utc)
 
     # Get the content of the progress.md file
     content = commit.tree / 'progress.md'
