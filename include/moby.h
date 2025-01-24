@@ -220,13 +220,20 @@ typedef struct {
 } AnimationHeader;
 
 typedef struct {
-  int m_numAnimations;
+  int m_numAnimations; // >= 0 == Model
   u_char m_sounds[16];
   void *m_collisionModels[8];
   void *m_data; // offset from this to the data, used to offset pointers inside
                 // animations
   AnimationHeader *m_animations[1];
 } Model;
+
+typedef struct {
+  int m_numAnimations; // < 0 == SimpleModel
+  void *m_Verts;
+  void *m_Colors;
+  void *m_Faces;
+} SimpleModel;
 
 // static_assert(sizeof(Moby) == 0x58, "Incorrect Moby size");
 

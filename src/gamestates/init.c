@@ -1,6 +1,8 @@
+#include "camera.h"
 #include "common.h"
 #include "cyclorama.h"
 #include "graphics.h"
+#include "loaders.h"
 #include "specular_and_metal.h"
 #include "spu.h"
 #include "spyro.h"
@@ -27,7 +29,26 @@ void func_8002C618(void) {
 }
 
 /// @brief Return home, sets gamestate to 1
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002C664);
+void func_8002C664(void) {
+  SpecularReset();
+
+  // Set the level you're traveling to
+  // to the homeworld of the current level
+  D_800758B4 = (g_LevelId / 10) * 10;
+
+  g_LoadStage = 0;
+  D_800756AC = 0;
+  g_Camera.unk_0xC0 = 0x80000012;
+  D_8007576C = -1;
+  D_800758AC = g_LevelId;
+
+  g_Gamestate = 1;
+
+  D_800756D0 = 1;
+  D_800756B0 = 1;
+
+  g_StateSwitch = 1;
+}
 
 /// @brief Opens the inventory menu
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002C714);

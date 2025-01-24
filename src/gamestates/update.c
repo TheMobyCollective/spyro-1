@@ -102,39 +102,40 @@ extern int D_80075704; // Credits sequence
 extern int D_800756F8;
 
 /// @brief Gamestate 15
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800333DC);
-#if 0 // Almost matched
 void func_800333DC(void) {
   SpecularUpdate(3);
 
-  if (D_80075704 == 99) {
+  switch (D_80075704) {
+  case 99:
     g_LoadStage = 1;
 
-    if (D_80075818 == -1) {
-      D_800758B4 = 60; // Gnorc Gnexus
-      if (g_GemTotal == 14000) {
-        D_800758B4 = 10; // Artisans
-      }
-    } else {
+    // If we started the credits with the cheat,
+    // return us to where we started it
+    if (D_80075818 != -1) {
       D_800758B4 = D_80075818;
       D_80075818 = -1;
+    } else {
+      // Otherwise, check if we completed loot, if we did, return us to Artisans
+      if (g_GemTotal == 14000) {
+        D_800758B4 = 10; // Artisans
+      } else {
+        D_800758B4 = 60; // Gnorc Gnexus
+      }
     }
 
     D_800758AC = 0; // Reset portal level id
     D_800756D0 = 0; // Set no level transition
     D_800756F8 = 0;
 
-    D_80075704 = 100; // Start loading level
-
-  } else {
-    if (D_80075704 == 100) {
-      // Load level
-      D_800756F8 += g_DeltaTime;
-      func_80015370(1);
-    }
+    D_80075704++; // Start loading level
+    return;
+  case 100:
+    // Load level
+    D_800756F8 += g_DeltaTime;
+    func_80015370(1);
+    return;
   }
 }
-#endif
 
 /// @brief Update demo mode
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800334D4);

@@ -40,10 +40,10 @@
 - [ ] func_80032AB0
 - [ ] func_80032B08
 - [ ] func_800331AC
-- [ ] func_800333DC
+- [x] func_800333DC
 - [ ] func_800334D4
 - [ ] GamestateUpdate
-- [ ] func_8005B6F8
+- [x] func_8005B6F8
 - [ ] func_8005B7D8
 - [x] SpuInitialize
 - [ ] PlaySound
@@ -103,7 +103,7 @@
 - [ ] func_8002C420
 - [ ] func_8002C534
 - [x] func_8002C618
-- [ ] func_8002C664
+- [x] func_8002C664
 - [ ] func_8002C714
 - [ ] func_8002C7BC
 - [x] func_8002C85C
