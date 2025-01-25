@@ -1,4 +1,5 @@
 /.vscode
 /build
-/psyq
+/psyq/include
+/psyq/lib
 /__pycache__

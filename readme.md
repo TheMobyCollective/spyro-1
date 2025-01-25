@@ -5,6 +5,8 @@
 
 This project aims to decompile Spyro the Dragon to source code that will create a matching game executable. By achieving a byte-for-byte match, we can preserve the game and gain insights into its development.
 
+I started this project late last year, I've been working on it on and off. Now that I've broken the 40% complete mark, I think it's time to make it public.
+
 ![Priceless](.github/assets/priceless.png)
 
 ## Structure
@@ -34,7 +36,7 @@ Spyro 3 fans really got it good
 
 Because I had trouble getting the order of the PSYQ sections to match, PSYQ 4.0 libraries are included in its disassembled form. If you prefer the more modern PSYQ 4.7, it's possible to replace it, creating a non-matching build. It'll be made easier to build with it soon.
 
-Please put PYSQ headers in psyq/include, if you're using 4.7 you should put the lib folder in psyq/lib
+Please put PYSQ headers in psyq/include, if you're using 4.7 you should put the lib folder in psyq/lib. Any version of PSYQ later than 4.0 should work.
 
 ## Building
 
@@ -44,9 +46,9 @@ After starting the container, executing `python3 build.py` will create the main 
 
 The overlays will be output to `/build/wad`, the naming convention matches the Spyro 1 template of [wadtool](https://github.com/altro50/wadtool).
 
-Because this project only concerns the game's code, you will need a copy of the game for it's assets. Besides, why would you be interested in decompiling a game you don't even have a copy of??
+This project only concerns the game's code, not the data files.
 
-A tool such as [wadtool](https://github.com/altro50/wadtool) is needed to rebuild the WAD.WAD file. For creating the CD image, I would recommend [mkpsxiso](https://github.com/Lameguy64/mkpsxiso) because it's modern and capable of recreating the image perfectly.
+A tool such as [wadtool](https://github.com/altro50/wadtool) is needed to rebuild the WAD.WAD file, you can use it for extracting and rebuilding. For creating the CD image, I would recommend [mkpsxiso](https://github.com/Lameguy64/mkpsxiso) because it's modern and capable of recreating the image perfectly. You can use [dumpsxiso](https://github.com/Lameguy64/mkpsxiso) to extract the contents of the original image.
 
 ## Acknowledgements
 

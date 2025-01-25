@@ -1,4 +1,4 @@
-FROM debian
+FROM debian:trixie-slim
 
 WORKDIR /s1
 
