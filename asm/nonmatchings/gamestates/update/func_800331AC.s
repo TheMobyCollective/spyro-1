@@ -51,7 +51,7 @@ glabel func_800331AC
 /* 23A64 80033264 23104300 */  subu       $v0, $v0, $v1
 /* 23A68 80033268 0880013C */  lui        $at, %hi(D_800785FC)
 /* 23A6C 8003326C FC8522AC */  sw         $v0, %lo(D_800785FC)($at)
-/* 23A70 80033270 BE6D010C */  jal        func_8005B6F8
+/* 23A70 80033270 BE6D010C */  jal        AllocateBuffers
 /* 23A74 80033274 01000424 */   addiu     $a0, $zero, 0x1
 /* 23A78 80033278 A4CC0008 */  j          .L80033290
 /* 23A7C 8003327C 00000000 */   nop

@@ -60,7 +60,7 @@ glabel func_8005B7D8
 /* 4C0B0 8005B8B0 EFFF4014 */  bnez       $v0, .L8005B870
 /* 4C0B4 8005B8B4 08001026 */   addiu     $s0, $s0, 0x8
 .L8005B8B8:
-/* 4C0B8 8005B8B8 BE6D010C */  jal        func_8005B6F8
+/* 4C0B8 8005B8B8 BE6D010C */  jal        AllocateBuffers
 /* 4C0BC 8005B8BC 21200000 */   addu      $a0, $zero, $zero
 /* 4C0C0 8005B8C0 2800BF8F */  lw         $ra, 0x28($sp)
 /* 4C0C4 8005B8C4 2400B38F */  lw         $s3, 0x24($sp)

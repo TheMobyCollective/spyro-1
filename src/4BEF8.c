@@ -4,7 +4,7 @@
 #include "memory.h"
 
 /// @brief: Set up the polygon buffers
-void func_8005B6F8(int pReducedSpace) {
+void AllocateBuffers(int pReducedSpace) {
   // Tried being smart with this, doesn't natch
   D_800785D8.m_ParticleSpaceStart =
       (char *)D_800785D8.m_SharedAnimations - 0x2000;
