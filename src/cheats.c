@@ -25,6 +25,7 @@ extern int cheat_HomeworldSelected; // Saves the homeworld you select
  * Table that contains all the cheats, padded with NULL inputs.
  */
 int CheatTable[CHEAT_COUNT][CHEAT_INPUT_BUFFER_SIZE] = {
+    // Cheat 0 (unused / INVINCIBLE)
     {
       PAD_SQUARE,
       PAD_CIRCLE,
@@ -38,8 +39,9 @@ int CheatTable[CHEAT_COUNT][CHEAT_INPUT_BUFFER_SIZE] = {
       PAD_CIRCLE,
       PAD_CIRCLE,
       PAD_RIGHT
-    }, // Cheat 0 (unused / INVINCIBLE)
+    },
 
+    // Cheat 1 (unused level cheat / LEVEL WARP)
     {
       PAD_R1,
       PAD_R2,
@@ -49,8 +51,9 @@ int CheatTable[CHEAT_COUNT][CHEAT_INPUT_BUFFER_SIZE] = {
       PAD_L1,
       PAD_R2,
       PAD_L2
-    }, // Cheat 1 (unused level cheat / LEVEL WARP)
+    },
 
+    // Cheat 2 (Credits cheat / CREDITS)
     {
       PAD_LEFT,
       PAD_RIGHT,
@@ -63,8 +66,9 @@ int CheatTable[CHEAT_COUNT][CHEAT_INPUT_BUFFER_SIZE] = {
       PAD_R2,
       PAD_L1,
       PAD_L2
-    }, // Cheat 2 (Credits cheat / CREDITS)
+    },
 
+    // Cheat 3 (Unlocks all levels / LEVELS OPEN)
     {
       PAD_SQUARE,
       PAD_SQUARE,
@@ -78,9 +82,10 @@ int CheatTable[CHEAT_COUNT][CHEAT_INPUT_BUFFER_SIZE] = {
       PAD_UP,
       PAD_RIGHT,
       PAD_DOWN
-    }, // Cheat 3 (Unlocks all levels / LEVELS OPEN)
+    },
 
-     {
+    // Cheat 4 (99 LIVES)
+    {
       PAD_SQUARE,
       PAD_SQUARE,
       PAD_SQUARE,
@@ -94,9 +99,10 @@ int CheatTable[CHEAT_COUNT][CHEAT_INPUT_BUFFER_SIZE] = {
       PAD_CIRCLE,
       PAD_RIGHT,
       PAD_CIRCLE,
-     }, // Cheat 4 (99 LIVES)
+    },
 
-     {
+    // Cheat 5 (Unused unknown)
+    {
       PAD_UP,
       PAD_DOWN,
       PAD_LEFT,
@@ -110,9 +116,10 @@ int CheatTable[CHEAT_COUNT][CHEAT_INPUT_BUFFER_SIZE] = {
       PAD_RIGHT,
       PAD_LEFT,
       PAD_CROSS,
-     }, // Cheat 5 (Unused unknown)
+    },
 
-     {
+    // Cheat 6 (Unused unknown)
+    {
       // Bunch of circles, then cross
       PAD_CIRCLE,
       PAD_CIRCLE,
@@ -130,9 +137,10 @@ int CheatTable[CHEAT_COUNT][CHEAT_INPUT_BUFFER_SIZE] = {
       PAD_CIRCLE,
       PAD_CIRCLE,
       PAD_CROSS,
-     }, // Cheat 6 (Unused unknown)
+    },
 
-     {
+    // Cheat 7 (Unused unknown)
+    {
       PAD_LEFT,
       PAD_RIGHT,
       PAD_SQUARE,
@@ -148,7 +156,7 @@ int CheatTable[CHEAT_COUNT][CHEAT_INPUT_BUFFER_SIZE] = {
       PAD_R1,
       PAD_TRIANGLE,
       PAD_CROSS,
-     } // Cheat 7 (Unused unknown)
+    }
 };
 /* clang-format on */
 
