@@ -94,7 +94,7 @@ dlabel g_ActAvailable
 dlabel D_800756DC
 /* 65EB4 800756DC */ .space 0x04
 
-dlabel D_800756E0
+dlabel g_CDMaxReadTime
 /* 65EB8 800756E0 */ .space 0x04
 
 dlabel D_800756E4
@@ -409,7 +409,7 @@ dlabel D_80075884
 dlabel D_80075888
 /* 66060 80075888 */ .space 0x04
 
-dlabel D_8007588C
+dlabel g_CDReadTime
 /* 66064 8007588C */ .space 0x04
 
 dlabel D_80075890

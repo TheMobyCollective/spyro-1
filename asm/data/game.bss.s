@@ -89,7 +89,7 @@ dlabel cheat_InputBuffer
 dlabel D_80076BFC
 /* 66B44 80076BFC */ .space 0x04
 
-dlabel D_80076C00
+dlabel g_LevelHeader
 /* Total size from 80076C00 to 80076DD0 */ .space 0x1D0
 
 dlabel g_Camera
@@ -1082,7 +1082,7 @@ dlabel D_80078EAC
 dlabel D_8007A6A8
 /* Total size from 8007A6A8 to 8007A6D0 */ .space 0x28
 
-dlabel D_8007A6D0
+dlabel g_WadHeader
 /* 6A618 8007A6D0 */ .space 0x04
 
 dlabel D_8007A6D4

@@ -137,7 +137,7 @@ void WadInitialize(void) {
   CDLoadSync(g_CdState.m_WadSector, D_800113A0, 2048, 0, 600);
 
   // Copy the WAD header to the global struct
-  Memcpy(&D_8007A6D0, D_800113A0, sizeof(D_8007A6D0));
+  Memcpy(&g_WadHeader, D_800113A0, sizeof(g_WadHeader));
 }
 
 // Initializes the music table
@@ -302,13 +302,13 @@ void Initialize(void) {
   CDLoadSync(g_CdState.m_WadSector, D_800113A0, 2048, WAD_OFFSET(3),
              600); // Load titlescreen_data.wad's header
 
-  Memcpy(&D_80076C00, D_800113A0,
-         sizeof(D_80076C00)); // Copy it to the header struct
+  Memcpy(&g_LevelHeader, D_800113A0,
+         sizeof(g_LevelHeader)); // Copy it to the header struct
 
   levelVram = (char *)0x80200000 - _stacksize - 0x40000;
 
   CDLoadSync(g_CdState.m_WadSector, levelVram, 0x40000,
-             WAD_OFFSET(3) + D_80076C00.m_VramSramOffset,
+             WAD_OFFSET(3) + g_LevelHeader.m_VramSramOffset,
              600); // Load the titlescreen VRAM
 
   CDLoadSync(g_CdState.m_WadSector, D_800113A0, WAD_SIZE(2), WAD_OFFSET(2),

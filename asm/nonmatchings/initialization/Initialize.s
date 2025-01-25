@@ -95,8 +95,8 @@ glabel Initialize
 /* 3120 80012920 A013A58C */  lw         $a1, %lo(D_800113A0)($a1)
 /* 3124 80012924 4059000C */  jal        CDLoadSync
 /* 3128 80012928 1000B0AF */   sw        $s0, 0x10($sp)
-/* 312C 8001292C 0780123C */  lui        $s2, %hi(D_80076C00)
-/* 3130 80012930 006C5226 */  addiu      $s2, $s2, %lo(D_80076C00)
+/* 312C 8001292C 0780123C */  lui        $s2, %hi(g_LevelHeader)
+/* 3130 80012930 006C5226 */  addiu      $s2, $s2, %lo(g_LevelHeader)
 /* 3134 80012934 21204002 */  addu       $a0, $s2, $zero
 /* 3138 80012938 0180053C */  lui        $a1, %hi(D_800113A0)
 /* 313C 8001293C A013A58C */  lw         $a1, %lo(D_800113A0)($a1)
@@ -126,8 +126,8 @@ glabel Initialize
 /* 319C 8001299C 0000248E */  lw         $a0, 0x0($s1)
 /* 31A0 800129A0 0880063C */  lui        $a2, %hi(D_8007A6D4)
 /* 31A4 800129A4 D4A6C68C */  lw         $a2, %lo(D_8007A6D4)($a2)
-/* 31A8 800129A8 0880073C */  lui        $a3, %hi(D_8007A6D0)
-/* 31AC 800129AC D0A6E78C */  lw         $a3, %lo(D_8007A6D0)($a3)
+/* 31A8 800129A8 0880073C */  lui        $a3, %hi(g_WadHeader)
+/* 31AC 800129AC D0A6E78C */  lw         $a3, %lo(g_WadHeader)($a3)
 /* 31B0 800129B0 0880023C */  lui        $v0, %hi(D_8007A6D4)
 /* 31B4 800129B4 D4A6428C */  lw         $v0, %lo(D_8007A6D4)($v0)
 /* 31B8 800129B8 1000B0AF */  sw         $s0, 0x10($sp)

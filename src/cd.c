@@ -4,20 +4,19 @@
 #include "music.h"
 #include "spu.h"
 
-
 void func_8002BBE0(void); // Music update
 
 void CDLoadTime(void) {
 
-  if (D_800756E0 == 0)
+  if (g_CDMaxReadTime == 0)
     return; // No timer set
 
   // Check if the disc read time is exceeded
-  if (D_8007588C > D_800756E0) {
+  if (g_CDReadTime > g_CDMaxReadTime) {
 
     /*
       There used to be a printf here that said
-      "Load Time (%d) Exceeded on LoadStage %d\n" (D_800756E0, g_LoadStage)
+      "Load Time (%d) Exceeded on LoadStage %d\n" (g_CDMaxReadTime, g_LoadStage)
     */
 
     // Reinitialize the CD subsystem
@@ -33,7 +32,7 @@ void CDLoadTime(void) {
     while (CdSync(1, 0) != CdlComplete)
       ;
 
-    D_8007588C = 0; // Reset the disc read time
+    g_CDReadTime = 0; // Reset the disc read time
 
     CdRead(g_CdState.m_Size, g_CdState.m_OutBuf, CdlModeSpeed);
   }
@@ -44,8 +43,8 @@ void CDReadDone(u_char intr, u_char *result) {
   // so other logic can continue.
   if (intr == CdlComplete) {
     g_CdState.m_IsReading = 0;
-    D_8007588C = 0; // Disc read time reset
-    D_800756E0 = 0; // Max time reset
+    g_CDReadTime = 0;    // Disc read time reset
+    g_CDMaxReadTime = 0; // Max time reset
     return;
   }
 
@@ -70,8 +69,8 @@ void CDLoadSync(int sector, void *buf, int size, int offset, int maxTime) {
   // Set the mode to double speed
   CdControl(CdlSetmode, &modeFlags, 0);
 
-  D_800756E0 = maxTime; // Max time
-  D_8007588C = 0;       // Disc read time
+  g_CDMaxReadTime = maxTime;
+  g_CDReadTime = 0;
 
   CdIntToPos(sector + (offset / 2048), &g_CdState.m_ReadLoc);
 
@@ -95,8 +94,8 @@ void CDLoadAsync(int sector, void *buf, int size, int offset, int maxTime) {
   // Set the mode to double speed
   CdControl(CdlSetmode, &modeFlags, 0);
 
-  D_800756E0 = maxTime; // Max time
-  D_8007588C = 0;       // Disc read time
+  g_CDMaxReadTime = maxTime;
+  g_CDReadTime = 0;
 
   CdIntToPos(sector + (offset / 2048), &g_CdState.m_ReadLoc);
 

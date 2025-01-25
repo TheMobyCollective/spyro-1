@@ -2,14 +2,11 @@
 #define __WAD_H_
 
 extern struct {
-  // struct {
-  //   int offset, size;
-  // } m_entry[102];
-  int m_entry[102][2]; // Struct does not match (func_800144C8)
-} D_8007A6D0;
+  int m_Entry[102][2]; // Using a struct does not match (func_800144C8)
+} g_WadHeader;
 
-#define WAD_OFFSET(x) D_8007A6D0.m_entry[x][0]
-#define WAD_SIZE(x) D_8007A6D0.m_entry[x][1]
+#define WAD_OFFSET(x) g_WadHeader.m_Entry[x][0]
+#define WAD_SIZE(x) g_WadHeader.m_Entry[x][1]
 
 typedef struct {
   int m_VramSramOffset;
@@ -27,6 +24,6 @@ typedef struct {
   short m_ModelIndices[64];
 } LevelHeader;
 
-LevelHeader D_80076C00;
+LevelHeader g_LevelHeader;
 
 #endif

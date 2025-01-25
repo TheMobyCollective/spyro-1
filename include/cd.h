@@ -6,10 +6,10 @@
 #include <libcd.h>
 
 /// @brief Maximum read time for the current disc read
-extern int D_800756E0;
+extern int g_CDMaxReadTime;
 
 /// @brief Disc read timer
-extern int D_8007588C;
+extern int g_CDReadTime;
 
 typedef struct {
   int m_WadSector;

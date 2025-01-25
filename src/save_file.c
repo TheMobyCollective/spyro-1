@@ -16,10 +16,6 @@ extern int D_80075748; // Music volume
 extern int D_80075838;
 extern int D_8007583C;
 
-// TODO: Where?
-extern int D_80078618[5];       // Course records
-extern u_char D_80078680[5][5]; // Flight collected
-
 /// @brief Generate checksum for save file
 int SaveChecksum(u_char *saveFile) {
   int checksum = 0;

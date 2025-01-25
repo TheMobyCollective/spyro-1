@@ -228,9 +228,9 @@ void PadVSync(void) {
   D_800758C8 += 1; // Increment the level ticks
 
   // Is there a CD max time set?
-  if (D_800756E0) {
+  if (g_CDMaxReadTime) {
     // Increment the read time
-    D_8007588C += 1;
+    g_CDReadTime += 1;
   }
 
   // Check if we're in DEMO mode, if we are, just return
