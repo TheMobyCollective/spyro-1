@@ -155,7 +155,20 @@ void func_80038458(Moby *pMoby) {
   func_800533D0(pMoby);
 }
 
+/// @brief Returns if a Moby has been killed
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038494);
+#if 0 // Close to matching, reg diff
+int func_80038494(Moby *pMoby) {
+  int mobyIdx = (pMoby - D_80075828);
+  int killArrayIndex = mobyIdx >> 5;     // / 32
+  int bitOffset = 1 << (mobyIdx & 0x1f); // % 32
+
+  // Since load layout sets m_DropMoby to 0xff if the moby is dead
+  // the check for it is a bit odd
+  return (g_Checkpoint.m_KilledMobysSaved[killArrayIndex] & bitOffset) &&
+         pMoby->m_DropMoby == 0xff;
+}
+#endif
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003851C);
 
@@ -236,12 +249,39 @@ int func_80038BB0(PathData *pPathData, int *pNodeIndexOut) {
   return furthestNodeIndex;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038C4C);
+/// @brief: Checks if a point is within a rectangle
+int func_80038C4C(Vector3D *point, Vector3D *rect) {
+  // The stack usage here is insane
+  Vector3D diff2;
+  Vector3D diff;
+  int z = rect[1].z;
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038D54);
+  VecSub(&diff, point, rect);
 
+  diff2.x = (diff.x * COSINE_8(z) >> 0xc) - (diff.y * SINE_8(z) >> 0xc);
+  diff2.y = (diff.x * SINE_8(z) >> 0xc) + (diff.y * COSINE_8(z) >> 0xc);
+
+  diff2.x = ABS(diff2.x);
+  diff2.y = ABS(diff2.y);
+
+  if (diff2.x < rect[1].x && diff2.y < rect[1].y)
+    return 1;
+
+  return 0;
+}
+
+/// @brief: Returns the dot product of two vectors (doesn't use the GTE)
+int func_80038D54(Vector3D *param_1, Vector3D *param_2) {
+  Vector3D unused; // Needed to match stack usage
+  int sum = param_2->x * param_1->x + param_2->y * param_1->y +
+            param_2->z * param_1->z;
+  return ABS((sum >> 10) + param_2[1].x);
+}
+
+/// @brief Rotate moby to face Spyro
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038DC0);
 
+/// @brief: Rotate moby to face a point
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038EE0);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038FC8);
@@ -318,7 +358,24 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A920);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A9EC);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003AA84);
+/// @brief: Apply flame heat
+void func_8003AA84(Moby *pMoby) {
+  // Are we being flamed?
+  if (pMoby->m_DamageFlags & 0x10000) {
+    // Being flamed, heat up
+    pMoby->m_SpecularMetalColor[2] += 24;
+    if (pMoby->m_SpecularMetalColor[2] > 96) {
+      pMoby->m_SpecularMetalColor[2] = 96;
+    }
+  } else {
+    // Not being flamed, cool down
+    if (pMoby->m_SpecularMetalColor[2] > 32) {
+      pMoby->m_SpecularMetalColor[2] -= 2;
+    } else if (pMoby->m_SpecularMetalColor[2] > 0) {
+      pMoby->m_SpecularMetalColor[2]--;
+    }
+  }
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003AAEC);
 

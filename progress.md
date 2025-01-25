@@ -165,8 +165,8 @@
 - [x] func_80038A40
 - [x] func_80038AFC
 - [x] func_80038BB0
-- [ ] func_80038C4C
-- [ ] func_80038D54
+- [x] func_80038C4C
+- [x] func_80038D54
 - [ ] func_80038DC0
 - [ ] func_80038EE0
 - [ ] func_80038FC8
@@ -183,7 +183,7 @@
 - [ ] func_8003A850
 - [ ] func_8003A920
 - [ ] func_8003A9EC
-- [ ] func_8003AA84
+- [x] func_8003AA84
 - [ ] func_8003AAEC
 - [ ] func_8003ABC0
 - [x] func_8003B0DC
