@@ -31,7 +31,7 @@ for commit in commits:
     progress.append((date, checked, unchecked))
 
 progress = sorted(progress, key=lambda x: x[0])
-date_range = pd.date_range(start=progress[0][0], end=progress[-1][0], freq='D')
+date_range = pd.date_range(start=progress[0][0], end=progress[-1][0], freq='h')
 
 new_progress = []
 for date in date_range:
