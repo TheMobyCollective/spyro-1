@@ -1,0 +1,6 @@
+* linguist-vendored
+asm/* linguist-vendored=false linguist-language=Assembly
+include/* linguist-vendored=false linguist-language=C
+src/* linguist-vendored=false linguist-language=C
+asm/data/* linguist-vendored
+asm/psyq* linguist-vendored
