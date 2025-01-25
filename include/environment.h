@@ -9,17 +9,17 @@ typedef struct {
 } SpecialSurface;
 
 typedef struct {
-  void *m_sectorPointer; // TODO: Type
-  int m_sectorCount;
-  void *m_occlusionGroups; // TODO: Type
-  int m_occlusionGroupCount;
-  SpecialSurface **surfaceData;
-  int surfaceCount;
+  void *m_SectorPointer; // TODO: Type
+  int m_SectorCount;
+  void *m_OcclusionGroups; // TODO: Type
+  int m_OcclusionGroupCount;
+  SpecialSurface **m_SurfaceData;
+  int m_SurfaceCount;
   void *m_LQTexturePointer; // TODO: Type
   void *m_HQTexturePointer; // TODO: Type
-  int m_textureCount;
-  int m_lodDistance;
-  int m_cullingDistance;
+  int m_TextureCount;
+  int m_LodDistance;
+  int m_CullingDistance;
 } Environment;
 
 extern Environment g_Environment;

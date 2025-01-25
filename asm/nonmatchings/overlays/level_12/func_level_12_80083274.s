@@ -252,7 +252,7 @@ glabel func_level_12_80083274
 /* EFEA90 800834C8 21900002 */   addu      $s2, $s0, $zero
 /* EFEA94 800834CC 21806000 */  addu       $s0, $v1, $zero
 .Llevel_12_800834D0:
-/* EFEA98 800834D0 2C5B000C */  jal        func_80016CB0
+/* EFEA98 800834D0 2C5B000C */  jal        Cos
 /* EFEA9C 800834D4 21204002 */   addu      $a0, $s2, $zero
 /* EFEAA0 800834D8 18000202 */  mult       $s0, $v0
 /* EFEAA4 800834DC 21204002 */  addu       $a0, $s2, $zero
@@ -260,7 +260,7 @@ glabel func_level_12_80083274
 /* EFEAAC 800834E4 12380000 */  mflo       $a3
 /* EFEAB0 800834E8 031B0700 */  sra        $v1, $a3, 12
 /* EFEAB4 800834EC 21104300 */  addu       $v0, $v0, $v1
-/* EFEAB8 800834F0 165B000C */  jal        func_80016C58
+/* EFEAB8 800834F0 165B000C */  jal        Sin
 /* EFEABC 800834F4 1000A2AF */   sw        $v0, 0x10($sp)
 /* EFEAC0 800834F8 18000202 */  mult       $s0, $v0
 /* EFEAC4 800834FC 1400A28F */  lw         $v0, 0x14($sp)
@@ -343,14 +343,14 @@ glabel func_level_12_80083274
 /* EFEBE8 80083620 C05D000C */  jal        VecCopy
 /* EFEBEC 80083624 A0FEA524 */   addiu     $a1, $a1, -0x160
 /* EFEBF0 80083628 17002486 */  lh         $a0, 0x17($s1)
-/* EFEBF4 8008362C 2C5B000C */  jal        func_80016CB0
+/* EFEBF4 8008362C 2C5B000C */  jal        Cos
 /* EFEBF8 80083630 00000000 */   nop
 /* EFEBFC 80083634 2000A38F */  lw         $v1, 0x20($sp)
 /* EFEC00 80083638 03110200 */  sra        $v0, $v0, 4
 /* EFEC04 8008363C 21186200 */  addu       $v1, $v1, $v0
 /* EFEC08 80083640 2000A3AF */  sw         $v1, 0x20($sp)
 /* EFEC0C 80083644 17002486 */  lh         $a0, 0x17($s1)
-/* EFEC10 80083648 165B000C */  jal        func_80016C58
+/* EFEC10 80083648 165B000C */  jal        Sin
 /* EFEC14 8008364C 00000000 */   nop
 /* EFEC18 80083650 2120A002 */  addu       $a0, $s5, $zero
 /* EFEC1C 80083654 21280002 */  addu       $a1, $s0, $zero
@@ -371,7 +371,7 @@ glabel func_level_12_80083274
 /* EFEC58 80083690 206E4284 */  lh         $v0, %lo(g_Camera + 0x50)($v0)
 /* EFEC5C 80083694 03240400 */  sra        $a0, $a0, 16
 /* EFEC60 80083698 23208200 */  subu       $a0, $a0, $v0
-/* EFEC64 8008369C 2C5B000C */  jal        func_80016CB0
+/* EFEC64 8008369C 2C5B000C */  jal        Cos
 /* EFEC68 800836A0 FF0F8430 */   andi      $a0, $a0, 0xFFF
 /* EFEC6C 800836A4 6060033C */  lui        $v1, (0x60606061 >> 16)
 /* EFEC70 800836A8 61606334 */  ori        $v1, $v1, (0x60606061 & 0xFFFF)

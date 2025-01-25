@@ -65,7 +65,7 @@ glabel func_8003E318
 /* 2EC08 8003E408 C05D000C */  jal        VecCopy
 /* 2EC0C 8003E40C 21280002 */   addu      $a1, $s0, $zero
 /* 2EC10 8003E410 21200002 */  addu       $a0, $s0, $zero
-/* 2EC14 8003E414 7F5C000C */  jal        func_800171FC
+/* 2EC14 8003E414 7F5C000C */  jal        VecMagnitude
 /* 2EC18 8003E418 21280000 */   addu      $a1, $zero, $zero
 /* 2EC1C 8003E41C 21284000 */  addu       $a1, $v0, $zero
 /* 2EC20 8003E420 0780043C */  lui        $a0, %hi(D_80077370)
@@ -84,7 +84,7 @@ glabel func_8003E318
 /* 2EC50 8003E450 0780043C */  lui        $a0, %hi(D_80075808)
 /* 2EC54 8003E454 0858848C */  lw         $a0, %lo(D_80075808)($a0)
 /* 2EC58 8003E458 DC014526 */  addiu      $a1, $s2, 0x1DC
-/* 2EC5C 8003E45C 2E5F000C */  jal        func_80017CB8
+/* 2EC5C 8003E45C 2E5F000C */  jal        ColTriUnpack
 /* 2EC60 8003E460 D80144AE */   sw        $a0, 0x1D8($s2)
 /* 2EC64 8003E464 0880033C */  lui        $v1, %hi(g_Spyro + 0xB0)
 /* 2EC68 8003E468 088B638C */  lw         $v1, %lo(g_Spyro + 0xB0)($v1)
@@ -167,7 +167,7 @@ glabel func_8003E318
 /* 2ED94 8003E594 C05D000C */  jal        VecCopy
 /* 2ED98 8003E598 21200002 */   addu      $a0, $s0, $zero
 /* 2ED9C 8003E59C 21200002 */  addu       $a0, $s0, $zero
-/* 2EDA0 8003E5A0 7F5C000C */  jal        func_800171FC
+/* 2EDA0 8003E5A0 7F5C000C */  jal        VecMagnitude
 /* 2EDA4 8003E5A4 21280000 */   addu      $a1, $zero, $zero
 /* 2EDA8 8003E5A8 21284000 */  addu       $a1, $v0, $zero
 /* 2EDAC 8003E5AC 0880043C */  lui        $a0, %hi(g_Spyro + 0xAC)

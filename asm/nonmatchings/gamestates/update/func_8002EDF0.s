@@ -200,7 +200,7 @@ glabel func_8002EDF0
 /* 1F8E4 8002F0E4 00811300 */   sll       $s0, $s3, 4
 /* 1F8E8 8002F0E8 000E1126 */  addiu      $s1, $s0, 0xE00
 /* 1F8EC 8002F0EC FF0F3132 */  andi       $s1, $s1, 0xFFF
-/* 1F8F0 8002F0F0 2C5B000C */  jal        func_80016CB0
+/* 1F8F0 8002F0F0 2C5B000C */  jal        Cos
 /* 1F8F4 8002F0F4 21202002 */   addu      $a0, $s1, $zero
 /* 1F8F8 8002F0F8 AA2A123C */  lui        $s2, (0x2AAAAAAB >> 16)
 /* 1F8FC 8002F0FC ABAA5236 */  ori        $s2, $s2, (0x2AAAAAAB & 0xFFFF)
@@ -221,7 +221,7 @@ glabel func_8002EDF0
 /* 1F938 8002F138 002A4224 */  addiu      $v0, $v0, 0x2A00
 /* 1F93C 8002F13C 0880013C */  lui        $at, %hi(g_Spyro)
 /* 1F940 8002F140 588A22AC */  sw         $v0, %lo(g_Spyro)($at)
-/* 1F944 8002F144 165B000C */  jal        func_80016C58
+/* 1F944 8002F144 165B000C */  jal        Sin
 /* 1F948 8002F148 21202002 */   addu      $a0, $s1, $zero
 /* 1F94C 8002F14C 18005000 */  mult       $v0, $s0
 /* 1F950 8002F150 40181300 */  sll        $v1, $s3, 1

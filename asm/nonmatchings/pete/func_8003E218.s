@@ -43,7 +43,7 @@ glabel func_8003E218
 /* 2EAB0 8003E2B0 0780103C */  lui        $s0, %hi(D_80077368)
 /* 2EAB4 8003E2B4 68731026 */  addiu      $s0, $s0, %lo(D_80077368)
 /* 2EAB8 8003E2B8 21200002 */  addu       $a0, $s0, $zero
-/* 2EABC 8003E2BC 7F5C000C */  jal        func_800171FC
+/* 2EABC 8003E2BC 7F5C000C */  jal        VecMagnitude
 /* 2EAC0 8003E2C0 21280000 */   addu      $a1, $zero, $zero
 /* 2EAC4 8003E2C4 0780043C */  lui        $a0, %hi(D_80077370)
 /* 2EAC8 8003E2C8 7073848C */  lw         $a0, %lo(D_80077370)($a0)

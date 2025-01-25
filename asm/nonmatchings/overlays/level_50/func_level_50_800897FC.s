@@ -251,7 +251,7 @@ glabel func_level_50_800897FC
 /* 43EA014 80089A4C 21900002 */   addu      $s2, $s0, $zero
 /* 43EA018 80089A50 21806000 */  addu       $s0, $v1, $zero
 .Llevel_50_80089A54:
-/* 43EA01C 80089A54 2C5B000C */  jal        func_80016CB0
+/* 43EA01C 80089A54 2C5B000C */  jal        Cos
 /* 43EA020 80089A58 21204002 */   addu      $a0, $s2, $zero
 /* 43EA024 80089A5C 18000202 */  mult       $s0, $v0
 /* 43EA028 80089A60 21204002 */  addu       $a0, $s2, $zero
@@ -259,7 +259,7 @@ glabel func_level_50_800897FC
 /* 43EA030 80089A68 12380000 */  mflo       $a3
 /* 43EA034 80089A6C 031B0700 */  sra        $v1, $a3, 12
 /* 43EA038 80089A70 21104300 */  addu       $v0, $v0, $v1
-/* 43EA03C 80089A74 165B000C */  jal        func_80016C58
+/* 43EA03C 80089A74 165B000C */  jal        Sin
 /* 43EA040 80089A78 1000A2AF */   sw        $v0, 0x10($sp)
 /* 43EA044 80089A7C 18000202 */  mult       $s0, $v0
 /* 43EA048 80089A80 1400A28F */  lw         $v0, 0x14($sp)
@@ -341,14 +341,14 @@ glabel func_level_50_800897FC
 /* 43EA168 80089BA0 C05D000C */  jal        VecCopy
 /* 43EA16C 80089BA4 A0FEA524 */   addiu     $a1, $a1, -0x160
 /* 43EA170 80089BA8 17002486 */  lh         $a0, 0x17($s1)
-/* 43EA174 80089BAC 2C5B000C */  jal        func_80016CB0
+/* 43EA174 80089BAC 2C5B000C */  jal        Cos
 /* 43EA178 80089BB0 00000000 */   nop
 /* 43EA17C 80089BB4 2000A38F */  lw         $v1, 0x20($sp)
 /* 43EA180 80089BB8 03110200 */  sra        $v0, $v0, 4
 /* 43EA184 80089BBC 21186200 */  addu       $v1, $v1, $v0
 /* 43EA188 80089BC0 2000A3AF */  sw         $v1, 0x20($sp)
 /* 43EA18C 80089BC4 17002486 */  lh         $a0, 0x17($s1)
-/* 43EA190 80089BC8 165B000C */  jal        func_80016C58
+/* 43EA190 80089BC8 165B000C */  jal        Sin
 /* 43EA194 80089BCC 00000000 */   nop
 /* 43EA198 80089BD0 2120A002 */  addu       $a0, $s5, $zero
 /* 43EA19C 80089BD4 21280002 */  addu       $a1, $s0, $zero
@@ -369,7 +369,7 @@ glabel func_level_50_800897FC
 /* 43EA1D8 80089C10 206E4284 */  lh         $v0, %lo(g_Camera + 0x50)($v0)
 /* 43EA1DC 80089C14 03240400 */  sra        $a0, $a0, 16
 /* 43EA1E0 80089C18 23208200 */  subu       $a0, $a0, $v0
-/* 43EA1E4 80089C1C 2C5B000C */  jal        func_80016CB0
+/* 43EA1E4 80089C1C 2C5B000C */  jal        Cos
 /* 43EA1E8 80089C20 FF0F8430 */   andi      $a0, $a0, 0xFFF
 /* 43EA1EC 80089C24 6060033C */  lui        $v1, (0x60606061 >> 16)
 /* 43EA1F0 80089C28 61606334 */  ori        $v1, $v1, (0x60606061 & 0xFFFF)

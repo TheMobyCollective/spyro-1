@@ -162,7 +162,7 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003851C);
 void func_800385BC(Moby *pMoby, int pUnknown) {
   if (pMoby != nullptr) {
     PlaySound(g_Spu.m_SoundTable->mobyPoof, pMoby, 0x08 /* 3D */,
-              &pMoby->m_soundChannel);
+              &pMoby->m_SoundChannel);
 
   } else {
     PlaySound(g_Spu.m_SoundTable->mobyPoof, nullptr, 0x10 /* 2D */, nullptr);
@@ -181,9 +181,9 @@ int func_80038A40(Moby *pMoby, PathData *pPathData, int *pNodeIndexOut) {
   int closestNodeIndex;
   int i;
 
-  for (i = 0; i < pPathData->m_nodeCount; i++) {
+  for (i = 0; i < pPathData->m_NodeCount; i++) {
     int distance =
-        func_80017990(&pMoby->m_Position, &pPathData->m_nodes[i].m_Position);
+        OctDistance(&pMoby->m_Position, &pPathData->m_Nodes[i].m_Position);
     if (distance < closestNodeDistance) {
       closestNodeDistance = distance;
       closestNodeIndex = i;
@@ -203,9 +203,9 @@ int func_80038AFC(PathData *pPathData, int *pNodeIndexOut) {
   int closestNodeIndex;
   int i;
 
-  for (i = 0; i < pPathData->m_nodeCount; i++) {
+  for (i = 0; i < pPathData->m_NodeCount; i++) {
     int distance =
-        func_80017990(&g_Spyro.m_Position, &pPathData->m_nodes[i].m_Position);
+        OctDistance(&g_Spyro.m_Position, &pPathData->m_Nodes[i].m_Position);
     if (distance < closestNodeDistance) {
       closestNodeDistance = distance;
       closestNodeIndex = i;
@@ -225,9 +225,9 @@ int func_80038BB0(PathData *pPathData, int *pNodeIndexOut) {
   int furthestNodeIndex;
   int i;
 
-  for (i = 0; i < pPathData->m_nodeCount; i++) {
+  for (i = 0; i < pPathData->m_NodeCount; i++) {
     int distance =
-        func_80017990(&g_Spyro.m_Position, &pPathData->m_nodes[i].m_Position);
+        OctDistance(&g_Spyro.m_Position, &pPathData->m_Nodes[i].m_Position);
     if (distance > furthestNodeDistance) {
       furthestNodeDistance = distance;
       furthestNodeIndex = i;
@@ -270,12 +270,12 @@ void func_8003A720(Moby *pMoby) {
   pMoby->m_DepthOffset = 4;
   pMoby->m_State = 0;
   pMoby->m_Substate = 0;
-  pMoby->m_AnimationState.m_animation = 0;
-  pMoby->m_AnimationState.m_nextAnimation = 0;
-  pMoby->m_AnimationState.m_frame = 0;
-  pMoby->m_AnimationState.m_nextFrame = 1;
-  pMoby->m_AnimationState.m_perFrameProgress = 32;
-  pMoby->m_AnimationState.m_frameProgress = 0;
+  pMoby->m_AnimationState.m_Animation = 0;
+  pMoby->m_AnimationState.m_NextAnimation = 0;
+  pMoby->m_AnimationState.m_Frame = 0;
+  pMoby->m_AnimationState.m_NextFrame = 1;
+  pMoby->m_AnimationState.m_PerFrameProgress = 32;
+  pMoby->m_AnimationState.m_FrameProgress = 0;
   pMoby->m_Pod = -1;
   pMoby->m_SectorIndex = -1;
   pMoby->m_DropMoby = -1;
@@ -284,15 +284,15 @@ void func_8003A720(Moby *pMoby) {
   pMoby->m_Rotation.y = 0;
   pMoby->m_Rotation.z = 0;
   pMoby->m_ShadowDistance = 0;
-  pMoby->m_scaleOverride = 0;
-  pMoby->m_soundChannel = 0x7f;
+  pMoby->m_ScaleOverride = 0;
+  pMoby->m_SoundChannel = 0x7f;
   pMoby->m_FloorDistance = 0;
   pMoby->m_Renderer.raw = 32;
-  *((int *)pMoby->m_specularMetalColor) = 0;
-  // pMoby->m_specularMetalColor[0] = 0;
-  // pMoby->m_specularMetalColor[1] = 0;
-  // pMoby->m_specularMetalColor[2] = 0;
-  // pMoby->m_specularMetalType = 0;
+  *((int *)pMoby->m_SpecularMetalColor) = 0;
+  // pMoby->m_SpecularMetalColor[0] = 0;
+  // pMoby->m_SpecularMetalColor[1] = 0;
+  // pMoby->m_SpecularMetalColor[2] = 0;
+  // pMoby->m_SpecularMetalType = 0;
 }
 #endif
 
@@ -301,13 +301,13 @@ int func_8003A79C(Moby *pMoby, PathData *path, int pDivider) {
   Vector3D dist;
 
   dist.x =
-      path->m_nodes[path->m_currentNode].m_Position.x - pMoby->m_Position.x;
+      path->m_Nodes[path->m_CurrentNode].m_Position.x - pMoby->m_Position.x;
   dist.y =
-      path->m_nodes[path->m_currentNode].m_Position.y - pMoby->m_Position.y;
+      path->m_Nodes[path->m_CurrentNode].m_Position.y - pMoby->m_Position.y;
   dist.z =
-      path->m_nodes[path->m_currentNode].m_Position.z - pMoby->m_Position.z;
+      path->m_Nodes[path->m_CurrentNode].m_Position.z - pMoby->m_Position.z;
 
-  return func_800171FC(&dist, 1) / pDivider;
+  return VecMagnitude(&dist, 1) / pDivider;
 }
 
 // Unused

@@ -53,7 +53,7 @@ glabel func_level_10_8007AEA0
 /* 7F2D28 8007AF60 E35D000C */  jal        VecSub
 /* 7F2D2C 8007AF64 0C000626 */   addiu     $a2, $s0, 0xC
 /* 7F2D30 8007AF68 1000A427 */  addiu      $a0, $sp, 0x10
-/* 7F2D34 8007AF6C 7F5C000C */  jal        func_800171FC
+/* 7F2D34 8007AF6C 7F5C000C */  jal        VecMagnitude
 /* 7F2D38 8007AF70 21280000 */   addu      $a1, $zero, $zero
 /* 7F2D3C 8007AF74 0780033C */  lui        $v1, %hi(g_Camera + 0x30)
 /* 7F2D40 8007AF78 006E638C */  lw         $v1, %lo(g_Camera + 0x30)($v1)

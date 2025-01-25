@@ -217,7 +217,7 @@ glabel func_80016AB4
 .size func_80016AB4, . - func_80016AB4
 
 /* Handwritten function */
-glabel func_80016C58
+glabel Sin
 /* 7458 80016C58 FF0F8430 */  andi       $a0, $a0, 0xFFF
 /* 745C 80016C5C 0780013C */  lui        $at, %hi(D_8006CBF8)
 /* 7460 80016C60 F8CB2124 */  addiu      $at, $at, %lo(D_8006CBF8)
@@ -241,10 +241,10 @@ glabel func_80016C58
 /* 74A4 80016CA4 00008284 */  lh         $v0, 0x0($a0)
 /* 74A8 80016CA8 0800E003 */  jr         $ra
 /* 74AC 80016CAC 00000000 */   nop
-.size func_80016C58, . - func_80016C58
+.size Sin, . - Sin
 
 /* Handwritten function */
-glabel func_80016CB0
+glabel Cos
 /* 74B0 80016CB0 FF0F8430 */  andi       $a0, $a0, 0xFFF
 /* 74B4 80016CB4 0780013C */  lui        $at, %hi(D_8006CC78)
 /* 74B8 80016CB8 78CC2124 */  addiu      $at, $at, %lo(D_8006CC78)
@@ -268,7 +268,7 @@ glabel func_80016CB0
 /* 74FC 80016CFC 00008284 */  lh         $v0, 0x0($a0)
 /* 7500 80016D00 0800E003 */  jr         $ra
 /* 7504 80016D04 00000000 */   nop
-.size func_80016CB0, . - func_80016CB0
+.size Cos, . - Cos
 
 /* Handwritten function */
 glabel func_80016D08
@@ -625,7 +625,7 @@ glabel func_80017188
 .size func_80017188, . - func_80017188
 
 /* Handwritten function */
-glabel func_800171FC
+glabel VecMagnitude
 /* 79FC 800171FC 000089C8 */  lwc2       $9, 0x0($a0)
 /* 7A00 80017200 00588048 */  mtc2       $zero, $11 /* handwritten instruction */
 /* 7A04 80017204 0200A010 */  beqz       $a1, .L80017210
@@ -670,7 +670,7 @@ glabel func_800171FC
 .L80017294:
 /* 7A94 80017294 0800E003 */  jr         $ra
 /* 7A98 80017298 02130800 */   srl       $v0, $t0, 12
-.size func_800171FC, . - func_800171FC
+.size VecMagnitude, . - VecMagnitude
 
 /* Handwritten function */
 glabel func_8001729C
@@ -1215,7 +1215,7 @@ glabel func_8001796C
 .size func_8001796C, . - func_8001796C
 
 /* Handwritten function */
-glabel func_80017990
+glabel OctDistance
 /* 8190 80017990 0000818C */  lw         $at, 0x0($a0)
 /* 8194 80017994 0400828C */  lw         $v0, 0x4($a0)
 /* 8198 80017998 0000A68C */  lw         $a2, 0x0($a1)
@@ -1243,7 +1243,7 @@ glabel func_80017990
 /* 81E4 800179E4 C2380700 */  srl        $a3, $a3, 3
 /* 81E8 800179E8 0800E003 */  jr         $ra
 /* 81EC 800179EC 2010C700 */   add       $v0, $a2, $a3 /* handwritten instruction */
-.size func_80017990, . - func_80017990
+.size OctDistance, . - OctDistance
 
 /* Handwritten function */
 glabel func_800179F0
@@ -1461,7 +1461,7 @@ glabel func_80017C84
 .size func_80017C84, . - func_80017C84
 
 /* Handwritten function */
-glabel func_80017CB8
+glabel ColTriUnpack
 /* 84B8 80017CB8 0880013C */  lui        $at, %hi(g_Environment)
 /* 84BC 80017CBC A8852124 */  addiu      $at, $at, %lo(g_Environment)
 /* 84C0 80017CC0 2C00218C */  lw         $at, 0x2C($at)
@@ -1511,7 +1511,7 @@ glabel func_80017CB8
 /* 8570 80017D70 1400A7AC */  sw         $a3, 0x14($a1)
 /* 8574 80017D74 0800E003 */  jr         $ra
 /* 8578 80017D78 2000A8AC */   sw        $t0, 0x20($a1)
-.size func_80017CB8, . - func_80017CB8
+.size ColTriUnpack, . - ColTriUnpack
 
 /* Handwritten function */
 glabel func_80017D7C

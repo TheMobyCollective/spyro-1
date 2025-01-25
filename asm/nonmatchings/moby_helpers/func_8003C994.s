@@ -24,7 +24,7 @@ glabel func_8003C994
 /* 2D1E0 8003C9E0 E35D000C */  jal        VecSub
 /* 2D1E4 8003C9E4 21302602 */   addu      $a2, $s1, $a2
 /* 2D1E8 8003C9E8 1800A427 */  addiu      $a0, $sp, 0x18
-/* 2D1EC 8003C9EC 7F5C000C */  jal        func_800171FC
+/* 2D1EC 8003C9EC 7F5C000C */  jal        VecMagnitude
 /* 2D1F0 8003C9F0 01000524 */   addiu     $a1, $zero, 0x1
 /* 2D1F4 8003C9F4 21304000 */  addu       $a2, $v0, $zero
 /* 2D1F8 8003C9F8 2A80D000 */  slt        $s0, $a2, $s0

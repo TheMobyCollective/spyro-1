@@ -174,7 +174,7 @@ glabel func_8003ABC0
 /* 2B630 8003AE30 0C005026 */   addiu     $s0, $s2, 0xC
 /* 2B634 8003AE34 0880053C */  lui        $a1, %hi(g_Spyro)
 /* 2B638 8003AE38 588AA524 */  addiu      $a1, $a1, %lo(g_Spyro)
-/* 2B63C 8003AE3C 645E000C */  jal        func_80017990
+/* 2B63C 8003AE3C 645E000C */  jal        OctDistance
 /* 2B640 8003AE40 0C004426 */   addiu     $a0, $s2, 0xC
 /* 2B644 8003AE44 00084228 */  slti       $v0, $v0, 0x800
 /* 2B648 8003AE48 2C004010 */  beqz       $v0, .L8003AEFC
@@ -286,7 +286,7 @@ glabel func_8003ABC0
 /* 2B7C4 8003AFC4 3000A38F */  lw         $v1, 0x30($sp)
 /* 2B7C8 8003AFC8 21804000 */  addu       $s0, $v0, $zero
 /* 2B7CC 8003AFCC 00FC6324 */  addiu      $v1, $v1, -0x400
-/* 2B7D0 8003AFD0 7F5C000C */  jal        func_800171FC
+/* 2B7D0 8003AFD0 7F5C000C */  jal        VecMagnitude
 /* 2B7D4 8003AFD4 3000A3AF */   sw        $v1, 0x30($sp)
 /* 2B7D8 8003AFD8 0780043C */  lui        $a0, %hi(D_80077370)
 /* 2B7DC 8003AFDC 7073848C */  lw         $a0, %lo(D_80077370)($a0)

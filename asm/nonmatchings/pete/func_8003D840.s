@@ -24,7 +24,7 @@ glabel func_8003D840
 /* 2E08C 8003D88C 1000A427 */  addiu      $a0, $sp, 0x10
 /* 2E090 8003D890 1800A0AF */  sw         $zero, 0x18($sp)
 /* 2E094 8003D894 81FF4224 */  addiu      $v0, $v0, -0x7F
-/* 2E098 8003D898 7F5C000C */  jal        func_800171FC
+/* 2E098 8003D898 7F5C000C */  jal        VecMagnitude
 /* 2E09C 8003D89C 1400A2AF */   sw        $v0, 0x14($sp)
 /* 2E0A0 8003D8A0 21304000 */  addu       $a2, $v0, $zero
 /* 2E0A4 8003D8A4 6000C228 */  slti       $v0, $a2, 0x60

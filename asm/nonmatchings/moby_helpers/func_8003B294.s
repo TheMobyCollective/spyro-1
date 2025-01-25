@@ -77,7 +77,7 @@ glabel func_8003B294
 /* 2BBA4 8003B3A4 25004010 */  beqz       $v0, .L8003B43C
 /* 2BBA8 8003B3A8 0C002426 */   addiu     $a0, $s1, 0xC
 .L8003B3AC:
-/* 2BBAC 8003B3AC 645E000C */  jal        func_80017990
+/* 2BBAC 8003B3AC 645E000C */  jal        OctDistance
 /* 2BBB0 8003B3B0 0C000526 */   addiu     $a1, $s0, 0xC
 /* 2BBB4 8003B3B4 2A105600 */  slt        $v0, $v0, $s6
 /* 2BBB8 8003B3B8 20004010 */  beqz       $v0, .L8003B43C

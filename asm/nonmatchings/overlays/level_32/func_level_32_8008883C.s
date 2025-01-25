@@ -367,27 +367,27 @@ glabel func_level_32_8008883C
 /* 2CBAB48 80088D80 CB89010C */  jal        rand
 /* 2CBAB4C 80088D84 FF0F5230 */   andi      $s2, $v0, 0xFFF
 /* 2CBAB50 80088D88 FF075130 */  andi       $s1, $v0, 0x7FF
-/* 2CBAB54 80088D8C 2C5B000C */  jal        func_80016CB0
+/* 2CBAB54 80088D8C 2C5B000C */  jal        Cos
 /* 2CBAB58 80088D90 21202002 */   addu      $a0, $s1, $zero
 /* 2CBAB5C 80088D94 21204002 */  addu       $a0, $s2, $zero
-/* 2CBAB60 80088D98 2C5B000C */  jal        func_80016CB0
+/* 2CBAB60 80088D98 2C5B000C */  jal        Cos
 /* 2CBAB64 80088D9C 21804000 */   addu      $s0, $v0, $zero
 /* 2CBAB68 80088DA0 43811000 */  sra        $s0, $s0, 5
 /* 2CBAB6C 80088DA4 18000202 */  mult       $s0, $v0
 /* 2CBAB70 80088DA8 21202002 */  addu       $a0, $s1, $zero
 /* 2CBAB74 80088DAC 12380000 */  mflo       $a3
 /* 2CBAB78 80088DB0 03130700 */  sra        $v0, $a3, 12
-/* 2CBAB7C 80088DB4 2C5B000C */  jal        func_80016CB0
+/* 2CBAB7C 80088DB4 2C5B000C */  jal        Cos
 /* 2CBAB80 80088DB8 000082A6 */   sh        $v0, 0x0($s4)
 /* 2CBAB84 80088DBC 21204002 */  addu       $a0, $s2, $zero
-/* 2CBAB88 80088DC0 165B000C */  jal        func_80016C58
+/* 2CBAB88 80088DC0 165B000C */  jal        Sin
 /* 2CBAB8C 80088DC4 21804000 */   addu      $s0, $v0, $zero
 /* 2CBAB90 80088DC8 43811000 */  sra        $s0, $s0, 5
 /* 2CBAB94 80088DCC 18000202 */  mult       $s0, $v0
 /* 2CBAB98 80088DD0 21202002 */  addu       $a0, $s1, $zero
 /* 2CBAB9C 80088DD4 12380000 */  mflo       $a3
 /* 2CBABA0 80088DD8 03130700 */  sra        $v0, $a3, 12
-/* 2CBABA4 80088DDC 165B000C */  jal        func_80016C58
+/* 2CBABA4 80088DDC 165B000C */  jal        Sin
 /* 2CBABA8 80088DE0 020082A6 */   sh        $v0, 0x2($s4)
 /* 2CBABAC 80088DE4 43110200 */  sra        $v0, $v0, 5
 /* 2CBABB0 80088DE8 040082A6 */  sh         $v0, 0x4($s4)
@@ -650,7 +650,7 @@ glabel func_level_32_8008883C
 .Llevel_32_800891C4:
 /* 2CBAF8C 800891C4 21280002 */  addu       $a1, $s0, $zero
 /* 2CBAF90 800891C8 2110C300 */  addu       $v0, $a2, $v1
-/* 2CBAF94 800891CC 645E000C */  jal        func_80017990
+/* 2CBAF94 800891CC 645E000C */  jal        OctDistance
 /* 2CBAF98 800891D0 460062A2 */   sb        $v0, 0x46($s3)
 /* 2CBAF9C 800891D4 21204000 */  addu       $a0, $v0, $zero
 /* 2CBAFA0 800891D8 21300000 */  addu       $a2, $zero, $zero

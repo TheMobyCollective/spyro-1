@@ -31,7 +31,7 @@ glabel func_8003A16C
 /* 2A9D4 8003A1D4 21284502 */   addu      $a1, $s2, $a1
 /* 2A9D8 8003A1D8 21200002 */  addu       $a0, $s0, $zero
 /* 2A9DC 8003A1DC 21280000 */  addu       $a1, $zero, $zero
-/* 2A9E0 8003A1E0 7F5C000C */  jal        func_800171FC
+/* 2A9E0 8003A1E0 7F5C000C */  jal        VecMagnitude
 /* 2A9E4 8003A1E4 1800A0A3 */   sb        $zero, 0x18($sp)
 /* 2A9E8 8003A1E8 21204000 */  addu       $a0, $v0, $zero
 /* 2A9EC 8003A1EC 2800A58F */  lw         $a1, 0x28($sp)
@@ -39,7 +39,7 @@ glabel func_8003A16C
 /* 2A9F4 8003A1F4 21300000 */   addu      $a2, $zero, $zero
 /* 2A9F8 8003A1F8 21200002 */  addu       $a0, $s0, $zero
 /* 2A9FC 8003A1FC 21280000 */  addu       $a1, $zero, $zero
-/* 2AA00 8003A200 7F5C000C */  jal        func_800171FC
+/* 2AA00 8003A200 7F5C000C */  jal        VecMagnitude
 /* 2AA04 8003A204 1900A2A3 */   sb        $v0, 0x19($sp)
 /* 2AA08 8003A208 2A105700 */  slt        $v0, $v0, $s7
 /* 2AA0C 8003A20C 04004010 */  beqz       $v0, .L8003A220
@@ -87,7 +87,7 @@ glabel func_8003A16C
 .L8003A29C:
 /* 2AA9C 8003A29C 2000B127 */  addiu      $s1, $sp, 0x20
 /* 2AAA0 8003A2A0 21202002 */  addu       $a0, $s1, $zero
-/* 2AAA4 8003A2A4 7F5C000C */  jal        func_800171FC
+/* 2AAA4 8003A2A4 7F5C000C */  jal        VecMagnitude
 /* 2AAA8 8003A2A8 01000524 */   addiu     $a1, $zero, 0x1
 /* 2AAAC 8003A2AC 21184000 */  addu       $v1, $v0, $zero
 /* 2AAB0 8003A2B0 2A107300 */  slt        $v0, $v1, $s3
@@ -155,7 +155,7 @@ glabel func_8003A16C
 /* 2AB98 8003A398 E35D000C */  jal        VecSub
 /* 2AB9C 8003A39C 21284502 */   addu      $a1, $s2, $a1
 /* 2ABA0 8003A3A0 21200002 */  addu       $a0, $s0, $zero
-/* 2ABA4 8003A3A4 7F5C000C */  jal        func_800171FC
+/* 2ABA4 8003A3A4 7F5C000C */  jal        VecMagnitude
 /* 2ABA8 8003A3A8 01000524 */   addiu     $a1, $zero, 0x1
 /* 2ABAC 8003A3AC 2A105700 */  slt        $v0, $v0, $s7
 /* 2ABB0 8003A3B0 0E004010 */  beqz       $v0, .L8003A3EC

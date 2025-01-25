@@ -16,7 +16,7 @@ glabel func_80038250
 /* 28A7C 8003827C E35D000C */  jal        VecSub
 /* 28A80 80038280 4800B0AF */   sw        $s0, 0x48($sp)
 /* 28A84 80038284 1000A427 */  addiu      $a0, $sp, 0x10
-/* 28A88 80038288 7F5C000C */  jal        func_800171FC
+/* 28A88 80038288 7F5C000C */  jal        VecMagnitude
 /* 28A8C 8003828C 01000524 */   addiu     $a1, $zero, 0x1
 /* 28A90 80038290 1000A427 */  addiu      $a0, $sp, 0x10
 /* 28A94 80038294 21804000 */  addu       $s0, $v0, $zero

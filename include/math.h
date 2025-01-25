@@ -24,12 +24,12 @@ int func_80016AB4(int pY, int pX, int output16Bit);
 /// @brief Get the sine of an angle
 /// @param angle
 /// @return The sine of the specified angle
-int func_80016C58(int angle);
+int Sin(int pAngle);
 
 /// @brief Get the cosine of an angle
 /// @param angle
 /// @return The cosine of the specified angle
-int func_80016CB0(int angle);
+int Cos(int pAngle);
 
 /// @brief Turns a 8bit rotation vector into a matrix
 /// @param pRotation The rotation vector
@@ -51,12 +51,12 @@ int func_80017908(int pAngle1, int pAngle2);
 
 /// @brief Returns the octangenal distance between two angles
 /// This function is a lot faster than using square roots
-int func_80017990(Vector3D *pPos1, Vector3D *pPos2);
+int OctDistance(Vector3D *pPos1, Vector3D *pPos2);
 
 /// @brief Projects a vector onto the screen
 void func_80017AA4(Vector3D *, Vector3D *);
 
 /// @brief Unpacks a collision triangle
-void func_80017CB8(int pIndex, Vector3D *pOut);
+void ColTriUnpack(int pIndex, Vector3D *pOut);
 
 #endif // !__MATH_H

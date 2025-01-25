@@ -1099,7 +1099,7 @@ glabel func_80041670
 /* 32DD8 800425D8 608A428C */  lw         $v0, %lo(g_Spyro + 0x8)($v0)
 /* 32DDC 800425DC 0880013C */  lui        $at, %hi(g_Spyro + 0x158)
 /* 32DE0 800425E0 B08B22AC */  sw         $v0, %lo(g_Spyro + 0x158)($at)
-/* 32DE4 800425E4 7F5C000C */  jal        func_800171FC
+/* 32DE4 800425E4 7F5C000C */  jal        VecMagnitude
 /* 32DE8 800425E8 01000524 */   addiu     $a1, $zero, 0x1
 /* 32DEC 800425EC 21184000 */  addu       $v1, $v0, $zero
 /* 32DF0 800425F0 801F6228 */  slti       $v0, $v1, 0x1F80
@@ -2071,7 +2071,7 @@ glabel func_80041670
 .L8004341C:
 /* 33C1C 8004341C 0880043C */  lui        $a0, %hi(g_Spyro + 0xF4)
 /* 33C20 80043420 4C8B8424 */  addiu      $a0, $a0, %lo(g_Spyro + 0xF4)
-/* 33C24 80043424 7F5C000C */  jal        func_800171FC
+/* 33C24 80043424 7F5C000C */  jal        VecMagnitude
 /* 33C28 80043428 01000524 */   addiu     $a1, $zero, 0x1
 /* 33C2C 8004342C 21204000 */  addu       $a0, $v0, $zero
 /* 33C30 80043430 02008014 */  bnez       $a0, .L8004343C

@@ -43,13 +43,13 @@ glabel func_8003C358
 /* 2CBEC 8003C3EC FF00F032 */  andi       $s0, $s7, 0xFF
 .L8003C3F0:
 /* 2CBF0 8003C3F0 00891000 */  sll        $s1, $s0, 4
-/* 2CBF4 8003C3F4 2C5B000C */  jal        func_80016CB0
+/* 2CBF4 8003C3F4 2C5B000C */  jal        Cos
 /* 2CBF8 8003C3F8 21202002 */   addu      $a0, $s1, $zero
 /* 2CBFC 8003C3FC 21202002 */  addu       $a0, $s1, $zero
 /* 2CC00 8003C400 40180200 */  sll        $v1, $v0, 1
 /* 2CC04 8003C404 21186200 */  addu       $v1, $v1, $v0
 /* 2CC08 8003C408 03190300 */  sra        $v1, $v1, 4
-/* 2CC0C 8003C40C 165B000C */  jal        func_80016C58
+/* 2CC0C 8003C40C 165B000C */  jal        Sin
 /* 2CC10 8003C410 1000A3AF */   sw        $v1, 0x10($sp)
 /* 2CC14 8003C414 40001026 */  addiu      $s0, $s0, 0x40
 /* 2CC18 8003C418 00811000 */  sll        $s0, $s0, 4
@@ -58,11 +58,11 @@ glabel func_8003C358
 /* 2CC24 8003C424 21186200 */  addu       $v1, $v1, $v0
 /* 2CC28 8003C428 03190300 */  sra        $v1, $v1, 4
 /* 2CC2C 8003C42C 1400A3AF */  sw         $v1, 0x14($sp)
-/* 2CC30 8003C430 2C5B000C */  jal        func_80016CB0
+/* 2CC30 8003C430 2C5B000C */  jal        Cos
 /* 2CC34 8003C434 1800A0AF */   sw        $zero, 0x18($sp)
 /* 2CC38 8003C438 21200002 */  addu       $a0, $s0, $zero
 /* 2CC3C 8003C43C 43110200 */  sra        $v0, $v0, 5
-/* 2CC40 8003C440 165B000C */  jal        func_80016C58
+/* 2CC40 8003C440 165B000C */  jal        Sin
 /* 2CC44 8003C444 2000A2AF */   sw        $v0, 0x20($sp)
 /* 2CC48 8003C448 43110200 */  sra        $v0, $v0, 5
 /* 2CC4C 8003C44C 2400A2AF */  sw         $v0, 0x24($sp)
@@ -103,7 +103,7 @@ glabel func_8003C358
 /* 2CCD0 8003C4D0 40A81100 */  sll        $s5, $s1, 1
 /* 2CCD4 8003C4D4 FF00B032 */  andi       $s0, $s5, 0xFF
 /* 2CCD8 8003C4D8 00811000 */  sll        $s0, $s0, 4
-/* 2CCDC 8003C4DC 2C5B000C */  jal        func_80016CB0
+/* 2CCDC 8003C4DC 2C5B000C */  jal        Cos
 /* 2CCE0 8003C4E0 21200002 */   addu      $a0, $s0, $zero
 /* 2CCE4 8003C4E4 21200002 */  addu       $a0, $s0, $zero
 /* 2CCE8 8003C4E8 40180200 */  sll        $v1, $v0, 1
@@ -111,14 +111,14 @@ glabel func_8003C358
 /* 2CCF0 8003C4F0 3800A28F */  lw         $v0, 0x38($sp)
 /* 2CCF4 8003C4F4 C3180300 */  sra        $v1, $v1, 3
 /* 2CCF8 8003C4F8 21104300 */  addu       $v0, $v0, $v1
-/* 2CCFC 8003C4FC 2C5B000C */  jal        func_80016CB0
+/* 2CCFC 8003C4FC 2C5B000C */  jal        Cos
 /* 2CD00 8003C500 3800A2AF */   sw        $v0, 0x38($sp)
 /* 2CD04 8003C504 1000A38F */  lw         $v1, 0x10($sp)
 /* 2CD08 8003C508 00000000 */  nop
 /* 2CD0C 8003C50C 18006200 */  mult       $v1, $v0
 /* 2CD10 8003C510 21200002 */  addu       $a0, $s0, $zero
 /* 2CD14 8003C514 12380000 */  mflo       $a3
-/* 2CD18 8003C518 2C5B000C */  jal        func_80016CB0
+/* 2CD18 8003C518 2C5B000C */  jal        Cos
 /* 2CD1C 8003C51C 4000A7AF */   sw        $a3, 0x40($sp)
 /* 2CD20 8003C520 1400A38F */  lw         $v1, 0x14($sp)
 /* 2CD24 8003C524 00000000 */  nop
@@ -157,14 +157,14 @@ glabel func_8003C358
 /* 2CD9C 8003C59C 04005EA4 */  sh         $fp, 0x4($v0)
 /* 2CDA0 8003C5A0 0000428E */  lw         $v0, 0x0($s2)
 /* 2CDA4 8003C5A4 21202002 */  addu       $a0, $s1, $zero
-/* 2CDA8 8003C5A8 2C5B000C */  jal        func_80016CB0
+/* 2CDA8 8003C5A8 2C5B000C */  jal        Cos
 /* 2CDAC 8003C5AC 060053A4 */   sh        $s3, 0x6($v0)
 /* 2CDB0 8003C5B0 1000A38F */  lw         $v1, 0x10($sp)
 /* 2CDB4 8003C5B4 00000000 */  nop
 /* 2CDB8 8003C5B8 18006200 */  mult       $v1, $v0
 /* 2CDBC 8003C5BC 21202002 */  addu       $a0, $s1, $zero
 /* 2CDC0 8003C5C0 12380000 */  mflo       $a3
-/* 2CDC4 8003C5C4 2C5B000C */  jal        func_80016CB0
+/* 2CDC4 8003C5C4 2C5B000C */  jal        Cos
 /* 2CDC8 8003C5C8 0C0047AE */   sw        $a3, 0xC($s2)
 /* 2CDCC 8003C5CC 1400A38F */  lw         $v1, 0x14($sp)
 /* 2CDD0 8003C5D0 00000000 */  nop
@@ -192,7 +192,7 @@ glabel func_8003C358
 /* 2CE28 8003C628 21288000 */  addu       $a1, $a0, $zero
 /* 2CE2C 8003C62C E35D000C */  jal        VecSub
 /* 2CE30 8003C630 3000A627 */   addiu     $a2, $sp, 0x30
-/* 2CE34 8003C634 2C5B000C */  jal        func_80016CB0
+/* 2CE34 8003C634 2C5B000C */  jal        Cos
 /* 2CE38 8003C638 21202002 */   addu      $a0, $s1, $zero
 /* 2CE3C 8003C63C 40180200 */  sll        $v1, $v0, 1
 /* 2CE40 8003C640 21186200 */  addu       $v1, $v1, $v0

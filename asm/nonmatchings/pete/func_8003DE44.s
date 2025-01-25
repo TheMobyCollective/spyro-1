@@ -7,7 +7,7 @@ glabel func_8003DE44
 /* 2E64C 8003DE4C 4C8B8424 */  addiu      $a0, $a0, %lo(g_Spyro + 0xF4)
 /* 2E650 8003DE50 21280000 */  addu       $a1, $zero, $zero
 /* 2E654 8003DE54 2000BFAF */  sw         $ra, 0x20($sp)
-/* 2E658 8003DE58 7F5C000C */  jal        func_800171FC
+/* 2E658 8003DE58 7F5C000C */  jal        VecMagnitude
 /* 2E65C 8003DE5C 1000A0AF */   sw        $zero, 0x10($sp)
 /* 2E660 8003DE60 21204000 */  addu       $a0, $v0, $zero
 /* 2E664 8003DE64 0880053C */  lui        $a1, %hi(g_Spyro + 0xFC)

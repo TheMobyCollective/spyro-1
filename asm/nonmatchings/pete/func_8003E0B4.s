@@ -11,7 +11,7 @@ glabel func_8003E0B4
 /* 2E8CC 8003E0CC C05D000C */  jal        VecCopy
 /* 2E8D0 8003E0D0 21280002 */   addu      $a1, $s0, $zero
 /* 2E8D4 8003E0D4 1000A427 */  addiu      $a0, $sp, 0x10
-/* 2E8D8 8003E0D8 7F5C000C */  jal        func_800171FC
+/* 2E8D8 8003E0D8 7F5C000C */  jal        VecMagnitude
 /* 2E8DC 8003E0DC 01000524 */   addiu     $a1, $zero, 0x1
 /* 2E8E0 8003E0E0 21284000 */  addu       $a1, $v0, $zero
 /* 2E8E4 8003E0E4 2C00A010 */  beqz       $a1, .L8003E198

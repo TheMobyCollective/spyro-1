@@ -50,7 +50,7 @@ glabel PlaySound
 /* 46328 80055B28 B25D000C */  jal        func_800176C8
 /* 4632C 80055B2C 04000524 */   addiu     $a1, $zero, 0x4
 /* 46330 80055B30 21200002 */  addu       $a0, $s0, $zero
-/* 46334 80055B34 7F5C000C */  jal        func_800171FC
+/* 46334 80055B34 7F5C000C */  jal        VecMagnitude
 /* 46338 80055B38 01000524 */   addiu     $a1, $zero, 0x1
 /* 4633C 80055B3C 55002392 */  lbu        $v1, 0x55($s1)
 /* 46340 80055B40 00000000 */  nop

@@ -546,7 +546,7 @@ glabel func_level_10_800873E0
 .L80087A00_:
 /* 7FF7C8 80087A00 0780053C */  lui        $a1, %hi(g_Camera + 0x28)
 /* 7FF7CC 80087A04 F86DA524 */  addiu      $a1, $a1, %lo(g_Camera + 0x28)
-/* 7FF7D0 80087A08 645E000C */  jal        func_80017990
+/* 7FF7D0 80087A08 645E000C */  jal        OctDistance
 /* 7FF7D4 80087A0C 21206002 */   addu      $a0, $s3, $zero
 /* 7FF7D8 80087A10 21804000 */  addu       $s0, $v0, $zero
 /* 7FF7DC 80087A14 FF7F0224 */  addiu      $v0, $zero, 0x7FFF
@@ -590,7 +590,7 @@ glabel func_level_10_800873E0
 .L80087AA4_:
 /* 7FF86C 80087AA4 0780053C */  lui        $a1, %hi(g_Camera + 0x28)
 /* 7FF870 80087AA8 F86DA524 */  addiu      $a1, $a1, %lo(g_Camera + 0x28)
-/* 7FF874 80087AAC 645E000C */  jal        func_80017990
+/* 7FF874 80087AAC 645E000C */  jal        OctDistance
 /* 7FF878 80087AB0 21206002 */   addu      $a0, $s3, $zero
 /* 7FF87C 80087AB4 21804000 */  addu       $s0, $v0, $zero
 /* 7FF880 80087AB8 FF7F0224 */  addiu      $v0, $zero, 0x7FFF
@@ -1065,20 +1065,20 @@ glabel func_level_10_800873E0
 /* 7FFF6C 800881A4 CB89010C */  jal        rand
 /* 7FFF70 800881A8 00000000 */   nop
 /* 7FFF74 800881AC FF0F5030 */  andi       $s0, $v0, 0xFFF
-/* 7FFF78 800881B0 2C5B000C */  jal        func_80016CB0
+/* 7FFF78 800881B0 2C5B000C */  jal        Cos
 /* 7FFF7C 800881B4 21200002 */   addu      $a0, $s0, $zero
 /* 7FFF80 800881B8 04004396 */  lhu        $v1, 0x4($s2)
 /* 7FFF84 800881BC 03120200 */  sra        $v0, $v0, 8
 /* 7FFF88 800881C0 21186200 */  addu       $v1, $v1, $v0
 /* 7FFF8C 800881C4 CB89010C */  jal        rand
 /* 7FFF90 800881C8 040043A6 */   sh        $v1, 0x4($s2)
-/* 7FFF94 800881CC 165B000C */  jal        func_80016C58
+/* 7FFF94 800881CC 165B000C */  jal        Sin
 /* 7FFF98 800881D0 FF074430 */   andi      $a0, $v0, 0x7FF
 /* 7FFF9C 800881D4 21200002 */  addu       $a0, $s0, $zero
 /* 7FFFA0 800881D8 06004396 */  lhu        $v1, 0x6($s2)
 /* 7FFFA4 800881DC 03120200 */  sra        $v0, $v0, 8
 /* 7FFFA8 800881E0 21186200 */  addu       $v1, $v1, $v0
-/* 7FFFAC 800881E4 165B000C */  jal        func_80016C58
+/* 7FFFAC 800881E4 165B000C */  jal        Sin
 /* 7FFFB0 800881E8 060043A6 */   sh        $v1, 0x6($s2)
 /* 7FFFB4 800881EC 7F000324 */  addiu      $v1, $zero, 0x7F
 /* 7FFFB8 800881F0 170043A2 */  sb         $v1, 0x17($s2)

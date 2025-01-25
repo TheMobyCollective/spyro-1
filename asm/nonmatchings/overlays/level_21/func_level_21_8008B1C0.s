@@ -284,14 +284,14 @@ glabel func_level_21_8008B1C0
 /* 1B3FA50 8008B488 C05D000C */  jal        VecCopy
 /* 1B3FA54 8008B48C A0FEA524 */   addiu     $a1, $a1, -0x160
 /* 1B3FA58 8008B490 17000486 */  lh         $a0, 0x17($s0)
-/* 1B3FA5C 8008B494 2C5B000C */  jal        func_80016CB0
+/* 1B3FA5C 8008B494 2C5B000C */  jal        Cos
 /* 1B3FA60 8008B498 00000000 */   nop
 /* 1B3FA64 8008B49C 1000A38F */  lw         $v1, 0x10($sp)
 /* 1B3FA68 8008B4A0 03110200 */  sra        $v0, $v0, 4
 /* 1B3FA6C 8008B4A4 21186200 */  addu       $v1, $v1, $v0
 /* 1B3FA70 8008B4A8 1000A3AF */  sw         $v1, 0x10($sp)
 /* 1B3FA74 8008B4AC 17000486 */  lh         $a0, 0x17($s0)
-/* 1B3FA78 8008B4B0 165B000C */  jal        func_80016C58
+/* 1B3FA78 8008B4B0 165B000C */  jal        Sin
 /* 1B3FA7C 8008B4B4 00000000 */   nop
 /* 1B3FA80 8008B4B8 21206002 */  addu       $a0, $s3, $zero
 /* 1B3FA84 8008B4BC 1000A527 */  addiu      $a1, $sp, 0x10
@@ -312,7 +312,7 @@ glabel func_level_21_8008B1C0
 /* 1B3FAC0 8008B4F8 206E4284 */  lh         $v0, %lo(g_Camera + 0x50)($v0)
 /* 1B3FAC4 8008B4FC 03240400 */  sra        $a0, $a0, 16
 /* 1B3FAC8 8008B500 23208200 */  subu       $a0, $a0, $v0
-/* 1B3FACC 8008B504 2C5B000C */  jal        func_80016CB0
+/* 1B3FACC 8008B504 2C5B000C */  jal        Cos
 /* 1B3FAD0 8008B508 FF0F8430 */   andi      $a0, $a0, 0xFFF
 /* 1B3FAD4 8008B50C 6060033C */  lui        $v1, (0x60606061 >> 16)
 /* 1B3FAD8 8008B510 61606334 */  ori        $v1, $v1, (0x60606061 & 0xFFFF)

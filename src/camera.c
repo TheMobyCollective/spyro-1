@@ -34,19 +34,15 @@ void CameraUpdateMatrices(void) {
   Memset(&mtx, 0, sizeof(MATRIX));
   SetTransMatrix(&mtx); // Clear the translation
 
-  // func_80016C58 - sine
-  // func_80016CB0 - cosine
-
   // X matrix
   // 4096    0       0
   // 0       cos(y)  -sin(y)
   // 0       sin(y)  cos(y)
   mtx.m[0][0] = 4096;
-  mtx.m[1][1] =
-      func_80016CB0(g_Camera.m_Rotation.y); // Y goes into the X matrix..
-  mtx.m[2][1] = func_80016C58(g_Camera.m_Rotation.y);
-  mtx.m[1][2] = -func_80016C58(g_Camera.m_Rotation.y);
-  mtx.m[2][2] = func_80016CB0(g_Camera.m_Rotation.y);
+  mtx.m[1][1] = Cos(g_Camera.m_Rotation.y); // Y goes into the X matrix..
+  mtx.m[2][1] = Sin(g_Camera.m_Rotation.y);
+  mtx.m[1][2] = -Sin(g_Camera.m_Rotation.y);
+  mtx.m[2][2] = Cos(g_Camera.m_Rotation.y);
 
   Memset(&tMtx, 0, sizeof(MATRIX)); // Clear the temporary matrix
 
@@ -54,12 +50,11 @@ void CameraUpdateMatrices(void) {
   // cos(x)  0   sin(x)
   // 0       4096    0
   // -sin(x) 0   cos(x)
-  tMtx.m[0][0] =
-      func_80016CB0(g_Camera.m_Rotation.z); // Z goes into the Y matrix..
-  tMtx.m[2][0] = -func_80016C58(g_Camera.m_Rotation.z);
+  tMtx.m[0][0] = Cos(g_Camera.m_Rotation.z); // Z goes into the Y matrix..
+  tMtx.m[2][0] = -Sin(g_Camera.m_Rotation.z);
   tMtx.m[1][1] = 4096;
-  tMtx.m[0][2] = func_80016C58(g_Camera.m_Rotation.z);
-  tMtx.m[2][2] = func_80016CB0(g_Camera.m_Rotation.z);
+  tMtx.m[0][2] = Sin(g_Camera.m_Rotation.z);
+  tMtx.m[2][2] = Cos(g_Camera.m_Rotation.z);
 
   MulMatrix(&mtx, &tMtx);
 
@@ -70,11 +65,10 @@ void CameraUpdateMatrices(void) {
   // cos(z)  sin(z) 0
   // -sin(z)  cos(z)  0
   // 0       0       4096
-  tMtx.m[0][0] =
-      func_80016CB0(g_Camera.m_Rotation.x); // X goes into the Z matrix..
-  tMtx.m[1][0] = -func_80016C58(g_Camera.m_Rotation.x);
-  tMtx.m[0][1] = func_80016C58(g_Camera.m_Rotation.x);
-  tMtx.m[1][1] = func_80016CB0(g_Camera.m_Rotation.x);
+  tMtx.m[0][0] = Cos(g_Camera.m_Rotation.x); // X goes into the Z matrix..
+  tMtx.m[1][0] = -Sin(g_Camera.m_Rotation.x);
+  tMtx.m[0][1] = Sin(g_Camera.m_Rotation.x);
+  tMtx.m[1][1] = Cos(g_Camera.m_Rotation.x);
   tMtx.m[2][2] = 4096;
 
   MulMatrix(&mtx, &tMtx);
@@ -111,9 +105,9 @@ int func_80033E40(Vector3D *point1, Vector3D *point2) {
 
   // TODO: This distance calculation causes Baruti crash, should create a
   // FIX_BUGS directive to fix it. We could fix it here, or inside of
-  // func_800171FC by changing add to addu, but I think here is preferable
+  // VecMagnitude by changing add to addu, but I think here is preferable
 
-  distance = func_800171FC(&pointPointDifference, 1);
+  distance = VecMagnitude(&pointPointDifference, 1);
   distanceDivided = distance >> 10; // Divide by 1024
   func_800175B8(&pointPointDifference, distance, 1024);
 
@@ -150,19 +144,19 @@ void func_80034204(Vector3D *pOut) {
   // x = r * cos(e) * cos(a)
   pOut->x =
       FIXED_MUL(
-          FIXED_MUL(g_Camera.m_SphereCoords.radius, func_80016CB0(g_Camera.m_SphereCoords.elevation)),
-          func_80016CB0(g_Camera.m_SphereCoords.azimuth)
+          FIXED_MUL(g_Camera.m_SphereCoords.radius, Cos(g_Camera.m_SphereCoords.elevation)),
+          Cos(g_Camera.m_SphereCoords.azimuth)
         );
 
   // y = (-r * cos(e)) * sin(a)
   pOut->y =
       FIXED_MUL(
-          -FIXED_MUL(g_Camera.m_SphereCoords.radius, func_80016CB0(g_Camera.m_SphereCoords.elevation)),
-          func_80016C58(g_Camera.m_SphereCoords.azimuth)
+          -FIXED_MUL(g_Camera.m_SphereCoords.radius, Cos(g_Camera.m_SphereCoords.elevation)),
+          Sin(g_Camera.m_SphereCoords.azimuth)
         );
 
   // z = r * sin(e)
-  pOut->z = FIXED_MUL(g_Camera.m_SphereCoords.radius, func_80016C58(g_Camera.m_SphereCoords.elevation));
+  pOut->z = FIXED_MUL(g_Camera.m_SphereCoords.radius, Sin(g_Camera.m_SphereCoords.elevation));
 
   /* clang-format on */
 }
@@ -265,35 +259,35 @@ void func_8003740C(void) {
   int activePathNode;
   int var_s0; // First used for winding, then for something else
 
-  activePathNode = g_Spyro.unk_0x240->m_currentNode;
+  activePathNode = g_Spyro.unk_0x240->m_CurrentNode;
 
   VecSub(&pointNodeDifference,
-         &g_Spyro.unk_0x240->m_nodes[activePathNode].m_Position,
+         &g_Spyro.unk_0x240->m_Nodes[activePathNode].m_Position,
          &g_Camera.m_Position);
 
-  nodeDistance = func_800171FC(&pointNodeDifference, 1);
+  nodeDistance = VecMagnitude(&pointNodeDifference, 1);
 
   // Checks if the distance to the path node is less than 0.5M
   if (nodeDistance < 512) {
     if (g_Spyro.unk_0x248) {
-      if (g_Spyro.unk_0x240->m_currentNode != 0)
-        g_Spyro.unk_0x240->m_currentNode--;
+      if (g_Spyro.unk_0x240->m_CurrentNode != 0)
+        g_Spyro.unk_0x240->m_CurrentNode--;
     } else {
-      if (g_Spyro.unk_0x240->m_currentNode < g_Spyro.unk_0x240->m_nodeCount - 1)
-        g_Spyro.unk_0x240->m_currentNode++;
+      if (g_Spyro.unk_0x240->m_CurrentNode < g_Spyro.unk_0x240->m_NodeCount - 1)
+        g_Spyro.unk_0x240->m_CurrentNode++;
     }
   }
 
   var_s0 = 0;
   if (g_Spyro.unk_0x248 != 0) {
-    var_s0 = activePathNode < (g_Spyro.unk_0x240->m_nodeCount - 1);
+    var_s0 = activePathNode < (g_Spyro.unk_0x240->m_NodeCount - 1);
   } else if (activePathNode != 0) {
     var_s0 = 1;
   }
 
   if (var_s0 != 0) { // False until spyro goes through the portal
     VecSub(&spyroCameraDifference, &g_Spyro.m_Position, &g_Camera.m_Position);
-    cameraSpyroDistance = func_800171FC(&spyroCameraDifference, 1);
+    cameraSpyroDistance = VecMagnitude(&spyroCameraDifference, 1);
     var_s0 = 0;
     if (cameraSpyroDistance > 1024) {
 
@@ -309,12 +303,12 @@ void func_8003740C(void) {
 
       if (g_Spyro.unk_0x248 != 0) {
         VecSub(&nodeNodeDifference,
-               &g_Spyro.unk_0x240->m_nodes[activePathNode].m_Position,
-               &g_Spyro.unk_0x240->m_nodes[activePathNode + 1].m_Position);
+               &g_Spyro.unk_0x240->m_Nodes[activePathNode].m_Position,
+               &g_Spyro.unk_0x240->m_Nodes[activePathNode + 1].m_Position);
       } else {
         VecSub(&nodeNodeDifference,
-               &g_Spyro.unk_0x240->m_nodes[activePathNode].m_Position,
-               &g_Spyro.unk_0x240->m_nodes[activePathNode - 1].m_Position);
+               &g_Spyro.unk_0x240->m_Nodes[activePathNode].m_Position,
+               &g_Spyro.unk_0x240->m_Nodes[activePathNode - 1].m_Position);
       }
 
       func_80017330(&nodeNodeDifference, 0x1000);
@@ -424,12 +418,12 @@ void func_800377A8(void) {
     } else {
 
       VecSub(&tempVector, &g_Camera.m_Position, &g_Spyro.m_Position);
-      spyroCameraDistance = func_800171FC(&tempVector, 1);
+      spyroCameraDistance = VecMagnitude(&tempVector, 1);
 
       VecSub(&tempVector, &g_Camera.m_Position, &g_Spyro.unk_0x8c);
 
       if (spyroCameraDistance > g_Camera.unk_0xEC->unk_0x34 &&
-          spyroCameraDistance > func_800171FC(&tempVector, 1)) {
+          spyroCameraDistance > VecMagnitude(&tempVector, 1)) {
         spawnIndex = 1;
       } else {
         func_80017AA4(&tempVector, &g_Spyro.m_Position);
@@ -591,7 +585,7 @@ void func_80037BD4(void) {
       if (func_8004DF24(&g_Camera.m_Position) != 0) {
         g_Camera.m_OcclusionGroup = D_80075844;
       }
-      if (g_Camera.m_OcclusionGroup >= g_Environment.m_occlusionGroupCount) {
+      if (g_Camera.m_OcclusionGroup >= g_Environment.m_OcclusionGroupCount) {
         g_Camera.m_OcclusionGroup = -1;
       }
       g_Camera.unk_0xEC = 0;

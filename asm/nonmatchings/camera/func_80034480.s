@@ -21,7 +21,7 @@ glabel func_80034480
 /* 24CC0 800344C0 E35D000C */  jal        VecSub
 /* 24CC4 800344C4 4C00B1AF */   sw        $s1, 0x4C($sp)
 /* 24CC8 800344C8 21200002 */  addu       $a0, $s0, $zero
-/* 24CCC 800344CC 7F5C000C */  jal        func_800171FC
+/* 24CCC 800344CC 7F5C000C */  jal        VecMagnitude
 /* 24CD0 800344D0 01000524 */   addiu     $a1, $zero, 0x1
 /* 24CD4 800344D4 1000A427 */  addiu      $a0, $sp, 0x10
 /* 24CD8 800344D8 21286002 */  addu       $a1, $s3, $zero
@@ -34,7 +34,7 @@ glabel func_80034480
 /* 24CF4 800344F4 E35D000C */  jal        VecSub
 /* 24CF8 800344F8 2130A002 */   addu      $a2, $s5, $zero
 /* 24CFC 800344FC 21200002 */  addu       $a0, $s0, $zero
-/* 24D00 80034500 7F5C000C */  jal        func_800171FC
+/* 24D00 80034500 7F5C000C */  jal        VecMagnitude
 /* 24D04 80034504 01000524 */   addiu     $a1, $zero, 0x1
 /* 24D08 80034508 02004104 */  bgez       $v0, .L80034514
 /* 24D0C 8003450C 00000000 */   nop

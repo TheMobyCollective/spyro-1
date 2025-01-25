@@ -45,11 +45,10 @@ void func_800175B8(Vector3D *pVec, int pFactor, int pDelta);
 /// @brief Normalizes a vector, then multiplies it by a distance
 void func_80017330(Vector3D *pVec, int pNormalizedDistance);
 
-/// @brief Turns a difference vector into a distance
-/// @param pVec The difference vector
-/// @param pZIncluded Whether or not to include the Z axis in the distance
-/// calculation
-/// @return The distance of the difference vector
-int func_800171FC(Vector3D *pVec, int pZIncluded);
+/// @brief Calculates the magnitude of a vector
+/// @param pVec The vector to calculate the magnitude of
+/// @param pIncludeZAxis Whether to include the Z axis in the calculation
+/// @return The magnitude of the provided vector
+int VecMagnitude(Vector3D *pVec, int pIncludeZAxis);
 
 #endif // !__VECTOR_H

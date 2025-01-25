@@ -83,13 +83,13 @@ void func_8003D52C(int pUnknown) {
   int sinY;
   Vector3D tempVec;
 
-  cosX = func_80016CB0(g_Spyro.m_Physics.m_SpeedAngle.m_RotX);
-  sinX = func_80016C58(g_Spyro.m_Physics.m_SpeedAngle.m_RotX);
-  cosY = func_80016CB0(-g_Spyro.m_Physics.m_SpeedAngle.m_RotY & 0xfff);
+  cosX = Cos(g_Spyro.m_Physics.m_SpeedAngle.m_RotX);
+  sinX = Sin(g_Spyro.m_Physics.m_SpeedAngle.m_RotX);
+  cosY = Cos(-g_Spyro.m_Physics.m_SpeedAngle.m_RotY & 0xfff);
   if (cosY == 0) {
     cosY = 1;
   }
-  sinY = func_80016C58(-g_Spyro.m_Physics.m_SpeedAngle.m_RotY & 0xfff);
+  sinY = Sin(-g_Spyro.m_Physics.m_SpeedAngle.m_RotY & 0xfff);
 
   // There's writes to stack here haha
   tempVec.x = (((pUnknown * sinY) / cosY) * cosX >> 0xc);
@@ -224,7 +224,7 @@ void func_8003E628(void) {
 
   VecNull(&pointSum);
 
-  func_80017CB8(g_Spyro.m_CollisionTriangleIndex, points);
+  ColTriUnpack(g_Spyro.m_CollisionTriangleIndex, points);
 
   // Calculate the movement
   for (i = 0; i < 3; i++) {
@@ -242,7 +242,7 @@ void func_8003E628(void) {
   VecCopy(&g_Spyro.m_Physics.m_CollisionMovement, &pointSum);
 
   // If we've moved more than 32 units, we're on a moving platform
-  if (func_800171FC(&pointSum, 1) > 32) {
+  if (VecMagnitude(&pointSum, 1) > 32) {
     g_Camera.m_OnMovingPlatform = 1;
   }
 }

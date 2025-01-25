@@ -326,27 +326,27 @@ glabel func_level_12_80082960
 /* EFE3D0 80082E08 CB89010C */  jal        rand
 /* EFE3D4 80082E0C FF0F5230 */   andi      $s2, $v0, 0xFFF
 /* EFE3D8 80082E10 FF075130 */  andi       $s1, $v0, 0x7FF
-/* EFE3DC 80082E14 2C5B000C */  jal        func_80016CB0
+/* EFE3DC 80082E14 2C5B000C */  jal        Cos
 /* EFE3E0 80082E18 21202002 */   addu      $a0, $s1, $zero
 /* EFE3E4 80082E1C 21204002 */  addu       $a0, $s2, $zero
-/* EFE3E8 80082E20 2C5B000C */  jal        func_80016CB0
+/* EFE3E8 80082E20 2C5B000C */  jal        Cos
 /* EFE3EC 80082E24 21804000 */   addu      $s0, $v0, $zero
 /* EFE3F0 80082E28 43811000 */  sra        $s0, $s0, 5
 /* EFE3F4 80082E2C 18000202 */  mult       $s0, $v0
 /* EFE3F8 80082E30 21202002 */  addu       $a0, $s1, $zero
 /* EFE3FC 80082E34 12380000 */  mflo       $a3
 /* EFE400 80082E38 03130700 */  sra        $v0, $a3, 12
-/* EFE404 80082E3C 2C5B000C */  jal        func_80016CB0
+/* EFE404 80082E3C 2C5B000C */  jal        Cos
 /* EFE408 80082E40 000082A6 */   sh        $v0, 0x0($s4)
 /* EFE40C 80082E44 21204002 */  addu       $a0, $s2, $zero
-/* EFE410 80082E48 165B000C */  jal        func_80016C58
+/* EFE410 80082E48 165B000C */  jal        Sin
 /* EFE414 80082E4C 21804000 */   addu      $s0, $v0, $zero
 /* EFE418 80082E50 43811000 */  sra        $s0, $s0, 5
 /* EFE41C 80082E54 18000202 */  mult       $s0, $v0
 /* EFE420 80082E58 21202002 */  addu       $a0, $s1, $zero
 /* EFE424 80082E5C 12380000 */  mflo       $a3
 /* EFE428 80082E60 03130700 */  sra        $v0, $a3, 12
-/* EFE42C 80082E64 165B000C */  jal        func_80016C58
+/* EFE42C 80082E64 165B000C */  jal        Sin
 /* EFE430 80082E68 020082A6 */   sh        $v0, 0x2($s4)
 /* EFE434 80082E6C 43110200 */  sra        $v0, $v0, 5
 /* EFE438 80082E70 040082A6 */  sh         $v0, 0x4($s4)

@@ -417,6 +417,6 @@ void Initialize(void) {
 
   g_DeltaTime = 2;
   g_UnprocessedFrames = 0;
-  g_Environment.m_lodDistance = 0x8000;
+  g_Environment.m_LodDistance = 0x8000;
 }
 #endif

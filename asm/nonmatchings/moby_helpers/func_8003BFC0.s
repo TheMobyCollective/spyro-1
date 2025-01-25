@@ -226,7 +226,7 @@ glabel func_8003BFC0
 /* 2CADC 8003C2DC 00000000 */   nop
 /* 2CAE0 8003C2E0 1000A427 */  addiu      $a0, $sp, 0x10
 /* 2CAE4 8003C2E4 21280000 */  addu       $a1, $zero, $zero
-/* 2CAE8 8003C2E8 7F5C000C */  jal        func_800171FC
+/* 2CAE8 8003C2E8 7F5C000C */  jal        VecMagnitude
 /* 2CAEC 8003C2EC 460062A2 */   sb        $v0, 0x46($s3)
 /* 2CAF0 8003C2F0 1800A48F */  lw         $a0, 0x18($sp)
 /* 2CAF4 8003C2F4 6B5A000C */  jal        func_800169AC

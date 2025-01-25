@@ -36,7 +36,7 @@ glabel func_8003C85C
 /* 2D0D8 8003C8D8 125C000C */  jal        func_80017048
 /* 2D0DC 8003C8DC 21300002 */   addu      $a2, $s0, $zero
 /* 2D0E0 8003C8E0 21200002 */  addu       $a0, $s0, $zero
-/* 2D0E4 8003C8E4 7F5C000C */  jal        func_800171FC
+/* 2D0E4 8003C8E4 7F5C000C */  jal        VecMagnitude
 /* 2D0E8 8003C8E8 21280000 */   addu      $a1, $zero, $zero
 /* 2D0EC 8003C8EC 21204000 */  addu       $a0, $v0, $zero
 /* 2D0F0 8003C8F0 3800A58F */  lw         $a1, 0x38($sp)

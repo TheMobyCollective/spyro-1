@@ -72,26 +72,26 @@ glabel func_8001A050
 /* A954 8001A154 1059848C */  lw         $a0, %lo(D_80075910)($a0)
 /* A958 8001A158 00101124 */  addiu      $s1, $zero, 0x1000
 /* A95C 8001A15C 1000B1A7 */  sh         $s1, 0x10($sp)
-/* A960 8001A160 2C5B000C */  jal        func_80016CB0
+/* A960 8001A160 2C5B000C */  jal        Cos
 /* A964 8001A164 23204400 */   subu      $a0, $v0, $a0
 /* A968 8001A168 00000386 */  lh         $v1, 0x0($s0)
 /* A96C 8001A16C 0780043C */  lui        $a0, %hi(D_80075910)
 /* A970 8001A170 1059848C */  lw         $a0, %lo(D_80075910)($a0)
 /* A974 8001A174 1800A2A7 */  sh         $v0, 0x18($sp)
-/* A978 8001A178 165B000C */  jal        func_80016C58
+/* A978 8001A178 165B000C */  jal        Sin
 /* A97C 8001A17C 23206400 */   subu      $a0, $v1, $a0
 /* A980 8001A180 00000386 */  lh         $v1, 0x0($s0)
 /* A984 8001A184 0780043C */  lui        $a0, %hi(D_80075910)
 /* A988 8001A188 1059848C */  lw         $a0, %lo(D_80075910)($a0)
 /* A98C 8001A18C 1E00A2A7 */  sh         $v0, 0x1E($sp)
-/* A990 8001A190 165B000C */  jal        func_80016C58
+/* A990 8001A190 165B000C */  jal        Sin
 /* A994 8001A194 23206400 */   subu      $a0, $v1, $a0
 /* A998 8001A198 00000386 */  lh         $v1, 0x0($s0)
 /* A99C 8001A19C 0780043C */  lui        $a0, %hi(D_80075910)
 /* A9A0 8001A1A0 1059848C */  lw         $a0, %lo(D_80075910)($a0)
 /* A9A4 8001A1A4 23100200 */  negu       $v0, $v0
 /* A9A8 8001A1A8 1A00A2A7 */  sh         $v0, 0x1A($sp)
-/* A9AC 8001A1AC 2C5B000C */  jal        func_80016CB0
+/* A9AC 8001A1AC 2C5B000C */  jal        Cos
 /* A9B0 8001A1B0 23206400 */   subu      $a0, $v1, $a0
 /* A9B4 8001A1B4 3000B027 */  addiu      $s0, $sp, 0x30
 /* A9B8 8001A1B8 21200002 */  addu       $a0, $s0, $zero
@@ -101,21 +101,21 @@ glabel func_8001A050
 /* A9C8 8001A1C8 2000A2A7 */   sh        $v0, 0x20($sp)
 /* A9CC 8001A1CC 0780043C */  lui        $a0, %hi(g_Camera + 0x50)
 /* A9D0 8001A1D0 206E8484 */  lh         $a0, %lo(g_Camera + 0x50)($a0)
-/* A9D4 8001A1D4 2C5B000C */  jal        func_80016CB0
+/* A9D4 8001A1D4 2C5B000C */  jal        Cos
 /* A9D8 8001A1D8 00000000 */   nop
 /* A9DC 8001A1DC 0780043C */  lui        $a0, %hi(g_Camera + 0x50)
 /* A9E0 8001A1E0 206E8484 */  lh         $a0, %lo(g_Camera + 0x50)($a0)
-/* A9E4 8001A1E4 165B000C */  jal        func_80016C58
+/* A9E4 8001A1E4 165B000C */  jal        Sin
 /* A9E8 8001A1E8 3000A2A7 */   sh        $v0, 0x30($sp)
 /* A9EC 8001A1EC 0780043C */  lui        $a0, %hi(g_Camera + 0x50)
 /* A9F0 8001A1F0 206E8484 */  lh         $a0, %lo(g_Camera + 0x50)($a0)
 /* A9F4 8001A1F4 23100200 */  negu       $v0, $v0
 /* A9F8 8001A1F8 3C00A2A7 */  sh         $v0, 0x3C($sp)
-/* A9FC 8001A1FC 165B000C */  jal        func_80016C58
+/* A9FC 8001A1FC 165B000C */  jal        Sin
 /* AA00 8001A200 3800B1A7 */   sh        $s1, 0x38($sp)
 /* AA04 8001A204 0780043C */  lui        $a0, %hi(g_Camera + 0x50)
 /* AA08 8001A208 206E8484 */  lh         $a0, %lo(g_Camera + 0x50)($a0)
-/* AA0C 8001A20C 2C5B000C */  jal        func_80016CB0
+/* AA0C 8001A20C 2C5B000C */  jal        Cos
 /* AA10 8001A210 3400A2A7 */   sh        $v0, 0x34($sp)
 /* AA14 8001A214 1000A427 */  addiu      $a0, $sp, 0x10
 /* AA18 8001A218 21280002 */  addu       $a1, $s0, $zero
@@ -127,20 +127,20 @@ glabel func_8001A050
 /* AA30 8001A230 20000624 */   addiu     $a2, $zero, 0x20
 /* AA34 8001A234 0780043C */  lui        $a0, %hi(g_Camera + 0x4C)
 /* AA38 8001A238 1C6E8484 */  lh         $a0, %lo(g_Camera + 0x4C)($a0)
-/* AA3C 8001A23C 2C5B000C */  jal        func_80016CB0
+/* AA3C 8001A23C 2C5B000C */  jal        Cos
 /* AA40 8001A240 00000000 */   nop
 /* AA44 8001A244 0780043C */  lui        $a0, %hi(g_Camera + 0x4C)
 /* AA48 8001A248 1C6E8484 */  lh         $a0, %lo(g_Camera + 0x4C)($a0)
-/* AA4C 8001A24C 165B000C */  jal        func_80016C58
+/* AA4C 8001A24C 165B000C */  jal        Sin
 /* AA50 8001A250 3000A2A7 */   sh        $v0, 0x30($sp)
 /* AA54 8001A254 0780043C */  lui        $a0, %hi(g_Camera + 0x4C)
 /* AA58 8001A258 1C6E8484 */  lh         $a0, %lo(g_Camera + 0x4C)($a0)
 /* AA5C 8001A25C 23100200 */  negu       $v0, $v0
-/* AA60 8001A260 165B000C */  jal        func_80016C58
+/* AA60 8001A260 165B000C */  jal        Sin
 /* AA64 8001A264 3600A2A7 */   sh        $v0, 0x36($sp)
 /* AA68 8001A268 0780043C */  lui        $a0, %hi(g_Camera + 0x4C)
 /* AA6C 8001A26C 1C6E8484 */  lh         $a0, %lo(g_Camera + 0x4C)($a0)
-/* AA70 8001A270 2C5B000C */  jal        func_80016CB0
+/* AA70 8001A270 2C5B000C */  jal        Cos
 /* AA74 8001A274 3200A2A7 */   sh        $v0, 0x32($sp)
 /* AA78 8001A278 1000A427 */  addiu      $a0, $sp, 0x10
 /* AA7C 8001A27C 21280002 */  addu       $a1, $s0, $zero

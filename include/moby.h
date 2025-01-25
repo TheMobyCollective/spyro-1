@@ -8,39 +8,39 @@
 // Animation state naming comes from PS underground 1:08
 typedef struct {
   /// @brief Which animation is currently playing
-  u_char m_animation;
+  u_char m_Animation;
 
   /// @brief Which animation you're interpolating to
-  u_char m_nextAnimation;
+  u_char m_NextAnimation;
 
   /// @brief The current frame
-  u_char m_frame;
+  u_char m_Frame;
 
   /// @brief The next frame which you're interpolating to
-  u_char m_nextFrame;
+  u_char m_NextFrame;
 
   /// @brief The progress of the current frame used for interpolation
   /// 0 - 4096 (0.0 - 1.0)
-  u_char m_frameProgress;
+  u_char m_FrameProgress;
 
   /// @brief The amount of progress to make per frame
   /// If you want a new frame every in-game frame, this would be 4096 (1.0)
   /// If you want a new frame every 2 in-game frames, this would be 2048 (0.5)
   /// etc..
-  u_char m_perFrameProgress;
+  u_char m_PerFrameProgress;
 
   /// @brief Flags that are set by the animation system
   /// Still not entirely sure if it should be part of the animation state
   /// or just in the moby
   /// & 1 == Finished frame (?)
   /// & 2 == Finished animation (used commonly)
-  u_char m_animationFlags;
+  u_char m_AnimationFlags;
 } AnimationState;
 
 // Double moby to define struct Moby inside
 typedef struct Moby {
   /// @brief Specifies the properties of the moby, which is class specific
-  void *m_props;
+  void *m_Props;
 
   /// @brief The next moby in the collision chain that this Moby is a part of
   struct Moby *m_CollisionChainNext;
@@ -103,10 +103,10 @@ typedef struct Moby {
   union {
     struct {
       /// @brief Stores the render distance of the Moby
-      u_char m_distance : 7;
+      u_char m_Distance : 7;
 
       /// @brief And the renderer to be used
-      u_char m_shinyRenderer : 1;
+      u_char m_ShinyRenderer : 1;
     } flags;
     u_char raw;
   } m_Renderer;
@@ -121,11 +121,11 @@ typedef struct Moby {
 
   // For metal it's straight forward, 8 bits per channel
 
-  u_char m_specularMetalColor[3];
+  u_char m_SpecularMetalColor[3];
 
   // Stores the type when shinyRenderer is enabled
   // 0 = Specular 1/2 = metal (2 being rotated)
-  u_char m_specularMetalType;
+  u_char m_SpecularMetalType;
 
   /// @brief Radius of the Moby for clipping purposes (>> 2)
   u_char m_RenderRadius;
@@ -146,31 +146,31 @@ typedef struct Moby {
   u_char m_DropMoby;
 
   /// @brief Sound channel the moby is occuping
-  u_char m_soundChannel;
+  u_char m_SoundChannel;
 
   /// @brief Distance the last sound played was at
-  u_char m_soundDistance;
+  u_char m_SoundDistance;
 
   // If dynamically allocated, this contains the index of the Moby that spawned
   // us used for keeping track of which index of the gem bitmask needs to be set
   // Ignored if the moby is not dynamically allocated
-  u_char m_mobyIndex;
+  u_char m_MobyIndex;
 
   // Used for resizing the Moby model dynamically, if set to 0 the regular size
   // is used
-  u_char m_scaleOverride;
+  u_char m_ScaleOverride;
 } Moby;
 
 // Data related
 typedef struct {
-  u_char m_nodeCount;
-  u_char m_currentNode;
+  u_char m_NodeCount;
+  u_char m_CurrentNode;
   char unk_0x2[4]; // No clue, padding? Usually 0
   short unk_0x6;   // Who knows (-1 or 1, might be winding?)
   struct {
     Vector3D m_Position;
     int unk_0xC; // Padding I assume
-  } m_nodes[1];
+  } m_Nodes[1];
 } PathData;
 
 // Moby models
@@ -183,53 +183,53 @@ typedef struct {
 
     // Not sure if this will match, but there's only one way to find out
     struct {
-      u_int m_vertexOffset : 12;
-      u_int m_collisionModel : 3;
-      u_int m_frameSound : 8;
-    } m_props;
-    u_int m_data;
+      u_int m_VertexOffset : 12;
+      u_int m_CollisionModel : 3;
+      u_int m_FrameSound : 8;
+    } m_Props;
+    u_int m_Data;
   } m;
 
-  u_short m_vertexColorOffset;
-  u_char m_shadow;
-  u_char m_shortOffset;
+  u_short m_VertexColorOffset;
+  u_char m_Shadow;
+  u_char m_ShortOffset;
 } AnimationFrame;
 
 typedef struct {
-  u_char m_numFrames;
-  u_char _padding1;
-  u_short m_numColors;
-  u_char m_unk1; // Changes something about the model format, but never used
-  u_char m_scale;
-  u_char m_shortEncodeShift;
-  u_char m_radius;
-  u_char m_vertCountHigh;
-  u_char m_vertCountLow;
-  u_char m_padding2;
-  u_char m_mulSomething;
-  u_char m_maxProgress;
-  u_char m_padding3;
-  u_short m_padding4;
-  void *m_unk2; // Used when m_unk1 is set, but that is never used, so it
+  u_char m_NumFrames;
+  u_char _Padding1;
+  u_short m_NumColors;
+  u_char m_Unk1; // Changes something about the model format, but never used
+  u_char m_Scale;
+  u_char m_ShortEncodeShift;
+  u_char m_Radius;
+  u_char m_VertCountHigh;
+  u_char m_VertCountLow;
+  u_char m_Padding2;
+  u_char m_MulSomething;
+  u_char m_MaxProgress;
+  u_char m_Padding3;
+  u_short m_Padding4;
+  void *m_Unk2; // Used when m_unk1 is set, but that is never used, so it
                 // matches m_faces
-  void *m_faces;
-  void *m_colors;
-  void *m_lpFaces;
-  void *m_lpColors;
-  AnimationFrame m_frames[1]; // To the size of frameCount
+  void *m_Faces;
+  void *m_Colors;
+  void *m_LpFaces;
+  void *m_LpColors;
+  AnimationFrame m_Frames[1]; // To the size of frameCount
 } AnimationHeader;
 
 typedef struct {
-  int m_numAnimations; // >= 0 == Model
-  u_char m_sounds[16];
-  void *m_collisionModels[8];
-  void *m_data; // offset from this to the data, used to offset pointers inside
+  int m_NumAnimations; // >= 0 == Model
+  u_char m_Sounds[16];
+  void *m_CollisionModels[8];
+  void *m_Data; // offset from this to the data, used to offset pointers inside
                 // animations
-  AnimationHeader *m_animations[1];
+  AnimationHeader *m_Animations[1];
 } Model;
 
 typedef struct {
-  int m_numAnimations; // < 0 == SimpleModel
+  int m_NumAnimations; // < 0 == SimpleModel
   void *m_Verts;
   void *m_Colors;
   void *m_Faces;

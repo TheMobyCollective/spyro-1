@@ -269,7 +269,7 @@ glabel func_8001CFDC
 /* DBC4 8001D3C4 21208200 */  addu       $a0, $a0, $v0
 /* DBC8 8001D3C8 80200400 */  sll        $a0, $a0, 2
 /* DBCC 8001D3CC 21208200 */  addu       $a0, $a0, $v0
-/* DBD0 8001D3D0 2C5B000C */  jal        func_80016CB0
+/* DBD0 8001D3D0 2C5B000C */  jal        Cos
 /* DBD4 8001D3D4 40200400 */   sll       $a0, $a0, 1
 /* DBD8 8001D3D8 0780033C */  lui        $v1, %hi(D_8006FCF4 + 0x1622)
 /* DBDC 8001D3DC 16136384 */  lh         $v1, %lo(D_8006FCF4 + 0x1622)($v1)

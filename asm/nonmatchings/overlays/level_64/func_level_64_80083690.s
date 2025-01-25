@@ -252,7 +252,7 @@ glabel func_level_64_80083690
 /* 5AF3800 80083A38 1400838E */  lw         $v1, 0x14($s4)
 /* 5AF3804 80083A3C 1000A427 */  addiu      $a0, $sp, 0x10
 /* 5AF3808 80083A40 23104300 */  subu       $v0, $v0, $v1
-/* 5AF380C 80083A44 7F5C000C */  jal        func_800171FC
+/* 5AF380C 80083A44 7F5C000C */  jal        VecMagnitude
 /* 5AF3810 80083A48 1800A2AF */   sw        $v0, 0x18($sp)
 /* 5AF3814 80083A4C 1000A427 */  addiu      $a0, $sp, 0x10
 /* 5AF3818 80083A50 21284000 */  addu       $a1, $v0, $zero
@@ -427,27 +427,27 @@ glabel func_level_64_80083690
 /* 5AF3A8C 80083CC4 CB89010C */  jal        rand
 /* 5AF3A90 80083CC8 FF0F5230 */   andi      $s2, $v0, 0xFFF
 /* 5AF3A94 80083CCC FF075130 */  andi       $s1, $v0, 0x7FF
-/* 5AF3A98 80083CD0 2C5B000C */  jal        func_80016CB0
+/* 5AF3A98 80083CD0 2C5B000C */  jal        Cos
 /* 5AF3A9C 80083CD4 21202002 */   addu      $a0, $s1, $zero
 /* 5AF3AA0 80083CD8 21204002 */  addu       $a0, $s2, $zero
-/* 5AF3AA4 80083CDC 2C5B000C */  jal        func_80016CB0
+/* 5AF3AA4 80083CDC 2C5B000C */  jal        Cos
 /* 5AF3AA8 80083CE0 21804000 */   addu      $s0, $v0, $zero
 /* 5AF3AAC 80083CE4 43811000 */  sra        $s0, $s0, 5
 /* 5AF3AB0 80083CE8 18000202 */  mult       $s0, $v0
 /* 5AF3AB4 80083CEC 21202002 */  addu       $a0, $s1, $zero
 /* 5AF3AB8 80083CF0 12380000 */  mflo       $a3
 /* 5AF3ABC 80083CF4 03130700 */  sra        $v0, $a3, 12
-/* 5AF3AC0 80083CF8 2C5B000C */  jal        func_80016CB0
+/* 5AF3AC0 80083CF8 2C5B000C */  jal        Cos
 /* 5AF3AC4 80083CFC 000062A6 */   sh        $v0, 0x0($s3)
 /* 5AF3AC8 80083D00 21204002 */  addu       $a0, $s2, $zero
-/* 5AF3ACC 80083D04 165B000C */  jal        func_80016C58
+/* 5AF3ACC 80083D04 165B000C */  jal        Sin
 /* 5AF3AD0 80083D08 21804000 */   addu      $s0, $v0, $zero
 /* 5AF3AD4 80083D0C 43811000 */  sra        $s0, $s0, 5
 /* 5AF3AD8 80083D10 18000202 */  mult       $s0, $v0
 /* 5AF3ADC 80083D14 21202002 */  addu       $a0, $s1, $zero
 /* 5AF3AE0 80083D18 12380000 */  mflo       $a3
 /* 5AF3AE4 80083D1C 03130700 */  sra        $v0, $a3, 12
-/* 5AF3AE8 80083D20 165B000C */  jal        func_80016C58
+/* 5AF3AE8 80083D20 165B000C */  jal        Sin
 /* 5AF3AEC 80083D24 020062A6 */   sh        $v0, 0x2($s3)
 /* 5AF3AF0 80083D28 43110200 */  sra        $v0, $v0, 5
 /* 5AF3AF4 80083D2C 040062A6 */  sh         $v0, 0x4($s3)
@@ -537,27 +537,27 @@ glabel func_level_64_80083690
 /* 5AF3C38 80083E70 CB89010C */  jal        rand
 /* 5AF3C3C 80083E74 FF0F5330 */   andi      $s3, $v0, 0xFFF
 /* 5AF3C40 80083E78 FF075230 */  andi       $s2, $v0, 0x7FF
-/* 5AF3C44 80083E7C 2C5B000C */  jal        func_80016CB0
+/* 5AF3C44 80083E7C 2C5B000C */  jal        Cos
 /* 5AF3C48 80083E80 21204002 */   addu      $a0, $s2, $zero
 /* 5AF3C4C 80083E84 21206002 */  addu       $a0, $s3, $zero
-/* 5AF3C50 80083E88 2C5B000C */  jal        func_80016CB0
+/* 5AF3C50 80083E88 2C5B000C */  jal        Cos
 /* 5AF3C54 80083E8C 21804000 */   addu      $s0, $v0, $zero
 /* 5AF3C58 80083E90 43811000 */  sra        $s0, $s0, 5
 /* 5AF3C5C 80083E94 18000202 */  mult       $s0, $v0
 /* 5AF3C60 80083E98 21204002 */  addu       $a0, $s2, $zero
 /* 5AF3C64 80083E9C 12380000 */  mflo       $a3
 /* 5AF3C68 80083EA0 03130700 */  sra        $v0, $a3, 12
-/* 5AF3C6C 80083EA4 2C5B000C */  jal        func_80016CB0
+/* 5AF3C6C 80083EA4 2C5B000C */  jal        Cos
 /* 5AF3C70 80083EA8 000022A6 */   sh        $v0, 0x0($s1)
 /* 5AF3C74 80083EAC 21206002 */  addu       $a0, $s3, $zero
-/* 5AF3C78 80083EB0 165B000C */  jal        func_80016C58
+/* 5AF3C78 80083EB0 165B000C */  jal        Sin
 /* 5AF3C7C 80083EB4 21804000 */   addu      $s0, $v0, $zero
 /* 5AF3C80 80083EB8 43811000 */  sra        $s0, $s0, 5
 /* 5AF3C84 80083EBC 18000202 */  mult       $s0, $v0
 /* 5AF3C88 80083EC0 21204002 */  addu       $a0, $s2, $zero
 /* 5AF3C8C 80083EC4 12380000 */  mflo       $a3
 /* 5AF3C90 80083EC8 03130700 */  sra        $v0, $a3, 12
-/* 5AF3C94 80083ECC 165B000C */  jal        func_80016C58
+/* 5AF3C94 80083ECC 165B000C */  jal        Sin
 /* 5AF3C98 80083ED0 020022A6 */   sh        $v0, 0x2($s1)
 /* 5AF3C9C 80083ED4 43110200 */  sra        $v0, $v0, 5
 /* 5AF3CA0 80083ED8 040022A6 */  sh         $v0, 0x4($s1)

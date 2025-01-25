@@ -28,7 +28,7 @@ glabel func_8003BAD0
 /* 2C32C 8003BB2C 21300000 */   addu      $a2, $zero, $zero
 /* 2C330 8003BB30 21884000 */  addu       $s1, $v0, $zero
 /* 2C334 8003BB34 1800A427 */  addiu      $a0, $sp, 0x18
-/* 2C338 8003BB38 7F5C000C */  jal        func_800171FC
+/* 2C338 8003BB38 7F5C000C */  jal        VecMagnitude
 /* 2C33C 8003BB3C 21280000 */   addu      $a1, $zero, $zero
 /* 2C340 8003BB40 21204000 */  addu       $a0, $v0, $zero
 /* 2C344 8003BB44 2000A58F */  lw         $a1, 0x20($sp)

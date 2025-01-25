@@ -144,7 +144,7 @@ void func_80056B28(int pSkipVoices) {
       } else {
         // Moby type beat
         if (g_Spu.m_ActiveSounds[i & 0x7f].m_Moby != nullptr)
-          g_Spu.m_ActiveSounds[i & 0x7f].m_Moby->m_soundChannel = 0x7f;
+          g_Spu.m_ActiveSounds[i & 0x7f].m_Moby->m_SoundChannel = 0x7f;
       }
 
       g_Spu.m_ActiveSounds[i & 0x7f].m_Flags = 0x40;

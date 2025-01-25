@@ -118,7 +118,7 @@ glabel func_8005637C
 /* 46D1C 8005651C E35D000C */  jal        VecSub
 /* 46D20 80056520 0C00A524 */   addiu     $a1, $a1, 0xC
 /* 46D24 80056524 21200002 */  addu       $a0, $s0, $zero
-/* 46D28 80056528 7F5C000C */  jal        func_800171FC
+/* 46D28 80056528 7F5C000C */  jal        VecMagnitude
 /* 46D2C 8005652C 01000524 */   addiu     $a1, $zero, 0x1
 /* 46D30 80056530 21804000 */  addu       $s0, $v0, $zero
 /* 46D34 80056534 2A101202 */  slt        $v0, $s0, $s2

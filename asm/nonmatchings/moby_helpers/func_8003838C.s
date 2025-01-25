@@ -17,7 +17,7 @@ glabel func_8003838C
 /* 28BBC 800383BC 1400028E */  lw         $v0, 0x14($s0)
 /* 28BC0 800383C0 21280000 */  addu       $a1, $zero, $zero
 /* 28BC4 800383C4 24FA4224 */  addiu      $v0, $v0, -0x5DC
-/* 28BC8 800383C8 7F5C000C */  jal        func_800171FC
+/* 28BC8 800383C8 7F5C000C */  jal        VecMagnitude
 /* 28BCC 800383CC 140002AE */   sw        $v0, 0x14($s0)
 /* 28BD0 800383D0 0780043C */  lui        $a0, %hi(D_80077370)
 /* 28BD4 800383D4 7073848C */  lw         $a0, %lo(D_80077370)($a0)

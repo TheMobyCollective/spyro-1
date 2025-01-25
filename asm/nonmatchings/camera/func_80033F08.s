@@ -10,7 +10,7 @@ glabel func_80033F08
 /* 2471C 80033F1C E35D000C */  jal        VecSub
 /* 24720 80033F20 1000A427 */   addiu     $a0, $sp, 0x10
 /* 24724 80033F24 1000A427 */  addiu      $a0, $sp, 0x10
-/* 24728 80033F28 7F5C000C */  jal        func_800171FC
+/* 24728 80033F28 7F5C000C */  jal        VecMagnitude
 /* 2472C 80033F2C 01000524 */   addiu     $a1, $zero, 0x1
 /* 24730 80033F30 1000A427 */  addiu      $a0, $sp, 0x10
 /* 24734 80033F34 21284000 */  addu       $a1, $v0, $zero
@@ -21,7 +21,7 @@ glabel func_80033F08
 /* 24748 80033F48 1000A427 */  addiu      $a0, $sp, 0x10
 /* 2474C 80033F4C 0780013C */  lui        $at, %hi(g_Camera + 0x98)
 /* 24750 80033F50 686E22AC */  sw         $v0, %lo(g_Camera + 0x98)($at)
-/* 24754 80033F54 7F5C000C */  jal        func_800171FC
+/* 24754 80033F54 7F5C000C */  jal        VecMagnitude
 /* 24758 80033F58 21280000 */   addu      $a1, $zero, $zero
 /* 2475C 80033F5C 1000A427 */  addiu      $a0, $sp, 0x10
 /* 24760 80033F60 21284000 */  addu       $a1, $v0, $zero

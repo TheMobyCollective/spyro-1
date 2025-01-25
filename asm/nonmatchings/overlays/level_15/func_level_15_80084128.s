@@ -452,7 +452,7 @@ glabel func_level_15_80084128
 .L80084640_:
 /* 16B1C08 80084640 0780053C */  lui        $a1, %hi(g_Camera + 0x28)
 /* 16B1C0C 80084644 F86DA524 */  addiu      $a1, $a1, %lo(g_Camera + 0x28)
-/* 16B1C10 80084648 645E000C */  jal        func_80017990
+/* 16B1C10 80084648 645E000C */  jal        OctDistance
 /* 16B1C14 8008464C 21206002 */   addu      $a0, $s3, $zero
 /* 16B1C18 80084650 21804000 */  addu       $s0, $v0, $zero
 /* 16B1C1C 80084654 FF7F0224 */  addiu      $v0, $zero, 0x7FFF
@@ -817,20 +817,20 @@ glabel func_level_15_80084128
 /* 16B214C 80084B84 CB89010C */  jal        rand
 /* 16B2150 80084B88 00000000 */   nop
 /* 16B2154 80084B8C FF0F5030 */  andi       $s0, $v0, 0xFFF
-/* 16B2158 80084B90 2C5B000C */  jal        func_80016CB0
+/* 16B2158 80084B90 2C5B000C */  jal        Cos
 /* 16B215C 80084B94 21200002 */   addu      $a0, $s0, $zero
 /* 16B2160 80084B98 04004396 */  lhu        $v1, 0x4($s2)
 /* 16B2164 80084B9C 03120200 */  sra        $v0, $v0, 8
 /* 16B2168 80084BA0 21186200 */  addu       $v1, $v1, $v0
 /* 16B216C 80084BA4 CB89010C */  jal        rand
 /* 16B2170 80084BA8 040043A6 */   sh        $v1, 0x4($s2)
-/* 16B2174 80084BAC 165B000C */  jal        func_80016C58
+/* 16B2174 80084BAC 165B000C */  jal        Sin
 /* 16B2178 80084BB0 FF074430 */   andi      $a0, $v0, 0x7FF
 /* 16B217C 80084BB4 21200002 */  addu       $a0, $s0, $zero
 /* 16B2180 80084BB8 06004396 */  lhu        $v1, 0x6($s2)
 /* 16B2184 80084BBC 03120200 */  sra        $v0, $v0, 8
 /* 16B2188 80084BC0 21186200 */  addu       $v1, $v1, $v0
-/* 16B218C 80084BC4 165B000C */  jal        func_80016C58
+/* 16B218C 80084BC4 165B000C */  jal        Sin
 /* 16B2190 80084BC8 060043A6 */   sh        $v1, 0x6($s2)
 /* 16B2194 80084BCC 7F000324 */  addiu      $v1, $zero, 0x7F
 /* 16B2198 80084BD0 170043A2 */  sb         $v1, 0x17($s2)
