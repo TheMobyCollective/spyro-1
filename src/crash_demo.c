@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 // Resets a bunch of PSYQ stuff
-void func_8002BA68(void) {
+static void func_8002BA68(void) {
   SetDispMask(0);
   CdInit();
   CdReadCallback(nullptr);
@@ -23,7 +23,7 @@ void func_8002BA68(void) {
 }
 
 // Launches the Crash 3 Demo
-void func_8002BAB8(void) {
+void CrashDemoLaunch(void) {
   // Shut everything down
   printf("Shutting Down\n");
   func_8002BA68();
@@ -34,8 +34,8 @@ void func_8002BAB8(void) {
 
   // Then launch the demo executable
   printf("Launching Crash Demo\n");
-  LoadExec("cdrom:\\S0\\CRASH.EXE;1\0", /* Executable name */
-           0x801fff00,                  /* Stack area starting address */
-           0                            /* Number of bytes in stack area */
+  LoadExec("cdrom:\\S0\\CRASH.EXE;1\0", // Executable name
+           0x801fff00,                  // Stack area starting address
+           0                            // Number of bytes in stack area
   );
 }

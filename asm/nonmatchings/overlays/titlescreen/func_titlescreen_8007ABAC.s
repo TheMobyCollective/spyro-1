@@ -297,7 +297,7 @@ glabel func_titlescreen_8007ABAC
 /* 5BD3C 8007AF74 C9EB0108 */  j          .Ltitlescreen_8007AF24
 /* 5BD40 8007AF78 00000000 */   nop
 .Ltitlescreen_8007AF7C:
-/* 5BD44 8007AF7C AEAE000C */  jal        func_8002BAB8
+/* 5BD44 8007AF7C AEAE000C */  jal        CrashDemoLaunch
 /* 5BD48 8007AF80 00000000 */   nop
 /* 5BD4C 8007AF84 12F30108 */  j          .Ltitlescreen_8007CC48
 /* 5BD50 8007AF88 00000000 */   nop
