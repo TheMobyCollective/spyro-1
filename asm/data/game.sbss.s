@@ -139,6 +139,7 @@ dlabel D_80075718
 dlabel D_8007571C
 /* 65EF4 8007571C */ .space 0x04
 
+/* The index of the selected item in the main pause menu, the options screen, and the post-flight menu */
 dlabel D_80075720
 /* 65EF8 80075720 */ .space 0x04
 
@@ -262,6 +263,7 @@ dlabel D_800757C0
 dlabel D_800757C4
 /* 65F9C 800757C4 */ .space 0x04
 
+/* Boolean, set to 1 when the options submenu is open */
 dlabel D_800757C8
 /* 65FA0 800757C8 */ .space 0x04
 

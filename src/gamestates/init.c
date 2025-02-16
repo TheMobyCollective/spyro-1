@@ -11,11 +11,90 @@
 extern int D_8007568C; // Pause menu no button ticks
 extern int D_800758B8; // Pause menu text rotation ticks
 
+extern int D_80075720; // Selected menu item index
+extern int D_800757C8; // OptionsSubmenuIsOpen
+
+extern char D_80077FA8;
+extern char D_80077FA9;
+extern char D_80077FAA;
+extern char D_80077FAB;
+extern char D_80077FAC;
+extern char D_80077FAD;
+extern char D_80077FAE;
+extern char D_80077FAF;
+extern char D_80077FB0;
+extern char D_80077FB1;
+
 /// @brief Pauses the game
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002C420);
+// enteringFromGameplay is:
+//   1 when entering the pause menu from the game.
+//   0 when returning from the inventory screen to the pause menu
+void func_8002C420(int enteringFromGameplay) {
+    if (enteringFromGameplay != 0) {
+        // Stop all sounds
+        func_80056B28(0);
+    }
+    PlaySound(g_Spu.m_SoundTable->menuSound, nullptr, 0x10 /* 2D */, nullptr);
+    g_Gamestate = 2;
+    D_80075720 = 0; // Selected menu item index
+    D_800757C8 = 0; // OptionsMenuIsOpen
+    D_8007568C = 0; // Pause menu no button ticks
+    if (D_80075690 != 0) { // If Spyro is in a flight level...
+        if (enteringFromGameplay != 0) {
+            D_800758B8 = 0; // Pause menu text rotation ticks
+        }
+    } else {
+        // Something HUD-related
+        func_80054600(0);
+        if (enteringFromGameplay != 0) {
+            D_800758B8 = 0; // Pause menu text rotation ticks
+        } else {
+            D_80077FA8 = 1;
+            D_80077FA9 = 1;
+            D_80077FAA = 1;
+            D_80077FAB = 1;
+            D_80077FAC = 1;
+            D_80077FAD = 0xC;
+            D_80077FAE = 0xC;
+            D_80077FAF = 0xC;
+            D_80077FB0 = 0xC;
+            D_80077FB1 = 0xC;
+        }
+        // Something HUD-related
+        func_80054988();
+    }
+}
+
+extern int D_800774B0;
+extern int D_800785F0;
 
 /// @brief Unpauses the game, and sets the gamestate to 0
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002C534);
+// The arg `always1` is always set to 1 in every call of this function.
+void func_8002C534(int always1) {
+    RECT rect;
+    setRECT(&rect, 0x200, 0, 0x100, 0xE1);
+    LoadImage(&rect, (u_long *)(D_800785F0 + 0xFFFE3E00));
+    DrawSync(0);
+
+    g_Gamestate = 0;
+
+    SpecularReset();
+
+    D_80077FA8 = 3;
+    D_80077FA9 = 3;
+    D_80077FAA = 3;
+    D_80077FAB = 3;
+    D_80077FAC = 3;
+    D_80077FAD = 0xD;
+    D_80077FAE = 0xD;
+    D_80077FAF = 0xD;
+    D_80077FB0 = 0xD;
+    D_80077FB1 = 0xD;
+
+    if (always1 != 0) {
+        func_800567F4(D_800774B0, 8);
+    }
+}
 
 /// @brief Exits level
 void func_8002C618(void) {

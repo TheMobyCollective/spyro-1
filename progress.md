@@ -100,8 +100,8 @@
 - [x] PadApplyCali
 - [x] PadDemoUpdate
 - [x] PadVSync
-- [ ] func_8002C420
-- [ ] func_8002C534
+- [x] func_8002C420
+- [x] func_8002C534
 - [x] func_8002C618
 - [x] func_8002C664
 - [ ] func_8002C714
