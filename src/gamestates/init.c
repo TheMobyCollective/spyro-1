@@ -1,8 +1,10 @@
+#include "buffers.h"
 #include "camera.h"
 #include "common.h"
 #include "cyclorama.h"
 #include "graphics.h"
 #include "loaders.h"
+#include "music.h"
 #include "specular_and_metal.h"
 #include "spu.h"
 #include "spyro.h"
@@ -14,7 +16,7 @@ extern int D_800758B8; // Pause menu text rotation ticks
 extern int D_80075720; // Selected menu item index
 extern int D_800757C8; // OptionsSubmenuIsOpen
 
-extern char D_80077FA8;
+extern char D_80077FA8; // TODO: These are part of the HUD struct
 extern char D_80077FA9;
 extern char D_80077FAA;
 extern char D_80077FAB;
@@ -26,74 +28,82 @@ extern char D_80077FB0;
 extern char D_80077FB1;
 
 /// @brief Pauses the game
-// enteringFromGameplay is:
+// pEnteringFromGameplay is:
 //   1 when entering the pause menu from the game.
 //   0 when returning from the inventory screen to the pause menu
-void func_8002C420(int enteringFromGameplay) {
-    if (enteringFromGameplay != 0) {
-        // Stop all sounds
-        func_80056B28(0);
+void func_8002C420(int pEnteringFromGameplay) {
+  if (pEnteringFromGameplay) {
+    // Stop all sounds
+    func_80056B28(0);
+  }
+
+  PlaySound(g_Spu.m_SoundTable->menuSound, nullptr, 0x10 /* 2D */, nullptr);
+
+  g_Gamestate = 2; // Set gamestate to pause menu
+  D_80075720 = 0;  // Selected menu item index
+  D_800757C8 = 0;  // OptionsMenuIsOpen
+  D_8007568C = 0;  // Pause menu no button ticks
+
+  if (D_80075690) { // If Spyro is in a flight level...
+    if (pEnteringFromGameplay) {
+      D_800758B8 = 0; // Pause menu text rotation ticks
     }
-    PlaySound(g_Spu.m_SoundTable->menuSound, nullptr, 0x10 /* 2D */, nullptr);
-    g_Gamestate = 2;
-    D_80075720 = 0; // Selected menu item index
-    D_800757C8 = 0; // OptionsMenuIsOpen
-    D_8007568C = 0; // Pause menu no button ticks
-    if (D_80075690 != 0) { // If Spyro is in a flight level...
-        if (enteringFromGameplay != 0) {
-            D_800758B8 = 0; // Pause menu text rotation ticks
-        }
+  } else {
+
+    // Resets the HUD struct
+    func_80054600(0);
+
+    if (pEnteringFromGameplay) {
+      D_800758B8 = 0; // Pause menu text rotation ticks
     } else {
-        // Something HUD-related
-        func_80054600(0);
-        if (enteringFromGameplay != 0) {
-            D_800758B8 = 0; // Pause menu text rotation ticks
-        } else {
-            D_80077FA8 = 1;
-            D_80077FA9 = 1;
-            D_80077FAA = 1;
-            D_80077FAB = 1;
-            D_80077FAC = 1;
-            D_80077FAD = 0xC;
-            D_80077FAE = 0xC;
-            D_80077FAF = 0xC;
-            D_80077FB0 = 0xC;
-            D_80077FB1 = 0xC;
-        }
-        // Something HUD-related
-        func_80054988();
+      D_80077FA8 = 1;
+      D_80077FA9 = 1;
+      D_80077FAA = 1;
+      D_80077FAB = 1;
+      D_80077FAC = 1;
+
+      // These are progress variables used to move the HUD elements down
+      // setting it to 12 causes them to snap down instantly
+      D_80077FAD = 12;
+      D_80077FAE = 12;
+      D_80077FAF = 12;
+      D_80077FB0 = 12;
+      D_80077FB1 = 12;
     }
+
+    // Something HUD-related
+    func_80054988();
+  }
 }
 
-extern int D_800774B0;
-extern int D_800785F0;
-
 /// @brief Unpauses the game, and sets the gamestate to 0
-// The arg `always1` is always set to 1 in every call of this function.
-void func_8002C534(int always1) {
-    RECT rect;
-    setRECT(&rect, 0x200, 0, 0x100, 0xE1);
-    LoadImage(&rect, (u_long *)(D_800785F0 + 0xFFFE3E00));
-    DrawSync(0);
+// The arg `pResumeMusic` is always set to 1 in every call of this function.
+void func_8002C534(int pResumeMusic) {
+  RECT rect;
 
-    g_Gamestate = 0;
+  // Restores the VRAM that it overwrote for the background
+  setRECT(&rect, 512, 0, 256, 225);
+  LoadImage(&rect, (u_long *)((int)D_800785D8.m_HudOTStart - 115200));
+  DrawSync(0);
 
-    SpecularReset();
+  g_Gamestate = 0;
 
-    D_80077FA8 = 3;
-    D_80077FA9 = 3;
-    D_80077FAA = 3;
-    D_80077FAB = 3;
-    D_80077FAC = 3;
-    D_80077FAD = 0xD;
-    D_80077FAE = 0xD;
-    D_80077FAF = 0xD;
-    D_80077FB0 = 0xD;
-    D_80077FB1 = 0xD;
+  SpecularReset();
 
-    if (always1 != 0) {
-        func_800567F4(D_800774B0, 8);
-    }
+  D_80077FA8 = 3;
+  D_80077FA9 = 3;
+  D_80077FAA = 3;
+  D_80077FAB = 3;
+  D_80077FAC = 3;
+  D_80077FAD = 13;
+  D_80077FAE = 13;
+  D_80077FAF = 13;
+  D_80077FB0 = 13;
+  D_80077FB1 = 13;
+
+  if (pResumeMusic) {
+    func_800567F4(D_800774B0, 8);
+  }
 }
 
 /// @brief Exits level

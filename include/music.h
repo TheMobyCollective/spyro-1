@@ -24,4 +24,6 @@ extern int D_8006F200[PETE_XA_COUNT];                 // Pete XA offsets
 
 extern CdMusic g_CdMusic;
 
+extern int D_800774B0; // Currently playing track
+
 #endif
