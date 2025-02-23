@@ -98,7 +98,7 @@ typedef struct Moby {
   char m_Substate;
 
   /// @brief Sector the Moby is located in, for culling purposes
-  char m_SectorIndex;
+  u_char m_SectorIndex;
 
   union {
     struct {

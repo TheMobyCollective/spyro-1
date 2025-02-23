@@ -3,7 +3,6 @@
 #include "collision.h"
 #include "common.h"
 #include "math.h"
-#include "moby.h"
 #include "moby_helpers.h"
 #include "spu.h"
 #include "spyro.h"
@@ -302,8 +301,6 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A16C);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A420);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A720);
-#if 0 // Close to matching
 void func_8003A720(Moby *pMoby) {
   pMoby->m_RenderRadius = 16;
   pMoby->m_UpdateDistance = 0xff;
@@ -314,8 +311,8 @@ void func_8003A720(Moby *pMoby) {
   pMoby->m_AnimationState.m_NextAnimation = 0;
   pMoby->m_AnimationState.m_Frame = 0;
   pMoby->m_AnimationState.m_NextFrame = 1;
-  pMoby->m_AnimationState.m_PerFrameProgress = 32;
   pMoby->m_AnimationState.m_FrameProgress = 0;
+  pMoby->m_AnimationState.m_PerFrameProgress = 32;
   pMoby->m_Pod = -1;
   pMoby->m_SectorIndex = -1;
   pMoby->m_DropMoby = -1;
@@ -334,7 +331,6 @@ void func_8003A720(Moby *pMoby) {
   // pMoby->m_SpecularMetalColor[2] = 0;
   // pMoby->m_SpecularMetalType = 0;
 }
-#endif
 
 // Unused
 int func_8003A79C(Moby *pMoby, PathData *path, int pDivider) {

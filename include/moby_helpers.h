@@ -1,6 +1,8 @@
 #ifndef __MOBY_HELPERS_H__
 #define __MOBY_HELPERS_H__
 
+#include "moby.h"
+
 /// @brief Function that ticks a timer
 /// @param pTimer The timer to update
 /// @param pTimerType The type of timer, equal to the size of the type
@@ -18,5 +20,8 @@ int func_80038074(int p1, int p2);
 /// @param p2 Angle 2
 /// @return The normalized difference
 int func_800381BC(int p1, int p2);
+
+/// @brief Initialize a Moby
+void func_8003A720(Moby *pMoby);
 
 #endif
