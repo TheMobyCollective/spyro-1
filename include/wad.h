@@ -1,12 +1,24 @@
 #ifndef __WAD_H_
 #define __WAD_H_
 
+typedef struct {
+  int m_Offset;
+  int m_Length;
+} OffsetLength;
+
 extern struct {
-  int m_Entry[102][2]; // Using a struct does not match (func_800144C8)
+  OffsetLength m_UniversalLogo;
+  OffsetLength m_wad1;
+  OffsetLength m_TitleScreenOverlay;
+  OffsetLength m_TitleScreen[4];
+  OffsetLength m_wad7;
+  OffsetLength m_wad8;
+  OffsetLength m_wad9;
+  OffsetLength m_LevelEntry[92];
 } g_WadHeader;
 
-#define WAD_OFFSET(x) g_WadHeader.m_Entry[x][0]
-#define WAD_SIZE(x) g_WadHeader.m_Entry[x][1]
+#define WAD_OFFSET(x) g_WadHeader.x.m_Offset
+#define WAD_SIZE(x) g_WadHeader.x.m_Length
 
 typedef struct {
   int m_VramSramOffset;

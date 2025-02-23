@@ -299,7 +299,7 @@ void Initialize(void) {
 
   WadInitialize(); // Load the WAD header
 
-  CDLoadSync(g_CdState.m_WadSector, D_800113A0, 2048, WAD_OFFSET(3),
+  CDLoadSync(g_CdState.m_WadSector, D_800113A0, 2048, WAD_OFFSET(m_TitleScreen[0]),
              600); // Load titlescreen_data.wad's header
 
   Memcpy(&g_LevelHeader, D_800113A0,
@@ -308,16 +308,16 @@ void Initialize(void) {
   levelVram = (char *)0x80200000 - _stacksize - 0x40000;
 
   CDLoadSync(g_CdState.m_WadSector, levelVram, 0x40000,
-             WAD_OFFSET(3) + g_LevelHeader.m_VramSramOffset,
+             WAD_OFFSET(m_TitleScreen[0]) + g_LevelHeader.m_VramSramOffset,
              600); // Load the titlescreen VRAM
 
-  CDLoadSync(g_CdState.m_WadSector, D_800113A0, WAD_SIZE(2), WAD_OFFSET(2),
+  CDLoadSync(g_CdState.m_WadSector, D_800113A0, WAD_SIZE(m_TitleScreenOverlay), WAD_OFFSET(m_TitleScreenOverlay),
              600); // Load the titlescreen overlay
 
-  universalImage = levelVram - WAD_SIZE(0);
+  universalImage = levelVram - WAD_SIZE(m_UniversalLogo);
 
   // Load the Universal Logo below the titlescreen VRAM
-  CDLoadSync(g_CdState.m_WadSector, universalImage, WAD_SIZE(0), WAD_OFFSET(0),
+  CDLoadSync(g_CdState.m_WadSector, universalImage, WAD_SIZE(m_UniversalLogo), WAD_OFFSET(m_UniversalLogo),
              600);
 
   // Wait for 210 frames, / 60 = 3.5 seconds
