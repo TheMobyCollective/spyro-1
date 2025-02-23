@@ -143,7 +143,27 @@ void func_8002C664(void) {
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002C714);
 
 /// @brief Unpauses from the inventory menu
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002C7BC);
+void func_8002C7BC(void) {
+  RECT rect;
+
+  // Restores the VRAM that it overwrote for the background
+  setRECT(&rect, 512, 0, 256, 225);
+  LoadImage(&rect, (u_long *)((int)D_800785D8.m_HudOTStart - 115200));
+  DrawSync(0);
+
+  g_Gamestate = 0;
+
+  SpecularReset();
+
+  D_80077FA8 = 0;
+  D_80077FA9 = 0;
+  D_80077FAA = 0;
+  D_80077FAB = 0;
+  D_80077FAC = 0;
+
+  // Resume music
+  func_800567F4(D_800774B0, 8);
+}
 
 extern int D_8007593C;
 extern int D_80075940;

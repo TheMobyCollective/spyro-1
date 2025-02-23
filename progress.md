@@ -105,7 +105,7 @@
 - [x] func_8002C618
 - [x] func_8002C664
 - [ ] func_8002C714
-- [ ] func_8002C7BC
+- [x] func_8002C7BC
 - [x] func_8002C85C
 - [x] func_8002C8A4
 - [x] func_8002C914
