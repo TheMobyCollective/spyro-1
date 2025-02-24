@@ -56,7 +56,8 @@ void func_800144C8(void) {
   // Reload layout from disc
   CDLoadSync(g_CdState.m_WadSector, D_800785D8.m_LevelLayout,
              D_800785D8.m_LevelLayoutSize,
-             D_800785D8.m_LevelLayoutOffset + WAD_OFFSET(m_LevelEntry[D_80075964 * 2]),
+             D_800785D8.m_LevelLayoutOffset +
+                 g_WadHeader.m_LevelEntry[D_80075964].m_Data.m_Offset,
              600);
 
   // Call load layout
