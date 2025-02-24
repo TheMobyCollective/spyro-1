@@ -16,6 +16,15 @@ extern int D_800758B8; // Pause menu text rotation ticks
 extern int D_80075720; // Selected menu item index
 extern int D_800757C8; // OptionsSubmenuIsOpen
 
+// Inventory page transition state
+// Set to 0 when not tranitioning
+// Set to -64 when transitioning to right. (When right button is pressed,
+// Artisans to Peace Keepers) Set to 64 when transitioning to left. (When left
+// button is pressed, Peace Keepers to Artisans)
+extern int D_800756D4;
+extern int D_80075744; // The index of the current page of the inventory screen
+extern int D_800757CC; // Transition progress between inventory pages.
+
 extern char D_80077FA8; // TODO: These are part of the HUD struct
 extern char D_80077FA9;
 extern char D_80077FAA;
@@ -102,6 +111,7 @@ void func_8002C534(int pResumeMusic) {
   D_80077FB1 = 13;
 
   if (pResumeMusic) {
+    // Resume the level music
     func_800567F4(D_800774B0, 8);
   }
 }
@@ -140,7 +150,30 @@ void func_8002C664(void) {
 }
 
 /// @brief Opens the inventory menu
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002C714);
+// pEnteringFromGameplay is:
+//   1 when entering the inventory screen directly from the game.
+//   0 when entering the inventory screen from the pause menu.
+void func_8002C714(int pEnteringFromGameplay) {
+  if (pEnteringFromGameplay) {
+    // Stop all sounds
+    func_80056B28(0);
+  }
+
+  PlaySound(g_Spu.m_SoundTable->menuSound, nullptr, 0x10 /* 2D */, nullptr);
+
+  D_800757CC = 0; // Transition progress between inventory pages.
+  D_800756D4 = 0; // Inventory page transition state
+  g_Gamestate = 3;
+  // Set the current inventory screen to the current level's index / 6.
+  // This causes the inventory screen to open up to page that shows the current
+  // world.
+  D_80075744 = D_80075964 / LEVEL_PER_HOMEWORLD;
+  if (pEnteringFromGameplay) {
+    D_800758B8 = 0; // Pause menu text rotation ticks
+  }
+
+  CheatResetBuffer();
+}
 
 /// @brief Unpauses from the inventory menu
 void func_8002C7BC(void) {
@@ -161,7 +194,7 @@ void func_8002C7BC(void) {
   D_80077FAB = 0;
   D_80077FAC = 0;
 
-  // Resume music
+  // Resume the level music
   func_800567F4(D_800774B0, 8);
 }
 
