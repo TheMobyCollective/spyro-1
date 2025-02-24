@@ -41,7 +41,7 @@ void SpecularUpdate(int deltaTime) {
   D_800770C8.m_specularTime = (D_800770C8.m_specularTime + deltaTime) & 0xff;
 
   // We have to do bitshifts to match, we also have to pretend sine and cosine
-  // are two seperate tables otherwise the compiler inserts a random scope for
+  // are two separate tables otherwise the compiler inserts a random scope for
   // no reason
   setXYZ(&D_800770C8.m_specularLightDirection,
          COSINE_8(D_800770C8.m_specularTime) * 1983 >> 11,

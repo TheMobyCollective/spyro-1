@@ -1,6 +1,7 @@
 #include "common.h"
 #include "spu.h"
 #include "spyro.h"
+#include "memory.h"
 
 // Mixed sounds and music stuff
 
@@ -20,8 +21,8 @@ void SpuInitialize() {
   g_Spu.m_CommonAttr.mvol.right = 0x3ccc;
 
   g_Spu.m_MusicVolume = 0x5000;
-  g_Spu.m_CommonAttr.cd.volume.left = g_Spu.m_MusicVolume;
-  g_Spu.m_CommonAttr.cd.volume.right = g_Spu.m_MusicVolume;
+  g_Spu.m_CommonAttr.cd.volume.left = (short)g_Spu.m_MusicVolume;
+  g_Spu.m_CommonAttr.cd.volume.right = (short)g_Spu.m_MusicVolume;
 
   g_Spu.m_MusicFadeTarget = -1;
 
@@ -165,7 +166,8 @@ void func_80056B28(int pSkipVoices) {
 void func_80056C84(SpuVolume *pVolumeOut, u_int pDistance, u_char pAngleToSound,
                    u_int pMaxDistance, SpuVolume *pVolumeIn) {
   u_char pad[32]; // Wtf
-  u_int volumeScale, angle, mirroredAngle, leftAttenuation, rightAttenuation;
+  u_int volumeScale, leftAttenuation, rightAttenuation;
+  int angle, mirroredAngle;
 
   if (pMaxDistance == 0)
     return;
@@ -185,10 +187,10 @@ void func_80056C84(SpuVolume *pVolumeOut, u_int pDistance, u_char pAngleToSound,
   // Then apply stereo panning based on angle
   // (I split this up for readability)
   leftAttenuation = pVolumeIn->left - ((volumeScale * pVolumeIn->left) >> 8);
-  pVolumeOut->left = (int)(mirroredAngle * (short)leftAttenuation) >> 7;
+  pVolumeOut->left = (short)((mirroredAngle * (short)leftAttenuation) >> 7);
 
   rightAttenuation = pVolumeIn->right - ((volumeScale * pVolumeIn->right) >> 8);
-  pVolumeOut->right = (int)(angle * (short)rightAttenuation) >> 7;
+  pVolumeOut->right = (short)((angle * (short)rightAttenuation) >> 7);
 
   // Might be a clamp macro, but I couldn't find a matching one
   if (pVolumeOut->left < 0) {
@@ -205,9 +207,9 @@ void func_80056C84(SpuVolume *pVolumeOut, u_int pDistance, u_char pAngleToSound,
 
   if (g_Spu.m_AudioMono) {
     // If we're on Mono, average the left and right channels
-    // This is fucking rediculous
+    // This is fucking ridiculous
     pVolumeOut->right = pVolumeOut->left =
-        (u_int)(pVolumeOut->right + pVolumeOut->left) / 2;
+        (short)((u_int)(pVolumeOut->right + pVolumeOut->left) / 2);
   }
 }
 
@@ -221,7 +223,7 @@ int IsMobyPlayingSound(Moby *pMoby, u_int pSoundId) {
     if (pMoby == g_Spu.m_ActiveSounds[i].m_Moby &&
         g_Spu.m_ActiveSounds[i].m_SoundId == pSoundId) {
 
-      // Tried turinary operator, but it didn't match
+      // Tried ternary operator, but it didn't match
       if (g_Spu.m_ActiveSounds[i].m_Flags & 0x100)
         return 2;
       else
@@ -237,7 +239,7 @@ static void KillOrphans(void) {
   u_char keysStatus[24];
   int i;
 
-  SpuGetAllKeysStatus(keysStatus);
+  SpuGetAllKeysStatus((char*)keysStatus);
 
   for (i = 0; i < 24; i++) {
     if (keysStatus[i] == 1 && (g_Spu.m_ActiveSounds[i].m_Flags & 0xC1) == 0) {

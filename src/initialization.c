@@ -26,7 +26,7 @@ extern void *D_800113A0;   // Pointer to overlay space
 extern char D_8006FCF4[1]; // Sony image
 extern int _stacksize;
 
-// Wouldn't know where to put these ones
+// Wouldn't know where to put these
 extern int D_80075838;
 extern int D_8007583C;
 
@@ -80,8 +80,7 @@ void GraphicsInitialize(void) {
 void GamepadInitialize(void) {
   PadInitDirect((u_char *)&g_PadBuffer, (u_char *)&D_80078E50);
   PadCaliReset(&D_800776D8); // Clears the backup's calibration values
-  PadCaliInit(&D_800776D8);  // Initializes it's calibration
-                             // deadzone values
+  PadCaliInit(&D_800776D8);  // Initializes it's calibration deadzone values
 
   // Reset the vibration timers
   D_80075904 = 0;
@@ -234,9 +233,9 @@ void func_8002D338(void); // Gamestate init cutscene (why?)
 void func_8002D170(void); // Gamestate init titlescreen
 
 // Init function
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/initialization", Initialize);
+// INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/initialization", Initialize);
 
-#if 0 // Almost matches
+#if 1 // Almost matches
 void Initialize(void) {
   RECT frameRect;
   char *levelVram;

@@ -49,7 +49,7 @@ void CDReadDone(u_char intr, u_char *result) {
   }
 
   // Aside from CdlComplete, there's only CdlDataEnd and CdlDiskError,
-  // so getting here we can assume an error occured.
+  // so getting here we can assume an error occurred.
 
   // Retry the read if we didn't manage due to a CD error
   CdControl(CdlSetloc, (void *)&g_CdState.m_ReadLoc, nullptr);

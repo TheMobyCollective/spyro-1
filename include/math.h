@@ -49,7 +49,7 @@ void func_80017048(MATRIX *pMatrix, Vector3D *pVector, Vector3D *pOut);
 /// @return 8 bit value
 int func_80017908(int pAngle1, int pAngle2);
 
-/// @brief Returns the octangenal distance between two angles
+/// @brief Returns the octagonal distance between two angles
 /// This function is a lot faster than using square roots
 int OctDistance(Vector3D *pPos1, Vector3D *pPos2);
 

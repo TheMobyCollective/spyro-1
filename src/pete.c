@@ -2,6 +2,7 @@
 #include "common.h"
 #include "spyro.h"
 #include "vector.h"
+#include "math.h"
 
 extern struct {
   u_char m_StartFrame, m_EndFrame;

@@ -9,7 +9,7 @@ void CheckpointSave(Moby *checkpoint, u_int checkpointRotation) {
   int i;
 
   // Set the starting rotation
-  g_Checkpoint.m_StartingRotation = (checkpointRotation << 4) & 0xfff;
+  g_Checkpoint.m_StartingRotation = ((int)checkpointRotation << 4) & 0xfff;
 
   // And copy the position
   VecCopy(&g_Checkpoint.m_StartingPosition, &checkpoint->m_Position);
@@ -17,7 +17,7 @@ void CheckpointSave(Moby *checkpoint, u_int checkpointRotation) {
   // Set the checkpoint flag
   g_Checkpoint.m_StoodOnCheckpoint = 1;
 
-  // Move the starting position up a bit to accomadate for Spyro's hitsphere
+  // Move the starting position up a bit to accommodate for Spyro's hitsphere
   g_Checkpoint.m_StartingPosition.z += 356;
 
   // These values are written here, but never read
