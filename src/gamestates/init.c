@@ -18,8 +18,9 @@ extern int D_800757C8; // OptionsSubmenuIsOpen
 
 // Inventory page transition state
 // Set to 0 when not tranitioning
-// Set to -64 when transitioning to right. (When right button is pressed, Artisans to Peace Keepers)
-// Set to 64 when transitioning to left. (When left button is pressed, Peace Keepers to Artisans)
+// Set to -64 when transitioning to right. (When right button is pressed,
+// Artisans to Peace Keepers) Set to 64 when transitioning to left. (When left
+// button is pressed, Peace Keepers to Artisans)
 extern int D_800756D4;
 extern int D_80075744; // The index of the current page of the inventory screen
 extern int D_800757CC; // Transition progress between inventory pages.
@@ -164,7 +165,8 @@ void func_8002C714(int pEnteringFromGameplay) {
   D_800756D4 = 0; // Inventory page transition state
   g_Gamestate = 3;
   // Set the current inventory screen to the current level's index / 6.
-  // This causes the inventory screen to open up to page that shows the current world.
+  // This causes the inventory screen to open up to page that shows the current
+  // world.
   D_80075744 = D_80075964 / LEVEL_PER_HOMEWORLD;
   if (pEnteringFromGameplay) {
     D_800758B8 = 0; // Pause menu text rotation ticks
