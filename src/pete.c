@@ -1,18 +1,18 @@
 #include "camera.h"
 #include "common.h"
+#include "math.h"
 #include "spyro.h"
 #include "vector.h"
-#include "math.h"
 
 extern struct {
   u_char m_StartFrame, m_EndFrame;
   u_char m_TransitionLastFrame, m_FrameRate;
 } spyro_AnimationDetails[46]; // Frame details for animations
 
-u_char spyro_StateDefaultAnimation[48]; // State to animation
-u_char
+extern u_char spyro_StateDefaultAnimation[48]; // State to animation
+extern u_char
     spyro_FlameBlockedInAnimation[48]; // Is flaming blocked in this animation
-u_char D_8006BC84[45][45];             // Transition types
+extern u_char D_8006BC84[45][45];      // Transition types
 
 // Spyro g_Spyro;
 

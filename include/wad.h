@@ -47,6 +47,6 @@ typedef struct {
   short m_ModelIndices[64];
 } LevelHeader;
 
-LevelHeader g_LevelHeader;
+extern LevelHeader g_LevelHeader;
 
 #endif

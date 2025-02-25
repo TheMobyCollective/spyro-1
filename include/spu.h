@@ -44,7 +44,7 @@ typedef struct {
   int m_VarianceType;
 } SoundDefinition;
 
-struct {
+extern struct {
   SpuCommonAttr m_CommonAttr;
   ActiveSound m_ActiveSounds[24];
 

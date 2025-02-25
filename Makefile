@@ -129,12 +129,13 @@ non_matching: $(TARGET_OVERLAYS) $(TARGET_EXE)
 # -------------------------------
 
 # Only use MASPSX for non-modern compilers
-MASPSX_COMMAND = $(if ${MODERN_COMPILER},|,| $(PYTHON) $(MASPSX) -G4 --aspsx-version 2.56 --expand-div)
+MASPSX_COMMAND = $(if ${MODERN_COMPILER},,$(PYTHON) $(MASPSX) -G4 --aspsx-version 2.56 --expand-div |)
 
 build/src/%.o: src/%.c
 	@echo "\e[0;36m[Compiling] $<\e[0m"
 	@$(GCC) $(MODERN_COMPILER_FLAG) $(NEW_PSYQ_FLAG) $(DEBUG_FLAG) -Iinclude -Ipsyq/include -ffreestanding -MT $@ -MMD -MP -MF $@.d $< | \
-		$(CC) $(C_FLAGS) $(MASPSX_COMMAND) \
+		$(CC) $(C_FLAGS) |\
+		$(MASPSX_COMMAND) \
 		$(PYTHON) $(REMOVE_SECTIONS) | \
 		$(AS) $(AS_FLAGS) -o $@
 
