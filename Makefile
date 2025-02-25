@@ -112,7 +112,7 @@ DEPENDS = $(OBJ_C:.o=.o.d)
 $(OBJ_C): | create_dirs
 
 create_dirs:
-	@mkdir -p $(sort $(dir $(OBJ_C))) $(sort $(dir $(OBJ_S)))
+	@mkdir -p build/asm build/src $(sort $(dir $(OBJ_C))) $(sort $(dir $(OBJ_S))) build/wad
 
 # -------------------------------
 # Build Targets
