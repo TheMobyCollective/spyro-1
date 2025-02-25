@@ -34,7 +34,7 @@ Spyro 3 fans really got it good
 
 ## PSYQ
 
-Because I had trouble getting the order of the PSYQ sections to match, PSYQ 4.0 libraries are included in its disassembled form. If you prefer the more modern PSYQ 4.7, it's possible to replace it, creating a non-matching build. It'll be made easier to build with it soon.
+Because I had trouble getting the order of the PSYQ sections to match, PSYQ 4.0 libraries are included in its disassembled form. If you prefer the more modern PSYQ 4.7, it's possible to replace it, creating a non-matching build. To build with PSYQ 4.7, use `NEW_PSYQ=1 make all`.
 
 Please put PYSQ headers in psyq/include, if you're using 4.7 you should put the lib folder in psyq/lib. Any version of PSYQ later than 4.0 should work.
 
@@ -42,7 +42,9 @@ Please put PYSQ headers in psyq/include, if you're using 4.7 you should put the 
 
 To make it easier to setup the MIPS toolchain, a docker image is provided. Executing `docker_env.sh` starts a container in interactive mode with the Dockerfile image, which comes with modern mipsel- gcc and binutils. For the source code, a much older compiler will be used, gcc2.7.2-mipsel.
 
-After starting the container, executing `python3 build.py` will create the main executable, named `PSX.EXE` in the `/build` folder.
+After starting the container, executing `make all` will create the main executable, named `PSX.EXE`, in the `/build` folder, and overlays in `/build/wad`.
+
+To speed up the build process, you can use `make -j` followed by the number of threads you want to use, such as `make all -j6`.
 
 The overlays will be output to `/build/wad`, the naming convention matches the Spyro 1 template of [wadtool](https://github.com/altro50/wadtool).
 
