@@ -233,9 +233,9 @@ void func_8002D338(void); // Gamestate init cutscene (why?)
 void func_8002D170(void); // Gamestate init titlescreen
 
 // Init function
-// INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/initialization", Initialize);
+INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/initialization", Initialize);
 
-#if 1 // Almost matches
+#if 0 // Almost matches
 void Initialize(void) {
   RECT frameRect;
   char *levelVram;

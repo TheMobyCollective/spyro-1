@@ -445,7 +445,8 @@ SECTIONS
 
     /* Now it's time for the overlays */
 
-    INCLUDE overlays.ld
+    /* INCLUDE overlays.ld */
+#include "overlays.ld"
 
     /* /DISCARD/ :
     {
