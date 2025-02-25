@@ -44,6 +44,10 @@ for date in date_range:
     total = checked + unchecked
     new_progress.append((date, (checked * 100) / total, (unchecked * 100) / total))
 
+for i in range(1, len(new_progress)):
+    if new_progress[i][1] < new_progress[i - 1][1]:
+        new_progress[i] = (new_progress[i][0], new_progress[i - 1][1], new_progress[i - 1][2])
+
 progress_df = pd.DataFrame(new_progress, columns=['date', 'checked', 'unchecked'])
 
 fig, ax = plt.subplots()
