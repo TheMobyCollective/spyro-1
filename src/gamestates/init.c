@@ -1,5 +1,6 @@
 #include "buffers.h"
 #include "camera.h"
+#include "cheats.h"
 #include "common.h"
 #include "cyclorama.h"
 #include "graphics.h"
@@ -35,6 +36,9 @@ extern char D_80077FAE;
 extern char D_80077FAF;
 extern char D_80077FB0;
 extern char D_80077FB1;
+
+void func_80054600(int);  // Reset HUD struct
+void func_80054988(void); // Something HUD-related
 
 /// @brief Pauses the game
 // pEnteringFromGameplay is:

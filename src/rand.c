@@ -1,7 +1,9 @@
-#include <rand.h>
-
 #include "common.h"
 #include "rand.h"
+
+// From psyq
+extern int rand(void);
+extern void srand(unsigned int);
 
 /// @brief returns a value between [pMin, pMax] both inclusive
 int RandRange(int pMin, int pMax) {

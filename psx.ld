@@ -43,11 +43,15 @@ SECTIONS
         build/src/overlay_pointers.o(.rodata);
         build/src/overlay_pointers.o(.rodata.jtbl);
 
+        #ifndef _NEW_PSYQ
+
         /* for old psyq */
         build/asm/data/psyq.rodata.o(.rodata*);
 
+        #else
+
         /* for new psyq */
-        /* *libapi.a:*(.rdata .rdata.*)
+        *libapi.a:*(.rdata .rdata.*)
         *libgte.a:*(.rdata .rdata.*)
         *libspu.a:*(.rdata .rdata.*)
         *libetc.a:*(.rdata .rdata.*)
@@ -57,7 +61,9 @@ SECTIONS
         *libcd.a:*(.rdata .rdata.*)
         *libmcrd.a:*(.rdata .rdata.*)
         *libcard.a:*(.rdata .rdata.*)
-        *libpad.a:*(.rdata .rdata.*) */
+        *libpad.a:*(.rdata .rdata.*)
+        
+        #endif
 
         build/src/main.o(.rodata);
         build/src/main.o(.rodata.jtbl);
@@ -179,11 +185,15 @@ SECTIONS
         build/src/overlay_pointers.o(.text);
         build/src/4BEF8.o(.text);
 
+        #ifndef _NEW_PSYQ
+
         /* for old psyq */
         build/asm/psyq.o(.text);
 
+        #else
+
         /* for new psyq */
-        /* build/asm/psyq.libsn.o(.text);
+        build/asm/psyq.libsn.o(.text);
         *libapi.a:*(.text .text.*)
         *libgte.a:*(.text .text.*)
         *libspu.a:*(.text .text.*)
@@ -194,7 +204,9 @@ SECTIONS
         *libcd.a:*(.text .text.*)
         *libmcrd.a:*(.text .text.*)
         *libcard.a:*(.text .text.*)
-        *libpad.a:*(.text .text.*) */
+        *libpad.a:*(.text .text.*)
+
+        #endif
 
         . = ALIGN(., 4);
         main_TEXT_END = .;
@@ -293,12 +305,15 @@ SECTIONS
         build/src/4BEF8.o(.data);
         psyq_data = .;
 
+        #ifndef _NEW_PSYQ
         /* for old psyq */
 
         build/asm/data/psyq.data.o(.data);
 
+        #else
+
         /* for new psyq */
-        /* build/asm/data/psyq.sqrt_tbl.o(.data);
+        build/asm/data/psyq.sqrt_tbl.o(.data);
         *libapi.a:*(.data .data.*)
         *libgte.a:*(.data .data.*)
         *libspu.a:*(.data .data.*)
@@ -309,7 +324,9 @@ SECTIONS
         *libcd.a:*(.data .data.*)
         *libmcrd.a:*(.data .data.*)
         *libcard.a:*(.data .data.*)
-        *libpad.a:*(.data .data.*) */
+        *libpad.a:*(.data .data.*)
+
+        #endif
 
 
         build/src/main.o(.data);
@@ -347,12 +364,16 @@ SECTIONS
     {
         FILL(0x00000000);
         main_SBSS_START = .;
+        
+        #ifndef _NEW_PSYQ
 
         /* for old psyq */
         build/asm/data/psyq.sbss.o(.sbss);
 
+        #else
+
         /* for new psyq */
-        /* *libapi.a:*(.sbss .sbss.*)
+        *libapi.a:*(.sbss .sbss.*)
         *libgte.a:*(.sbss .sbss.*)
         *libspu.a:*(.sbss .sbss.*)
         *libetc.a:*(.sbss .sbss.*)
@@ -362,7 +383,9 @@ SECTIONS
         *libcd.a:*(.sbss .sbss.*)
         *libmcrd.a:*(.sbss .sbss.*)
         *libcard.a:*(.sbss .sbss.*)
-        *libpad.a:*(.sbss .sbss.*) */
+        *libpad.a:*(.sbss .sbss.*)
+
+        #endif
 
         build/asm/data/game.sbss.o(.sbss);
         . = ALIGN(., 4);
@@ -380,11 +403,15 @@ SECTIONS
         build/asm/data/overlay_pointer.rodata.o(.bss);
         build/src/overlay_pointers.o(.bss);
 
+        #ifndef _NEW_PSYQ
+
         /* for old psyq */
         build/asm/data/psyq.bss.o(.bss);
 
+        #else
+
         /* for new psyq */
-        /* *libapi.a:*(.bss .bss.*)
+        *libapi.a:*(.bss .bss.*)
         *libgte.a:*(.bss .bss.*)
         *libspu.a:*(.bss .bss.*)
         *libetc.a:*(.bss .bss.*)
@@ -394,7 +421,9 @@ SECTIONS
         *libcd.a:*(.bss .bss.*)
         *libmcrd.a:*(.bss .bss.*)
         *libcard.a:*(.bss .bss.*)
-        *libpad.a:*(.bss .bss.*) */
+        *libpad.a:*(.bss .bss.*)
+
+        #endif
 
 
         build/src/main.o(.bss);

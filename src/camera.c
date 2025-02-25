@@ -10,7 +10,9 @@
 #include "spyro.h"
 
 #include <libgte.h>
-#include <rand.h>
+
+extern int rand(void); // From psyq
+extern void srand(unsigned int);
 
 // FYI, these are inside of this file rather than just extern,
 // because otherwise the compiler didn't make use of gp_rel!
@@ -220,11 +222,17 @@ void func_80034358(void) {
 // Does the camera's collision, updates the spherical coordinates
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80034480);
 
+void func_80034C84(void);
+
 // Forces the camera to it's destination forcefully
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80034C84);
 
+void func_80034CE8(int);
+
 // Related to updating the spherical coordinates, not 100% sure
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80034CE8);
+
+void func_800357A4(void);
 
 // Camera movement related, seems to be for warping it when blocked
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_800357A4);
@@ -245,6 +253,8 @@ void func_80035F58() {
     D_80075924 = 1024;
   }
 }
+
+void func_80035FB4(void);
 
 // Camera state update for all other states
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80035FB4);

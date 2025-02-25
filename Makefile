@@ -3,8 +3,10 @@
 # -------------------------------
 DEBUG_FLAG          = $(if ${DEBUG},-DDEBUG,-DNDEBUG)
 MODERN_COMPILER_FLAG = $(if ${MODERN_COMPILER},-DMODERN_COMPILER,-D_HAS_MASPSX)
+NEW_PSYQ_FLAG = $(if ${NEW_PSYQ},-D_NEW_PSYQ,)
+PSYQ_LIB = $(if ${NEW_PSYQ},-Lpsyq/lib --start-group -lapi -lc -lc2 -lcard -lcd -lcomb -lds -letc -lgpu -lgs -lgte -lgun -lhmd -lmath -lmcrd -lpad -lsio -lspu --end-group,)
 
-CC       = $(if ${MODERN_COMPILER}, "/usr/lib/gcc-cross/mips-linux-gnu/12/cc1", "./tools/gcc2.7.2/cc1")
+CC       = $(if ${MODERN_COMPILER}, "/usr/libexec/gcc-cross/mips-linux-gnu/14/cc1", "./tools/gcc2.7.2/cc1")
 GCC      = mips-linux-gnu-cpp
 AS       = mips-linux-gnu-as
 LD       = mips-linux-gnu-ld
@@ -17,9 +19,11 @@ REMOVE_SECTIONS = "./tools/remove_sections.py"
 # -------------------------------
 # Compilation Flags
 # -------------------------------
-LD_FLAGS  = -EL -T /tmp/psx.ld -g -Map build/psx.map --no-check-sections -nostdlib
-C_FLAGS   = -O2 -G4 -g0 -fverbose-asm -mips1 -mcpu=3000 -fgnu-linker -mno-abicalls -mgpopt -msoft-float -quiet
-AS_FLAGS  = -EL -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -G0 -ggdb
+LD_FLAGS  = -EL -T /tmp/psx.ld -g -Map build/psx.map --no-check-sections -nostdlib $(PSYQ_LIB)
+C_CLASSIC_FLAGS = -O2 -G4 -g0 -fverbose-asm -mips1 -mcpu=3000 -fgnu-linker -mno-abicalls -mgpopt -msoft-float -quiet
+C_MODERN_FLAGS = -Os -G 0 -g3 -fverbose-asm -march=mips1 -mabi=32 -mips1 -mno-llsc -mno-abicalls -mgpopt -msoft-float -fno-builtin -fno-strict-aliasing -fno-exceptions -fschedule-insns -fno-pic -fno-stack-protector -ffreestanding -o-
+C_FLAGS   = $(if ${MODERN_COMPILER},$(C_MODERN_FLAGS),$(C_CLASSIC_FLAGS))
+AS_FLAGS  = -EL -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -G0 -ggdb -msoft-float
 
 # -------------------------------
 # Targets & Sources
@@ -120,11 +124,17 @@ all: $(TARGET_OVERLAYS) $(TARGET_EXE)
 
 non_matching: $(TARGET_OVERLAYS) $(TARGET_EXE)
 
+# -------------------------------
+# Compilation
+# -------------------------------
+
+# Only use MASPSX for non-modern compilers
+MASPSX_COMMAND = $(if ${MODERN_COMPILER},|,| $(PYTHON) $(MASPSX) -G4 --aspsx-version 2.56 --expand-div)
+
 build/src/%.o: src/%.c
 	@echo "\e[0;36m[Compiling] $<\e[0m"
-	@ $(GCC) $(MODERN_COMPILER_FLAG) $(DEBUG_FLAG) -Iinclude -Ipsyq/include -ffreestanding -MT $@ -MMD -MP -MF $@.d $< | \
-		$(CC) $(C_FLAGS) | \
-		$(PYTHON) $(MASPSX) -G4 --aspsx-version 2.56 --expand-div | \
+	@$(GCC) $(MODERN_COMPILER_FLAG) $(NEW_PSYQ_FLAG) $(DEBUG_FLAG) -Iinclude -Ipsyq/include -ffreestanding -MT $@ -MMD -MP -MF $@.d $< | \
+		$(CC) $(C_FLAGS) $(MASPSX_COMMAND) \
 		$(PYTHON) $(REMOVE_SECTIONS) | \
 		$(AS) $(AS_FLAGS) -o $@
 
@@ -139,7 +149,7 @@ build/asm/%.o: asm/%.s
 # Main ELF
 $(TARGET_ELF): $(OBJ_C) $(OBJ_S) psx.ld overlays.ld
 	@echo "\e[0;32m[Linking] $@\e[0m"
-	@gcc -E -P -x assembler-with-cpp -c psx.ld -o /tmp/psx.ld
+	@gcc -E -P -x assembler-with-cpp -c psx.ld $(NEW_PSYQ_FLAG) -o /tmp/psx.ld
 	@$(LD) $(LD_FLAGS) -o $@
 
 # Main executable
