@@ -233,26 +233,27 @@ void func_8002D338(void); // Gamestate init cutscene (why?)
 void func_8002D170(void); // Gamestate init titlescreen
 
 // Init function
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/initialization", Initialize);
-
-#if 0 // Almost matches
 void Initialize(void) {
   RECT frameRect;
+  RECT pad;
   char *levelVram;
   char *universalImage;
-  char *imageTemp;
   int i;
-  int imageValueOffset;
+  int j;
+  int k;
+  int l;
   int frameCountStart;
+  const int blend_start = 224;
+  const int blend_end = 0;
+  const int blend_step_count = 8;
+  const int blend_step = (blend_start - blend_end) / (blend_step_count - 1);
+  const int rgb24_w = (512 / 2) * 3;
+  const int rgb24_h = 240;
+  const int image_size = 512 * 3 * 240;
 
   GraphicsInitialize(); // Graphics init
 
-  // Strange place to do this but okay
-  i = 0;
-
   MemoryCardInitialize(); // Memory card init
-
-  imageValueOffset = -224;
 
   GamepadInitialize(); // Gamepad init
   SpuInitialize();     // Sound init
@@ -278,12 +279,12 @@ void Initialize(void) {
 
   // Clear the copy buffer for the images
   // to be decompressed into
-  Memset(D_800785D8.m_CopyBuf, 0, 0x5a000);
-
-  while (i < 8) {
+  Memset(D_800785D8.m_CopyBuf, 0, image_size);
+  
+  for (i = 0; i < 8; ++i) {
     // Decompress the image
-    func_80017F24(D_8006FCF4, D_800785D8.m_CopyBuf, imageValueOffset);
-    setRECT(&frameRect, 0, 0, 768, 240);
+    func_80017F24(D_8006FCF4, D_800785D8.m_CopyBuf, i * blend_step - blend_start);
+    setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
     LoadImage(&frameRect, D_800785D8.m_CopyBuf);
     DrawSync(0);
     VSync(0);
@@ -291,9 +292,6 @@ void Initialize(void) {
 
     if (i == 0)
       SetDispMask(1); // Enable display
-
-    i++;
-    imageValueOffset += 32; // 32*7 = 224
   }
 
   WadInitialize(); // Load the WAD header
@@ -308,8 +306,7 @@ void Initialize(void) {
   levelVram = (char *)0x80200000 - _stacksize - 0x40000;
 
   CDLoadSync(g_CdState.m_WadSector, levelVram, 0x40000,
-             g_WadHeader.m_TitleScreenData.m_Offset +
-                 g_LevelHeader.m_VramSramOffset,
+             g_LevelHeader.m_VramSramOffset + g_WadHeader.m_TitleScreenData.m_Offset,
              600); // Load the titlescreen VRAM
 
   CDLoadSync(g_CdState.m_WadSector, D_800113A0,
@@ -330,41 +327,32 @@ void Initialize(void) {
 
   // Clear the copy buffer for the images
   // to be decompressed into again
-  Memset(D_800785D8.m_CopyBuf, 0, 0x5a000);
-
-  i = 0;
-
-  // Fade out the Sony logo
-  do {
-    i++;
+  Memset(D_800785D8.m_CopyBuf, 0, image_size);
+  
+  for(j = 0; j < 8; ++j) {
     // Decompress the image
-    func_80017F24(D_8006FCF4, D_800785D8.m_CopyBuf, -i * 32);
-    setRECT(&frameRect, 0, 0, (512 * 3) / 2, 240);
+    func_80017F24(D_8006FCF4, D_800785D8.m_CopyBuf, -(j+1) * blend_step);
+    setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
     LoadImage(&frameRect, D_800785D8.m_CopyBuf);
     DrawSync(0);
     VSync(0);
     PutDispEnv(&g_DB[1].m_DispEnv);
-  } while (i < 8);
+  }
 
   frameCountStart = VSync(-1); // Get the frame count again
-  imageTemp = universalImage - 0x16800;
-  Memset(imageTemp, 0, 0x5a000);
+  Memset(universalImage - image_size, 0, image_size);
 
   // Fade in the Universal logo
-  i = 0;
-  imageValueOffset = -224;
-  do {
+  for (k = 0; k < 8; ++k) { // blend2 = -blend_start; k < blend_step_count; blend2 += blend_step
     // Decompress the image
-    func_80017F24(universalImage, imageTemp, imageValueOffset);
-    setRECT(&frameRect, 0, 0, 768, 240);
-    LoadImage(&frameRect, (u_long *)imageTemp);
+    func_80017F24(universalImage, universalImage - image_size, k * blend_step - blend_start);
+    setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
+    LoadImage(&frameRect, (u_long *)(universalImage - image_size));
     DrawSync(0);
     VSync(0);
 
     PutDispEnv(&g_DB[1].m_DispEnv);
-    imageValueOffset += 32; // 32*7 = 224
-    i++;
-  } while (i < 8);
+  }
 
   // Load in the titlescreen
   g_LoadStage = 3;
@@ -377,19 +365,16 @@ void Initialize(void) {
   while (VSync(-1) - frameCountStart < 210)
     VSync(0);
 
-  i = 0;
-
   // Fade out the Universal logo
-  do {
-    i++;
+  for(l = 0; l < 8; ++l) {
     // Decompress the image
-    func_80017F24(levelVram, imageTemp, -i * 32);
-    setRECT(&frameRect, 0, 0, (512 * 3) / 2, 240);
-    LoadImage(&frameRect, (u_long *)imageTemp);
+    func_80017F24(universalImage, universalImage - image_size, -(l+1) * blend_step);
+    setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
+    LoadImage(&frameRect, (u_long *)(universalImage - image_size));
     DrawSync(0);
     VSync(0);
     PutDispEnv(&g_DB[1].m_DispEnv);
-  } while (i < 8);
+  }
 
   SetDispMask(0); // Disable display
 
@@ -399,14 +384,14 @@ void Initialize(void) {
 
   PutDispEnv(&g_DB[1].m_DispEnv);
 
-  setRECT(&frameRect, 0, 0, 512, 480); // 480..?
-  ClearImage(&frameRect, 0, 0, 0);
+  setRECT(&pad, 0, 0, 512, 480); // 480..?
+  ClearImage(&pad, 0, 0, 0);
   DrawSync(0);
 
   // Enable display again
   SetDispMask(1);
 
-  setRECT(&frameRect, 0, 0, 512, 256);
+  setRECT(&frameRect, 512, 0, 512, 256);
   LoadImage(&frameRect, (u_long *)levelVram);
   DrawSync(0);
 
@@ -423,4 +408,3 @@ void Initialize(void) {
   g_UnprocessedFrames = 0;
   g_Environment.m_LodDistance = 0x8000;
 }
-#endif
