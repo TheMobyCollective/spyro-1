@@ -92,7 +92,7 @@ typedef struct Moby {
   char m_DepthOffset;
 
   /// @brief The Moby's current state, often used in Moby code
-  char m_State;
+  u_char m_State;
 
   /// @brief The Moby's substate, less often used in Moby code
   char m_Substate;

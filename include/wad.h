@@ -12,11 +12,8 @@ extern struct {
   OffsetLength m_wad1;
 
   OffsetLength m_TitleScreenOverlay;
-  OffsetLength m_TitleScreenData;
 
-  OffsetLength m_IntroData;
-  OffsetLength m_OutroData;
-  OffsetLength m_Outro2Data;
+  OffsetLength m_CutsceneData[4];
 
   OffsetLength m_wad8;
   OffsetLength m_wad9;

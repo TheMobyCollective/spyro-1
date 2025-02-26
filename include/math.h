@@ -15,6 +15,8 @@ extern short D_8006CC78[256];
 #define SINE_8(x) D_8006CBF8[(x)]
 #define COSINE_8(x) D_8006CC78[(x)]
 
+extern int D_8006EE5C[4];
+
 /// @brief Atan2 function
 /// @param pY The Y coordinate
 /// @param pX The X coordinate

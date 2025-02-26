@@ -15,4 +15,17 @@ void func_80014564(void); // Load titlescreen
 
 void func_80015370(int); // Load level
 
+typedef struct {
+  u_int m_0x00;
+  u_int m_0x04;
+  u_int m_0x08;
+  int nMobyCount;
+  void* m_0x10;
+  void* m_0x14[1]; //TODO - how many of these?
+} CutsceneLayout;
+
+extern CutsceneLayout *D_80075680;
+
+extern int D_8007637C[249];
+
 #endif

@@ -3,7 +3,7 @@
 
 #include <sys/types.h>
 
-extern struct {
+typedef struct {
   int m_SectorCount;
   void *m_Sectors; // TODO: Type
   int m_OcclusionGroupsCount;
@@ -11,6 +11,10 @@ extern struct {
   struct {
     u_char r, g, b, s;
   } m_BackgroundColor;
-} D_80078A40;
+} S_80078A40;
+
+extern S_80078A40 D_80078A40;
+
+extern S_80078A40 D_80077780;
 
 #endif
