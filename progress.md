@@ -134,7 +134,7 @@
 - [x] func_8001256C
 - [x] func_80012604
 - [x] func_8001277C
-- [ ] Initialize
+- [x] Initialize
 - [x] func_80012CF0
 - [ ] func_80012D58
 - [ ] func_80013230
@@ -152,7 +152,7 @@
 - [x] func_80038178
 - [x] func_800381BC
 - [x] func_800381E8
-- [ ] func_80038250
+- [x] func_80038250
 - [x] func_80038340
 - [ ] func_8003838C
 - [x] func_80038400

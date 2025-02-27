@@ -98,30 +98,32 @@ void CameraUpdateMatrices(void) {
 }
 
 // Casts a ray between two points, returns false if it hits something
-int func_80033E40(Vector3D *point1, Vector3D *point2) {
-  Vector3D pointPointDifference;
-  Vector3D source, destination;
-  int distance, distanceDivided, t;
+int func_80033E40(Vector3D *pPoint1, Vector3D *pPoint2) {
+  Vector3D distance;
+  Vector3D rayStart, rayEnd;
+  int magnitude, raySegments, i;
 
-  VecSub(&pointPointDifference, point2, point1);
+  VecSub(&distance, pPoint2, pPoint1);
 
   // TODO: This distance calculation causes Baruti crash, should create a
   // FIX_BUGS directive to fix it. We could fix it here, or inside of
   // VecMagnitude by changing add to addu, but I think here is preferable
 
-  distance = VecMagnitude(&pointPointDifference, 1);
-  distanceDivided = distance >> 10; // Divide by 1024
-  func_800175B8(&pointPointDifference, distance, 1024);
+  magnitude = VecMagnitude(&distance, 1);
+  raySegments = magnitude >> 10; // Divide by 1024
+  func_800175B8(&distance, magnitude, 1024);
 
   // Copy point 1 into the source
-  VecCopy(&source, point1);
+  VecCopy(&rayStart, pPoint1);
 
-  for (t = 0; t < distanceDivided; t++) {
-    VecAdd(&destination, &source, &pointPointDifference);
-    if (func_8004AE38(&source, &destination)) {
-      return 0;
-    }
-    VecCopy(&source, &destination);
+  for (i = 0; i < raySegments; i++) {
+    VecAdd(&rayEnd, &rayStart, &distance);
+
+    // Look if we've got a collision
+    if (func_8004AE38(&rayStart, &rayEnd))
+      return 0; // If we did, return it
+
+    VecCopy(&rayStart, &rayEnd); // Advance the ray
   }
 
   return 1;
