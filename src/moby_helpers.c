@@ -121,7 +121,37 @@ int func_800381E8(Moby *moby, int range) { // Unused
                        moby->m_Rotation.z) < range;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038250);
+int func_8001729C(Vector3D*, int, int); // Newton's method
+
+int func_80038250(Vector3D* pPoint) {
+  Vector3D distance;
+  Vector3D rayStart;
+  Vector3D rayEnd;
+  int raySegments;
+  int magnitude;
+  int i;
+
+  VecSub(&distance, &g_Spyro.m_Position, pPoint);
+  magnitude = VecMagnitude(&distance, 1);
+  // SKELETON: Newton's method, which isn't used
+  func_8001729C(&distance, magnitude, 1);
+  func_800175B8(&distance, magnitude, 0x400);
+  VecCopy(&rayStart, pPoint);
+  
+  raySegments = magnitude >> 0xA; // div by 1024
+
+  for (i = 0; i < raySegments; i++) {
+    VecAdd(&rayEnd, &rayStart, &distance);
+
+    // Look if we've got a collision
+    if (func_8004AE38(&rayStart, &rayEnd))
+      return 0; // If we did, return it
+    
+    VecCopy(&rayStart, &rayEnd); // Advance the ray
+  }
+
+  return 1;
+}
 
 // Looks for the floor below the Moby
 int func_80038340(Moby *pMoby) {
