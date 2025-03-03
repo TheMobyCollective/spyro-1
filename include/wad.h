@@ -6,6 +6,13 @@ typedef struct {
   int m_Length;
 } OffsetLength;
 
+enum CutsceneType {
+  Cutscene_Titlescreen = 0,
+  Cutscene_Intro = 1,
+  Cutscene_Outro1 = 2,
+  Cutscene_Outro2 = 3
+};
+
 // TODO: PETE.WAD
 extern struct {
   OffsetLength m_UniversalLogo;
@@ -13,7 +20,7 @@ extern struct {
 
   OffsetLength m_TitleScreenOverlay;
 
-  OffsetLength m_CutsceneData[4];
+  OffsetLength m_CutsceneData[4]; //CutsceneType
 
   OffsetLength m_wad8;
   OffsetLength m_wad9;

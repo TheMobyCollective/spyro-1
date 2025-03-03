@@ -297,7 +297,7 @@ void Initialize(void) {
   WadInitialize(); // Load the WAD header
 
   CDLoadSync(g_CdState.m_WadSector, D_800113A0, 2048,
-             g_WadHeader.m_CutsceneData[0].m_Offset,
+             g_WadHeader.m_CutsceneData[Cutscene_Titlescreen].m_Offset,
              600); // Load titlescreen_data.wad's header
 
   Memcpy(&g_LevelHeader, D_800113A0,
@@ -306,7 +306,7 @@ void Initialize(void) {
   levelVram = (char *)0x80200000 - _stacksize - 0x40000;
 
   CDLoadSync(g_CdState.m_WadSector, levelVram, 0x40000,
-             g_LevelHeader.m_VramSramOffset + g_WadHeader.m_CutsceneData[0].m_Offset,
+             g_LevelHeader.m_VramSramOffset + g_WadHeader.m_CutsceneData[Cutscene_Titlescreen].m_Offset,
              600); // Load the titlescreen VRAM
 
   CDLoadSync(g_CdState.m_WadSector, D_800113A0,
