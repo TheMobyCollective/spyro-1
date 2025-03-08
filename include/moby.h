@@ -228,6 +228,8 @@ typedef struct {
   AnimationHeader *m_Animations[1];
 } Model;
 
+extern Model *D_80076378[250];
+
 typedef struct {
   int m_NumAnimations; // < 0 == SimpleModel
   void *m_Verts;

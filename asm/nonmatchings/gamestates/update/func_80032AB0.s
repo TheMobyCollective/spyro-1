@@ -14,10 +14,10 @@ glabel func_80032AB0
 /* 232D4 80032AD4 21200000 */  addu       $a0, $zero, $zero
 /* 232D8 80032AD8 4000C524 */  addiu      $a1, $a2, 0x40
 /* 232DC 80032ADC 0000C2AC */  sw         $v0, 0x0($a2)
-/* 232E0 80032AE0 0880013C */  lui        $at, %hi(D_80078D88)
-/* 232E4 80032AE4 888D20AC */  sw         $zero, %lo(D_80078D88)($at)
-/* 232E8 80032AE8 0880013C */  lui        $at, %hi(D_80078D7C)
-/* 232EC 80032AEC 7C8D20AC */  sw         $zero, %lo(D_80078D7C)($at)
+/* 232E0 80032AE0 0880013C */  lui        $at, %hi(D_80078D78 + 0x10)
+/* 232E4 80032AE4 888D20AC */  sw         $zero, %lo(D_80078D78 + 0x10)($at)
+/* 232E8 80032AE8 0880013C */  lui        $at, %hi(D_80078D78 + 0x4)
+/* 232EC 80032AEC 7C8D20AC */  sw         $zero, %lo(D_80078D78 + 0x4)($at)
 /* 232F0 80032AF0 8A9D010C */  jal        MemCardSync
 /* 232F4 80032AF4 4400C624 */   addiu     $a2, $a2, 0x44
 .L80032AF8:

@@ -40,10 +40,10 @@ glabel func_8002D440
 /* 1DCCC 8002D4CC 5C000624 */   addiu     $a2, $zero, 0x5C
 /* 1DCD0 8002D4D0 03000224 */  addiu      $v0, $zero, 0x3
 /* 1DCD4 8002D4D4 000002AE */  sw         $v0, 0x0($s0)
-/* 1DCD8 8002D4D8 0880013C */  lui        $at, %hi(D_80078D7C)
-/* 1DCDC 8002D4DC 7C8D20AC */  sw         $zero, %lo(D_80078D7C)($at)
-/* 1DCE0 8002D4E0 0880013C */  lui        $at, %hi(D_80078D94)
-/* 1DCE4 8002D4E4 948D31AC */  sw         $s1, %lo(D_80078D94)($at)
+/* 1DCD8 8002D4D8 0880013C */  lui        $at, %hi(D_80078D78 + 0x4)
+/* 1DCDC 8002D4DC 7C8D20AC */  sw         $zero, %lo(D_80078D78 + 0x4)($at)
+/* 1DCE0 8002D4E0 0880013C */  lui        $at, %hi(D_80078D78 + 0x1C)
+/* 1DCE4 8002D4E4 948D31AC */  sw         $s1, %lo(D_80078D78 + 0x1C)($at)
 /* 1DCE8 8002D4E8 DF49000C */  jal        func_8001277C
 /* 1DCEC 8002D4EC 00000000 */   nop
 /* 1DCF0 8002D4F0 0A000224 */  addiu      $v0, $zero, 0xA

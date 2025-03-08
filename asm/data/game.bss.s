@@ -979,73 +979,7 @@ dlabel D_80078D74
 /* 68CBC 80078D74 */ .space 0x04
 
 dlabel D_80078D78
-/* 68CC0 80078D78 */ .space 0x04
-
-dlabel D_80078D7C
-/* 68CC4 80078D7C */ .space 0x04
-
-dlabel D_80078D80
-/* 68CC8 80078D80 */ .space 0x04
-
-dlabel D_80078D84
-/* 80078D84 */       .space 0x04
-
-dlabel D_80078D88
-    .space 0x04
-
-dlabel D_80078D8C
-    .space 0x04
-
-dlabel D_80078D90
-    .space 0x04
-
-dlabel D_80078D94
-    .space 0x04
-
-dlabel D_80078D98
-    .space 0x04
-
-dlabel D_80078D9C
-    .space 0x04
-
-dlabel D_80078DA0
-    .space 0x04
-
-dlabel D_80078DA4
-    .space 0x04
-
-dlabel D_80078DA8
-    .space 0x04
-
-dlabel D_80078DAC
-    .space 0x04
-
-dlabel D_80078DB0
-    .space 0x04
-
-dlabel D_80078DB4
-    .space 0x04
-
-dlabel D_80078DB8
-    .space 0x04
-
-dlabel D_80078DBC
-    .space 0x04
-
-dlabel D_80078DC0
-    .space 0x04
-
-dlabel D_80078DC4
-    .space 0x04
-
-dlabel D_80078DC8
-    .space 0x04
-
-dlabel D_80078DCC
-    .space 0x04
-
-dlabel D_80078DD0
-    .space 0x04
+/* Total size from 80078D78 to 80078DD4 */ .space 0x5C
 
 dlabel D_80078DD4
     .space 0x04

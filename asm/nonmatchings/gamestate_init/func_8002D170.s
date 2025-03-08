@@ -33,8 +33,8 @@ glabel func_8002D170
 /* 1D9E0 8002D1E0 C0000324 */  addiu      $v1, $zero, 0xC0
 /* 1D9E4 8002D1E4 E0FCA3AC */  sw         $v1, -0x320($a1)
 /* 1D9E8 8002D1E8 00E04224 */  addiu      $v0, $v0, -0x2000
-/* 1D9EC 8002D1EC 0880013C */  lui        $at, %hi(D_80078DC4)
-/* 1D9F0 8002D1F0 C48D22AC */  sw         $v0, %lo(D_80078DC4)($at)
+/* 1D9EC 8002D1EC 0880013C */  lui        $at, %hi(D_80078D78 + 0x4C)
+/* 1D9F0 8002D1F0 C48D22AC */  sw         $v0, %lo(D_80078D78 + 0x4C)($at)
 /* 1D9F4 8002D1F4 1673010C */  jal        SpuSetCommonAttr
 /* 1D9F8 8002D1F8 E0FCA424 */   addiu     $a0, $a1, -0x320
 /* 1D9FC 8002D1FC 0780023C */  lui        $v0, %hi(D_80075680)

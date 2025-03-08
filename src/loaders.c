@@ -6,6 +6,8 @@
 #include "loaders.h"
 #include "math.h"
 #include "memory.h"
+#include "moby.h"
+#include "moby_helpers.h"
 #include "music.h"
 #include "spu.h"
 #include "spyro.h"
@@ -43,6 +45,8 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80012D58);
 /// @brief Patches the pointers inside of Spyro's model
 // Has some cool code added after July
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80013230);
+
+Model *func_800133E0(Model *pModel);
 
 /// @brief Patches the pointers inside of a Moby's model
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_800133E0);
@@ -95,7 +99,7 @@ void func_80014564(void) {
 
   if (g_LoadStage == 0) {
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf, 0x800,
-                g_WadHeader.m_CutsceneData[D_8007566C].m_Offset, 0x258);
+                g_WadHeader.m_CutsceneData[D_8007566C].m_Offset, 600);
     g_LoadStage = 1;
   } else if (g_LoadStage == 1) {
     Memcpy(&g_LevelHeader, D_800785D8.m_CopyBuf, 0x1D0);
@@ -103,7 +107,7 @@ void func_80014564(void) {
                 D_8006EE5C[D_8007566C],
                 g_LevelHeader.m_VramSramOffset +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
-                0x258);
+                600);
     g_LoadStage = 2;
   } else if (g_LoadStage == 2) {
     setRECT(&r, 512, 0, 512, D_8006EE5C[D_8007566C] >> 10);
@@ -114,7 +118,7 @@ void func_80014564(void) {
                 g_LevelHeader.m_VramSramSize - 0x80000,
                 g_LevelHeader.m_VramSramOffset +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset + 0x80000,
-                0x258);
+                600);
     g_LoadStage = 4;
   } else if (g_LoadStage == 4) {
 
@@ -128,7 +132,7 @@ void func_80014564(void) {
                 g_LevelHeader.m_SceneSize,
                 g_LevelHeader.m_SceneOffset +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
-                0x258);
+                600);
     g_LoadStage = 5;
   } else if (g_LoadStage == 5) {
     D_800785D8.m_EndOfSceneData =
@@ -145,7 +149,7 @@ void func_80014564(void) {
                 size_to_load,
                 g_LevelHeader.m_ModelDataOffset +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
-                0x258);
+                600);
   } else if (g_LoadStage == 6) {
     g_LoadStage = 7;
   } else if (g_LoadStage == 7) {
@@ -156,13 +160,14 @@ void func_80014564(void) {
                 g_LevelHeader.m_ModelDataOffset +
                     g_LevelHeader.m_ModelDataSize - 0x60000 +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
-                0x258);
+                600);
     g_LoadStage = 8;
   } else if (g_LoadStage == 8) {
     for (i = 0; g_LevelHeader.m_ModelOffsets[i] > 0; ++i) {
-      D_8007637C[i] = func_800133E0(
-          (char *)D_800785D8.m_EndOfSceneData +
-          (g_LevelHeader.m_ModelOffsets[i] - g_LevelHeader.m_ModelDataOffset));
+      D_80076378[1 + i] =
+          func_800133E0((Model *)((char *)D_800785D8.m_EndOfSceneData +
+                                  (g_LevelHeader.m_ModelOffsets[i] -
+                                   g_LevelHeader.m_ModelDataOffset)));
     }
     D_800785D8.m_LevelLayout =
         (char *)D_800785D8.m_EndOfSceneData + g_LevelHeader.m_ModelDataSize;
@@ -172,25 +177,38 @@ void func_80014564(void) {
                 D_800785D8.m_LevelLayoutSize,
                 g_LevelHeader.m_LayoutOffset +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
-                0x258);
+                600);
     g_LoadStage = 9;
   } else if (g_LoadStage == 9) {
     D_80075680 = D_800785D8.m_LevelLayout;
-    D_80075680->m_0x10 =
-        (void *)((char *)D_80075680 + (u_int)D_80075680->m_0x10);
-    for (j = 0; j < D_80075680->nMobyCount; ++j) {
-      D_80075680->m_0x14[j] = (void *)((char *)D_800785D8.m_LevelLayout +
-                                       (u_int)D_80075680->m_0x14[j]);
+
+    // While in WAD it's an offset, now we turn it into a pointer
+    D_80075680->m_CameraData =
+        (CutsceneCameraData *)((char *)D_80075680 +
+                               (u_int)D_80075680->m_CameraData);
+
+    // Ditto for the Moby data
+    for (j = 0; j < D_80075680->m_MobyCount; ++j) {
+      D_80075680->m_MobyData[j] =
+          (CutsceneMobyData *)((char *)D_800785D8.m_LevelLayout +
+                               (u_int)D_80075680->m_MobyData[j]);
     }
+
+    // Set the Moby pointer to the empty space after the cutscene data
     D_80075828 = (Moby *)((char *)D_800785D8.m_LevelLayout +
                           D_800785D8.m_LevelLayoutSize);
-    for (j = 0; j < D_80075680->nMobyCount; ++j) {
-      func_8003A720(D_80075828 + j);
+
+    for (j = 0; j < D_80075680->m_MobyCount; ++j) {
+      func_8003A720(&D_80075828[j]);
 
       D_80075828[j].m_Class = j + 1;
+
+      // SKELETON: func_8003A720 already sets this value to 32.
       D_80075828[j].m_RenderRadius = 32;
     }
-    D_80075828[D_80075680->nMobyCount].m_State = 0xFF;
+
+    // Terminate the moby list
+    D_80075828[D_80075680->m_MobyCount].m_State = 0xFF;
     g_LoadStage = 10;
   }
 }
