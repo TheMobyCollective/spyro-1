@@ -20,8 +20,8 @@ typedef struct {
   u_int m_0x04;
   u_int m_0x08;
   int nMobyCount;
-  void* m_0x10;
-  void* m_0x14[1]; //TODO - how many of these?
+  void *m_0x10;
+  void *m_0x14[1]; // TODO - how many of these?
 } CutsceneLayout;
 
 extern CutsceneLayout *D_80075680;

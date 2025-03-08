@@ -88,36 +88,51 @@ void func_80014564(void) {
   int size_to_load;
 
   CDLoadTime();
-  if(g_CdState.m_IsReading != 0 || CdSync(1, 0) != CdlComplete || (g_CdMusic.m_Flags & 0x40) == 0)
+
+  if (g_CdState.m_IsReading != 0 || CdSync(1, 0) != CdlComplete ||
+      (g_CdMusic.m_Flags & 0x40) == 0)
     return;
 
-  if(g_LoadStage == 0) {
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf, 0x800, g_WadHeader.m_CutsceneData[D_8007566C].m_Offset, 0x258);
+  if (g_LoadStage == 0) {
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf, 0x800,
+                g_WadHeader.m_CutsceneData[D_8007566C].m_Offset, 0x258);
     g_LoadStage = 1;
-  }
-  else if(g_LoadStage == 1) {
+  } else if (g_LoadStage == 1) {
     Memcpy(&g_LevelHeader, D_800785D8.m_CopyBuf, 0x1D0);
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf, D_8006EE5C[D_8007566C], g_LevelHeader.m_VramSramOffset + g_WadHeader.m_CutsceneData[D_8007566C].m_Offset, 0x258);
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf,
+                D_8006EE5C[D_8007566C],
+                g_LevelHeader.m_VramSramOffset +
+                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
+                0x258);
     g_LoadStage = 2;
-  }
-  else if(g_LoadStage == 2) {
+  } else if (g_LoadStage == 2) {
     setRECT(&r, 512, 0, 512, D_8006EE5C[D_8007566C] >> 10);
     LoadImage(&r, D_800785D8.m_CopyBuf);
     g_LoadStage = 3;
-  }
-  else if(g_LoadStage == 3) {
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf, g_LevelHeader.m_VramSramSize - 0x80000, g_LevelHeader.m_VramSramOffset + g_WadHeader.m_CutsceneData[D_8007566C].m_Offset + 0x80000, 0x258);
+  } else if (g_LoadStage == 3) {
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf,
+                g_LevelHeader.m_VramSramSize - 0x80000,
+                g_LevelHeader.m_VramSramOffset +
+                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset + 0x80000,
+                0x258);
     g_LoadStage = 4;
-  }
-  else if(g_LoadStage == 4) {
+  } else if (g_LoadStage == 4) {
+
     SpuSetTransferStartAddr(0x1010);
     SpuWrite(D_800785D8.m_CopyBuf, 0x7EFF0);
-    while (!SpuIsTransferCompleted(0));
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf, g_LevelHeader.m_SceneSize, g_LevelHeader.m_SceneOffset + g_WadHeader.m_CutsceneData[D_8007566C].m_Offset, 0x258);
+
+    while (!SpuIsTransferCompleted(0))
+      ;
+
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf,
+                g_LevelHeader.m_SceneSize,
+                g_LevelHeader.m_SceneOffset +
+                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
+                0x258);
     g_LoadStage = 5;
-  }
-  else if(g_LoadStage == 5) {
-    D_800785D8.m_EndOfSceneData = (void*)func_80012D58(D_800785D8.m_DiscCopyBuf, 1);
+  } else if (g_LoadStage == 5) {
+    D_800785D8.m_EndOfSceneData =
+        (void *)func_80012D58(D_800785D8.m_DiscCopyBuf, 1);
     D_80078A40 = D_80077780;
     if (D_8007566C == 1) {
       g_LoadStage = 6;
@@ -126,37 +141,50 @@ void func_80014564(void) {
       size_to_load = g_LevelHeader.m_ModelDataSize;
       g_LoadStage = 8;
     }
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_EndOfSceneData, size_to_load, g_LevelHeader.m_ModelDataOffset + g_WadHeader.m_CutsceneData[D_8007566C].m_Offset, 0x258);
-  }
-  else if(g_LoadStage == 6) {
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_EndOfSceneData,
+                size_to_load,
+                g_LevelHeader.m_ModelDataOffset +
+                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
+                0x258);
+  } else if (g_LoadStage == 6) {
     g_LoadStage = 7;
-  }
-  else if(g_LoadStage == 7) {
+  } else if (g_LoadStage == 7) {
     CDLoadAsync(g_CdState.m_WadSector,
-        D_800785D8.m_EndOfSceneData + g_LevelHeader.m_ModelDataSize - 0x60000,
-        0x60000,
-        g_LevelHeader.m_ModelDataOffset + g_LevelHeader.m_ModelDataSize - 0x60000 + g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
-        0x258);
+                (char *)D_800785D8.m_EndOfSceneData +
+                    g_LevelHeader.m_ModelDataSize - 0x60000,
+                0x60000,
+                g_LevelHeader.m_ModelDataOffset +
+                    g_LevelHeader.m_ModelDataSize - 0x60000 +
+                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
+                0x258);
     g_LoadStage = 8;
-  }
-  else if(g_LoadStage == 8) {
-    for(i = 0; g_LevelHeader.m_ModelOffsets[i] > 0; ++i) {
-      D_8007637C[i] = func_800133E0(D_800785D8.m_EndOfSceneData + (g_LevelHeader.m_ModelOffsets[i] - g_LevelHeader.m_ModelDataOffset));
+  } else if (g_LoadStage == 8) {
+    for (i = 0; g_LevelHeader.m_ModelOffsets[i] > 0; ++i) {
+      D_8007637C[i] = func_800133E0(
+          (char *)D_800785D8.m_EndOfSceneData +
+          (g_LevelHeader.m_ModelOffsets[i] - g_LevelHeader.m_ModelDataOffset));
     }
-    D_800785D8.m_LevelLayout = D_800785D8.m_EndOfSceneData + g_LevelHeader.m_ModelDataSize;
+    D_800785D8.m_LevelLayout =
+        (char *)D_800785D8.m_EndOfSceneData + g_LevelHeader.m_ModelDataSize;
     D_800785D8.m_LevelLayoutSize = g_LevelHeader.m_LayoutSize;
     D_800785D8.m_LevelLayoutOffset = g_LevelHeader.m_LayoutOffset;
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_LevelLayout, D_800785D8.m_LevelLayoutSize, g_LevelHeader.m_LayoutOffset + g_WadHeader.m_CutsceneData[D_8007566C].m_Offset, 0x258);
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_LevelLayout,
+                D_800785D8.m_LevelLayoutSize,
+                g_LevelHeader.m_LayoutOffset +
+                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
+                0x258);
     g_LoadStage = 9;
-  }
-  else if(g_LoadStage == 9) {
+  } else if (g_LoadStage == 9) {
     D_80075680 = D_800785D8.m_LevelLayout;
-    D_80075680->m_0x10 = (void*)((char*)D_80075680 + (u_int)D_80075680->m_0x10);
-    for(j = 0; j < D_80075680->nMobyCount; ++j) {
-        D_80075680->m_0x14[j] = (void*)((char*)D_800785D8.m_LevelLayout + (u_int)D_80075680->m_0x14[j]);
+    D_80075680->m_0x10 =
+        (void *)((char *)D_80075680 + (u_int)D_80075680->m_0x10);
+    for (j = 0; j < D_80075680->nMobyCount; ++j) {
+      D_80075680->m_0x14[j] = (void *)((char *)D_800785D8.m_LevelLayout +
+                                       (u_int)D_80075680->m_0x14[j]);
     }
-    D_80075828 = (Moby*)((char*)D_800785D8.m_LevelLayout + D_800785D8.m_LevelLayoutSize);
-    for(j = 0; j < D_80075680->nMobyCount; ++j) {
+    D_80075828 = (Moby *)((char *)D_800785D8.m_LevelLayout +
+                          D_800785D8.m_LevelLayoutSize);
+    for (j = 0; j < D_80075680->nMobyCount; ++j) {
       func_8003A720(D_80075828 + j);
 
       D_80075828[j].m_Class = j + 1;
