@@ -311,26 +311,11 @@ dlabel D_800776D3
 dlabel D_800776D8
 /* 67620 800776D8 */ .space 0xA8
 
-dlabel D_80077780
-/* 676C8 80077780 */ .space 0x04
+dlabel g_NewCyclorama
+/* Total size from 80077780 to 80077794 */ .space 0x14
 
-dlabel D_80077784
-/* 676CC 80077784 */ .space 0x04
-
-dlabel D_80077788
-/* 676D0 80077788 */ .space 0x04
-
-dlabel D_8007778C
-/* 676D4 8007778C */ .space 0x04
-
-dlabel D_80077790
-/* 676D8 80077790 */ .space 0x01
-
-dlabel D_80077791
-/* 676D9 80077791 */ .space 0x01
-
-dlabel D_80077792
-/* 676DA 80077792 */ .space 0x06
+dlabel D_80077794
+/* 676DA 80077794 */ .space 0x04
 
 dlabel D_80077798
 /* 676E0 80077798 */ .space 0x08
@@ -889,7 +874,7 @@ dlabel D_80078804
 dlabel D_80078820
 /* 68768 80078820 */ .space 0x220
 
-dlabel D_80078A40
+dlabel g_Cyclorama
 /* Total size from 80078A40 to 80078A58 */ .space 0x18
 
 dlabel g_Spyro

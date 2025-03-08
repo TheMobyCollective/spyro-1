@@ -40,6 +40,12 @@ void func_80012CF0(char *pData, int pPatchAddressesInTable) {
 }
 
 /// @brief Loads the level scene, as we used to call it
+/// @param pData The data to load
+/// @param pCutscene Whether it's scene data for a cutscene, which is missing
+/// collision and occlusion data
+/// @return The end of the scene data
+void *func_80012D58(void *pData, int pCutscene);
+/// @brief Loads the level scene, as we used to call it
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80012D58);
 
 /// @brief Patches the pointers inside of Spyro's model
@@ -137,7 +143,7 @@ void func_80014564(void) {
   } else if (g_LoadStage == 5) {
     D_800785D8.m_EndOfSceneData =
         (void *)func_80012D58(D_800785D8.m_DiscCopyBuf, 1);
-    D_80078A40 = D_80077780;
+    g_Cyclorama = g_NewCyclorama;
     if (D_8007566C == 1) {
       g_LoadStage = 6;
       size_to_load = g_LevelHeader.m_ModelDataSize - 0x60000;

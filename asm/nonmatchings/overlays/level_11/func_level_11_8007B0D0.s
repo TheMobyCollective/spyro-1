@@ -1631,8 +1631,8 @@ glabel func_level_11_8007B0D0
 /* B856B4 8007C8EC 2B104300 */  sltu       $v0, $v0, $v1
 /* B856B8 8007C8F0 05004014 */  bnez       $v0, .Llevel_11_8007C908
 /* B856BC 8007C8F4 1F80113C */   lui       $s1, (0x801FE000 >> 16)
-/* B856C0 8007C8F8 0880023C */  lui        $v0, %hi(D_80078A40 + 0x4)
-/* B856C4 8007C8FC 448A428C */  lw         $v0, %lo(D_80078A40 + 0x4)($v0)
+/* B856C0 8007C8F8 0880023C */  lui        $v0, %hi(g_Cyclorama + 0x4)
+/* B856C4 8007C8FC 448A428C */  lw         $v0, %lo(g_Cyclorama + 0x4)($v0)
 /* B856C8 8007C900 43F20108 */  j          .Llevel_11_8007C90C
 /* B856CC 8007C904 F4BF5124 */   addiu     $s1, $v0, -0x400C
 .Llevel_11_8007C908:

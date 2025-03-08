@@ -36,8 +36,8 @@ glabel func_8004EBA8
 /* 3F408 8004EC08 0028C048 */  ctc2       $zero, $5 /* handwritten instruction */
 /* 3F40C 8004EC0C 0030C048 */  ctc2       $zero, $6 /* handwritten instruction */
 /* 3F410 8004EC10 0038C048 */  ctc2       $zero, $7 /* handwritten instruction */
-/* 3F414 8004EC14 0880013C */  lui        $at, %hi(D_80078A40)
-/* 3F418 8004EC18 408A2124 */  addiu      $at, $at, %lo(D_80078A40)
+/* 3F414 8004EC14 0880013C */  lui        $at, %hi(g_Cyclorama)
+/* 3F418 8004EC18 408A2124 */  addiu      $at, $at, %lo(g_Cyclorama)
 /* 3F41C 8004EC1C 00008F20 */  addi       $t7, $a0, 0x0 /* handwritten instruction */
 /* 3F420 8004EC20 07800D3C */  lui        $t5, %hi(D_8006FCF4)
 /* 3F424 8004EC24 F4FCAD25 */  addiu      $t5, $t5, %lo(D_8006FCF4)
@@ -338,8 +338,8 @@ glabel func_8004F000
 /* 3F868 8004F068 0028C048 */  ctc2       $zero, $5 /* handwritten instruction */
 /* 3F86C 8004F06C 0030C048 */  ctc2       $zero, $6 /* handwritten instruction */
 /* 3F870 8004F070 0038C048 */  ctc2       $zero, $7 /* handwritten instruction */
-/* 3F874 8004F074 0880013C */  lui        $at, %hi(D_80078A40)
-/* 3F878 8004F078 408A2124 */  addiu      $at, $at, %lo(D_80078A40)
+/* 3F874 8004F074 0880013C */  lui        $at, %hi(g_Cyclorama)
+/* 3F878 8004F078 408A2124 */  addiu      $at, $at, %lo(g_Cyclorama)
 /* 3F87C 8004F07C 07800D3C */  lui        $t5, %hi(D_8006FCF4)
 /* 3F880 8004F080 F4FCAD25 */  addiu      $t5, $t5, %lo(D_8006FCF4)
 /* 3F884 8004F084 0000AD21 */  addi       $t5, $t5, 0x0 /* handwritten instruction */

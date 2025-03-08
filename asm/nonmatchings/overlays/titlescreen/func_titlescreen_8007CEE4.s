@@ -947,12 +947,12 @@ glabel func_titlescreen_8007CEE4
 /* 5E9F4 8007DC2C 4EF3010C */  jal        func_titlescreen_8007CD38
 /* 5E9F8 8007DC30 00000000 */   nop
 .Ltitlescreen_8007DC34:
-/* 5E9FC 8007DC34 0880023C */  lui        $v0, %hi(D_80078A40 + 0x10)
-/* 5EA00 8007DC38 508A4290 */  lbu        $v0, %lo(D_80078A40 + 0x10)($v0)
-/* 5EA04 8007DC3C 0880033C */  lui        $v1, %hi(D_80078A40 + 0x11)
-/* 5EA08 8007DC40 518A6390 */  lbu        $v1, %lo(D_80078A40 + 0x11)($v1)
-/* 5EA0C 8007DC44 0880043C */  lui        $a0, %hi(D_80078A40 + 0x12)
-/* 5EA10 8007DC48 528A8490 */  lbu        $a0, %lo(D_80078A40 + 0x12)($a0)
+/* 5E9FC 8007DC34 0880023C */  lui        $v0, %hi(g_Cyclorama + 0x10)
+/* 5EA00 8007DC38 508A4290 */  lbu        $v0, %lo(g_Cyclorama + 0x10)($v0)
+/* 5EA04 8007DC3C 0880033C */  lui        $v1, %hi(g_Cyclorama + 0x11)
+/* 5EA08 8007DC40 518A6390 */  lbu        $v1, %lo(g_Cyclorama + 0x11)($v1)
+/* 5EA0C 8007DC44 0880043C */  lui        $a0, %hi(g_Cyclorama + 0x12)
+/* 5EA10 8007DC48 528A8490 */  lbu        $a0, %lo(g_Cyclorama + 0x12)($a0)
 /* 5EA14 8007DC4C 0780013C */  lui        $at, %hi(g_DB + 0x19)
 /* 5EA18 8007DC50 F96E22A0 */  sb         $v0, %lo(g_DB + 0x19)($at)
 /* 5EA1C 8007DC54 0780013C */  lui        $at, %hi(g_DB + 0x1A)

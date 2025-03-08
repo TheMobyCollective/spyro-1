@@ -97,15 +97,15 @@ glabel func_80015370
 /* 5C7C 8001547C 04001026 */  addiu      $s0, $s0, 0x4
 /* 5C80 80015480 0000028E */  lw         $v0, 0x0($s0)
 /* 5C84 80015484 04001026 */  addiu      $s0, $s0, 0x4
-/* 5C88 80015488 0880053C */  lui        $a1, %hi(D_80078A40 + 0x10)
-/* 5C8C 8001548C 508AA524 */  addiu      $a1, $a1, %lo(D_80078A40 + 0x10)
+/* 5C88 80015488 0880053C */  lui        $a1, %hi(g_Cyclorama + 0x10)
+/* 5C8C 8001548C 508AA524 */  addiu      $a1, $a1, %lo(g_Cyclorama + 0x10)
 /* 5C90 80015490 0000A2AC */  sw         $v0, 0x0($a1)
 /* 5C94 80015494 0000028E */  lw         $v0, 0x0($s0)
 /* 5C98 80015498 04001026 */  addiu      $s0, $s0, 0x4
-/* 5C9C 8001549C 0880013C */  lui        $at, %hi(D_80078A40 + 0x4)
-/* 5CA0 800154A0 448A30AC */  sw         $s0, %lo(D_80078A40 + 0x4)($at)
-/* 5CA4 800154A4 0880013C */  lui        $at, %hi(D_80078A40)
-/* 5CA8 800154A8 408A22AC */  sw         $v0, %lo(D_80078A40)($at)
+/* 5C9C 8001549C 0880013C */  lui        $at, %hi(g_Cyclorama + 0x4)
+/* 5CA0 800154A0 448A30AC */  sw         $s0, %lo(g_Cyclorama + 0x4)($at)
+/* 5CA4 800154A4 0880013C */  lui        $at, %hi(g_Cyclorama)
+/* 5CA8 800154A8 408A22AC */  sw         $v0, %lo(g_Cyclorama)($at)
 /* 5CAC 800154AC 2F004018 */  blez       $v0, .L8001556C
 /* 5CB0 800154B0 21180000 */   addu      $v1, $zero, $zero
 /* 5CB4 800154B4 F0FFA524 */  addiu      $a1, $a1, -0x10
@@ -123,8 +123,8 @@ glabel func_80015370
 /* 5CE0 800154E0 5B550008 */  j          .L8001556C
 /* 5CE4 800154E4 00000000 */   nop
 .L800154E8:
-/* 5CE8 800154E8 0880133C */  lui        $s3, %hi(D_80078A40 + 0x4)
-/* 5CEC 800154EC 448A7326 */  addiu      $s3, $s3, %lo(D_80078A40 + 0x4)
+/* 5CE8 800154E8 0880133C */  lui        $s3, %hi(g_Cyclorama + 0x4)
+/* 5CEC 800154EC 448A7326 */  addiu      $s3, $s3, %lo(g_Cyclorama + 0x4)
 /* 5CF0 800154F0 0000628E */  lw         $v0, 0x0($s3)
 /* 5CF4 800154F4 0880033C */  lui        $v1, %hi(D_800785E8)
 /* 5CF8 800154F8 E885638C */  lw         $v1, %lo(D_800785E8)($v1)
@@ -141,8 +141,8 @@ glabel func_80015370
 /* 5D24 80015524 0000028E */  lw         $v0, 0x0($s0)
 /* 5D28 80015528 04001026 */  addiu      $s0, $s0, 0x4
 /* 5D2C 8001552C 000070AE */  sw         $s0, 0x0($s3)
-/* 5D30 80015530 0880013C */  lui        $at, %hi(D_80078A40)
-/* 5D34 80015534 408A22AC */  sw         $v0, %lo(D_80078A40)($at)
+/* 5D30 80015530 0880013C */  lui        $at, %hi(g_Cyclorama)
+/* 5D34 80015534 408A22AC */  sw         $v0, %lo(g_Cyclorama)($at)
 /* 5D38 80015538 0C004018 */  blez       $v0, .L8001556C
 /* 5D3C 8001553C 21180000 */   addu      $v1, $zero, $zero
 /* 5D40 80015540 FCFF6526 */  addiu      $a1, $s3, -0x4
@@ -182,8 +182,8 @@ glabel func_80015370
 /* 5DBC 800155BC 0780023C */  lui        $v0, %hi(g_LoadStage)
 /* 5DC0 800155C0 6458428C */  lw         $v0, %lo(g_LoadStage)($v0)
 /* 5DC4 800155C4 FFFF0324 */  addiu      $v1, $zero, -0x1
-/* 5DC8 800155C8 0880013C */  lui        $at, %hi(D_80078A40)
-/* 5DCC 800155CC 408A20AC */  sw         $zero, %lo(D_80078A40)($at)
+/* 5DC8 800155C8 0880013C */  lui        $at, %hi(g_Cyclorama)
+/* 5DCC 800155CC 408A20AC */  sw         $zero, %lo(g_Cyclorama)($at)
 /* 5DD0 800155D0 0780013C */  lui        $at, %hi(g_Camera + 0x54)
 /* 5DD4 800155D4 246E23AC */  sw         $v1, %lo(g_Camera + 0x54)($at)
 /* 5DD8 800155D8 01004224 */  addiu      $v0, $v0, 0x1
@@ -393,8 +393,8 @@ glabel func_80015370
 /* 60E4 800158E4 DC85848C */  lw         $a0, %lo(D_800785DC)($a0)
 /* 60E8 800158E8 564B000C */  jal        func_80012D58
 /* 60EC 800158EC 21280000 */   addu      $a1, $zero, $zero
-/* 60F0 800158F0 0880063C */  lui        $a2, %hi(D_80078A40)
-/* 60F4 800158F4 408AC624 */  addiu      $a2, $a2, %lo(D_80078A40)
+/* 60F0 800158F0 0880063C */  lui        $a2, %hi(g_Cyclorama)
+/* 60F4 800158F4 408AC624 */  addiu      $a2, $a2, %lo(g_Cyclorama)
 /* 60F8 800158F8 0000C38C */  lw         $v1, 0x0($a2)
 /* 60FC 800158FC 0880013C */  lui        $at, %hi(D_800785E0)
 /* 6100 80015900 E08522AC */  sw         $v0, %lo(D_800785E0)($at)
@@ -436,8 +436,8 @@ glabel func_80015370
 /* 618C 8001598C 00000000 */   nop
 .L80015990:
 /* 6190 80015990 0000628C */  lw         $v0, 0x0($v1)
-/* 6194 80015994 0880063C */  lui        $a2, %hi(D_80078A40)
-/* 6198 80015998 408AC624 */  addiu      $a2, $a2, %lo(D_80078A40)
+/* 6194 80015994 0880063C */  lui        $a2, %hi(g_Cyclorama)
+/* 6198 80015998 408AC624 */  addiu      $a2, $a2, %lo(g_Cyclorama)
 /* 619C 8001599C 0000438C */  lw         $v1, 0x0($v0)
 /* 61A0 800159A0 0400448C */  lw         $a0, 0x4($v0)
 /* 61A4 800159A4 0800458C */  lw         $a1, 0x8($v0)
@@ -451,8 +451,8 @@ glabel func_80015370
 /* 61C4 800159C4 7F560008 */  j          .L800159FC
 /* 61C8 800159C8 00000000 */   nop
 .L800159CC:
-/* 61CC 800159CC 0780053C */  lui        $a1, %hi(D_80077780)
-/* 61D0 800159D0 8077A524 */  addiu      $a1, $a1, %lo(D_80077780)
+/* 61CC 800159CC 0780053C */  lui        $a1, %hi(g_NewCyclorama)
+/* 61D0 800159D0 8077A524 */  addiu      $a1, $a1, %lo(g_NewCyclorama)
 /* 61D4 800159D4 0000A28C */  lw         $v0, 0x0($a1)
 /* 61D8 800159D8 0400A38C */  lw         $v1, 0x4($a1)
 /* 61DC 800159DC 0800A48C */  lw         $a0, 0x8($a1)
@@ -1073,10 +1073,10 @@ glabel func_80015370
 /* 6B0C 8001630C 9AFA000C */  jal        func_8003EA68
 /* 6B10 80016310 21200000 */   addu      $a0, $zero, $zero
 .L80016314:
-/* 6B14 80016314 0780053C */  lui        $a1, %hi(D_80077780)
-/* 6B18 80016318 8077A524 */  addiu      $a1, $a1, %lo(D_80077780)
-/* 6B1C 8001631C 0880043C */  lui        $a0, %hi(D_80078A40)
-/* 6B20 80016320 408A8424 */  addiu      $a0, $a0, %lo(D_80078A40)
+/* 6B14 80016314 0780053C */  lui        $a1, %hi(g_NewCyclorama)
+/* 6B18 80016318 8077A524 */  addiu      $a1, $a1, %lo(g_NewCyclorama)
+/* 6B1C 8001631C 0880043C */  lui        $a0, %hi(g_Cyclorama)
+/* 6B20 80016320 408A8424 */  addiu      $a0, $a0, %lo(g_Cyclorama)
 /* 6B24 80016324 0000A28C */  lw         $v0, 0x0($a1)
 /* 6B28 80016328 0400A38C */  lw         $v1, 0x4($a1)
 /* 6B2C 8001632C 000082AC */  sw         $v0, 0x0($a0)

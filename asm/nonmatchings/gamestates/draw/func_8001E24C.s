@@ -219,8 +219,8 @@ glabel func_8001E24C
 /* ED3C 8001E53C 0780013C */  lui        $at, %hi(D_8007575C)
 /* ED40 8001E540 5C5722AC */  sw         $v0, %lo(D_8007575C)($at)
 .L8001E544:
-/* ED44 8001E544 0880043C */  lui        $a0, %hi(D_80078A40 + 0x10)
-/* ED48 8001E548 508A848C */  lw         $a0, %lo(D_80078A40 + 0x10)($a0)
+/* ED44 8001E544 0880043C */  lui        $a0, %hi(g_Cyclorama + 0x10)
+/* ED48 8001E548 508A848C */  lw         $a0, %lo(g_Cyclorama + 0x10)($a0)
 /* ED4C 8001E54C 0780053C */  lui        $a1, %hi(D_800757D4)
 /* ED50 8001E550 D457A58C */  lw         $a1, %lo(D_800757D4)($a1)
 /* ED54 8001E554 0780063C */  lui        $a2, %hi(D_8007575C)

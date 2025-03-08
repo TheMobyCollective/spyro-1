@@ -224,12 +224,12 @@ void func_8002C85C(void) {
 /// @brief Sets gamestate 0, resets background color, and resets the specular
 void func_8002C8A4(void) {
   g_Gamestate = 0;
-  g_DB[0].m_DrawEnv.r0 = D_80078A40.m_BackgroundColor.r;
-  g_DB[0].m_DrawEnv.g0 = D_80078A40.m_BackgroundColor.g;
-  g_DB[0].m_DrawEnv.b0 = D_80078A40.m_BackgroundColor.b;
-  g_DB[1].m_DrawEnv.r0 = D_80078A40.m_BackgroundColor.r;
-  g_DB[1].m_DrawEnv.g0 = D_80078A40.m_BackgroundColor.g;
-  g_DB[1].m_DrawEnv.b0 = D_80078A40.m_BackgroundColor.b;
+  g_DB[0].m_DrawEnv.r0 = g_Cyclorama.m_BackgroundColor.r;
+  g_DB[0].m_DrawEnv.g0 = g_Cyclorama.m_BackgroundColor.g;
+  g_DB[0].m_DrawEnv.b0 = g_Cyclorama.m_BackgroundColor.b;
+  g_DB[1].m_DrawEnv.r0 = g_Cyclorama.m_BackgroundColor.r;
+  g_DB[1].m_DrawEnv.g0 = g_Cyclorama.m_BackgroundColor.g;
+  g_DB[1].m_DrawEnv.b0 = g_Cyclorama.m_BackgroundColor.b;
   SpecularReset();
 }
 

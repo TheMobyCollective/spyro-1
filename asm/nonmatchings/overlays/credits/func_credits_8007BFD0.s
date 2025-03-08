@@ -39,12 +39,12 @@ glabel func_credits_8007BFD0
 /* 5C98E1C 8007C054 C7F00108 */  j          .Lcredits_8007C31C
 /* 5C98E20 8007C058 00000000 */   nop
 .Lcredits_8007C05C:
-/* 5C98E24 8007C05C 0880023C */  lui        $v0, %hi(D_80078A40 + 0x10)
-/* 5C98E28 8007C060 508A4290 */  lbu        $v0, %lo(D_80078A40 + 0x10)($v0)
-/* 5C98E2C 8007C064 0880033C */  lui        $v1, %hi(D_80078A40 + 0x11)
-/* 5C98E30 8007C068 518A6390 */  lbu        $v1, %lo(D_80078A40 + 0x11)($v1)
-/* 5C98E34 8007C06C 0880043C */  lui        $a0, %hi(D_80078A40 + 0x12)
-/* 5C98E38 8007C070 528A8490 */  lbu        $a0, %lo(D_80078A40 + 0x12)($a0)
+/* 5C98E24 8007C05C 0880023C */  lui        $v0, %hi(g_Cyclorama + 0x10)
+/* 5C98E28 8007C060 508A4290 */  lbu        $v0, %lo(g_Cyclorama + 0x10)($v0)
+/* 5C98E2C 8007C064 0880033C */  lui        $v1, %hi(g_Cyclorama + 0x11)
+/* 5C98E30 8007C068 518A6390 */  lbu        $v1, %lo(g_Cyclorama + 0x11)($v1)
+/* 5C98E34 8007C06C 0880043C */  lui        $a0, %hi(g_Cyclorama + 0x12)
+/* 5C98E38 8007C070 528A8490 */  lbu        $a0, %lo(g_Cyclorama + 0x12)($a0)
 /* 5C98E3C 8007C074 0780053C */  lui        $a1, %hi(D_800756E4)
 /* 5C98E40 8007C078 E456A58C */  lw         $a1, %lo(D_800756E4)($a1)
 /* 5C98E44 8007C07C 0780013C */  lui        $at, %hi(g_DB + 0x19)

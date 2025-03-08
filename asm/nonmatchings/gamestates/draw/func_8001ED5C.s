@@ -156,12 +156,12 @@ glabel func_8001ED5C
 /* F778 8001EF78 517C0008 */  j          .L8001F144
 /* F77C 8001EF7C 00000000 */   nop
 .L8001EF80:
-/* F780 8001EF80 0880023C */  lui        $v0, %hi(D_80078A40 + 0x10)
-/* F784 8001EF84 508A4290 */  lbu        $v0, %lo(D_80078A40 + 0x10)($v0)
-/* F788 8001EF88 0880033C */  lui        $v1, %hi(D_80078A40 + 0x11)
-/* F78C 8001EF8C 518A6390 */  lbu        $v1, %lo(D_80078A40 + 0x11)($v1)
-/* F790 8001EF90 0880043C */  lui        $a0, %hi(D_80078A40 + 0x12)
-/* F794 8001EF94 528A8490 */  lbu        $a0, %lo(D_80078A40 + 0x12)($a0)
+/* F780 8001EF80 0880023C */  lui        $v0, %hi(g_Cyclorama + 0x10)
+/* F784 8001EF84 508A4290 */  lbu        $v0, %lo(g_Cyclorama + 0x10)($v0)
+/* F788 8001EF88 0880033C */  lui        $v1, %hi(g_Cyclorama + 0x11)
+/* F78C 8001EF8C 518A6390 */  lbu        $v1, %lo(g_Cyclorama + 0x11)($v1)
+/* F790 8001EF90 0880043C */  lui        $a0, %hi(g_Cyclorama + 0x12)
+/* F794 8001EF94 528A8490 */  lbu        $a0, %lo(g_Cyclorama + 0x12)($a0)
 /* F798 8001EF98 0780013C */  lui        $at, %hi(g_DB + 0x19)
 /* F79C 8001EF9C F96E22A0 */  sb         $v0, %lo(g_DB + 0x19)($at)
 /* F7A0 8001EFA0 0780013C */  lui        $at, %hi(g_DB + 0x1A)

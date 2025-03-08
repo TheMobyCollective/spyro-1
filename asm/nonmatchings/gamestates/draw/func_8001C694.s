@@ -138,8 +138,8 @@ glabel func_8001C694
 /* D09C 8001C89C 54720008 */  j          .L8001C950
 /* D0A0 8001C8A0 00000000 */   nop
 .L8001C8A4:
-/* D0A4 8001C8A4 0880043C */  lui        $a0, %hi(D_80078A40 + 0x10)
-/* D0A8 8001C8A8 508A848C */  lw         $a0, %lo(D_80078A40 + 0x10)($a0)
+/* D0A4 8001C8A4 0880043C */  lui        $a0, %hi(g_Cyclorama + 0x10)
+/* D0A8 8001C8A8 508A848C */  lw         $a0, %lo(g_Cyclorama + 0x10)($a0)
 /* D0AC 8001C8AC 0780023C */  lui        $v0, %hi(D_8007568C)
 /* D0B0 8001C8B0 8C56428C */  lw         $v0, %lo(D_8007568C)($v0)
 /* D0B4 8001C8B4 0780013C */  lui        $at, %hi(D_800757D4)

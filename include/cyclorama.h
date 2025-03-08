@@ -11,10 +11,10 @@ typedef struct {
   struct {
     u_char r, g, b, s;
   } m_BackgroundColor;
-} S_80078A40;
+} Cyclorama;
 
-extern S_80078A40 D_80078A40;
+extern Cyclorama g_Cyclorama;
 
-extern S_80078A40 D_80077780;
+extern Cyclorama g_NewCyclorama;
 
 #endif

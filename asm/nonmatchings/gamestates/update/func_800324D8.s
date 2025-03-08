@@ -198,10 +198,10 @@ glabel func_800324D8
 /* 22FC8 800327C8 0A000224 */  addiu      $v0, $zero, 0xA
 /* 22FCC 800327CC 84006214 */  bne        $v1, $v0, .L800329E0
 /* 22FD0 800327D0 00000000 */   nop
-/* 22FD4 800327D4 0780053C */  lui        $a1, %hi(D_80077780)
-/* 22FD8 800327D8 8077A524 */  addiu      $a1, $a1, %lo(D_80077780)
-/* 22FDC 800327DC 0880043C */  lui        $a0, %hi(D_80078A40)
-/* 22FE0 800327E0 408A8424 */  addiu      $a0, $a0, %lo(D_80078A40)
+/* 22FD4 800327D4 0780053C */  lui        $a1, %hi(g_NewCyclorama)
+/* 22FD8 800327D8 8077A524 */  addiu      $a1, $a1, %lo(g_NewCyclorama)
+/* 22FDC 800327DC 0880043C */  lui        $a0, %hi(g_Cyclorama)
+/* 22FE0 800327E0 408A8424 */  addiu      $a0, $a0, %lo(g_Cyclorama)
 /* 22FE4 800327E4 0000A28C */  lw         $v0, 0x0($a1)
 /* 22FE8 800327E8 0400A38C */  lw         $v1, 0x4($a1)
 /* 22FEC 800327EC 000082AC */  sw         $v0, 0x0($a0)

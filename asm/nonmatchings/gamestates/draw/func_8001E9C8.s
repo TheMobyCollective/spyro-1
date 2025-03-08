@@ -2,12 +2,12 @@
 .set noreorder /* don't insert nops after branches */
 
 glabel func_8001E9C8
-/* F1C8 8001E9C8 0880023C */  lui        $v0, %hi(D_80078A40 + 0x10)
-/* F1CC 8001E9CC 508A4290 */  lbu        $v0, %lo(D_80078A40 + 0x10)($v0)
-/* F1D0 8001E9D0 0880033C */  lui        $v1, %hi(D_80078A40 + 0x11)
-/* F1D4 8001E9D4 518A6390 */  lbu        $v1, %lo(D_80078A40 + 0x11)($v1)
-/* F1D8 8001E9D8 0880043C */  lui        $a0, %hi(D_80078A40 + 0x12)
-/* F1DC 8001E9DC 528A8490 */  lbu        $a0, %lo(D_80078A40 + 0x12)($a0)
+/* F1C8 8001E9C8 0880023C */  lui        $v0, %hi(g_Cyclorama + 0x10)
+/* F1CC 8001E9CC 508A4290 */  lbu        $v0, %lo(g_Cyclorama + 0x10)($v0)
+/* F1D0 8001E9D0 0880033C */  lui        $v1, %hi(g_Cyclorama + 0x11)
+/* F1D4 8001E9D4 518A6390 */  lbu        $v1, %lo(g_Cyclorama + 0x11)($v1)
+/* F1D8 8001E9D8 0880043C */  lui        $a0, %hi(g_Cyclorama + 0x12)
+/* F1DC 8001E9DC 528A8490 */  lbu        $a0, %lo(g_Cyclorama + 0x12)($a0)
 /* F1E0 8001E9E0 E8FFBD27 */  addiu      $sp, $sp, -0x18
 /* F1E4 8001E9E4 1400BFAF */  sw         $ra, 0x14($sp)
 /* F1E8 8001E9E8 1000B0AF */  sw         $s0, 0x10($sp)
