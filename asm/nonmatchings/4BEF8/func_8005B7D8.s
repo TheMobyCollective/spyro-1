@@ -49,7 +49,7 @@ glabel func_8005B7D8
 /* 4C084 8005B884 FC85848C */  lw         $a0, %lo(D_800785FC)($a0)
 /* 4C088 8005B888 01005226 */  addiu      $s2, $s2, 0x1
 /* 4C08C 8005B88C 21208200 */  addu       $a0, $a0, $v0
-/* 4C090 8005B890 F84C000C */  jal        func_800133E0
+/* 4C090 8005B890 F84C000C */  jal        PatchMobyModelPointers
 /* 4C094 8005B894 00F88424 */   addiu     $a0, $a0, -0x800
 /* 4C098 8005B898 0800038E */  lw         $v1, 0x8($s0)
 /* 4C09C 8005B89C 00000000 */  nop

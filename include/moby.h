@@ -183,7 +183,7 @@ typedef struct {
 
     // Not sure if this will match, but there's only one way to find out
     struct {
-      u_int m_VertexOffset : 12;
+      u_int m_VertexOffset : 21;
       u_int m_CollisionModel : 3;
       u_int m_FrameSound : 8;
     } m_Props;
@@ -196,8 +196,7 @@ typedef struct {
 } AnimationFrame;
 
 typedef struct {
-  u_char m_NumFrames;
-  u_char _Padding1;
+  short m_NumFrames;
   u_short m_NumColors;
   u_char m_Unk1; // Changes something about the model format, but never used
   u_char m_Scale;

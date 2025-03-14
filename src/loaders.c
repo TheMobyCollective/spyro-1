@@ -6,7 +6,6 @@
 #include "loaders.h"
 #include "math.h"
 #include "memory.h"
-#include "moby.h"
 #include "moby_helpers.h"
 #include "music.h"
 #include "spu.h"
@@ -52,10 +51,73 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80012D58);
 // Has some cool code added after July
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80013230);
 
-Model *func_800133E0(Model *pModel);
-
 /// @brief Patches the pointers inside of a Moby's model
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_800133E0);
+Model *PatchMobyModelPointers(Model *pModel) {
+  int i;
+  int k;
+  int lower;
+  u_int *p;
+  Model *m = pModel;
+
+  if (m->m_NumAnimations < 0) {
+    PATCH_POINTER2(((SimpleModel *)m)->m_Verts, m);
+    PATCH_POINTER2(((SimpleModel *)m)->m_Colors, m);
+    PATCH_POINTER2(((SimpleModel *)m)->m_Faces, m);
+    return (Model *)((u_int)pModel & 0x7FFFFFFF);
+  }
+
+  for (i = 0; i < 8; ++i) {
+    if (m->m_CollisionModels[i] != 0) {
+      PATCH_POINTER(m->m_CollisionModels[i], (u_int)m & 0x7FFFFFFF);
+    }
+  }
+
+  PATCH_POINTER(m->m_Data, pModel);
+
+  for (i = 0; i < m->m_NumAnimations; ++i) {
+    if ((int)m->m_Animations[i] == -1) {
+      continue;
+    }
+
+    PATCH_POINTER_WITH_TYPE(AnimationHeader, m->m_Animations[i], pModel);
+    PATCH_POINTER(m->m_Animations[i]->m_Faces, m->m_Data);
+    PATCH_POINTER(m->m_Animations[i]->m_Colors, m->m_Data);
+
+    if (m->m_Animations[i]->m_LpFaces != 0) {
+      PATCH_POINTER(m->m_Animations[i]->m_LpFaces, m->m_Data);
+      PATCH_POINTER(m->m_Animations[i]->m_LpColors, m->m_Data);
+    }
+
+    if (m->m_Animations[i]->m_Unk1 != 0) {
+      PATCH_POINTER(m->m_Animations[i]->m_Unk2, m->m_Data);
+      p = (u_int *)&(m->m_Animations[i]->m_Frames[0]);
+      for (k = 0; k < m->m_Animations[i]->m_NumFrames; ++k, ++p) {
+        // this is all wonky, seems like it's a smaller AnimationFrame
+        // if it is, seems like it would have been easier to use the bitfield
+        // directly essentially
+        // trying to just update AnimationFrame::m::m_VertexOffset
+        lower = *p & 0x1fffff;
+        *p = *p & 0xffe00000;
+        lower = ((int)(lower + (u_int)m->m_Data) >> 1) & 0x1fffff;
+        *p = *p + lower;
+      }
+    } else {
+      p = (u_int *)&(m->m_Animations[i]->m_Frames[0]);
+      for (k = 0; k < m->m_Animations[i]->m_NumFrames; ++k, ++p) {
+        // this also looks weird or at least can potentially overflow the
+        // bitfield
+        // appears it's (probably) AnimationFrame as defined in moby.h
+        *p += (u_int)m->m_Data & 0x1fffff;
+        ++p;
+        if ((*p & 0xffff) != 0) {
+          *p += ((int)(m->m_Data - (u_int)p + 4) >> 2) & 0xffff;
+        }
+      }
+    }
+  }
+
+  return pModel;
+}
 
 void func_8001364C(int pAnimationsAndSparx); /* Weird param, always 1 iirc */
 
@@ -171,9 +233,9 @@ void func_80014564(void) {
   } else if (g_LoadStage == 8) {
     for (i = 0; g_LevelHeader.m_ModelOffsets[i] > 0; ++i) {
       D_80076378[1 + i] =
-          func_800133E0((Model *)((char *)D_800785D8.m_EndOfSceneData +
-                                  (g_LevelHeader.m_ModelOffsets[i] -
-                                   g_LevelHeader.m_ModelDataOffset)));
+          PatchMobyModelPointers((Model *)((char *)D_800785D8.m_EndOfSceneData +
+                                           (g_LevelHeader.m_ModelOffsets[i] -
+                                            g_LevelHeader.m_ModelDataOffset)));
     }
     D_800785D8.m_LevelLayout =
         (char *)D_800785D8.m_EndOfSceneData + g_LevelHeader.m_ModelDataSize;
@@ -189,15 +251,13 @@ void func_80014564(void) {
     D_80075680 = D_800785D8.m_LevelLayout;
 
     // While in WAD it's an offset, now we turn it into a pointer
-    D_80075680->m_CameraData =
-        (CutsceneCameraData *)((char *)D_80075680 +
-                               (u_int)D_80075680->m_CameraData);
+    PATCH_POINTER_WITH_TYPE(CutsceneCameraData, D_80075680->m_CameraData,
+                            D_80075680);
 
     // Ditto for the Moby data
     for (j = 0; j < D_80075680->m_MobyCount; ++j) {
-      D_80075680->m_MobyData[j] =
-          (CutsceneMobyData *)((char *)D_800785D8.m_LevelLayout +
-                               (u_int)D_80075680->m_MobyData[j]);
+      PATCH_POINTER_WITH_TYPE(CutsceneMobyData, D_80075680->m_MobyData[j],
+                              D_800785D8.m_LevelLayout);
     }
 
     // Set the Moby pointer to the empty space after the cutscene data

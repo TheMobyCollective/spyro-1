@@ -138,7 +138,7 @@
 - [x] func_80012CF0
 - [ ] func_80012D58
 - [ ] func_80013230
-- [ ] func_800133E0
+- [x] PatchMobyModelPointers
 - [ ] func_8001364C
 - [x] func_800144C8
 - [x] func_80014564
