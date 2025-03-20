@@ -49,7 +49,63 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80012D58);
 
 /// @brief Patches the pointers inside of Spyro's model
 // Has some cool code added after July
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80013230);
+void func_80013230(void *data) {
+  int animation_index;
+  int j;
+  int frame_data_size;
+  int anim_len;
+  int lower;
+  int upper;
+  int past_frame_data;
+  AnimationFrame *frame;
+
+  for (j = 0; j < 46 /*?*/; ++j) {
+    if ((u_int)SPYRO_MODEL->m_Animations[j] <
+            (u_int)D_800785D8.m_SharedAnimations ||
+        (int)SPYRO_MODEL->m_Animations[j] == -1) {
+      SPYRO_MODEL->m_Animations[j] = nullptr;
+    }
+  }
+
+  // data format here is:
+  //   - 4 byte animation_index
+  //   - 4 byte animation_length
+  //   - AnimationHeader of animation_length bytes
+
+  for (animation_index = *(int *)data; animation_index >= 0;
+       animation_index = *(int *)data) {
+    data += 4;
+    anim_len = *(int *)data;
+
+    data += 4;
+    SPYRO_MODEL->m_Animations[animation_index] = data;
+
+    PATCH_POINTER(SPYRO_MODEL->m_Animations[animation_index]->m_Faces,
+                  SPYRO_MODEL->m_Data);
+    PATCH_POINTER(SPYRO_MODEL->m_Animations[animation_index]->m_Colors,
+                  SPYRO_MODEL->m_Data);
+
+    frame_data_size = SPYRO_MODEL->m_Animations[animation_index]->m_NumFrames *
+                      sizeof(AnimationFrame);
+    past_frame_data =
+        (int)((AnimationHeader *)data)->m_Frames + frame_data_size;
+    PATCH_POINTER(SPYRO_MODEL->m_Animations[animation_index]->m_Unk2,
+                  past_frame_data);
+
+    frame = SPYRO_MODEL->m_Animations[animation_index]->m_Frames;
+    for (j = 0; j < SPYRO_MODEL->m_Animations[animation_index]->m_NumFrames;
+         ++j) {
+      lower = ((int)((frame->m.m_Data & 0x001FFFFF) + past_frame_data) >> 1) &
+              0x1FFFFF;
+      upper = (frame->m.m_Data & 0xFFE00000);
+      frame->m.m_Data = upper + lower;
+
+      ++frame;
+    }
+
+    data = data + anim_len;
+  }
+}
 
 /// @brief Patches the pointers inside of a Moby's model
 Model *PatchMobyModelPointers(Model *pModel) {

@@ -190,9 +190,9 @@ typedef struct {
     u_int m_Data;
   } m;
 
-  u_short m_VertexColorOffset;
+  /*u_short m_VertexColorOffset;
   u_char m_Shadow;
-  u_char m_ShortOffset;
+  u_char m_ShortOffset;*/
 } AnimationFrame;
 
 typedef struct {
@@ -227,7 +227,9 @@ typedef struct {
   AnimationHeader *m_Animations[1];
 } Model;
 
-extern Model *D_80076378[250];
+extern Model *D_80076378[512];
+
+#define SPYRO_MODEL (D_80076378[0])
 
 typedef struct {
   int m_NumAnimations; // < 0 == SimpleModel
