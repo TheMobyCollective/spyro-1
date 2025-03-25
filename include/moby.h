@@ -190,10 +190,19 @@ typedef struct {
     u_int m_Data;
   } m;
 
-  /*u_short m_VertexColorOffset;
+  u_short m_VertexColorOffset;
   u_char m_Shadow;
-  u_char m_ShortOffset;*/
+  u_char m_ShortOffset;
 } AnimationFrame;
+
+typedef struct {
+  union {
+    // TODO: Document the Spyro model format
+    // struct {
+    // } m_Props;
+    u_int m_Data;
+  } m;
+} SpyroAnimationFrame;
 
 typedef struct {
   short m_NumFrames;
@@ -232,7 +241,7 @@ extern Model *D_80076378[512];
 #define SPYRO_MODEL (D_80076378[0])
 
 typedef struct {
-  int m_NumAnimations; // < 0 == SimpleModel
+  int m_NumAnimations; // < 0 == SimpleModel (always -1 in reality)
   void *m_Verts;
   void *m_Colors;
   void *m_Faces;

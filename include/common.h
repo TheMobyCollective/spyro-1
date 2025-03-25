@@ -20,9 +20,8 @@
 
 /* clang-format on */
 
-#define PATCH_POINTER(dest, base) dest = (char *)((u_int)(base) + (u_int)(dest));
-#define PATCH_POINTER_WITH_TYPE(typ, dest, base) dest = (typ *)((u_int)(base) + (u_int)(dest));
-#define PATCH_POINTER2(dest, base) dest = (char *)((u_int)(dest) + (u_int)(base));
+#define PATCH_POINTER(dest, base) dest = (void *)((u_int)(base) + (u_int)(dest));
+#define PATCH_POINTER2(dest, base) dest = (void *)((u_int)(dest) + (u_int)(base));
 
 // This ABS macro makes GCC really shit the bed when it comes to optimizations!
 // Holy fuck!

@@ -398,11 +398,11 @@ void Initialize(void) {
   D_800785D8.m_SharedAnimations = (char *)0x80200000 - _stacksize;
 
   func_8005B7D8(); // Load shared models from WAD.WAD
-  func_8002D338();
+  func_8002D338(); // Initialize the gamestate to cutscene
 
   D_80075918 = 15; // Fade
 
-  func_8002D170();
+  func_8002D170(); // But then switch it to titlescreen..
 
   g_DeltaTime = 2;
   g_UnprocessedFrames = 0;

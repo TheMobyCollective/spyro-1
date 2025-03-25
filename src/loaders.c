@@ -1,9 +1,9 @@
+#include "loaders.h"
 #include "buffers.h"
 #include "cd.h"
 #include "common.h"
 #include "cyclorama.h"
 #include "graphics.h"
-#include "loaders.h"
 #include "math.h"
 #include "memory.h"
 #include "moby_helpers.h"
@@ -57,7 +57,7 @@ void func_80013230(void *data) {
   int lower;
   int upper;
   int past_frame_data;
-  AnimationFrame *frame;
+  SpyroAnimationFrame *frame;
 
   for (j = 0; j < 46 /*?*/; ++j) {
     if ((u_int)SPYRO_MODEL->m_Animations[j] <
@@ -74,10 +74,10 @@ void func_80013230(void *data) {
 
   for (animation_index = *(int *)data; animation_index >= 0;
        animation_index = *(int *)data) {
-    data += 4;
+    (char *)data += 4;
     anim_len = *(int *)data;
 
-    data += 4;
+    (char *)data += 4;
     SPYRO_MODEL->m_Animations[animation_index] = data;
 
     PATCH_POINTER(SPYRO_MODEL->m_Animations[animation_index]->m_Faces,
@@ -86,13 +86,14 @@ void func_80013230(void *data) {
                   SPYRO_MODEL->m_Data);
 
     frame_data_size = SPYRO_MODEL->m_Animations[animation_index]->m_NumFrames *
-                      sizeof(AnimationFrame);
+                      sizeof(SpyroAnimationFrame);
     past_frame_data =
         (int)((AnimationHeader *)data)->m_Frames + frame_data_size;
     PATCH_POINTER(SPYRO_MODEL->m_Animations[animation_index]->m_Unk2,
                   past_frame_data);
 
-    frame = SPYRO_MODEL->m_Animations[animation_index]->m_Frames;
+    frame = (SpyroAnimationFrame *)SPYRO_MODEL->m_Animations[animation_index]
+                ->m_Frames;
     for (j = 0; j < SPYRO_MODEL->m_Animations[animation_index]->m_NumFrames;
          ++j) {
       lower = ((int)((frame->m.m_Data & 0x001FFFFF) + past_frame_data) >> 1) &
@@ -103,7 +104,7 @@ void func_80013230(void *data) {
       ++frame;
     }
 
-    data = data + anim_len;
+    data = (char *)data + anim_len;
   }
 }
 
@@ -119,11 +120,15 @@ Model *PatchMobyModelPointers(Model *pModel) {
     PATCH_POINTER2(((SimpleModel *)m)->m_Verts, m);
     PATCH_POINTER2(((SimpleModel *)m)->m_Colors, m);
     PATCH_POINTER2(((SimpleModel *)m)->m_Faces, m);
-    return (Model *)((u_int)pModel & 0x7FFFFFFF);
+    return (Model *)((u_int)pModel & 0x7FFFFFFF); // Unset the top bit to
+                                                  // indicate it's a SimpleModel
   }
 
   for (i = 0; i < 8; ++i) {
     if (m->m_CollisionModels[i] != 0) {
+      // The top bit is unset, because it's used to indicate mesh collision
+      // models So we want to take the top bit from m->m_CollisionModels[i]
+      // rather than pModel
       PATCH_POINTER(m->m_CollisionModels[i], (u_int)m & 0x7FFFFFFF);
     }
   }
@@ -135,7 +140,7 @@ Model *PatchMobyModelPointers(Model *pModel) {
       continue;
     }
 
-    PATCH_POINTER_WITH_TYPE(AnimationHeader, m->m_Animations[i], pModel);
+    PATCH_POINTER(m->m_Animations[i], pModel);
     PATCH_POINTER(m->m_Animations[i]->m_Faces, m->m_Data);
     PATCH_POINTER(m->m_Animations[i]->m_Colors, m->m_Data);
 
@@ -144,14 +149,13 @@ Model *PatchMobyModelPointers(Model *pModel) {
       PATCH_POINTER(m->m_Animations[i]->m_LpColors, m->m_Data);
     }
 
+    // SKELETON: This flag is never set for Moby models, the render code
+    // can't deal with the different format either
     if (m->m_Animations[i]->m_Unk1 != 0) {
       PATCH_POINTER(m->m_Animations[i]->m_Unk2, m->m_Data);
       p = (u_int *)&(m->m_Animations[i]->m_Frames[0]);
       for (k = 0; k < m->m_Animations[i]->m_NumFrames; ++k, ++p) {
         // this is all wonky, seems like it's a smaller AnimationFrame
-        // if it is, seems like it would have been easier to use the bitfield
-        // directly essentially
-        // trying to just update AnimationFrame::m::m_VertexOffset
         lower = *p & 0x1fffff;
         *p = *p & 0xffe00000;
         lower = ((int)(lower + (u_int)m->m_Data) >> 1) & 0x1fffff;
@@ -160,13 +164,12 @@ Model *PatchMobyModelPointers(Model *pModel) {
     } else {
       p = (u_int *)&(m->m_Animations[i]->m_Frames[0]);
       for (k = 0; k < m->m_Animations[i]->m_NumFrames; ++k, ++p) {
-        // this also looks weird or at least can potentially overflow the
-        // bitfield
-        // appears it's (probably) AnimationFrame as defined in moby.h
+        // TODO: This breaks 8MB, which sucks
+        // Maybe change the renderer to use an offset instead of a pointer
         *p += (u_int)m->m_Data & 0x1fffff;
         ++p;
         if ((*p & 0xffff) != 0) {
-          *p += ((int)(m->m_Data - (u_int)p + 4) >> 2) & 0xffff;
+          *p += (((int)m->m_Data - (int)p + 4) >> 2) & 0xffff;
         }
       }
     }
@@ -307,13 +310,11 @@ void func_80014564(void) {
     D_80075680 = D_800785D8.m_LevelLayout;
 
     // While in WAD it's an offset, now we turn it into a pointer
-    PATCH_POINTER_WITH_TYPE(CutsceneCameraData, D_80075680->m_CameraData,
-                            D_80075680);
+    PATCH_POINTER(D_80075680->m_CameraData, D_80075680);
 
     // Ditto for the Moby data
     for (j = 0; j < D_80075680->m_MobyCount; ++j) {
-      PATCH_POINTER_WITH_TYPE(CutsceneMobyData, D_80075680->m_MobyData[j],
-                              D_800785D8.m_LevelLayout);
+      PATCH_POINTER(D_80075680->m_MobyData[j], D_800785D8.m_LevelLayout);
     }
 
     // Set the Moby pointer to the empty space after the cutscene data
