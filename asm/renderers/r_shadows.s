@@ -1,4 +1,5 @@
 .include "macro.inc"
+.include "c2regs.inc"
 
 .set noat
 .set noreorder
@@ -31,19 +32,19 @@ glabel func_80059A48
 /* 4A294 80059A94 0800298F */  lw         $t1, 0x8($t9)
 /* 4A298 80059A98 0C002A8F */  lw         $t2, 0xC($t9)
 /* 4A29C 80059A9C 10002B8F */  lw         $t3, 0x10($t9)
-/* 4A2A0 80059AA0 0000C748 */  ctc2       $a3, $0 /* handwritten instruction */
-/* 4A2A4 80059AA4 0008C848 */  ctc2       $t0, $1 /* handwritten instruction */
-/* 4A2A8 80059AA8 0010C948 */  ctc2       $t1, $2 /* handwritten instruction */
-/* 4A2AC 80059AAC 0018CA48 */  ctc2       $t2, $3 /* handwritten instruction */
-/* 4A2B0 80059AB0 0020CB48 */  ctc2       $t3, $4 /* handwritten instruction */
-/* 4A2B4 80059AB4 0028C048 */  ctc2       $zero, $5 /* handwritten instruction */
-/* 4A2B8 80059AB8 0030C048 */  ctc2       $zero, $6 /* handwritten instruction */
-/* 4A2BC 80059ABC 0038C048 */  ctc2       $zero, $7 /* handwritten instruction */
-/* 4A2C0 80059AC0 00088148 */  mtc2       $at, $1 /* handwritten instruction */
+/* 4A2A0 80059AA0 0000C748 */  ctc2       $a3, C2_R11R12 /* handwritten instruction */
+/* 4A2A4 80059AA4 0008C848 */  ctc2       $t0, C2_R13R21 /* handwritten instruction */
+/* 4A2A8 80059AA8 0010C948 */  ctc2       $t1, C2_R22R23 /* handwritten instruction */
+/* 4A2AC 80059AAC 0018CA48 */  ctc2       $t2, C2_R31R32 /* handwritten instruction */
+/* 4A2B0 80059AB0 0020CB48 */  ctc2       $t3, C2_R33 /* handwritten instruction */
+/* 4A2B4 80059AB4 0028C048 */  ctc2       $zero, C2_TRX /* handwritten instruction */
+/* 4A2B8 80059AB8 0030C048 */  ctc2       $zero, C2_TRY /* handwritten instruction */
+/* 4A2BC 80059ABC 0038C048 */  ctc2       $zero, C2_TRZ /* handwritten instruction */
+/* 4A2C0 80059AC0 00088148 */  mtc2       $at, C2_VZ0 /* handwritten instruction */
 /* 4A2C4 80059AC4 001C0300 */  sll        $v1, $v1, 16
 /* 4A2C8 80059AC8 FFFF4230 */  andi       $v0, $v0, 0xFFFF
 /* 4A2CC 80059ACC 20104300 */  add        $v0, $v0, $v1 /* handwritten instruction */
-/* 4A2D0 80059AD0 00008248 */  mtc2       $v0, $0 /* handwritten instruction */
+/* 4A2D0 80059AD0 00008248 */  mtc2       $v0, C2_VXY0 /* handwritten instruction */
 /* 4A2D4 80059AD4 00000000 */  nop
 /* 4A2D8 80059AD8 00000000 */  nop
 /* 4A2DC 80059ADC 0100184A */  RTPS
@@ -55,29 +56,29 @@ glabel func_80059A48
 /* 4A2F4 80059AF4 40180300 */  sll        $v1, $v1, 1
 /* 4A2F8 80059AF8 20082300 */  add        $at, $at, $v1 /* handwritten instruction */
 /* 4A2FC 80059AFC 20104300 */  add        $v0, $v0, $v1 /* handwritten instruction */
-/* 4A300 80059B00 00700E48 */  mfc2       $t6, $14 /* handwritten instruction */
-/* 4A304 80059B04 00980F48 */  mfc2       $t7, $19 /* handwritten instruction */
-/* 4A308 80059B08 00D80548 */  mfc2       $a1, $27 /* handwritten instruction */
-/* 4A30C 80059B0C 00D00448 */  mfc2       $a0, $26 /* handwritten instruction */
-/* 4A310 80059B10 00C80348 */  mfc2       $v1, $25 /* handwritten instruction */
-/* 4A314 80059B14 0038C548 */  ctc2       $a1, $7 /* handwritten instruction */
-/* 4A318 80059B18 0030C448 */  ctc2       $a0, $6 /* handwritten instruction */
-/* 4A31C 80059B1C 0028C348 */  ctc2       $v1, $5 /* handwritten instruction */
+/* 4A300 80059B00 00700E48 */  mfc2       $t6, C2_SXY2 /* handwritten instruction */
+/* 4A304 80059B04 00980F48 */  mfc2       $t7, C2_SZ3 /* handwritten instruction */
+/* 4A308 80059B08 00D80548 */  mfc2       $a1, C2_MAC3 /* handwritten instruction */
+/* 4A30C 80059B0C 00D00448 */  mfc2       $a0, C2_MAC2 /* handwritten instruction */
+/* 4A310 80059B10 00C80348 */  mfc2       $v1, C2_MAC1 /* handwritten instruction */
+/* 4A314 80059B14 0038C548 */  ctc2       $a1, C2_TRZ /* handwritten instruction */
+/* 4A318 80059B18 0030C448 */  ctc2       $a0, C2_TRY /* handwritten instruction */
+/* 4A31C 80059B1C 0028C348 */  ctc2       $v1, C2_TRX /* handwritten instruction */
 /* 4A320 80059B20 00004294 */  lhu        $v0, 0x0($v0)
 /* 4A324 80059B24 00002194 */  lhu        $at, 0x0($at)
 /* 4A328 80059B28 FFFF4230 */  andi       $v0, $v0, 0xFFFF
-/* 4A32C 80059B2C 00008248 */  mtc2       $v0, $0 /* handwritten instruction */
-/* 4A330 80059B30 00088148 */  mtc2       $at, $1 /* handwritten instruction */
+/* 4A32C 80059B2C 00008248 */  mtc2       $v0, C2_VXY0 /* handwritten instruction */
+/* 4A330 80059B30 00088148 */  mtc2       $at, C2_VZ0 /* handwritten instruction */
 /* 4A334 80059B34 00000000 */  nop
 /* 4A338 80059B38 00000000 */  nop
 /* 4A33C 80059B3C 1260484A */  MVMVA      1, 0, 0, 3, 0
 /* 4A340 80059B40 22080100 */  neg        $at, $at /* handwritten instruction */
 /* 4A344 80059B44 FFFF2130 */  andi       $at, $at, 0xFFFF
-/* 4A348 80059B48 00480448 */  mfc2       $a0, $9 /* handwritten instruction */
-/* 4A34C 80059B4C 00500548 */  mfc2       $a1, $10 /* handwritten instruction */
-/* 4A350 80059B50 00580648 */  mfc2       $a2, $11 /* handwritten instruction */
-/* 4A354 80059B54 00008148 */  mtc2       $at, $0 /* handwritten instruction */
-/* 4A358 80059B58 00088248 */  mtc2       $v0, $1 /* handwritten instruction */
+/* 4A348 80059B48 00480448 */  mfc2       $a0, C2_IR1 /* handwritten instruction */
+/* 4A34C 80059B4C 00500548 */  mfc2       $a1, C2_IR2 /* handwritten instruction */
+/* 4A350 80059B50 00580648 */  mfc2       $a2, C2_IR3 /* handwritten instruction */
+/* 4A354 80059B54 00008148 */  mtc2       $at, C2_VXY0 /* handwritten instruction */
+/* 4A358 80059B58 00088248 */  mtc2       $v0, C2_VZ0 /* handwritten instruction */
 /* 4A35C 80059B5C 00000000 */  nop
 /* 4A360 80059B60 FFFF033C */  lui        $v1, (0xFFFF0000 >> 16)
 /* 4A364 80059B64 1260484A */  MVMVA      1, 0, 0, 3, 0
@@ -89,19 +90,19 @@ glabel func_80059A48
 /* 4A37C 80059B7C 20504601 */  add        $t2, $t2, $a2 /* handwritten instruction */
 /* 4A380 80059B80 002C0500 */  sll        $a1, $a1, 16
 /* 4A384 80059B84 FFFF2931 */  andi       $t1, $t1, 0xFFFF
-/* 4A388 80059B88 00480148 */  mfc2       $at, $9 /* handwritten instruction */
-/* 4A38C 80059B8C 00500248 */  mfc2       $v0, $10 /* handwritten instruction */
-/* 4A390 80059B90 00580348 */  mfc2       $v1, $11 /* handwritten instruction */
+/* 4A388 80059B88 00480148 */  mfc2       $at, C2_IR1 /* handwritten instruction */
+/* 4A38C 80059B8C 00500248 */  mfc2       $v0, C2_IR2 /* handwritten instruction */
+/* 4A390 80059B90 00580348 */  mfc2       $v1, C2_IR3 /* handwritten instruction */
 /* 4A394 80059B94 FFFF2130 */  andi       $at, $at, 0xFFFF
 /* 4A398 80059B98 20402500 */  add        $t0, $at, $a1 /* handwritten instruction */
 /* 4A39C 80059B9C 00140200 */  sll        $v0, $v0, 16
 /* 4A3A0 80059BA0 20482201 */  add        $t1, $t1, $v0 /* handwritten instruction */
 /* 4A3A4 80059BA4 FFFF6B30 */  andi       $t3, $v1, 0xFFFF
-/* 4A3A8 80059BA8 0000C748 */  ctc2       $a3, $0 /* handwritten instruction */
-/* 4A3AC 80059BAC 0008C848 */  ctc2       $t0, $1 /* handwritten instruction */
-/* 4A3B0 80059BB0 0010C948 */  ctc2       $t1, $2 /* handwritten instruction */
-/* 4A3B4 80059BB4 0018CA48 */  ctc2       $t2, $3 /* handwritten instruction */
-/* 4A3B8 80059BB8 0020CB48 */  ctc2       $t3, $4 /* handwritten instruction */
+/* 4A3A8 80059BA8 0000C748 */  ctc2       $a3, C2_R11R12 /* handwritten instruction */
+/* 4A3AC 80059BAC 0008C848 */  ctc2       $t0, C2_R13R21 /* handwritten instruction */
+/* 4A3B0 80059BB0 0010C948 */  ctc2       $t1, C2_R22R23 /* handwritten instruction */
+/* 4A3B4 80059BB4 0018CA48 */  ctc2       $t2, C2_R31R32 /* handwritten instruction */
+/* 4A3B8 80059BB8 0020CB48 */  ctc2       $t3, C2_R33 /* handwritten instruction */
 /* 4A3BC 80059BBC 24000793 */  lbu        $a3, 0x24($t8)
 /* 4A3C0 80059BC0 0780023C */  lui        $v0, %hi(D_80076378)
 /* 4A3C4 80059BC4 78634224 */  addiu      $v0, $v0, %lo(D_80076378)
@@ -146,10 +147,10 @@ glabel func_80059A48
 /* 4A45C 80059C5C 00002590 */  lbu        $a1, (0x1F800000 & 0xFFFF)($at)
 /* 4A460 80059C60 01002690 */  lbu        $a2, (0x1F800001 & 0xFFFF)($at)
 /* 4A464 80059C64 02002790 */  lbu        $a3, (0x1F800002 & 0xFFFF)($at)
-/* 4A468 80059C68 00408248 */  mtc2       $v0, $8 /* handwritten instruction */
-/* 4A46C 80059C6C 00488548 */  mtc2       $a1, $9 /* handwritten instruction */
-/* 4A470 80059C70 00508648 */  mtc2       $a2, $10 /* handwritten instruction */
-/* 4A474 80059C74 00588748 */  mtc2       $a3, $11 /* handwritten instruction */
+/* 4A468 80059C68 00408248 */  mtc2       $v0, C2_IR0 /* handwritten instruction */
+/* 4A46C 80059C6C 00488548 */  mtc2       $a1, C2_IR1 /* handwritten instruction */
+/* 4A470 80059C70 00508648 */  mtc2       $a2, C2_IR2 /* handwritten instruction */
+/* 4A474 80059C74 00588748 */  mtc2       $a3, C2_IR3 /* handwritten instruction */
 /* 4A478 80059C78 08002590 */  lbu        $a1, (0x1F800008 & 0xFFFF)($at)
 /* 4A47C 80059C7C 09002690 */  lbu        $a2, (0x1F800009 & 0xFFFF)($at)
 /* 4A480 80059C80 3D00904B */  GPF        0
@@ -157,16 +158,16 @@ glabel func_80059A48
 /* 4A488 80059C88 00000000 */  nop
 /* 4A48C 80059C8C 00000000 */  nop
 /* 4A490 80059C90 00000000 */  nop
-/* 4A494 80059C94 00408348 */  mtc2       $v1, $8 /* handwritten instruction */
-/* 4A498 80059C98 00488548 */  mtc2       $a1, $9 /* handwritten instruction */
-/* 4A49C 80059C9C 00508648 */  mtc2       $a2, $10 /* handwritten instruction */
-/* 4A4A0 80059CA0 00588748 */  mtc2       $a3, $11 /* handwritten instruction */
+/* 4A494 80059C94 00408348 */  mtc2       $v1, C2_IR0 /* handwritten instruction */
+/* 4A498 80059C98 00488548 */  mtc2       $a1, C2_IR1 /* handwritten instruction */
+/* 4A49C 80059C9C 00508648 */  mtc2       $a2, C2_IR2 /* handwritten instruction */
+/* 4A4A0 80059CA0 00588748 */  mtc2       $a3, C2_IR3 /* handwritten instruction */
 /* 4A4A4 80059CA4 FFFF8420 */  addi       $a0, $a0, -0x1 /* handwritten instruction */
 /* 4A4A8 80059CA8 03002120 */  addi       $at, $at, (0x1F800003 & 0xFFFF) /* handwritten instruction */
 /* 4A4AC 80059CAC 3E00A04B */  GPL        0
-/* 4A4B0 80059CB0 00C80548 */  mfc2       $a1, $25 /* handwritten instruction */
-/* 4A4B4 80059CB4 00D00648 */  mfc2       $a2, $26 /* handwritten instruction */
-/* 4A4B8 80059CB8 00D80748 */  mfc2       $a3, $27 /* handwritten instruction */
+/* 4A4B0 80059CB0 00C80548 */  mfc2       $a1, C2_MAC1 /* handwritten instruction */
+/* 4A4B4 80059CB4 00D00648 */  mfc2       $a2, C2_MAC2 /* handwritten instruction */
+/* 4A4B8 80059CB8 00D80748 */  mfc2       $a3, C2_MAC3 /* handwritten instruction */
 /* 4A4BC 80059CBC 02290500 */  srl        $a1, $a1, 4
 /* 4A4C0 80059CC0 02310600 */  srl        $a2, $a2, 4
 /* 4A4C4 80059CC4 02390700 */  srl        $a3, $a3, 4
@@ -260,14 +261,14 @@ glabel func_80059A48
 /* 4A60C 80059E0C 00002680 */  lb         $a2, 0x0($at)
 /* 4A610 80059E10 12400000 */  mflo       $t0
 /* 4A614 80059E14 83420800 */  sra        $t0, $t0, 10
-/* 4A618 80059E18 00088848 */  mtc2       $t0, $1 /* handwritten instruction */
+/* 4A618 80059E18 00088848 */  mtc2       $t0, C2_VZ0 /* handwritten instruction */
 /* 4A61C 80059E1C 1800E900 */  mult       $a3, $t1
 /* 4A620 80059E20 80340600 */  sll        $a2, $a2, 18
 /* 4A624 80059E24 12480000 */  mflo       $t1
 /* 4A628 80059E28 834A0900 */  sra        $t1, $t1, 10
 /* 4A62C 80059E2C FFFF2931 */  andi       $t1, $t1, 0xFFFF
 /* 4A630 80059E30 20482601 */  add        $t1, $t1, $a2 /* handwritten instruction */
-/* 4A634 80059E34 00008948 */  mtc2       $t1, $0 /* handwritten instruction */
+/* 4A634 80059E34 00008948 */  mtc2       $t1, C2_VXY0 /* handwritten instruction */
 /* 4A638 80059E38 01002120 */  addi       $at, $at, 0x1 /* handwritten instruction */
 /* 4A63C 80059E3C 01004220 */  addi       $v0, $v0, 0x1 /* handwritten instruction */
 /* 4A640 80059E40 0100184A */  RTPS
@@ -277,8 +278,8 @@ glabel func_80059A48
 /* 4A650 80059E50 034C0800 */  sra        $t1, $t0, 16
 /* 4A654 80059E54 00440800 */  sll        $t0, $t0, 16
 /* 4A658 80059E58 03440800 */  sra        $t0, $t0, 16
-/* 4A65C 80059E5C 00700A48 */  mfc2       $t2, $14 /* handwritten instruction */
-/* 4A660 80059E60 00980B48 */  mfc2       $t3, $19 /* handwritten instruction */
+/* 4A65C 80059E5C 00700A48 */  mfc2       $t2, C2_SXY2 /* handwritten instruction */
+/* 4A660 80059E60 00980B48 */  mfc2       $t3, C2_SZ3 /* handwritten instruction */
 /* 4A664 80059E64 00008AAC */  sw         $t2, (0x1F800000 & 0xFFFF)($a0)
 /* 4A668 80059E68 04008BAC */  sw         $t3, (0x1F800004 & 0xFFFF)($a0)
 /* 4A66C 80059E6C E6FF8514 */  bne        $a0, $a1, .L80059E08
@@ -411,14 +412,14 @@ glabel func_80059F8C
 /* 4A844 8005A044 14004D8D */  lw         $t5, (0x1F800014 & 0xFFFF)($t2)
 /* 4A848 8005A048 18004E8D */  lw         $t6, (0x1F800018 & 0xFFFF)($t2)
 /* 4A84C 8005A04C 1C004F8D */  lw         $t7, (0x1F80001C & 0xFFFF)($t2)
-/* 4A850 8005A050 0000CB48 */  ctc2       $t3, $0 /* handwritten instruction */
-/* 4A854 8005A054 0008CC48 */  ctc2       $t4, $1 /* handwritten instruction */
-/* 4A858 8005A058 0010CD48 */  ctc2       $t5, $2 /* handwritten instruction */
-/* 4A85C 8005A05C 0018CE48 */  ctc2       $t6, $3 /* handwritten instruction */
-/* 4A860 8005A060 0020CF48 */  ctc2       $t7, $4 /* handwritten instruction */
-/* 4A864 8005A064 0028C048 */  ctc2       $zero, $5 /* handwritten instruction */
-/* 4A868 8005A068 0030C048 */  ctc2       $zero, $6 /* handwritten instruction */
-/* 4A86C 8005A06C 0038C048 */  ctc2       $zero, $7 /* handwritten instruction */
+/* 4A850 8005A050 0000CB48 */  ctc2       $t3, C2_R11R12 /* handwritten instruction */
+/* 4A854 8005A054 0008CC48 */  ctc2       $t4, C2_R13R21 /* handwritten instruction */
+/* 4A858 8005A058 0010CD48 */  ctc2       $t5, C2_R22R23 /* handwritten instruction */
+/* 4A85C 8005A05C 0018CE48 */  ctc2       $t6, C2_R31R32 /* handwritten instruction */
+/* 4A860 8005A060 0020CF48 */  ctc2       $t7, C2_R33 /* handwritten instruction */
+/* 4A864 8005A064 0028C048 */  ctc2       $zero, C2_TRX /* handwritten instruction */
+/* 4A868 8005A068 0030C048 */  ctc2       $zero, C2_TRY /* handwritten instruction */
+/* 4A86C 8005A06C 0038C048 */  ctc2       $zero, C2_TRZ /* handwritten instruction */
 /* 4A870 8005A070 0000478D */  lw         $a3, (0x1F800000 & 0xFFFF)($t2)
 /* 4A874 8005A074 0400488D */  lw         $t0, (0x1F800004 & 0xFFFF)($t2)
 /* 4A878 8005A078 0800498D */  lw         $t1, (0x1F800008 & 0xFFFF)($t2)
@@ -434,8 +435,8 @@ glabel func_80059F8C
 /* 4A8A0 8005A0A0 2020A400 */  add        $a0, $a1, $a0 /* handwritten instruction */
 /* 4A8A4 8005A0A4 82180300 */  srl        $v1, $v1, 2
 /* 4A8A8 8005A0A8 22186700 */  sub        $v1, $v1, $a3 /* handwritten instruction */
-/* 4A8AC 8005A0AC 00008448 */  mtc2       $a0, $0 /* handwritten instruction */
-/* 4A8B0 8005A0B0 00088348 */  mtc2       $v1, $1 /* handwritten instruction */
+/* 4A8AC 8005A0AC 00008448 */  mtc2       $a0, C2_VXY0 /* handwritten instruction */
+/* 4A8B0 8005A0B0 00088348 */  mtc2       $v1, C2_VZ0 /* handwritten instruction */
 /* 4A8B4 8005A0B4 022C0600 */  srl        $a1, $a2, 16
 /* 4A8B8 8005A0B8 82250600 */  srl        $a0, $a2, 22
 /* 4A8BC 8005A0BC 0100184A */  RTPS
@@ -446,12 +447,12 @@ glabel func_80059F8C
 /* 4A8D0 8005A0D0 3F00A530 */  andi       $a1, $a1, 0x3F
 /* 4A8D4 8005A0D4 C0200400 */  sll        $a0, $a0, 3
 /* 4A8D8 8005A0D8 C0280500 */  sll        $a1, $a1, 3
-/* 4A8DC 8005A0DC 00D80848 */  mfc2       $t0, $27 /* handwritten instruction */
-/* 4A8E0 8005A0E0 00D00748 */  mfc2       $a3, $26 /* handwritten instruction */
-/* 4A8E4 8005A0E4 00C80648 */  mfc2       $a2, $25 /* handwritten instruction */
-/* 4A8E8 8005A0E8 0038C848 */  ctc2       $t0, $7 /* handwritten instruction */
-/* 4A8EC 8005A0EC 0030C748 */  ctc2       $a3, $6 /* handwritten instruction */
-/* 4A8F0 8005A0F0 0028C648 */  ctc2       $a2, $5 /* handwritten instruction */
+/* 4A8DC 8005A0DC 00D80848 */  mfc2       $t0, C2_MAC3 /* handwritten instruction */
+/* 4A8E0 8005A0E0 00D00748 */  mfc2       $a3, C2_MAC2 /* handwritten instruction */
+/* 4A8E4 8005A0E4 00C80648 */  mfc2       $a2, C2_MAC1 /* handwritten instruction */
+/* 4A8E8 8005A0E8 0038C848 */  ctc2       $t0, C2_TRZ /* handwritten instruction */
+/* 4A8EC 8005A0EC 0030C748 */  ctc2       $a3, C2_TRY /* handwritten instruction */
+/* 4A8F0 8005A0F0 0028C648 */  ctc2       $a2, C2_TRX /* handwritten instruction */
 /* 4A8F4 8005A0F4 00F00821 */  addi       $t0, $t0, -0x1000 /* handwritten instruction */
 /* 4A8F8 8005A0F8 CCFF0105 */  bgez       $t0, .L8005A02C
 /* 4A8FC 8005A0FC 00000000 */   nop
@@ -460,18 +461,18 @@ glabel func_80059F8C
 /* 4A908 8005A108 8000A694 */  lhu        $a2, 0x80($a1)
 /* 4A90C 8005A10C 0000A594 */  lhu        $a1, 0x0($a1)
 /* 4A910 8005A110 003C0600 */  sll        $a3, $a2, 16
-/* 4A914 8005A114 00008748 */  mtc2       $a3, $0 /* handwritten instruction */
-/* 4A918 8005A118 00088548 */  mtc2       $a1, $1 /* handwritten instruction */
+/* 4A914 8005A114 00008748 */  mtc2       $a3, C2_VXY0 /* handwritten instruction */
+/* 4A918 8005A118 00088548 */  mtc2       $a1, C2_VZ0 /* handwritten instruction */
 /* 4A91C 8005A11C 00000000 */  nop
 /* 4A920 8005A120 00000000 */  nop
 /* 4A924 8005A124 1260484A */  MVMVA      1, 0, 0, 3, 0
 /* 4A928 8005A128 003C0500 */  sll        $a3, $a1, 16
 /* 4A92C 8005A12C 22380700 */  neg        $a3, $a3 /* handwritten instruction */
-/* 4A930 8005A130 00480848 */  mfc2       $t0, $9 /* handwritten instruction */
-/* 4A934 8005A134 00500948 */  mfc2       $t1, $10 /* handwritten instruction */
-/* 4A938 8005A138 00580A48 */  mfc2       $t2, $11 /* handwritten instruction */
-/* 4A93C 8005A13C 00008748 */  mtc2       $a3, $0 /* handwritten instruction */
-/* 4A940 8005A140 00088648 */  mtc2       $a2, $1 /* handwritten instruction */
+/* 4A930 8005A130 00480848 */  mfc2       $t0, C2_IR1 /* handwritten instruction */
+/* 4A934 8005A134 00500948 */  mfc2       $t1, C2_IR2 /* handwritten instruction */
+/* 4A938 8005A138 00580A48 */  mfc2       $t2, C2_IR3 /* handwritten instruction */
+/* 4A93C 8005A13C 00008748 */  mtc2       $a3, C2_VXY0 /* handwritten instruction */
+/* 4A940 8005A140 00088648 */  mtc2       $a2, C2_VZ0 /* handwritten instruction */
 /* 4A944 8005A144 00000000 */  nop
 /* 4A948 8005A148 FFFF073C */  lui        $a3, (0xFFFF0000 >> 16)
 /* 4A94C 8005A14C 1260484A */  MVMVA      1, 0, 0, 3, 0
@@ -483,28 +484,28 @@ glabel func_80059F8C
 /* 4A964 8005A164 2070CA01 */  add        $t6, $t6, $t2 /* handwritten instruction */
 /* 4A968 8005A168 FFFF2931 */  andi       $t1, $t1, 0xFFFF
 /* 4A96C 8005A16C 24608701 */  and        $t4, $t4, $a3
-/* 4A970 8005A170 00480548 */  mfc2       $a1, $9 /* handwritten instruction */
-/* 4A974 8005A174 00500648 */  mfc2       $a2, $10 /* handwritten instruction */
-/* 4A978 8005A178 00580748 */  mfc2       $a3, $11 /* handwritten instruction */
+/* 4A970 8005A170 00480548 */  mfc2       $a1, C2_IR1 /* handwritten instruction */
+/* 4A974 8005A174 00500648 */  mfc2       $a2, C2_IR2 /* handwritten instruction */
+/* 4A978 8005A178 00580748 */  mfc2       $a3, C2_IR3 /* handwritten instruction */
 /* 4A97C 8005A17C FFFFA530 */  andi       $a1, $a1, 0xFFFF
 /* 4A980 8005A180 20608501 */  add        $t4, $t4, $a1 /* handwritten instruction */
 /* 4A984 8005A184 00340600 */  sll        $a2, $a2, 16
 /* 4A988 8005A188 2068C900 */  add        $t5, $a2, $t1 /* handwritten instruction */
 /* 4A98C 8005A18C FFFFEF30 */  andi       $t7, $a3, 0xFFFF
-/* 4A990 8005A190 0000CB48 */  ctc2       $t3, $0 /* handwritten instruction */
-/* 4A994 8005A194 0008CC48 */  ctc2       $t4, $1 /* handwritten instruction */
-/* 4A998 8005A198 0010CD48 */  ctc2       $t5, $2 /* handwritten instruction */
-/* 4A99C 8005A19C 0018CE48 */  ctc2       $t6, $3 /* handwritten instruction */
-/* 4A9A0 8005A1A0 0020CF48 */  ctc2       $t7, $4 /* handwritten instruction */
+/* 4A990 8005A190 0000CB48 */  ctc2       $t3, C2_R11R12 /* handwritten instruction */
+/* 4A994 8005A194 0008CC48 */  ctc2       $t4, C2_R13R21 /* handwritten instruction */
+/* 4A998 8005A198 0010CD48 */  ctc2       $t5, C2_R22R23 /* handwritten instruction */
+/* 4A99C 8005A19C 0018CE48 */  ctc2       $t6, C2_R31R32 /* handwritten instruction */
+/* 4A9A0 8005A1A0 0020CF48 */  ctc2       $t7, C2_R33 /* handwritten instruction */
 .L8005A1A4:
 /* 4A9A4 8005A1A4 25008010 */  beqz       $a0, .L8005A23C
 /* 4A9A8 8005A1A8 20208300 */   add       $a0, $a0, $v1 /* handwritten instruction */
 /* 4A9AC 8005A1AC 80008694 */  lhu        $a2, 0x80($a0)
 /* 4A9B0 8005A1B0 00008594 */  lhu        $a1, 0x0($a0)
-/* 4A9B4 8005A1B4 00088048 */  mtc2       $zero, $1 /* handwritten instruction */
+/* 4A9B4 8005A1B4 00088048 */  mtc2       $zero, C2_VZ0 /* handwritten instruction */
 /* 4A9B8 8005A1B8 003C0500 */  sll        $a3, $a1, 16
 /* 4A9BC 8005A1BC 2038E600 */  add        $a3, $a3, $a2 /* handwritten instruction */
-/* 4A9C0 8005A1C0 00008748 */  mtc2       $a3, $0 /* handwritten instruction */
+/* 4A9C0 8005A1C0 00008748 */  mtc2       $a3, C2_VXY0 /* handwritten instruction */
 /* 4A9C4 8005A1C4 00000000 */  nop
 /* 4A9C8 8005A1C8 00000000 */  nop
 /* 4A9CC 8005A1CC 1260484A */  MVMVA      1, 0, 0, 3, 0
@@ -512,11 +513,11 @@ glabel func_80059F8C
 /* 4A9D4 8005A1D4 FFFFA530 */  andi       $a1, $a1, 0xFFFF
 /* 4A9D8 8005A1D8 00340600 */  sll        $a2, $a2, 16
 /* 4A9DC 8005A1DC 2028A600 */  add        $a1, $a1, $a2 /* handwritten instruction */
-/* 4A9E0 8005A1E0 00480848 */  mfc2       $t0, $9 /* handwritten instruction */
-/* 4A9E4 8005A1E4 00500948 */  mfc2       $t1, $10 /* handwritten instruction */
-/* 4A9E8 8005A1E8 00580A48 */  mfc2       $t2, $11 /* handwritten instruction */
-/* 4A9EC 8005A1EC 00008548 */  mtc2       $a1, $0 /* handwritten instruction */
-/* 4A9F0 8005A1F0 00088048 */  mtc2       $zero, $1 /* handwritten instruction */
+/* 4A9E0 8005A1E0 00480848 */  mfc2       $t0, C2_IR1 /* handwritten instruction */
+/* 4A9E4 8005A1E4 00500948 */  mfc2       $t1, C2_IR2 /* handwritten instruction */
+/* 4A9E8 8005A1E8 00580A48 */  mfc2       $t2, C2_IR3 /* handwritten instruction */
+/* 4A9EC 8005A1EC 00008548 */  mtc2       $a1, C2_VXY0 /* handwritten instruction */
+/* 4A9F0 8005A1F0 00088048 */  mtc2       $zero, C2_VZ0 /* handwritten instruction */
 /* 4A9F4 8005A1F4 00000000 */  nop
 /* 4A9F8 8005A1F8 FFFF073C */  lui        $a3, (0xFFFF0000 >> 16)
 /* 4A9FC 8005A1FC 1260484A */  MVMVA      1, 0, 0, 3, 0
@@ -526,9 +527,9 @@ glabel func_80059F8C
 /* 4AA0C 8005A20C FFFF0831 */  andi       $t0, $t0, 0xFFFF
 /* 4AA10 8005A210 FFFF4A31 */  andi       $t2, $t2, 0xFFFF
 /* 4AA14 8005A214 2468A701 */  and        $t5, $t5, $a3
-/* 4AA18 8005A218 00480548 */  mfc2       $a1, $9 /* handwritten instruction */
-/* 4AA1C 8005A21C 00500648 */  mfc2       $a2, $10 /* handwritten instruction */
-/* 4AA20 8005A220 00580748 */  mfc2       $a3, $11 /* handwritten instruction */
+/* 4AA18 8005A218 00480548 */  mfc2       $a1, C2_IR1 /* handwritten instruction */
+/* 4AA1C 8005A21C 00500648 */  mfc2       $a2, C2_IR2 /* handwritten instruction */
+/* 4AA20 8005A220 00580748 */  mfc2       $a3, C2_IR3 /* handwritten instruction */
 /* 4AA24 8005A224 002C0500 */  sll        $a1, $a1, 16
 /* 4AA28 8005A228 2058A800 */  add        $t3, $a1, $t0 /* handwritten instruction */
 /* 4AA2C 8005A22C 003C0700 */  sll        $a3, $a3, 16
@@ -536,22 +537,22 @@ glabel func_80059F8C
 /* 4AA34 8005A234 FFFFC630 */  andi       $a2, $a2, 0xFFFF
 /* 4AA38 8005A238 2068A601 */  add        $t5, $t5, $a2 /* handwritten instruction */
 .L8005A23C:
-/* 4AA3C 8005A23C 0000CB48 */  ctc2       $t3, $0 /* handwritten instruction */
-/* 4AA40 8005A240 0008CC48 */  ctc2       $t4, $1 /* handwritten instruction */
-/* 4AA44 8005A244 0010CD48 */  ctc2       $t5, $2 /* handwritten instruction */
-/* 4AA48 8005A248 0018CE48 */  ctc2       $t6, $3 /* handwritten instruction */
-/* 4AA4C 8005A24C 0020CF48 */  ctc2       $t7, $4 /* handwritten instruction */
-/* 4AA50 8005A250 00700E48 */  mfc2       $t6, $14 /* handwritten instruction */
-/* 4AA54 8005A254 00980F48 */  mfc2       $t7, $19 /* handwritten instruction */
-/* 4AA58 8005A258 00008048 */  mtc2       $zero, $0 /* handwritten instruction */
-/* 4AA5C 8005A25C 00088248 */  mtc2       $v0, $1 /* handwritten instruction */
-/* 4AA60 8005A260 00108248 */  mtc2       $v0, $2 /* handwritten instruction */
-/* 4AA64 8005A264 00188048 */  mtc2       $zero, $3 /* handwritten instruction */
-/* 4AA68 8005A268 00208048 */  mtc2       $zero, $4 /* handwritten instruction */
+/* 4AA3C 8005A23C 0000CB48 */  ctc2       $t3, C2_R11R12 /* handwritten instruction */
+/* 4AA40 8005A240 0008CC48 */  ctc2       $t4, C2_R13R21 /* handwritten instruction */
+/* 4AA44 8005A244 0010CD48 */  ctc2       $t5, C2_R22R23 /* handwritten instruction */
+/* 4AA48 8005A248 0018CE48 */  ctc2       $t6, C2_R31R32 /* handwritten instruction */
+/* 4AA4C 8005A24C 0020CF48 */  ctc2       $t7, C2_R33 /* handwritten instruction */
+/* 4AA50 8005A250 00700E48 */  mfc2       $t6, C2_SXY2 /* handwritten instruction */
+/* 4AA54 8005A254 00980F48 */  mfc2       $t7, C2_SZ3 /* handwritten instruction */
+/* 4AA58 8005A258 00008048 */  mtc2       $zero, C2_VXY0 /* handwritten instruction */
+/* 4AA5C 8005A25C 00088248 */  mtc2       $v0, C2_VZ0 /* handwritten instruction */
+/* 4AA60 8005A260 00108248 */  mtc2       $v0, C2_VXY1 /* handwritten instruction */
+/* 4AA64 8005A264 00188048 */  mtc2       $zero, C2_VZ1 /* handwritten instruction */
+/* 4AA68 8005A268 00208048 */  mtc2       $zero, C2_VXY2 /* handwritten instruction */
 /* 4AA6C 8005A26C 22180200 */  neg        $v1, $v0 /* handwritten instruction */
-/* 4AA70 8005A270 00288348 */  mtc2       $v1, $5 /* handwritten instruction */
+/* 4AA70 8005A270 00288348 */  mtc2       $v1, C2_VZ2 /* handwritten instruction */
 /* 4AA74 8005A274 00000000 */  nop
-/* 4AA78 8005A278 00384948 */  cfc2       $t1, $7 /* handwritten instruction */
+/* 4AA78 8005A278 00384948 */  cfc2       $t1, C2_TRZ /* handwritten instruction */
 /* 4AA7C 8005A27C 3000284A */  RTPT
 /* 4AA80 8005A280 801F033C */  lui        $v1, (0x1F800030 >> 16)
 /* 4AA84 8005A284 2800648C */  lw         $a0, (0x1F800028 & 0xFFFF)($v1)
@@ -575,25 +576,25 @@ glabel func_80059F8C
 .L8005A2CC:
 /* 4AACC 8005A2CC 22100200 */  neg        $v0, $v0 /* handwritten instruction */
 /* 4AAD0 8005A2D0 FFFF4230 */  andi       $v0, $v0, 0xFFFF
-/* 4AAD4 8005A2D4 00600948 */  mfc2       $t1, $12 /* handwritten instruction */
-/* 4AAD8 8005A2D8 00680A48 */  mfc2       $t2, $13 /* handwritten instruction */
-/* 4AADC 8005A2DC 00700B48 */  mfc2       $t3, $14 /* handwritten instruction */
+/* 4AAD4 8005A2D4 00600948 */  mfc2       $t1, C2_SXY0 /* handwritten instruction */
+/* 4AAD8 8005A2D8 00680A48 */  mfc2       $t2, C2_SXY1 /* handwritten instruction */
+/* 4AADC 8005A2DC 00700B48 */  mfc2       $t3, C2_SXY2 /* handwritten instruction */
 /* 4AAE0 8005A2E0 0600404B */  NCLIP
 /* 4AAE4 8005A2E4 300069AC */  sw         $t1, (0x1F800030 & 0xFFFF)($v1)
 /* 4AAE8 8005A2E8 34006AAC */  sw         $t2, (0x1F800034 & 0xFFFF)($v1)
 /* 4AAEC 8005A2EC 38006BAC */  sw         $t3, (0x1F800038 & 0xFFFF)($v1)
 /* 4AAF0 8005A2F0 400069AC */  sw         $t1, (0x1F800040 & 0xFFFF)($v1)
-/* 4AAF4 8005A2F4 00880948 */  mfc2       $t1, $17 /* handwritten instruction */
-/* 4AAF8 8005A2F8 00900A48 */  mfc2       $t2, $18 /* handwritten instruction */
-/* 4AAFC 8005A2FC 00980B48 */  mfc2       $t3, $19 /* handwritten instruction */
-/* 4AB00 8005A300 00C00C48 */  mfc2       $t4, $24 /* handwritten instruction */
+/* 4AAF4 8005A2F4 00880948 */  mfc2       $t1, C2_SZ1 /* handwritten instruction */
+/* 4AAF8 8005A2F8 00900A48 */  mfc2       $t2, C2_SZ2 /* handwritten instruction */
+/* 4AAFC 8005A2FC 00980B48 */  mfc2       $t3, C2_SZ3 /* handwritten instruction */
+/* 4AB00 8005A300 00C00C48 */  mfc2       $t4, C2_MAC0 /* handwritten instruction */
 /* 4AB04 8005A304 440069AC */  sw         $t1, (0x1F800044 & 0xFFFF)($v1)
 /* 4AB08 8005A308 48FF8005 */  bltz       $t4, .L8005A02C
 /* 4AB0C 8005A30C 48006AAC */   sw        $t2, (0x1F800048 & 0xFFFF)($v1)
 /* 4AB10 8005A310 4C006BAC */  sw         $t3, (0x1F80004C & 0xFFFF)($v1)
 /* 4AB14 8005A314 540069AC */  sw         $t1, (0x1F800054 & 0xFFFF)($v1)
-/* 4AB18 8005A318 00008248 */  mtc2       $v0, $0 /* handwritten instruction */
-/* 4AB1C 8005A31C 00088048 */  mtc2       $zero, $1 /* handwritten instruction */
+/* 4AB18 8005A318 00008248 */  mtc2       $v0, C2_VXY0 /* handwritten instruction */
+/* 4AB1C 8005A31C 00088048 */  mtc2       $zero, C2_VZ0 /* handwritten instruction */
 /* 4AB20 8005A320 FFFF2120 */  addi       $at, $at, -0x1 /* handwritten instruction */
 /* 4AB24 8005A324 00000000 */  nop
 /* 4AB28 8005A328 0100184A */  RTPS
@@ -608,13 +609,13 @@ glabel func_80059F8C
 /* 4AB4C 8005A34C F8FDAC21 */   addi      $t4, $t5, -0x208 /* handwritten instruction */
 /* 4AB50 8005A350 36FF8105 */  bgez       $t4, .L8005A02C
 /* 4AB54 8005A354 00000000 */   nop
-/* 4AB58 8005A358 00700948 */  mfc2       $t1, $14 /* handwritten instruction */
-/* 4AB5C 8005A35C 00980A48 */  mfc2       $t2, $19 /* handwritten instruction */
+/* 4AB58 8005A358 00700948 */  mfc2       $t1, C2_SXY2 /* handwritten instruction */
+/* 4AB5C 8005A35C 00980A48 */  mfc2       $t2, C2_SZ3 /* handwritten instruction */
 /* 4AB60 8005A360 3C0069AC */  sw         $t1, (0x1F80003C & 0xFFFF)($v1)
 /* 4AB64 8005A364 50006AAC */  sw         $t2, (0x1F800050 & 0xFFFF)($v1)
 /* 4AB68 8005A368 30006220 */  addi       $v0, $v1, (0x1F800030 & 0xFFFF) /* handwritten instruction */
 /* 4AB6C 8005A36C 10004320 */  addi       $v1, $v0, 0x10 /* handwritten instruction */
-/* 4AB70 8005A370 00384948 */  cfc2       $t1, $7 /* handwritten instruction */
+/* 4AB70 8005A370 00384948 */  cfc2       $t1, C2_TRZ /* handwritten instruction */
 /* 4AB74 8005A374 01000B3C */  lui        $t3, (0x10000 >> 16)
 /* 4AB78 8005A378 00FC2921 */  addi       $t1, $t1, -0x400 /* handwritten instruction */
 /* 4AB7C 8005A37C 0F002019 */  blez       $t1, .L8005A3BC

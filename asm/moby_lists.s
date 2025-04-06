@@ -1,4 +1,5 @@
 .include "macro.inc"
+.include "c2regs.inc"
 
 .set noat
 .set noreorder
@@ -62,7 +63,7 @@ glabel func_80051FEC
 /* 428A8 800520A8 22388300 */   sub       $a3, $a0, $v1 /* handwritten instruction */
 /* 428AC 800520AC E4FFE104 */  bgez       $a3, .L80052040
 /* 428B0 800520B0 C3200400 */   sra       $a0, $a0, 3
-/* 428B4 800520B4 00488448 */  mtc2       $a0, $9 /* handwritten instruction */
+/* 428B4 800520B4 00488448 */  mtc2       $a0, C2_IR1 /* handwritten instruction */
 /* 428B8 800520B8 1400268C */  lw         $a2, 0x14($at)
 /* 428BC 800520BC 2228AC00 */  sub        $a1, $a1, $t4 /* handwritten instruction */
 /* 428C0 800520C0 2038A300 */  add        $a3, $a1, $v1 /* handwritten instruction */
@@ -70,8 +71,8 @@ glabel func_80051FEC
 /* 428C8 800520C8 2238A300 */   sub       $a3, $a1, $v1 /* handwritten instruction */
 /* 428CC 800520CC DCFFE104 */  bgez       $a3, .L80052040
 /* 428D0 800520D0 C3280500 */   sra       $a1, $a1, 3
-/* 428D4 800520D4 00508548 */  mtc2       $a1, $10 /* handwritten instruction */
-/* 428D8 800520D8 00588048 */  mtc2       $zero, $11 /* handwritten instruction */
+/* 428D4 800520D4 00508548 */  mtc2       $a1, C2_IR2 /* handwritten instruction */
+/* 428D8 800520D8 00588048 */  mtc2       $zero, C2_IR3 /* handwritten instruction */
 /* 428DC 800520DC 2230CD00 */  sub        $a2, $a2, $t5 /* handwritten instruction */
 /* 428E0 800520E0 2038C300 */  add        $a3, $a2, $v1 /* handwritten instruction */
 /* 428E4 800520E4 2804A04A */  SQR        0
@@ -79,8 +80,8 @@ glabel func_80051FEC
 /* 428EC 800520EC 2238C300 */   sub       $a3, $a2, $v1 /* handwritten instruction */
 /* 428F0 800520F0 D3FFE104 */  bgez       $a3, .L80052040
 /* 428F4 800520F4 12180000 */   mflo      $v1
-/* 428F8 800520F8 00C80448 */  mfc2       $a0, $25 /* handwritten instruction */
-/* 428FC 800520FC 00D00548 */  mfc2       $a1, $26 /* handwritten instruction */
+/* 428F8 800520F8 00C80448 */  mfc2       $a0, C2_MAC1 /* handwritten instruction */
+/* 428FC 800520FC 00D00548 */  mfc2       $a1, C2_MAC2 /* handwritten instruction */
 /* 42900 80052100 22186400 */  sub        $v1, $v1, $a0 /* handwritten instruction */
 /* 42904 80052104 22186500 */  sub        $v1, $v1, $a1 /* handwritten instruction */
 /* 42908 80052108 CDFF6018 */  blez       $v1, .L80052040

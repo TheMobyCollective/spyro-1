@@ -1,4 +1,5 @@
 .include "macro.inc"
+.include "c2regs.inc"
 
 .set noat
 .set noreorder
@@ -9,21 +10,21 @@
 
 /* Handwritten function */
 glabel func_80017E54
-/* 8654 80017E54 00308448 */  mtc2       $a0, $6 /* handwritten instruction */
-/* 8658 80017E58 00408648 */  mtc2       $a2, $8 /* handwritten instruction */
+/* 8654 80017E54 00308448 */  mtc2       $a0, C2_RGB /* handwritten instruction */
+/* 8658 80017E58 00408648 */  mtc2       $a2, C2_IR0 /* handwritten instruction */
 /* 865C 80017E5C 00090500 */  sll        $at, $a1, 4
 /* 8660 80017E60 F00F2130 */  andi       $at, $at, 0xFF0
 /* 8664 80017E64 02110500 */  srl        $v0, $a1, 4
 /* 8668 80017E68 F00F4230 */  andi       $v0, $v0, 0xFF0
 /* 866C 80017E6C 021B0500 */  srl        $v1, $a1, 12
 /* 8670 80017E70 F00F6330 */  andi       $v1, $v1, 0xFF0
-/* 8674 80017E74 00A8C148 */  ctc2       $at, $21 /* handwritten instruction */
-/* 8678 80017E78 00B0C248 */  ctc2       $v0, $22 /* handwritten instruction */
-/* 867C 80017E7C 00B8C348 */  ctc2       $v1, $23 /* handwritten instruction */
+/* 8674 80017E74 00A8C148 */  ctc2       $at, C2_RFC /* handwritten instruction */
+/* 8678 80017E78 00B0C248 */  ctc2       $v0, C2_GFC /* handwritten instruction */
+/* 867C 80017E7C 00B8C348 */  ctc2       $v1, C2_BFC /* handwritten instruction */
 /* 8680 80017E80 00000000 */  nop
 /* 8684 80017E84 00000000 */  nop
 /* 8688 80017E88 1000784A */  DPCS
-/* 868C 80017E8C 00B00248 */  mfc2       $v0, $22 /* handwritten instruction */
+/* 868C 80017E8C 00B00248 */  mfc2       $v0, C2_RGB2 /* handwritten instruction */
 /* 8690 80017E90 0800E003 */  jr         $ra
 /* 8694 80017E94 00000000 */   nop
 .size func_80017E54, . - func_80017E54
