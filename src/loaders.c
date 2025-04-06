@@ -225,61 +225,100 @@ void func_80014564(void) {
     return;
 
   if (g_LoadStage == 0) {
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf, 0x800,
+
+    // Load the level header from disc
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf, 2048,
                 g_WadHeader.m_CutsceneData[D_8007566C].m_Offset, 600);
+
     g_LoadStage = 1;
+
   } else if (g_LoadStage == 1) {
-    Memcpy(&g_LevelHeader, D_800785D8.m_CopyBuf, 0x1D0);
+
+    // Copy the level header to the global struct
+    Memcpy(&g_LevelHeader, D_800785D8.m_CopyBuf, sizeof(g_LevelHeader));
+
+    // Load the VRAM for the cutscene from disc
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf,
                 D_8006EE5C[D_8007566C],
                 g_LevelHeader.m_VramSramOffset +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
                 600);
+
     g_LoadStage = 2;
+
   } else if (g_LoadStage == 2) {
+
+    // Load the cutscene VRAM from the buffer into VRAM
+    // The shift for is dividing by 1024, because every line is 1024 bytes
     setRECT(&r, 512, 0, 512, D_8006EE5C[D_8007566C] >> 10);
     LoadImage(&r, D_800785D8.m_CopyBuf);
+
     g_LoadStage = 3;
+
   } else if (g_LoadStage == 3) {
+
+    // Load SRAM from disc, which is placed after VRAM
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf,
                 g_LevelHeader.m_VramSramSize - 0x80000,
                 g_LevelHeader.m_VramSramOffset +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset + 0x80000,
                 600);
+
     g_LoadStage = 4;
+
   } else if (g_LoadStage == 4) {
 
     SpuSetTransferStartAddr(0x1010);
-    SpuWrite(D_800785D8.m_CopyBuf, 0x7EFF0);
 
-    while (!SpuIsTransferCompleted(0))
+    // This size isn't accurate, it should be
+    // g_LevelHeader.m_VramSramSize - 0x80000
+    SpuWrite(D_800785D8.m_CopyBuf, 0x80000 - 0x1010);
+
+    // Wait for the transfer to finish, synchronously sadly
+    while (!SpuIsTransferCompleted(SPU_TRANSFER_PEEK))
       ;
 
+    // Load the scene data from disc
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf,
                 g_LevelHeader.m_SceneSize,
                 g_LevelHeader.m_SceneOffset +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
                 600);
+
     g_LoadStage = 5;
+
   } else if (g_LoadStage == 5) {
+
+    // Initialize the scene data
     D_800785D8.m_EndOfSceneData =
         (void *)func_80012D58(D_800785D8.m_DiscCopyBuf, 1);
+
+    // Switch to the new skybox
     g_Cyclorama = g_NewCyclorama;
-    if (D_8007566C == 1) {
-      g_LoadStage = 6;
+
+    if (D_8007566C == Cutscene_Intro) {
+
       size_to_load = g_LevelHeader.m_ModelDataSize - 0x60000;
+      g_LoadStage = 6;
+
     } else {
+
       size_to_load = g_LevelHeader.m_ModelDataSize;
       g_LoadStage = 8;
     }
+
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_EndOfSceneData,
                 size_to_load,
                 g_LevelHeader.m_ModelDataOffset +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
                 600);
+
   } else if (g_LoadStage == 6) {
+
     g_LoadStage = 7;
+
   } else if (g_LoadStage == 7) {
+
     CDLoadAsync(g_CdState.m_WadSector,
                 (char *)D_800785D8.m_EndOfSceneData +
                     g_LevelHeader.m_ModelDataSize - 0x60000,
@@ -288,25 +327,36 @@ void func_80014564(void) {
                     g_LevelHeader.m_ModelDataSize - 0x60000 +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
                 600);
+
     g_LoadStage = 8;
+
   } else if (g_LoadStage == 8) {
+
+    // Go over the models and patch the pointers
     for (i = 0; g_LevelHeader.m_ModelOffsets[i] > 0; ++i) {
       D_80076378[1 + i] =
           PatchMobyModelPointers((Model *)((char *)D_800785D8.m_EndOfSceneData +
                                            (g_LevelHeader.m_ModelOffsets[i] -
                                             g_LevelHeader.m_ModelDataOffset)));
     }
+
     D_800785D8.m_LevelLayout =
         (char *)D_800785D8.m_EndOfSceneData + g_LevelHeader.m_ModelDataSize;
     D_800785D8.m_LevelLayoutSize = g_LevelHeader.m_LayoutSize;
     D_800785D8.m_LevelLayoutOffset = g_LevelHeader.m_LayoutOffset;
+
+    // Load the level layout from disc
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_LevelLayout,
                 D_800785D8.m_LevelLayoutSize,
                 g_LevelHeader.m_LayoutOffset +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
                 600);
+
     g_LoadStage = 9;
+
   } else if (g_LoadStage == 9) {
+
+    // The layout is actually the cutscene data
     D_80075680 = D_800785D8.m_LevelLayout;
 
     // While in WAD it's an offset, now we turn it into a pointer
@@ -324,9 +374,8 @@ void func_80014564(void) {
     for (j = 0; j < D_80075680->m_MobyCount; ++j) {
       func_8003A720(&D_80075828[j]);
 
+      // Set the class and render radius, the class is sequential in cutscenes
       D_80075828[j].m_Class = j + 1;
-
-      // SKELETON: func_8003A720 already sets this value to 32.
       D_80075828[j].m_RenderRadius = 32;
     }
 

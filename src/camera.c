@@ -31,7 +31,6 @@ void CameraUpdateMatrices(void) {
 
   MATRIX mtx;
   MATRIX tMtx;
-  int t;
 
   Memset(&mtx, 0, sizeof(MATRIX));
   SetTransMatrix(&mtx); // Clear the translation
@@ -79,20 +78,9 @@ void CameraUpdateMatrices(void) {
 
   // Create the projection matrix by scaling the view matrix
   // The framebuffer is 512x240, but the display is 4:3, so 320x240
-  t = mtx.m[1][0] * 320;
-  if (t < 0)
-    t += 511;
-  mtx.m[1][0] = t >> 9; // / 512
-
-  t = mtx.m[1][1] * 320;
-  if (t < 0)
-    t += 511;
-  mtx.m[1][1] = t >> 9; // / 512
-
-  t = mtx.m[1][2] * 320;
-  if (t < 0)
-    t += 511;
-  mtx.m[1][2] = t >> 9; // / 512
+  mtx.m[1][0] = mtx.m[1][0] * 320 / 512;
+  mtx.m[1][1] = mtx.m[1][1] * 320 / 512;
+  mtx.m[1][2] = mtx.m[1][2] * 320 / 512;
 
   Memcpy(&g_Camera.m_ProjectionMatrix, &mtx, sizeof(SHORTMATRIX));
 }

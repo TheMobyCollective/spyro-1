@@ -280,10 +280,11 @@ void Initialize(void) {
   // Clear the copy buffer for the images
   // to be decompressed into
   Memset(D_800785D8.m_CopyBuf, 0, image_size);
-  
+
   for (i = 0; i < 8; ++i) {
     // Decompress the image
-    func_80017F24(D_8006FCF4, D_800785D8.m_CopyBuf, i * blend_step - blend_start);
+    func_80017F24(D_8006FCF4, D_800785D8.m_CopyBuf,
+                  i * blend_step - blend_start);
     setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
     LoadImage(&frameRect, D_800785D8.m_CopyBuf);
     DrawSync(0);
@@ -306,7 +307,8 @@ void Initialize(void) {
   levelVram = (char *)0x80200000 - _stacksize - 0x40000;
 
   CDLoadSync(g_CdState.m_WadSector, levelVram, 0x40000,
-             g_LevelHeader.m_VramSramOffset + g_WadHeader.m_CutsceneData[Cutscene_Titlescreen].m_Offset,
+             g_LevelHeader.m_VramSramOffset +
+                 g_WadHeader.m_CutsceneData[Cutscene_Titlescreen].m_Offset,
              600); // Load the titlescreen VRAM
 
   CDLoadSync(g_CdState.m_WadSector, D_800113A0,
@@ -328,10 +330,10 @@ void Initialize(void) {
   // Clear the copy buffer for the images
   // to be decompressed into again
   Memset(D_800785D8.m_CopyBuf, 0, image_size);
-  
-  for(j = 0; j < 8; ++j) {
+
+  for (j = 0; j < 8; ++j) {
     // Decompress the image
-    func_80017F24(D_8006FCF4, D_800785D8.m_CopyBuf, -(j+1) * blend_step);
+    func_80017F24(D_8006FCF4, D_800785D8.m_CopyBuf, -(j + 1) * blend_step);
     setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
     LoadImage(&frameRect, D_800785D8.m_CopyBuf);
     DrawSync(0);
@@ -343,9 +345,11 @@ void Initialize(void) {
   Memset(universalImage - image_size, 0, image_size);
 
   // Fade in the Universal logo
-  for (k = 0; k < 8; ++k) { // blend2 = -blend_start; k < blend_step_count; blend2 += blend_step
+  for (k = 0; k < 8; ++k) { // blend2 = -blend_start; k < blend_step_count;
+                            // blend2 += blend_step
     // Decompress the image
-    func_80017F24(universalImage, universalImage - image_size, k * blend_step - blend_start);
+    func_80017F24(universalImage, universalImage - image_size,
+                  k * blend_step - blend_start);
     setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
     LoadImage(&frameRect, (u_long *)(universalImage - image_size));
     DrawSync(0);
@@ -357,6 +361,7 @@ void Initialize(void) {
   // Load in the titlescreen
   g_LoadStage = 3;
   D_8007566C = 0;
+
   do {
     func_80014564();
   } while (g_LoadStage < 10);
@@ -366,9 +371,10 @@ void Initialize(void) {
     VSync(0);
 
   // Fade out the Universal logo
-  for(l = 0; l < 8; ++l) {
+  for (l = 0; l < 8; ++l) {
     // Decompress the image
-    func_80017F24(universalImage, universalImage - image_size, -(l+1) * blend_step);
+    func_80017F24(universalImage, universalImage - image_size,
+                  -(l + 1) * blend_step);
     setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
     LoadImage(&frameRect, (u_long *)(universalImage - image_size));
     DrawSync(0);
