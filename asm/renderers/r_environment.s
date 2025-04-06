@@ -10,6 +10,9 @@
 
 /* Handwritten function */
 glabel func_800258F0
+
+/* Save the registers to a buffer in memory */
+
 /* 160F0 800258F0 0780013C */  lui        $at, %hi(D_80077DD8)
 /* 160F4 800258F4 D87D2124 */  addiu      $at, $at, %lo(D_80077DD8)
 /* 160F8 800258F8 000030AC */  sw         $s0, 0x0($at)
@@ -37,22 +40,24 @@ glabel func_800258F0
 /* 16140 80025940 20002D8C */  lw         $t5, 0x20($at)
 /* 16144 80025944 24002E8C */  lw         $t6, 0x24($at)
 
-/* 16148 80025948 0000CA48 */  ctc2       $t2, C2_R11R12
+/* 16148 80025948 0000CA48 */  ctc2       $t2, C2_R11R12 /* Write the matrix */
 /* 1614C 8002594C 0008CB48 */  ctc2       $t3, C2_R13R21
 /* 16150 80025950 0010CC48 */  ctc2       $t4, C2_R22R23
 /* 16154 80025954 0018CD48 */  ctc2       $t5, C2_R31R32
 /* 16158 80025958 0020CE48 */  ctc2       $t6, C2_R33
-/* 1615C 8002595C 0028C048 */  ctc2       $zero, C2_TRX
+
+/* 1615C 8002595C 0028C048 */  ctc2       $zero, C2_TRX /* Translation just gets nulled */
 /* 16160 80025960 0030C048 */  ctc2       $zero, C2_TRY
 /* 16164 80025964 0038C048 */  ctc2       $zero, C2_TRZ
 
 
-/* 16168 80025968 2800378C */  lw         $s7, 0x28($at)
+/* 16168 80025968 2800378C */  lw         $s7, 0x28($at) /* Get the camera's position */
 /* 1616C 8002596C 2C00388C */  lw         $t8, 0x2C($at)
 /* 16170 80025970 3000398C */  lw         $t9, 0x30($at)
-/* 16174 80025974 03B91700 */  sra        $s7, $s7, 4
+/* 16174 80025974 03B91700 */  sra        $s7, $s7, 4 /* Divide by 16 */
 /* 16178 80025978 03C11800 */  sra        $t8, $t8, 4
 /* 1617C 8002597C 03C91900 */  sra        $t9, $t9, 4
+
 /* 16180 80025980 0780143C */  lui        $s4, %hi(D_800771C8)
 /* 16184 80025984 C8719426 */  addiu      $s4, $s4, %lo(D_800771C8)
 /* 16188 80025988 00008122 */  addi       $at, $s4, 0x0 /* handwritten instruction */

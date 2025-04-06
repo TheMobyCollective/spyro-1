@@ -627,11 +627,11 @@ glabel func_80017188
 
 /* Handwritten function */
 glabel VecMagnitude
-/* 79FC 800171FC 000089C8 */  lwc2       $9, 0x0($a0)
+/* 79FC 800171FC 000089C8 */  lwc2       C2_IR1, 0x0($a0)
 /* 7A00 80017200 00588048 */  mtc2       $zero, C2_IR3 /* handwritten instruction */
 /* 7A04 80017204 0200A010 */  beqz       $a1, .L80017210
-/* 7A08 80017208 04008AC8 */   lwc2      $10, 0x4($a0)
-/* 7A0C 8001720C 08008BC8 */  lwc2       $11, 0x8($a0)
+/* 7A08 80017208 04008AC8 */   lwc2      C2_IR2, 0x4($a0)
+/* 7A0C 8001720C 08008BC8 */  lwc2       C2_IR3, 0x8($a0)
 .L80017210:
 /* 7A10 80017210 00000000 */  nop
 /* 7A14 80017214 00000000 */  nop
@@ -675,11 +675,11 @@ glabel VecMagnitude
 
 /* Handwritten function */
 glabel func_8001729C
-/* 7A9C 8001729C 000089C8 */  lwc2       $9, 0x0($a0)
+/* 7A9C 8001729C 000089C8 */  lwc2       C2_IR1, 0x0($a0)
 /* 7AA0 800172A0 00588048 */  mtc2       $zero, C2_IR3 /* handwritten instruction */
 /* 7AA4 800172A4 0200C010 */  beqz       $a2, .L800172B0
-/* 7AA8 800172A8 04008AC8 */   lwc2      $10, 0x4($a0)
-/* 7AAC 800172AC 08008BC8 */  lwc2       $11, 0x8($a0)
+/* 7AA8 800172A8 04008AC8 */   lwc2      C2_IR2, 0x4($a0)
+/* 7AAC 800172AC 08008BC8 */  lwc2       C2_IR3, 0x8($a0)
 .L800172B0:
 /* 7AB0 800172B0 1800A500 */  mult       $a1, $a1
 /* 7AB4 800172B4 00000000 */  nop
@@ -888,19 +888,19 @@ glabel func_80017548
 /* 7D9C 8001759C 00000000 */  nop
 /* 7DA0 800175A0 00000000 */  nop
 /* 7DA4 800175A4 0C00704B */  OP         0
-/* 7DA8 800175A8 0000F9E8 */  swc2       $25, 0x0($a3)
-/* 7DAC 800175AC 0400FAE8 */  swc2       $26, 0x4($a3) /* handwritten instruction */
+/* 7DA8 800175A8 0000F9E8 */  swc2       C2_MAC1, 0x0($a3)
+/* 7DAC 800175AC 0400FAE8 */  swc2       C2_MAC2, 0x4($a3) /* handwritten instruction */
 /* 7DB0 800175B0 0800E003 */  jr         $ra
-/* 7DB4 800175B4 0800FBE8 */   swc2      $27, 0x8($a3) /* handwritten instruction */
+/* 7DB4 800175B4 0800FBE8 */   swc2      C2_MAC3, 0x8($a3) /* handwritten instruction */
 .size func_80017548, . - func_80017548
 
 /* Handwritten function */
 glabel func_800175B8
 /* 7DB8 800175B8 00330600 */  sll        $a2, $a2, 12
 /* 7DBC 800175BC 1A00C500 */  div        $zero, $a2, $a1
-/* 7DC0 800175C0 000089C8 */  lwc2       $9, 0x0($a0)
-/* 7DC4 800175C4 04008AC8 */  lwc2       $10, 0x4($a0)
-/* 7DC8 800175C8 08008BC8 */  lwc2       $11, 0x8($a0)
+/* 7DC0 800175C0 000089C8 */  lwc2       C2_IR1, 0x0($a0)
+/* 7DC4 800175C4 04008AC8 */  lwc2       C2_IR2, 0x4($a0)
+/* 7DC8 800175C8 08008BC8 */  lwc2       C2_IR3, 0x8($a0)
 /* 7DCC 800175CC 00C88048 */  mtc2       $zero, C2_MAC1 /* handwritten instruction */
 /* 7DD0 800175D0 00D08048 */  mtc2       $zero, C2_MAC2 /* handwritten instruction */
 /* 7DD4 800175D4 00D88048 */  mtc2       $zero, C2_MAC3 /* handwritten instruction */
@@ -923,9 +923,9 @@ glabel func_800175B8
 
 /* Handwritten function */
 glabel func_80017614
-/* 7E14 80017614 000089C8 */  lwc2       $9, 0x0($a0)
-/* 7E18 80017618 04008AC8 */  lwc2       $10, 0x4($a0)
-/* 7E1C 8001761C 08008BC8 */  lwc2       $11, 0x8($a0)
+/* 7E14 80017614 000089C8 */  lwc2       C2_IR1, 0x0($a0)
+/* 7E18 80017618 04008AC8 */  lwc2       C2_IR2, 0x4($a0)
+/* 7E1C 8001761C 08008BC8 */  lwc2       C2_IR3, 0x8($a0)
 /* 7E20 80017620 00C88048 */  mtc2       $zero, C2_MAC1 /* handwritten instruction */
 /* 7E24 80017624 00D08048 */  mtc2       $zero, C2_MAC2 /* handwritten instruction */
 /* 7E28 80017628 00D88048 */  mtc2       $zero, C2_MAC3 /* handwritten instruction */
@@ -1065,9 +1065,9 @@ glabel VecSub
 
 /* Handwritten function */
 glabel func_800177C0
-/* 7FC0 800177C0 0000A9C8 */  lwc2       $9, 0x0($a1)
-/* 7FC4 800177C4 0400AAC8 */  lwc2       $10, 0x4($a1)
-/* 7FC8 800177C8 0800ABC8 */  lwc2       $11, 0x8($a1)
+/* 7FC0 800177C0 0000A9C8 */  lwc2       C2_IR1, 0x0($a1)
+/* 7FC4 800177C4 0400AAC8 */  lwc2       C2_IR2, 0x4($a1)
+/* 7FC8 800177C8 0800ABC8 */  lwc2       C2_IR3, 0x8($a1)
 /* 7FCC 800177CC 00C88048 */  mtc2       $zero, C2_MAC1 /* handwritten instruction */
 /* 7FD0 800177D0 00D08048 */  mtc2       $zero, C2_MAC2 /* handwritten instruction */
 /* 7FD4 800177D4 00D88048 */  mtc2       $zero, C2_MAC3 /* handwritten instruction */
@@ -1075,19 +1075,19 @@ glabel func_800177C0
 /* 7FDC 800177DC 00000000 */  nop
 /* 7FE0 800177E0 00000000 */  nop
 /* 7FE4 800177E4 3E00A04B */  GPL        0
-/* 7FE8 800177E8 000099E8 */  swc2       $25, 0x0($a0)
-/* 7FEC 800177EC 04009AE8 */  swc2       $26, 0x4($a0) /* handwritten instruction */
+/* 7FE8 800177E8 000099E8 */  swc2       C2_MAC1, 0x0($a0)
+/* 7FEC 800177EC 04009AE8 */  swc2       C2_MAC2, 0x4($a0) /* handwritten instruction */
 /* 7FF0 800177F0 0800E003 */  jr         $ra
-/* 7FF4 800177F4 08009BE8 */   swc2      $27, 0x8($a0) /* handwritten instruction */
+/* 7FF4 800177F4 08009BE8 */   swc2      C2_MAC3, 0x8($a0) /* handwritten instruction */
 .size func_800177C0, . - func_800177C0
 
 /* Handwritten function */
 glabel func_800177F8
 /* 7FF8 800177F8 0100013C */  lui        $at, (0x10000 >> 16)
 /* 7FFC 800177FC 1A002600 */  div        $zero, $at, $a2
-/* 8000 80017800 0000A9C8 */  lwc2       $9, 0x0($a1)
-/* 8004 80017804 0400AAC8 */  lwc2       $10, 0x4($a1)
-/* 8008 80017808 0800ABC8 */  lwc2       $11, 0x8($a1)
+/* 8000 80017800 0000A9C8 */  lwc2       C2_IR1, 0x0($a1)
+/* 8004 80017804 0400AAC8 */  lwc2       C2_IR2, 0x4($a1)
+/* 8008 80017808 0800ABC8 */  lwc2       C2_IR3, 0x8($a1)
 /* 800C 8001780C 00C88048 */  mtc2       $zero, C2_MAC1 /* handwritten instruction */
 /* 8010 80017810 00D08048 */  mtc2       $zero, C2_MAC2 /* handwritten instruction */
 /* 8014 80017814 00D88048 */  mtc2       $zero, C2_MAC3 /* handwritten instruction */
@@ -1116,24 +1116,24 @@ glabel func_80017854
 /* 8060 80017860 0000C148 */  ctc2       $at, C2_R11R12 /* handwritten instruction */
 /* 8064 80017864 0010C248 */  ctc2       $v0, C2_R22R23 /* handwritten instruction */
 /* 8068 80017868 0020C348 */  ctc2       $v1, C2_R33 /* handwritten instruction */
-/* 806C 8001786C 0000C9C8 */  lwc2       $9, 0x0($a2)
-/* 8070 80017870 0400CAC8 */  lwc2       $10, 0x4($a2)
-/* 8074 80017874 0800CBC8 */  lwc2       $11, 0x8($a2)
+/* 806C 8001786C 0000C9C8 */  lwc2       C2_IR1, 0x0($a2)
+/* 8070 80017870 0400CAC8 */  lwc2       C2_IR2, 0x4($a2)
+/* 8074 80017874 0800CBC8 */  lwc2       C2_IR3, 0x8($a2)
 /* 8078 80017878 00000000 */  nop
 /* 807C 8001787C 00000000 */  nop
 /* 8080 80017880 0C00704B */  OP         0
-/* 8084 80017884 000099E8 */  swc2       $25, 0x0($a0)
-/* 8088 80017888 04009AE8 */  swc2       $26, 0x4($a0) /* handwritten instruction */
+/* 8084 80017884 000099E8 */  swc2       C2_MAC1, 0x0($a0)
+/* 8088 80017888 04009AE8 */  swc2       C2_MAC2, 0x4($a0) /* handwritten instruction */
 /* 808C 8001788C 0800E003 */  jr         $ra
-/* 8090 80017890 08009BE8 */   swc2      $27, 0x8($a0) /* handwritten instruction */
+/* 8090 80017890 08009BE8 */   swc2      C2_MAC3, 0x8($a0) /* handwritten instruction */
 .size func_80017854, . - func_80017854
 
 /* Handwritten function */
 glabel func_80017894
 /* 8094 80017894 00408748 */  mtc2       $a3, C2_IR0 /* handwritten instruction */
-/* 8098 80017898 0000C9C8 */  lwc2       $9, 0x0($a2)
-/* 809C 8001789C 0400CAC8 */  lwc2       $10, 0x4($a2)
-/* 80A0 800178A0 0800CBC8 */  lwc2       $11, 0x8($a2)
+/* 8098 80017898 0000C9C8 */  lwc2       C2_IR1, 0x0($a2)
+/* 809C 8001789C 0400CAC8 */  lwc2       C2_IR2, 0x4($a2)
+/* 80A0 800178A0 0800CBC8 */  lwc2       C2_IR3, 0x8($a2)
 /* 80A4 800178A4 00000000 */  nop
 /* 80A8 800178A8 00000000 */  nop
 /* 80AC 800178AC 3D00904B */  GPF        0
