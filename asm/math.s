@@ -588,7 +588,7 @@ glabel func_80017110
 /* 7984 80017184 0800A3AC */   sw        $v1, 0x8($a1)
 .size func_80017110, . - func_80017110
 
-/* Handwritten function */
+/* Unused function */
 glabel func_80017188
 /* 7988 80017188 0000A18C */  lw         $at, 0x0($a1)
 /* 798C 8001718C 0400A28C */  lw         $v0, 0x4($a1)
@@ -862,7 +862,7 @@ glabel func_80017428
 /* 7D44 80017544 01000220 */   addi      $v0, $zero, 0x1 /* handwritten instruction */
 .size func_80017428, . - func_80017428
 
-/* Handwritten function */
+/* Unused function */
 glabel func_80017548
 /* 7D48 80017548 0000818C */  lw         $at, 0x0($a0)
 /* 7D4C 8001754C 0400828C */  lw         $v0, 0x4($a0)
@@ -1009,7 +1009,7 @@ glabel VecCopy
 /* 7F18 80017718 080083AC */   sw        $v1, 0x8($a0)
 .size VecCopy, . - VecCopy
 
-/* Handwritten function */
+/* Unused function */
 glabel func_8001771C
 /* 7F1C 8001771C 0000818C */  lw         $at, 0x0($a0)
 /* 7F20 80017720 0000A28C */  lw         $v0, 0x0($a1)
@@ -1108,7 +1108,7 @@ glabel func_800177F8
 /* 8050 80017850 080083AC */   sw        $v1, 0x8($a0)
 .size func_800177F8, . - func_800177F8
 
-/* Handwritten function */
+/* Unused function */
 glabel func_80017854
 /* 8054 80017854 0000A18C */  lw         $at, 0x0($a1)
 /* 8058 80017858 0400A28C */  lw         $v0, 0x4($a1)
