@@ -1,22 +1,22 @@
+#include "environment.h"
 #include "camera.h"
 #include "common.h"
-#include "environment.h"
 #include "memory.h"
 
-/// @brief: Update environment animations
-INCLUDE_ASM("asm/nonmatchings/environment", func_8002A6FC);
+// /// @brief: Update environment animations
+// func_8002A6FC
 
-/// @brief: Change environment animation's flags
-INCLUDE_ASM("asm/nonmatchings/environment", func_8002B390);
+// /// @brief: Change environment animation's flags
+// func_8002B390
 
-/// @brief: Get environment animation's current frame
-INCLUDE_ASM("asm/nonmatchings/environment", func_8002B3F4);
+// /// @brief: Get environment animation's current frame
+// func_8002B3F4
 
-/// @brief: Set environment animation's current frame
-INCLUDE_ASM("asm/nonmatchings/environment", func_8002B444);
+// /// @brief: Set environment animation's current frame
+// func_8002B444
 
-/// @brief: Initialize environment animations
-INCLUDE_ASM("asm/nonmatchings/environment", func_8002B4AC);
+// /// @brief: Initialize environment animations
+// func_8002B4AC
 
 extern char D_8006FCF4[1]; // Sony image
 

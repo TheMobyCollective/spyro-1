@@ -87,11 +87,11 @@
 - [x] func_8002BAB8
 - [ ] func_80050BD0
 - [x] CheckpointSave
-- [ ] func_8002A6FC
-- [ ] func_8002B390
-- [ ] func_8002B3F4
-- [ ] func_8002B444
-- [ ] func_8002B4AC
+- [x] func_8002A6FC
+- [x] func_8002B390
+- [x] func_8002B3F4
+- [x] func_8002B444
+- [x] func_8002B4AC
 - [x] func_8002B9CC
 - [x] PadReset
 - [x] func_80053708
