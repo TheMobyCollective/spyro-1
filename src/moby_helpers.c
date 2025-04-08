@@ -1,11 +1,12 @@
+#include "moby_helpers.h"
 #include "42CC4.h"
 #include "checkpoint.h"
 #include "collision.h"
 #include "common.h"
 #include "math.h"
-#include "moby_helpers.h"
 #include "spu.h"
 #include "spyro.h"
+#include "variables.h"
 #include <sys/types.h>
 
 /// @brief Function that ticks a timer
@@ -121,9 +122,9 @@ int func_800381E8(Moby *moby, int range) { // Unused
                        moby->m_Rotation.z) < range;
 }
 
-int func_8001729C(Vector3D*, int, int); // Newton's method
+int func_8001729C(Vector3D *, int, int); // Newton's method
 
-int func_80038250(Vector3D* pPoint) {
+int func_80038250(Vector3D *pPoint) {
   Vector3D distance;
   Vector3D rayStart;
   Vector3D rayEnd;
@@ -137,7 +138,7 @@ int func_80038250(Vector3D* pPoint) {
   func_8001729C(&distance, magnitude, 1);
   func_800175B8(&distance, magnitude, 0x400);
   VecCopy(&rayStart, pPoint);
-  
+
   raySegments = magnitude >> 0xA; // div by 1024
 
   for (i = 0; i < raySegments; i++) {
@@ -146,7 +147,7 @@ int func_80038250(Vector3D* pPoint) {
     // Look if we've got a collision
     if (func_8004AE38(&rayStart, &rayEnd))
       return 0; // If we did, return it
-    
+
     VecCopy(&rayStart, &rayEnd); // Advance the ray
   }
 
@@ -164,7 +165,12 @@ int func_80038340(Moby *pMoby) {
   return position;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003838C);
+int func_8003838C(Moby *pMoby) {
+  pMoby->m_Position.z += 1500;
+  func_8004D5EC(&pMoby->m_Position, 4096);
+  pMoby->m_Position.z -= 1500;
+  return (char)func_800169AC(D_80077368.z, VecMagnitude(&D_80077368, 0)) < 24;
+}
 
 int func_80038400(Moby *pMoby, int pDistFromFloor) {
   int position;
@@ -184,22 +190,30 @@ void func_80038458(Moby *pMoby) {
   func_800533D0(pMoby);
 }
 
-/// @brief Returns if a Moby has been killed
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038494);
-#if 0 // Close to matching, reg diff
-int func_80038494(Moby *pMoby) {
-  int mobyIdx = (pMoby - D_80075828);
-  int killArrayIndex = mobyIdx >> 5;     // / 32
-  int bitOffset = 1 << (mobyIdx & 0x1f); // % 32
+inline static int SavedMobyIsDead(int mobyIndex) {
+  int index = mobyIndex >> 5;
+  int bit = mobyIndex & 0x1F;
+  return g_Checkpoint.m_KilledMobysSaved[index] & (1 << bit);
+}
 
+/// @brief Returns if a Moby has been killed
+int func_80038494(Moby *pMoby) {
   // Since load layout sets m_DropMoby to 0xff if the moby is dead
   // the check for it is a bit odd
-  return (g_Checkpoint.m_KilledMobysSaved[killArrayIndex] & bitOffset) &&
-         pMoby->m_DropMoby == 0xff;
+  return SavedMobyIsDead(pMoby - D_80075828) && pMoby->m_DropMoby == 0xff;
 }
-#endif
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003851C);
+void func_8003851C(Moby *pMoby, int pSoundIndex, u_char *pChannel) {
+  if (pChannel != nullptr) {
+    PlaySound(D_80076378[pMoby->m_Class]->m_Sounds[pSoundIndex], pMoby,
+              0x08 /* 3D */, pChannel);
+  } else {
+    // stop sounds from this moby
+    func_800562A4(pMoby, 1);
+    PlaySound(D_80076378[pMoby->m_Class]->m_Sounds[pSoundIndex], pMoby,
+              0x08 /* 3D */, &pMoby->m_SoundChannel);
+  }
+}
 
 void func_800385BC(Moby *pMoby, int pUnknown) {
   if (pMoby != nullptr) {
@@ -215,7 +229,24 @@ void func_800385BC(Moby *pMoby, int pUnknown) {
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038638);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003891C);
+int func_8003891C(Vector3D *pVec1, Vector3D *pVec2, int p3, int p4, int *pOut) {
+  struct {
+    int x;
+    int y;
+  } vec;
+  int t;
+
+  vec.x = pVec1->x - pVec2->x;
+  vec.y = pVec1->y - pVec2->y;
+  t = VecMagnitude((Vector3D *)&vec, 0) / p3;
+  if (pOut != nullptr) {
+    *pOut = t;
+  }
+  if (t != 0) {
+    return -(pVec1->z - pVec2->z + (p4 * (t * t) >> 1)) / t;
+  }
+  return 0;
+}
 
 /// @brief: Finds the path node closest to the moby
 int func_80038A40(Moby *pMoby, PathData *pPathData, int *pNodeIndexOut) {

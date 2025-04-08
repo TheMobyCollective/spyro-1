@@ -154,14 +154,14 @@
 - [x] func_800381E8
 - [x] func_80038250
 - [x] func_80038340
-- [ ] func_8003838C
+- [x] func_8003838C
 - [x] func_80038400
 - [x] func_80038458
-- [ ] func_80038494
-- [ ] func_8003851C
+- [x] func_80038494
+- [x] func_8003851C
 - [x] func_800385BC
 - [ ] func_80038638
-- [ ] func_8003891C
+- [x] func_8003891C
 - [x] func_80038A40
 - [x] func_80038AFC
 - [x] func_80038BB0
