@@ -4,8 +4,6 @@
 
 // TODO: This file is fucked up
 
-extern Moby *(*D_800758CC)(int pClass, Moby *pMe); // g_MobySpawn
-extern void (*D_80075734)();                       // g_MobyUpdate
 extern void (*D_800758E4)(int pAmount, int pClass, Moby *pSpawner,
                           void *extraParam); // g_ParticleSpawn
 extern void (*D_800756BC)();                 // g_ParticleUpdate

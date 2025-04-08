@@ -164,8 +164,9 @@ Model *PatchMobyModelPointers(Model *pModel) {
     } else {
       p = (u_int *)&(m->m_Animations[i]->m_Frames[0]);
       for (k = 0; k < m->m_Animations[i]->m_NumFrames; ++k, ++p) {
-        // TODO: This breaks 8MB, which sucks
-        // Maybe change the renderer to use an offset instead of a pointer
+        // TODO: This breaks 8MB, which sucks, consider fixing with a FIX_BUGS
+        // define. Which would mean changing the renderer to use an offset
+        // instead of a pointer.
         *p += (u_int)m->m_Data & 0x1fffff;
         ++p;
         if ((*p & 0xffff) != 0) {

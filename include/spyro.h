@@ -153,7 +153,7 @@ typedef struct {
   int m_touchingSurface;
   int unk_0x170;
   int m_damagingFloorIndex;
-  int unk_0x178;
+  int *m_damagingFloorFlags;
   Vector3D unk_0x17c;
   Vector3D unk_0x188; // Momentum related?
   int unk_0x194;      // Used to force spyro to flame in cutscenes

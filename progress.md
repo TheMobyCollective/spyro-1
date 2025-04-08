@@ -263,7 +263,7 @@
 - [x] SaveChecksum
 - [x] SaveLoad
 - [x] SaveCreate
-- [ ] func_80056F64
+- [x] func_80056F64
 - [x] func_80057380
 - [x] func_80058BD8
 - [x] SpecularReset

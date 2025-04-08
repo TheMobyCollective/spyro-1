@@ -173,6 +173,11 @@ typedef struct {
   } m_Nodes[1];
 } PathData;
 
+typedef struct {
+  PathData *m_Path;
+  Vector3D unk_0x4;
+} PortalPathMobyData;
+
 // Moby models
 
 typedef struct {
@@ -265,5 +270,9 @@ extern Moby *D_80075890; // Pointer to the first dynamic Moby, used for
                          // delimiting static and dynamic Mobys
 
 extern Moby *D_80075710; // HUD Mobys
+
+// Overlays
+extern Moby *(*D_800758CC)(int pClass, Moby *pMe); // g_MobySpawn
+extern void (*D_80075734)();                       // g_MobyUpdate
 
 #endif // !__MOBY_H
