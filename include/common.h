@@ -27,6 +27,9 @@
 // Holy fuck!
 #define ABS(x) ((x) >= 0 ? (x) : -(x))
 
+//because why not have this one too!
+#define ABS2(x) ((x) > 0 ? (x) : -(x))
+
 #define CLAMP(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
 
 typedef enum {

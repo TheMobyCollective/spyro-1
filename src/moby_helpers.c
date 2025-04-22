@@ -509,7 +509,37 @@ void func_8003B1E8(Moby *pMoby, u_int pState) {
 }
 
 // Something related to damaging other mobys inside a pod (metalhead)
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003B294);
+void func_8003B294(Moby *pMoby, int pPodIdx, uint pFlag, int pWithinOctDist,
+                   int pWithinZDist, int pWithinXYDist, int pWithinAngle) {
+  int angle2;
+  Moby *check_moby;
+  ushort *pod_list;
+
+  if (pPodIdx >= g_MobyPodCount)
+    return;
+
+  pod_list = g_MobyPods[pPodIdx];
+  while (1) {
+    check_moby = &D_80075828[*pod_list & 0x7FFF];
+    if (check_moby->m_State < 0x80 &&
+        ABS2(pMoby->m_Position.x - check_moby->m_Position.x) < pWithinXYDist &&
+        ABS2(pMoby->m_Position.y - check_moby->m_Position.y) < pWithinXYDist &&
+        OctDistance(&pMoby->m_Position, &check_moby->m_Position) <
+            pWithinOctDist &&
+        ABS2(check_moby->m_Position.z - pMoby->m_Position.z) < pWithinZDist) {
+      angle2 =
+          func_80016AB4(check_moby->m_Position.x - (pMoby->m_Position).x,
+                        check_moby->m_Position.y - (pMoby->m_Position).y, 0);
+      if (func_80017908((pMoby->m_Rotation).z, angle2) < pWithinAngle) {
+        check_moby->m_DamageFlags |= pFlag;
+      }
+    }
+    if ((short)*pod_list < 0) {
+      break;
+    }
+    ++pod_list;
+  }
+}
 
 /// @brief Sets the state of all mobys in this pod, if they do not have a
 /// certain state
