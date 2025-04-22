@@ -648,8 +648,96 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers",
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BFC0);
 
+#define setMobyLetterProps(props, parent, index, len)                          \
+  (props)->m_Parent = parent;                                                  \
+  (props)->m_Len = len;                                                        \
+  (props)->m_Index = index
+
 // Create portal text
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003C358);
+void func_8003C358(Moby *pMoby, int pIsLevelName) {
+  char const *level_name;
+  u_char z_rot;
+  Vector3D vec1;
+  Vector3D vec2;
+  Vector3D vec3;
+  Vector3D vec4;
+  int tmp4;
+  int i;
+  int char_moby_class;
+  int string_len;
+  u_char character;
+  Moby *char_moby;
+  Vector3D *pos;
+
+  if (pIsLevelName) {
+    level_name = D_8006F7F0[*(int *)(pMoby->m_Props)];
+    z_rot = pMoby->m_Rotation.z;
+  } else {
+    level_name = D_8006F7F0[36]; //"RETURN HOME"
+    z_rot = func_80016AB4(g_Spyro.m_Position.x - pMoby->m_Position.x,
+                          g_Spyro.m_Position.y - pMoby->m_Position.y, 0);
+  }
+
+  setXYZ(&vec1, Cos(z_rot << 4) * 3 >> 4, Sin(z_rot << 4) * 3 >> 4, 0);
+
+  setXYZ(&vec2, Cos((z_rot + 64) << 4) >> 5, Sin((z_rot + 64) << 4) >> 5, 0);
+
+  if (pIsLevelName != 0) {
+    if (pMoby->m_Substate == 0) {
+      z_rot = pMoby->m_Rotation.z + 128;
+    } else {
+      z_rot = pMoby->m_Rotation.z;
+      VecNull(&vec3);
+      VecSub(&vec1, &vec3, &vec1);
+      VecSub(&vec2, &vec3, &vec2);
+    }
+  }
+
+  string_len = strlen(level_name);
+
+  VecMult(&vec3, &vec2, string_len - 1);
+
+  VecShiftLeft(&vec2, 1);
+
+  tmp4 = (string_len - 1) * 2;
+
+  vec3.z += Cos((tmp4 & 0xff) << 4) * 3 >> 3;
+
+  setXYZ(&vec4, vec1.x * Cos((tmp4 & 0xff) << 4),
+         vec1.y * Cos((tmp4 & 0xff) << 4), 0);
+
+  for (i = 0; i < string_len; tmp4 -= 4, ++i) {
+    character = level_name[i];
+    if (character != ' ') {
+      char_moby_class = character;
+      if (character >= 'A' && character <= 'Z') {
+        char_moby_class += 361;
+      } else {
+        char_moby_class = 76;
+      }
+      char_moby = (*D_800758CC)(char_moby_class, pMoby);
+      setMobyLetterProps((MobyLetterProps *)char_moby->m_Props, pMoby, i,
+                         string_len);
+      pos = &char_moby->m_Position;
+      setXYZ(pos, vec1.x * Cos((tmp4 & 0xff) << 4),
+             vec1.y * Cos((tmp4 & 0xff) << 4), 0);
+      VecSub(pos, pos, &vec4);
+      VecShiftRight(pos, 10);
+      VecAdd(pos, pos, &vec1);
+      VecAdd(pos, pos, &pMoby->m_Position);
+      VecSub(pos, pos, &vec3);
+      char_moby->m_Position.z += Cos((tmp4 & 0xff) << 4) * 3 >> 3;
+      if (char_moby->m_Class == 76)
+        char_moby->m_Position.z += 256;
+      char_moby->m_Rotation.z = z_rot;
+      char_moby->m_FloorDistance = z_rot;
+      char_moby->m_State = pMoby->m_Substate;
+      char_moby->m_Substate = i * 8;
+      char_moby->m_SpecularMetalType = 2;
+    }
+    VecSub(&vec3, &vec3, &vec2);
+  }
+}
 
 // Fragment animation
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003C6E4);

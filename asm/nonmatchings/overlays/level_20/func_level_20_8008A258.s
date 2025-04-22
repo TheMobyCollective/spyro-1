@@ -515,7 +515,7 @@ glabel func_level_20_8008A258
 /* 188DFA0 8008A9D8 C05D000C */  jal        VecCopy
 /* 188DFA4 8008A9DC 21280002 */   addu      $a1, $s0, $zero
 /* 188DFA8 8008A9E0 21202002 */  addu       $a0, $s1, $zero
-/* 188DFAC 8008A9E4 B25D000C */  jal        func_800176C8
+/* 188DFAC 8008A9E4 B25D000C */  jal        VecShiftRight
 /* 188DFB0 8008A9E8 02000524 */   addiu     $a1, $zero, 0x2
 /* 188DFB4 8008A9EC CB89010C */  jal        rand
 /* 188DFB8 8008A9F0 00000000 */   nop

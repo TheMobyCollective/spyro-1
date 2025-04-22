@@ -570,7 +570,7 @@ glabel func_level_31_8008AF54
 /* 2A0A418 8008B650 095F000C */  jal        func_80017C24
 /* 2A0A41C 8008B654 1B0046A6 */   sh        $a2, 0x1B($s2)
 /* 2A0A420 8008B658 21200002 */  addu       $a0, $s0, $zero
-/* 2A0A424 8008B65C B25D000C */  jal        func_800176C8
+/* 2A0A424 8008B65C B25D000C */  jal        VecShiftRight
 /* 2A0A428 8008B660 02000524 */   addiu     $a1, $zero, 0x2
 /* 2A0A42C 8008B664 21202002 */  addu       $a0, $s1, $zero
 /* 2A0A430 8008B668 21282002 */  addu       $a1, $s1, $zero

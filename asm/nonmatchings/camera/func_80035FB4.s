@@ -360,10 +360,10 @@ glabel func_80035FB4
 /* 26CDC 800364DC 21200002 */  addu       $a0, $s0, $zero
 /* 26CE0 800364E0 0780063C */  lui        $a2, %hi(D_8007527C)
 /* 26CE4 800364E4 7C52C690 */  lbu        $a2, %lo(D_8007527C)($a2)
-/* 26CE8 800364E8 F05D000C */  jal        func_800177C0
+/* 26CE8 800364E8 F05D000C */  jal        VecMult
 /* 26CEC 800364EC 0C012526 */   addiu     $a1, $s1, 0x10C
 /* 26CF0 800364F0 21200002 */  addu       $a0, $s0, $zero
-/* 26CF4 800364F4 B25D000C */  jal        func_800176C8
+/* 26CF4 800364F4 B25D000C */  jal        VecShiftRight
 /* 26CF8 800364F8 06000524 */   addiu     $a1, $zero, 0x6
 /* 26CFC 800364FC 21200002 */  addu       $a0, $s0, $zero
 /* 26D00 80036500 1000A527 */  addiu      $a1, $sp, 0x10
@@ -531,10 +531,10 @@ glabel func_80035FB4
 /* 26F5C 8003675C 21200002 */  addu       $a0, $s0, $zero
 /* 26F60 80036760 0780063C */  lui        $a2, %hi(D_8007527C)
 /* 26F64 80036764 7C52C690 */  lbu        $a2, %lo(D_8007527C)($a2)
-/* 26F68 80036768 F05D000C */  jal        func_800177C0
+/* 26F68 80036768 F05D000C */  jal        VecMult
 /* 26F6C 8003676C 0C016526 */   addiu     $a1, $s3, 0x10C
 /* 26F70 80036770 21200002 */  addu       $a0, $s0, $zero
-/* 26F74 80036774 B25D000C */  jal        func_800176C8
+/* 26F74 80036774 B25D000C */  jal        VecShiftRight
 /* 26F78 80036778 05000524 */   addiu     $a1, $zero, 0x5
 /* 26F7C 8003677C 21200002 */  addu       $a0, $s0, $zero
 /* 26F80 80036780 21282002 */  addu       $a1, $s1, $zero
@@ -605,10 +605,10 @@ glabel func_80035FB4
 /* 27078 80036878 21200002 */  addu       $a0, $s0, $zero
 /* 2707C 8003687C 0780063C */  lui        $a2, %hi(D_8007527C)
 /* 27080 80036880 7C52C690 */  lbu        $a2, %lo(D_8007527C)($a2)
-/* 27084 80036884 F05D000C */  jal        func_800177C0
+/* 27084 80036884 F05D000C */  jal        VecMult
 /* 27088 80036888 0C012526 */   addiu     $a1, $s1, 0x10C
 /* 2708C 8003688C 21200002 */  addu       $a0, $s0, $zero
-/* 27090 80036890 B25D000C */  jal        func_800176C8
+/* 27090 80036890 B25D000C */  jal        VecShiftRight
 /* 27094 80036894 05000524 */   addiu     $a1, $zero, 0x5
 /* 27098 80036898 21200002 */  addu       $a0, $s0, $zero
 /* 2709C 8003689C 21284002 */  addu       $a1, $s2, $zero

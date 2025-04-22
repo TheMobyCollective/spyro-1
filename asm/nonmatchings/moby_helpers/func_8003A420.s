@@ -114,7 +114,7 @@ glabel func_8003A420
 /* 2ADB4 8003A5B4 C05D000C */  jal        VecCopy
 /* 2ADB8 8003A5B8 21288002 */   addu      $a1, $s4, $zero
 /* 2ADBC 8003A5BC 21202002 */  addu       $a0, $s1, $zero
-/* 2ADC0 8003A5C0 B25D000C */  jal        func_800176C8
+/* 2ADC0 8003A5C0 B25D000C */  jal        VecShiftRight
 /* 2ADC4 8003A5C4 02000524 */   addiu     $a1, $zero, 0x2
 /* 2ADC8 8003A5C8 21208002 */  addu       $a0, $s4, $zero
 /* 2ADCC 8003A5CC 21288002 */  addu       $a1, $s4, $zero

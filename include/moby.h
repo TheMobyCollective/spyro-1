@@ -42,8 +42,15 @@ typedef struct Moby {
   /// @brief Specifies the properties of the moby, which is class specific
   void *m_Props;
 
-  /// @brief The next moby in the collision chain that this Moby is a part of
-  struct Moby *m_CollisionChainNext;
+  union {
+    /// @brief The next moby in the collision chain that this Moby is a part of
+    struct Moby *m_CollisionChainNext;
+
+    struct {
+      short m_Len;
+      short m_Index;
+    } m_StringInfo;
+  } m_Props2;
 
   /// @brief This Moby's active collision group (Which is part of it's model)
   void *m_CollisionGroup;
@@ -300,6 +307,12 @@ typedef struct {
   void *m_Colors;
   void *m_Faces;
 } SimpleModel;
+
+typedef struct {
+  Moby* m_Parent;
+  short m_Len;
+  short m_Index;
+} MobyLetterProps;
 
 // static_assert(sizeof(Moby) == 0x58, "Incorrect Moby size");
 

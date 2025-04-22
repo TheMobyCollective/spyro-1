@@ -751,7 +751,7 @@ glabel func_level_41_8008465C
 /* 37FCF30 80085168 C05D000C */  jal        VecCopy
 /* 37FCF34 8008516C 21280002 */   addu      $a1, $s0, $zero
 /* 37FCF38 80085170 21202002 */  addu       $a0, $s1, $zero
-/* 37FCF3C 80085174 B25D000C */  jal        func_800176C8
+/* 37FCF3C 80085174 B25D000C */  jal        VecShiftRight
 /* 37FCF40 80085178 02000524 */   addiu     $a1, $zero, 0x2
 /* 37FCF44 8008517C CB89010C */  jal        rand
 /* 37FCF48 80085180 00000000 */   nop

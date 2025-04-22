@@ -966,7 +966,7 @@ glabel func_80017614
 /* 7E9C 8001769C 080083AC */   sw        $v1, 0x8($a0)
 .size func_80017614, . - func_80017614
 
-glabel func_800176A0
+glabel VecShiftLeft
 /* 7EA0 800176A0 0000818C */  lw         $at, 0x0($a0)
 /* 7EA4 800176A4 0400828C */  lw         $v0, 0x4($a0)
 /* 7EA8 800176A8 0800838C */  lw         $v1, 0x8($a0)
@@ -977,9 +977,9 @@ glabel func_800176A0
 /* 7EBC 800176BC 040082AC */  sw         $v0, 0x4($a0)
 /* 7EC0 800176C0 0800E003 */  jr         $ra
 /* 7EC4 800176C4 080083AC */   sw        $v1, 0x8($a0)
-.size func_800176A0, . - func_800176A0
+.size VecShiftLeft, . - VecShiftLeft
 
-glabel func_800176C8
+glabel VecShiftRight
 /* 7EC8 800176C8 0000818C */  lw         $at, 0x0($a0)
 /* 7ECC 800176CC 0400828C */  lw         $v0, 0x4($a0)
 /* 7ED0 800176D0 0800838C */  lw         $v1, 0x8($a0)
@@ -990,7 +990,7 @@ glabel func_800176C8
 /* 7EE4 800176E4 040082AC */  sw         $v0, 0x4($a0)
 /* 7EE8 800176E8 0800E003 */  jr         $ra
 /* 7EEC 800176EC 080083AC */   sw        $v1, 0x8($a0)
-.size func_800176C8, . - func_800176C8
+.size VecShiftRight, . - VecShiftRight
 
 glabel VecNull
 /* 7EF0 800176F0 000080AC */  sw         $zero, 0x0($a0)
@@ -1064,7 +1064,7 @@ glabel VecSub
 .size VecSub, . - VecSub
 
 /* Handwritten function */
-glabel func_800177C0
+glabel VecMult
 /* 7FC0 800177C0 0000A9C8 */  lwc2       C2_IR1, 0x0($a1)
 /* 7FC4 800177C4 0400AAC8 */  lwc2       C2_IR2, 0x4($a1)
 /* 7FC8 800177C8 0800ABC8 */  lwc2       C2_IR3, 0x8($a1)
@@ -1079,7 +1079,7 @@ glabel func_800177C0
 /* 7FEC 800177EC 04009AE8 */  swc2       C2_MAC2, 0x4($a0) /* handwritten instruction */
 /* 7FF0 800177F0 0800E003 */  jr         $ra
 /* 7FF4 800177F4 08009BE8 */   swc2      C2_MAC3, 0x8($a0) /* handwritten instruction */
-.size func_800177C0, . - func_800177C0
+.size VecMult, . - VecMult
 
 /* Handwritten function */
 glabel func_800177F8

@@ -51,7 +51,7 @@ glabel func_8004AA0C
 /* 3B2B4 8004AAB4 0880103C */  lui        $s0, %hi(g_Spyro + 0x100)
 /* 3B2B8 8004AAB8 588B1026 */  addiu      $s0, $s0, %lo(g_Spyro + 0x100)
 /* 3B2BC 8004AABC 21200002 */  addu       $a0, $s0, $zero
-/* 3B2C0 8004AAC0 B25D000C */  jal        func_800176C8
+/* 3B2C0 8004AAC0 B25D000C */  jal        VecShiftRight
 /* 3B2C4 8004AAC4 06000524 */   addiu     $a1, $zero, 0x6
 /* 3B2C8 8004AAC8 8CFF0426 */  addiu      $a0, $s0, -0x74
 /* 3B2CC 8004AACC 00FF1126 */  addiu      $s1, $s0, -0x100

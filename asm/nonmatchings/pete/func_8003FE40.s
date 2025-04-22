@@ -551,7 +551,7 @@ glabel func_8003FE40
 /* 30E0C 8004060C 0880103C */  lui        $s0, %hi(g_Spyro + 0x100)
 /* 30E10 80040610 588B1026 */  addiu      $s0, $s0, %lo(g_Spyro + 0x100)
 /* 30E14 80040614 21200002 */  addu       $a0, $s0, $zero
-/* 30E18 80040618 B25D000C */  jal        func_800176C8
+/* 30E18 80040618 B25D000C */  jal        VecShiftRight
 /* 30E1C 8004061C 06000524 */   addiu     $a1, $zero, 0x6
 /* 30E20 80040620 0880023C */  lui        $v0, %hi(g_Spyro + 0x1F4)
 /* 30E24 80040624 4C8C428C */  lw         $v0, %lo(g_Spyro + 0x1F4)($v0)
@@ -1124,7 +1124,7 @@ glabel func_8003FE40
 /* 31648 80040E48 E35D000C */  jal        VecSub
 /* 3164C 80040E4C 80FF0626 */   addiu     $a2, $s0, -0x80
 /* 31650 80040E50 21200002 */  addu       $a0, $s0, $zero
-/* 31654 80040E54 A85D000C */  jal        func_800176A0
+/* 31654 80040E54 A85D000C */  jal        VecShiftLeft
 /* 31658 80040E58 06000524 */   addiu     $a1, $zero, 0x6
 /* 3165C 80040E5C 0000078E */  lw         $a3, 0x0($s0)
 /* 31660 80040E60 0780023C */  lui        $v0, %hi(g_DeltaTime)

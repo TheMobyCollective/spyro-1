@@ -202,7 +202,7 @@
 - [ ] func_8003BCCC
 - [ ] func_8003BED8
 - [ ] func_8003BFC0
-- [ ] func_8003C358
+- [x] func_8003C358
 - [ ] func_8003C6E4
 - [ ] func_8003C85C
 - [ ] func_8003C994

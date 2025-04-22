@@ -805,7 +805,7 @@ glabel func_8002F3E4
 /* 2079C 8002FF9C D65D000C */  jal        VecAdd
 /* 207A0 8002FFA0 0C00C624 */   addiu     $a2, $a2, 0xC
 /* 207A4 8002FFA4 1000A427 */  addiu      $a0, $sp, 0x10
-/* 207A8 8002FFA8 B25D000C */  jal        func_800176C8
+/* 207A8 8002FFA8 B25D000C */  jal        VecShiftRight
 /* 207AC 8002FFAC 01000524 */   addiu     $a1, $zero, 0x1
 /* 207B0 8002FFB0 1000A427 */  addiu      $a0, $sp, 0x10
 /* 207B4 8002FFB4 0780063C */  lui        $a2, %hi(g_Camera + 0x28)

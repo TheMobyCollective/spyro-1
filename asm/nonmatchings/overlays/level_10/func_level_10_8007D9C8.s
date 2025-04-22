@@ -1685,10 +1685,10 @@ glabel func_level_10_8007D9C8
 /* 7F6EC8 8007F100 21302002 */   addu      $a2, $s1, $zero
 /* 7F6ECC 8007F104 21200002 */  addu       $a0, $s0, $zero
 /* 7F6ED0 8007F108 12004692 */  lbu        $a2, 0x12($s2)
-/* 7F6ED4 8007F10C F05D000C */  jal        func_800177C0
+/* 7F6ED4 8007F10C F05D000C */  jal        VecMult
 /* 7F6ED8 8007F110 21280002 */   addu      $a1, $s0, $zero
 /* 7F6EDC 8007F114 21200002 */  addu       $a0, $s0, $zero
-/* 7F6EE0 8007F118 B25D000C */  jal        func_800176C8
+/* 7F6EE0 8007F118 B25D000C */  jal        VecShiftRight
 /* 7F6EE4 8007F11C 06000524 */   addiu     $a1, $zero, 0x6
 /* 7F6EE8 8007F120 0C006426 */  addiu      $a0, $s3, 0xC
 /* 7F6EEC 8007F124 21282002 */  addu       $a1, $s1, $zero
@@ -2491,10 +2491,10 @@ glabel func_level_10_8007D9C8
 /* 7F7ACC 8007FD04 21200002 */  addu       $a0, $s0, $zero
 /* 7F7AD0 8007FD08 0780063C */  lui        $a2, %hi(g_DeltaTime)
 /* 7F7AD4 8007FD0C CC56C68C */  lw         $a2, %lo(g_DeltaTime)($a2)
-/* 7F7AD8 8007FD10 F05D000C */  jal        func_800177C0
+/* 7F7AD8 8007FD10 F05D000C */  jal        VecMult
 /* 7F7ADC 8007FD14 21282002 */   addu      $a1, $s1, $zero
 /* 7F7AE0 8007FD18 21200002 */  addu       $a0, $s0, $zero
-/* 7F7AE4 8007FD1C B25D000C */  jal        func_800176C8
+/* 7F7AE4 8007FD1C B25D000C */  jal        VecShiftRight
 /* 7F7AE8 8007FD20 01000524 */   addiu     $a1, $zero, 0x1
 /* 7F7AEC 8007FD24 21200002 */  addu       $a0, $s0, $zero
 /* 7F7AF0 8007FD28 7F5C000C */  jal        VecMagnitude
@@ -2789,7 +2789,7 @@ glabel func_level_10_8007D9C8
 /* 7F7F30 80080168 E35D000C */  jal        VecSub
 /* 7F7F34 8008016C 21302002 */   addu      $a2, $s1, $zero
 /* 7F7F38 80080170 21200002 */  addu       $a0, $s0, $zero
-/* 7F7F3C 80080174 B25D000C */  jal        func_800176C8
+/* 7F7F3C 80080174 B25D000C */  jal        VecShiftRight
 /* 7F7F40 80080178 05000524 */   addiu     $a1, $zero, 0x5
 /* 7F7F44 8008017C 21200002 */  addu       $a0, $s0, $zero
 /* 7F7F48 80080180 7F5C000C */  jal        VecMagnitude
@@ -2806,7 +2806,7 @@ glabel func_level_10_8007D9C8
 /* 7F7F74 800801AC 0F0022A2 */   sb        $v0, 0xF($s1)
 .Llevel_10_800801B0:
 /* 7F7F78 800801B0 0F002692 */  lbu        $a2, 0xF($s1)
-/* 7F7F7C 800801B4 F05D000C */  jal        func_800177C0
+/* 7F7F7C 800801B4 F05D000C */  jal        VecMult
 /* 7F7F80 800801B8 21280002 */   addu      $a1, $s0, $zero
 /* 7F7F84 800801BC 0C006426 */  addiu      $a0, $s3, 0xC
 /* 7F7F88 800801C0 21282002 */  addu       $a1, $s1, $zero
@@ -5109,7 +5109,7 @@ glabel func_level_10_8007D9C8
 /* 7FA108 80082340 E35D000C */  jal        VecSub
 /* 7FA10C 80082344 21302002 */   addu      $a2, $s1, $zero
 /* 7FA110 80082348 21200002 */  addu       $a0, $s0, $zero
-/* 7FA114 8008234C B25D000C */  jal        func_800176C8
+/* 7FA114 8008234C B25D000C */  jal        VecShiftRight
 /* 7FA118 80082350 02000524 */   addiu     $a1, $zero, 0x2
 /* 7FA11C 80082354 21202002 */  addu       $a0, $s1, $zero
 /* 7FA120 80082358 21282002 */  addu       $a1, $s1, $zero
@@ -6014,7 +6014,7 @@ glabel func_level_10_8007D9C8
 /* 7FAE4C 80083084 C05D000C */  jal        VecCopy
 /* 7FAE50 80083088 68FF0526 */   addiu     $a1, $s0, -0x98
 /* 7FAE54 8008308C 21202002 */  addu       $a0, $s1, $zero
-/* 7FAE58 80083090 B25D000C */  jal        func_800176C8
+/* 7FAE58 80083090 B25D000C */  jal        VecShiftRight
 /* 7FAE5C 80083094 06000524 */   addiu     $a1, $zero, 0x6
 /* 7FAE60 80083098 6400028E */  lw         $v0, 0x64($s0)
 /* 7FAE64 8008309C 0880013C */  lui        $at, %hi(g_Spyro + 0x210)
@@ -7797,7 +7797,7 @@ glabel func_level_10_8007D9C8
 /* 7FC838 80084A70 D65D000C */  jal        VecAdd
 /* 7FC83C 80084A74 1800C624 */   addiu     $a2, $a2, 0x18
 /* 7FC840 80084A78 21200002 */  addu       $a0, $s0, $zero
-/* 7FC844 80084A7C B25D000C */  jal        func_800176C8
+/* 7FC844 80084A7C B25D000C */  jal        VecShiftRight
 /* 7FC848 80084A80 01000524 */   addiu     $a1, $zero, 0x1
 /* 7FC84C 80084A84 14003226 */  addiu      $s2, $s1, 0x14
 /* 7FC850 80084A88 21204002 */  addu       $a0, $s2, $zero
@@ -8554,10 +8554,10 @@ glabel func_level_10_8007D9C8
 /* 7FD38C 800855C4 460062A2 */  sb         $v0, 0x46($s3)
 /* 7FD390 800855C8 04008686 */  lh         $a2, 0x4($s4)
 /* 7FD394 800855CC 21204002 */  addu       $a0, $s2, $zero
-/* 7FD398 800855D0 F05D000C */  jal        func_800177C0
+/* 7FD398 800855D0 F05D000C */  jal        VecMult
 /* 7FD39C 800855D4 FFFFC624 */   addiu     $a2, $a2, -0x1
 /* 7FD3A0 800855D8 21200002 */  addu       $a0, $s0, $zero
-/* 7FD3A4 800855DC A85D000C */  jal        func_800176A0
+/* 7FD3A4 800855DC A85D000C */  jal        VecShiftLeft
 /* 7FD3A8 800855E0 01000524 */   addiu     $a1, $zero, 0x1
 /* 7FD3AC 800855E4 04008786 */  lh         $a3, 0x4($s4)
 /* 7FD3B0 800855E8 07800A3C */  lui        $t2, %hi(D_8006CC78)
@@ -8592,7 +8592,7 @@ glabel func_level_10_8007D9C8
 /* 7FD424 8008565C 21200002 */  addu       $a0, $s0, $zero
 /* 7FD428 80085660 80100600 */  sll        $v0, $a2, 2
 /* 7FD42C 80085664 23102202 */  subu       $v0, $s1, $v0
-/* 7FD430 80085668 F05D000C */  jal        func_800177C0
+/* 7FD430 80085668 F05D000C */  jal        VecMult
 /* 7FD434 8008566C FF005130 */   andi      $s1, $v0, 0xFF
 /* 7FD438 80085670 21204002 */  addu       $a0, $s2, $zero
 /* 7FD43C 80085674 21284002 */  addu       $a1, $s2, $zero
@@ -8621,7 +8621,7 @@ glabel func_level_10_8007D9C8
 /* 7FD498 800856D0 E35D000C */  jal        VecSub
 /* 7FD49C 800856D4 10006AAE */   sw        $t2, 0x10($s3)
 /* 7FD4A0 800856D8 21200002 */  addu       $a0, $s0, $zero
-/* 7FD4A4 800856DC B25D000C */  jal        func_800176C8
+/* 7FD4A4 800856DC B25D000C */  jal        VecShiftRight
 /* 7FD4A8 800856E0 0A000524 */   addiu     $a1, $zero, 0xA
 /* 7FD4AC 800856E4 21200002 */  addu       $a0, $s0, $zero
 /* 7FD4B0 800856E8 21280002 */  addu       $a1, $s0, $zero

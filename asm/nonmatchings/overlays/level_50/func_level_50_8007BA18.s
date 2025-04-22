@@ -215,10 +215,10 @@ glabel func_level_50_8007BA18
 /* 43DC2D0 8007BD08 00105024 */   addiu     $s0, $v0, 0x1000
 /* 43DC2D4 8007BD0C 1000A427 */  addiu      $a0, $sp, 0x10
 /* 43DC2D8 8007BD10 21288000 */  addu       $a1, $a0, $zero
-/* 43DC2DC 8007BD14 F05D000C */  jal        func_800177C0
+/* 43DC2DC 8007BD14 F05D000C */  jal        VecMult
 /* 43DC2E0 8007BD18 21300002 */   addu      $a2, $s0, $zero
 /* 43DC2E4 8007BD1C 1000A427 */  addiu      $a0, $sp, 0x10
-/* 43DC2E8 8007BD20 B25D000C */  jal        func_800176C8
+/* 43DC2E8 8007BD20 B25D000C */  jal        VecShiftRight
 /* 43DC2EC 8007BD24 0D000524 */   addiu     $a1, $zero, 0xD
 /* 43DC2F0 8007BD28 0880043C */  lui        $a0, %hi(g_Spyro)
 /* 43DC2F4 8007BD2C 588A8424 */  addiu      $a0, $a0, %lo(g_Spyro)

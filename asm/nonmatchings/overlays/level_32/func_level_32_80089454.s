@@ -576,7 +576,7 @@ glabel func_level_32_80089454
 /* 2CBB934 80089B6C 095F000C */  jal        func_80017C24
 /* 2CBB938 80089B70 1B0046A6 */   sh        $a2, 0x1B($s2)
 /* 2CBB93C 80089B74 21200002 */  addu       $a0, $s0, $zero
-/* 2CBB940 80089B78 B25D000C */  jal        func_800176C8
+/* 2CBB940 80089B78 B25D000C */  jal        VecShiftRight
 /* 2CBB944 80089B7C 02000524 */   addiu     $a1, $zero, 0x2
 /* 2CBB948 80089B80 21202002 */  addu       $a0, $s1, $zero
 /* 2CBB94C 80089B84 21282002 */  addu       $a1, $s1, $zero

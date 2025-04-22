@@ -27,7 +27,7 @@ glabel func_8003A850
 /* 2B0A4 8003A8A4 21202002 */  addu       $a0, $s1, $zero
 /* 2B0A8 8003A8A8 02000692 */  lbu        $a2, 0x2($s0)
 /* 2B0AC 8003A8AC 21284002 */  addu       $a1, $s2, $zero
-/* 2B0B0 8003A8B0 F05D000C */  jal        func_800177C0
+/* 2B0B0 8003A8B0 F05D000C */  jal        VecMult
 /* 2B0B4 8003A8B4 42300600 */   srl       $a2, $a2, 1
 /* 2B0B8 8003A8B8 21202002 */  addu       $a0, $s1, $zero
 /* 2B0BC 8003A8BC 21282002 */  addu       $a1, $s1, $zero

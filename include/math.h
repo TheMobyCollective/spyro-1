@@ -56,6 +56,15 @@ void func_80016D2C(Vector3D8 *pRotation, MATRIX *pOut, MATRIX *pIn);
 /// @param pOut The output vector
 void func_80017048(MATRIX *pMatrix, Vector3D *pVector, Vector3D *pOut);
 
+/// @brief Shift all vector elements left
+void VecShiftLeft(Vector3D *pVec, int pNumBits);
+
+/// @brief Shift all vector elements right
+void VecShiftRight(Vector3D *pVec, int pNumBits);
+
+/// @brief Use the GTE to multiply each element by a fixed value
+void VecMult(Vector3D *pOut, Vector3D *pIn, int pVal);
+
 /// @brief Subtracts two angles
 /// @param pAngle1
 /// @param pAngle2

@@ -27,7 +27,7 @@ glabel func_80039228
 /* 29A80 80039280 C05D000C */  jal        VecCopy
 /* 29A84 80039284 21282002 */   addu      $a1, $s1, $zero
 /* 29A88 80039288 21200002 */  addu       $a0, $s0, $zero
-/* 29A8C 8003928C B25D000C */  jal        func_800176C8
+/* 29A8C 8003928C B25D000C */  jal        VecShiftRight
 /* 29A90 80039290 01000524 */   addiu     $a1, $zero, 0x1
 /* 29A94 80039294 21202002 */  addu       $a0, $s1, $zero
 /* 29A98 80039298 21288000 */  addu       $a1, $a0, $zero
@@ -40,7 +40,7 @@ glabel func_80039228
 /* 29AB0 800392B0 05006214 */  bne        $v1, $v0, .L800392C8
 /* 29AB4 800392B4 1800A427 */   addiu     $a0, $sp, 0x18
 /* 29AB8 800392B8 5C00A427 */  addiu      $a0, $sp, 0x5C
-/* 29ABC 800392BC A85D000C */  jal        func_800176A0
+/* 29ABC 800392BC A85D000C */  jal        VecShiftLeft
 /* 29AC0 800392C0 01000524 */   addiu     $a1, $zero, 0x1
 /* 29AC4 800392C4 1800A427 */  addiu      $a0, $sp, 0x18
 .L800392C8:

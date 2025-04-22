@@ -47,7 +47,7 @@ glabel PlaySound
 /* 4631C 80055B1C E35D000C */  jal        VecSub
 /* 46320 80055B20 D8FFA626 */   addiu     $a2, $s5, -0x28
 /* 46324 80055B24 21200002 */  addu       $a0, $s0, $zero
-/* 46328 80055B28 B25D000C */  jal        func_800176C8
+/* 46328 80055B28 B25D000C */  jal        VecShiftRight
 /* 4632C 80055B2C 04000524 */   addiu     $a1, $zero, 0x4
 /* 46330 80055B30 21200002 */  addu       $a0, $s0, $zero
 /* 46334 80055B34 7F5C000C */  jal        VecMagnitude

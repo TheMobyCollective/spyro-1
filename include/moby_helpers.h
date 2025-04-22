@@ -27,4 +27,7 @@ void func_8003851C(Moby *pMoby, int pSoundIndex, u_char *pChannel);
 /// @brief Initialize a Moby
 void func_8003A720(Moby *pMoby);
 
+/// @brief Create portal text
+void func_8003C358(Moby *pMoby, int pIsLevelName);
+
 #endif

@@ -662,7 +662,7 @@ glabel func_8003EA68
 /* 2FA90 8003F290 E35D000C */  jal        VecSub
 /* 2FA94 8003F294 21300002 */   addu      $a2, $s0, $zero
 /* 2FA98 8003F298 21200002 */  addu       $a0, $s0, $zero
-/* 2FA9C 8003F29C B25D000C */  jal        func_800176C8
+/* 2FA9C 8003F29C B25D000C */  jal        VecShiftRight
 /* 2FAA0 8003F2A0 02000524 */   addiu     $a1, $zero, 0x2
 /* 2FAA4 8003F2A4 00FD0224 */  addiu      $v0, $zero, -0x300
 /* 2FAA8 8003F2A8 0880013C */  lui        $at, %hi(g_Spyro + 0x14C)

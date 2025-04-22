@@ -53,7 +53,7 @@ glabel func_8004A7EC
 /* 3B09C 8004A89C 0880103C */  lui        $s0, %hi(g_Spyro + 0x100)
 /* 3B0A0 8004A8A0 588B1026 */  addiu      $s0, $s0, %lo(g_Spyro + 0x100)
 /* 3B0A4 8004A8A4 21200002 */  addu       $a0, $s0, $zero
-/* 3B0A8 8004A8A8 B25D000C */  jal        func_800176C8
+/* 3B0A8 8004A8A8 B25D000C */  jal        VecShiftRight
 /* 3B0AC 8004A8AC 06000524 */   addiu     $a1, $zero, 0x6
 /* 3B0B0 8004A8B0 8CFF0426 */  addiu      $a0, $s0, -0x74
 /* 3B0B4 8004A8B4 00FF1126 */  addiu      $s1, $s0, -0x100
