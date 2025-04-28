@@ -344,7 +344,36 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038EE0);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038FC8);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039228);
+int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6) {
+  Vector3D vec2;
+  Vector3D vec3;
+
+  if (D_800756C4 == 3) {
+    //vec1 *= 1.5
+    VecCopy(&vec3, &vec1);
+    VecShiftRight(&vec3, 1);
+    VecAdd(&vec1, &vec1, &vec3);
+  } else if (D_800756C4 == 4) {
+    //vec1 *= 2
+    VecShiftLeft(&vec1, 1);
+  }
+  VecAdd(&vec2, &pMoby->m_Position, &vec1);
+  if (arg6 & 1) {
+    vec2.z += 300 + arg5;
+  }
+  if (arg4 && func_8004E3C8(&vec2, arg4, 0, nullptr, pMoby, nullptr)) {
+    return 1;
+  }
+  if (arg5 && func_8004BE4C(&vec2, arg5, arg5)) {
+    return 2;
+  }
+  if (arg6 & 1) {
+    vec2.z -= 300 + arg5;
+  }
+  VecCopy(&pMoby->m_Position, &vec2);
+  func_800529E4(pMoby, 2);
+  return 0;
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039398);
 
