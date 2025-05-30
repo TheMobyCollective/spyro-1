@@ -906,12 +906,12 @@ glabel func_level_33_8007B7A8
 /* 2F5C004 8007BA3C D32C4010 */  beqz       $v0, .Llevel_33_80086D8C
 /* 2F5C008 8007BA40 00000000 */   nop
 .Llevel_33_8007BA44:
-/* 2F5C00C 8007BA44 0780023C */  lui        $v0, %hi(D_80077FA8)
-/* 2F5C010 8007BA48 A87F4290 */  lbu        $v0, %lo(D_80077FA8)($v0)
+/* 2F5C00C 8007BA44 0780023C */  lui        $v0, %hi(g_Hud)
+/* 2F5C010 8007BA48 A87F4290 */  lbu        $v0, %lo(g_Hud)($v0)
 /* 2F5C014 8007BA4C 02000924 */  addiu      $t1, $zero, 0x2
 /* 2F5C018 8007BA50 04004914 */  bne        $v0, $t1, .Llevel_33_8007BA64
 /* 2F5C01C 8007BA54 0080033C */   lui       $v1, (0x80008000 >> 16)
-/* 2F5C020 8007BA58 5E51010C */  jal        func_80054578
+/* 2F5C020 8007BA58 5E51010C */  jal        HudGemUpdate
 /* 2F5C024 8007BA5C 00000000 */   nop
 /* 2F5C028 8007BA60 0080033C */  lui        $v1, (0x80008000 >> 16)
 .Llevel_33_8007BA64:
@@ -3600,8 +3600,8 @@ glabel func_level_33_8007B7A8
 /* 2F5E77C 8007E1B4 130042A2 */  sb         $v0, 0x13($s2)
 /* 2F5E780 8007E1B8 100040A6 */  sh         $zero, 0x10($s2)
 /* 2F5E784 8007E1BC 120040A2 */  sb         $zero, 0x12($s2)
-/* 2F5E788 8007E1C0 0780013C */  lui        $at, %hi(D_80077FDC)
-/* 2F5E78C 8007E1C4 DC7F3EAC */  sw         $fp, %lo(D_80077FDC)($at)
+/* 2F5E788 8007E1C0 0780013C */  lui        $at, %hi(g_Hud + 0x34)
+/* 2F5E78C 8007E1C4 DC7F3EAC */  sw         $fp, %lo(g_Hud + 0x34)($at)
 /* 2F5E790 8007E1C8 48006292 */  lbu        $v0, 0x48($s3)
 /* 2F5E794 8007E1CC 08000924 */  addiu      $t1, $zero, 0x8
 /* 2F5E798 8007E1D0 440060A2 */  sb         $zero, 0x44($s3)
@@ -3921,8 +3921,8 @@ glabel func_level_33_8007B7A8
 /* 2F5EC5C 8007E694 0780013C */  lui        $at, %hi(g_EggTotal)
 /* 2F5EC60 8007E698 105822AC */  sw         $v0, %lo(g_EggTotal)($at)
 /* 2F5EC64 8007E69C 0000A3AC */  sw         $v1, 0x0($a1)
-/* 2F5EC68 8007E6A0 0780013C */  lui        $at, %hi(D_80077FDC)
-/* 2F5EC6C 8007E6A4 DC7F20AC */  sw         $zero, %lo(D_80077FDC)($at)
+/* 2F5EC68 8007E6A0 0780013C */  lui        $at, %hi(g_Hud + 0x34)
+/* 2F5EC6C 8007E6A4 DC7F20AC */  sw         $zero, %lo(g_Hud + 0x34)($at)
 /* 2F5EC70 8007E6A8 5A49010C */  jal        func_80052568
 /* 2F5EC74 8007E6AC 21206002 */   addu      $a0, $s3, $zero
 /* 2F5EC78 8007E6B0 631B0208 */  j          .Llevel_33_80086D8C

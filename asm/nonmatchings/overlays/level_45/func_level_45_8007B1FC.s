@@ -11,8 +11,8 @@ glabel func_level_45_8007B1FC
 /* 4256FDC 8007B214 CA5A010C */  jal        func_80056B28
 /* 4256FE0 8007B218 21200000 */   addu      $a0, $zero, $zero
 .Llevel_45_8007B21C:
-/* 4256FE4 8007B21C 0780033C */  lui        $v1, %hi(D_80077FE4)
-/* 4256FE8 8007B220 E47F6324 */  addiu      $v1, $v1, %lo(D_80077FE4)
+/* 4256FE4 8007B21C 0780033C */  lui        $v1, %hi(g_Hud + 0x3C)
+/* 4256FE8 8007B220 E47F6324 */  addiu      $v1, $v1, %lo(g_Hud + 0x3C)
 /* 4256FEC 8007B224 0000628C */  lw         $v0, 0x0($v1)
 /* 4256FF0 8007B228 03000424 */  addiu      $a0, $zero, 0x3
 /* 4256FF4 8007B22C FCFF4224 */  addiu      $v0, $v0, -0x4

@@ -88,8 +88,8 @@ glabel func_8002C924
 /* 1D260 8002CA60 5057A58C */  lw         $a1, %lo(g_DragonTotal)($a1)
 /* 1D264 8002CA64 80180300 */  sll        $v1, $v1, 2
 /* 1D268 8002CA68 21186200 */  addu       $v1, $v1, $v0
-/* 1D26C 8002CA6C 0780013C */  lui        $at, %hi(D_80077FCC)
-/* 1D270 8002CA70 CC7F25AC */  sw         $a1, %lo(D_80077FCC)($at)
+/* 1D26C 8002CA6C 0780013C */  lui        $at, %hi(g_Hud + 0x24)
+/* 1D270 8002CA70 CC7F25AC */  sw         $a1, %lo(g_Hud + 0x24)($at)
 /* 1D274 8002CA74 0000628C */  lw         $v0, 0x0($v1)
 /* 1D278 8002CA78 0780013C */  lui        $at, %hi(D_8007570C)
 /* 1D27C 8002CA7C 0C5724AC */  sw         $a0, %lo(D_8007570C)($at)

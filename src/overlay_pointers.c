@@ -4,8 +4,6 @@
 
 // TODO: This file is fucked up
 
-extern void (*D_800758E4)(int pAmount, int pClass, Moby *pSpawner,
-                          void *extraParam); // g_ParticleSpawn
 extern void (*D_800756BC)();                 // g_ParticleUpdate
 extern void (*D_800757A0)(); // g_BalloonistTriggerCode (called inside the
                              // overlay for fuck knows why!)

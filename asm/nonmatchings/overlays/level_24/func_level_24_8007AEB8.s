@@ -462,12 +462,12 @@ glabel func_level_24_8007AEB8
 /* 237D910 8007B348 96244010 */  beqz       $v0, .Llevel_24_800845A4
 /* 237D914 8007B34C 00000000 */   nop
 .Llevel_24_8007B350:
-/* 237D918 8007B350 0780023C */  lui        $v0, %hi(D_80077FA8)
-/* 237D91C 8007B354 A87F4290 */  lbu        $v0, %lo(D_80077FA8)($v0)
+/* 237D918 8007B350 0780023C */  lui        $v0, %hi(g_Hud)
+/* 237D91C 8007B354 A87F4290 */  lbu        $v0, %lo(g_Hud)($v0)
 /* 237D920 8007B358 02000924 */  addiu      $t1, $zero, 0x2
 /* 237D924 8007B35C 04004914 */  bne        $v0, $t1, .Llevel_24_8007B370
 /* 237D928 8007B360 0080033C */   lui       $v1, (0x80008000 >> 16)
-/* 237D92C 8007B364 5E51010C */  jal        func_80054578
+/* 237D92C 8007B364 5E51010C */  jal        HudGemUpdate
 /* 237D930 8007B368 00000000 */   nop
 /* 237D934 8007B36C 0080033C */  lui        $v1, (0x80008000 >> 16)
 .Llevel_24_8007B370:
@@ -1255,8 +1255,8 @@ glabel func_level_24_8007AEB8
 /* 237E4A4 8007BEDC 100040A6 */  sh         $zero, 0x10($s2)
 /* 237E4A8 8007BEE0 120040A2 */  sb         $zero, 0x12($s2)
 /* 237E4AC 8007BEE4 01000924 */  addiu      $t1, $zero, 0x1
-/* 237E4B0 8007BEE8 0780013C */  lui        $at, %hi(D_80077FDC)
-/* 237E4B4 8007BEEC DC7F29AC */  sw         $t1, %lo(D_80077FDC)($at)
+/* 237E4B0 8007BEE8 0780013C */  lui        $at, %hi(g_Hud + 0x34)
+/* 237E4B4 8007BEEC DC7F29AC */  sw         $t1, %lo(g_Hud + 0x34)($at)
 /* 237E4B8 8007BEF0 48006392 */  lbu        $v1, 0x48($s3)
 /* 237E4BC 8007BEF4 08000224 */  addiu      $v0, $zero, 0x8
 /* 237E4C0 8007BEF8 440060A2 */  sb         $zero, 0x44($s3)
@@ -1601,8 +1601,8 @@ glabel func_level_24_8007AEB8
 /* 237E9E4 8007C41C 0780013C */  lui        $at, %hi(g_EggTotal)
 /* 237E9E8 8007C420 105822AC */  sw         $v0, %lo(g_EggTotal)($at)
 /* 237E9EC 8007C424 0000A3AC */  sw         $v1, 0x0($a1)
-/* 237E9F0 8007C428 0780013C */  lui        $at, %hi(D_80077FDC)
-/* 237E9F4 8007C42C DC7F20AC */  sw         $zero, %lo(D_80077FDC)($at)
+/* 237E9F0 8007C428 0780013C */  lui        $at, %hi(g_Hud + 0x34)
+/* 237E9F4 8007C42C DC7F20AC */  sw         $zero, %lo(g_Hud + 0x34)($at)
 /* 237E9F8 8007C430 5A49010C */  jal        func_80052568
 /* 237E9FC 8007C434 21206002 */   addu      $a0, $s3, $zero
 /* 237EA00 8007C438 69110208 */  j          .Llevel_24_800845A4

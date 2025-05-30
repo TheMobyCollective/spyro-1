@@ -4,6 +4,7 @@
 #include "common.h"
 #include "cyclorama.h"
 #include "graphics.h"
+#include "hud.h"
 #include "loaders.h"
 #include "music.h"
 #include "specular_and_metal.h"
@@ -25,20 +26,6 @@ extern int D_800757C8; // OptionsSubmenuIsOpen
 extern int D_800756D4;
 extern int D_80075744; // The index of the current page of the inventory screen
 extern int D_800757CC; // Transition progress between inventory pages.
-
-extern char D_80077FA8; // TODO: These are part of the HUD struct
-extern char D_80077FA9;
-extern char D_80077FAA;
-extern char D_80077FAB;
-extern char D_80077FAC;
-extern char D_80077FAD;
-extern char D_80077FAE;
-extern char D_80077FAF;
-extern char D_80077FB0;
-extern char D_80077FB1;
-
-void func_80054600(int);  // Reset HUD struct
-void func_80054988(void); // Something HUD-related
 
 /// @brief Pauses the game
 // pEnteringFromGameplay is:
@@ -64,28 +51,28 @@ void func_8002C420(int pEnteringFromGameplay) {
   } else {
 
     // Resets the HUD struct
-    func_80054600(0);
+    HudReset(0);
 
     if (pEnteringFromGameplay) {
       D_800758B8 = 0; // Pause menu text rotation ticks
     } else {
-      D_80077FA8 = 1;
-      D_80077FA9 = 1;
-      D_80077FAA = 1;
-      D_80077FAB = 1;
-      D_80077FAC = 1;
+      g_Hud.m_GemDisplayState = HDS_Opening;
+      g_Hud.m_DragonDisplayState = HDS_Opening;
+      g_Hud.m_LifeDisplayState = HDS_Opening;
+      g_Hud.m_EggDisplayState = HDS_Opening;
+      g_Hud.m_KeyDisplayState = HDS_Opening;
 
       // These are progress variables used to move the HUD elements down
       // setting it to 12 causes them to snap down instantly
-      D_80077FAD = 12;
-      D_80077FAE = 12;
-      D_80077FAF = 12;
-      D_80077FB0 = 12;
-      D_80077FB1 = 12;
+      g_Hud.m_GemProgress = 12;
+      g_Hud.m_DragonProgress = 12;
+      g_Hud.m_LifeProgress = 12;
+      g_Hud.m_EggProgress = 12;
+      g_Hud.m_KeyProgress = 12;
     }
 
     // Something HUD-related
-    func_80054988();
+    HudTick();
   }
 }
 
@@ -103,16 +90,16 @@ void func_8002C534(int pResumeMusic) {
 
   SpecularReset();
 
-  D_80077FA8 = 3;
-  D_80077FA9 = 3;
-  D_80077FAA = 3;
-  D_80077FAB = 3;
-  D_80077FAC = 3;
-  D_80077FAD = 13;
-  D_80077FAE = 13;
-  D_80077FAF = 13;
-  D_80077FB0 = 13;
-  D_80077FB1 = 13;
+  g_Hud.m_GemDisplayState = HDS_Closing;
+  g_Hud.m_DragonDisplayState = HDS_Closing;
+  g_Hud.m_LifeDisplayState = HDS_Closing;
+  g_Hud.m_EggDisplayState = HDS_Closing;
+  g_Hud.m_KeyDisplayState = HDS_Closing;
+  g_Hud.m_GemProgress = 13;
+  g_Hud.m_DragonProgress = 13;
+  g_Hud.m_LifeProgress = 13;
+  g_Hud.m_EggProgress = 13;
+  g_Hud.m_KeyProgress = 13;
 
   if (pResumeMusic) {
     // Resume the level music
@@ -192,11 +179,11 @@ void func_8002C7BC(void) {
 
   SpecularReset();
 
-  D_80077FA8 = 0;
-  D_80077FA9 = 0;
-  D_80077FAA = 0;
-  D_80077FAB = 0;
-  D_80077FAC = 0;
+  g_Hud.m_GemDisplayState = HDS_Hidden;
+  g_Hud.m_DragonDisplayState = HDS_Hidden;
+  g_Hud.m_LifeDisplayState = HDS_Hidden;
+  g_Hud.m_EggDisplayState = HDS_Hidden;
+  g_Hud.m_KeyDisplayState = HDS_Hidden;
 
   // Resume the level music
   func_800567F4(D_800774B0, 8);
@@ -234,10 +221,10 @@ void func_8002C8A4(void) {
 }
 
 /// @brief Empty, used to open the dragon dialogue in protos
-void func_8002C914(void){};
+void func_8002C914(void) {};
 
 /// @brief Empty, used to update the dragon dialogue iirc?
-void func_8002C91C(void){};
+void func_8002C91C(void) {};
 
 /// @brief Rescue a dragon, increments the needed values and starts the cutscene
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002C924);

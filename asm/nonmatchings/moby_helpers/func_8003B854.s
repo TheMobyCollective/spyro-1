@@ -14,7 +14,7 @@ glabel func_8003B854
 /* 2C078 8003B878 00034228 */  slti       $v0, $v0, 0x300
 /* 2C07C 8003B87C 03004014 */  bnez       $v0, .L8003B88C
 /* 2C080 8003B880 00000000 */   nop
-/* 2C084 8003B884 F355010C */  jal        func_800557CC
+/* 2C084 8003B884 F355010C */  jal        GenerateGemCollectMobys
 /* 2C088 8003B888 00000000 */   nop
 .L8003B88C:
 /* 2C08C 8003B88C 0780043C */  lui        $a0, %hi(D_80075964)

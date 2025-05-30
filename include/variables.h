@@ -21,6 +21,8 @@ extern int g_LevelDragonCount[TOTAL_LEVEL_COUNT];    // Level dragon counts
 extern int g_LevelGemCount[TOTAL_LEVEL_COUNT];       // Level gem counts
 extern int g_LevelEggCount[LEVEL_PER_HOMEWORLD * 3]; // Level egg counts
 
+extern short g_TargetGemCounts[TOTAL_LEVEL_COUNT]; // Target gem counts
+
 extern int D_80078618[5];       // Course records
 extern u_char D_80078680[5][5]; // Flight collected
 

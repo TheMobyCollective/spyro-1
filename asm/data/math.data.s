@@ -2046,13 +2046,8 @@ dlabel D_8006E638
 /* 5EE88 8006E688 3000A300 */ .word 0x00A30030
 .size D_8006E44C, . - D_8006E44C
 
-.align 2
-dlabel D_8006E68C
-/* 5EE8C 8006E68C */ .asciz "Z"
-.align 2
-.size D_8006E68C, . - D_8006E68C
-
-dlabel D_8006E690
+dlabel g_HudMobyTargetPos
+/* 5EE8C 8006E68C 5A000000 */ .word 0x0000005A
 /* 5EE90 8006E690 00000000 */ .word 0x00000000
 /* 5EE94 8006E694 400B0000 */ .word 0x00000B40
 /* 5EE98 8006E698 76000000 */ .word 0x00000076
@@ -2088,9 +2083,10 @@ dlabel D_8006E690
 /* 5EF10 8006E710 AE010000 */ .word 0x000001AE
 /* 5EF14 8006E714 F0000000 */ .word 0x000000F0
 /* 5EF18 8006E718 000C0000 */ .word 0x00000C00
-.size D_8006E690, . - D_8006E690
+.size g_HudMobyTargetPos, . - g_HudMobyTargetPos
 
 dlabel D_8006E71C
+dlabel g_HudEggTargetRect
 /* 5EF1C 8006E71C */ .short 0x0024
 .size D_8006E71C, . - D_8006E71C
 
@@ -2151,6 +2147,7 @@ dlabel D_8006E722
 .size D_8006E722, . - D_8006E722
 
 dlabel D_8006E77C
+dlabel g_HudOpeningOffsets
 /* 5EF7C 8006E77C */ .short 0x0002
 /* 5EF7E 8006E77E */ .short 0x0005
 /* 5EF80 8006E780 */ .short 0x0008
@@ -2170,7 +2167,7 @@ dlabel D_8006E794
 /* 5EF96 8006E796 */ .short 0x0000
 .size D_8006E794, . - D_8006E794
 
-dlabel D_8006E798
+dlabel g_HudClosingOffsets
 /* 5EF98 8006E798 */ .short 0x0000
 /* 5EF9A 8006E79A */ .short 0x0004
 /* 5EF9C 8006E79C */ .short 0x0008
@@ -2185,9 +2182,10 @@ dlabel D_8006E798
 /* 5EFAE 8006E7AE */ .short 0x0022
 /* 5EFB0 8006E7B0 */ .short 0x0024
 /* 5EFB2 8006E7B2 */ .short 0x0000
-.size D_8006E798, . - D_8006E798
+.size g_HudClosingOffsets, . - g_HudClosingOffsets
 
 dlabel D_8006E7B4
+dlabel g_LifeOrbXYTarget
 /* 5EFB4 8006E7B4 */ .byte 0x1A
 .size D_8006E7B4, . - D_8006E7B4
 
@@ -3310,6 +3308,7 @@ dlabel D_8006F414
 .size D_8006F414, . - D_8006F414
 
 dlabel D_8006F438
+dlabel g_TargetGemCounts
 /* 5FC38 8006F438 */ .short 0x0064
 /* 5FC3A 8006F43A */ .short 0x00C8
 /* 5FC3C 8006F43C */ .short 0x0064

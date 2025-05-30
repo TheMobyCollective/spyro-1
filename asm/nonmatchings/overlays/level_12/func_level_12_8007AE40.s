@@ -439,12 +439,12 @@ glabel func_level_12_8007AE40
 /* EF6894 8007B2CC 911D4010 */  beqz       $v0, .Llevel_12_80082914
 /* EF6898 8007B2D0 00000000 */   nop
 .Llevel_12_8007B2D4:
-/* EF689C 8007B2D4 0780023C */  lui        $v0, %hi(D_80077FA8)
-/* EF68A0 8007B2D8 A87F4290 */  lbu        $v0, %lo(D_80077FA8)($v0)
+/* EF689C 8007B2D4 0780023C */  lui        $v0, %hi(g_Hud)
+/* EF68A0 8007B2D8 A87F4290 */  lbu        $v0, %lo(g_Hud)($v0)
 /* EF68A4 8007B2DC 02000924 */  addiu      $t1, $zero, 0x2
 /* EF68A8 8007B2E0 04004914 */  bne        $v0, $t1, .Llevel_12_8007B2F4
 /* EF68AC 8007B2E4 0080033C */   lui       $v1, (0x80008000 >> 16)
-/* EF68B0 8007B2E8 5E51010C */  jal        func_80054578
+/* EF68B0 8007B2E8 5E51010C */  jal        HudGemUpdate
 /* EF68B4 8007B2EC 00000000 */   nop
 /* EF68B8 8007B2F0 0080033C */  lui        $v1, (0x80008000 >> 16)
 .Llevel_12_8007B2F4:
@@ -1244,8 +1244,8 @@ glabel func_level_12_8007AE40
 /* EF7454 8007BE8C 130042A2 */  sb         $v0, 0x13($s2)
 /* EF7458 8007BE90 100040A6 */  sh         $zero, 0x10($s2)
 /* EF745C 8007BE94 120040A2 */  sb         $zero, 0x12($s2)
-/* EF7460 8007BE98 0780013C */  lui        $at, %hi(D_80077FDC)
-/* EF7464 8007BE9C DC7F36AC */  sw         $s6, %lo(D_80077FDC)($at)
+/* EF7460 8007BE98 0780013C */  lui        $at, %hi(g_Hud + 0x34)
+/* EF7464 8007BE9C DC7F36AC */  sw         $s6, %lo(g_Hud + 0x34)($at)
 /* EF7468 8007BEA0 48006392 */  lbu        $v1, 0x48($s3)
 /* EF746C 8007BEA4 08000224 */  addiu      $v0, $zero, 0x8
 /* EF7470 8007BEA8 440060A2 */  sb         $zero, 0x44($s3)
@@ -1565,8 +1565,8 @@ glabel func_level_12_8007AE40
 /* EF7934 8007C36C 0780013C */  lui        $at, %hi(g_EggTotal)
 /* EF7938 8007C370 105822AC */  sw         $v0, %lo(g_EggTotal)($at)
 /* EF793C 8007C374 0000A3AC */  sw         $v1, 0x0($a1)
-/* EF7940 8007C378 0780013C */  lui        $at, %hi(D_80077FDC)
-/* EF7944 8007C37C DC7F20AC */  sw         $zero, %lo(D_80077FDC)($at)
+/* EF7940 8007C378 0780013C */  lui        $at, %hi(g_Hud + 0x34)
+/* EF7944 8007C37C DC7F20AC */  sw         $zero, %lo(g_Hud + 0x34)($at)
 /* EF7948 8007C380 5A49010C */  jal        func_80052568
 /* EF794C 8007C384 21206002 */   addu      $a0, $s3, $zero
 /* EF7950 8007C388 450A0208 */  j          .Llevel_12_80082914

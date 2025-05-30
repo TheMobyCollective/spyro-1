@@ -500,76 +500,37 @@ dlabel D_80077EB0
 dlabel D_80077EB4
 /* 67DFC 80077EB4 */ .space 0xF4
 
-dlabel D_80077FA8
+dlabel g_Hud
+/* TODO - Total size from 80077FA8 to 8007850C -> .space 0x564 */
 /* 67EF0 80077FA8 */ .space 0x01
-
-dlabel D_80077FA9
 /* 67EF1 80077FA9 */ .space 0x01
-
-dlabel D_80077FAA
 /* 67EF2 80077FAA */ .space 0x01
-
-dlabel D_80077FAB
 /* 67EF3 80077FAB */ .space 0x01
-
-dlabel D_80077FAC
 /* 67EF4 80077FAC */ .space 0x01
 
-dlabel D_80077FAD
 /* 67EF5 80077FAD */ .space 0x01
-
-dlabel D_80077FAE
 /* 67EF6 80077FAE */ .space 0x01
-
-dlabel D_80077FAF
 /* 67EF7 80077FAF */ .space 0x01
-
-dlabel D_80077FB0
 /* 67EF8 80077FB0 */ .space 0x01
+/* 67EF9 80077FB1 */ .space 0x01
 
-dlabel D_80077FB1
-/* 67EF9 80077FB1 */ .space 0x03
+/* 67EF9 80077FB2 padding */ .space 0x02
 
-dlabel D_80077FB4
 /* 67EFC 80077FB4 */ .space 0x04
-
-dlabel D_80077FB8
 /* 67F00 80077FB8 */ .space 0x04
-
-dlabel D_80077FBC
 /* 67F04 80077FBC */ .space 0x04
-
-dlabel D_80077FC0
 /* 67F08 80077FC0 */ .space 0x04
-
-dlabel D_80077FC4
 /* 67F0C 80077FC4 */ .space 0x04
 
-dlabel D_80077FC8
 /* 67F10 80077FC8 */ .space 0x04
-
-dlabel D_80077FCC
 /* 67F14 80077FCC */ .space 0x04
-
-dlabel D_80077FD0
 /* 67F18 80077FD0 */ .space 0x04
-
-dlabel D_80077FD4
 /* 67F1C 80077FD4 */ .space 0x04
-
-dlabel D_80077FD8
 /* 67F20 80077FD8 */ .space 0x04
 
-dlabel D_80077FDC
 /* 67F24 80077FDC */ .space 0x04
-
-dlabel D_80077FE0
 /* 67F28 80077FE0 */ .space 0x04
-
-dlabel D_80077FE4
 /* 67F2C 80077FE4 */ .space 0x04
-
-dlabel D_80077FE8
 /* 67F30 80077FE8 */ .space 0x04
 
 dlabel D_80077FEC

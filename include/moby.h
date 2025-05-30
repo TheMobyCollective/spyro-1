@@ -95,7 +95,7 @@ typedef struct Moby {
   u_char m_State;
 
   /// @brief The Moby's substate, less often used in Moby code
-  char m_Substate;
+  u_char m_Substate;
 
   /// @brief Sector the Moby is located in, for culling purposes
   u_char m_SectorIndex;
@@ -160,6 +160,55 @@ typedef struct Moby {
   // is used
   u_char m_ScaleOverride;
 } Moby;
+
+typedef enum {
+  MOBYCLASS_HUD_SPYRO_HEAD = 58,
+  MOBYCLASS_LETTER_BLANK = 76,
+  MOBYCLASS_GEM_1 = 83,
+  MOBYCLASS_GEM_2 = 84,
+  MOBYCLASS_GEM_5 = 85,
+  MOBYCLASS_GEM_10 = 86,
+  MOBYCLASS_GEM_25 = 87,
+  MOBYCLASS_HUD_KEY = 173,
+  MOBYCLASS_NUMBER_0 = 260,
+  MOBYCLASS_NUMBER_1,
+  MOBYCLASS_NUMBER_2,
+  MOBYCLASS_NUMBER_3,
+  MOBYCLASS_NUMBER_4,
+  MOBYCLASS_NUMBER_5,
+  MOBYCLASS_NUMBER_6,
+  MOBYCLASS_NUMBER_7,
+  MOBYCLASS_NUMBER_8,
+  MOBYCLASS_NUMBER_9, //269
+  MOBYCLASS_LETTER_A = 426,
+  MOBYCLASS_LETTER_B,
+  MOBYCLASS_LETTER_C,
+  MOBYCLASS_LETTER_D,
+  MOBYCLASS_LETTER_E,
+  MOBYCLASS_LETTER_F,
+  MOBYCLASS_LETTER_G,
+  MOBYCLASS_LETTER_H,
+  MOBYCLASS_LETTER_I,
+  MOBYCLASS_LETTER_J,
+  MOBYCLASS_LETTER_K,
+  MOBYCLASS_LETTER_L,
+  MOBYCLASS_LETTER_M,
+  MOBYCLASS_LETTER_N,
+  MOBYCLASS_LETTER_O,
+  MOBYCLASS_LETTER_P,
+  MOBYCLASS_LETTER_Q,
+  MOBYCLASS_LETTER_R,
+  MOBYCLASS_LETTER_S,
+  MOBYCLASS_LETTER_T,
+  MOBYCLASS_LETTER_U,
+  MOBYCLASS_LETTER_V,
+  MOBYCLASS_LETTER_W,
+  MOBYCLASS_LETTER_X,
+  MOBYCLASS_LETTER_Y,
+  MOBYCLASS_LETTER_Z, //451
+  MOBYCLASS_HUD_GEM_CHEST = 471,
+  MOBYCLASS_HUD_DRAGON = 506,
+} MobyClass;
 
 // Data related
 typedef struct {
@@ -274,5 +323,7 @@ extern Moby *D_80075710; // HUD Mobys
 // Overlays
 extern Moby *(*D_800758CC)(int pClass, Moby *pMe); // g_MobySpawn
 extern void (*D_80075734)();                       // g_MobyUpdate
+extern void (*D_800758E4)(int pAmount, int pClass, Vector3D *pVec,
+                          void *extraParam); // g_ParticleSpawn
 
 #endif // !__MOBY_H

@@ -2106,7 +2106,7 @@ glabel func_level_60_8007AF90
 /* 51E54A0 8007CED8 FF0F4230 */  andi       $v0, $v0, 0xFFF
 /* 51E54A4 8007CEDC D6D0000C */  jal        func_80034358
 /* 51E54A8 8007CEE0 000002AE */   sw        $v0, 0x0($s0)
-/* 51E54AC 8007CEE4 8051010C */  jal        func_80054600
+/* 51E54AC 8007CEE4 8051010C */  jal        HudReset
 /* 51E54B0 8007CEE8 21200000 */   addu      $a0, $zero, $zero
 /* 51E54B4 8007CEEC 01000224 */  addiu      $v0, $zero, 0x1
 /* 51E54B8 8007CEF0 0780013C */  lui        $at, %hi(g_Gamestate)

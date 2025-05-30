@@ -724,12 +724,12 @@ glabel func_level_51_8007B4F8
 /* 467AD4C 8007B784 F0244010 */  beqz       $v0, .Llevel_51_80084B48
 /* 467AD50 8007B788 00000000 */   nop
 .Llevel_51_8007B78C:
-/* 467AD54 8007B78C 0780023C */  lui        $v0, %hi(D_80077FA8)
-/* 467AD58 8007B790 A87F4290 */  lbu        $v0, %lo(D_80077FA8)($v0)
+/* 467AD54 8007B78C 0780023C */  lui        $v0, %hi(g_Hud)
+/* 467AD58 8007B790 A87F4290 */  lbu        $v0, %lo(g_Hud)($v0)
 /* 467AD5C 8007B794 02000924 */  addiu      $t1, $zero, 0x2
 /* 467AD60 8007B798 04004914 */  bne        $v0, $t1, .Llevel_51_8007B7AC
 /* 467AD64 8007B79C 0080033C */   lui       $v1, (0x80008000 >> 16)
-/* 467AD68 8007B7A0 5E51010C */  jal        func_80054578
+/* 467AD68 8007B7A0 5E51010C */  jal        HudGemUpdate
 /* 467AD6C 8007B7A4 00000000 */   nop
 /* 467AD70 8007B7A8 0080033C */  lui        $v1, (0x80008000 >> 16)
 .Llevel_51_8007B7AC:
@@ -1526,8 +1526,8 @@ glabel func_level_51_8007B4F8
 /* 467B8FC 8007C334 130042A2 */  sb         $v0, 0x13($s2)
 /* 467B900 8007C338 100040A6 */  sh         $zero, 0x10($s2)
 /* 467B904 8007C33C 120040A2 */  sb         $zero, 0x12($s2)
-/* 467B908 8007C340 0780013C */  lui        $at, %hi(D_80077FDC)
-/* 467B90C 8007C344 DC7F3EAC */  sw         $fp, %lo(D_80077FDC)($at)
+/* 467B908 8007C340 0780013C */  lui        $at, %hi(g_Hud + 0x34)
+/* 467B90C 8007C344 DC7F3EAC */  sw         $fp, %lo(g_Hud + 0x34)($at)
 /* 467B910 8007C348 48006392 */  lbu        $v1, 0x48($s3)
 /* 467B914 8007C34C 08000224 */  addiu      $v0, $zero, 0x8
 /* 467B918 8007C350 440060A2 */  sb         $zero, 0x44($s3)
@@ -1849,8 +1849,8 @@ glabel func_level_51_8007B4F8
 /* 467BDE4 8007C81C 0780013C */  lui        $at, %hi(g_EggTotal)
 /* 467BDE8 8007C820 105822AC */  sw         $v0, %lo(g_EggTotal)($at)
 /* 467BDEC 8007C824 0000A3AC */  sw         $v1, 0x0($a1)
-/* 467BDF0 8007C828 0780013C */  lui        $at, %hi(D_80077FDC)
-/* 467BDF4 8007C82C DC7F20AC */  sw         $zero, %lo(D_80077FDC)($at)
+/* 467BDF0 8007C828 0780013C */  lui        $at, %hi(g_Hud + 0x34)
+/* 467BDF4 8007C82C DC7F20AC */  sw         $zero, %lo(g_Hud + 0x34)($at)
 /* 467BDF8 8007C830 5A49010C */  jal        func_80052568
 /* 467BDFC 8007C834 21206002 */   addu      $a0, $s3, $zero
 /* 467BE00 8007C838 D2120208 */  j          .Llevel_51_80084B48

@@ -9,6 +9,9 @@ Moby *func_800524C4(void);
 /// @brief Frees a Moby
 void func_80052568(Moby *pMoby);
 
+/// @brief
+void func_800529CC(Moby *pMoby);
+
 /// @brief Updates a Moby's shadow
 void func_800533D0(Moby *pMoby);
 

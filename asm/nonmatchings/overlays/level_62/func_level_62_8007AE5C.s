@@ -460,12 +460,12 @@ glabel func_level_62_8007AE5C
 /* 56CA100 8007B338 601F4010 */  beqz       $v0, .Llevel_62_800830BC
 /* 56CA104 8007B33C 00000000 */   nop
 .Llevel_62_8007B340:
-/* 56CA108 8007B340 0780023C */  lui        $v0, %hi(D_80077FA8)
-/* 56CA10C 8007B344 A87F4290 */  lbu        $v0, %lo(D_80077FA8)($v0)
+/* 56CA108 8007B340 0780023C */  lui        $v0, %hi(g_Hud)
+/* 56CA10C 8007B344 A87F4290 */  lbu        $v0, %lo(g_Hud)($v0)
 /* 56CA110 8007B348 02000924 */  addiu      $t1, $zero, 0x2
 /* 56CA114 8007B34C 04004914 */  bne        $v0, $t1, .Llevel_62_8007B360
 /* 56CA118 8007B350 0080033C */   lui       $v1, (0x80008000 >> 16)
-/* 56CA11C 8007B354 5E51010C */  jal        func_80054578
+/* 56CA11C 8007B354 5E51010C */  jal        HudGemUpdate
 /* 56CA120 8007B358 00000000 */   nop
 /* 56CA124 8007B35C 0080033C */  lui        $v1, (0x80008000 >> 16)
 .Llevel_62_8007B360:
@@ -1256,8 +1256,8 @@ glabel func_level_62_8007AE5C
 /* 56CACA0 8007BED8 100040A6 */  sh         $zero, 0x10($s2)
 /* 56CACA4 8007BEDC 120040A2 */  sb         $zero, 0x12($s2)
 /* 56CACA8 8007BEE0 01000924 */  addiu      $t1, $zero, 0x1
-/* 56CACAC 8007BEE4 0780013C */  lui        $at, %hi(D_80077FDC)
-/* 56CACB0 8007BEE8 DC7F29AC */  sw         $t1, %lo(D_80077FDC)($at)
+/* 56CACAC 8007BEE4 0780013C */  lui        $at, %hi(g_Hud + 0x34)
+/* 56CACB0 8007BEE8 DC7F29AC */  sw         $t1, %lo(g_Hud + 0x34)($at)
 /* 56CACB4 8007BEEC 4800A392 */  lbu        $v1, 0x48($s5)
 /* 56CACB8 8007BEF0 08000224 */  addiu      $v0, $zero, 0x8
 /* 56CACBC 8007BEF4 4400A0A2 */  sb         $zero, 0x44($s5)
@@ -1577,8 +1577,8 @@ glabel func_level_62_8007AE5C
 /* 56CB180 8007C3B8 0780013C */  lui        $at, %hi(g_EggTotal)
 /* 56CB184 8007C3BC 105822AC */  sw         $v0, %lo(g_EggTotal)($at)
 /* 56CB188 8007C3C0 0000A3AC */  sw         $v1, 0x0($a1)
-/* 56CB18C 8007C3C4 0780013C */  lui        $at, %hi(D_80077FDC)
-/* 56CB190 8007C3C8 DC7F20AC */  sw         $zero, %lo(D_80077FDC)($at)
+/* 56CB18C 8007C3C4 0780013C */  lui        $at, %hi(g_Hud + 0x34)
+/* 56CB190 8007C3C8 DC7F20AC */  sw         $zero, %lo(g_Hud + 0x34)($at)
 /* 56CB194 8007C3CC 2D0C0208 */  j          .Llevel_62_800830B4
 /* 56CB198 8007C3D0 2120A002 */   addu      $a0, $s5, $zero
 .Llevel_62_8007C3D4:

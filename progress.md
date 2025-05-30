@@ -118,14 +118,14 @@
 - [ ] func_8002D228
 - [ ] func_8002D338
 - [ ] func_8002D440
-- [ ] func_800542E4
-- [ ] func_80054400
-- [ ] func_8005445C
-- [ ] func_800544A8
-- [ ] func_80054578
-- [ ] func_80054600
-- [ ] func_80054988
-- [ ] func_800557CC
+- [x] HudPrint
+- [x] HudMoveMoby
+- [x] HudMoveEgg
+- [x] HudMobyRotate
+- [x] HudGemUpdate
+- [x] HudReset
+- [x] HudTick
+- [ ] GenerateGemCollectMobys
 - [x] func_800122A8
 - [x] func_800123C8
 - [x] func_80012460

@@ -24,21 +24,21 @@ glabel func_8002E12C
 /* 1E93C 8002E13C 2400B1AF */  sw         $s1, 0x24($sp)
 /* 1E940 8002E140 03004014 */  bnez       $v0, .L8002E150
 /* 1E944 8002E144 2000B0AF */   sw        $s0, 0x20($sp)
-/* 1E948 8002E148 6252010C */  jal        func_80054988
+/* 1E948 8002E148 6252010C */  jal        HudTick
 /* 1E94C 8002E14C 00000000 */   nop
 .L8002E150:
 /* 1E950 8002E150 0780023C */  lui        $v0, %hi(D_8007568C)
 /* 1E954 8002E154 8C56428C */  lw         $v0, %lo(D_8007568C)($v0)
-/* 1E958 8002E158 0780013C */  lui        $at, %hi(D_80077FB4)
-/* 1E95C 8002E15C B47F20AC */  sw         $zero, %lo(D_80077FB4)($at)
-/* 1E960 8002E160 0780013C */  lui        $at, %hi(D_80077FB8)
-/* 1E964 8002E164 B87F20AC */  sw         $zero, %lo(D_80077FB8)($at)
-/* 1E968 8002E168 0780013C */  lui        $at, %hi(D_80077FBC)
-/* 1E96C 8002E16C BC7F20AC */  sw         $zero, %lo(D_80077FBC)($at)
-/* 1E970 8002E170 0780013C */  lui        $at, %hi(D_80077FC0)
-/* 1E974 8002E174 C07F20AC */  sw         $zero, %lo(D_80077FC0)($at)
-/* 1E978 8002E178 0780013C */  lui        $at, %hi(D_80077FC4)
-/* 1E97C 8002E17C C47F20AC */  sw         $zero, %lo(D_80077FC4)($at)
+/* 1E958 8002E158 0780013C */  lui        $at, %hi(g_Hud + 0x0C)
+/* 1E95C 8002E15C B47F20AC */  sw         $zero, %lo(g_Hud + 0x0C)($at)
+/* 1E960 8002E160 0780013C */  lui        $at, %hi(g_Hud + 0x10)
+/* 1E964 8002E164 B87F20AC */  sw         $zero, %lo(g_Hud + 0x10)($at)
+/* 1E968 8002E168 0780013C */  lui        $at, %hi(g_Hud + 0x14)
+/* 1E96C 8002E16C BC7F20AC */  sw         $zero, %lo(g_Hud + 0x14)($at)
+/* 1E970 8002E170 0780013C */  lui        $at, %hi(g_Hud + 0x18)
+/* 1E974 8002E174 C07F20AC */  sw         $zero, %lo(g_Hud + 0x18)($at)
+/* 1E978 8002E178 0780013C */  lui        $at, %hi(g_Hud + 0x1C)
+/* 1E97C 8002E17C C47F20AC */  sw         $zero, %lo(g_Hud + 0x1C)($at)
 /* 1E980 8002E180 01004224 */  addiu      $v0, $v0, 0x1
 /* 1E984 8002E184 0780013C */  lui        $at, %hi(D_8007568C)
 /* 1E988 8002E188 8C5622AC */  sw         $v0, %lo(D_8007568C)($at)

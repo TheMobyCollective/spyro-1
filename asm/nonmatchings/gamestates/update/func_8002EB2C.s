@@ -5,10 +5,10 @@ glabel func_8002EB2C
 /* 1F32C 8002EB2C E8FFBD27 */  addiu      $sp, $sp, -0x18
 /* 1F330 8002EB30 E338023C */  lui        $v0, (0x38E38E39 >> 16)
 /* 1F334 8002EB34 398E4234 */  ori        $v0, $v0, (0x38E38E39 & 0xFFFF)
-/* 1F338 8002EB38 0780053C */  lui        $a1, %hi(D_80077FE8)
-/* 1F33C 8002EB3C E87FA58C */  lw         $a1, %lo(D_80077FE8)($a1)
-/* 1F340 8002EB40 0780073C */  lui        $a3, %hi(D_80077FE4)
-/* 1F344 8002EB44 E47FE724 */  addiu      $a3, $a3, %lo(D_80077FE4)
+/* 1F338 8002EB38 0780053C */  lui        $a1, %hi(g_Hud + 0x40)
+/* 1F33C 8002EB3C E87FA58C */  lw         $a1, %lo(g_Hud + 0x40)($a1)
+/* 1F340 8002EB40 0780073C */  lui        $a3, %hi(g_Hud + 0x3C)
+/* 1F344 8002EB44 E47FE724 */  addiu      $a3, $a3, %lo(g_Hud + 0x3C)
 /* 1F348 8002EB48 0100A524 */  addiu      $a1, $a1, 0x1
 /* 1F34C 8002EB4C 1800A200 */  mult       $a1, $v0
 /* 1F350 8002EB50 0780063C */  lui        $a2, %hi(g_DeltaTime)
@@ -30,8 +30,8 @@ glabel func_8002EB2C
 /* 1F390 8002EB90 C0100300 */  sll        $v0, $v1, 3
 /* 1F394 8002EB94 21104300 */  addu       $v0, $v0, $v1
 /* 1F398 8002EB98 2328A200 */  subu       $a1, $a1, $v0
-/* 1F39C 8002EB9C 0780013C */  lui        $at, %hi(D_80077FE8)
-/* 1F3A0 8002EBA0 E87F25AC */  sw         $a1, %lo(D_80077FE8)($at)
+/* 1F39C 8002EB9C 0780013C */  lui        $at, %hi(g_Hud + 0x40)
+/* 1F3A0 8002EBA0 E87F25AC */  sw         $a1, %lo(g_Hud + 0x40)($at)
 /* 1F3A4 8002EBA4 3063010C */  jal        SpecularUpdate
 /* 1F3A8 8002EBA8 03000424 */   addiu     $a0, $zero, 0x3
 /* 1F3AC 8002EBAC 0780023C */  lui        $v0, %hi(D_800758B8)
