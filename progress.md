@@ -113,7 +113,7 @@
 - [ ] func_8002C924
 - [ ] func_8002CB6C
 - [ ] func_8002CCC8
-- [ ] func_8002D02C
+- [x] func_8002D02C
 - [ ] func_8002D170
 - [ ] func_8002D228
 - [ ] func_8002D338

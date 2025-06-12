@@ -6,6 +6,7 @@
 #include "graphics.h"
 #include "hud.h"
 #include "loaders.h"
+#include "memory.h"
 #include "music.h"
 #include "specular_and_metal.h"
 #include "spu.h"
@@ -18,14 +19,25 @@ extern int D_800758B8; // Pause menu text rotation ticks
 extern int D_80075720; // Selected menu item index
 extern int D_800757C8; // OptionsSubmenuIsOpen
 
+extern int D_8007570C; // Is currently talking to fairy / rescuing dragon
+
 // Inventory page transition state
-// Set to 0 when not tranitioning
+// Set to 0 when not transitioning
 // Set to -64 when transitioning to right. (When right button is pressed,
 // Artisans to Peace Keepers) Set to 64 when transitioning to left. (When left
 // button is pressed, Peace Keepers to Artisans)
 extern int D_800756D4;
 extern int D_80075744; // The index of the current page of the inventory screen
 extern int D_800757CC; // Transition progress between inventory pages.
+
+// This is part of some larger "level" struct starting at 800786C8
+// Seems to me a timer of some sort
+extern int D_80078768;
+
+// TODO - where does this get updated
+extern int D_800758A4; // no idea, value goes back and forth between D_80078768
+
+extern SphericalCoordsOffset D_8006C8BC;
 
 /// @brief Pauses the game
 // pEnteringFromGameplay is:
@@ -236,7 +248,54 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002CB6C);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002CCC8);
 
 /// @brief Exit fairy
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002D02C);
+void func_8002D02C(void) {
+  g_Gamestate = 0;
+
+  // no longer talking to fairy/dragon
+  D_8007570C = 0;
+
+  SpecularReset();
+  VecNull(&g_Spyro.unk_0x1a4);
+
+  // reset spyro
+  func_8004AC24(1);
+  g_Spyro.unk_0x1b4 = 256;
+  g_Spyro.m_headRotation.z = 16;
+  g_Spyro.m_noGamepadUpdateFrames = 8;
+
+  // put camera on spyro
+  g_Camera.m_Focus = &g_Spyro.m_Position;
+  g_Camera.m_State = 0;
+  g_Camera.unk_0xC0 = 0;
+  g_Camera.m_0xD8 = &D_8006C8BC;
+
+  //?? some sort of counter
+  D_80078768 = D_800758A4;
+
+  g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+  // something for updating spherical coordinates
+  func_80033F08(&g_Camera.m_Position);
+  Memcpy(&D_8006C8BC, &g_Camera.m_Simulation, sizeof(D_8006C8BC));
+  D_8006C8BC.m_Coords.azimuth =
+      (D_8006C8BC.m_Coords.azimuth + g_Camera.m_FocusRotation) & 0xFFF;
+
+  // some more camera reset
+  func_80034358();
+
+  // build out the HUD
+  HudReset(0);
+
+  // hide all the HUD stats
+  g_Hud.m_GemDisplayState = HDS_Hidden;
+  g_Hud.m_DragonDisplayState = HDS_Hidden;
+  g_Hud.m_LifeDisplayState = HDS_Hidden;
+  g_Hud.m_EggDisplayState = HDS_Hidden;
+  g_Hud.m_KeyDisplayState = HDS_Hidden;
+
+  // start up the music
+  func_800567F4(D_800774B0, 8);
+}
 
 /// @brief Start the titlescreen gamestate
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002D170);
