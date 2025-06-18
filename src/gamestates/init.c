@@ -249,11 +249,74 @@ void func_8002C914(void) {};
 /// @brief Empty, used to update the dragon dialogue iirc?
 void func_8002C91C(void) {};
 
+extern Moby *D_800770C0; // resucing dragon moby
+
+typedef struct {
+  int unk_0x0;
+  int unk_0x4;
+  int unk_0x8;
+  int unk_0xC;
+  int unk_0x10;
+  int unk_0x14;
+  int unk_0x18;
+  int unk_0x1C;
+  int unk_0x20;
+} RescuedDragonMobyProps;
+
 /// @brief Rescue a dragon, increments the needed values and starts the cutscene
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002C924);
 
 /// @brief Exit dragon cutscene, back to gamestate 0
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002CB6C);
+void func_8002CB6C(void) {
+  Moby *moby;
+  int moby_idx;
+
+  g_Gamestate = GS_Playing;
+  D_8007570C = 0; // reset rescuing dragon
+  moby_idx = ((RescuedDragonMobyProps *)D_800770C0->m_Props)->unk_0x20;
+  if (moby_idx != -1) {
+    moby = D_80075828 + moby_idx;
+    moby->m_AnimationState.m_Animation = 0;
+    moby->m_State = 1;
+  }
+
+  // Reset spyro
+  func_8004AC24(1);
+
+  g_Spyro.m_noGamepadUpdateFrames = 12;
+
+  // put focus on spyro
+  g_Camera.m_Focus = &g_Spyro.m_Position;
+  g_Camera.m_State = 0;
+  g_Camera.unk_0xC0 = 0;
+  g_Camera.m_0xD8 = &D_8006C8BC;
+
+  D_80078768 = D_800758A4;
+
+  g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+  // something for updating spherical coordinates
+  func_80033F08(&g_Camera.m_Position);
+  Memcpy(&D_8006C8BC, &g_Camera.m_Simulation, sizeof(D_8006C8BC));
+  D_8006C8BC.m_Coords.azimuth =
+      (D_8006C8BC.m_Coords.azimuth + g_Camera.m_FocusRotation) & 0xFFF;
+
+  // some more camera reset
+  func_80034358();
+
+  // build out the HUD
+  HudReset(0);
+
+  // hide all the HUD stats
+  g_Hud.m_GemDisplayState = HDS_Hidden;
+  g_Hud.m_DragonDisplayState = HDS_Hidden;
+  g_Hud.m_LifeDisplayState = HDS_Hidden;
+  g_Hud.m_EggDisplayState = HDS_Hidden;
+  g_Hud.m_KeyDisplayState = HDS_Hidden;
+
+  // start up the music
+  func_800567F4(D_800774B0, 8);
+}
 
 /// @brief Talk to a fairy
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002CCC8);

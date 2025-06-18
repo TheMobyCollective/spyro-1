@@ -37,6 +37,8 @@ typedef enum {
   GS_Respawn = 4,
   GS_GameOver = 5,
 
+  GS_Dragon = 8,
+
   GS_ExitLevel = 10,
   GS_Fairy = 11,
   GS_Baloonist = 12,
