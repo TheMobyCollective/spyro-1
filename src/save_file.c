@@ -8,10 +8,6 @@
 #include "spu.h"
 #include "variables.h"
 
-// TODO: Pause menu
-extern int D_80075754; // Sound volume
-extern int D_80075748; // Music volume
-
 // Wouldn't know where to put these ones
 extern int D_80075838;
 extern int D_8007583C;

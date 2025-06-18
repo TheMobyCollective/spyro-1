@@ -233,7 +233,7 @@ void CheatProcessLevelWarp(void) {
         func_8003FDC8(15); // Reset Spyro to gliding state
 
         // Set level transition flags
-        g_Gamestate = 1;   // Set gamestate to loading
+        g_Gamestate = GS_Loading;   // Set gamestate to loading
         g_LoadStage = 1;   // Set load stage to 1
         D_800756D0 = 0;    // Set no level transition
         D_800756B0 = 0;    // Set no transition text

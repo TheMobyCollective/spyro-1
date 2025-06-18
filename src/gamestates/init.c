@@ -13,6 +13,9 @@
 #include "spyro.h"
 #include "variables.h"
 
+extern int rand(void); // From psyq
+extern void srand(unsigned int);
+
 extern int D_8007568C; // Pause menu no button ticks
 extern int D_800758B8; // Pause menu text rotation ticks
 
@@ -37,6 +40,14 @@ extern int D_80078768;
 // TODO - where does this get updated
 extern int D_800758A4; // no idea, value goes back and forth between D_80078768
 
+extern struct {
+  char stuff[0x4C];
+  void *unk_0x4C;
+  char stuff2[0x0C];
+} D_80078D78; //
+
+extern int D_8007591C; //??
+
 extern SphericalCoordsOffset D_8006C8BC;
 
 /// @brief Pauses the game
@@ -51,10 +62,10 @@ void func_8002C420(int pEnteringFromGameplay) {
 
   PlaySound(g_Spu.m_SoundTable->menuSound, nullptr, 0x10 /* 2D */, nullptr);
 
-  g_Gamestate = 2; // Set gamestate to pause menu
-  D_80075720 = 0;  // Selected menu item index
-  D_800757C8 = 0;  // OptionsMenuIsOpen
-  D_8007568C = 0;  // Pause menu no button ticks
+  g_Gamestate = GS_PauseMenu; // Set gamestate to pause menu
+  D_80075720 = 0;             // Selected menu item index
+  D_800757C8 = 0;             // OptionsMenuIsOpen
+  D_8007568C = 0;             // Pause menu no button ticks
 
   if (D_80075690) { // If Spyro is in a flight level...
     if (pEnteringFromGameplay) {
@@ -98,7 +109,7 @@ void func_8002C534(int pResumeMusic) {
   LoadImage(&rect, (u_long *)((int)D_800785D8.m_HudOTStart - 115200));
   DrawSync(0);
 
-  g_Gamestate = 0;
+  g_Gamestate = GS_Playing;
 
   SpecularReset();
 
@@ -121,10 +132,10 @@ void func_8002C534(int pResumeMusic) {
 
 /// @brief Exits level
 void func_8002C618(void) {
-  func_80056B28(0); // Stop all sounds
-  g_Gamestate = 10; // Set gamestate to exit level
-  D_8007568C = 0;   // Pause menu no button ticks
-  D_800758B8 = 0;   // Pause menu text rotation ticks
+  func_80056B28(0);           // Stop all sounds
+  g_Gamestate = GS_ExitLevel; // Set gamestate to exit level
+  D_8007568C = 0;             // Pause menu no button ticks
+  D_800758B8 = 0;             // Pause menu text rotation ticks
 
   func_8004AC24(0); // Reset spyro
   func_8003EA68(0); // Set state to idle
@@ -144,7 +155,7 @@ void func_8002C664(void) {
   D_8007576C = -1;
   D_800758AC = g_LevelId;
 
-  g_Gamestate = 1;
+  g_Gamestate = GS_Loading;
 
   D_800756D0 = 1;
   D_800756B0 = 1;
@@ -166,7 +177,7 @@ void func_8002C714(int pEnteringFromGameplay) {
 
   D_800757CC = 0; // Transition progress between inventory pages.
   D_800756D4 = 0; // Inventory page transition state
-  g_Gamestate = 3;
+  g_Gamestate = GS_InvetoryMenu;
   // Set the current inventory screen to the current level's index / 6.
   // This causes the inventory screen to open up to page that shows the current
   // world.
@@ -187,7 +198,7 @@ void func_8002C7BC(void) {
   LoadImage(&rect, (u_long *)((int)D_800785D8.m_HudOTStart - 115200));
   DrawSync(0);
 
-  g_Gamestate = 0;
+  g_Gamestate = GS_Playing;
 
   SpecularReset();
 
@@ -209,9 +220,9 @@ void func_8002C85C(void) {
   int newState;
   if (D_8007582C != 0) {
     D_8007582C--;
-    newState = 4;
+    newState = GS_Respawn;
   } else {
-    newState = 5;
+    newState = GS_GameOver;
   }
 
   g_Gamestate = newState;
@@ -222,7 +233,7 @@ void func_8002C85C(void) {
 
 /// @brief Sets gamestate 0, resets background color, and resets the specular
 void func_8002C8A4(void) {
-  g_Gamestate = 0;
+  g_Gamestate = GS_Playing;
   g_DB[0].m_DrawEnv.r0 = g_Cyclorama.m_BackgroundColor.r;
   g_DB[0].m_DrawEnv.g0 = g_Cyclorama.m_BackgroundColor.g;
   g_DB[0].m_DrawEnv.b0 = g_Cyclorama.m_BackgroundColor.b;
@@ -249,7 +260,7 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002CCC8);
 
 /// @brief Exit fairy
 void func_8002D02C(void) {
-  g_Gamestate = 0;
+  g_Gamestate = GS_Playing;
 
   // no longer talking to fairy/dragon
   D_8007570C = 0;
@@ -298,7 +309,27 @@ void func_8002D02C(void) {
 }
 
 /// @brief Start the titlescreen gamestate
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002D170);
+void func_8002D170(void) {
+  g_Gamestate = GS_TitleScreen;
+  Memset(&D_80078D78, 0, sizeof(D_80078D78));
+
+  D_80075754 = 10; // sound volume
+
+  D_80078D78.unk_0x4C = D_800785D8.m_LowerPolyBuffer - 0x2000;
+
+  g_Spu.unk_0x320 = 0x3FFF;
+  D_80075748 = 10; // music volume
+  g_Spu.m_MusicVolume = 0x5000;
+  g_Spu.m_CommonAttr.cd.volume.left = g_Spu.m_MusicVolume;
+  g_Spu.m_CommonAttr.cd.volume.right = g_Spu.m_MusicVolume;
+  g_Spu.m_CommonAttr.mask = SPU_COMMON_CDVOLL | SPU_COMMON_CDVOLR;
+  SpuSetCommonAttr(&g_Spu.m_CommonAttr);
+
+  D_8007591C = 0;
+  D_80075680->m_CurrentTick = 0;
+
+  srand(345);
+}
 
 /// @brief Plays the credits
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002D228);

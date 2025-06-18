@@ -32,7 +32,7 @@ void func_8002B9CC() {
     g_Environment.m_CullingDistance = 0x28000;
     occlusionGroup = g_Camera.m_OcclusionGroup;
   } else {
-    if (g_Gamestate >= 13 && g_Gamestate < 15) {
+    if (g_Gamestate >= GS_TitleScreen && g_Gamestate < 15) {
       g_Environment.m_CullingDistance = 0x1c000;
     } else {
       g_Environment.m_CullingDistance = 0x14000;

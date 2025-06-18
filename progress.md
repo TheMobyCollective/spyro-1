@@ -114,7 +114,7 @@
 - [ ] func_8002CB6C
 - [ ] func_8002CCC8
 - [x] func_8002D02C
-- [ ] func_8002D170
+- [x] func_8002D170
 - [ ] func_8002D228
 - [ ] func_8002D338
 - [ ] func_8002D440

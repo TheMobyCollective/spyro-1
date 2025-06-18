@@ -101,7 +101,7 @@ void func_80056F64(int surfaceIdx, u_int arg1) {
       // Links are set to -1 when they're not filled
       if (pathMoby < 0) {
         g_LoadStage = 0;
-        g_Gamestate = 1;
+        g_Gamestate = GS_Loading;
         D_800756B0 = 1;
         D_800756AC = 0;
         return;

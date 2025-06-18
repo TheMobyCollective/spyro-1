@@ -29,6 +29,20 @@
 
 #define CLAMP(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
 
+typedef enum {
+  GS_Playing = 0,
+  GS_Loading = 1,
+  GS_PauseMenu = 2,
+  GS_InvetoryMenu = 3,
+  GS_Respawn = 4,
+  GS_GameOver = 5,
+
+  GS_ExitLevel = 10,
+  GS_Fairy = 11,
+  GS_Baloonist = 12,
+  GS_TitleScreen = 13
+} Gamestate;
+
 extern int g_Gamestate;   // Gamestate
 extern int g_StateSwitch; // Whether to skip the draw routine because of a
                           // gamestate switch

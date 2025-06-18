@@ -38,7 +38,7 @@ void func_8002E000(void) {
     g_Camera.m_Rotation.y -= 0x1000;
 
   if (g_Camera.m_Rotation.y < -0x200 || g_Camera.m_0xD8 == &D_8006CA84) {
-    g_Gamestate = 0;
+    g_Gamestate = GS_Playing;
   }
 }
 
