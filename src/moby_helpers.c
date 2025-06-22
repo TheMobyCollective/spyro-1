@@ -385,10 +385,6 @@ void func_8003A720(Moby *pMoby) {
   pMoby->m_FloorDistance = 0;
   pMoby->m_Renderer.raw = 32;
   *((int *)pMoby->m_SpecularMetalColor) = 0;
-  // pMoby->m_SpecularMetalColor[0] = 0;
-  // pMoby->m_SpecularMetalColor[1] = 0;
-  // pMoby->m_SpecularMetalColor[2] = 0;
-  // pMoby->m_SpecularMetalType = 0;
 }
 
 // Unused
@@ -637,8 +633,10 @@ void func_8003B7C0(Moby *pMoby) {
   }
 }
 
+/// @brief Collects a collectable moby
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003B854);
 
+/// @brief Collect a gem moby, adds it to the collected gem array
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003B9D4);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BAD0);

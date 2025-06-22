@@ -16,14 +16,14 @@ enum CutsceneType {
 // TODO: PETE.WAD
 extern struct {
   OffsetLength m_UniversalLogo;
-  OffsetLength m_wad1;
+  OffsetLength m_wad1; // Some titlescreen graphics, such as the logo and text
 
   OffsetLength m_TitleScreenOverlay;
 
-  OffsetLength m_CutsceneData[4]; //CutsceneType
+  OffsetLength m_CutsceneData[4]; // CutsceneType
 
-  OffsetLength m_wad8;
-  OffsetLength m_wad9;
+  OffsetLength m_GameOverSkybox; // Skybox used on the game over screen
+  OffsetLength m_PETE;           // PETE.WAD in prototypes
 
   struct {
     OffsetLength m_Overlay;

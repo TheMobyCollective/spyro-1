@@ -59,6 +59,7 @@ void func_80013230(void *data) {
   int past_frame_data;
   SpyroAnimationFrame *frame;
 
+  // This got added after July, it sets all level animations to null
   for (j = 0; j < 46 /*?*/; ++j) {
     if ((u_int)SPYRO_MODEL->m_Animations[j] <
             (u_int)D_800785D8.m_SharedAnimations ||

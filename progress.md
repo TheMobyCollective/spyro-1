@@ -44,7 +44,7 @@
 - [ ] func_800334D4
 - [ ] GamestateUpdate
 - [x] func_8005B6F8
-- [ ] func_8005B7D8
+- [x] func_8005B7D8
 - [x] SpuInitialize
 - [ ] PlaySound
 - [x] StopSound

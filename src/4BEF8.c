@@ -1,7 +1,13 @@
 #include "buffers.h"
+#include "cd.h"
 #include "common.h"
 #include "graphics.h"
+#include "loaders.h"
 #include "memory.h"
+#include "moby.h"
+#include "wad.h"
+
+extern int _stacksize;
 
 /// @brief: Set up the polygon buffers
 void AllocateBuffers(int pReducedSpace) {
@@ -34,5 +40,39 @@ void AllocateBuffers(int pReducedSpace) {
   Memset(D_800785D8.m_WorldOTStart, 0, 0x4000);
 }
 
-// Load shared models from WAD.WAD
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/4BEF8", func_8005B7D8);
+// Load shared models from PETE.WAD inside WAD.WAD
+void func_8005B7D8(void) {
+  int i;
+
+  struct {
+    int m_DataSize;
+    struct {
+      int m_Offset;
+      int m_Class;
+    } models[64];
+  } *peteData = (void *)(0x80200000 - g_WadHeader.m_PETE.m_Length -
+                         g_WadHeader.m_PETE.m_Length - _stacksize);
+
+  // PETE.WAD is loaded below the bottom of the stack,
+  // but lower than where the shared animations will end up
+  CDLoadSync(g_CdState.m_WadSector, peteData, g_WadHeader.m_PETE.m_Length,
+             g_WadHeader.m_PETE.m_Offset, 600);
+
+  // The shared animations are loaded blow the bottom of the stack
+  D_800785D8.m_SharedAnimations =
+      (void *)(0x80200000 - peteData->m_DataSize - _stacksize);
+
+  Memcpy(D_800785D8.m_SharedAnimations, (void *)((int)peteData + 0x800),
+         peteData->m_DataSize);
+
+  for (i = 0; i < 64; i++) {
+    if (!peteData->models[i].m_Offset)
+      break;
+
+    D_80076378[peteData->models[i].m_Class] =
+        PatchMobyModelPointers((void *)((char *)D_800785D8.m_SharedAnimations +
+                                        peteData->models[i].m_Offset - 0x800));
+  }
+
+  AllocateBuffers(0);
+}
