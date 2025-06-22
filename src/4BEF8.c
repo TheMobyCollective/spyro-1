@@ -58,7 +58,7 @@ void func_8005B7D8(void) {
   CDLoadSync(g_CdState.m_WadSector, peteData, g_WadHeader.m_PETE.m_Length,
              g_WadHeader.m_PETE.m_Offset, 600);
 
-  // The shared animations are loaded blow the bottom of the stack
+  // The shared animations are loaded below the bottom of the stack
   D_800785D8.m_SharedAnimations =
       (void *)(0x80200000 - peteData->m_DataSize - _stacksize);
 
