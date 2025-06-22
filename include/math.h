@@ -18,6 +18,7 @@ extern short D_8006CC78[256];
 // @brief VRAM size per cutscene
 extern int D_8006EE5C[4];
 
+/// @brief Also an atan2 function, but less precise
 int func_800169AC(int p1, int p2);
 
 /// @brief Atan2 function
@@ -35,6 +36,13 @@ int Sin(int pAngle);
 /// @param angle
 /// @return The cosine of the specified angle
 int Cos(int pAngle);
+
+/// @brief Uses Newton's method to find a more precise value
+/// @param pIn The input vector
+/// @param pInitialGuess The initial guess for the root
+/// @param pIncludeZAxis Whether to include the Z axis in the calculation
+/// @return A more precise value for the magnitude of the vector
+int func_8001729C(Vector3D *pIn, int pInitialGuess, int pIncludeZAxis);
 
 /// @brief Turns a 8bit rotation vector into a matrix
 /// @param pRotation The rotation vector

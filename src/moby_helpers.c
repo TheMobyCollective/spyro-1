@@ -122,8 +122,6 @@ int func_800381E8(Moby *moby, int range) { // Unused
                        moby->m_Rotation.z) < range;
 }
 
-int func_8001729C(Vector3D *, int, int); // Newton's method
-
 int func_80038250(Vector3D *pPoint) {
   Vector3D distance;
   Vector3D rayStart;
