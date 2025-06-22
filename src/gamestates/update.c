@@ -1,9 +1,13 @@
 #include "camera.h"
 #include "common.h"
+#include "gamepad.h"
 #include "loaders.h"
 #include "specular_and_metal.h"
 #include "spyro.h"
+#include "titlescreen.h"
 #include "variables.h"
+
+#include <libmcrd.h>
 
 /// @brief Updates level transition gems and text
 void func_8002DA74(void);
@@ -87,10 +91,29 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800314B4);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800324D8);
 
 // Memory card used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_80032A20);
+void func_80032A20(void) {
+  int t =
+      MemCardSync(1, (void *)&D_80078D78.m_0x40, (void *)&D_80078D78.m_0x44);
+
+  if (t) {
+    if (t == 1) {
+      D_80078D78.m_0x30[D_80078D78.m_0x2C] = D_80078D78.m_0x44;
+      D_80078D78.m_0x2C = 1 - D_80078D78.m_0x2C;
+    }
+
+    MemCardExist(D_80078D78.m_0x2C << 4);
+  }
+}
 
 // Memory card used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_80032AB0);
+void func_80032AB0(void) {
+  if (g_Pad.m_Down & PAD_TRIANGLE) {
+    D_80078D78.m_0x00 = 1;
+    D_80078D78.m_0x10 = 0;
+    D_80078D78.m_0x04 = 0;
+    MemCardSync(0, (void *)&D_80078D78.m_0x40, (void *)&D_80078D78.m_0x44);
+  }
+}
 
 /// @brief Gamestate 13
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_80032B08);

@@ -36,8 +36,8 @@
 - [ ] func_8002F3E4
 - [ ] func_800314B4
 - [ ] func_800324D8
-- [ ] func_80032A20
-- [ ] func_80032AB0
+- [x] func_80032A20
+- [x] func_80032AB0
 - [ ] func_80032B08
 - [ ] func_800331AC
 - [x] func_800333DC
