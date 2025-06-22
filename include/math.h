@@ -18,6 +18,8 @@ extern short D_8006CC78[256];
 // @brief VRAM size per cutscene
 extern int D_8006EE5C[4];
 
+int func_800169AC(int p1, int p2);
+
 /// @brief Atan2 function
 /// @param pY The Y coordinate
 /// @param pX The X coordinate

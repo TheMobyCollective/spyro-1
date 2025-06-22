@@ -21,6 +21,9 @@ int func_80038074(int p1, int p2);
 /// @return The normalized difference
 int func_800381BC(int p1, int p2);
 
+/// @brief Plays a sound from a Moby
+void func_8003851C(Moby *pMoby, int pSoundIndex, u_char *pChannel);
+
 /// @brief Initialize a Moby
 void func_8003A720(Moby *pMoby);
 

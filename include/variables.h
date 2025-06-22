@@ -2,6 +2,7 @@
 #define _VARIABLES_H_
 
 #include "common.h"
+#include "vector.h"
 #include <sys/types.h>
 
 // Misc global variables
@@ -24,5 +25,7 @@ extern int D_80078618[5];       // Course records
 extern u_char D_80078680[5][5]; // Flight collected
 
 extern u_char D_80077908[1200]; // Gem collection mask
+
+extern Vector3D D_80077368;
 
 #endif
