@@ -15,6 +15,11 @@ typedef struct {
 } LevelFlyInParameters;
 
 typedef struct {
+  SphericalCoordinates m_Coords;
+  SphericalCoordinates m_Offset;
+} SphericalCoordsOffset;
+
+typedef struct {
   SHORTMATRIX m_ProjectionMatrix; // Scaled for the aspect ratio
   SHORTMATRIX m_ViewMatrix; // Represents the camera's position and orientation
   Vector3D m_Position;      // Camera's position
@@ -25,23 +30,17 @@ typedef struct {
   int m_OcclusionGroup;  // Occlusion group
   u_int m_State;         // Camera state
   int unk_0x5C;          // Padding
-  SphericalCoordinates m_LastSimulationCoords;
-  SphericalCoordinates unk_0x6C;
-  SphericalCoordinates m_SphereCoords;
-  SphericalCoordinates unk_0x84;
-  SphericalCoordinates m_SimulationSphereCoords;
-  SphericalCoordinates m_SimulationOffset;
-  SphericalCoordinates unk_0xA8;
-  int unk_0xB4;
-  int unk_0xB8;
-  int unk_0xBC;
+  SphericalCoordsOffset m_LastSimulation;
+  SphericalCoordsOffset m_Sphere;
+  SphericalCoordsOffset m_Simulation;
+  SphericalCoordsOffset unk_0xA8;
   int unk_0xC0; // Related to states
   int unk_0xC4;
   int m_SpyroOffCenterFrames;
   int unk_0xCC;
   Vector3D *m_Focus;
   int m_FocusRotation;
-  SphericalCoordinates *m_0xD8;
+  SphericalCoordsOffset *m_0xD8;
   int unk_0xDC;
   int unk_0xE0;
   int unk_0xE4;
@@ -70,6 +69,12 @@ extern Camera g_Camera;
 
 /// @brief Creates the Camera's view and projection matrices
 void CameraUpdateMatrices(void);
+
+/// @brief
+int func_80033F08(Vector3D *pVec);
+
+/// @brief Some camera reset stuff
+void func_80034358(void);
 
 /// @brief Sets the level fly-in parameters
 /// @param param New level fly-in parameters

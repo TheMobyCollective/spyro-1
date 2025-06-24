@@ -136,31 +136,31 @@ void func_80034204(Vector3D *pOut) {
   // x = r * cos(e) * cos(a)
   pOut->x =
       FIXED_MUL(
-          FIXED_MUL(g_Camera.m_SphereCoords.radius, Cos(g_Camera.m_SphereCoords.elevation)),
-          Cos(g_Camera.m_SphereCoords.azimuth)
+          FIXED_MUL(g_Camera.m_Sphere.m_Coords.radius, Cos(g_Camera.m_Sphere.m_Coords.elevation)),
+          Cos(g_Camera.m_Sphere.m_Coords.azimuth)
         );
 
   // y = (-r * cos(e)) * sin(a)
   pOut->y =
       FIXED_MUL(
-          -FIXED_MUL(g_Camera.m_SphereCoords.radius, Cos(g_Camera.m_SphereCoords.elevation)),
-          Sin(g_Camera.m_SphereCoords.azimuth)
+          -FIXED_MUL(g_Camera.m_Sphere.m_Coords.radius, Cos(g_Camera.m_Sphere.m_Coords.elevation)),
+          Sin(g_Camera.m_Sphere.m_Coords.azimuth)
         );
 
   // z = r * sin(e)
-  pOut->z = FIXED_MUL(g_Camera.m_SphereCoords.radius, Sin(g_Camera.m_SphereCoords.elevation));
+  pOut->z = FIXED_MUL(g_Camera.m_Sphere.m_Coords.radius, Sin(g_Camera.m_Sphere.m_Coords.elevation));
 
   /* clang-format on */
 }
 
 /// @brief Updates the camera's rotation based on it's spherical coordinates
 void func_800342F8(void) {
-  g_Camera.m_Rotation.x = g_Camera.unk_0x84.azimuth;
-  g_Camera.m_Rotation.y = g_Camera.m_SimulationSphereCoords.elevation +
-                              g_Camera.unk_0x84.elevation &
+  g_Camera.m_Rotation.x = g_Camera.m_Sphere.m_Offset.azimuth;
+  g_Camera.m_Rotation.y = g_Camera.m_Simulation.m_Coords.elevation +
+                              g_Camera.m_Sphere.m_Offset.elevation &
                           0xfff;
-  g_Camera.m_Rotation.z = 0x800 - g_Camera.m_SimulationSphereCoords.azimuth -
-                              g_Camera.unk_0x84.radius &
+  g_Camera.m_Rotation.z = 0x800 - g_Camera.m_Simulation.m_Coords.azimuth -
+                              g_Camera.m_Sphere.m_Offset.radius &
                           0xfff;
 }
 
@@ -168,26 +168,30 @@ void func_800342F8(void) {
 void func_80034358(void) {
   func_80034198();
 
-  g_Camera.m_SphereCoords.azimuth = g_Camera.m_LastSimulationCoords.azimuth;
-  g_Camera.m_SphereCoords.elevation = g_Camera.m_LastSimulationCoords.elevation;
-  g_Camera.m_SphereCoords.radius = g_Camera.m_LastSimulationCoords.radius;
+  g_Camera.m_Sphere.m_Coords.azimuth =
+      g_Camera.m_LastSimulation.m_Coords.azimuth;
+  g_Camera.m_Sphere.m_Coords.elevation =
+      g_Camera.m_LastSimulation.m_Coords.elevation;
+  g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_LastSimulation.m_Coords.radius;
 
-  g_Camera.unk_0xA8.azimuth = 0;
-  g_Camera.unk_0xA8.elevation = 0;
-  g_Camera.unk_0xA8.radius = 0;
+  g_Camera.unk_0xA8.m_Coords.azimuth = 0;
+  g_Camera.unk_0xA8.m_Coords.elevation = 0;
+  g_Camera.unk_0xA8.m_Coords.radius = 0;
 
   // No clue
-  g_Camera.unk_0xB4 = 0;
-  g_Camera.unk_0xB8 = 0;
-  g_Camera.unk_0xBC = 0;
+  g_Camera.unk_0xA8.m_Offset.azimuth = 0;
+  g_Camera.unk_0xA8.m_Offset.elevation = 0;
+  g_Camera.unk_0xA8.m_Offset.radius = 0;
   g_Camera.unk_0xC4 = 0;
 
   g_Camera.m_SpyroOffCenterFrames = 0;
 
   // No clue
-  g_Camera.unk_0x84.azimuth = g_Camera.unk_0x6C.azimuth;
-  g_Camera.unk_0x84.elevation = g_Camera.unk_0x6C.elevation;
-  g_Camera.unk_0x84.radius = g_Camera.unk_0x6C.radius;
+  g_Camera.m_Sphere.m_Offset.azimuth =
+      g_Camera.m_LastSimulation.m_Offset.azimuth;
+  g_Camera.m_Sphere.m_Offset.elevation =
+      g_Camera.m_LastSimulation.m_Offset.elevation;
+  g_Camera.m_Sphere.m_Offset.radius = g_Camera.m_LastSimulation.m_Offset.radius;
 
   func_80034204(
       &g_Camera.m_DestinationPosition); // Calculate the new position from the
@@ -472,10 +476,10 @@ void func_800377A8(void) {
 
 // Not sure how to represent this properly, it might be an array
 // But the way this data is formatted is just absurd
-extern SphericalCoordinates D_8006C964;
-extern SphericalCoordinates D_8006CA3C;
-extern SphericalCoordinates D_8006CA54;
-extern SphericalCoordinates D_8006CA6C;
+extern SphericalCoordsOffset D_8006C964;
+extern SphericalCoordsOffset D_8006CA3C;
+extern SphericalCoordsOffset D_8006CA54;
+extern SphericalCoordsOffset D_8006CA6C;
 
 /// @brief Update function used during the level transition
 void func_80037A20(void) {
@@ -514,14 +518,15 @@ void func_80037A20(void) {
   // Update the sphere coordinates
   g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
 
-  g_Camera.m_SphereCoords.azimuth = g_Camera.m_SimulationSphereCoords.azimuth;
-  g_Camera.m_SphereCoords.elevation =
-      g_Camera.m_SimulationSphereCoords.elevation;
-  g_Camera.m_SphereCoords.radius = g_Camera.m_SimulationSphereCoords.radius;
+  g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+  g_Camera.m_Sphere.m_Coords.elevation =
+      g_Camera.m_Simulation.m_Coords.elevation;
+  g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
 
-  g_Camera.unk_0x84.azimuth = g_Camera.m_SimulationOffset.azimuth;
-  g_Camera.unk_0x84.elevation = g_Camera.m_SimulationOffset.elevation;
-  g_Camera.unk_0x84.radius = g_Camera.m_SimulationOffset.radius;
+  g_Camera.m_Sphere.m_Offset.azimuth = g_Camera.m_Simulation.m_Offset.azimuth;
+  g_Camera.m_Sphere.m_Offset.elevation =
+      g_Camera.m_Simulation.m_Offset.elevation;
+  g_Camera.m_Sphere.m_Offset.radius = g_Camera.m_Simulation.m_Offset.radius;
 }
 
 /// @brief Camera update function

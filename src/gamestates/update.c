@@ -25,7 +25,7 @@ void func_8002DF9C(void) {
   }
 }
 
-extern SphericalCoordinates D_8006CA84; // Dunno
+extern SphericalCoordsOffset D_8006CA84; // Dunno
 
 /// @brief Gamestate 9
 void func_8002E000(void) {
