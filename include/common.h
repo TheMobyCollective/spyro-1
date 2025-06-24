@@ -42,7 +42,9 @@ typedef enum {
   GS_ExitLevel = 10,
   GS_Fairy = 11,
   GS_Baloonist = 12,
-  GS_TitleScreen = 13
+  GS_TitleScreen = 13,
+
+  GS_Credits = 15
 } Gamestate;
 
 extern int g_Gamestate;   // Gamestate

@@ -2,6 +2,7 @@
 #include "cheats.h"
 #include "common.h"
 #include "gamepad.h"
+#include "gamestate/init.h"
 #include "loaders.h"
 #include "specular_and_metal.h"
 #include "spu.h"
@@ -250,9 +251,6 @@ void CheatProcessLevelWarp(void) {
     cheat_HomeworldSelected = level;
   }
 }
-
-// Play credits, param is whether to reload shared models I believe
-void func_8002D228(int unk);
 
 // Applies the cheat effect based on the input id
 void CheatApplyEffect(int pCheatId) {

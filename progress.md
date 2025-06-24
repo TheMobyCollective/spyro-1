@@ -117,7 +117,7 @@
 - [x] func_8002D170
 - [ ] func_8002D228
 - [ ] func_8002D338
-- [ ] func_8002D440
+- [x] func_8002D440
 - [x] HudPrint
 - [x] HudMoveMoby
 - [x] HudMoveEgg
