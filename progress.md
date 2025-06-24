@@ -125,7 +125,7 @@
 - [x] HudGemUpdate
 - [x] HudReset
 - [x] HudTick
-- [ ] GenerateGemCollectMobys
+- [x] GenerateGemCollectMobys
 - [x] func_800122A8
 - [x] func_800123C8
 - [x] func_80012460
