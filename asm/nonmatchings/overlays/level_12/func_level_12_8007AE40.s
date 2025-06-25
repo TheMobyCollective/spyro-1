@@ -2142,7 +2142,7 @@ glabel func_level_12_8007AE40
 /* EF81D0 8007CC08 73164014 */  bnez       $v0, .Llevel_12_800825D8
 /* EF81D4 8007CC0C 00000000 */   nop
 .Llevel_12_8007CC10:
-/* EF81D8 8007CC10 75EE000C */  jal        func_8003B9D4
+/* EF81D8 8007CC10 75EE000C */  jal        CollectItem
 /* EF81DC 8007CC14 21206002 */   addu      $a0, $s3, $zero
 /* EF81E0 8007CC18 76090208 */  j          .Llevel_12_800825D8
 /* EF81E4 8007CC1C 00000000 */   nop

@@ -2094,7 +2094,7 @@ glabel func_level_64_8007AD4C
 /* 5AEC920 8007CB58 0200422C */  sltiu      $v0, $v0, 0x2
 /* 5AEC924 8007CB5C B71A4014 */  bnez       $v0, .Llevel_64_8008363C
 /* 5AEC928 8007CB60 21206002 */   addu      $a0, $s3, $zero
-/* 5AEC92C 8007CB64 75EE000C */  jal        func_8003B9D4
+/* 5AEC92C 8007CB64 75EE000C */  jal        CollectItem
 /* 5AEC930 8007CB68 21206002 */   addu      $a0, $s3, $zero
 /* 5AEC934 8007CB6C 8F0D0208 */  j          .Llevel_64_8008363C
 /* 5AEC938 8007CB70 21206002 */   addu      $a0, $s3, $zero
@@ -2116,7 +2116,7 @@ glabel func_level_64_8007AD4C
 /* 5AEC974 8007CBAC 0200422C */  sltiu      $v0, $v0, 0x2
 /* 5AEC978 8007CBB0 A21A4014 */  bnez       $v0, .Llevel_64_8008363C
 /* 5AEC97C 8007CBB4 21206002 */   addu      $a0, $s3, $zero
-/* 5AEC980 8007CBB8 75EE000C */  jal        func_8003B9D4
+/* 5AEC980 8007CBB8 75EE000C */  jal        CollectItem
 /* 5AEC984 8007CBBC 21206002 */   addu      $a0, $s3, $zero
 /* 5AEC988 8007CBC0 8F0D0208 */  j          .Llevel_64_8008363C
 /* 5AEC98C 8007CBC4 21206002 */   addu      $a0, $s3, $zero
@@ -2593,7 +2593,7 @@ glabel func_level_64_8007AD4C
 /* 5AED084 8007D2BC 8F0D0208 */  j          .Llevel_64_8008363C
 /* 5AED088 8007D2C0 21206002 */   addu      $a0, $s3, $zero
 .Llevel_64_8007D2C4:
-/* 5AED08C 8007D2C4 75EE000C */  jal        func_8003B9D4
+/* 5AED08C 8007D2C4 75EE000C */  jal        CollectItem
 /* 5AED090 8007D2C8 21206002 */   addu      $a0, $s3, $zero
 /* 5AED094 8007D2CC 8F0D0208 */  j          .Llevel_64_8008363C
 /* 5AED098 8007D2D0 21206002 */   addu      $a0, $s3, $zero
@@ -7753,7 +7753,7 @@ glabel func_level_64_8007AD4C
 /* 5AF1C5C 80081E94 00000000 */   nop
 .Llevel_64_80081E98:
 /* 5AF1C60 80081E98 0000248E */  lw         $a0, 0x0($s1)
-/* 5AF1C64 80081E9C 75EE000C */  jal        func_8003B9D4
+/* 5AF1C64 80081E9C 75EE000C */  jal        CollectItem
 /* 5AF1C68 80081EA0 21800000 */   addu      $s0, $zero, $zero
 /* 5AF1C6C 80081EA4 0000248E */  lw         $a0, 0x0($s1)
 /* 5AF1C70 80081EA8 5A49010C */  jal        func_80052568

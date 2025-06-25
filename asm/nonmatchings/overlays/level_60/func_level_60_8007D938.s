@@ -1936,7 +1936,7 @@ glabel func_level_60_8007D938
 /* 51E7AA4 8007F4DC 400F4014 */  bnez       $v0, .Llevel_60_800831E0
 /* 51E7AA8 8007F4E0 00000000 */   nop
 .Llevel_60_8007F4E4:
-/* 51E7AAC 8007F4E4 75EE000C */  jal        func_8003B9D4
+/* 51E7AAC 8007F4E4 75EE000C */  jal        CollectItem
 /* 51E7AB0 8007F4E8 21206002 */   addu      $a0, $s3, $zero
 /* 51E7AB4 8007F4EC 780C0208 */  j          .Llevel_60_800831E0
 /* 51E7AB8 8007F4F0 00000000 */   nop

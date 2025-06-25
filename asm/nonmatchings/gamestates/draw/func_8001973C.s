@@ -544,9 +544,9 @@ glabel func_8001973C
 /* A678 80019E78 1057848C */  lw         $a0, %lo(D_80075710)($a0)
 /* A67C 80019E7C 0780033C */  lui        $v1, %hi(D_8007571C)
 /* A680 80019E80 1C57638C */  lw         $v1, %lo(D_8007571C)($v1)
-/* A684 80019E84 0780013C */  lui        $at, %hi(D_80077DB8)
+/* A684 80019E84 0780013C */  lui        $at, %hi(g_RecentGemsCollected)
 /* A688 80019E88 21083000 */  addu       $at, $at, $s0
-/* A68C 80019E8C B87D2290 */  lbu        $v0, %lo(D_80077DB8)($at)
+/* A68C 80019E8C B87D2290 */  lbu        $v0, %lo(g_RecentGemsCollected)($at)
 /* A690 80019E90 21182302 */  addu       $v1, $s1, $v1
 /* A694 80019E94 360082A4 */  sh         $v0, 0x36($a0)
 /* A698 80019E98 00006284 */  lh         $v0, 0x0($v1)

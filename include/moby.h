@@ -326,6 +326,8 @@ extern u_short **g_MobyPods; // Pointer to the Moby pods data, the last Moby
                              // in the list has the top bit set.
 extern int g_MobyPodCount;   // The number of pods in the current level
 
+extern Moby* D_80075758; // Poitner to the key Moby for this level
+
 extern Moby *D_80075828; // The Mobys in the current level
 
 extern Moby *D_80075890; // Pointer to the first dynamic Moby, used for

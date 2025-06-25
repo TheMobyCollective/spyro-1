@@ -88,6 +88,7 @@ extern struct {
 
 extern unsigned char D_8007A6A8[TOTAL_LEVEL_COUNT]; // Level completion flags
 
+extern int D_8006E330[];
 extern const char* D_8006F7F0[]; // Level name table
 
 #endif

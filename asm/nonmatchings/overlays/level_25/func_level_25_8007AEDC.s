@@ -181,9 +181,9 @@ glabel func_level_25_8007AEDC
 /* 258FF48 8007B180 21082200 */  addu       $at, $at, $v0
 /* 258FF4C 8007B184 98E92390 */  lbu        $v1, %lo(D_8006E998)($at)
 /* 258FF50 8007B188 1F00C230 */  andi       $v0, $a2, 0x1F
-/* 258FF54 8007B18C 0780013C */  lui        $at, %hi(D_80077DB8)
+/* 258FF54 8007B18C 0780013C */  lui        $at, %hi(g_RecentGemsCollected)
 /* 258FF58 8007B190 21082200 */  addu       $at, $at, $v0
-/* 258FF5C 8007B194 B87D23A0 */  sb         $v1, %lo(D_80077DB8)($at)
+/* 258FF5C 8007B194 B87D23A0 */  sb         $v1, %lo(g_RecentGemsCollected)($at)
 /* 258FF60 8007B198 0780023C */  lui        $v0, %hi(D_800756C8)
 /* 258FF64 8007B19C C856428C */  lw         $v0, %lo(D_800756C8)($v0)
 /* 258FF68 8007B1A0 0100C624 */  addiu      $a2, $a2, 0x1

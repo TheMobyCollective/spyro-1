@@ -476,7 +476,7 @@ dlabel D_800778F0
 dlabel D_80077908
 /* 67850 80077908 */ .space 0x4B0
 
-dlabel D_80077DB8
+dlabel g_RecentGemsCollected
 /* 67D00 80077DB8 */ .space 0x20
 
 dlabel D_80077DD8

@@ -1523,7 +1523,7 @@ glabel func_level_25_8007CFB4
 /* 259337C 8007E5B4 1F0C4014 */  bnez       $v0, .Llevel_25_80081634
 /* 2593380 8007E5B8 00000000 */   nop
 .Llevel_25_8007E5BC:
-/* 2593384 8007E5BC 75EE000C */  jal        func_8003B9D4
+/* 2593384 8007E5BC 75EE000C */  jal        CollectItem
 /* 2593388 8007E5C0 21206002 */   addu      $a0, $s3, $zero
 /* 259338C 8007E5C4 8D050208 */  j          .Llevel_25_80081634
 /* 2593390 8007E5C8 00000000 */   nop

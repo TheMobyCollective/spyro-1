@@ -1623,7 +1623,7 @@ glabel func_level_55_8007CFB4
 /* 50334EC 8007E724 0200422C */  sltiu      $v0, $v0, 0x2
 /* 50334F0 8007E728 2A0E4014 */  bnez       $v0, .Llevel_55_80081FD4
 /* 50334F4 8007E72C 21206002 */   addu      $a0, $s3, $zero
-/* 50334F8 8007E730 75EE000C */  jal        func_8003B9D4
+/* 50334F8 8007E730 75EE000C */  jal        CollectItem
 /* 50334FC 8007E734 21206002 */   addu      $a0, $s3, $zero
 /* 5033500 8007E738 F5070208 */  j          .Llevel_55_80081FD4
 /* 5033504 8007E73C 21206002 */   addu      $a0, $s3, $zero
@@ -1645,7 +1645,7 @@ glabel func_level_55_8007CFB4
 /* 5033540 8007E778 0200422C */  sltiu      $v0, $v0, 0x2
 /* 5033544 8007E77C 150E4014 */  bnez       $v0, .Llevel_55_80081FD4
 /* 5033548 8007E780 21206002 */   addu      $a0, $s3, $zero
-/* 503354C 8007E784 75EE000C */  jal        func_8003B9D4
+/* 503354C 8007E784 75EE000C */  jal        CollectItem
 /* 5033550 8007E788 21206002 */   addu      $a0, $s3, $zero
 /* 5033554 8007E78C F5070208 */  j          .Llevel_55_80081FD4
 /* 5033558 8007E790 21206002 */   addu      $a0, $s3, $zero
@@ -2121,7 +2121,7 @@ glabel func_level_55_8007CFB4
 /* 5033C4C 8007EE84 F5070208 */  j          .Llevel_55_80081FD4
 /* 5033C50 8007EE88 21206002 */   addu      $a0, $s3, $zero
 .Llevel_55_8007EE8C:
-/* 5033C54 8007EE8C 75EE000C */  jal        func_8003B9D4
+/* 5033C54 8007EE8C 75EE000C */  jal        CollectItem
 /* 5033C58 8007EE90 21206002 */   addu      $a0, $s3, $zero
 /* 5033C5C 8007EE94 F5070208 */  j          .Llevel_55_80081FD4
 /* 5033C60 8007EE98 21206002 */   addu      $a0, $s3, $zero

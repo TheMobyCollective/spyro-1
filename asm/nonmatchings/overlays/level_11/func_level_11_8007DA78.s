@@ -5461,7 +5461,7 @@ glabel func_level_11_8007DA78
 /* B8B654 8008288C C5124014 */  bnez       $v0, .Llevel_11_800873A4
 /* B8B658 80082890 00000000 */   nop
 .Llevel_11_80082894:
-/* B8B65C 80082894 75EE000C */  jal        func_8003B9D4
+/* B8B65C 80082894 75EE000C */  jal        CollectItem
 /* B8B660 80082898 21206002 */   addu      $a0, $s3, $zero
 /* B8B664 8008289C E91C0208 */  j          .Llevel_11_800873A4
 /* B8B668 800828A0 00000000 */   nop

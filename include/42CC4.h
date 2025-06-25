@@ -12,6 +12,8 @@ void func_80052568(Moby *pMoby);
 /// @brief
 void func_800529CC(Moby *pMoby);
 
+void func_800529E4(Moby *pMoby, int pSomething);
+
 /// @brief Updates a Moby's shadow
 void func_800533D0(Moby *pMoby);
 

@@ -667,7 +667,45 @@ void func_8003B7C0(Moby *pMoby) {
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003B854);
 
 /// @brief Collect a gem moby, adds it to the collected gem array
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003B9D4);
+void CollectItem(Moby *pMoby) {
+  char x[16];
+  int gem_value;
+  short moby_class;
+
+  // Update recently collected items, presumably for the little animation when
+  // you leave a level
+  g_RecentGemsCollected[D_800756C8 & 0x1F] = pMoby->m_Class;
+  D_800756C8 += 1;
+
+  // If this was a key, mark it as collected
+  if (pMoby == D_80075758) {
+    D_80075830 = 3;
+  }
+
+  //??
+  func_800529E4(pMoby, 4);
+
+  // particle spawn
+  (*D_800758E4)(6, 0xC, pMoby, (void *)D_8006E330[pMoby->m_Class]);
+
+  moby_class = pMoby->m_Class;
+
+  if (moby_class == MOBYCLASS_GEM_1)
+    gem_value = 1;
+  else if (moby_class == MOBYCLASS_GEM_2)
+    gem_value = 2;
+  else if (moby_class == MOBYCLASS_GEM_5)
+    gem_value = 5;
+  else if (moby_class == MOBYCLASS_GEM_10)
+    gem_value = 10;
+  else if (moby_class == MOBYCLASS_GEM_25)
+    gem_value = 25;
+  else
+    return;
+
+  // persist gem collection
+  func_8003B854(gem_value, pMoby);
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BAD0);
 
@@ -741,9 +779,9 @@ void func_8003C358(Moby *pMoby, int pIsLevelName) {
     if (character != ' ') {
       char_moby_class = character;
       if (character >= 'A' && character <= 'Z') {
-        char_moby_class += 361;
+        char_moby_class = char_moby_class - 'A' + MOBYCLASS_LETTER_A;
       } else {
-        char_moby_class = 76;
+        char_moby_class = MOBYCLASS_LETTER_BLANK;
       }
       char_moby = (*D_800758CC)(char_moby_class, pMoby);
       setMobyLetterProps((MobyLetterProps *)char_moby->m_Props, pMoby, i,

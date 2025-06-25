@@ -2198,7 +2198,7 @@ glabel func_level_14_8007AF94
 /* 14822C8 8007CD00 47134014 */  bnez       $v0, .Llevel_14_80081A20
 /* 14822CC 8007CD04 00000000 */   nop
 .Llevel_14_8007CD08:
-/* 14822D0 8007CD08 75EE000C */  jal        func_8003B9D4
+/* 14822D0 8007CD08 75EE000C */  jal        CollectItem
 /* 14822D4 8007CD0C 21206002 */   addu      $a0, $s3, $zero
 /* 14822D8 8007CD10 88060208 */  j          .Llevel_14_80081A20
 /* 14822DC 8007CD14 00000000 */   nop

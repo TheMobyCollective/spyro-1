@@ -2562,7 +2562,7 @@ glabel func_level_53_8007B510
 /* 4B63094 8007D2CC 7A214014 */  bnez       $v0, .Llevel_53_800858B8
 /* 4B63098 8007D2D0 21206002 */   addu      $a0, $s3, $zero
 .Llevel_53_8007D2D4:
-/* 4B6309C 8007D2D4 75EE000C */  jal        func_8003B9D4
+/* 4B6309C 8007D2D4 75EE000C */  jal        CollectItem
 /* 4B630A0 8007D2D8 21206002 */   addu      $a0, $s3, $zero
 /* 4B630A4 8007D2DC 2E160208 */  j          .Llevel_53_800858B8
 /* 4B630A8 8007D2E0 21206002 */   addu      $a0, $s3, $zero
@@ -10026,7 +10026,7 @@ glabel func_level_53_8007B510
 /* 4B69E2C 80084064 00000000 */   nop
 .Llevel_53_80084068:
 /* 4B69E30 80084068 0000248E */  lw         $a0, 0x0($s1)
-/* 4B69E34 8008406C 75EE000C */  jal        func_8003B9D4
+/* 4B69E34 8008406C 75EE000C */  jal        CollectItem
 /* 4B69E38 80084070 21800000 */   addu      $s0, $zero, $zero
 /* 4B69E3C 80084074 0000248E */  lw         $a0, 0x0($s1)
 /* 4B69E40 80084078 5A49010C */  jal        func_80052568

@@ -197,7 +197,7 @@
 - [x] func_8003B728
 - [x] func_8003B7C0
 - [ ] func_8003B854
-- [ ] func_8003B9D4
+- [x] CollectItem
 - [ ] func_8003BAD0
 - [ ] func_8003BCCC
 - [ ] func_8003BED8
