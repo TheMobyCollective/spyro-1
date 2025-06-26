@@ -387,7 +387,7 @@ void HudTick(void) {
     if (g_Hud.m_KeyFlag != D_80075830) {
       if (g_Hud.m_KeySteadyTicks == 0) {
         for (j = 0; j < 6; ++j) {
-          (*D_800758E4)(1, 12, (Vector3D *)&g_Hud.m_Mobys[11].m_Props,
+          (*D_800758E4)(1, 12, &g_Hud.m_Mobys[11].m_Props,
                         (void *)(something_hud(j) + 0x8080));
         }
       } else if (g_Hud.m_KeySteadyTicks > 11) {

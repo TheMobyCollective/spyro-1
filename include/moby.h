@@ -338,7 +338,7 @@ extern Moby *D_80075710; // HUD Mobys
 // Overlays
 extern Moby *(*D_800758CC)(int pClass, Moby *pMe); // g_MobySpawn
 extern void (*D_80075734)();                       // g_MobyUpdate
-extern void (*D_800758E4)(int pAmount, int pClass, Vector3D *pVec,
+extern void (*D_800758E4)(int pAmount, int pClass, void *spawnParam,
                           void *extraParam); // g_ParticleSpawn
 
 #endif // !__MOBY_H
