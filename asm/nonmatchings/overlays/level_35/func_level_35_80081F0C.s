@@ -246,7 +246,7 @@ glabel func_level_35_80081F0C
 /* 33E7060 80082298 1800A2AF */   sw        $v0, 0x18($sp)
 /* 33E7064 8008229C 1000A427 */  addiu      $a0, $sp, 0x10
 /* 33E7068 800822A0 21284000 */  addu       $a1, $v0, $zero
-/* 33E706C 800822A4 6E5D000C */  jal        func_800175B8
+/* 33E706C 800822A4 6E5D000C */  jal        VecScaleToLength
 /* 33E7070 800822A8 A0000624 */   addiu     $a2, $zero, 0xA0
 /* 33E7074 800822AC AA49010C */  jal        func_800526A8
 /* 33E7078 800822B0 21208002 */   addu      $a0, $s4, $zero

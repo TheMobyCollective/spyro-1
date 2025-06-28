@@ -635,7 +635,7 @@ glabel func_8003EA68
 /* 2FA24 8003F224 01003126 */  addiu      $s1, $s1, 0x1
 /* 2FA28 8003F228 00140200 */  sll        $v0, $v0, 16
 /* 2FA2C 8003F22C C3150200 */  sra        $v0, $v0, 23
-/* 2FA30 8003F230 125C000C */  jal        func_80017048
+/* 2FA30 8003F230 125C000C */  jal        VecRotateByMatrix
 /* 2FA34 8003F234 2800A2AF */   sw        $v0, 0x28($sp)
 /* 2FA38 8003F238 01000424 */  addiu      $a0, $zero, 0x1
 /* 2FA3C 8003F23C 21000524 */  addiu      $a1, $zero, 0x21
@@ -709,7 +709,7 @@ glabel func_8003EA68
 /* 2FB40 8003F340 011EA228 */  slti       $v0, $a1, 0x1E01
 /* 2FB44 8003F344 03004014 */  bnez       $v0, .L8003F354
 /* 2FB48 8003F348 21202002 */   addu      $a0, $s1, $zero
-/* 2FB4C 8003F34C 6E5D000C */  jal        func_800175B8
+/* 2FB4C 8003F34C 6E5D000C */  jal        VecScaleToLength
 /* 2FB50 8003F350 001E0624 */   addiu     $a2, $zero, 0x1E00
 .L8003F354:
 /* 2FB54 8003F354 0880033C */  lui        $v1, %hi(g_Spyro + 0x9C)
@@ -760,7 +760,7 @@ glabel func_8003EA68
 /* 2FC00 8003F400 011EA228 */  slti       $v0, $a1, 0x1E01
 /* 2FC04 8003F404 03004014 */  bnez       $v0, .L8003F414
 /* 2FC08 8003F408 21200002 */   addu      $a0, $s0, $zero
-/* 2FC0C 8003F40C 6E5D000C */  jal        func_800175B8
+/* 2FC0C 8003F40C 6E5D000C */  jal        VecScaleToLength
 /* 2FC10 8003F410 001E0624 */   addiu     $a2, $zero, 0x1E00
 .L8003F414:
 /* 2FC14 8003F414 0880033C */  lui        $v1, %hi(g_Spyro + 0x9C)

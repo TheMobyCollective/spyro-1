@@ -20,7 +20,7 @@ glabel func_8003E218
 /* 2EA54 8003E254 1400A0AF */  sw         $zero, 0x14($sp)
 /* 2EA58 8003E258 1000A0AF */  sw         $zero, 0x10($sp)
 /* 2EA5C 8003E25C 2400A0AF */  sw         $zero, 0x24($sp)
-/* 2EA60 8003E260 125C000C */  jal        func_80017048
+/* 2EA60 8003E260 125C000C */  jal        VecRotateByMatrix
 /* 2EA64 8003E264 2800A2AF */   sw        $v0, 0x28($sp)
 /* 2EA68 8003E268 1000A427 */  addiu      $a0, $sp, 0x10
 /* 2EA6C 8003E26C 21288000 */  addu       $a1, $a0, $zero

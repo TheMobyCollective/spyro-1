@@ -133,8 +133,8 @@ int func_80038250(Vector3D *pPoint) {
   VecSub(&distance, &g_Spyro.m_Position, pPoint);
   magnitude = VecMagnitude(&distance, 1);
   // SKELETON: Newton's method, which isn't used
-  func_8001729C(&distance, magnitude, 1);
-  func_800175B8(&distance, magnitude, 0x400);
+  VecRefineMagnitude(&distance, magnitude, 1);
+  VecScaleToLength(&distance, magnitude, 1024);
   VecCopy(&rayStart, pPoint);
 
   raySegments = magnitude >> 0xA; // div by 1024

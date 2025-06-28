@@ -805,11 +805,11 @@ glabel func_80050BD0
 /* 41F68 80051768 02190300 */  srl        $v1, $v1, 4
 /* 41F6C 8005176C 9000A7A3 */  sb         $a3, 0x90($sp)
 /* 41F70 80051770 9100A2A3 */  sb         $v0, 0x91($sp)
-/* 41F74 80051774 4B5B000C */  jal        func_80016D2C
+/* 41F74 80051774 4B5B000C */  jal        RotVec8ToMatrix
 /* 41F78 80051778 9200A3A3 */   sb        $v1, 0x92($sp)
 /* 41F7C 8005177C 21200002 */  addu       $a0, $s0, $zero
 /* 41F80 80051780 7000A527 */  addiu      $a1, $sp, 0x70
-/* 41F84 80051784 125C000C */  jal        func_80017048
+/* 41F84 80051784 125C000C */  jal        VecRotateByMatrix
 /* 41F88 80051788 2130A000 */   addu      $a2, $a1, $zero
 /* 41F8C 8005178C 7000A38F */  lw         $v1, 0x70($sp)
 /* 41F90 80051790 8000A28F */  lw         $v0, 0x80($sp)
@@ -1260,11 +1260,11 @@ glabel func_80050BD0
 /* 425FC 80051DFC 02190300 */  srl        $v1, $v1, 4
 /* 42600 80051E00 E000A7A3 */  sb         $a3, 0xE0($sp)
 /* 42604 80051E04 E100A2A3 */  sb         $v0, 0xE1($sp)
-/* 42608 80051E08 4B5B000C */  jal        func_80016D2C
+/* 42608 80051E08 4B5B000C */  jal        RotVec8ToMatrix
 /* 4260C 80051E0C E200A3A3 */   sb        $v1, 0xE2($sp)
 /* 42610 80051E10 21200002 */  addu       $a0, $s0, $zero
 /* 42614 80051E14 C000A527 */  addiu      $a1, $sp, 0xC0
-/* 42618 80051E18 125C000C */  jal        func_80017048
+/* 42618 80051E18 125C000C */  jal        VecRotateByMatrix
 /* 4261C 80051E1C 2130A000 */   addu      $a2, $a1, $zero
 /* 42620 80051E20 C000A38F */  lw         $v1, 0xC0($sp)
 /* 42624 80051E24 D000A28F */  lw         $v0, 0xD0($sp)

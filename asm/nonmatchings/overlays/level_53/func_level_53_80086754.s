@@ -1019,7 +1019,7 @@ glabel func_level_53_80086754
 /* 4B6D2BC 800874F4 7000A48F */  lw         $a0, 0x70($sp)
 /* 4B6D2C0 800874F8 00010624 */  addiu      $a2, $zero, 0x100
 .Llevel_53_800874FC:
-/* 4B6D2C4 800874FC 6E5D000C */  jal        func_800175B8
+/* 4B6D2C4 800874FC 6E5D000C */  jal        VecScaleToLength
 /* 4B6D2C8 80087500 00000000 */   nop
 .Llevel_53_80087504:
 /* 4B6D2CC 80087504 7800A48F */  lw         $a0, 0x78($sp)

@@ -13,7 +13,7 @@ glabel func_8001CFDC
 /* D7FC 8001CFFC 2800A424 */   addiu     $a0, $a1, 0x28
 /* D800 8001D000 0780063C */  lui        $a2, %hi(g_Camera)
 /* D804 8001D004 D06DC624 */  addiu      $a2, $a2, %lo(g_Camera)
-/* D808 8001D008 4B5B000C */  jal        func_80016D2C
+/* D808 8001D008 4B5B000C */  jal        RotVec8ToMatrix
 /* D80C 8001D00C 1000A524 */   addiu     $a1, $a1, 0x10
 /* D810 8001D010 1962010C */  jal        func_80058864
 /* D814 8001D014 00000000 */   nop

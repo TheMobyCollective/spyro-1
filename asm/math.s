@@ -286,7 +286,7 @@ glabel func_80016D08
 .size func_80016D08, . - func_80016D08
 
 /* Handwritten function */
-glabel func_80016D2C
+glabel RotVec8ToMatrix
 /* 752C 80016D2C 0000818C */  lw         $at, 0x0($a0)
 /* 7530 80016D30 0780023C */  lui        $v0, %hi(D_8006CBF8)
 /* 7534 80016D34 F8CB4224 */  addiu      $v0, $v0, %lo(D_8006CBF8)
@@ -461,7 +461,7 @@ glabel func_80016D2C
 /* 77C4 80016FC4 1000EEAD */  sw         $t6, 0x10($t7)
 /* 77C8 80016FC8 0800E003 */  jr         $ra
 /* 77CC 80016FCC 00000000 */   nop
-.size func_80016D2C, . - func_80016D2C
+.size RotVec8ToMatrix, . - RotVec8ToMatrix
 
 glabel func_80016FD0
 /* 77D0 80016FD0 0000A68C */  lw         $a2, 0x0($a1)
@@ -497,7 +497,7 @@ glabel func_80016FD0
 .size func_80016FD0, . - func_80016FD0
 
 /* Handwritten function */
-glabel func_80017048
+glabel VecRotateByMatrix
 /* 7848 80017048 0000818C */  lw         $at, 0x0($a0)
 /* 784C 8001704C 0400828C */  lw         $v0, 0x4($a0)
 /* 7850 80017050 0800838C */  lw         $v1, 0x8($a0)
@@ -528,7 +528,7 @@ glabel func_80017048
 /* 78B4 800170B4 0400C2AC */  sw         $v0, 0x4($a2)
 /* 78B8 800170B8 0800E003 */  jr         $ra
 /* 78BC 800170BC 0800C3AC */   sw        $v1, 0x8($a2)
-.size func_80017048, . - func_80017048
+.size VecRotateByMatrix, . - VecRotateByMatrix
 
 /* Handwritten function */
 glabel func_800170C0
@@ -555,7 +555,7 @@ glabel func_800170C0
 .size func_800170C0, . - func_800170C0
 
 /* Handwritten function */
-glabel func_80017110
+glabel VecRotateByCam
 /* 7910 80017110 0780013C */  lui        $at, %hi(g_Camera)
 /* 7914 80017114 D06D2124 */  addiu      $at, $at, %lo(g_Camera)
 /* 7918 80017118 1400268C */  lw         $a2, 0x14($at)
@@ -586,7 +586,7 @@ glabel func_80017110
 /* 797C 8001717C 0400A2AC */  sw         $v0, 0x4($a1)
 /* 7980 80017180 0800E003 */  jr         $ra
 /* 7984 80017184 0800A3AC */   sw        $v1, 0x8($a1)
-.size func_80017110, . - func_80017110
+.size VecRotateByCam, . - VecRotateByCam
 
 /* Unused function */
 glabel func_80017188
@@ -674,7 +674,7 @@ glabel VecMagnitude
 .size VecMagnitude, . - VecMagnitude
 
 /* Handwritten function */
-glabel func_8001729C
+glabel VecRefineMagnitude
 /* 7A9C 8001729C 000089C8 */  lwc2       C2_IR1, 0x0($a0)
 /* 7AA0 800172A0 00588048 */  mtc2       $zero, C2_IR3 /* handwritten instruction */
 /* 7AA4 800172A4 0200C010 */  beqz       $a2, .L800172B0
@@ -714,7 +714,7 @@ glabel func_8001729C
 .L80017328:
 /* 7B28 80017328 0800E003 */  jr         $ra
 /* 7B2C 8001732C 0000A220 */   addi      $v0, $a1, 0x0 /* handwritten instruction */
-.size func_8001729C, . - func_8001729C
+.size VecRefineMagnitude, . - VecRefineMagnitude
 
 /* Handwritten function */
 glabel func_80017330
@@ -895,7 +895,7 @@ glabel func_80017548
 .size func_80017548, . - func_80017548
 
 /* Handwritten function */
-glabel func_800175B8
+glabel VecScaleToLength
 /* 7DB8 800175B8 00330600 */  sll        $a2, $a2, 12
 /* 7DBC 800175BC 1A00C500 */  div        $zero, $a2, $a1
 /* 7DC0 800175C0 000089C8 */  lwc2       C2_IR1, 0x0($a0)
@@ -919,7 +919,7 @@ glabel func_800175B8
 /* 7E08 80017608 040082AC */  sw         $v0, 0x4($a0)
 /* 7E0C 8001760C 0800E003 */  jr         $ra
 /* 7E10 80017610 080083AC */   sw        $v1, 0x8($a0)
-.size func_800175B8, . - func_800175B8
+.size VecScaleToLength, . - VecScaleToLength
 
 /* Handwritten function */
 glabel func_80017614
@@ -1434,7 +1434,7 @@ glabel func_80017C4C
 /* 8464 80017C64 080083AC */   sw        $v1, 0x8($a0)
 .size func_80017C4C, . - func_80017C4C
 
-glabel func_80017C68
+glabel VecToShortVec
 /* 8468 80017C68 0000A18C */  lw         $at, 0x0($a1)
 /* 846C 80017C6C 0400A28C */  lw         $v0, 0x4($a1)
 /* 8470 80017C70 0800A38C */  lw         $v1, 0x8($a1)
@@ -1442,7 +1442,7 @@ glabel func_80017C68
 /* 8478 80017C78 020082A4 */  sh         $v0, 0x2($a0)
 /* 847C 80017C7C 0800E003 */  jr         $ra
 /* 8480 80017C80 040083A4 */   sh        $v1, 0x4($a0)
-.size func_80017C68, . - func_80017C68
+.size VecToShortVec, . - VecToShortVec
 
 /* Handwritten function */
 glabel func_80017C84

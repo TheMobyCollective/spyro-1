@@ -260,7 +260,7 @@ glabel func_level_45_8008223C
 /* 425E3C8 80082600 1800A2AF */   sw        $v0, 0x18($sp)
 /* 425E3CC 80082604 1000A427 */  addiu      $a0, $sp, 0x10
 /* 425E3D0 80082608 21284000 */  addu       $a1, $v0, $zero
-/* 425E3D4 8008260C 6E5D000C */  jal        func_800175B8
+/* 425E3D4 8008260C 6E5D000C */  jal        VecScaleToLength
 /* 425E3D8 80082610 A0000624 */   addiu     $a2, $zero, 0xA0
 /* 425E3DC 80082614 AA49010C */  jal        func_800526A8
 /* 425E3E0 80082618 21208002 */   addu      $a0, $s4, $zero

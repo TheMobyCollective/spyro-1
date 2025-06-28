@@ -105,8 +105,8 @@ glabel GamestateUpdate
 .L800339C0:
 /* 241C0 800339C0 0E006214 */  bne        $v1, $v0, .L800339FC
 /* 241C4 800339C4 0E000224 */   addiu     $v0, $zero, 0xE
-/* 241C8 800339C8 0880033C */  lui        $v1, %hi(D_80078D78)
-/* 241CC 800339CC 788D638C */  lw         $v1, %lo(D_80078D78)($v1)
+/* 241C8 800339C8 0880033C */  lui        $v1, %hi(g_TitlescreenState)
+/* 241CC 800339CC 788D638C */  lw         $v1, %lo(g_TitlescreenState)($v1)
 /* 241D0 800339D0 03000224 */  addiu      $v0, $zero, 0x3
 /* 241D4 800339D4 05006210 */  beq        $v1, $v0, .L800339EC
 /* 241D8 800339D8 00000000 */   nop

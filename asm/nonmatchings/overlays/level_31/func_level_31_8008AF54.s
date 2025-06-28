@@ -466,7 +466,7 @@ glabel func_level_31_8008AF54
 .Llevel_31_8008B4D8:
 /* 2A0A2A0 8008B4D8 00010624 */  addiu      $a2, $zero, 0x100
 .Llevel_31_8008B4DC:
-/* 2A0A2A4 8008B4DC 6E5D000C */  jal        func_800175B8
+/* 2A0A2A4 8008B4DC 6E5D000C */  jal        VecScaleToLength
 /* 2A0A2A8 8008B4E0 00000000 */   nop
 /* 2A0A2AC 8008B4E4 1000A427 */  addiu      $a0, $sp, 0x10
 .Llevel_31_8008B4E8:
@@ -645,7 +645,7 @@ glabel func_level_31_8008AF54
 /* 2A0A540 8008B778 4100422C */  sltiu      $v0, $v0, 0x41
 /* 2A0A544 8008B77C 80044010 */  beqz       $v0, .Llevel_31_8008C980
 /* 2A0A548 8008B780 21202002 */   addu      $a0, $s1, $zero
-/* 2A0A54C 8008B784 6E5D000C */  jal        func_800175B8
+/* 2A0A54C 8008B784 6E5D000C */  jal        VecScaleToLength
 /* 2A0A550 8008B788 80000624 */   addiu     $a2, $zero, 0x80
 /* 2A0A554 8008B78C 21200002 */  addu       $a0, $s0, $zero
 /* 2A0A558 8008B790 21280002 */  addu       $a1, $s0, $zero

@@ -37,7 +37,7 @@ glabel func_8003E0B4
 /* 2E930 8003E130 0D000600 */  break      6
 .L8003E134:
 /* 2E934 8003E134 12300000 */  mflo       $a2
-/* 2E938 8003E138 6E5D000C */  jal        func_800175B8
+/* 2E938 8003E138 6E5D000C */  jal        VecScaleToLength
 /* 2E93C 8003E13C 1000A427 */   addiu     $a0, $sp, 0x10
 /* 2E940 8003E140 1800A28F */  lw         $v0, 0x18($sp)
 /* 2E944 8003E144 00000000 */  nop

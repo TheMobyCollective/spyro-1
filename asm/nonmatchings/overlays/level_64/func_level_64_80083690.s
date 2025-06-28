@@ -256,7 +256,7 @@ glabel func_level_64_80083690
 /* 5AF3810 80083A48 1800A2AF */   sw        $v0, 0x18($sp)
 /* 5AF3814 80083A4C 1000A427 */  addiu      $a0, $sp, 0x10
 /* 5AF3818 80083A50 21284000 */  addu       $a1, $v0, $zero
-/* 5AF381C 80083A54 6E5D000C */  jal        func_800175B8
+/* 5AF381C 80083A54 6E5D000C */  jal        VecScaleToLength
 /* 5AF3820 80083A58 A0000624 */   addiu     $a2, $zero, 0xA0
 /* 5AF3824 80083A5C AA49010C */  jal        func_800526A8
 /* 5AF3828 80083A60 21208002 */   addu      $a0, $s4, $zero

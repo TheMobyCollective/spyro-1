@@ -358,11 +358,11 @@ void func_8002D02C(void) {
 /// @brief Start the titlescreen gamestate
 void func_8002D170(void) {
   g_Gamestate = GS_TitleScreen;
-  Memset(&D_80078D78, 0, sizeof(D_80078D78));
+  Memset(&g_TitlescreenState, 0, sizeof(g_TitlescreenState));
 
   D_80075754 = 10; // sound volume
 
-  D_80078D78.m_0x4C = (char *)D_800785D8.m_LowerPolyBuffer - 0x2000;
+  g_TitlescreenState.m_0x4C = (char *)D_800785D8.m_LowerPolyBuffer - 0x2000;
 
   g_Spu.unk_0x320 = 0x3FFF;
   D_80075748 = 10; // music volume
@@ -404,10 +404,10 @@ void func_8002D440(void) {
     g_Gamestate = GS_TitleScreen;
 
     // reset/init this thing
-    Memset(&D_80078D78, 0, 0x5C);
-    D_80078D78.m_0x00 = 3;
-    D_80078D78.m_0x04 = 0;
-    D_80078D78.m_0x1C = 1;
+    Memset(&g_TitlescreenState, 0, 0x5C);
+    g_TitlescreenState.m_0x00 = 3;
+    g_TitlescreenState.m_0x04 = 0;
+    g_TitlescreenState.m_0x1C = 1;
 
     // reset more stuff (also resets gems/dragons/lives/etc)
     func_8001277C();

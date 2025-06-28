@@ -505,7 +505,7 @@ glabel func_level_21_8008A4D0
 /* 1B3F1EC 8008AC24 21082200 */  addu       $at, $at, $v0
 /* 1B3F1F0 8008AC28 A2F32284 */  lh         $v0, %lo(D_8006F3A0 + 0x02)($at)
 /* 1B3F1F4 8008AC2C 21300002 */  addu       $a2, $s0, $zero
-/* 1B3F1F8 8008AC30 125C000C */  jal        func_80017048
+/* 1B3F1F8 8008AC30 125C000C */  jal        VecRotateByMatrix
 /* 1B3F1FC 8008AC34 2800A2AF */   sw        $v0, 0x28($sp)
 /* 1B3F200 8008AC38 CB89010C */  jal        rand
 /* 1B3F204 8008AC3C 00000000 */   nop

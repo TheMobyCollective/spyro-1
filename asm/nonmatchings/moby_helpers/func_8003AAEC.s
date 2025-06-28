@@ -28,7 +28,7 @@ glabel func_8003AAEC
 /* 2B348 8003AB48 120002A2 */   sb        $v0, 0x12($s0)
 /* 2B34C 8003AB4C 20002426 */  addiu      $a0, $s1, 0x20
 /* 2B350 8003AB50 21286002 */  addu       $a1, $s3, $zero
-/* 2B354 8003AB54 125C000C */  jal        func_80017048
+/* 2B354 8003AB54 125C000C */  jal        VecRotateByMatrix
 /* 2B358 8003AB58 21300002 */   addu      $a2, $s0, $zero
 /* 2B35C 8003AB5C 21200002 */  addu       $a0, $s0, $zero
 /* 2B360 8003AB60 21280002 */  addu       $a1, $s0, $zero

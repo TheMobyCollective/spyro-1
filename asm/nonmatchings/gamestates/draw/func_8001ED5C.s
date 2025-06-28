@@ -116,8 +116,8 @@ glabel func_8001ED5C
 .L8001EEEC:
 /* F6EC 8001EEEC 0E006214 */  bne        $v1, $v0, .L8001EF28
 /* F6F0 8001EEF0 0E000224 */   addiu     $v0, $zero, 0xE
-/* F6F4 8001EEF4 0880033C */  lui        $v1, %hi(D_80078D78)
-/* F6F8 8001EEF8 788D638C */  lw         $v1, %lo(D_80078D78)($v1)
+/* F6F4 8001EEF4 0880033C */  lui        $v1, %hi(g_TitlescreenState)
+/* F6F8 8001EEF8 788D638C */  lw         $v1, %lo(g_TitlescreenState)($v1)
 /* F6FC 8001EEFC 03000224 */  addiu      $v0, $zero, 0x3
 /* F700 8001EF00 05006214 */  bne        $v1, $v0, .L8001EF18
 /* F704 8001EF04 00000000 */   nop

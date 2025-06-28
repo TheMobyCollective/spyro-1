@@ -333,7 +333,7 @@ glabel func_level_30_8008BE98
 /* 27387EC 8008C224 4100422C */  sltiu      $v0, $v0, 0x41
 /* 27387F0 8008C228 14044010 */  beqz       $v0, .Llevel_30_8008D27C
 /* 27387F4 8008C22C 2120E002 */   addu      $a0, $s7, $zero
-/* 27387F8 8008C230 6E5D000C */  jal        func_800175B8
+/* 27387F8 8008C230 6E5D000C */  jal        VecScaleToLength
 /* 27387FC 8008C234 80000624 */   addiu     $a2, $zero, 0x80
 /* 2738800 8008C238 1000A427 */  addiu      $a0, $sp, 0x10
 /* 2738804 8008C23C 21288000 */  addu       $a1, $a0, $zero

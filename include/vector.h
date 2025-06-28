@@ -22,7 +22,7 @@ typedef struct {
 #define setXYZ(a, _x, _y, _z) (a)->x = _x, (a)->y = _y, (a)->z = _z
 
 /// @brief Rotates a vector by the camera matrix
-void func_80017110(Vector3D *pIn, Vector3D *pOut);
+void VecRotateByCam(Vector3D *pIn, Vector3D *pOut);
 
 /// @brief Nulls a vector
 void VecNull(Vector3D *pVec);
@@ -37,10 +37,13 @@ void VecAdd(Vector3D *pOut, Vector3D *pIn1, Vector3D *pIn2);
 void VecSub(Vector3D *pOut, Vector3D *pIn1, Vector3D *pIn2);
 
 /// @brief Converts a vector to a short vector
-void func_80017C68(Vector3D16 *pOut, Vector3D *pVec);
+void VecToShortVec(Vector3D16 *pOut, Vector3D *pVec);
 
-/// @brief Interpolates a vector to 0, I'm not 100% certain
-void func_800175B8(Vector3D *pVec, int pFactor, int pDelta);
+/// @brief Scales a vector to a desired length
+/// @param pVec The vector, modified in place
+/// @param pCurrentLength The current length
+/// @param pTargetLength The desired new length
+void VecScaleToLength(Vector3D *pVec, int pCurrentLength, int pTargetLength);
 
 /// @brief Normalizes a vector, then multiplies it by a distance
 void func_80017330(Vector3D *pVec, int pNormalizedDistance);

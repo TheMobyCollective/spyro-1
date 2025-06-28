@@ -206,11 +206,11 @@ glabel func_8003DAE4
 /* 2E5F4 8003DDF4 23104700 */  subu       $v0, $v0, $a3
 /* 2E5F8 8003DDF8 80100200 */  sll        $v0, $v0, 2
 /* 2E5FC 8003DDFC 03130200 */  sra        $v0, $v0, 12
-/* 2E600 8003DE00 4B5B000C */  jal        func_80016D2C
+/* 2E600 8003DE00 4B5B000C */  jal        RotVec8ToMatrix
 /* 2E604 8003DE04 1800A2AF */   sw        $v0, 0x18($sp)
 /* 2E608 8003DE08 21202002 */  addu       $a0, $s1, $zero
 /* 2E60C 8003DE0C 1000A527 */  addiu      $a1, $sp, 0x10
-/* 2E610 8003DE10 125C000C */  jal        func_80017048
+/* 2E610 8003DE10 125C000C */  jal        VecRotateByMatrix
 /* 2E614 8003DE14 2130A000 */   addu      $a2, $a1, $zero
 /* 2E618 8003DE18 50FF4426 */  addiu      $a0, $s2, -0xB0
 /* 2E61C 8003DE1C 21288000 */  addu       $a1, $a0, $zero

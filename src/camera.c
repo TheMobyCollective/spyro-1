@@ -99,7 +99,7 @@ int func_80033E40(Vector3D *pPoint1, Vector3D *pPoint2) {
 
   magnitude = VecMagnitude(&distance, 1);
   raySegments = magnitude >> 10; // Divide by 1024
-  func_800175B8(&distance, magnitude, 1024);
+  VecScaleToLength(&distance, magnitude, 1024);
 
   // Copy point 1 into the source
   VecCopy(&rayStart, pPoint1);
@@ -301,7 +301,7 @@ void func_8003740C(void) {
         var_s0 = cameraSpyroDistance;
       }
 
-      func_800175B8(&spyroCameraDifference, cameraSpyroDistance, var_s0);
+      VecScaleToLength(&spyroCameraDifference, cameraSpyroDistance, var_s0);
 
       cameraSpyroDistance = var_s0;
 
@@ -357,7 +357,7 @@ void func_8003740C(void) {
   // var_s0 (frame 2) = 0x60
   // var_s0 (frame 3+) = 0x78
 
-  func_800175B8(&pointNodeDifference, nodeDistance, var_s0 * g_DeltaTime);
+  VecScaleToLength(&pointNodeDifference, nodeDistance, var_s0 * g_DeltaTime);
   VecAdd(&g_Camera.m_Position, &g_Camera.m_Position,
          &pointNodeDifference); // g_Camera.m_Position += pointNodeDifference
 

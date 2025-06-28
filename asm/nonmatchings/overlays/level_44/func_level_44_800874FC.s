@@ -690,7 +690,7 @@ glabel func_level_44_800874FC
 /* 4031CE4 80087F1C 21082200 */  addu       $at, $at, $v0
 /* 4031CE8 80087F20 A2F32284 */  lh         $v0, %lo(D_8006F3A0 + 0x02)($at)
 /* 4031CEC 80087F24 21300002 */  addu       $a2, $s0, $zero
-/* 4031CF0 80087F28 125C000C */  jal        func_80017048
+/* 4031CF0 80087F28 125C000C */  jal        VecRotateByMatrix
 /* 4031CF4 80087F2C 2800A2AF */   sw        $v0, 0x28($sp)
 /* 4031CF8 80087F30 CB89010C */  jal        rand
 /* 4031CFC 80087F34 00000000 */   nop

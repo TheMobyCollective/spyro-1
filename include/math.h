@@ -42,19 +42,19 @@ int Cos(int pAngle);
 /// @param pInitialGuess The initial guess for the root
 /// @param pIncludeZAxis Whether to include the Z axis in the calculation
 /// @return A more precise value for the magnitude of the vector
-int func_8001729C(Vector3D *pIn, int pInitialGuess, int pIncludeZAxis);
+int VecRefineMagnitude(Vector3D *pIn, int pInitialGuess, int pIncludeZAxis);
 
 /// @brief Turns a 8bit rotation vector into a matrix
 /// @param pRotation The rotation vector
 /// @param pOut The output matrix
 /// @param pIn Optional input, output is multiplied by this matrix
-void func_80016D2C(Vector3D8 *pRotation, MATRIX *pOut, MATRIX *pIn);
+void RotVec8ToMatrix(Vector3D8 *pRotation, MATRIX *pOut, MATRIX *pIn);
 
 /// @brief Rotates a vector by a matrix
 /// @param pMatrix The matrix
 /// @param pVector The vector
 /// @param pOut The output vector
-void func_80017048(MATRIX *pMatrix, Vector3D *pVector, Vector3D *pOut);
+void VecRotateByMatrix(MATRIX *pMatrix, Vector3D *pVector, Vector3D *pOut);
 
 /// @brief Shift all vector elements left
 void VecShiftLeft(Vector3D *pVec, int pNumBits);

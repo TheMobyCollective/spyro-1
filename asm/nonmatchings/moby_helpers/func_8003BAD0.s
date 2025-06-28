@@ -79,14 +79,14 @@ glabel func_8003BAD0
 /* 2C3E0 8003BBE0 21187100 */  addu       $v1, $v1, $s1
 /* 2C3E4 8003BBE4 460043A2 */  sb         $v1, 0x46($s2)
 /* 2C3E8 8003BBE8 21104700 */  addu       $v0, $v0, $a3
-/* 2C3EC 8003BBEC 4B5B000C */  jal        func_80016D2C
+/* 2C3EC 8003BBEC 4B5B000C */  jal        RotVec8ToMatrix
 /* 2C3F0 8003BBF0 450042A2 */   sb        $v0, 0x45($s2)
 /* 2C3F4 8003BBF4 21200002 */  addu       $a0, $s0, $zero
 /* 2C3F8 8003BBF8 1800A527 */  addiu      $a1, $sp, 0x18
 /* 2C3FC 8003BBFC 2130A000 */  addu       $a2, $a1, $zero
 /* 2C400 8003BC00 1800B7AF */  sw         $s7, 0x18($sp)
 /* 2C404 8003BC04 1C00A0AF */  sw         $zero, 0x1C($sp)
-/* 2C408 8003BC08 125C000C */  jal        func_80017048
+/* 2C408 8003BC08 125C000C */  jal        VecRotateByMatrix
 /* 2C40C 8003BC0C 2000A0AF */   sw        $zero, 0x20($sp)
 /* 2C410 8003BC10 21206002 */  addu       $a0, $s3, $zero
 /* 2C414 8003BC14 21286002 */  addu       $a1, $s3, $zero

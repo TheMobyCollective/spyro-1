@@ -471,7 +471,7 @@ glabel func_level_33_80087B40
 .Llevel_33_800880D8:
 /* 2F686A0 800880D8 00010624 */  addiu      $a2, $zero, 0x100
 .Llevel_33_800880DC:
-/* 2F686A4 800880DC 6E5D000C */  jal        func_800175B8
+/* 2F686A4 800880DC 6E5D000C */  jal        VecScaleToLength
 /* 2F686A8 800880E0 00000000 */   nop
 /* 2F686AC 800880E4 1000A427 */  addiu      $a0, $sp, 0x10
 .Llevel_33_800880E8:

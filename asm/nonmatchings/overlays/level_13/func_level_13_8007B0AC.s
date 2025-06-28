@@ -134,7 +134,7 @@ glabel func_level_13_8007B0AC
 /* 118F028 8007B260 107820AC */  sw         $zero, %lo(D_80077810)($at)
 /* 118F02C 8007B264 0780013C */  lui        $at, %hi(D_80077814)
 /* 118F030 8007B268 147822AC */  sw         $v0, %lo(D_80077814)($at)
-/* 118F034 8007B26C 125C000C */  jal        func_80017048
+/* 118F034 8007B26C 125C000C */  jal        VecRotateByMatrix
 /* 118F038 8007B270 20008424 */   addiu     $a0, $a0, 0x20
 /* 118F03C 8007B274 21200002 */  addu       $a0, $s0, $zero
 /* 118F040 8007B278 0780063C */  lui        $a2, %hi(D_8007784C)
@@ -342,7 +342,7 @@ glabel func_level_13_8007B0AC
 /* 118F344 8007B57C 28008524 */  addiu      $a1, $a0, 0x28
 /* 118F348 8007B580 0880013C */  lui        $at, %hi(g_Spyro + 0xA0)
 /* 118F34C 8007B584 F88A22AC */  sw         $v0, %lo(g_Spyro + 0xA0)($at)
-/* 118F350 8007B588 4B5B000C */  jal        func_80016D2C
+/* 118F350 8007B588 4B5B000C */  jal        RotVec8ToMatrix
 /* 118F354 8007B58C 21300000 */   addu      $a2, $zero, $zero
 /* 118F358 8007B590 EB27010C */  jal        func_80049FAC
 /* 118F35C 8007B594 01000424 */   addiu     $a0, $zero, 0x1
@@ -429,7 +429,7 @@ glabel func_level_13_8007B0AC
 /* 118F498 8007B6D0 2138E200 */  addu       $a3, $a3, $v0
 /* 118F49C 8007B6D4 0780013C */  lui        $at, %hi(g_Camera + 0x30)
 /* 118F4A0 8007B6D8 006E27AC */  sw         $a3, %lo(g_Camera + 0x30)($at)
-/* 118F4A4 8007B6DC 125C000C */  jal        func_80017048
+/* 118F4A4 8007B6DC 125C000C */  jal        VecRotateByMatrix
 /* 118F4A8 8007B6E0 2130A000 */   addu      $a2, $a1, $zero
 /* 118F4AC 8007B6E4 1000A427 */  addiu      $a0, $sp, 0x10
 /* 118F4B0 8007B6E8 0780063C */  lui        $a2, %hi(D_8007784C)
@@ -1199,7 +1199,7 @@ glabel func_level_13_8007B0AC
 /* 118FFFC 8007C234 34000526 */  addiu      $a1, $s0, 0x34
 /* 1190000 8007C238 0880013C */  lui        $at, %hi(g_Spyro + 0xA0)
 /* 1190004 8007C23C F88A22AC */  sw         $v0, %lo(g_Spyro + 0xA0)($at)
-/* 1190008 8007C240 4B5B000C */  jal        func_80016D2C
+/* 1190008 8007C240 4B5B000C */  jal        RotVec8ToMatrix
 /* 119000C 8007C244 21300000 */   addu      $a2, $zero, $zero
 /* 1190010 8007C248 EB27010C */  jal        func_80049FAC
 /* 1190014 8007C24C 01000424 */   addiu     $a0, $zero, 0x1
@@ -2045,7 +2045,7 @@ glabel func_level_13_8007B0AC
 /* 1190CCC 8007CF04 34000526 */  addiu      $a1, $s0, 0x34
 /* 1190CD0 8007CF08 0880013C */  lui        $at, %hi(g_Spyro + 0xA0)
 /* 1190CD4 8007CF0C F88A22AC */  sw         $v0, %lo(g_Spyro + 0xA0)($at)
-/* 1190CD8 8007CF10 4B5B000C */  jal        func_80016D2C
+/* 1190CD8 8007CF10 4B5B000C */  jal        RotVec8ToMatrix
 /* 1190CDC 8007CF14 21300000 */   addu      $a2, $zero, $zero
 /* 1190CE0 8007CF18 EB27010C */  jal        func_80049FAC
 /* 1190CE4 8007CF1C 01000424 */   addiu     $a0, $zero, 0x1

@@ -12,20 +12,20 @@ void func_80058BD8(void) {
   // Matrix top row: [4096, 0, 0] * Camera matrix
   VecNull(&temp);
   temp.x = 4096;
-  func_80017110(&temp, &temp); // [4096, 0, 0] * Camera matrix
-  func_80017C68((Vector3D16 *)D_800770C8.m_metalmatrix.m[0], &temp);
+  VecRotateByCam(&temp, &temp); // [4096, 0, 0] * Camera matrix
+  VecToShortVec((Vector3D16 *)D_800770C8.m_metalmatrix.m[0], &temp);
 
   // Matrix middle row: [0, 4096, 0] * Camera matrix
   VecNull(&temp);
   temp.y = 4096;
-  func_80017110(&temp, &temp); // [0, 4096, 0] * Camera matrix
-  func_80017C68((Vector3D16 *)D_800770C8.m_metalmatrix.m[1], &temp);
+  VecRotateByCam(&temp, &temp); // [0, 4096, 0] * Camera matrix
+  VecToShortVec((Vector3D16 *)D_800770C8.m_metalmatrix.m[1], &temp);
 
   // Matrix bottom row: [0, 0, -4096] * Camera matrix
   VecNull(&temp);
   temp.z = -4096;
-  func_80017110(&temp, &temp); // [0, 0, -4096] * Camera matrix
-  func_80017C68((Vector3D16 *)D_800770C8.m_metalmatrix.m[2], &temp);
+  VecRotateByCam(&temp, &temp); // [0, 0, -4096] * Camera matrix
+  VecToShortVec((Vector3D16 *)D_800770C8.m_metalmatrix.m[2], &temp);
 };
 
 /// @brief Resets the specular lights to their defaults after they have been

@@ -144,14 +144,14 @@ void func_8003D978(void) {
   t.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
   t.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
 
-  func_80016D2C(&t, &m, nullptr);
+  RotVec8ToMatrix(&t, &m, nullptr);
 
   g_Spyro.m_Physics.m_Acceleration.x = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
   g_Spyro.m_Physics.m_Acceleration.y = 0;
   g_Spyro.m_Physics.m_Acceleration.z = 0;
 
-  func_80017048(&m, &g_Spyro.m_Physics.m_Acceleration,
-                &g_Spyro.m_Physics.m_Acceleration);
+  VecRotateByMatrix(&m, &g_Spyro.m_Physics.m_Acceleration,
+                    &g_Spyro.m_Physics.m_Acceleration);
 }
 
 void func_8003DA08(void) {

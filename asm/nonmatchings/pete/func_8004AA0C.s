@@ -119,12 +119,12 @@ glabel func_8004AA0C
 /* 3B3B4 8004ABB4 658A22A0 */  sb         $v0, %lo(g_Spyro + 0xD)($at)
 /* 3B3B8 8004ABB8 0880013C */  lui        $at, %hi(g_Spyro + 0xE)
 /* 3B3BC 8004ABBC 668A23A0 */  sb         $v1, %lo(g_Spyro + 0xE)($at)
-/* 3B3C0 8004ABC0 4B5B000C */  jal        func_80016D2C
+/* 3B3C0 8004ABC0 4B5B000C */  jal        RotVec8ToMatrix
 /* 3B3C4 8004ABC4 21300000 */   addu      $a2, $zero, $zero
 /* 3B3C8 8004ABC8 04000426 */  addiu      $a0, $s0, 0x4
 /* 3B3CC 8004ABCC BC011026 */  addiu      $s0, $s0, 0x1BC
 /* 3B3D0 8004ABD0 21280002 */  addu       $a1, $s0, $zero
-/* 3B3D4 8004ABD4 4B5B000C */  jal        func_80016D2C
+/* 3B3D4 8004ABD4 4B5B000C */  jal        RotVec8ToMatrix
 /* 3B3D8 8004ABD8 21300000 */   addu      $a2, $zero, $zero
 /* 3B3DC 8004ABDC 21202002 */  addu       $a0, $s1, $zero
 /* 3B3E0 8004ABE0 21280002 */  addu       $a1, $s0, $zero

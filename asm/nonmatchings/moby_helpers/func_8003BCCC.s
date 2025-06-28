@@ -32,7 +32,7 @@ glabel func_8003BCCC
 /* 2C530 8003BD30 44004426 */  addiu      $a0, $s2, 0x44
 .L8003BD34:
 /* 2C534 8003BD34 1800A527 */  addiu      $a1, $sp, 0x18
-/* 2C538 8003BD38 4B5B000C */  jal        func_80016D2C
+/* 2C538 8003BD38 4B5B000C */  jal        RotVec8ToMatrix
 /* 2C53C 8003BD3C 21300000 */   addu      $a2, $zero, $zero
 /* 2C540 8003BD40 1800A427 */  addiu      $a0, $sp, 0x18
 /* 2C544 8003BD44 3800B127 */  addiu      $s1, $sp, 0x38
@@ -40,7 +40,7 @@ glabel func_8003BCCC
 /* 2C54C 8003BD4C 21302002 */  addu       $a2, $s1, $zero
 /* 2C550 8003BD50 3800B0AF */  sw         $s0, 0x38($sp)
 /* 2C554 8003BD54 4000A0AF */  sw         $zero, 0x40($sp)
-/* 2C558 8003BD58 125C000C */  jal        func_80017048
+/* 2C558 8003BD58 125C000C */  jal        VecRotateByMatrix
 /* 2C55C 8003BD5C 3C00A0AF */   sw        $zero, 0x3C($sp)
 /* 2C560 8003BD60 21202002 */  addu       $a0, $s1, $zero
 /* 2C564 8003BD64 21282002 */  addu       $a1, $s1, $zero

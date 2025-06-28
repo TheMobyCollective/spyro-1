@@ -92,26 +92,29 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800324D8);
 
 // Memory card used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
 void func_80032A20(void) {
-  int t =
-      MemCardSync(1, (void *)&D_80078D78.m_0x40, (void *)&D_80078D78.m_0x44);
+  int t = MemCardSync(1, (void *)&g_TitlescreenState.m_CardCompletedFunc,
+                      (void *)&g_TitlescreenState.m_CardResultData);
 
   if (t) {
     if (t == 1) {
-      D_80078D78.m_0x30[D_80078D78.m_0x2C] = D_80078D78.m_0x44;
-      D_80078D78.m_0x2C = 1 - D_80078D78.m_0x2C;
+      g_TitlescreenState.m_CardStates[g_TitlescreenState.m_CardIdxChecking] =
+          g_TitlescreenState.m_CardResultData;
+      g_TitlescreenState.m_CardIdxChecking =
+          1 - g_TitlescreenState.m_CardIdxChecking;
     }
 
-    MemCardExist(D_80078D78.m_0x2C << 4);
+    MemCardExist(g_TitlescreenState.m_CardIdxChecking << 4);
   }
 }
 
 // Memory card used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
 void func_80032AB0(void) {
   if (g_Pad.m_Down & PAD_TRIANGLE) {
-    D_80078D78.m_0x00 = 1;
-    D_80078D78.m_0x10 = 0;
-    D_80078D78.m_0x04 = 0;
-    MemCardSync(0, (void *)&D_80078D78.m_0x40, (void *)&D_80078D78.m_0x44);
+    g_TitlescreenState.m_0x00 = 1;
+    g_TitlescreenState.m_0x10 = 0;
+    g_TitlescreenState.m_0x04 = 0;
+    MemCardSync(0, (void *)&g_TitlescreenState.m_CardCompletedFunc,
+                (void *)&g_TitlescreenState.m_CardResultData);
   }
 }
 

@@ -248,7 +248,7 @@ glabel func_80047B60
 /* 38628 80047E28 20000224 */  addiu      $v0, $zero, 0x20
 /* 3862C 80047E2C 3000A2AF */  sw         $v0, 0x30($sp)
 /* 38630 80047E30 3400A0AF */  sw         $zero, 0x34($sp)
-/* 38634 80047E34 125C000C */  jal        func_80017048
+/* 38634 80047E34 125C000C */  jal        VecRotateByMatrix
 /* 38638 80047E38 3800A0AF */   sw        $zero, 0x38($sp)
 /* 3863C 80047E3C 01000424 */  addiu      $a0, $zero, 0x1
 /* 38640 80047E40 21000524 */  addiu      $a1, $zero, 0x21

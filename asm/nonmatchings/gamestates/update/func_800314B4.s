@@ -462,7 +462,7 @@ glabel func_800314B4
 /* 2233C 80031B3C 0880043C */  lui        $a0, %hi(g_Spyro + 0xC)
 /* 22340 80031B40 648A8424 */  addiu      $a0, $a0, %lo(g_Spyro + 0xC)
 /* 22344 80031B44 28008524 */  addiu      $a1, $a0, 0x28
-/* 22348 80031B48 4B5B000C */  jal        func_80016D2C
+/* 22348 80031B48 4B5B000C */  jal        RotVec8ToMatrix
 /* 2234C 80031B4C 21300000 */   addu      $a2, $zero, $zero
 /* 22350 80031B50 42121300 */  srl        $v0, $s3, 9
 /* 22354 80031B54 0880013C */  lui        $at, %hi(g_Spyro + 0x11)

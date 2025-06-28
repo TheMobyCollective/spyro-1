@@ -18,7 +18,7 @@ glabel func_8003C85C
 /* 2D090 8003C890 40000224 */  addiu      $v0, $zero, 0x40
 /* 2D094 8003C894 4C00BFAF */  sw         $ra, 0x4C($sp)
 /* 2D098 8003C898 3400A0AF */  sw         $zero, 0x34($sp)
-/* 2D09C 8003C89C 125C000C */  jal        func_80017048
+/* 2D09C 8003C89C 125C000C */  jal        VecRotateByMatrix
 /* 2D0A0 8003C8A0 3800A2AF */   sw        $v0, 0x38($sp)
 /* 2D0A4 8003C8A4 21200002 */  addu       $a0, $s0, $zero
 /* 2D0A8 8003C8A8 21280002 */  addu       $a1, $s0, $zero
@@ -33,7 +33,7 @@ glabel func_8003C85C
 /* 2D0CC 8003C8CC 21282002 */   addu      $a1, $s1, $zero
 /* 2D0D0 8003C8D0 1000A427 */  addiu      $a0, $sp, 0x10
 /* 2D0D4 8003C8D4 21280002 */  addu       $a1, $s0, $zero
-/* 2D0D8 8003C8D8 125C000C */  jal        func_80017048
+/* 2D0D8 8003C8D8 125C000C */  jal        VecRotateByMatrix
 /* 2D0DC 8003C8DC 21300002 */   addu      $a2, $s0, $zero
 /* 2D0E0 8003C8E0 21200002 */  addu       $a0, $s0, $zero
 /* 2D0E4 8003C8E4 7F5C000C */  jal        VecMagnitude

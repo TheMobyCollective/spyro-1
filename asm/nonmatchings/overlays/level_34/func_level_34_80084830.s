@@ -392,7 +392,7 @@ glabel func_level_34_80084830
 /* 31FF268 80084CA0 91044010 */  beqz       $v0, .Llevel_34_80085EE8
 /* 31FF26C 80084CA4 00000000 */   nop
 /* 31FF270 80084CA8 6800A48F */  lw         $a0, 0x68($sp)
-/* 31FF274 80084CAC 6E5D000C */  jal        func_800175B8
+/* 31FF274 80084CAC 6E5D000C */  jal        VecScaleToLength
 /* 31FF278 80084CB0 80000624 */   addiu     $a2, $zero, 0x80
 /* 31FF27C 80084CB4 21200002 */  addu       $a0, $s0, $zero
 /* 31FF280 80084CB8 6800A68F */  lw         $a2, 0x68($sp)
