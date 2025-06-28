@@ -247,20 +247,6 @@ void func_8002C914(void){};
 /// @brief Empty, used to update the dragon dialogue iirc?
 void func_8002C91C(void){};
 
-extern Moby *D_800770C0; // resucing dragon moby
-
-typedef struct {
-  int unk_0x0;
-  int unk_0x4;
-  int unk_0x8;
-  int unk_0xC;
-  int unk_0x10;
-  int unk_0x14;
-  int unk_0x18;
-  int unk_0x1C;
-  int unk_0x20;
-} RescuedDragonMobyProps;
-
 /// @brief Rescue a dragon, increments the needed values and starts the cutscene
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002C924);
 
@@ -271,9 +257,9 @@ void func_8002CB6C(void) {
 
   g_Gamestate = GS_Playing;
   D_8007570C = 0; // reset rescuing dragon
-  moby_idx = ((RescuedDragonMobyProps *)D_800770C0->m_Props)->unk_0x20;
+  moby_idx = ((RescuedDragonMobyProps *)D_800770C0->m_Props)->m_DragonPadLink;
   if (moby_idx != -1) {
-    moby = D_80075828 + moby_idx;
+    moby = &D_80075828[moby_idx];
     moby->m_AnimationState.m_Animation = 0;
     moby->m_State = 1;
   }

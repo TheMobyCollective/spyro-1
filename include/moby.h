@@ -161,74 +161,7 @@ typedef struct Moby {
   u_char m_ScaleOverride;
 } Moby;
 
-typedef enum {
-  MOBYCLASS_HUD_SPYRO_HEAD = 58,
-  MOBYCLASS_LETTER_BLANK = 76,
-  MOBYCLASS_GEM_1 = 83,
-  MOBYCLASS_GEM_2 = 84,
-  MOBYCLASS_GEM_5 = 85,
-  MOBYCLASS_GEM_10 = 86,
-  MOBYCLASS_GEM_25 = 87,
-  MOBYCLASS_HUD_KEY = 173,
-  MOBYCLASS_NUMBER_0 = 260,
-  MOBYCLASS_NUMBER_1,
-  MOBYCLASS_NUMBER_2,
-  MOBYCLASS_NUMBER_3,
-  MOBYCLASS_NUMBER_4,
-  MOBYCLASS_NUMBER_5,
-  MOBYCLASS_NUMBER_6,
-  MOBYCLASS_NUMBER_7,
-  MOBYCLASS_NUMBER_8,
-  MOBYCLASS_NUMBER_9, // 269
-  MOBYCLASS_LETTER_A = 426,
-  MOBYCLASS_LETTER_B,
-  MOBYCLASS_LETTER_C,
-  MOBYCLASS_LETTER_D,
-  MOBYCLASS_LETTER_E,
-  MOBYCLASS_LETTER_F,
-  MOBYCLASS_LETTER_G,
-  MOBYCLASS_LETTER_H,
-  MOBYCLASS_LETTER_I,
-  MOBYCLASS_LETTER_J,
-  MOBYCLASS_LETTER_K,
-  MOBYCLASS_LETTER_L,
-  MOBYCLASS_LETTER_M,
-  MOBYCLASS_LETTER_N,
-  MOBYCLASS_LETTER_O,
-  MOBYCLASS_LETTER_P,
-  MOBYCLASS_LETTER_Q,
-  MOBYCLASS_LETTER_R,
-  MOBYCLASS_LETTER_S,
-  MOBYCLASS_LETTER_T,
-  MOBYCLASS_LETTER_U,
-  MOBYCLASS_LETTER_V,
-  MOBYCLASS_LETTER_W,
-  MOBYCLASS_LETTER_X,
-  MOBYCLASS_LETTER_Y,
-  MOBYCLASS_LETTER_Z, // 451
-  MOBYCLASS_HUD_GEM_CHEST = 471,
-  MOBYCLASS_HUD_DRAGON = 506,
-} MobyClass;
-
-// Data related
-typedef struct {
-  u_char m_NodeCount;
-  u_char m_CurrentNode;
-  char unk_0x2[4]; // No clue, padding? Usually 0
-  short unk_0x6;   // Who knows (-1 or 1, might be winding?)
-  struct {
-    Vector3D m_Position;
-    int unk_0xC; // Padding I assume
-  } m_Nodes[1];
-} PathData;
-
-typedef struct {
-  PathData *m_Path;
-  Vector3D unk_0x4;
-} PortalPathMobyData;
-
 // Moby models
-
 typedef struct {
   // Vertex offset:    00000000000111111111111111111111
   // Collision model:  00000000111000000000000000000000
@@ -301,11 +234,103 @@ typedef struct {
   void *m_Faces;
 } SimpleModel;
 
+// Data related
+
+typedef enum {
+  MOBYCLASS_HUD_SPYRO_HEAD = 58,
+  MOBYCLASS_LETTER_BLANK = 76,
+  MOBYCLASS_GEM_1 = 83,
+  MOBYCLASS_GEM_2 = 84,
+  MOBYCLASS_GEM_5 = 85,
+  MOBYCLASS_GEM_10 = 86,
+  MOBYCLASS_GEM_25 = 87,
+  MOBYCLASS_HUD_KEY = 173,
+  MOBYCLASS_NUMBER_0 = 260,
+  MOBYCLASS_NUMBER_1,
+  MOBYCLASS_NUMBER_2,
+  MOBYCLASS_NUMBER_3,
+  MOBYCLASS_NUMBER_4,
+  MOBYCLASS_NUMBER_5,
+  MOBYCLASS_NUMBER_6,
+  MOBYCLASS_NUMBER_7,
+  MOBYCLASS_NUMBER_8,
+  MOBYCLASS_NUMBER_9, // 269
+  MOBYCLASS_LETTER_A = 426,
+  MOBYCLASS_LETTER_B,
+  MOBYCLASS_LETTER_C,
+  MOBYCLASS_LETTER_D,
+  MOBYCLASS_LETTER_E,
+  MOBYCLASS_LETTER_F,
+  MOBYCLASS_LETTER_G,
+  MOBYCLASS_LETTER_H,
+  MOBYCLASS_LETTER_I,
+  MOBYCLASS_LETTER_J,
+  MOBYCLASS_LETTER_K,
+  MOBYCLASS_LETTER_L,
+  MOBYCLASS_LETTER_M,
+  MOBYCLASS_LETTER_N,
+  MOBYCLASS_LETTER_O,
+  MOBYCLASS_LETTER_P,
+  MOBYCLASS_LETTER_Q,
+  MOBYCLASS_LETTER_R,
+  MOBYCLASS_LETTER_S,
+  MOBYCLASS_LETTER_T,
+  MOBYCLASS_LETTER_U,
+  MOBYCLASS_LETTER_V,
+  MOBYCLASS_LETTER_W,
+  MOBYCLASS_LETTER_X,
+  MOBYCLASS_LETTER_Y,
+  MOBYCLASS_LETTER_Z, // 451
+  MOBYCLASS_HUD_GEM_CHEST = 471,
+  MOBYCLASS_HUD_DRAGON = 506,
+} MobyClass;
+
+typedef struct {
+  u_char m_NodeCount;
+  u_char m_CurrentNode;
+  char unk_0x2[4]; // No clue, padding? Usually 0
+  short unk_0x6;   // Who knows (-1 or 1, might be winding?)
+  struct {
+    Vector3D m_Position;
+    int unk_0xC; // Padding I assume
+  } m_Nodes[1];
+} PathData;
+
+typedef struct {
+  PathData *m_Path;
+  Vector3D unk_0x4;
+} PortalPathMobyData;
+
 typedef struct {
   Moby *m_Parent;
   short m_Len;
   short m_Index;
 } MobyLetterProps;
+
+typedef struct {
+  int unk_0x0;
+  // not sure what to call this, for input pGemValue=25 this is either "20" or
+  // "5"
+  int unk_0x4;
+  Vector3D unk_0x8;
+} MobyNumberProps;
+
+typedef struct {
+  Vector3D m_CameraPosition;
+  Vector3D m_CameraRotation;
+  int m_CutsceneId; // The ID of the cutscene to play when this Moby is
+  int m_Rotation;
+  int m_DragonPadLink;
+  int m_OldDialogueId; // The ID of the *text* dialogue, used in prototypes
+  Vector3D m_Angle;
+  int m_IsUnskipable;       // Whether the cutscene can't be skipped
+  int m_NameIndex;          // The index of the name in the dragon name table
+  int m_CutsceneAudioPitch; // The pitch of the cutscene audio (for sample rate)
+  int m_CutsceneTicks;      // The number of ticks the cutscene lasts
+  int m_ShakeTimer;
+  Vector3D m_AngleStorage; // Used in moby code
+  int m_PosZStorage;       // Used in moby code
+} RescuedDragonMobyProps;
 
 // static_assert(sizeof(Moby) == 0x58, "Incorrect Moby size");
 
@@ -319,7 +344,9 @@ extern u_short **g_MobyPods; // Pointer to the Moby pods data, the last Moby
                              // in the list has the top bit set.
 extern int g_MobyPodCount;   // The number of pods in the current level
 
-extern Moby *D_80075758; // Poitner to the key Moby for this level
+extern Moby *D_80075758; // Pointer to the key Moby for this level
+
+extern Moby *D_800770C0; // Pointer to the dragon Moby that is being rescued
 
 extern Moby *D_80075828; // The Mobys in the current level
 

@@ -426,14 +426,6 @@ void HudTick(void) {
   }
 }
 
-typedef struct {
-  int unk_0x0;
-  // not sure what to call this, for input pGemValue=25 this is either "20" or
-  // "5"
-  int unk_0x4;
-  Vector3D unk_0x8;
-} props_800557CC;
-
 void GenerateGemCollectMobys(int pGemValue, Moby *pGemPos) {
   int i = 1;
   int moby_x = pGemPos->m_Position.x;
@@ -444,7 +436,7 @@ void GenerateGemCollectMobys(int pGemValue, Moby *pGemPos) {
          Sin(g_Camera.m_Rotation.z - 0x400) >> 8, 128);
 
   for (; pGemValue != 0; pGemValue /= 10, i *= 10) {
-    props_800557CC *props;
+    MobyNumberProps *props;
     int rem = (pGemValue % 10);
     Moby *pMoby = (*D_800758CC)(rem + MOBYCLASS_NUMBER_0, nullptr);
     setXYZ(&pMoby->m_Position, moby_x, moby_y, pGemPos->m_Position.z);
