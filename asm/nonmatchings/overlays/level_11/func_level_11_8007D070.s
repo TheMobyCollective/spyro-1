@@ -77,9 +77,9 @@ glabel func_level_11_8007D070
 /* B85E9C 8007D0D4 83100800 */  sra        $v0, $t0, 2
 /* B85EA0 8007D0D8 23104300 */  subu       $v0, $v0, $v1
 /* B85EA4 8007D0DC 80100200 */  sll        $v0, $v0, 2
-/* B85EA8 8007D0E0 0780013C */  lui        $at, %hi(D_8006F880)
+/* B85EA8 8007D0E0 0780013C */  lui        $at, %hi(D_8006F884 - 0x04)
 /* B85EAC 8007D0E4 21082200 */  addu       $at, $at, $v0
-/* B85EB0 8007D0E8 80F8268C */  lw         $a2, %lo(D_8006F880)($at)
+/* B85EB0 8007D0E8 80F8268C */  lw         $a2, %lo(D_8006F884 - 0x04)($at)
 /* B85EB4 8007D0EC 0780113C */  lui        $s1, %hi(D_80075710)
 /* B85EB8 8007D0F0 1057318E */  lw         $s1, %lo(D_80075710)($s1)
 /* B85EBC 8007D0F4 F58B010C */  jal        sprintf

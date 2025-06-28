@@ -77,9 +77,9 @@ glabel func_level_50_8007D9B8
 /* 43DDFE4 8007DA1C 83100800 */  sra        $v0, $t0, 2
 /* 43DDFE8 8007DA20 23104300 */  subu       $v0, $v0, $v1
 /* 43DDFEC 8007DA24 80100200 */  sll        $v0, $v0, 2
-/* 43DDFF0 8007DA28 0780013C */  lui        $at, %hi(D_8006F880)
+/* 43DDFF0 8007DA28 0780013C */  lui        $at, %hi(D_8006F884 - 0x04)
 /* 43DDFF4 8007DA2C 21082200 */  addu       $at, $at, $v0
-/* 43DDFF8 8007DA30 80F8268C */  lw         $a2, %lo(D_8006F880)($at)
+/* 43DDFF8 8007DA30 80F8268C */  lw         $a2, %lo(D_8006F884 - 0x04)($at)
 /* 43DDFFC 8007DA34 0780113C */  lui        $s1, %hi(D_80075710)
 /* 43DE000 8007DA38 1057318E */  lw         $s1, %lo(D_80075710)($s1)
 /* 43DE004 8007DA3C F58B010C */  jal        sprintf

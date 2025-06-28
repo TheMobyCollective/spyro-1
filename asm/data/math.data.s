@@ -2085,20 +2085,10 @@ dlabel g_HudMobyTargetPos
 /* 5EF18 8006E718 000C0000 */ .word 0x00000C00
 .size g_HudMobyTargetPos, . - g_HudMobyTargetPos
 
-dlabel D_8006E71C
 dlabel g_HudEggTargetRect
 /* 5EF1C 8006E71C */ .short 0x0024
-.size D_8006E71C, . - D_8006E71C
-
-dlabel D_8006E71E
 /* 5EF1E 8006E71E */ .short 0x00EA
-.size D_8006E71E, . - D_8006E71E
-
-dlabel D_8006E720
 /* 5EF20 8006E720 */ .short 0x0018
-.size D_8006E720, . - D_8006E720
-
-dlabel D_8006E722
 /* 5EF22 8006E722 */ .short 0x0010
 /* 5EF24 8006E724 */ .short 0x003F
 /* 5EF26 8006E726 */ .short 0x00EA
@@ -2144,7 +2134,7 @@ dlabel D_8006E722
 /* 5EF76 8006E776 */ .short 0x00EA
 /* 5EF78 8006E778 */ .short 0x0018
 /* 5EF7A 8006E77A */ .short 0x0010
-.size D_8006E722, . - D_8006E722
+.size g_HudEggTargetRect, . - g_HudEggTargetRect
 
 dlabel D_8006E77C
 dlabel g_HudOpeningOffsets

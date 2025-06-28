@@ -26,4 +26,6 @@ extern CdMusic g_CdMusic;
 
 extern int D_800774B0; // Currently playing track
 
+void func_8002BBE0(void); // Music update
+
 #endif

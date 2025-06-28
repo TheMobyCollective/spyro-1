@@ -42,15 +42,8 @@ typedef struct Moby {
   /// @brief Specifies the properties of the moby, which is class specific
   void *m_Props;
 
-  union {
-    /// @brief The next moby in the collision chain that this Moby is a part of
-    struct Moby *m_CollisionChainNext;
-
-    struct {
-      short m_Len;
-      short m_Index;
-    } m_StringInfo;
-  } m_Props2;
+  /// @brief The next moby in the collision chain that this Moby is a part of
+  struct Moby *m_CollisionChainNext;
 
   /// @brief This Moby's active collision group (Which is part of it's model)
   void *m_CollisionGroup;
@@ -62,7 +55,7 @@ typedef struct Moby {
   int m_DamageFlags; // TODO: Enum?
 
   /// @brief The distance of the shadow from the Moby, equal to the floor
-  /// distnace
+  /// distance
   int m_ShadowDistance;
 
   /// @brief The Moby's rotation matrix
@@ -186,7 +179,7 @@ typedef enum {
   MOBYCLASS_NUMBER_6,
   MOBYCLASS_NUMBER_7,
   MOBYCLASS_NUMBER_8,
-  MOBYCLASS_NUMBER_9, //269
+  MOBYCLASS_NUMBER_9, // 269
   MOBYCLASS_LETTER_A = 426,
   MOBYCLASS_LETTER_B,
   MOBYCLASS_LETTER_C,
@@ -212,7 +205,7 @@ typedef enum {
   MOBYCLASS_LETTER_W,
   MOBYCLASS_LETTER_X,
   MOBYCLASS_LETTER_Y,
-  MOBYCLASS_LETTER_Z, //451
+  MOBYCLASS_LETTER_Z, // 451
   MOBYCLASS_HUD_GEM_CHEST = 471,
   MOBYCLASS_HUD_DRAGON = 506,
 } MobyClass;
@@ -309,7 +302,7 @@ typedef struct {
 } SimpleModel;
 
 typedef struct {
-  Moby* m_Parent;
+  Moby *m_Parent;
   short m_Len;
   short m_Index;
 } MobyLetterProps;
@@ -326,7 +319,7 @@ extern u_short **g_MobyPods; // Pointer to the Moby pods data, the last Moby
                              // in the list has the top bit set.
 extern int g_MobyPodCount;   // The number of pods in the current level
 
-extern Moby* D_80075758; // Poitner to the key Moby for this level
+extern Moby *D_80075758; // Poitner to the key Moby for this level
 
 extern Moby *D_80075828; // The Mobys in the current level
 

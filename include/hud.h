@@ -1,15 +1,20 @@
 #ifndef __HUD_H
 #define __HUD_H
 
-#include "moby.h"
-#include "libgte.h"
-#include "libgpu.h"
+// clang-format off
+#include <sys/types.h>
+#include <libgte.h>
+#include <libgpu.h>
+// clang-format on
 
-// These are the target positions for the HUD mobys when they are fully displayed
+#include "moby.h"
+
+// These are the target positions for the HUD mobys when they are fully
+// displayed
 extern Vector3D g_HudMobyTargetPos[12];
 
 // Offsets that get added as the HUD is opening/closing
-extern short g_HudOpeningOffsets[14]; //8006E77C
+extern short g_HudOpeningOffsets[14]; // 8006E77C
 extern short g_HudClosingOffsets[14];
 
 // Target position for the HUD egg sprites
@@ -31,7 +36,7 @@ extern struct {
   u_char m_LifeProgress;
   u_char m_EggProgress;
   u_char m_KeyProgress;
-  //2 bytes padding
+  // 2 bytes padding
   int m_GemSteadyTicks;
   int m_DragonSteadyTicks;
   int m_LifeSteadyTicks;
@@ -44,8 +49,8 @@ extern struct {
   int m_KeyFlag;
   int D_80077FDC;
   int m_LifeOrbCount;
-  int unk_0x3c; //80077FE4
-  int unk_0x40; //80077FE8
+  int unk_0x3c; // 80077FE4
+  int unk_0x40; // 80077FE8
 
   // The HUD has 12 moby slots for the gem/dragon/life counts (and icons)
   Moby m_Mobys[12];

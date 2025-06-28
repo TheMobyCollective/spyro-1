@@ -4,8 +4,6 @@
 #include "music.h"
 #include "spu.h"
 
-void func_8002BBE0(void); // Music update
-
 void CDLoadTime(void) {
 
   if (g_CDMaxReadTime == 0)

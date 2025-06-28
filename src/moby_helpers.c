@@ -349,12 +349,12 @@ int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6) {
   Vector3D vec3;
 
   if (D_800756C4 == 3) {
-    //vec1 *= 1.5
+    // vec1 *= 1.5
     VecCopy(&vec3, &vec1);
     VecShiftRight(&vec3, 1);
     VecAdd(&vec1, &vec1, &vec3);
   } else if (D_800756C4 == 4) {
-    //vec1 *= 2
+    // vec1 *= 2
     VecShiftLeft(&vec1, 1);
   }
   VecAdd(&vec2, &pMoby->m_Position, &vec1);
@@ -371,7 +371,7 @@ int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6) {
     vec2.z -= 300 + arg5;
   }
   VecCopy(&pMoby->m_Position, &vec2);
-  func_800529E4(pMoby, 2);
+  func_800529E4(pMoby, UPDATE_PROP_CHAIN);
   return 0;
 }
 
@@ -699,7 +699,6 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003B854);
 void CollectItem(Moby *pMoby) {
   char x[16];
   int gem_value;
-  short moby_class;
 
   // Update recently collected items, presumably for the little animation when
   // you leave a level
@@ -711,23 +710,22 @@ void CollectItem(Moby *pMoby) {
     D_80075830 = 3;
   }
 
-  //??
-  func_800529E4(pMoby, 4);
+  // Updates the moby's rotation matrix
+  // I'm not entirely sure why
+  func_800529E4(pMoby, UPDATE_PROP_ROTMATRIX);
 
   // particle spawn
   (*D_800758E4)(6, 0xC, pMoby, (void *)D_8006E330[pMoby->m_Class]);
 
-  moby_class = pMoby->m_Class;
-
-  if (moby_class == MOBYCLASS_GEM_1)
+  if (pMoby->m_Class == MOBYCLASS_GEM_1)
     gem_value = 1;
-  else if (moby_class == MOBYCLASS_GEM_2)
+  else if (pMoby->m_Class == MOBYCLASS_GEM_2)
     gem_value = 2;
-  else if (moby_class == MOBYCLASS_GEM_5)
+  else if (pMoby->m_Class == MOBYCLASS_GEM_5)
     gem_value = 5;
-  else if (moby_class == MOBYCLASS_GEM_10)
+  else if (pMoby->m_Class == MOBYCLASS_GEM_10)
     gem_value = 10;
-  else if (moby_class == MOBYCLASS_GEM_25)
+  else if (pMoby->m_Class == MOBYCLASS_GEM_25)
     gem_value = 25;
   else
     return;
