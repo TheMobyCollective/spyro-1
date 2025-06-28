@@ -336,7 +336,7 @@ glabel func_8003FE40
 /* 30B04 80040304 0C00C624 */   addiu     $a2, $a2, 0xC
 /* 30B08 80040308 4800A48F */  lw         $a0, 0x48($sp)
 /* 30B0C 8004030C 4C00A58F */  lw         $a1, 0x4C($sp)
-/* 30B10 80040310 AD5A000C */  jal        func_80016AB4
+/* 30B10 80040310 AD5A000C */  jal        Atan2
 /* 30B14 80040314 21300000 */   addu      $a2, $zero, $zero
 /* 30B18 80040318 0880033C */  lui        $v1, %hi(g_Spyro + 0x224)
 /* 30B1C 8004031C 7C8C638C */  lw         $v1, %lo(g_Spyro + 0x224)($v1)
@@ -384,7 +384,7 @@ glabel func_8003FE40
 /* 30BB4 800403B4 0C00A524 */   addiu     $a1, $a1, 0xC
 /* 30BB8 800403B8 4800A48F */  lw         $a0, 0x48($sp)
 /* 30BBC 800403BC 4C00A58F */  lw         $a1, 0x4C($sp)
-/* 30BC0 800403C0 AD5A000C */  jal        func_80016AB4
+/* 30BC0 800403C0 AD5A000C */  jal        Atan2
 /* 30BC4 800403C4 01000624 */   addiu     $a2, $zero, 0x1
 /* 30BC8 800403C8 0880033C */  lui        $v1, %hi(g_Spyro + 0x224)
 /* 30BCC 800403CC 7C8C638C */  lw         $v1, %lo(g_Spyro + 0x224)($v1)
@@ -863,7 +863,7 @@ glabel func_8003FE40
 /* 31280 80040A80 0780043C */  lui        $a0, %hi(D_80077370)
 /* 31284 80040A84 7073848C */  lw         $a0, %lo(D_80077370)($a0)
 /* 31288 80040A88 21284000 */  addu       $a1, $v0, $zero
-/* 3128C 80040A8C AD5A000C */  jal        func_80016AB4
+/* 3128C 80040A8C AD5A000C */  jal        Atan2
 /* 31290 80040A90 21300000 */   addu      $a2, $zero, $zero
 /* 31294 80040A94 00160200 */  sll        $v0, $v0, 24
 /* 31298 80040A98 03160200 */  sra        $v0, $v0, 24
@@ -1026,7 +1026,7 @@ glabel func_8003FE40
 /* 314DC 80040CDC 0780043C */  lui        $a0, %hi(D_80077370)
 /* 314E0 80040CE0 7073848C */  lw         $a0, %lo(D_80077370)($a0)
 /* 314E4 80040CE4 21284000 */  addu       $a1, $v0, $zero
-/* 314E8 80040CE8 AD5A000C */  jal        func_80016AB4
+/* 314E8 80040CE8 AD5A000C */  jal        Atan2
 /* 314EC 80040CEC 21300000 */   addu      $a2, $zero, $zero
 /* 314F0 80040CF0 00160200 */  sll        $v0, $v0, 24
 /* 314F4 80040CF4 03160200 */  sra        $v0, $v0, 24

@@ -219,7 +219,7 @@ glabel func_8005637C
 /* 46EA0 800566A0 0C00438C */  lw         $v1, 0xC($v0)
 /* 46EA4 800566A4 1000428C */  lw         $v0, 0x10($v0)
 /* 46EA8 800566A8 23206400 */  subu       $a0, $v1, $a0
-/* 46EAC 800566AC AD5A000C */  jal        func_80016AB4
+/* 46EAC 800566AC AD5A000C */  jal        Atan2
 /* 46EB0 800566B0 23284500 */   subu      $a1, $v0, $a1
 /* 46EB4 800566B4 2000A427 */  addiu      $a0, $sp, 0x20
 /* 46EB8 800566B8 21280002 */  addu       $a1, $s0, $zero

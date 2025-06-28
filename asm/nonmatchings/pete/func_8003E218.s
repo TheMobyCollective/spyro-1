@@ -48,7 +48,7 @@ glabel func_8003E218
 /* 2EAC4 8003E2C4 0780043C */  lui        $a0, %hi(D_80077370)
 /* 2EAC8 8003E2C8 7073848C */  lw         $a0, %lo(D_80077370)($a0)
 /* 2EACC 8003E2CC 21284000 */  addu       $a1, $v0, $zero
-/* 2EAD0 8003E2D0 AD5A000C */  jal        func_80016AB4
+/* 2EAD0 8003E2D0 AD5A000C */  jal        Atan2
 /* 2EAD4 8003E2D4 21300000 */   addu      $a2, $zero, $zero
 /* 2EAD8 8003E2D8 00160200 */  sll        $v0, $v0, 24
 /* 2EADC 8003E2DC 03160200 */  sra        $v0, $v0, 24

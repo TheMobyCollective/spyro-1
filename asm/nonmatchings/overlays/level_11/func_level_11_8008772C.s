@@ -327,7 +327,7 @@ glabel func_level_11_8008772C
 /* B909A0 80087BD8 E08B848C */  lw         $a0, %lo(g_Spyro + 0x188)($a0)
 /* B909A4 80087BDC 0880053C */  lui        $a1, %hi(g_Spyro + 0x18C)
 /* B909A8 80087BE0 E48BA58C */  lw         $a1, %lo(g_Spyro + 0x18C)($a1)
-/* B909AC 80087BE4 AD5A000C */  jal        func_80016AB4
+/* B909AC 80087BE4 AD5A000C */  jal        Atan2
 /* B909B0 80087BE8 21300000 */   addu      $a2, $zero, $zero
 /* B909B4 80087BEC 21206002 */  addu       $a0, $s3, $zero
 /* B909B8 80087BF0 40004224 */  addiu      $v0, $v0, 0x40

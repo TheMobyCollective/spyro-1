@@ -434,7 +434,7 @@ glabel PlaySound
 /* 468B4 800560B4 0C00448C */  lw         $a0, 0xC($v0)
 /* 468B8 800560B8 1000458C */  lw         $a1, 0x10($v0)
 /* 468BC 800560BC 2320E400 */  subu       $a0, $a3, $a0
-/* 468C0 800560C0 AD5A000C */  jal        func_80016AB4
+/* 468C0 800560C0 AD5A000C */  jal        Atan2
 /* 468C4 800560C4 23286500 */   subu      $a1, $v1, $a1
 /* 468C8 800560C8 0780043C */  lui        $a0, %hi(g_Camera + 0x50)
 /* 468CC 800560CC 206E8494 */  lhu        $a0, %lo(g_Camera + 0x50)($a0)

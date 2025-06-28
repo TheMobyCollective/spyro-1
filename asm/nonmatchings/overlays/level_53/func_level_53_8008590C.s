@@ -306,7 +306,7 @@ glabel func_level_53_8008590C
 /* 4B6BB3C 80085D74 608A428C */  lw         $v0, %lo(g_Spyro + 0x8)($v0)
 /* 4B6BB40 80085D78 1400658E */  lw         $a1, 0x14($s3)
 /* 4B6BB44 80085D7C 21300000 */  addu       $a2, $zero, $zero
-/* 4B6BB48 80085D80 AD5A000C */  jal        func_80016AB4
+/* 4B6BB48 80085D80 AD5A000C */  jal        Atan2
 /* 4B6BB4C 80085D84 23284500 */   subu      $a1, $v0, $a1
 /* 4B6BB50 80085D88 4500A492 */  lbu        $a0, 0x45($s5)
 /* 4B6BB54 80085D8C 00000000 */  nop

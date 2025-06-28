@@ -339,7 +339,7 @@ glabel func_level_13_800872A4
 /* 119B544 8008777C E08B848C */  lw         $a0, %lo(g_Spyro + 0x188)($a0)
 /* 119B548 80087780 0880053C */  lui        $a1, %hi(g_Spyro + 0x18C)
 /* 119B54C 80087784 E48BA58C */  lw         $a1, %lo(g_Spyro + 0x18C)($a1)
-/* 119B550 80087788 AD5A000C */  jal        func_80016AB4
+/* 119B550 80087788 AD5A000C */  jal        Atan2
 /* 119B554 8008778C 21300000 */   addu      $a2, $zero, $zero
 /* 119B558 80087790 21206002 */  addu       $a0, $s3, $zero
 /* 119B55C 80087794 40004224 */  addiu      $v0, $v0, 0x40

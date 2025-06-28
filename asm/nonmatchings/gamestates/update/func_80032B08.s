@@ -316,13 +316,13 @@ glabel func_80032B08
 /* 237A0 80032FA0 21280000 */   addu      $a1, $zero, $zero
 /* 237A4 80032FA4 21204000 */  addu       $a0, $v0, $zero
 /* 237A8 80032FA8 1800A58F */  lw         $a1, 0x18($sp)
-/* 237AC 80032FAC AD5A000C */  jal        func_80016AB4
+/* 237AC 80032FAC AD5A000C */  jal        Atan2
 /* 237B0 80032FB0 21300000 */   addu      $a2, $zero, $zero
 /* 237B4 80032FB4 1000A48F */  lw         $a0, 0x10($sp)
 /* 237B8 80032FB8 1400A58F */  lw         $a1, 0x14($sp)
 /* 237BC 80032FBC 0880013C */  lui        $at, %hi(g_Spyro + 0xD)
 /* 237C0 80032FC0 658A22A0 */  sb         $v0, %lo(g_Spyro + 0xD)($at)
-/* 237C4 80032FC4 AD5A000C */  jal        func_80016AB4
+/* 237C4 80032FC4 AD5A000C */  jal        Atan2
 /* 237C8 80032FC8 21300000 */   addu      $a2, $zero, $zero
 /* 237CC 80032FCC 0880013C */  lui        $at, %hi(g_Spyro + 0xE)
 /* 237D0 80032FD0 668A22A0 */  sb         $v0, %lo(g_Spyro + 0xE)($at)

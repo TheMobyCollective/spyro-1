@@ -401,7 +401,7 @@ glabel func_80043FE4
 /* 34C8C 8004448C 0880053C */  lui        $a1, %hi(g_Spyro + 0x4)
 /* 34C90 80044490 5C8AA58C */  lw         $a1, %lo(g_Spyro + 0x4)($a1)
 /* 34C94 80044494 23206400 */  subu       $a0, $v1, $a0
-/* 34C98 80044498 AD5A000C */  jal        func_80016AB4
+/* 34C98 80044498 AD5A000C */  jal        Atan2
 /* 34C9C 8004449C 23284500 */   subu      $a1, $v0, $a1
 /* 34CA0 800444A0 0880013C */  lui        $at, %hi(g_Spyro + 0xCC)
 /* 34CA4 800444A4 248B22AC */  sw         $v0, %lo(g_Spyro + 0xCC)($at)
@@ -1030,7 +1030,7 @@ glabel func_80043FE4
 /* 355C0 80044DC0 01000624 */  addiu      $a2, $zero, 0x1
 /* 355C4 80044DC4 3000A48F */  lw         $a0, 0x30($sp)
 /* 355C8 80044DC8 3400A58F */  lw         $a1, 0x34($sp)
-/* 355CC 80044DCC AD5A000C */  jal        func_80016AB4
+/* 355CC 80044DCC AD5A000C */  jal        Atan2
 /* 355D0 80044DD0 21804000 */   addu      $s0, $v0, $zero
 /* 355D4 80044DD4 0000638E */  lw         $v1, 0x0($s3)
 /* 355D8 80044DD8 00000000 */  nop
@@ -1774,7 +1774,7 @@ glabel func_80043FE4
 /* 36078 80045878 4800A0AF */   sw        $zero, 0x48($sp)
 /* 3607C 8004587C 4000A48F */  lw         $a0, 0x40($sp)
 /* 36080 80045880 4400A58F */  lw         $a1, 0x44($sp)
-/* 36084 80045884 AD5A000C */  jal        func_80016AB4
+/* 36084 80045884 AD5A000C */  jal        Atan2
 /* 36088 80045888 01000624 */   addiu     $a2, $zero, 0x1
 /* 3608C 8004588C 0880033C */  lui        $v1, %hi(g_Spyro + 0x11C)
 /* 36090 80045890 748B638C */  lw         $v1, %lo(g_Spyro + 0x11C)($v1)
@@ -3744,7 +3744,7 @@ glabel func_80043FE4
 /* 37CB4 800474B4 01000624 */  addiu      $a2, $zero, 0x1
 /* 37CB8 800474B8 A000A48F */  lw         $a0, 0xA0($sp)
 /* 37CBC 800474BC A400A58F */  lw         $a1, 0xA4($sp)
-/* 37CC0 800474C0 AD5A000C */  jal        func_80016AB4
+/* 37CC0 800474C0 AD5A000C */  jal        Atan2
 /* 37CC4 800474C4 21A04000 */   addu      $s4, $v0, $zero
 /* 37CC8 800474C8 21804000 */  addu       $s0, $v0, $zero
 /* 37CCC 800474CC 0880033C */  lui        $v1, %hi(g_Spyro + 0x7C)

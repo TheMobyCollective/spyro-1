@@ -125,7 +125,7 @@ glabel func_80047B60
 /* 38458 80047C58 FC8A848C */  lw         $a0, %lo(g_Spyro + 0xA4)($a0)
 /* 3845C 80047C5C 0880053C */  lui        $a1, %hi(g_Spyro + 0xA8)
 /* 38460 80047C60 008BA58C */  lw         $a1, %lo(g_Spyro + 0xA8)($a1)
-/* 38464 80047C64 AD5A000C */  jal        func_80016AB4
+/* 38464 80047C64 AD5A000C */  jal        Atan2
 /* 38468 80047C68 01000624 */   addiu     $a2, $zero, 0x1
 /* 3846C 80047C6C 0880033C */  lui        $v1, %hi(g_Spyro + 0x11C)
 /* 38470 80047C70 748B638C */  lw         $v1, %lo(g_Spyro + 0x11C)($v1)

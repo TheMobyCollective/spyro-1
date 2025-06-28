@@ -29,14 +29,14 @@ glabel func_80033F08
 /* 24768 80033F68 21300000 */   addu      $a2, $zero, $zero
 /* 2476C 80033F6C 21204000 */  addu       $a0, $v0, $zero
 /* 24770 80033F70 1800A58F */  lw         $a1, 0x18($sp)
-/* 24774 80033F74 AD5A000C */  jal        func_80016AB4
+/* 24774 80033F74 AD5A000C */  jal        Atan2
 /* 24778 80033F78 01000624 */   addiu     $a2, $zero, 0x1
 /* 2477C 80033F7C 1000A48F */  lw         $a0, 0x10($sp)
 /* 24780 80033F80 1400A58F */  lw         $a1, 0x14($sp)
 /* 24784 80033F84 01000624 */  addiu      $a2, $zero, 0x1
 /* 24788 80033F88 0780013C */  lui        $at, %hi(g_Camera + 0x94)
 /* 2478C 80033F8C 646E22AC */  sw         $v0, %lo(g_Camera + 0x94)($at)
-/* 24790 80033F90 AD5A000C */  jal        func_80016AB4
+/* 24790 80033F90 AD5A000C */  jal        Atan2
 /* 24794 80033F94 23280500 */   negu      $a1, $a1
 /* 24798 80033F98 0780043C */  lui        $a0, %hi(g_Camera + 0x90)
 /* 2479C 80033F9C 606E848C */  lw         $a0, %lo(g_Camera + 0x90)($a0)

@@ -1,13 +1,15 @@
-#include "moby_helpers.h"
+#include <strings.h>
+#include <sys/types.h>
+
 #include "42CC4.h"
 #include "checkpoint.h"
 #include "collision.h"
 #include "common.h"
 #include "math.h"
+#include "moby_helpers.h"
 #include "spu.h"
 #include "spyro.h"
 #include "variables.h"
-#include <sys/types.h>
 
 /// @brief Function that ticks a timer
 /// @param pTimer The timer to update
@@ -116,9 +118,8 @@ int func_800381BC(int p1, int p2) {
 
 int func_800381E8(Moby *moby, int range) { // Unused
   // Returns true if spyro is in the range of the moby's vision
-  return func_80017908(func_80016AB4(g_Spyro.m_Position.x - moby->m_Position.x,
-                                     g_Spyro.m_Position.y - moby->m_Position.y,
-                                     0),
+  return func_80017908(Atan2(g_Spyro.m_Position.x - moby->m_Position.x,
+                             g_Spyro.m_Position.y - moby->m_Position.y, 0),
                        moby->m_Rotation.z) < range;
 }
 
@@ -167,7 +168,7 @@ int func_8003838C(Moby *pMoby) {
   pMoby->m_Position.z += 1500;
   func_8004D5EC(&pMoby->m_Position, 4096);
   pMoby->m_Position.z -= 1500;
-  return (char)func_800169AC(D_80077368.z, VecMagnitude(&D_80077368, 0)) < 24;
+  return (char)Atan2Fast(D_80077368.z, VecMagnitude(&D_80077368, 0)) < 24;
 }
 
 int func_80038400(Moby *pMoby, int pDistFromFloor) {
@@ -556,9 +557,8 @@ void func_8003B294(Moby *pMoby, int pPodIdx, uint pFlag, int pWithinOctDist,
         OctDistance(&pMoby->m_Position, &check_moby->m_Position) <
             pWithinOctDist &&
         ABS2(check_moby->m_Position.z - pMoby->m_Position.z) < pWithinZDist) {
-      angle2 =
-          func_80016AB4(check_moby->m_Position.x - (pMoby->m_Position).x,
-                        check_moby->m_Position.y - (pMoby->m_Position).y, 0);
+      angle2 = Atan2(check_moby->m_Position.x - (pMoby->m_Position).x,
+                     check_moby->m_Position.y - (pMoby->m_Position).y, 0);
       if (func_80017908((pMoby->m_Rotation).z, angle2) < pWithinAngle) {
         check_moby->m_DamageFlags |= pFlag;
       }
@@ -751,26 +751,26 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BFC0);
 // Create portal text
 void func_8003C358(Moby *pMoby, int pIsLevelName) {
   char const *level_name;
-  u_char z_rot;
+  Moby *char_moby;
+  Vector3D *pos;
   Vector3D vec1;
   Vector3D vec2;
   Vector3D vec3;
   Vector3D vec4;
-  int tmp4;
-  int i;
+  u_char z_rot;
+  u_char textBowAngle;
+  u_char character;
   int char_moby_class;
   int string_len;
-  u_char character;
-  Moby *char_moby;
-  Vector3D *pos;
+  int i;
 
   if (pIsLevelName) {
     level_name = D_8006F7F0[*(int *)(pMoby->m_Props)];
     z_rot = pMoby->m_Rotation.z;
   } else {
     level_name = D_8006F7F0[36]; //"RETURN HOME"
-    z_rot = func_80016AB4(g_Spyro.m_Position.x - pMoby->m_Position.x,
-                          g_Spyro.m_Position.y - pMoby->m_Position.y, 0);
+    z_rot = Atan2(g_Spyro.m_Position.x - pMoby->m_Position.x,
+                  g_Spyro.m_Position.y - pMoby->m_Position.y, 0);
   }
 
   setXYZ(&vec1, Cos(z_rot << 4) * 3 >> 4, Sin(z_rot << 4) * 3 >> 4, 0);
@@ -794,42 +794,53 @@ void func_8003C358(Moby *pMoby, int pIsLevelName) {
 
   VecShiftLeft(&vec2, 1);
 
-  tmp4 = (string_len - 1) * 2;
+  textBowAngle = (string_len - 1) * 2;
 
-  vec3.z += Cos((tmp4 & 0xff) << 4) * 3 >> 3;
+  vec3.z += Cos(textBowAngle << 4) * 3 >> 3;
 
-  setXYZ(&vec4, vec1.x * Cos((tmp4 & 0xff) << 4),
-         vec1.y * Cos((tmp4 & 0xff) << 4), 0);
+  setXYZ(&vec4, vec1.x * Cos(textBowAngle << 4),
+         vec1.y * Cos(textBowAngle << 4), 0);
 
-  for (i = 0; i < string_len; tmp4 -= 4, ++i) {
+  for (i = 0; i < string_len; textBowAngle -= 4, ++i) {
     character = level_name[i];
-    if (character != ' ') {
+
+    if (character != ' ') { // Skip spaces
       char_moby_class = character;
+
       if (character >= 'A' && character <= 'Z') {
         char_moby_class = char_moby_class - 'A' + MOBYCLASS_LETTER_A;
       } else {
-        char_moby_class = MOBYCLASS_LETTER_BLANK;
+        // If not a letter, we just turn it into an apostrophe
+        char_moby_class = MOBYCLASS_LETTER_APOSTROPHE;
       }
+
       char_moby = (*D_800758CC)(char_moby_class, pMoby);
       setMobyLetterProps((MobyLetterProps *)char_moby->m_Props, pMoby, i,
                          string_len);
       pos = &char_moby->m_Position;
-      setXYZ(pos, vec1.x * Cos((tmp4 & 0xff) << 4),
-             vec1.y * Cos((tmp4 & 0xff) << 4), 0);
+      setXYZ(pos, vec1.x * Cos(textBowAngle << 4),
+             vec1.y * Cos(textBowAngle << 4), 0);
       VecSub(pos, pos, &vec4);
-      VecShiftRight(pos, 10);
+
+      VecShiftRight(pos, 10); // Divide by 1024
+
       VecAdd(pos, pos, &vec1);
       VecAdd(pos, pos, &pMoby->m_Position);
       VecSub(pos, pos, &vec3);
-      char_moby->m_Position.z += Cos((tmp4 & 0xff) << 4) * 3 >> 3;
-      if (char_moby->m_Class == 76)
+
+      char_moby->m_Position.z += Cos(textBowAngle << 4) * 3 >> 3;
+
+      // Apostrophes are placed higher
+      if (char_moby->m_Class == MOBYCLASS_LETTER_APOSTROPHE)
         char_moby->m_Position.z += 256;
+
       char_moby->m_Rotation.z = z_rot;
       char_moby->m_FloorDistance = z_rot;
       char_moby->m_State = pMoby->m_Substate;
       char_moby->m_Substate = i * 8;
       char_moby->m_SpecularMetalType = 2;
     }
+
     VecSub(&vec3, &vec3, &vec2);
   }
 }

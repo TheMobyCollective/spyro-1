@@ -272,7 +272,7 @@ glabel func_level_30_8008B2C0
 /* 2737C74 8008B6AC 608A428C */  lw         $v0, %lo(g_Spyro + 0x8)($v0)
 /* 2737C78 8008B6B0 1400658E */  lw         $a1, 0x14($s3)
 /* 2737C7C 8008B6B4 21300000 */  addu       $a2, $zero, $zero
-/* 2737C80 8008B6B8 AD5A000C */  jal        func_80016AB4
+/* 2737C80 8008B6B8 AD5A000C */  jal        Atan2
 /* 2737C84 8008B6BC 23284500 */   subu      $a1, $v0, $a1
 /* 2737C88 8008B6C0 4500A492 */  lbu        $a0, 0x45($s5)
 /* 2737C8C 8008B6C4 00000000 */  nop

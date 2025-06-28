@@ -74,13 +74,13 @@ glabel func_8003DAE4
 /* 2E3F4 8003DBF4 1400A2AF */   sw        $v0, 0x14($sp)
 /* 2E3F8 8003DBF8 21204000 */  addu       $a0, $v0, $zero
 /* 2E3FC 8003DBFC 1400A58F */  lw         $a1, 0x14($sp)
-/* 2E400 8003DC00 AD5A000C */  jal        func_80016AB4
+/* 2E400 8003DC00 AD5A000C */  jal        Atan2
 /* 2E404 8003DC04 01000624 */   addiu     $a2, $zero, 0x1
 /* 2E408 8003DC08 01000624 */  addiu      $a2, $zero, 0x1
 /* 2E40C 8003DC0C 1800A48F */  lw         $a0, 0x18($sp)
 /* 2E410 8003DC10 1000A58F */  lw         $a1, 0x10($sp)
 /* 2E414 8003DC14 23100200 */  negu       $v0, $v0
-/* 2E418 8003DC18 AD5A000C */  jal        func_80016AB4
+/* 2E418 8003DC18 AD5A000C */  jal        Atan2
 /* 2E41C 8003DC1C 2000A2AF */   sw        $v0, 0x20($sp)
 /* 2E420 8003DC20 2000A38F */  lw         $v1, 0x20($sp)
 /* 2E424 8003DC24 0880063C */  lui        $a2, %hi(g_Spyro + 0x124)

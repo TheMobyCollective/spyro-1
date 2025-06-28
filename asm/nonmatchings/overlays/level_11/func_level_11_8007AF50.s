@@ -44,7 +44,7 @@ glabel func_level_11_8007AF50
 /* B83DB4 8007AFEC FC6D428C */  lw         $v0, %lo(g_Camera + 0x2C)($v0)
 /* B83DB8 8007AFF0 1000058E */  lw         $a1, 0x10($s0)
 /* B83DBC 8007AFF4 23206400 */  subu       $a0, $v1, $a0
-/* B83DC0 8007AFF8 AD5A000C */  jal        func_80016AB4
+/* B83DC0 8007AFF8 AD5A000C */  jal        Atan2
 /* B83DC4 8007AFFC 23284500 */   subu      $a1, $v0, $a1
 /* B83DC8 8007B000 1000A427 */  addiu      $a0, $sp, 0x10
 /* B83DCC 8007B004 21282002 */  addu       $a1, $s1, $zero

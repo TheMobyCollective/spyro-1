@@ -353,12 +353,12 @@ glabel func_800314B4
 /* 22198 80031998 21204000 */  addu       $a0, $v0, $zero
 /* 2219C 8003199C 2000A58F */  lw         $a1, 0x20($sp)
 /* 221A0 800319A0 01000624 */  addiu      $a2, $zero, 0x1
-/* 221A4 800319A4 AD5A000C */  jal        func_80016AB4
+/* 221A4 800319A4 AD5A000C */  jal        Atan2
 /* 221A8 800319A8 23280500 */   negu      $a1, $a1
 /* 221AC 800319AC 1800A48F */  lw         $a0, 0x18($sp)
 /* 221B0 800319B0 1C00A58F */  lw         $a1, 0x1C($sp)
 /* 221B4 800319B4 01000624 */  addiu      $a2, $zero, 0x1
-/* 221B8 800319B8 AD5A000C */  jal        func_80016AB4
+/* 221B8 800319B8 AD5A000C */  jal        Atan2
 /* 221BC 800319BC 2A00A2A7 */   sh        $v0, 0x2A($sp)
 /* 221C0 800319C0 2800A487 */  lh         $a0, 0x28($sp)
 /* 221C4 800319C4 0780053C */  lui        $a1, %hi(g_Camera + 0x4C)
@@ -418,13 +418,13 @@ glabel func_800314B4
 /* 22298 80031A98 21204000 */  addu       $a0, $v0, $zero
 /* 2229C 80031A9C 2000A58F */  lw         $a1, 0x20($sp)
 /* 222A0 80031AA0 01000624 */  addiu      $a2, $zero, 0x1
-/* 222A4 80031AA4 AD5A000C */  jal        func_80016AB4
+/* 222A4 80031AA4 AD5A000C */  jal        Atan2
 /* 222A8 80031AA8 23280500 */   negu      $a1, $a1
 /* 222AC 80031AAC 1800A48F */  lw         $a0, 0x18($sp)
 /* 222B0 80031AB0 1C00A58F */  lw         $a1, 0x1C($sp)
 /* 222B4 80031AB4 0780013C */  lui        $at, %hi(g_Camera + 0x4E)
 /* 222B8 80031AB8 1E6E22A4 */  sh         $v0, %lo(g_Camera + 0x4E)($at)
-/* 222BC 80031ABC AD5A000C */  jal        func_80016AB4
+/* 222BC 80031ABC AD5A000C */  jal        Atan2
 /* 222C0 80031AC0 01000624 */   addiu     $a2, $zero, 0x1
 .L80031AC4:
 /* 222C4 80031AC4 0780013C */  lui        $at, %hi(g_Camera + 0x50)
@@ -532,7 +532,7 @@ glabel func_800314B4
 /* 22450 80031C50 0C00448C */  lw         $a0, 0xC($v0)
 /* 22454 80031C54 1000458C */  lw         $a1, 0x10($v0)
 /* 22458 80031C58 2320E400 */  subu       $a0, $a3, $a0
-/* 2245C 80031C5C AD5A000C */  jal        func_80016AB4
+/* 2245C 80031C5C AD5A000C */  jal        Atan2
 /* 22460 80031C60 23286500 */   subu      $a1, $v1, $a1
 /* 22464 80031C64 0880033C */  lui        $v1, %hi(D_80078D74)
 /* 22468 80031C68 748D638C */  lw         $v1, %lo(D_80078D74)($v1)

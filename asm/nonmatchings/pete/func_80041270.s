@@ -53,7 +53,7 @@ glabel func_80041270
 /* 31B20 80041320 0C00A524 */   addiu     $a1, $a1, 0xC
 /* 31B24 80041324 1000A48F */  lw         $a0, 0x10($sp)
 /* 31B28 80041328 1400A58F */  lw         $a1, 0x14($sp)
-/* 31B2C 8004132C AD5A000C */  jal        func_80016AB4
+/* 31B2C 8004132C AD5A000C */  jal        Atan2
 /* 31B30 80041330 01000624 */   addiu     $a2, $zero, 0x1
 /* 31B34 80041334 0880033C */  lui        $v1, %hi(g_Spyro + 0x11C)
 /* 31B38 80041338 748B638C */  lw         $v1, %lo(g_Spyro + 0x11C)($v1)

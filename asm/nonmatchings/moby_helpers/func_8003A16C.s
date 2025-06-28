@@ -35,7 +35,7 @@ glabel func_8003A16C
 /* 2A9E4 8003A1E4 1800A0A3 */   sb        $zero, 0x18($sp)
 /* 2A9E8 8003A1E8 21204000 */  addu       $a0, $v0, $zero
 /* 2A9EC 8003A1EC 2800A58F */  lw         $a1, 0x28($sp)
-/* 2A9F0 8003A1F0 AD5A000C */  jal        func_80016AB4
+/* 2A9F0 8003A1F0 AD5A000C */  jal        Atan2
 /* 2A9F4 8003A1F4 21300000 */   addu      $a2, $zero, $zero
 /* 2A9F8 8003A1F8 21200002 */  addu       $a0, $s0, $zero
 /* 2A9FC 8003A1FC 21280000 */  addu       $a1, $zero, $zero
@@ -50,7 +50,7 @@ glabel func_8003A16C
 .L8003A220:
 /* 2AA20 8003A220 2000A48F */  lw         $a0, 0x20($sp)
 /* 2AA24 8003A224 2400A58F */  lw         $a1, 0x24($sp)
-/* 2AA28 8003A228 AD5A000C */  jal        func_80016AB4
+/* 2AA28 8003A228 AD5A000C */  jal        Atan2
 /* 2AA2C 8003A22C 21300000 */   addu      $a2, $zero, $zero
 /* 2AA30 8003A230 0000A58E */  lw         $a1, 0x0($s5)
 /* 2AA34 8003A234 00000000 */  nop

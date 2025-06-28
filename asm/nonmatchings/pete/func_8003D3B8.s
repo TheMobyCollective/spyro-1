@@ -22,7 +22,7 @@ glabel func_8003D3B8
 /* 2DBFC 8003D3FC 1700A490 */  lbu        $a0, 0x17($a1)
 /* 2DC00 8003D400 1600A590 */  lbu        $a1, 0x16($a1)
 /* 2DC04 8003D404 23200402 */  subu       $a0, $s0, $a0
-/* 2DC08 8003D408 AD5A000C */  jal        func_80016AB4
+/* 2DC08 8003D408 AD5A000C */  jal        Atan2
 /* 2DC0C 8003D40C 23280502 */   subu      $a1, $s0, $a1
 /* 2DC10 8003D410 0780033C */  lui        $v1, %hi(g_Camera + 0x50)
 /* 2DC14 8003D414 206E6384 */  lh         $v1, %lo(g_Camera + 0x50)($v1)

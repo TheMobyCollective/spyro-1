@@ -8,7 +8,8 @@
 
 #define FIXED_MUL(x, y) (((x) * (y)) >> 12)
 
-// This is horrible, but that's the only way it will match in some files
+// This is horrible (since they intersect)
+// but that's the only way it will match in some files
 extern short D_8006CBF8[256];
 extern short D_8006CC78[256];
 
@@ -18,14 +19,18 @@ extern short D_8006CC78[256];
 // @brief VRAM size per cutscene
 extern int D_8006EE5C[4];
 
+// TODO: When the we've used it in more places, check if maybe we have to
+// change the type to char
+// (it matches as char in func_8003838C atleast, then it doesn't need casting)
+
 /// @brief Also an atan2 function, but less precise
-int func_800169AC(int p1, int p2);
+int Atan2Fast(int pY, int pX);
 
 /// @brief Atan2 function
 /// @param pY The Y coordinate
 /// @param pX The X coordinate
 /// @param output16Bit Whether to output a 16-bit value rather than a 8-bit one
-int func_80016AB4(int pY, int pX, int output16Bit);
+int Atan2(int pY, int pX, int output16Bit);
 
 /// @brief Get the sine of an angle
 /// @param angle

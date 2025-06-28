@@ -290,7 +290,7 @@ glabel func_8003ABC0
 /* 2B7D4 8003AFD4 3000A3AF */   sw        $v1, 0x30($sp)
 /* 2B7D8 8003AFD8 0780043C */  lui        $a0, %hi(D_80077370)
 /* 2B7DC 8003AFDC 7073848C */  lw         $a0, %lo(D_80077370)($a0)
-/* 2B7E0 8003AFE0 6B5A000C */  jal        func_800169AC
+/* 2B7E0 8003AFE0 6B5A000C */  jal        Atan2Fast
 /* 2B7E4 8003AFE4 21284000 */   addu      $a1, $v0, $zero
 /* 2B7E8 8003AFE8 00160200 */  sll        $v0, $v0, 24
 /* 2B7EC 8003AFEC 0C000012 */  beqz       $s0, .L8003B020
