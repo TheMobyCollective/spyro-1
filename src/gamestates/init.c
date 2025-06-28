@@ -1,10 +1,10 @@
+#include "gamestate/init.h"
 #include "4BEF8.h"
 #include "buffers.h"
 #include "camera.h"
 #include "cheats.h"
 #include "common.h"
 #include "cyclorama.h"
-#include "gamestate/init.h"
 #include "graphics.h"
 #include "hud.h"
 #include "initialization.h"
@@ -14,6 +14,7 @@
 #include "specular_and_metal.h"
 #include "spu.h"
 #include "spyro.h"
+#include "titlescreen.h"
 #include "variables.h"
 
 extern int rand(void); // From psyq
@@ -44,31 +45,6 @@ extern int D_80078768;
 extern int D_800758A4; // no idea, value goes back and forth between D_80078768
 
 extern int D_800757AC;
-extern struct {
-  int unk_0x0;
-  int unk_0x4;
-  int unk_0x8;
-  int unk_0xC;
-  int unk_0x10;
-  int unk_0x14;
-  int unk_0x18;
-  int unk_0x1C;
-  int unk_0x20;
-  int unk_0x24;
-  int unk_0x28;
-  int unk_0x2C;
-  int unk_0x30;
-  int unk_0x34;
-  int unk_0x38;
-  int unk_0x3C;
-  int unk_0x40;
-  int unk_0x44;
-  int unk_0x48;
-  void *unk_0x4C;
-  char stuff2[0x0C];
-} D_80078D78;
-
-extern int D_8007591C; //??
 
 extern SphericalCoordsOffset D_8006C8BC;
 
@@ -266,10 +242,10 @@ void func_8002C8A4(void) {
 }
 
 /// @brief Empty, used to open the dragon dialogue in protos
-void func_8002C914(void) {};
+void func_8002C914(void){};
 
 /// @brief Empty, used to update the dragon dialogue iirc?
-void func_8002C91C(void) {};
+void func_8002C91C(void){};
 
 extern Moby *D_800770C0; // resucing dragon moby
 
@@ -400,7 +376,7 @@ void func_8002D170(void) {
 
   D_80075754 = 10; // sound volume
 
-  D_80078D78.unk_0x4C = D_800785D8.m_LowerPolyBuffer - 0x2000;
+  D_80078D78.m_0x4C = (char *)D_800785D8.m_LowerPolyBuffer - 0x2000;
 
   g_Spu.unk_0x320 = 0x3FFF;
   D_80075748 = 10; // music volume
@@ -427,40 +403,38 @@ void func_8002D440(void) {
   RECT rc;
 
   if (D_8007566C == 1) {
-    //clear the screen
+    // clear the screen
     setRECT(&rc, 0, 0, 0x200, 0x1E0);
     ClearImage(&rc, 0U, 0U, 0U);
     DrawSync(0);
 
-    //stop all sounds
+    // stop all sounds
     func_80056B28(0);
     SpuUpdate();
 
-    //load shared models from wad.wad
+    // load shared models from wad.wad
     func_8005B7D8();
 
     g_Gamestate = GS_TitleScreen;
 
-    //reset/init this thing
+    // reset/init this thing
     Memset(&D_80078D78, 0, 0x5C);
-    D_80078D78.unk_0x0 = 3;
-    D_80078D78.unk_0x4 = 0;
-    D_80078D78.unk_0x1C = 1;
+    D_80078D78.m_0x00 = 3;
+    D_80078D78.m_0x04 = 0;
+    D_80078D78.m_0x1C = 1;
 
-    //reset more stuff (also resets gems/dragons/lives/etc)
+    // reset more stuff (also resets gems/dragons/lives/etc)
     func_8001277C();
 
     // change to artisans home
     g_LevelId = 10;
     g_StateSwitch = 1;
-  }
-  else if(D_8007566C == 2) {
-    //play credits 1
+  } else if (D_8007566C == 2) {
+    // play credits 1
     func_8002D228(0);
     g_StateSwitch = 1;
-  }
-  else if(D_8007566C == 3) {
-    //play credits 2
+  } else if (D_8007566C == 3) {
+    // play credits 2
     D_800757AC = 10;
     func_8002D228(1);
     g_StateSwitch = 1;

@@ -20,14 +20,16 @@
 
 /* clang-format on */
 
-#define PATCH_POINTER(dest, base) dest = (void *)((u_int)(base) + (u_int)(dest));
-#define PATCH_POINTER2(dest, base) dest = (void *)((u_int)(dest) + (u_int)(base));
+#define PATCH_POINTER(dest, base)                                              \
+  dest = (void *)((u_int)(base) + (u_int)(dest));
+#define PATCH_POINTER2(dest, base)                                             \
+  dest = (void *)((u_int)(dest) + (u_int)(base));
 
 // This ABS macro makes GCC really shit the bed when it comes to optimizations!
 // Holy fuck!
 #define ABS(x) ((x) >= 0 ? (x) : -(x))
 
-//because why not have this one too!
+// because why not have this one too!
 #define ABS2(x) ((x) > 0 ? (x) : -(x))
 
 #define CLAMP(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
@@ -78,6 +80,8 @@ extern unsigned char D_800758D0[8]; // Unlocked homeworlds
 
 extern int D_80075830; // Key flag
 
+extern int D_8007591C; // Skip low-poly model in world
+
 extern int D_8007582C; // Spyro's extra life count
 extern int D_800758E8; // Life orb count
 
@@ -89,6 +93,6 @@ extern struct {
 extern unsigned char D_8007A6A8[TOTAL_LEVEL_COUNT]; // Level completion flags
 
 extern int D_8006E330[];
-extern const char* D_8006F7F0[]; // Level name table
+extern const char *D_8006F7F0[]; // Level name table
 
 #endif
