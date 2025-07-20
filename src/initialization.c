@@ -17,13 +17,13 @@
 #include "loaders.h"
 #include "memory.h"
 #include "music.h"
+#include "sony_image.h"
 #include "spu.h"
 #include "spyro.h"
 #include "variables.h"
 #include "wad.h"
 
-extern void *D_800113A0;   // Pointer to overlay space
-extern char D_8006FCF4[1]; // Sony image
+extern void *D_800113A0; // Pointer to overlay space
 extern int _stacksize;
 
 // Wouldn't know where to put these
@@ -406,7 +406,7 @@ void Initialize(void) {
   func_8005B7D8(); // Load shared models from WAD.WAD
   func_8002D338(); // Initialize the gamestate to cutscene
 
-  D_80075918 = 15; // Fade
+  g_Fade = 15; // Fade
 
   func_8002D170(); // But then switch it to titlescreen..
 

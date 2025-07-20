@@ -126,13 +126,13 @@ glabel func_8001E24C
 /* EBDC 8001E3DC 00160224 */  addiu      $v0, $zero, 0x1600
 /* EBE0 8001E3E0 3000A2AF */  sw         $v0, 0x30($sp)
 /* EBE4 8001E3E4 02000224 */  addiu      $v0, $zero, 0x2
-/* EBE8 8001E3E8 0780103C */  lui        $s0, %hi(D_80075710)
-/* EBEC 8001E3EC 1057108E */  lw         $s0, %lo(D_80075710)($s0)
+/* EBE8 8001E3E8 0780103C */  lui        $s0, %hi(g_HudMobys)
+/* EBEC 8001E3EC 1057108E */  lw         $s0, %lo(g_HudMobys)($s0)
 /* EBF0 8001E3F0 10000724 */  addiu      $a3, $zero, 0x10
 /* EBF4 8001E3F4 6B60000C */  jal        func_800181AC
 /* EBF8 8001E3F8 1000A2AF */   sw        $v0, 0x10($sp)
-/* EBFC 8001E3FC 0780023C */  lui        $v0, %hi(D_80075710)
-/* EC00 8001E400 1057428C */  lw         $v0, %lo(D_80075710)($v0)
+/* EBFC 8001E3FC 0780023C */  lui        $v0, %hi(g_HudMobys)
+/* EC00 8001E400 1057428C */  lw         $v0, %lo(g_HudMobys)($v0)
 /* EC04 8001E404 A8FF1026 */  addiu      $s0, $s0, -0x58
 /* EC08 8001E408 2A100202 */  slt        $v0, $s0, $v0
 /* EC0C 8001E40C 16004014 */  bnez       $v0, .L8001E468
@@ -153,8 +153,8 @@ glabel func_8001E24C
 /* EC44 8001E444 00000000 */  nop
 /* EC48 8001E448 C2110200 */  srl        $v0, $v0, 7
 /* EC4C 8001E44C 460002A2 */  sb         $v0, 0x46($s0)
-/* EC50 8001E450 0780023C */  lui        $v0, %hi(D_80075710)
-/* EC54 8001E454 1057428C */  lw         $v0, %lo(D_80075710)($v0)
+/* EC50 8001E450 0780023C */  lui        $v0, %hi(g_HudMobys)
+/* EC54 8001E454 1057428C */  lw         $v0, %lo(g_HudMobys)($v0)
 /* EC58 8001E458 A8FF1026 */  addiu      $s0, $s0, -0x58
 /* EC5C 8001E45C 2A100202 */  slt        $v0, $s0, $v0
 /* EC60 8001E460 F0FF4010 */  beqz       $v0, .L8001E424
@@ -225,7 +225,7 @@ glabel func_8001E24C
 /* ED50 8001E550 D457A58C */  lw         $a1, %lo(D_800757D4)($a1)
 /* ED54 8001E554 0780063C */  lui        $a2, %hi(D_8007575C)
 /* ED58 8001E558 5C57C68C */  lw         $a2, %lo(D_8007575C)($a2)
-/* ED5C 8001E55C 955F000C */  jal        func_80017E54
+/* ED5C 8001E55C 955F000C */  jal        ColorLerp
 /* ED60 8001E560 00000000 */   nop
 /* ED64 8001E564 7800A2AF */  sw         $v0, 0x78($sp)
 /* ED68 8001E568 7800A393 */  lbu        $v1, 0x78($sp)
@@ -298,14 +298,14 @@ glabel func_8001E24C
 .L8001E664:
 /* EE64 8001E664 F176010C */  jal        VSync
 /* EE68 8001E668 FFFF0424 */   addiu     $a0, $zero, -0x1
-/* EE6C 8001E66C 0780043C */  lui        $a0, %hi(D_80075888)
-/* EE70 8001E670 8858848C */  lw         $a0, %lo(D_80075888)($a0)
+/* EE6C 8001E66C 0780043C */  lui        $a0, %hi(g_CurDB)
+/* EE70 8001E670 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* EE74 8001E674 0780013C */  lui        $at, %hi(D_80075950)
 /* EE78 8001E678 505922AC */  sw         $v0, %lo(D_80075950)($at)
 /* EE7C 8001E67C 0C80010C */  jal        PutDispEnv
 /* EE80 8001E680 5C008424 */   addiu     $a0, $a0, 0x5C
-/* EE84 8001E684 0780043C */  lui        $a0, %hi(D_80075888)
-/* EE88 8001E688 8858848C */  lw         $a0, %lo(D_80075888)($a0)
+/* EE84 8001E684 0780043C */  lui        $a0, %hi(g_CurDB)
+/* EE88 8001E688 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* EE8C 8001E68C 767F010C */  jal        PutDrawEnv
 /* EE90 8001E690 00000000 */   nop
 /* EE94 8001E694 E159000C */  jal        func_80016784

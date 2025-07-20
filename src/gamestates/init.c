@@ -1,10 +1,11 @@
-#include "gamestate/init.h"
+#include "gamestates/init.h"
 #include "4BEF8.h"
 #include "buffers.h"
 #include "camera.h"
 #include "cheats.h"
 #include "common.h"
 #include "cyclorama.h"
+#include "gamestates/draw.h"
 #include "graphics.h"
 #include "hud.h"
 #include "initialization.h"
@@ -25,8 +26,6 @@ extern int D_800758B8; // Pause menu text rotation ticks
 
 extern int D_80075720; // Selected menu item index
 extern int D_800757C8; // OptionsSubmenuIsOpen
-
-extern int D_8007570C; // Is currently talking to fairy / rescuing dragon
 
 // Inventory page transition state
 // Set to 0 when not transitioning
@@ -153,7 +152,7 @@ void func_8002C664(void) {
   D_8007576C = -1;
   D_800758AC = g_LevelId;
 
-  g_Gamestate = GS_Loading;
+  g_Gamestate = GS_LevelTransition;
 
   D_800756D0 = 1;
   D_800756B0 = 1;
@@ -175,7 +174,8 @@ void func_8002C714(int pEnteringFromGameplay) {
 
   D_800757CC = 0; // Transition progress between inventory pages.
   D_800756D4 = 0; // Inventory page transition state
-  g_Gamestate = GS_InvetoryMenu;
+  g_Gamestate = GS_InventoryMenu;
+
   // Set the current inventory screen to the current level's index / 6.
   // This causes the inventory screen to open up to page that shows the current
   // world.
@@ -232,19 +232,20 @@ void func_8002C85C(void) {
 /// @brief Sets gamestate 0, resets background color, and resets the specular
 void func_8002C8A4(void) {
   g_Gamestate = GS_Playing;
-  g_DB[0].m_DrawEnv.r0 = g_Cyclorama.m_BackgroundColor.r;
-  g_DB[0].m_DrawEnv.g0 = g_Cyclorama.m_BackgroundColor.g;
-  g_DB[0].m_DrawEnv.b0 = g_Cyclorama.m_BackgroundColor.b;
-  g_DB[1].m_DrawEnv.r0 = g_Cyclorama.m_BackgroundColor.r;
-  g_DB[1].m_DrawEnv.g0 = g_Cyclorama.m_BackgroundColor.g;
-  g_DB[1].m_DrawEnv.b0 = g_Cyclorama.m_BackgroundColor.b;
+
+  setRGB0(&g_DB[0].m_DrawEnv, g_Cyclorama.m_BackgroundColor.r,
+          g_Cyclorama.m_BackgroundColor.g, g_Cyclorama.m_BackgroundColor.b);
+
+  setRGB0(&g_DB[1].m_DrawEnv, g_Cyclorama.m_BackgroundColor.r,
+          g_Cyclorama.m_BackgroundColor.g, g_Cyclorama.m_BackgroundColor.b);
+
   SpecularReset();
 }
 
 /// @brief Empty, used to open the dragon dialogue in protos
 void func_8002C914(void){};
 
-/// @brief Empty, used to update the dragon dialogue iirc?
+/// @brief Empty, proto dragon dialogue update calls this for some reason
 void func_8002C91C(void){};
 
 /// @brief Rescue a dragon, increments the needed values and starts the cutscene
@@ -256,7 +257,10 @@ void func_8002CB6C(void) {
   int moby_idx;
 
   g_Gamestate = GS_Playing;
-  D_8007570C = 0; // reset rescuing dragon
+
+  // Turn off the screen border
+  D_8007570C = 0;
+
   moby_idx = ((RescuedDragonMobyProps *)D_800770C0->m_Props)->m_DragonPadLink;
   if (moby_idx != -1) {
     moby = &D_80075828[moby_idx];
@@ -309,7 +313,7 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002CCC8);
 void func_8002D02C(void) {
   g_Gamestate = GS_Playing;
 
-  // no longer talking to fairy/dragon
+  // Turn off the screen border
   D_8007570C = 0;
 
   SpecularReset();

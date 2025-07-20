@@ -2,6 +2,8 @@
 #include "camera.h"
 #include "common.h"
 #include "memory.h"
+#include "renderers.h"
+#include "sony_image.h"
 
 // /// @brief: Update environment animations
 // func_8002A6FC
@@ -17,10 +19,6 @@
 
 // /// @brief: Initialize environment animations
 // func_8002B4AC
-
-extern char D_8006FCF4[1]; // Sony image
-
-void func_800258F0(int pOcclusionGroup); // Actual draw world function
 
 /// @brief: Create the environment
 void func_8002B9CC() {

@@ -169,8 +169,8 @@ glabel func_8003EA68
 /* 2F354 8003EB54 0780013C */  lui        $at, %hi(D_80075274)
 /* 2F358 8003EB58 21082200 */  addu       $at, $at, $v0
 /* 2F35C 8003EB5C 74522390 */  lbu        $v1, %lo(D_80075274)($at)
-/* 2F360 8003EB60 0780023C */  lui        $v0, %hi(D_8006C4A2)
-/* 2F364 8003EB64 A2C44290 */  lbu        $v0, %lo(D_8006C4A2)($v0)
+/* 2F360 8003EB60 0780023C */  lui        $v0, %hi(spyro_AnimationDetails + 0x02)
+/* 2F364 8003EB64 A2C44290 */  lbu        $v0, %lo(spyro_AnimationDetails + 0x02)($v0)
 /* 2F368 8003EB68 00000000 */  nop
 /* 2F36C 8003EB6C 18006200 */  mult       $v1, $v0
 /* 2F370 8003EB70 80FF0224 */  addiu      $v0, $zero, -0x80
@@ -1003,9 +1003,9 @@ glabel func_8003EA68
 /* 2FF84 8003F784 80101500 */  sll        $v0, $s5, 2
 /* 2FF88 8003F788 0880013C */  lui        $at, %hi(g_Spyro + 0x7C)
 /* 2FF8C 8003F78C D48A20AC */  sw         $zero, %lo(g_Spyro + 0x7C)($at)
-/* 2FF90 8003F790 0780013C */  lui        $at, %hi(D_8006C4A2)
+/* 2FF90 8003F790 0780013C */  lui        $at, %hi(spyro_AnimationDetails + 0x02)
 /* 2FF94 8003F794 21082200 */  addu       $at, $at, $v0
-/* 2FF98 8003F798 A2C42290 */  lbu        $v0, %lo(D_8006C4A2)($at)
+/* 2FF98 8003F798 A2C42290 */  lbu        $v0, %lo(spyro_AnimationDetails + 0x02)($at)
 /* 2FF9C 8003F79C 00F40324 */  addiu      $v1, $zero, -0xC00
 /* 2FFA0 8003F7A0 0880013C */  lui        $at, %hi(g_Spyro + 0x14C)
 /* 2FFA4 8003F7A4 A48B23AC */  sw         $v1, %lo(g_Spyro + 0x14C)($at)
@@ -1418,9 +1418,9 @@ glabel func_8003EA68
 /* 30580 8003FD80 70C42290 */  lbu        $v0, %lo(spyro_StateDefaultAnimation)($at)
 /* 30584 8003FD84 00000000 */  nop
 /* 30588 8003FD88 80100200 */  sll        $v0, $v0, 2
-/* 3058C 8003FD8C 0780013C */  lui        $at, %hi(D_8006C4A3)
+/* 3058C 8003FD8C 0780013C */  lui        $at, %hi(spyro_AnimationDetails + 0x03)
 /* 30590 8003FD90 21082200 */  addu       $at, $at, $v0
-/* 30594 8003FD94 A3C42290 */  lbu        $v0, %lo(D_8006C4A3)($at)
+/* 30594 8003FD94 A3C42290 */  lbu        $v0, %lo(spyro_AnimationDetails + 0x03)($at)
 /* 30598 8003FD98 0880013C */  lui        $at, %hi(g_Spyro + 0x58)
 /* 3059C 8003FD9C B08A22AC */  sw         $v0, %lo(g_Spyro + 0x58)($at)
 /* 305A0 8003FDA0 4800BF8F */  lw         $ra, 0x48($sp)

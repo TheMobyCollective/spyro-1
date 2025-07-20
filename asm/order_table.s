@@ -9,8 +9,8 @@
 
 /* Handwritten function */
 glabel func_80016784
-/* 6F84 80016784 0780023C */  lui        $v0, %hi(D_80075820)
-/* 6F88 80016788 20584224 */  addiu      $v0, $v0, %lo(D_80075820)
+/* 6F84 80016784 0780023C */  lui        $v0, %hi(g_WorldOT)
+/* 6F88 80016788 20584224 */  addiu      $v0, $v0, %lo(g_WorldOT)
 /* 6F8C 8001678C 0000428C */  lw         $v0, 0x0($v0)
 /* 6F90 80016790 C0080400 */  sll        $at, $a0, 3
 /* 6F94 80016794 20082200 */  add        $at, $at, $v0 /* handwritten instruction */
@@ -37,8 +37,8 @@ glabel func_80016784
 /* 6FE0 800167E0 EF590008 */  j          .L800167BC
 /* 6FE4 800167E4 000020AC */   sw        $zero, 0x0($at)
 .L800167E8:
-/* 6FE8 800167E8 0780013C */  lui        $at, %hi(D_8007581C)
-/* 6FEC 800167EC 1C582124 */  addiu      $at, $at, %lo(D_8007581C)
+/* 6FE8 800167E8 0780013C */  lui        $at, %hi(g_HudOT)
+/* 6FEC 800167EC 1C582124 */  addiu      $at, $at, %lo(g_HudOT)
 /* 6FF0 800167F0 0000218C */  lw         $at, 0x0($at)
 /* 6FF4 800167F4 00000000 */  nop
 /* 6FF8 800167F8 0400248C */  lw         $a0, 0x4($at)
@@ -66,8 +66,8 @@ glabel func_80016784
 /* 704C 8001684C 0800E003 */  jr         $ra
 /* 7050 80016850 0000C220 */   addi      $v0, $a2, 0x0 /* handwritten instruction */
 .L80016854:
-/* 7054 80016854 0780013C */  lui        $at, %hi(D_8007581C)
-/* 7058 80016858 1C582124 */  addiu      $at, $at, %lo(D_8007581C)
+/* 7054 80016854 0780013C */  lui        $at, %hi(g_HudOT)
+/* 7058 80016858 1C582124 */  addiu      $at, $at, %lo(g_HudOT)
 /* 705C 8001685C 0000218C */  lw         $at, 0x0($at)
 /* 7060 80016860 00000000 */  nop
 /* 7064 80016864 0000238C */  lw         $v1, 0x0($at)
@@ -90,8 +90,8 @@ glabel func_80016784
 
 /* Handwritten function */
 glabel func_800168A0
-/* 70A0 800168A0 0780063C */  lui        $a2, %hi(D_80075820)
-/* 70A4 800168A4 2058C624 */  addiu      $a2, $a2, %lo(D_80075820)
+/* 70A0 800168A0 0780063C */  lui        $a2, %hi(g_WorldOT)
+/* 70A4 800168A4 2058C624 */  addiu      $a2, $a2, %lo(g_WorldOT)
 /* 70A8 800168A8 0000C68C */  lw         $a2, 0x0($a2)
 /* 70AC 800168AC C0280500 */  sll        $a1, $a1, 3
 /* 70B0 800168B0 2028A600 */  add        $a1, $a1, $a2 /* handwritten instruction */
@@ -109,8 +109,8 @@ glabel func_800168A0
 .size func_800168A0, . - func_800168A0
 
 glabel func_800168DC
-/* 70DC 800168DC 0780033C */  lui        $v1, %hi(D_8007581C)
-/* 70E0 800168E0 1C586324 */  addiu      $v1, $v1, %lo(D_8007581C)
+/* 70DC 800168DC 0780033C */  lui        $v1, %hi(g_HudOT)
+/* 70E0 800168E0 1C586324 */  addiu      $v1, $v1, %lo(g_HudOT)
 /* 70E4 800168E4 0000638C */  lw         $v1, 0x0($v1)
 /* 70E8 800168E8 00000000 */  nop
 /* 70EC 800168EC 0000618C */  lw         $at, 0x0($v1)

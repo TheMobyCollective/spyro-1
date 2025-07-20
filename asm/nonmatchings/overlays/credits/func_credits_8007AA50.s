@@ -324,30 +324,30 @@ glabel func_credits_8007AA50
 /* 5C97CC0 8007AEF8 43180300 */  sra        $v1, $v1, 1
 /* 5C97CC4 8007AEFC 10000224 */  addiu      $v0, $zero, 0x10
 /* 5C97CC8 8007AF00 23104300 */  subu       $v0, $v0, $v1
-/* 5C97CCC 8007AF04 0780013C */  lui        $at, %hi(D_80075918)
-/* 5C97CD0 8007AF08 185922AC */  sw         $v0, %lo(D_80075918)($at)
+/* 5C97CCC 8007AF04 0780013C */  lui        $at, %hi(g_Fade)
+/* 5C97CD0 8007AF08 185922AC */  sw         $v0, %lo(g_Fade)($at)
 /* 5C97CD4 8007AF0C C7EB0108 */  j          .Lcredits_8007AF1C
 /* 5C97CD8 8007AF10 00000000 */   nop
 .Lcredits_8007AF14:
-/* 5C97CDC 8007AF14 0780013C */  lui        $at, %hi(D_80075918)
-/* 5C97CE0 8007AF18 185920AC */  sw         $zero, %lo(D_80075918)($at)
+/* 5C97CDC 8007AF14 0780013C */  lui        $at, %hi(g_Fade)
+/* 5C97CE0 8007AF18 185920AC */  sw         $zero, %lo(g_Fade)($at)
 .Lcredits_8007AF1C:
-/* 5C97CE4 8007AF1C 0780023C */  lui        $v0, %hi(D_80075918)
-/* 5C97CE8 8007AF20 1859428C */  lw         $v0, %lo(D_80075918)($v0)
+/* 5C97CE4 8007AF1C 0780023C */  lui        $v0, %hi(g_Fade)
+/* 5C97CE8 8007AF20 1859428C */  lw         $v0, %lo(g_Fade)($v0)
 /* 5C97CEC 8007AF24 00000000 */  nop
 /* 5C97CF0 8007AF28 10004228 */  slti       $v0, $v0, 0x10
 /* 5C97CF4 8007AF2C 03004014 */  bnez       $v0, .Lcredits_8007AF3C
 /* 5C97CF8 8007AF30 0F000224 */   addiu     $v0, $zero, 0xF
-/* 5C97CFC 8007AF34 0780013C */  lui        $at, %hi(D_80075918)
-/* 5C97D00 8007AF38 185922AC */  sw         $v0, %lo(D_80075918)($at)
+/* 5C97CFC 8007AF34 0780013C */  lui        $at, %hi(g_Fade)
+/* 5C97D00 8007AF38 185922AC */  sw         $v0, %lo(g_Fade)($at)
 .Lcredits_8007AF3C:
-/* 5C97D04 8007AF3C 0780023C */  lui        $v0, %hi(D_80075918)
-/* 5C97D08 8007AF40 1859428C */  lw         $v0, %lo(D_80075918)($v0)
+/* 5C97D04 8007AF3C 0780023C */  lui        $v0, %hi(g_Fade)
+/* 5C97D08 8007AF40 1859428C */  lw         $v0, %lo(g_Fade)($v0)
 /* 5C97D0C 8007AF44 00000000 */  nop
 /* 5C97D10 8007AF48 03004104 */  bgez       $v0, .Lcredits_8007AF58
 /* 5C97D14 8007AF4C 00000000 */   nop
-/* 5C97D18 8007AF50 0780013C */  lui        $at, %hi(D_80075918)
-/* 5C97D1C 8007AF54 185920AC */  sw         $zero, %lo(D_80075918)($at)
+/* 5C97D18 8007AF50 0780013C */  lui        $at, %hi(g_Fade)
+/* 5C97D1C 8007AF54 185920AC */  sw         $zero, %lo(g_Fade)($at)
 .Lcredits_8007AF58:
 /* 5C97D20 8007AF58 0780043C */  lui        $a0, %hi(D_800757BC)
 /* 5C97D24 8007AF5C BC57848C */  lw         $a0, %lo(D_800757BC)($a0)
@@ -455,16 +455,16 @@ glabel func_credits_8007AA50
 .Lcredits_8007B0EC:
 /* 5C97EB4 8007B0EC 0780023C */  lui        $v0, %hi(D_800756F8)
 /* 5C97EB8 8007B0F0 F856428C */  lw         $v0, %lo(D_800756F8)($v0)
-/* 5C97EBC 8007B0F4 0780013C */  lui        $at, %hi(D_80075918)
-/* 5C97EC0 8007B0F8 185922AC */  sw         $v0, %lo(D_80075918)($at)
+/* 5C97EBC 8007B0F4 0780013C */  lui        $at, %hi(g_Fade)
+/* 5C97EC0 8007B0F8 185922AC */  sw         $v0, %lo(g_Fade)($at)
 /* 5C97EC4 8007B0FC 10004228 */  slti       $v0, $v0, 0x10
 /* 5C97EC8 8007B100 03004014 */  bnez       $v0, .Lcredits_8007B110
 /* 5C97ECC 8007B104 0F000224 */   addiu     $v0, $zero, 0xF
-/* 5C97ED0 8007B108 0780013C */  lui        $at, %hi(D_80075918)
-/* 5C97ED4 8007B10C 185922AC */  sw         $v0, %lo(D_80075918)($at)
+/* 5C97ED0 8007B108 0780013C */  lui        $at, %hi(g_Fade)
+/* 5C97ED4 8007B10C 185922AC */  sw         $v0, %lo(g_Fade)($at)
 .Lcredits_8007B110:
-/* 5C97ED8 8007B110 0780033C */  lui        $v1, %hi(D_80075918)
-/* 5C97EDC 8007B114 1859638C */  lw         $v1, %lo(D_80075918)($v1)
+/* 5C97ED8 8007B110 0780033C */  lui        $v1, %hi(g_Fade)
+/* 5C97EDC 8007B114 1859638C */  lw         $v1, %lo(g_Fade)($v1)
 /* 5C97EE0 8007B118 0F000224 */  addiu      $v0, $zero, 0xF
 /* 5C97EE4 8007B11C 03006214 */  bne        $v1, $v0, .Lcredits_8007B12C
 /* 5C97EE8 8007B120 63000224 */   addiu     $v0, $zero, 0x63

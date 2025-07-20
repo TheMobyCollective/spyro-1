@@ -1555,8 +1555,8 @@ glabel func_8001F798
 .L800207B4:
 /* 10FB4 800207B4 00010320 */  addi       $v1, $zero, 0x100 /* handwritten instruction */
 /* 10FB8 800207B8 06184300 */  srlv       $v1, $v1, $v0
-/* 10FBC 800207BC 0780023C */  lui        $v0, %hi(D_80075820)
-/* 10FC0 800207C0 20584224 */  addiu      $v0, $v0, %lo(D_80075820)
+/* 10FBC 800207BC 0780023C */  lui        $v0, %hi(g_WorldOT)
+/* 10FC0 800207C0 20584224 */  addiu      $v0, $v0, %lo(g_WorldOT)
 /* 10FC4 800207C4 0000428C */  lw         $v0, 0x0($v0)
 /* 10FC8 800207C8 F8FF8622 */  addi       $a2, $s4, -0x8 /* handwritten instruction */
 /* 10FCC 800207CC 20082200 */  add        $at, $at, $v0 /* handwritten instruction */
@@ -3864,8 +3864,8 @@ glabel D_80022180
 .L800228E8:
 /* 130E8 800228E8 00010320 */  addi       $v1, $zero, 0x100 /* handwritten instruction */
 /* 130EC 800228EC 06184300 */  srlv       $v1, $v1, $v0
-/* 130F0 800228F0 0780023C */  lui        $v0, %hi(D_80075820)
-/* 130F4 800228F4 20584224 */  addiu      $v0, $v0, %lo(D_80075820)
+/* 130F0 800228F0 0780023C */  lui        $v0, %hi(g_WorldOT)
+/* 130F4 800228F4 20584224 */  addiu      $v0, $v0, %lo(g_WorldOT)
 /* 130F8 800228F8 0000428C */  lw         $v0, 0x0($v0)
 /* 130FC 800228FC F8FF8622 */  addi       $a2, $s4, -0x8 /* handwritten instruction */
 /* 13100 80022900 20082200 */  add        $at, $at, $v0 /* handwritten instruction */
@@ -5024,8 +5024,8 @@ glabel func_80022A2C
 /* 141B0 800239B0 F7FF5316 */  bne        $s2, $s3, .L80023990
 /* 141B4 800239B4 040060AE */   sw        $zero, 0x4($s3)
 .L800239B8:
-/* 141B8 800239B8 0780033C */  lui        $v1, %hi(D_80075820)
-/* 141BC 800239BC 20586324 */  addiu      $v1, $v1, %lo(D_80075820)
+/* 141B8 800239B8 0780033C */  lui        $v1, %hi(g_WorldOT)
+/* 141BC 800239BC 20586324 */  addiu      $v1, $v1, %lo(g_WorldOT)
 /* 141C0 800239C0 0000638C */  lw         $v1, 0x0($v1)
 /* 141C4 800239C4 00E04448 */  cfc2       $a0, C2_DQB /* handwritten instruction */
 /* 141C8 800239C8 00D84548 */  cfc2       $a1, C2_DQA /* handwritten instruction */
@@ -5033,8 +5033,8 @@ glabel func_80022A2C
 /* 141D0 800239D0 C0200400 */   sll       $a0, $a0, 3
 /* 141D4 800239D4 0500A010 */  beqz       $a1, .L800239EC
 /* 141D8 800239D8 00000420 */   addi      $a0, $zero, 0x0 /* handwritten instruction */
-/* 141DC 800239DC 0780033C */  lui        $v1, %hi(D_8007581C)
-/* 141E0 800239E0 1C586324 */  addiu      $v1, $v1, %lo(D_8007581C)
+/* 141DC 800239DC 0780033C */  lui        $v1, %hi(g_HudOT)
+/* 141E0 800239E0 1C586324 */  addiu      $v1, $v1, %lo(g_HudOT)
 /* 141E4 800239E4 0000638C */  lw         $v1, 0x0($v1)
 /* 141E8 800239E8 00000000 */  nop
 .L800239EC:

@@ -18,12 +18,14 @@ PYTHON   = python3
 
 MASPSX          = "./tools/maspsx/maspsx.py"
 REMOVE_SECTIONS = "./tools/remove_sections.py"
+FIX_JTBL_ALIGN  = "./tools/fix_jtbl_align.py"
+FIX_STR_ALIGN   = "./tools/fix_str_align.py"
 
 # -------------------------------
 # Compilation Flags
 # -------------------------------
 LD_FLAGS  = -g -EL -T /tmp/psx.ld -g -Map build/psx.map --no-check-sections -nostdlib $(PSYQ_LIB)
-C_CLASSIC_FLAGS = -O2 -G4 -g3 -fverbose-asm -mips1 -mcpu=3000 -fgnu-linker -mno-abicalls -mgpopt -msoft-float -quiet
+C_CLASSIC_FLAGS = -O2 -G8 -g3 -fverbose-asm -mips1 -mcpu=3000 -fgnu-linker -mno-abicalls -mgpopt -msoft-float -quiet
 C_MODERN_FLAGS = -Os -G 0 -g3 -fverbose-asm -march=mips1 -mabi=32 -mips1 -mno-llsc -mno-abicalls -mgpopt -msoft-float -fno-builtin -fno-builtin-function -fno-strict-aliasing -fno-exceptions -fschedule-insns -fno-pic -fno-stack-protector -ffreestanding -o-
 C_FLAGS   = $(if ${MODERN_COMPILER},$(C_MODERN_FLAGS),$(C_CLASSIC_FLAGS))
 AS_FLAGS  = -EL -Iinclude -Iasm -Iasm/renderers -march=r3000 -mtune=r3000 -no-pad-sections -G0 -ggdb -msoft-float
@@ -140,6 +142,8 @@ build/src/%.o: src/%.c
 		$(CC) $(C_FLAGS) |\
 		$(MASPSX_COMMAND) \
 		$(PYTHON) $(REMOVE_SECTIONS) | \
+		$(PYTHON) $(FIX_STR_ALIGN) | \
+		$(PYTHON) $(FIX_JTBL_ALIGN) | \
 		$(AS) $(AS_FLAGS) -o $@
 
 build/asm/%.o: asm/%.s

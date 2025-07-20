@@ -21,10 +21,10 @@
 - [ ] func_8001CFDC
 - [ ] func_8001D718
 - [ ] func_8001E24C
-- [ ] func_8001E6B8
-- [ ] func_8001E9C8
-- [ ] func_8001EB80
-- [ ] func_8001ED5C
+- [x] func_8001E6B8
+- [x] func_8001E9C8
+- [x] func_8001EB80
+- [x] GamestateDraw
 - [ ] func_8002DA74
 - [x] func_8002DF9C
 - [x] func_8002E000
@@ -213,7 +213,7 @@
 - [x] func_8005A470
 - [x] func_8003CB24
 - [x] func_8003CBB8
-- [ ] func_8003CCE4
+- [x] func_8003CCE4
 - [ ] func_8003D194
 - [ ] func_8003D3B8
 - [x] func_8003D52C

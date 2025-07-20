@@ -25,9 +25,12 @@ enum MobyPropUpdateFlags {
 };
 
 /// @brief Update's various properties of a Moby
+/// @param pMoby The Moby to update
+/// @param pFlags The flags to update, see MobyPropUpdateFlags
 void func_800529E4(Moby *pMoby, int pFlags);
 
 /// @brief Updates a Moby's shadow
+/// @param pMoby The Moby to update
 void func_800533D0(Moby *pMoby);
 
 /// @brief Creates the death sparks and poofs

@@ -992,8 +992,8 @@ glabel func_titlescreen_8007CEE4
 /* 5EAA4 8007DCDC E46DA524 */  addiu      $a1, $a1, %lo(g_Camera + 0x14)
 /* 5EAA8 8007DCE0 EA3A010C */  jal        func_8004EBA8
 /* 5EAAC 8007DCE4 ECFFA624 */   addiu     $a2, $a1, -0x14
-/* 5EAB0 8007DCE8 0780053C */  lui        $a1, %hi(D_80075918)
-/* 5EAB4 8007DCEC 1859A58C */  lw         $a1, %lo(D_80075918)($a1)
+/* 5EAB0 8007DCE8 0780053C */  lui        $a1, %hi(g_Fade)
+/* 5EAB4 8007DCEC 1859A58C */  lw         $a1, %lo(g_Fade)($a1)
 /* 5EAB8 8007DCF0 00000000 */  nop
 /* 5EABC 8007DCF4 0500A010 */  beqz       $a1, .Ltitlescreen_8007DD0C
 /* 5EAC0 8007DCF8 02000424 */   addiu     $a0, $zero, 0x2
@@ -1032,14 +1032,14 @@ glabel func_titlescreen_8007CEE4
 .Ltitlescreen_8007DD74:
 /* 5EB3C 8007DD74 F176010C */  jal        VSync
 /* 5EB40 8007DD78 FFFF0424 */   addiu     $a0, $zero, -0x1
-/* 5EB44 8007DD7C 0780043C */  lui        $a0, %hi(D_80075888)
-/* 5EB48 8007DD80 8858848C */  lw         $a0, %lo(D_80075888)($a0)
+/* 5EB44 8007DD7C 0780043C */  lui        $a0, %hi(g_CurDB)
+/* 5EB48 8007DD80 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* 5EB4C 8007DD84 0780013C */  lui        $at, %hi(D_80075950)
 /* 5EB50 8007DD88 505922AC */  sw         $v0, %lo(D_80075950)($at)
 /* 5EB54 8007DD8C 0C80010C */  jal        PutDispEnv
 /* 5EB58 8007DD90 5C008424 */   addiu     $a0, $a0, 0x5C
-/* 5EB5C 8007DD94 0780043C */  lui        $a0, %hi(D_80075888)
-/* 5EB60 8007DD98 8858848C */  lw         $a0, %lo(D_80075888)($a0)
+/* 5EB5C 8007DD94 0780043C */  lui        $a0, %hi(g_CurDB)
+/* 5EB60 8007DD98 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* 5EB64 8007DD9C 767F010C */  jal        PutDrawEnv
 /* 5EB68 8007DDA0 00000000 */   nop
 /* 5EB6C 8007DDA4 E159000C */  jal        func_80016784

@@ -286,8 +286,8 @@ glabel func_80059A48
 /* 4A670 80059E70 08008420 */   addi      $a0, $a0, (0x1F800008 & 0xFFFF) /* handwritten instruction */
 /* 4A674 80059E74 801F013C */  lui        $at, (0x1F800008 >> 16)
 /* 4A678 80059E78 80002220 */  addi       $v0, $at, (0x1F800080 & 0xFFFF) /* handwritten instruction */
-/* 4A67C 80059E7C 0780073C */  lui        $a3, %hi(D_80075820)
-/* 4A680 80059E80 2058E724 */  addiu      $a3, $a3, %lo(D_80075820)
+/* 4A67C 80059E7C 0780073C */  lui        $a3, %hi(g_WorldOT)
+/* 4A680 80059E80 2058E724 */  addiu      $a3, $a3, %lo(g_WorldOT)
 /* 4A684 80059E84 0000E78C */  lw         $a3, 0x0($a3)
 /* 4A688 80059E88 0780083C */  lui        $t0, %hi(D_800757B0)
 /* 4A68C 80059E8C B0570825 */  addiu      $t0, $t0, %lo(D_800757B0)
@@ -397,8 +397,8 @@ glabel func_80059F8C
 /* 4A80C 8005A00C 0780023C */  lui        $v0, %hi(D_800757B0)
 /* 4A810 8005A010 B0574224 */  addiu      $v0, $v0, %lo(D_800757B0)
 /* 4A814 8005A014 0000428C */  lw         $v0, 0x0($v0)
-/* 4A818 8005A018 0780033C */  lui        $v1, %hi(D_80075820)
-/* 4A81C 8005A01C 20586324 */  addiu      $v1, $v1, %lo(D_80075820)
+/* 4A818 8005A018 0780033C */  lui        $v1, %hi(g_WorldOT)
+/* 4A81C 8005A01C 20586324 */  addiu      $v1, $v1, %lo(g_WorldOT)
 /* 4A820 8005A020 0000638C */  lw         $v1, 0x0($v1)
 /* 4A824 8005A024 280022AC */  sw         $v0, (0x1F800028 & 0xFFFF)($at)
 /* 4A828 8005A028 2C0023AC */  sw         $v1, (0x1F80002C & 0xFFFF)($at)

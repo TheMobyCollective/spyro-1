@@ -4,6 +4,7 @@
 #include "common.h"
 #include "math.h"
 #include "memory.h"
+#include "overlay_pointers.h"
 #include "variables.h"
 
 void HudPrint(int pIdx, int pLen, int pValue, int pArg4) {

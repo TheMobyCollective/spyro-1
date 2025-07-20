@@ -12,8 +12,8 @@ glabel func_8002D338
 /* 1DB54 8002D354 1000BFAF */  sw         $ra, 0x10($sp)
 /* 1DB58 8002D358 0780013C */  lui        $at, %hi(g_Gamestate)
 /* 1DB5C 8002D35C D85722AC */  sw         $v0, %lo(g_Gamestate)($at)
-/* 1DB60 8002D360 0780013C */  lui        $at, %hi(D_80075918)
-/* 1DB64 8002D364 185920AC */  sw         $zero, %lo(D_80075918)($at)
+/* 1DB60 8002D360 0780013C */  lui        $at, %hi(g_Fade)
+/* 1DB64 8002D364 185920AC */  sw         $zero, %lo(g_Fade)($at)
 /* 1DB68 8002D368 03008514 */  bne        $a0, $a1, .L8002D378
 /* 1DB6C 8002D36C 000060AC */   sw        $zero, 0x0($v1)
 /* 1DB70 8002D370 0780013C */  lui        $at, %hi(D_8007591C)

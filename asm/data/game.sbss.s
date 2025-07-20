@@ -127,10 +127,10 @@ dlabel D_80075708
 dlabel D_8007570C
 /* 65EE4 8007570C */ .space 0x04
 
-dlabel D_80075710
+dlabel g_HudMobys
 /* 65EE8 80075710 */ .space 0x04
 
-dlabel D_80075714
+dlabel g_DemoMode
 /* 65EEC 80075714 */ .space 0x04
 
 dlabel D_80075718
@@ -330,10 +330,10 @@ dlabel D_80075814
 dlabel D_80075818
 /* 65FF0 80075818 */ .space 0x04
 
-dlabel D_8007581C
+dlabel g_HudOT
 /* 65FF4 8007581C */ .space 0x04
 
-dlabel D_80075820
+dlabel g_WorldOT
 /* 65FF8 80075820 */ .space 0x04
 
 dlabel D_80075824
@@ -408,7 +408,7 @@ dlabel g_LevelCheatActive
 dlabel D_80075884
 /* 6605C 80075884 */ .space 0x04
 
-dlabel D_80075888
+dlabel g_CurDB
 /* 66060 80075888 */ .space 0x04
 
 dlabel g_CDReadTime
@@ -528,7 +528,7 @@ dlabel D_80075910
 dlabel D_80075914
 /* 660EC 80075914 */ .space 0x04
 
-dlabel D_80075918
+dlabel g_Fade
 /* 660F0 80075918 */ .space 0x04
 
 dlabel D_8007591C

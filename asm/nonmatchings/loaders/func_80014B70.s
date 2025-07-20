@@ -240,8 +240,8 @@ glabel func_80014B70
 /* 56C0 80014EC0 21208200 */  addu       $a0, $a0, $v0
 /* 56C4 80014EC4 C972010C */  jal        SpuSetTransferStartAddr
 /* 56C8 80014EC8 23208300 */   subu      $a0, $a0, $v1
-/* 56CC 80014ECC 0780033C */  lui        $v1, %hi(D_80075888)
-/* 56D0 80014ED0 8858638C */  lw         $v1, %lo(D_80075888)($v1)
+/* 56CC 80014ECC 0780033C */  lui        $v1, %hi(g_CurDB)
+/* 56D0 80014ED0 8858638C */  lw         $v1, %lo(g_CurDB)($v1)
 /* 56D4 80014ED4 0780023C */  lui        $v0, %hi(g_DB)
 /* 56D8 80014ED8 E06E4224 */  addiu      $v0, $v0, %lo(g_DB)
 /* 56DC 80014EDC 05006214 */  bne        $v1, $v0, .L80014EF4

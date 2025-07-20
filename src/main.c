@@ -1,8 +1,8 @@
 #include "common.h"
 
 #include "gamepad.h"
-#include "gamestate/draw.h"
-#include "gamestate/update.h"
+#include "gamestates/draw.h"
+#include "gamestates/update.h"
 #include "initialization.h"
 
 #include <stdio.h>
@@ -32,7 +32,7 @@ void main(void) {
     g_UnprocessedFrames = 0;
 
     if (!g_StateSwitch) {
-      func_8001ED5C();
+      GamestateDraw();
     }
   }
 }

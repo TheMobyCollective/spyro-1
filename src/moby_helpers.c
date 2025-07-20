@@ -7,6 +7,7 @@
 #include "common.h"
 #include "math.h"
 #include "moby_helpers.h"
+#include "overlay_pointers.h"
 #include "spu.h"
 #include "spyro.h"
 #include "variables.h"
@@ -715,7 +716,8 @@ void CollectItem(Moby *pMoby) {
   func_800529E4(pMoby, UPDATE_PROP_ROTMATRIX);
 
   // particle spawn
-  (*D_800758E4)(6, 0xC, pMoby, (void *)D_8006E330[pMoby->m_Class]);
+  (*D_800758E4)(6, 0xC, pMoby,
+                (void *)D_8006E44C[12 + (pMoby->m_Class - MOBYCLASS_GEM_1)]);
 
   if (pMoby->m_Class == MOBYCLASS_GEM_1)
     gem_value = 1;

@@ -1968,8 +1968,8 @@ glabel D_800241A8
 .L800257FC:
 /* 15FFC 800257FC 00010320 */  addi       $v1, $zero, 0x100 /* handwritten instruction */
 /* 16000 80025800 06184300 */  srlv       $v1, $v1, $v0
-/* 16004 80025804 0780023C */  lui        $v0, %hi(D_80075820)
-/* 16008 80025808 20584224 */  addiu      $v0, $v0, %lo(D_80075820)
+/* 16004 80025804 0780023C */  lui        $v0, %hi(g_WorldOT)
+/* 16008 80025808 20584224 */  addiu      $v0, $v0, %lo(g_WorldOT)
 /* 1600C 8002580C 0000428C */  lw         $v0, 0x0($v0)
 /* 16010 80025810 F8FF8622 */  addi       $a2, $s4, -0x8 /* handwritten instruction */
 /* 16014 80025814 20082200 */  add        $at, $at, $v0 /* handwritten instruction */

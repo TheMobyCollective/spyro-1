@@ -1,5 +1,6 @@
 #include "camera.h"
 #include "common.h"
+#include "gamepad.h"
 #include "math.h"
 #include "spyro.h"
 #include "vector.h"
@@ -37,6 +38,7 @@ void func_8003CB24(int pDeltaTime) {
   }
 }
 
+// / @brief Increments the body animation and handles state transitions
 int func_8003CBB8(int pDeltaTime) {
   g_Spyro.m_bodyFrameProgress += pDeltaTime;
 
@@ -69,7 +71,142 @@ int func_8003CBB8(int pDeltaTime) {
   return 0;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003CCE4);
+/// @brief Handles the state transition for Spyro's body animation
+void func_8003CCE4(void) {
+  switch (D_8006BC84[g_Spyro.unk_0x5C][g_Spyro.m_State]) {
+  case 1:
+    g_Spyro.unk_0x54 = 1;
+    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
+    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+
+    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_nextBodyAnimationFrame = 0;
+    g_Spyro.m_bodyFrameProgress = 2;
+
+    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    break;
+
+  case 8:
+    g_Spyro.unk_0x54 = 8;
+    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
+    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+
+    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_nextBodyAnimationFrame = 0;
+    g_Spyro.m_bodyFrameProgress = 4;
+
+    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    break;
+
+  case 2:
+    if (g_Spyro.m_nextBodyAnimationFrame >=
+        spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_EndFrame) {
+      g_Spyro.unk_0x54 = 2;
+      g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
+      g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+      g_Spyro.m_nextBodyAnimationFrame =
+          spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_StartFrame;
+      g_Spyro.m_bodyFrameProgress = 2;
+    } else {
+      g_Spyro.unk_0x54 = 0;
+    }
+    break;
+
+  case 5:
+    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
+    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+
+    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_nextBodyAnimationFrame++;
+
+    if (g_Spyro.m_nextBodyAnimationFrame >=
+        spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_EndFrame) {
+      g_Spyro.m_nextBodyAnimationFrame =
+          spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_StartFrame;
+    }
+
+    g_Spyro.m_bodyFrameProgress = 4;
+    g_Spyro.unk_0x54 = 5;
+    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    break;
+
+  case 3:
+  case 10:
+    g_Spyro.unk_0x54 = 3;
+    break;
+
+  case 4:
+    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
+    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+
+    if (g_Spyro.unk_0x5C == 6 && g_Spyro.unk_0x84 < 24) {
+      g_Spyro.unk_0x54 = 1;
+      g_Spyro.m_nextBodyAnimation =
+          spyro_StateDefaultAnimation[g_Spyro.m_State];
+      g_Spyro.m_nextBodyAnimationFrame = 0;
+      g_Spyro.m_bodyFrameProgress = 2;
+      g_Spyro.unk_0x5C = g_Spyro.m_State;
+    } else {
+      g_Spyro.m_nextBodyAnimationFrame =
+          spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_EndFrame;
+      g_Spyro.m_bodyFrameProgress = 4;
+      g_Spyro.unk_0x54 = 4;
+
+      if (g_Spyro.unk_0x5C == 6) {
+        D_8007584C = 0xA0;
+        if (D_800757D0 < 0xF) {
+          D_800757D0 = 0xF;
+        }
+      }
+    }
+    break;
+
+  case 6:
+    g_Spyro.unk_0x54 = 6;
+    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
+    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+
+    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_nextBodyAnimationFrame =
+        spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_StartFrame;
+    g_Spyro.m_bodyFrameProgress = 2;
+
+    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    break;
+
+  case 7:
+    g_Spyro.m_bodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_bodyAnimationFrame = 0;
+
+    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_nextBodyAnimationFrame = 1;
+
+    g_Spyro.m_bodyFrameProgress = 0;
+    g_Spyro.unk_0x54 = 0;
+    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    break;
+
+  case 11:
+    g_Spyro.m_bodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_bodyAnimationFrame =
+        spyro_AnimationDetails[g_Spyro.m_bodyAnimation].m_StartFrame;
+
+    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_nextBodyAnimationFrame =
+        spyro_AnimationDetails[g_Spyro.m_bodyAnimation].m_StartFrame + 1;
+
+    g_Spyro.m_bodyFrameProgress = 0;
+    g_Spyro.unk_0x54 = 0;
+    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    break;
+
+  default:
+    // There used to be a printf here (removed after July) that said:
+    // printf("illegal animation transition from %d to %d\n", g_Spyro.unk_0x5C,
+    // g_Spyro.m_State)
+    return;
+  }
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003D194);
 

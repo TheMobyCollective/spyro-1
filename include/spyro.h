@@ -231,6 +231,9 @@ void func_8004A200(void);
 
 void func_8004AA0C(void);
 
+/// @brief Handles the state transition for Spyro's body animation
+void func_8003CCE4(void);
+
 /// @brief Changes Spyro's state
 void func_8003EA68(int pNewState);
 

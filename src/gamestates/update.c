@@ -45,8 +45,6 @@ void func_8002E000(void) {
 extern int D_8007568C; // Pause menu no button ticks
 extern int D_800758B8; // Pause menu text rotation ticks
 
-void func_8002C664(void); // init.c
-
 /// @brief Gamestate 10
 void func_8002E084(void) {
   func_8004AA0C(); // Spyro -> return home

@@ -24,12 +24,21 @@ typedef struct {
 
 extern DB g_DB[2];
 
-extern DB *D_80075888; // Current DB
+extern DB *g_CurDB; // Current DB
 
 extern int D_800758B0; // Only written to, never read
 
 extern void *D_800757B0; // Pointer to poly buffer
 extern void *D_800756FC; // End of poly buffer
+
+// ????
+extern void *g_HudOT;   // HUD OT
+extern void *g_WorldOT; // World OT
+
+/// @brief Builds the final order table
+/// @param size The size of the world order table
+/// @return A pointer to the final order table's first entry
+void *func_80016784(int size);
 
 // static_assert(sizeof(g_DB[0]) == 0x84);
 

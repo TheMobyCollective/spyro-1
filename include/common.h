@@ -36,19 +36,27 @@
 
 typedef enum {
   GS_Playing = 0,
-  GS_Loading = 1,
+  GS_LevelTransition = 1,
+
   GS_PauseMenu = 2,
-  GS_InvetoryMenu = 3,
+  GS_InventoryMenu = 3,
+
   GS_Respawn = 4,
   GS_GameOver = 5,
+
+  GS_OldDragon = 6, // From prototypes
+
+  GS_FlightResults = 7, // From prototypes
 
   GS_Dragon = 8,
 
   GS_ExitLevel = 10,
   GS_Fairy = 11,
-  GS_Baloonist = 12,
-  GS_TitleScreen = 13,
+  GS_Balloonist = 12,
 
+  // Special
+  GS_TitleScreen = 13,
+  GS_Cutscene = 14,
   GS_Credits = 15
 } Gamestate;
 
@@ -68,7 +76,7 @@ extern int D_8007572C; // Number of ticks (also since in the level)
 
 extern int D_8007576C; // For loading, the VRAM part we're loading
 
-extern int D_80075918; // Fade
+extern int g_Fade; // Fade
 
 extern int g_LevelId;  // Current level id
 extern int D_800758B4; // The level you're traveling to
@@ -92,7 +100,6 @@ extern struct {
 
 extern unsigned char D_8007A6A8[TOTAL_LEVEL_COUNT]; // Level completion flags
 
-extern int D_8006E330[];
 extern const char *D_8006F7F0[]; // Level name table
 
 #endif

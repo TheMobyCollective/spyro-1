@@ -6162,13 +6162,13 @@ glabel func_level_64_8007AD4C
 /* 5AF04CC 80080704 09004010 */  beqz       $v0, .Llevel_64_8008072C
 /* 5AF04D0 80080708 10000224 */   addiu     $v0, $zero, 0x10
 /* 5AF04D4 8008070C 23104300 */  subu       $v0, $v0, $v1
-/* 5AF04D8 80080710 0780013C */  lui        $at, %hi(D_80075918)
-/* 5AF04DC 80080714 185922AC */  sw         $v0, %lo(D_80075918)($at)
+/* 5AF04D8 80080710 0780013C */  lui        $at, %hi(g_Fade)
+/* 5AF04DC 80080714 185922AC */  sw         $v0, %lo(g_Fade)($at)
 /* 5AF04E0 80080718 10004228 */  slti       $v0, $v0, 0x10
 /* 5AF04E4 8008071C 03004014 */  bnez       $v0, .Llevel_64_8008072C
 /* 5AF04E8 80080720 0F000224 */   addiu     $v0, $zero, 0xF
-/* 5AF04EC 80080724 0780013C */  lui        $at, %hi(D_80075918)
-/* 5AF04F0 80080728 185922AC */  sw         $v0, %lo(D_80075918)($at)
+/* 5AF04EC 80080724 0780013C */  lui        $at, %hi(g_Fade)
+/* 5AF04F0 80080728 185922AC */  sw         $v0, %lo(g_Fade)($at)
 .Llevel_64_8008072C:
 /* 5AF04F4 8008072C E4DF000C */  jal        func_80037F90
 /* 5AF04F8 80080730 04000524 */   addiu     $a1, $zero, 0x4

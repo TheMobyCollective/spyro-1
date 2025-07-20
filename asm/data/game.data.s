@@ -614,17 +614,8 @@ dlabel spyro_StateDefaultAnimation
 
 dlabel spyro_AnimationDetails
 /* 5CCA0 8006C4A0 */ .byte 0x00
-.size spyro_AnimationDetails, . - spyro_AnimationDetails
-
-dlabel D_8006C4A1
 /* 5CCA1 8006C4A1 */ .byte 0x16
-.size D_8006C4A1, . - D_8006C4A1
-
-dlabel D_8006C4A2
 /* 5CCA2 8006C4A2 */ .byte 0x16
-.size D_8006C4A2, . - D_8006C4A2
-
-dlabel D_8006C4A3
 /* 5CCA3 8006C4A3 */ .byte 0x02
 /* 5CCA4 8006C4A4 */ .byte 0x00
 /* 5CCA5 8006C4A5 */ .byte 0x14
@@ -703,9 +694,6 @@ dlabel D_8006C4A3
 /* 5CCEE 8006C4EE */ .byte 0x2B
 /* 5CCEF 8006C4EF */ .byte 0x02
 /* 5CCF0 8006C4F0 */ .byte 0x03
-.size D_8006C4A3, . - D_8006C4A3
-
-dlabel D_8006C4F1
 /* 5CCF1 8006C4F1 */ .byte 0x09
 /* 5CCF2 8006C4F2 */ .byte 0x11
 /* 5CCF3 8006C4F3 */ .byte 0x04
@@ -809,7 +797,7 @@ dlabel D_8006C4F1
 /* 5CD55 8006C555 */ .byte 0x0C
 /* 5CD56 8006C556 */ .byte 0x0C
 /* 5CD57 8006C557 */ .byte 0x04
-.size D_8006C4F1, . - D_8006C4F1
+.size spyro_AnimationDetails, . - spyro_AnimationDetails
 
 dlabel spyro_FlameBlockedInAnimation
 /* 5CD58 8006C558 */ .byte 0x00

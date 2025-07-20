@@ -232,14 +232,14 @@ glabel func_8001A050
 .L8001A3B4:
 /* ABB4 8001A3B4 F176010C */  jal        VSync
 /* ABB8 8001A3B8 FFFF0424 */   addiu     $a0, $zero, -0x1
-/* ABBC 8001A3BC 0780043C */  lui        $a0, %hi(D_80075888)
-/* ABC0 8001A3C0 8858848C */  lw         $a0, %lo(D_80075888)($a0)
+/* ABBC 8001A3BC 0780043C */  lui        $a0, %hi(g_CurDB)
+/* ABC0 8001A3C0 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* ABC4 8001A3C4 0780013C */  lui        $at, %hi(D_80075950)
 /* ABC8 8001A3C8 505922AC */  sw         $v0, %lo(D_80075950)($at)
 /* ABCC 8001A3CC 0C80010C */  jal        PutDispEnv
 /* ABD0 8001A3D0 5C008424 */   addiu     $a0, $a0, 0x5C
-/* ABD4 8001A3D4 0780043C */  lui        $a0, %hi(D_80075888)
-/* ABD8 8001A3D8 8858848C */  lw         $a0, %lo(D_80075888)($a0)
+/* ABD4 8001A3D4 0780043C */  lui        $a0, %hi(g_CurDB)
+/* ABD8 8001A3D8 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* ABDC 8001A3DC 767F010C */  jal        PutDrawEnv
 /* ABE0 8001A3E0 00000000 */   nop
 /* ABE4 8001A3E4 E159000C */  jal        func_80016784

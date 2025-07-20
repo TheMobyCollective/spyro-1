@@ -632,8 +632,8 @@ glabel func_800258F0
 /* 169FC 800261FC 0000DE8F */   lw        $fp, 0x0($fp)
 /* 16A00 80026200 0880013C */  lui        $at, %hi(g_Environment)
 /* 16A04 80026204 A8852124 */  addiu      $at, $at, %lo(g_Environment)
-/* 16A08 80026208 07801C3C */  lui        $gp, %hi(D_80075820)
-/* 16A0C 8002620C 20589C27 */  addiu      $gp, $gp, %lo(D_80075820)
+/* 16A08 80026208 07801C3C */  lui        $gp, %hi(g_WorldOT)
+/* 16A0C 8002620C 20589C27 */  addiu      $gp, $gp, %lo(g_WorldOT)
 /* 16A10 80026210 2800328C */  lw         $s2, 0x28($at)
 /* 16A14 80026214 2400338C */  lw         $s3, 0x24($at)
 /* 16A18 80026218 00009C8F */  lw         $gp, 0x00($gp)
@@ -1008,8 +1008,8 @@ glabel func_800258F0
 /* 16F80 80026780 E4980008 */  j          .L80026390
 /* 16F84 80026784 0800B522 */   addi      $s5, $s5, 0x8 /* handwritten instruction */
 .L80026788:
-/* 16F88 80026788 0780013C */  lui        $at, %hi(D_80075820)
-/* 16F8C 8002678C 20582124 */  addiu      $at, $at, %lo(D_80075820)
+/* 16F88 80026788 0780013C */  lui        $at, %hi(g_WorldOT)
+/* 16F8C 8002678C 20582124 */  addiu      $at, $at, %lo(g_WorldOT)
 /* 16F90 80026790 0000348C */  lw         $s4, 0x0($at)
 /* 16F94 80026794 0780013C */  lui        $at, %hi(D_8006FCF4)
 /* 16F98 80026798 F4FC2124 */  addiu      $at, $at, %lo(D_8006FCF4)
@@ -2060,8 +2060,8 @@ glabel func_800258F0
 /* 17E9C 8002769C 08801D3C */  lui        $sp, %hi(g_Environment)
 /* 17EA0 800276A0 A885BD27 */  addiu      $sp, $sp, %lo(g_Environment)
 /* 17EA4 800276A4 1C00BD8F */  lw         $sp, 0x1C($sp)
-/* 17EA8 800276A8 07801C3C */  lui        $gp, %hi(D_80075820)
-/* 17EAC 800276AC 20589C27 */  addiu      $gp, $gp, %lo(D_80075820)
+/* 17EA8 800276A8 07801C3C */  lui        $gp, %hi(g_WorldOT)
+/* 17EAC 800276AC 20589C27 */  addiu      $gp, $gp, %lo(g_WorldOT)
 /* 17EB0 800276B0 00009C8F */  lw         $gp, 0x00($gp)
 .L800276B4:
 /* 17EB4 800276B4 0000F38F */  lw         $s3, 0x0($ra)
@@ -5245,8 +5245,8 @@ glabel func_800258F0
 /* 1AE80 8002A680 2CA80008 */  j          .L8002A0B0
 /* 1AE84 8002A684 020061A1 */   sb        $at, 0x2($t3)
 .L8002A688:
-/* 1AE88 8002A688 0780013C */  lui        $at, %hi(D_80075820)
-/* 1AE8C 8002A68C 20582124 */  addiu      $at, $at, %lo(D_80075820)
+/* 1AE88 8002A688 0780013C */  lui        $at, %hi(g_WorldOT)
+/* 1AE8C 8002A68C 20582124 */  addiu      $at, $at, %lo(g_WorldOT)
 /* 1AE90 8002A690 0000218C */  lw         $at, 0x0($at)
 /* 1AE94 8002A694 00000000 */  nop
 .L8002A698:

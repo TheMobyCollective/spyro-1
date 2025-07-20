@@ -108,7 +108,8 @@ extern int D_8007584C; // Custom vibration amount
 extern int D_80075904; // Normal vibration timer
 extern int D_80075764; // Electric shock vibration timer
 
-extern int D_80075714;  // Are we in DEMO mode? (0 = no, 1 = play, 2 = record)
+extern int g_DemoMode;  // Are we in DEMO mode? (0 = no, 1 = play, 2 = record)
+extern int D_80075784;  // Extra VSync for DEMO mode
 extern int *D_8007585C; // Pointer to the current demo input
 
 extern PadBuffer g_PadBuffer; // Buffer that PSYQ writes out pad state into

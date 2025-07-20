@@ -119,9 +119,9 @@ glabel func_8003D194
 /* 2DAE4 8003D2E4 00000292 */  lbu        $v0, 0x0($s0)
 /* 2DAE8 8003D2E8 00000000 */  nop
 /* 2DAEC 8003D2EC 80100200 */  sll        $v0, $v0, 2
-/* 2DAF0 8003D2F0 0780013C */  lui        $at, %hi(D_8006C4A3)
+/* 2DAF0 8003D2F0 0780013C */  lui        $at, %hi(spyro_AnimationDetails + 0x03)
 /* 2DAF4 8003D2F4 21082200 */  addu       $at, $at, $v0
-/* 2DAF8 8003D2F8 A3C42490 */  lbu        $a0, %lo(D_8006C4A3)($at)
+/* 2DAF8 8003D2F8 A3C42490 */  lbu        $a0, %lo(spyro_AnimationDetails + 0x03)($at)
 /* 2DAFC 8003D2FC EEF2000C */  jal        func_8003CBB8
 /* 2DB00 8003D300 00000000 */   nop
 /* 2DB04 8003D304 27004010 */  beqz       $v0, .L8003D3A4

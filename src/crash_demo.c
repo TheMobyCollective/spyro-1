@@ -34,8 +34,8 @@ void CrashDemoLaunch(void) {
 
   // Then launch the demo executable
   printf("Launching Crash Demo\n");
-  LoadExec("cdrom:\\S0\\CRASH.EXE;1\0", // Executable name
-           0x801fff00,                  // Stack area starting address
-           0                            // Number of bytes in stack area
+  LoadExec("cdrom:\\S0\\CRASH.EXE;1", // Executable name
+           0x801fff00,                // Stack area starting address
+           0                          // Number of bytes in stack area
   );
 }

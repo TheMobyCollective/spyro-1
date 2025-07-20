@@ -1,8 +1,8 @@
-#include "camera.h"
 #include "cheats.h"
+#include "camera.h"
 #include "common.h"
 #include "gamepad.h"
-#include "gamestate/init.h"
+#include "gamestates/init.h"
 #include "loaders.h"
 #include "specular_and_metal.h"
 #include "spu.h"
@@ -234,10 +234,10 @@ void CheatProcessLevelWarp(void) {
         func_8003FDC8(15); // Reset Spyro to gliding state
 
         // Set level transition flags
-        g_Gamestate = GS_Loading;   // Set gamestate to loading
-        g_LoadStage = 1;   // Set load stage to 1
-        D_800756D0 = 0;    // Set no level transition
-        D_800756B0 = 0;    // Set no transition text
+        g_Gamestate = GS_LevelTransition; // Set gamestate to loading
+        g_LoadStage = 1;                  // Set load stage to 1
+        D_800756D0 = 0;                   // Set no level transition
+        D_800756B0 = 0;                   // Set no transition text
         g_StateSwitch = 1; // Set skip draw routine due to gamestate switch
 
         g_Camera.unk_0xC0 = 0x80000012;

@@ -4,6 +4,7 @@
 #include "environment.h"
 #include "loaders.h"
 #include "moby.h"
+#include "overlay_pointers.h"
 #include "spyro.h"
 
 extern int D_80075728;    // TODO: spyro.h? not sure
@@ -101,7 +102,7 @@ void func_80056F64(int surfaceIdx, u_int arg1) {
       // Links are set to -1 when they're not filled
       if (pathMoby < 0) {
         g_LoadStage = 0;
-        g_Gamestate = GS_Loading;
+        g_Gamestate = GS_LevelTransition;
         D_800756B0 = 1;
         D_800756AC = 0;
         return;

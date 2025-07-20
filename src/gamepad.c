@@ -1,5 +1,5 @@
-#include "common.h"
 #include "gamepad.h"
+#include "common.h"
 #include <libpad.h>
 
 #include "cd.h"
@@ -145,7 +145,7 @@ void PadDemoUpdate(void) {
   int i;
 
   // Are we in recording mode?
-  if (D_80075714 == DEMO_MODE_RECORD) {
+  if (g_DemoMode == DEMO_MODE_RECORD) {
     // Writes the demo recording data
 
     // Get the inputs
@@ -234,7 +234,7 @@ void PadVSync(void) {
   }
 
   // Check if we're in DEMO mode, if we are, just return
-  if (D_80075714)
+  if (g_DemoMode)
     return;
 
   padState = PadGetState(0);

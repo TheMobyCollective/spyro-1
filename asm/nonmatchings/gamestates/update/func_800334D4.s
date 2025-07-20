@@ -6,8 +6,8 @@ glabel func_800334D4
 /* 23CD8 800334D8 2C00BFAF */  sw         $ra, 0x2C($sp)
 /* 23CDC 800334DC 7F4E010C */  jal        PadDemoUpdate
 /* 23CE0 800334E0 2800B0AF */   sw        $s0, 0x28($sp)
-/* 23CE4 800334E4 0780033C */  lui        $v1, %hi(D_80075714)
-/* 23CE8 800334E8 1457638C */  lw         $v1, %lo(D_80075714)($v1)
+/* 23CE4 800334E4 0780033C */  lui        $v1, %hi(g_DemoMode)
+/* 23CE8 800334E8 1457638C */  lw         $v1, %lo(g_DemoMode)($v1)
 /* 23CEC 800334EC 02000224 */  addiu      $v0, $zero, 0x2
 /* 23CF0 800334F0 D5006210 */  beq        $v1, $v0, .L80033848
 /* 23CF4 800334F4 21100000 */   addu      $v0, $zero, $zero
@@ -57,8 +57,8 @@ glabel func_800334D4
 /* 23D98 80033598 0780013C */  lui        $at, %hi(D_80075884)
 /* 23D9C 8003359C 845822AC */  sw         $v0, %lo(D_80075884)($at)
 /* 23DA0 800335A0 40100200 */  sll        $v0, $v0, 1
-/* 23DA4 800335A4 0780013C */  lui        $at, %hi(D_80075918)
-/* 23DA8 800335A8 185922AC */  sw         $v0, %lo(D_80075918)($at)
+/* 23DA4 800335A4 0780013C */  lui        $at, %hi(g_Fade)
+/* 23DA8 800335A8 185922AC */  sw         $v0, %lo(g_Fade)($at)
 .L800335AC:
 /* 23DAC 800335AC 0780033C */  lui        $v1, %hi(D_80075884)
 /* 23DB0 800335B0 8458638C */  lw         $v1, %lo(D_80075884)($v1)
@@ -105,8 +105,8 @@ glabel func_800334D4
 /* 23E54 80033654 D05720AC */  sw         $zero, %lo(D_800757D0)($at)
 /* 23E58 80033658 0780013C */  lui        $at, %hi(D_8007584C)
 /* 23E5C 8003365C 4C5820AC */  sw         $zero, %lo(D_8007584C)($at)
-/* 23E60 80033660 0780013C */  lui        $at, %hi(D_80075714)
-/* 23E64 80033664 145720AC */  sw         $zero, %lo(D_80075714)($at)
+/* 23E60 80033660 0780013C */  lui        $at, %hi(g_DemoMode)
+/* 23E64 80033664 145720AC */  sw         $zero, %lo(g_DemoMode)($at)
 /* 23E68 80033668 0780013C */  lui        $at, %hi(g_LoadStage)
 /* 23E6C 8003366C 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
 /* 23E70 80033670 0780013C */  lui        $at, %hi(D_8007566C)
@@ -134,8 +134,8 @@ glabel func_800334D4
 /* 23EC0 800336C0 0780013C */  lui        $at, %hi(g_Gamestate)
 /* 23EC4 800336C4 D85722AC */  sw         $v0, %lo(g_Gamestate)($at)
 /* 23EC8 800336C8 0F000224 */  addiu      $v0, $zero, 0xF
-/* 23ECC 800336CC 0780013C */  lui        $at, %hi(D_80075918)
-/* 23ED0 800336D0 185922AC */  sw         $v0, %lo(D_80075918)($at)
+/* 23ECC 800336CC 0780013C */  lui        $at, %hi(g_Fade)
+/* 23ED0 800336D0 185922AC */  sw         $v0, %lo(g_Fade)($at)
 /* 23ED4 800336D4 5CB4000C */  jal        func_8002D170
 /* 23ED8 800336D8 00000000 */   nop
 /* 23EDC 800336DC 0780023C */  lui        $v0, %hi(D_800757B8)

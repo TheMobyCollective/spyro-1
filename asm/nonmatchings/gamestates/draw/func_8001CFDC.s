@@ -477,14 +477,14 @@ glabel func_8001CFDC
 .L8001D6C4:
 /* DEC4 8001D6C4 F176010C */  jal        VSync
 /* DEC8 8001D6C8 FFFF0424 */   addiu     $a0, $zero, -0x1
-/* DECC 8001D6CC 0780043C */  lui        $a0, %hi(D_80075888)
-/* DED0 8001D6D0 8858848C */  lw         $a0, %lo(D_80075888)($a0)
+/* DECC 8001D6CC 0780043C */  lui        $a0, %hi(g_CurDB)
+/* DED0 8001D6D0 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* DED4 8001D6D4 0780013C */  lui        $at, %hi(D_80075950)
 /* DED8 8001D6D8 505922AC */  sw         $v0, %lo(D_80075950)($at)
 /* DEDC 8001D6DC 0C80010C */  jal        PutDispEnv
 /* DEE0 8001D6E0 5C008424 */   addiu     $a0, $a0, 0x5C
-/* DEE4 8001D6E4 0780043C */  lui        $a0, %hi(D_80075888)
-/* DEE8 8001D6E8 8858848C */  lw         $a0, %lo(D_80075888)($a0)
+/* DEE4 8001D6E4 0780043C */  lui        $a0, %hi(g_CurDB)
+/* DEE8 8001D6E8 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* DEEC 8001D6EC 767F010C */  jal        PutDrawEnv
 /* DEF0 8001D6F0 00000000 */   nop
 /* DEF4 8001D6F4 E159000C */  jal        func_80016784

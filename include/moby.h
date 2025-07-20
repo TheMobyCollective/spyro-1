@@ -124,7 +124,8 @@ typedef struct Moby {
   u_char m_SpecularMetalColor[3];
 
   // Stores the type when shinyRenderer is enabled
-  // 0 = Specular 1/2 = metal (2 being rotated)
+  // If Shiny renderer: 0 = Specular 1/2 = metal (2 being rotated)
+  // If shaded: color index
   u_char m_SpecularMetalType;
 
   /// @brief Radius of the Moby for clipping purposes (>> 2)
@@ -377,12 +378,8 @@ extern Moby *D_80075828; // The Mobys in the current level
 extern Moby *D_80075890; // Pointer to the first dynamic Moby, used for
                          // delimiting static and dynamic Mobys
 
-extern Moby *D_80075710; // HUD Mobys
+extern Moby *g_HudMobys; // HUD Mobys
 
-// Overlays
-extern Moby *(*D_800758CC)(int pClass, Moby *pMe); // g_MobySpawn
-extern void (*D_80075734)();                       // g_MobyUpdate
-extern void (*D_800758E4)(int pAmount, int pClass, void *spawnParam,
-                          void *extraParam); // g_ParticleSpawn
+extern u_int D_8006E44C[17]; // Specular shaded color list
 
 #endif // !__MOBY_H

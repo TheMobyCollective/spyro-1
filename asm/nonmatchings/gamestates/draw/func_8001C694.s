@@ -27,8 +27,8 @@ glabel func_8001C694
 /* CEEC 8001C6EC 54720008 */  j          .L8001C950
 /* CEF0 8001C6F0 00000000 */   nop
 .L8001C6F4:
-/* CEF4 8001C6F4 0780023C */  lui        $v0, %hi(D_80075888)
-/* CEF8 8001C6F8 8858428C */  lw         $v0, %lo(D_80075888)($v0)
+/* CEF4 8001C6F4 0780023C */  lui        $v0, %hi(g_CurDB)
+/* CEF8 8001C6F8 8858428C */  lw         $v0, %lo(g_CurDB)($v0)
 /* CEFC 8001C6FC 0780043C */  lui        $a0, %hi(g_DB)
 /* CF00 8001C700 E06E8424 */  addiu      $a0, $a0, %lo(g_DB)
 /* CF04 8001C704 02004414 */  bne        $v0, $a0, .L8001C710
@@ -148,11 +148,11 @@ glabel func_8001C694
 /* D0C0 8001C8C0 C0310600 */  sll        $a2, $a2, 7
 /* D0C4 8001C8C4 0780013C */  lui        $at, %hi(D_8007575C)
 /* D0C8 8001C8C8 5C5726AC */  sw         $a2, %lo(D_8007575C)($at)
-/* D0CC 8001C8CC 955F000C */  jal        func_80017E54
+/* D0CC 8001C8CC 955F000C */  jal        ColorLerp
 /* D0D0 8001C8D0 21280000 */   addu      $a1, $zero, $zero
 /* D0D4 8001C8D4 1800A2AF */  sw         $v0, 0x18($sp)
-/* D0D8 8001C8D8 0780023C */  lui        $v0, %hi(D_80075888)
-/* D0DC 8001C8DC 8858428C */  lw         $v0, %lo(D_80075888)($v0)
+/* D0D8 8001C8D8 0780023C */  lui        $v0, %hi(g_CurDB)
+/* D0DC 8001C8DC 8858428C */  lw         $v0, %lo(g_CurDB)($v0)
 /* D0E0 8001C8E0 0780043C */  lui        $a0, %hi(g_DB)
 /* D0E4 8001C8E4 E06E8424 */  addiu      $a0, $a0, %lo(g_DB)
 /* D0E8 8001C8E8 0C004414 */  bne        $v0, $a0, .L8001C91C
@@ -232,8 +232,8 @@ glabel func_8001C694
 .L8001C9FC:
 /* D1FC 8001C9FC F176010C */  jal        VSync
 /* D200 8001CA00 FFFF0424 */   addiu     $a0, $zero, -0x1
-/* D204 8001CA04 0780043C */  lui        $a0, %hi(D_80075888)
-/* D208 8001CA08 8858848C */  lw         $a0, %lo(D_80075888)($a0)
+/* D204 8001CA04 0780043C */  lui        $a0, %hi(g_CurDB)
+/* D208 8001CA08 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* D20C 8001CA0C 0780013C */  lui        $at, %hi(D_80075950)
 /* D210 8001CA10 505922AC */  sw         $v0, %lo(D_80075950)($at)
 /* D214 8001CA14 0C80010C */  jal        PutDispEnv
