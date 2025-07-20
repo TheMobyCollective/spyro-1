@@ -7,6 +7,9 @@
 
 // func_80022A2C
 
+// r_particles:
+void func_800573C8(void);
+
 // r_cyclorama:
 
 /// @brief: Renders the cyclorama / sky

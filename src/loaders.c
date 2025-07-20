@@ -75,10 +75,10 @@ void func_80013230(void *data) {
 
   for (animation_index = *(int *)data; animation_index >= 0;
        animation_index = *(int *)data) {
-    (char *)data += 4;
+    data = ((char *)data + 4);
     anim_len = *(int *)data;
 
-    (char *)data += 4;
+    data = ((char *)data + 4);
     SPYRO_MODEL->m_Animations[animation_index] = data;
 
     PATCH_POINTER(SPYRO_MODEL->m_Animations[animation_index]->m_Faces,

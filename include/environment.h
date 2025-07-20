@@ -22,6 +22,8 @@ typedef struct {
   int m_CullingDistance;
 } Environment;
 
+void func_8002B9CC(void);
+
 extern Environment g_Environment;
 
 extern int D_80075718; // Currently touching surface flag

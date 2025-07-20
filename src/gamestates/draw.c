@@ -7,6 +7,7 @@
 #include "gamepad.h"
 #include "graphics.h"
 #include "math.h"
+#include "memory.h"
 #include "moby.h"
 #include "moby_lists.h"
 #include "overlay_pointers.h"
@@ -15,6 +16,7 @@
 #include "titlescreen.h"
 #include "variables.h"
 
+#include <libetc.h>
 #include <libgpu.h>
 
 // HAS to be local to this file.
@@ -57,15 +59,19 @@ INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018728);
 // Unused, boy I wonder.. probably the old dragon cutscenes
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018878);
 
+void func_80018880(void);
 /// @brief Copies the HUD mobys to the shaded mobys
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018880);
 
+void func_80018908(void);
 /// @brief Creates the demo mode text
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018908);
 
+void func_800189F0(void);
 /// @brief Creates tracers, C function, god knows why
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_800189F0);
 
+void func_80018F30(void);
 /// @brief Creates the border
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018F30);
 
@@ -77,33 +83,43 @@ INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_800190D4);
 /// @brief Creates a 2D sprite
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001919C);
 
+void func_80019300(void);
 /// @brief Creates the collectable icons and counters
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80019300);
 
+void func_80019698(void);
 /// @brief Creates Mobys, shadows, Spyro, flame and glows and sparkles
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80019698);
 
+void func_8001973C(void);
 /// @brief Creates the level transition text
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001973C);
 
+void func_8001A050(void);
 /// @brief Gamestate 1
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001A050);
 
+void func_8001A40C(void);
 /// @brief Gamestate 2 & 3
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001A40C);
 
+void func_8001C694(void);
 /// @brief Gamestate 10
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001C694);
 
+void func_8001CA38(void);
 /// @brief Gamestate 4 & 5
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001CA38);
 
+void func_8001CFDC(void);
 /// @brief Gamestate 8
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001CFDC);
 
+void func_8001D718(void);
 /// @brief Gamestate 11
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001D718);
 
+void func_8001E24C(void);
 /// @brief Gamestate 12
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001E24C);
 

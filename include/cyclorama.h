@@ -31,4 +31,6 @@ typedef struct {
 
 extern Portal *D_80078640[6];
 
+void func_80050BD0(void);
+
 #endif

@@ -1,6 +1,7 @@
 #include "camera.h"
 #include "common.h"
 #include "gamepad.h"
+#include "gamestates/init.h"
 #include "loaders.h"
 #include "specular_and_metal.h"
 #include "spyro.h"
