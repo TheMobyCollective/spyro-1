@@ -18,10 +18,6 @@ def fix_section(lines):
             else:
                 yield line
                 yield next_line
-        elif line.strip().replace("\t", " ").startswith('.align 3'):
-            # If we are here, it means the previous line was not .section .rodata
-            yield '.section .rodata\n'
-            yield line
         else:
             yield line
 
