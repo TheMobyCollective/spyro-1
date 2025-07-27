@@ -36,12 +36,11 @@ extern int D_800756D4;
 extern int D_80075744; // The index of the current page of the inventory screen
 extern int D_800757CC; // Transition progress between inventory pages.
 
-// This is part of some larger "level" struct starting at 800786C8
-// Seems to me a timer of some sort
+// This is part of the flame struct starting at 800786C8
+// It's the fairy kiss timer
 extern int D_80078768;
 
-// TODO - where does this get updated
-extern int D_800758A4; // no idea, value goes back and forth between D_80078768
+extern int D_800758A4; // Stores the fairy kiss timer temporarily
 
 extern int D_800757AC;
 

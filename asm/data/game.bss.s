@@ -339,85 +339,7 @@ dlabel D_800777E4
 /* 6772C 800777E4 */ .space 0x04
 
 dlabel D_800777E8
-/* 67730 800777E8 */ .space 0x04
-
-dlabel D_800777EC
-/* 67734 800777EC */ .space 0x04
-
-dlabel D_800777F0
-/* 67738 800777F0 */ .space 0x04
-
-dlabel D_800777F4
-/* 6773C 800777F4 */ .space 0x04
-
-dlabel D_800777F8
-/* 67740 800777F8 */ .space 0x04
-
-dlabel D_800777FC
-/* 67744 800777FC */ .space 0x04
-
-dlabel D_80077800
-/* 67748 80077800 */ .space 0x04
-
-dlabel D_80077804
-/* 6774C 80077804 */ .space 0x04
-
-dlabel D_80077808
-/* 67750 80077808 */ .space 0x04
-
-dlabel D_8007780C
-/* 67754 8007780C */ .space 0x04
-
-dlabel D_80077810
-/* 67758 80077810 */ .space 0x04
-
-dlabel D_80077814
-/* 6775C 80077814 */ .space 0x04
-
-dlabel D_80077818
-/* 67760 80077818 */ .space 0x04
-
-dlabel D_8007781C
-/* 67764 8007781C */ .space 0x04
-
-dlabel D_80077820
-/* 67768 80077820 */ .space 0x04
-
-dlabel D_80077824
-/* 6776C 80077824 */ .space 0x04
-
-dlabel D_80077828
-/* 67770 80077828 */ .space 0x04
-
-dlabel D_8007782C
-/* 67774 8007782C */ .space 0x04
-
-dlabel D_80077830
-/* 67778 80077830 */ .space 0x04
-
-dlabel D_80077834
-/* 6777C 80077834 */ .space 0x04
-
-dlabel D_80077838
-/* 67780 80077838 */ .space 0x04
-
-dlabel D_8007783C
-/* 67784 8007783C */ .space 0x04
-
-dlabel D_80077840
-/* 67788 80077840 */ .space 0x04
-
-dlabel D_80077844
-/* 6778C 80077844 */ .space 0x04
-
-dlabel D_80077848
-/* 67790 80077848 */ .space 0x04
-
-dlabel D_8007784C
-/* 67794 8007784C */ .space 0x04
-
-dlabel D_80077850
-/* 67798 80077850 */ .space 0x08
+/* Total size from 800777E8 to 80077858 */ .space 0x70
 
 dlabel D_80077858
 /* 677A0 80077858 */ .space 0x04
@@ -928,7 +850,7 @@ dlabel g_TitlescreenState
 /* Total size from 80078D78 to 80078DD4 */ .space 0x5C
 
 dlabel D_80078DD4
-    .space 0x04
+/* 68D1C 80078DD4 */ .space 0x04
     
 dlabel D_80078DD8
 /* 68D20 80078DD8 */ .space 0x04
@@ -1019,20 +941,6 @@ dlabel D_8007AA08
 dlabel D_8007AA0C
 /* 6A954 8007AA0C */ .space 0x04
 
+/* Spyro's shadow struct */
 dlabel D_8007AA10
-/* 6A958 8007AA10 */ .space 0x10
-
-dlabel D_8007AA20
-/* 6A968 8007AA20 */ .space 0x08
-
-dlabel D_8007AA28
-/* 6A970 8007AA28 */ .space 0x04
-
-dlabel D_8007AA2C
-/* 6A974 8007AA2C */ .space 0x04
-
-dlabel D_8007AA30
-/* 6A978 8007AA30 */ .space 0x04
-
-dlabel D_8007AA34
-/* 6A97C 8007AA34 */ .space 0x04
+/* 6A958 8007AA10 */ .space 0x28

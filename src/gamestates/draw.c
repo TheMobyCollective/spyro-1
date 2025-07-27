@@ -1,4 +1,5 @@
 #include "gamestates/draw.h"
+#include "balloonist.h"
 #include "buffers.h"
 #include "camera.h"
 #include "common.h"
@@ -119,9 +120,122 @@ void func_8001D718(void);
 /// @brief Gamestate 11
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001D718);
 
-void func_8001E24C(void);
-/// @brief Gamestate 12
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001E24C);
+/// @brief Gamestate 12, balloon transition and balloonist talk
+void func_8001E24C(void) {
+  Moby *curMoby;
+  int rotOff;
+  int color;
+
+  Vector3D position;
+  Vector3D spacing;
+  char buf[64];
+
+  if (D_800777E8.m_State >= 4) {
+
+    if (D_800777E8.m_State < 6) {
+      Moby **mobyQueue = (void *)g_SonyImage.m_Buf;
+
+      *(mobyQueue++) = D_800777E8.m_BalloonMoby;
+      *(mobyQueue++) = (void *)0;
+
+      if (D_800777E8.m_Homeworld < 5) {
+        // Minus one is due to the homeworlds starting at 10
+        int homeworld = D_800758B4 / 10;
+        sprintf(buf, "ENTERING %s WORLD", homeworldNameTable[homeworld - 1]);
+      } else if (D_800777E8.m_Homeworld == 5) {
+        // Exception for Gnasty's World so it doesn't display
+        // GNASTY'S WORLD WORLD (like in July)
+        int homeworld = D_800758B4 / 10;
+        sprintf(buf, "ENTERING %s", homeworldNameTable[homeworld - 1]);
+      } else {
+        int homeworld = D_800758B4 / 10;
+        int level = D_800758B4 % 10;
+        sprintf(buf, "ENTERING %s", D_8006F7F0[level + ((homeworld - 1) * 6)]);
+      }
+
+      // sprintf(buf, fmt, levelName);
+      position.x = 256 - ((strlen(buf) - 1) * 7);
+      position.y = 200;
+      position.z = 0x1400;
+
+      spacing.x = 14;
+      spacing.y = 1;
+      spacing.z = 0x1600;
+
+      curMoby = g_HudMobys;
+
+      func_800181AC(buf, &position, &spacing, 16, 2);
+
+      rotOff = 0;
+      while ((int)(--curMoby) >= (int)g_HudMobys) {
+        curMoby->m_Rotation.z =
+            COSINE_8(((D_800777E8.unk_0x04 * 2) + rotOff) & 0xFF) >> 7;
+        rotOff += 12;
+      }
+
+      func_8001F158(); // Prepare Moby draw
+      Memset(g_SonyImage.m_Buf, 0, 0x900);
+      func_8001F798(); // Draw Mobys
+
+      *((int *)&g_SonyImage.m_ShadedMobys[0]) = 0;
+      func_80018880(); // Copy HUD Mobys to Shaded
+      func_80022A2C(); // Draw Shaded Mobys
+      func_80023AC4(); // Draw Spyro
+
+      if (D_800777E8.m_State < 6) {
+        D_800757D4 = 0x401010;
+
+        if (D_800777E8.m_State == 4) {
+          D_8007575C = D_800777E8.unk_0x04 * 16;
+        } else {
+          D_8007575C = (0x100 - D_800777E8.unk_0x04) * 16;
+        }
+
+        if (D_8007575C < 0)
+          D_8007575C = 0;
+        if (D_8007575C > 4096)
+          D_8007575C = 4096;
+
+        color = ColorLerp(*(int *)&g_Cyclorama.m_BackgroundColor, D_800757D4,
+                          D_8007575C);
+
+        setRGB0(&g_DB[0].m_DrawEnv, ((Color *)&color)->r, ((Color *)&color)->g,
+                ((Color *)&color)->b);
+        setRGB0(&g_DB[1].m_DrawEnv, ((Color *)&color)->r, ((Color *)&color)->g,
+                ((Color *)&color)->b);
+
+        if (D_8007575C < 4096) {
+          func_8004F000();
+        }
+      }
+    } else {
+      D_800758D8();
+    }
+  } else {
+    D_800758D8();
+  }
+
+  func_80018F30();
+
+  DrawSync(0);
+
+  if (D_80075784 != 0) {
+    VSync(0);
+  }
+
+  D_80075950.pre = VSync(-1);
+
+  while (D_80075950.pre - D_80075950.post < 2) {
+    VSync(0);
+    D_80075950.pre = VSync(-1);
+  }
+
+  D_80075950.post = VSync(-1);
+
+  PutDispEnv(&g_CurDB->m_DispEnv);
+  PutDrawEnv(&g_CurDB->m_DrawEnv);
+  DrawOTag(func_80016784(0x800));
+}
 
 /// @brief Gamestate 13
 void func_8001E6B8() {

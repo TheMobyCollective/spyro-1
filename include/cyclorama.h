@@ -2,6 +2,8 @@
 #define __CYCLORAMA_H
 
 #include <sys/types.h>
+
+#include <common.h>
 #include <vector.h>
 
 typedef struct {
@@ -9,14 +11,15 @@ typedef struct {
   void *m_Sectors; // TODO: Type
   int m_OcclusionGroupsCount;
   void *m_OcclusionGroups; // TODO: Type
-  struct {
-    u_char r, g, b, s;
-  } m_BackgroundColor;
+  Color m_BackgroundColor;
 } Cyclorama;
 
 extern Cyclorama g_Cyclorama;
 
 extern Cyclorama g_NewCyclorama;
+
+// Lerp color target
+extern int D_800757D4;
 
 typedef struct {
   void *m_Skybox; // TODO: Type

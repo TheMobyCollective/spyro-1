@@ -20,7 +20,7 @@
 - [ ] func_8001CA38
 - [ ] func_8001CFDC
 - [ ] func_8001D718
-- [ ] func_8001E24C
+- [x] func_8001E24C
 - [x] func_8001E6B8
 - [x] func_8001E9C8
 - [x] func_8001EB80

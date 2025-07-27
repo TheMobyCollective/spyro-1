@@ -226,8 +226,8 @@ glabel func_80034480
 .L8003479C:
 /* 24F9C 8003479C 0780023C */  lui        $v0, %hi(g_Camera + 0xC8)
 /* 24FA0 800347A0 986E428C */  lw         $v0, %lo(g_Camera + 0xC8)($v0)
-/* 24FA4 800347A4 0880013C */  lui        $at, %hi(D_8007AA2C)
-/* 24FA8 800347A8 2CAA20AC */  sw         $zero, %lo(D_8007AA2C)($at)
+/* 24FA4 800347A4 0880013C */  lui        $at, %hi(D_8007AA10 + 0x1C)
+/* 24FA8 800347A8 2CAA20AC */  sw         $zero, %lo(D_8007AA10 + 0x1C)($at)
 /* 24FAC 800347AC 01004224 */  addiu      $v0, $v0, 0x1
 /* 24FB0 800347B0 0780013C */  lui        $at, %hi(g_Camera + 0xC8)
 /* 24FB4 800347B4 986E22AC */  sw         $v0, %lo(g_Camera + 0xC8)($at)

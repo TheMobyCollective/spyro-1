@@ -3,6 +3,8 @@
 
 #include "include_asm.h"
 
+#include <sys/types.h>
+
 // x0: Homeworld
 // x1: Level B
 // x2: Level C
@@ -93,6 +95,12 @@ extern int D_8007591C; // Skip low-poly model in world
 extern int D_8007582C; // Spyro's extra life count
 extern int D_800758E8; // Life orb count
 
+extern int D_8007575C; // Skybox color lerp value
+
+typedef struct {
+  u_char r, g, b, s;
+} Color;
+
 extern struct {
   unsigned char m_Homeworlds[HOMEWORLD_COUNT];
   unsigned char m_Levels[TOTAL_LEVEL_COUNT];
@@ -100,6 +108,8 @@ extern struct {
 
 extern unsigned char D_8007A6A8[TOTAL_LEVEL_COUNT]; // Level completion flags
 
+// 7 due to thigh master
+extern const char *homeworldNameTable[7];
 extern const char *D_8006F7F0[]; // Level name table
 
 #endif
