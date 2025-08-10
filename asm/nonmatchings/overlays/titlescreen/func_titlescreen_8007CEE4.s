@@ -1010,8 +1010,8 @@ glabel func_titlescreen_8007CEE4
 /* 5EAE8 8007DD20 FFFF0424 */   addiu     $a0, $zero, -0x1
 /* 5EAEC 8007DD24 0780033C */  lui        $v1, %hi(D_80075950)
 /* 5EAF0 8007DD28 5059638C */  lw         $v1, %lo(D_80075950)($v1)
-/* 5EAF4 8007DD2C 0780043C */  lui        $a0, %hi(D_80075954)
-/* 5EAF8 8007DD30 54598424 */  addiu      $a0, $a0, %lo(D_80075954)
+/* 5EAF4 8007DD2C 0780043C */  lui        $a0, %hi(D_80075950 + 0x04)
+/* 5EAF8 8007DD30 54598424 */  addiu      $a0, $a0, %lo(D_80075950 + 0x04)
 /* 5EAFC 8007DD34 000082AC */  sw         $v0, 0x0($a0)
 /* 5EB00 8007DD38 23104300 */  subu       $v0, $v0, $v1
 /* 5EB04 8007DD3C 02004228 */  slti       $v0, $v0, 0x2

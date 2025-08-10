@@ -90,8 +90,10 @@ void func_80013230(void *data) {
                       sizeof(SpyroAnimationFrame);
     past_frame_data =
         (int)((AnimationHeader *)data)->m_Frames + frame_data_size;
-    PATCH_POINTER(SPYRO_MODEL->m_Animations[animation_index]->m_Unk2,
-                  past_frame_data);
+
+    PATCH_POINTER(
+        SPYRO_MODEL->m_Animations[animation_index]->m_AnimationVertices,
+        past_frame_data);
 
     frame = (SpyroAnimationFrame *)SPYRO_MODEL->m_Animations[animation_index]
                 ->m_Frames;
@@ -150,13 +152,11 @@ Model *PatchMobyModelPointers(Model *pModel) {
       PATCH_POINTER(m->m_Animations[i]->m_LpColors, m->m_Data);
     }
 
-    // SKELETON: This flag is never set for Moby models, the render code
-    // can't deal with the different format either
-    if (m->m_Animations[i]->m_Unk1 != 0) {
-      PATCH_POINTER(m->m_Animations[i]->m_Unk2, m->m_Data);
+    // Used for Spyro's model in PETE.WAD
+    if (m->m_Animations[i]->m_IsSpyroAnimation != 0) {
+      PATCH_POINTER(m->m_Animations[i]->m_AnimationVertices, m->m_Data);
       p = (u_int *)&(m->m_Animations[i]->m_Frames[0]);
       for (k = 0; k < m->m_Animations[i]->m_NumFrames; ++k, ++p) {
-        // this is all wonky, seems like it's a smaller AnimationFrame
         lower = *p & 0x1fffff;
         *p = *p & 0xffe00000;
         lower = ((int)(lower + (u_int)m->m_Data) >> 1) & 0x1fffff;

@@ -195,19 +195,21 @@ typedef struct {
 typedef struct {
   short m_NumFrames;
   u_short m_NumColors;
-  u_char m_Unk1; // Changes something about the model format, but never used
+  u_char m_IsSpyroAnimation; // Changes something about the model format, but
+                             // never used
   u_char m_Scale;
   u_char m_ShortEncodeShift;
   u_char m_Radius;
   u_char m_VertCountHigh;
   u_char m_VertCountLow;
   u_char m_Padding2;
-  u_char m_MulSomething;
-  u_char m_MaxProgress;
+  u_char m_DepthScale;
+  u_char m_ProgressPerTick;
   u_char m_Padding3;
   u_short m_Padding4;
-  void *m_Unk2; // Used when m_unk1 is set, but that is never used, so it
-                // matches m_faces
+
+  void *m_AnimationVertices; // Used when m_IsSpyroAnimation is set, otherwise
+                             // matches m_faces
   void *m_Faces;
   void *m_Colors;
   void *m_LpFaces;

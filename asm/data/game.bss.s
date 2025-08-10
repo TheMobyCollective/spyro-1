@@ -762,89 +762,9 @@ dlabel g_Cyclorama
 
 dlabel g_Spyro
 /* Total size from 80078A58 to 80078D00 */ .space 0x2A8
+
 dlabel D_80078D00
-/* 68C48 80078D00 */ .space 0x04
-
-dlabel D_80078D04
-/* 68C4C 80078D04 */ .space 0x04
-
-dlabel D_80078D08
-/* 68C50 80078D08 */ .space 0x04
-
-dlabel D_80078D0C
-/* 68C54 80078D0C */ .space 0x04
-
-dlabel D_80078D10
-/* 68C58 80078D10 */ .space 0x04
-
-dlabel D_80078D14
-/* 68C5C 80078D14 */ .space 0x04
-
-dlabel D_80078D18
-/* 68C60 80078D18 */ .space 0x04
-
-dlabel D_80078D1C
-/* 68C64 80078D1C */ .space 0x04
-
-dlabel D_80078D20
-/* 68C68 80078D20 */ .space 0x0C
-
-dlabel D_80078D2C
-/* 68C74 80078D2C */ .space 0x04
-
-dlabel D_80078D30
-/* 68C78 80078D30 */ .space 0x04
-
-dlabel D_80078D34
-/* 68C7C 80078D34 */ .space 0x04
-
-dlabel D_80078D38
-/* 68C80 80078D38 */ .space 0x04
-
-dlabel D_80078D3C
-/* 68C84 80078D3C */ .space 0x04
-
-dlabel D_80078D40
-/* 68C88 80078D40 */ .space 0x04
-
-dlabel D_80078D44
-/* 68C8C 80078D44 */ .space 0x04
-
-dlabel D_80078D48
-/* 68C90 80078D48 */ .space 0x04
-
-dlabel D_80078D4C
-/* 68C94 80078D4C */ .space 0x04
-
-dlabel D_80078D50
-/* 68C98 80078D50 */ .space 0x04
-
-dlabel D_80078D54
-/* 68C9C 80078D54 */ .space 0x04
-
-dlabel D_80078D58
-/* 68CA0 80078D58 */ .space 0x04
-
-dlabel D_80078D5C
-/* 68CA4 80078D5C */ .space 0x04
-
-dlabel D_80078D60
-/* 68CA8 80078D60 */ .space 0x04
-
-dlabel D_80078D64
-/* 68CAC 80078D64 */ .space 0x04
-
-dlabel D_80078D68
-/* 68CB0 80078D68 */ .space 0x04
-
-dlabel D_80078D6C
-/* 68CB4 80078D6C */ .space 0x04
-
-dlabel D_80078D70
-/* 68CB8 80078D70 */ .space 0x04
-
-dlabel D_80078D74
-/* 68CBC 80078D74 */ .space 0x04
+/* Total size from 80078D00 to 80078D78 */ .space 0x78
 
 dlabel g_TitlescreenState
 /* Total size from 80078D78 to 80078DD4 */ .space 0x5C

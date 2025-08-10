@@ -209,22 +209,22 @@ glabel func_8001C694
 /* D1A4 8001C9A4 FFFF0424 */   addiu     $a0, $zero, -0x1
 /* D1A8 8001C9A8 0780033C */  lui        $v1, %hi(D_80075950)
 /* D1AC 8001C9AC 5059638C */  lw         $v1, %lo(D_80075950)($v1)
-/* D1B0 8001C9B0 0780013C */  lui        $at, %hi(D_80075954)
-/* D1B4 8001C9B4 545922AC */  sw         $v0, %lo(D_80075954)($at)
+/* D1B0 8001C9B0 0780013C */  lui        $at, %hi(D_80075950 + 0x04)
+/* D1B4 8001C9B4 545922AC */  sw         $v0, %lo(D_80075950 + 0x04)($at)
 /* D1B8 8001C9B8 23104300 */  subu       $v0, $v0, $v1
 /* D1BC 8001C9BC 02004228 */  slti       $v0, $v0, 0x2
 /* D1C0 8001C9C0 0E004010 */  beqz       $v0, .L8001C9FC
 /* D1C4 8001C9C4 00000000 */   nop
-/* D1C8 8001C9C8 0780103C */  lui        $s0, %hi(D_80075954)
-/* D1CC 8001C9CC 54591026 */  addiu      $s0, $s0, %lo(D_80075954)
+/* D1C8 8001C9C8 0780103C */  lui        $s0, %hi(D_80075950 + 0x04)
+/* D1CC 8001C9CC 54591026 */  addiu      $s0, $s0, %lo(D_80075950 + 0x04)
 .L8001C9D0:
 /* D1D0 8001C9D0 F176010C */  jal        VSync
 /* D1D4 8001C9D4 21200000 */   addu      $a0, $zero, $zero
 /* D1D8 8001C9D8 F176010C */  jal        VSync
 /* D1DC 8001C9DC FFFF0424 */   addiu     $a0, $zero, -0x1
 /* D1E0 8001C9E0 FCFF038E */  lw         $v1, -0x4($s0)
-/* D1E4 8001C9E4 0780013C */  lui        $at, %hi(D_80075954)
-/* D1E8 8001C9E8 545922AC */  sw         $v0, %lo(D_80075954)($at)
+/* D1E4 8001C9E4 0780013C */  lui        $at, %hi(D_80075950 + 0x04)
+/* D1E8 8001C9E8 545922AC */  sw         $v0, %lo(D_80075950 + 0x04)($at)
 /* D1EC 8001C9EC 23104300 */  subu       $v0, $v0, $v1
 /* D1F0 8001C9F0 02004228 */  slti       $v0, $v0, 0x2
 /* D1F4 8001C9F4 F6FF4014 */  bnez       $v0, .L8001C9D0

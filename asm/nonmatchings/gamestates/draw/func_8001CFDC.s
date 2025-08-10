@@ -454,22 +454,22 @@ glabel func_8001CFDC
 /* DE6C 8001D66C FFFF0424 */   addiu     $a0, $zero, -0x1
 /* DE70 8001D670 0780033C */  lui        $v1, %hi(D_80075950)
 /* DE74 8001D674 5059638C */  lw         $v1, %lo(D_80075950)($v1)
-/* DE78 8001D678 0780013C */  lui        $at, %hi(D_80075954)
-/* DE7C 8001D67C 545922AC */  sw         $v0, %lo(D_80075954)($at)
+/* DE78 8001D678 0780013C */  lui        $at, %hi(D_80075950 + 0x04)
+/* DE7C 8001D67C 545922AC */  sw         $v0, %lo(D_80075950 + 0x04)($at)
 /* DE80 8001D680 23104300 */  subu       $v0, $v0, $v1
 /* DE84 8001D684 02004228 */  slti       $v0, $v0, 0x2
 /* DE88 8001D688 0E004010 */  beqz       $v0, .L8001D6C4
 /* DE8C 8001D68C 00000000 */   nop
-/* DE90 8001D690 0780103C */  lui        $s0, %hi(D_80075954)
-/* DE94 8001D694 54591026 */  addiu      $s0, $s0, %lo(D_80075954)
+/* DE90 8001D690 0780103C */  lui        $s0, %hi(D_80075950 + 0x04)
+/* DE94 8001D694 54591026 */  addiu      $s0, $s0, %lo(D_80075950 + 0x04)
 .L8001D698:
 /* DE98 8001D698 F176010C */  jal        VSync
 /* DE9C 8001D69C 21200000 */   addu      $a0, $zero, $zero
 /* DEA0 8001D6A0 F176010C */  jal        VSync
 /* DEA4 8001D6A4 FFFF0424 */   addiu     $a0, $zero, -0x1
 /* DEA8 8001D6A8 FCFF038E */  lw         $v1, -0x4($s0)
-/* DEAC 8001D6AC 0780013C */  lui        $at, %hi(D_80075954)
-/* DEB0 8001D6B0 545922AC */  sw         $v0, %lo(D_80075954)($at)
+/* DEAC 8001D6AC 0780013C */  lui        $at, %hi(D_80075950 + 0x04)
+/* DEB0 8001D6B0 545922AC */  sw         $v0, %lo(D_80075950 + 0x04)($at)
 /* DEB4 8001D6B4 23104300 */  subu       $v0, $v0, $v1
 /* DEB8 8001D6B8 02004228 */  slti       $v0, $v0, 0x2
 /* DEBC 8001D6BC F6FF4014 */  bnez       $v0, .L8001D698

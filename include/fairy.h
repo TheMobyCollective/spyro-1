@@ -1,0 +1,39 @@
+#ifndef __FAIRY_H
+#define __FAIRY_H
+
+#include "moby.h"
+
+extern struct {
+  int unk_0x00;
+  int unk_0x04;
+  int unk_0x08;
+  int unk_0x0c;
+  int unk_0x10;
+  int unk_0x14;
+  int unk_0x18;
+  int unk_0x1c;
+  int unk_0x20;
+  int unk_0x24;
+  int unk_0x28;
+  int unk_0x2c;
+  int unk_0x30;
+  int unk_0x34;
+  int unk_0x38;
+  int unk_0x3c;
+  int unk_0x40;
+  int unk_0x44;
+  int unk_0x48;
+  int unk_0x4c;
+  int unk_0x50;
+  int unk_0x54;
+  int unk_0x58;
+  int unk_0x5c;
+  int unk_0x60;
+  int unk_0x64;
+  int unk_0x68;
+  int unk_0x6c;
+  int unk_0x70;
+  Moby *unk_0x74;
+} D_80078D00;
+
+#endif

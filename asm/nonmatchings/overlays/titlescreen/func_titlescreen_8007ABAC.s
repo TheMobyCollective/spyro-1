@@ -953,8 +953,8 @@ glabel func_titlescreen_8007ABAC
 /* 5C6C0 8007B8F8 7C8D22AC */  sw         $v0, %lo(g_TitlescreenState + 0x4)($at)
 /* 5C6C4 8007B8FC 0880013C */  lui        $at, %hi(g_TitlescreenState + 0x1C)
 /* 5C6C8 8007B900 948D20AC */  sw         $zero, %lo(g_TitlescreenState + 0x1C)($at)
-/* 5C6CC 8007B904 0880013C */  lui        $at, %hi(D_80078D14)
-/* 5C6D0 8007B908 148D20AC */  sw         $zero, %lo(D_80078D14)($at)
+/* 5C6CC 8007B904 0880013C */  lui        $at, %hi(D_80078D00 + 0x14)
+/* 5C6D0 8007B908 148D20AC */  sw         $zero, %lo(D_80078D00 + 0x14)($at)
 /* 5C6D4 8007B90C 12F30108 */  j          .Ltitlescreen_8007CC48
 /* 5C6D8 8007B910 00000000 */   nop
 .Ltitlescreen_8007B914:
@@ -1312,8 +1312,8 @@ glabel func_titlescreen_8007ABAC
 /* 5CC00 8007BE38 00021026 */   addiu     $s0, $s0, 0x200
 /* 5CC04 8007BE3C 0880033C */  lui        $v1, %hi(g_TitlescreenState + 0x4C)
 /* 5CC08 8007BE40 C48D638C */  lw         $v1, %lo(g_TitlescreenState + 0x4C)($v1)
-/* 5CC0C 8007BE44 0880013C */  lui        $at, %hi(D_80078D20)
-/* 5CC10 8007BE48 208D22AC */  sw         $v0, %lo(D_80078D20)($at)
+/* 5CC0C 8007BE44 0880013C */  lui        $at, %hi(D_80078D00 + 0x20)
+/* 5CC10 8007BE48 208D22AC */  sw         $v0, %lo(D_80078D00 + 0x20)($at)
 /* 5CC14 8007BE4C DF49000C */  jal        func_8001277C
 /* 5CC18 8007BE50 7E0062A4 */   sh        $v0, 0x7E($v1)
 .Ltitlescreen_8007BE54:
@@ -1973,8 +1973,8 @@ glabel func_titlescreen_8007ABAC
 /* 5D594 8007C7CC 7E006794 */  lhu        $a3, 0x7E($v1)
 /* 5D598 8007C7D0 0880033C */  lui        $v1, %hi(g_TitlescreenState + 0x14)
 /* 5D59C 8007C7D4 8C8D638C */  lw         $v1, %lo(g_TitlescreenState + 0x14)($v1)
-/* 5D5A0 8007C7D8 0880013C */  lui        $at, %hi(D_80078D14)
-/* 5D5A4 8007C7DC 148D30AC */  sw         $s0, %lo(D_80078D14)($at)
+/* 5D5A0 8007C7D8 0880013C */  lui        $at, %hi(D_80078D00 + 0x14)
+/* 5D5A4 8007C7DC 148D30AC */  sw         $s0, %lo(D_80078D00 + 0x14)($at)
 /* 5D5A8 8007C7E0 A0F20108 */  j          .Ltitlescreen_8007CA80
 /* 5D5AC 8007C7E4 00110200 */   sll       $v0, $v0, 4
 .Ltitlescreen_8007C7E8:
@@ -2157,15 +2157,15 @@ glabel func_titlescreen_8007ABAC
 /* 5D834 8007CA6C 0880033C */  lui        $v1, %hi(g_TitlescreenState + 0x14)
 /* 5D838 8007CA70 8C8D638C */  lw         $v1, %lo(g_TitlescreenState + 0x14)($v1)
 /* 5D83C 8007CA74 00110200 */  sll        $v0, $v0, 4
-/* 5D840 8007CA78 0880013C */  lui        $at, %hi(D_80078D14)
-/* 5D844 8007CA7C 148D32AC */  sw         $s2, %lo(D_80078D14)($at)
+/* 5D840 8007CA78 0880013C */  lui        $at, %hi(D_80078D00 + 0x14)
+/* 5D844 8007CA7C 148D32AC */  sw         $s2, %lo(D_80078D00 + 0x14)($at)
 .Ltitlescreen_8007CA80:
-/* 5D848 8007CA80 0880013C */  lui        $at, %hi(D_80078D18)
-/* 5D84C 8007CA84 188D22AC */  sw         $v0, %lo(D_80078D18)($at)
-/* 5D850 8007CA88 0880013C */  lui        $at, %hi(D_80078D1C)
-/* 5D854 8007CA8C 1C8D23AC */  sw         $v1, %lo(D_80078D1C)($at)
-/* 5D858 8007CA90 0880013C */  lui        $at, %hi(D_80078D20)
-/* 5D85C 8007CA94 208D27AC */  sw         $a3, %lo(D_80078D20)($at)
+/* 5D848 8007CA80 0880013C */  lui        $at, %hi(D_80078D00 + 0x18)
+/* 5D84C 8007CA84 188D22AC */  sw         $v0, %lo(D_80078D00 + 0x18)($at)
+/* 5D850 8007CA88 0880013C */  lui        $at, %hi(D_80078D00 + 0x1C)
+/* 5D854 8007CA8C 1C8D23AC */  sw         $v1, %lo(D_80078D00 + 0x1C)($at)
+/* 5D858 8007CA90 0880013C */  lui        $at, %hi(D_80078D00 + 0x20)
+/* 5D85C 8007CA94 208D27AC */  sw         $a3, %lo(D_80078D00 + 0x20)($at)
 /* 5D860 8007CA98 8A9D010C */  jal        MemCardSync
 /* 5D864 8007CA9C 00000000 */   nop
 /* 5D868 8007CAA0 12F30108 */  j          .Ltitlescreen_8007CC48

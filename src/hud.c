@@ -64,7 +64,8 @@ void HudMobyRotate(int pIdx, int pLen, int pZRot) {
             g_Hud.m_Mobys[pIdx + i].m_Class - MOBYCLASS_NUMBER_0) {
       g_Hud.m_Mobys[pIdx + i].m_Rotation.z = pZRot;
     }
-    if (g_Hud.m_Mobys[pIdx + i].m_Substate != 0xFF && pZRot == 0xC0) {
+
+    if (g_Hud.m_Mobys[pIdx + i].m_Substate != 0xFF && pZRot == 192) {
       g_Hud.m_Mobys[pIdx + i].m_Class =
           (g_Hud.m_Mobys[pIdx + i].m_Substate & 0xFF) + MOBYCLASS_NUMBER_0;
       g_Hud.m_Mobys[pIdx + i].m_RenderRadius = 0xFF;

@@ -2308,22 +2308,22 @@ glabel func_8001A40C
 /* CDD0 8001C5D0 FFFF0424 */   addiu     $a0, $zero, -0x1
 /* CDD4 8001C5D4 0780033C */  lui        $v1, %hi(D_80075950)
 /* CDD8 8001C5D8 5059638C */  lw         $v1, %lo(D_80075950)($v1)
-/* CDDC 8001C5DC 0780013C */  lui        $at, %hi(D_80075954)
-/* CDE0 8001C5E0 545922AC */  sw         $v0, %lo(D_80075954)($at)
+/* CDDC 8001C5DC 0780013C */  lui        $at, %hi(D_80075950 + 0x04)
+/* CDE0 8001C5E0 545922AC */  sw         $v0, %lo(D_80075950 + 0x04)($at)
 /* CDE4 8001C5E4 23104300 */  subu       $v0, $v0, $v1
 /* CDE8 8001C5E8 02004228 */  slti       $v0, $v0, 0x2
 /* CDEC 8001C5EC 0E004010 */  beqz       $v0, .L8001C628
 /* CDF0 8001C5F0 00000000 */   nop
-/* CDF4 8001C5F4 0780103C */  lui        $s0, %hi(D_80075954)
-/* CDF8 8001C5F8 54591026 */  addiu      $s0, $s0, %lo(D_80075954)
+/* CDF4 8001C5F4 0780103C */  lui        $s0, %hi(D_80075950 + 0x04)
+/* CDF8 8001C5F8 54591026 */  addiu      $s0, $s0, %lo(D_80075950 + 0x04)
 .L8001C5FC:
 /* CDFC 8001C5FC F176010C */  jal        VSync
 /* CE00 8001C600 21200000 */   addu      $a0, $zero, $zero
 /* CE04 8001C604 F176010C */  jal        VSync
 /* CE08 8001C608 FFFF0424 */   addiu     $a0, $zero, -0x1
 /* CE0C 8001C60C FCFF038E */  lw         $v1, -0x4($s0)
-/* CE10 8001C610 0780013C */  lui        $at, %hi(D_80075954)
-/* CE14 8001C614 545922AC */  sw         $v0, %lo(D_80075954)($at)
+/* CE10 8001C610 0780013C */  lui        $at, %hi(D_80075950 + 0x04)
+/* CE14 8001C614 545922AC */  sw         $v0, %lo(D_80075950 + 0x04)($at)
 /* CE18 8001C618 23104300 */  subu       $v0, $v0, $v1
 /* CE1C 8001C61C 02004228 */  slti       $v0, $v0, 0x2
 /* CE20 8001C620 F6FF4014 */  bnez       $v0, .L8001C5FC

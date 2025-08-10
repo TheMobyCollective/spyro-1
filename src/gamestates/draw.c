@@ -5,6 +5,7 @@
 #include "common.h"
 #include "cyclorama.h"
 #include "environment.h"
+#include "fairy.h"
 #include "gamepad.h"
 #include "graphics.h"
 #include "math.h"
@@ -31,10 +32,18 @@ extern int D_800756F8;
 
 // TODO: Remove once func_8001973C is implemented
 extern char D_80010ACC[1]; // "RETURNING HOME..."
-extern char D_80010AE0[1];
-extern char D_80010AF4[1];
-extern char D_80010B04[1];
-extern char D_80010B14[1];
+extern char D_80010AE0[1]; // "CONFRONTING %s..."
+extern char D_80010AF4[1]; // "ENTERING %s..."
+extern char D_80010B04[1]; // "TREASURE FOUND"
+extern char D_80010B14[1]; // "TOTAL TREASURE"
+
+extern char D_80010B6C[1]; // "CONTINUE"
+
+// TODO: Remove once the whole file is implemented
+extern char D_80075620[1]; // "RETRY"
+extern char D_80075628[1]; // "ABORT"
+extern char D_80075630[1]; // "SLOT 1"
+extern char D_80075638[1]; // "SLOT 2"
 
 /// @brief Create text Mobys, no capitalization
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80017FE4);
@@ -51,6 +60,7 @@ INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001844C);
 /// @brief Creates an arrow
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018534);
 
+void func_8001860C(int pX1, int pX2, int pY1, int pY2);
 /// @brief Creates a shaded box
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001860C);
 
@@ -116,9 +126,298 @@ void func_8001CFDC(void);
 /// @brief Gamestate 8
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001CFDC);
 
-void func_8001D718(void);
+typedef struct {
+  short x, x2;
+  short y, y2;
+} FAIRYRECT;
+
+extern FAIRYRECT D_8006F350[8];
+
 /// @brief Gamestate 11
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001D718);
+void func_8001D718(void) {
+  int i;
+
+  Vector3D position;
+  Vector3D spacing;
+
+  Moby *curMoby;
+  unsigned char textLen;
+
+  // Dunno what this is about
+  if (D_800756FC == D_800785D8.m_HudOTStart) {
+    // Reduces the polygon space available from 0x1C000 to 0x1BA00
+    D_800756FC = (char *)D_800757B0 + 0x1BA00;
+
+    // Then uses that space to store the list of HUD Mobys
+    g_HudMobys = D_800756FC;
+  }
+
+  if (D_80078D00.unk_0x00 == 1) {
+    func_8001860C(D_80078D00.unk_0x10 + D_8006F350[D_80078D00.unk_0x0c].x,
+                  D_80078D00.unk_0x10 + D_8006F350[D_80078D00.unk_0x0c].x2,
+                  D_8006F350[D_80078D00.unk_0x0c].y,
+                  D_8006F350[D_80078D00.unk_0x0c].y2);
+
+    spacing.x = 16;
+    spacing.y = 1; // ... Why?
+    spacing.z = 0x1400;
+
+    position.z = 0x1100;
+
+    switch (D_80078D00.unk_0x0c) {
+    case 0: // HI SPYRO
+      position.x = D_80078D00.unk_0x10 + 64;
+      position.y = 50;
+
+      func_800181AC("HI SPYRO,", &position, &spacing, 18, 11);
+      position.y += 24;
+
+      position.x = D_80078D00.unk_0x10 + 76;
+      func_800181AC("SAVE GAME", &position, &spacing, 18, 11);
+      position.y += 19;
+
+      // Selected
+      if (D_80078D00.unk_0x08 == 0) {
+        curMoby = g_HudMobys;
+        textLen = sizeof("SAVEGAME") - 1;
+      }
+
+      position.x = D_80078D00.unk_0x10 + 76;
+      func_800181AC("REPLAY DRAGON", &position, &spacing, 18, 11);
+      position.y += 19;
+
+      if (D_80078D00.unk_0x08 == 1) {
+        curMoby = g_HudMobys;
+        textLen = sizeof("REPLAYDRAGON") - 1;
+      }
+
+      position.x = D_80078D00.unk_0x10 + 76;
+      // TODO: func_800181AC("CONTINUE", &position, &spacing, 18, 11);
+      func_800181AC(D_80010B6C, &position, &spacing, 18, 11);
+
+      if (D_80078D00.unk_0x08 == 2) {
+        curMoby = g_HudMobys;
+        textLen = sizeof("CONTINUE") - 1;
+      }
+
+      // You're going to be seeing a lot of this
+      for (i = 0; i < textLen; i++) {
+        (curMoby++)->m_Rotation.z =
+            COSINE_8(((D_80078D00.unk_0x04 * 4) + (i * 12)) & 0xFF) * 3 >> 9;
+      }
+      break;
+    case 1: // NO SAVE FILE
+      position.y = 50;
+      position.x = D_80078D00.unk_0x10 + 82;
+      func_800181AC("NO SAVE FILE", &position, &spacing, 18, 11);
+
+      position.y += 26;
+
+      curMoby = g_HudMobys;
+
+      for (i = 0; i < (int)sizeof("NOSAVEFILE") - 1; i++) {
+        (curMoby++)->m_Rotation.z =
+            COSINE_8(((D_80078D00.unk_0x04 * 4) + (i * 12)) & 0xFF) * 3 >> 9;
+      }
+
+      spacing.x = 14;
+      spacing.y = 1;
+      spacing.z = 0x1600;
+      position.z = 0x1400;
+
+      position.x = D_80078D00.unk_0x10 + 45;
+      func_800181AC("PLEASE RESTART WITH", &position, &spacing, 16, 11);
+      position.y += 17;
+
+      position.x = D_80078D00.unk_0x10 + 67;
+      func_800181AC("A MEMORY CARD TO", &position, &spacing, 16, 11);
+      position.y += 17;
+
+      position.x = D_80078D00.unk_0x10 + 56;
+      func_800181AC("ENABLE GAME SAVES.", &position, &spacing, 16, 11);
+
+      break;
+    case 2: // SAVING...
+      position.y = 82;
+      position.x = D_80078D00.unk_0x10 + 106;
+      func_800181AC("SAVING...", &position, &spacing, 18, 11);
+      curMoby = g_HudMobys;
+
+      for (i = 0; i < (int)sizeof("SAVING...") - 1; i++) {
+        (curMoby++)->m_Rotation.z =
+            COSINE_8(((D_80078D00.unk_0x04 * 4) + (i * 12)) & 0xFF) * 3 >> 9;
+      }
+      break;
+    case 3: // NO MEMORY CARD
+    case 4: // NO SAVE FILE
+      position.y = 50;
+
+      if (D_80078D00.unk_0x0c == 3) {
+        position.x = D_80078D00.unk_0x10 + 66;
+        func_800181AC("NO MEMORY CARD", &position, &spacing, 18, 11);
+        textLen = sizeof("NOMEMORYCARD") - 1;
+      } else {
+        position.x = D_80078D00.unk_0x10 + 84;
+        func_800181AC("NO SAVE FILE", &position, &spacing, 18, 11);
+        textLen = sizeof("NOSAVEFILE") - 1;
+      }
+
+      curMoby = g_HudMobys;
+      position.y += 26;
+
+      for (i = 0; i < textLen; i++) {
+        (curMoby++)->m_Rotation.z =
+            COSINE_8(((D_80078D00.unk_0x04 * 4) + (i * 12)) & 0xFF) * 3 >> 9;
+      }
+
+      spacing.x = 14;
+      spacing.y = 1;
+      spacing.z = 0x1600;
+
+      position.x = D_80078D00.unk_0x10 + 59;
+      position.z = 0x1400;
+
+      func_800181AC("PLEASE INSERT THE", &position, &spacing, 16, 11);
+      position.y += 17;
+
+      position.x = D_80078D00.unk_0x10 + 67;
+      func_800181AC("MEMORY CARD WITH", &position, &spacing, 16, 11);
+      position.y += 17;
+
+      position.x = D_80078D00.unk_0x10 + 45;
+      func_800181AC("THIS GAME SAVE FILE", &position, &spacing, 16, 11);
+
+      break;
+    case 5: // SAVE ERROR
+      position.y = 50;
+      position.x = D_80078D00.unk_0x10 + 94;
+      func_800181AC("SAVE ERROR", &position, &spacing, 18, 11);
+      position.y += 26;
+
+      curMoby = g_HudMobys;
+
+      for (i = 0; i < (int)sizeof("SAVEERROR") - 1; i++) {
+        (curMoby++)->m_Rotation.z =
+            COSINE_8(((D_80078D00.unk_0x04 * 4) + (i * 12)) & 0xFF) * 3 >> 9;
+      }
+
+      spacing.x = 14;
+      spacing.y = 1;
+      spacing.z = 0x1600;
+      position.z = 0x1400;
+
+      position.x = D_80078D00.unk_0x10 + 59;
+      func_800181AC("PLEASE CHECK THAT", &position, &spacing, 16, 11);
+      position.y += 17;
+
+      position.x = D_80078D00.unk_0x10 + 73;
+      func_800181AC("THE MEMORY CARD", &position, &spacing, 16, 11);
+      position.y += 17;
+
+      position.x = D_80078D00.unk_0x10 + 54;
+      func_800181AC("IS STILL IN PLACE.", &position, &spacing, 16, 11);
+      break;
+    case 6: // SAVE FAILED
+      position.y = 53;
+      position.x = D_80078D00.unk_0x10 + 86;
+      func_800181AC("SAVE FAILED", &position, &spacing, 18, 11);
+      position.y += 40;
+
+      position.x = D_80078D00.unk_0x10 + 135;
+      // TODO: func_800181AC("RETRY", &position, &spacing, 18, 11);
+      func_800181AC(D_80075620, &position, &spacing, 18, 11);
+      position.y += 19;
+
+      // Selected
+      if (D_80078D00.unk_0x08 == 0) {
+        curMoby = g_HudMobys;
+        textLen = sizeof("RETRY") - 1;
+      }
+
+      position.x = D_80078D00.unk_0x10 + 135;
+      // TODO: func_800181AC("ABORT", &position, &spacing, 18, 11);
+      func_800181AC(D_80075628, &position, &spacing, 18, 11);
+
+      // Selected
+      if (D_80078D00.unk_0x08 == 1) {
+        curMoby = g_HudMobys;
+        textLen = sizeof("ABORT") - 1;
+      }
+
+      for (i = 0; i < textLen; i++) {
+        (curMoby++)->m_Rotation.z =
+            COSINE_8(((D_80078D00.unk_0x04 * 4) + (i * 12)) & 0xFF) * 3 >> 9;
+      }
+
+      break;
+    case 7: // GAME SAVED
+      position.y = 82;
+      position.x = D_80078D00.unk_0x10 + 94;
+      func_800181AC("GAME SAVED", &position, &spacing, 18, 11);
+
+      curMoby = g_HudMobys;
+
+      for (i = 0; i < (int)sizeof("GAMESAVED") - 1; i++) {
+        (curMoby++)->m_Rotation.z =
+            COSINE_8(((D_80078D00.unk_0x04 * 4) + (i * 12)) & 0xFF) * 3 >> 9;
+      }
+      break;
+    }
+
+    if (D_80078D00.unk_0x0c > 1) {
+      // Show the used slot number
+      spacing.x = 13;
+      spacing.y = 1;
+      spacing.z = 0x1a00;
+
+      position.y = 29;
+      position.z = 0x1600;
+
+      if (D_80078D00.unk_0x18 == 0) {
+        position.x = D_80078D00.unk_0x10 + 48;
+        // TODO: func_800181AC("SLOT 1", &position, &spacing, 14, 11);
+        func_800181AC(D_80075630, &position, &spacing, 14, 11);
+      } else {
+        position.x = 230; // SKELETON: Not adding the x offset now?
+        // TODO: func_800181AC("SLOT 2", &position, &spacing, 14, 11);
+        func_800181AC(D_80075638, &position, &spacing, 14, 11);
+      }
+    }
+  }
+
+  func_800521C0();
+  func_80019698();
+
+  if (D_80078D00.unk_0x00 == 1) {
+    g_SonyImage.m_ShadedMobys[0] = nullptr;
+    func_80018880(); // Copy HUD Mobys to Shaded
+    func_80022A2C(); // Draw Shaded Mobys
+  }
+
+  func_8002B9CC();
+  func_80050BD0();
+  func_800573C8();
+  func_80018F30();
+
+  DrawSync(0);
+
+  if (D_80075784) {
+    VSync(0);
+  }
+
+  D_80075950.pre = VSync(-1);
+
+  while (D_80075950.pre - D_80075950.post < 2) {
+    VSync(0);
+    D_80075950.pre = VSync(-1);
+  }
+
+  D_80075950.post = VSync(-1);
+
+  PutDispEnv(&g_CurDB->m_DispEnv);
+  PutDrawEnv(&g_CurDB->m_DrawEnv);
+  DrawOTag(func_80016784(0x800));
+}
 
 /// @brief Gamestate 12, balloon transition and balloonist talk
 void func_8001E24C(void) {
@@ -177,7 +476,7 @@ void func_8001E24C(void) {
       Memset(g_SonyImage.m_Buf, 0, 0x900);
       func_8001F798(); // Draw Mobys
 
-      *((int *)&g_SonyImage.m_ShadedMobys[0]) = 0;
+      g_SonyImage.m_ShadedMobys[0] = nullptr;
       func_80018880(); // Copy HUD Mobys to Shaded
       func_80022A2C(); // Draw Shaded Mobys
       func_80023AC4(); // Draw Spyro
@@ -219,7 +518,7 @@ void func_8001E24C(void) {
 
   DrawSync(0);
 
-  if (D_80075784 != 0) {
+  if (D_80075784) {
     VSync(0);
   }
 
@@ -304,7 +603,7 @@ void func_8001E6B8() {
   setRGB0(&g_DB[0].m_DrawEnv, 0, 0, 0);
   setRGB0(&g_DB[1].m_DrawEnv, 0, 0, 0);
 
-  g_SonyImage.m_ShadedMobys[0] = (void *)0;
+  g_SonyImage.m_ShadedMobys[0] = nullptr;
   func_80018880(); // Copies the HUD Mobys to the Shaded Mobys list
   Memset(g_SonyImage.m_Buf, 0, 0x900);
   func_80022A2C(); // Renders the shaded mobys
