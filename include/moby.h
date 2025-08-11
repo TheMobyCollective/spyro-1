@@ -246,8 +246,11 @@ typedef enum {
 
   MOBYCLASS_GEM_SPAWNER = 13,
 
+  MOBYCLASS_LIFE_STATUE = 14,
   MOBYCLASS_LIFE_ORB = 15,
   MOBYCLASS_BUTTERFLY = 16,
+
+  MOBYCLASS_DRAGON_EGG = 34,
 
   MOBYCLASS_HUD_SPYRO_HEAD = 58,
 
@@ -329,10 +332,29 @@ typedef struct {
 } PortalPathMobyData;
 
 typedef struct {
+  int unk_0x00;
+  Vector3D unk_0x04;
+  char unk_0x10;
+  char unk_0x11;
+  char unk_0x12;
+  char unk_0x13;
+  short unk_0x14;
+} MobyButterflyProps;
+
+typedef struct {
   Moby *m_Parent;
   short m_Len;
   short m_Index;
 } MobyLetterProps;
+
+typedef struct {
+  int unk_0x00;
+  short unk_0x04;
+  short unk_0x06;
+  short unk_0x08;
+  int unk_0x0c;
+  int unk_0x10;
+} MobySparxProps;
 
 typedef struct {
   int unk_0x0;
@@ -341,6 +363,40 @@ typedef struct {
   int unk_0x4;
   Vector3D unk_0x8;
 } MobyNumberProps;
+
+typedef struct {
+  short unk_0x00;
+  short unk_0x02;
+  short unk_0x04;
+
+  short unk_0x06;
+  short unk_0x08;
+  short unk_0x0A;
+
+  int unk_0x0C;
+  int unk_0x10;
+} MobyFragmentProps;
+
+typedef struct {
+  Vector3D trajectory;
+  int initZ;
+  char unk_0x10;
+  char unk_0x11;
+  char unk_0x12;
+  char unk_0x13;
+} MobyDragonFragmentProps;
+
+typedef struct {
+  Vector3D m_InitPos;
+  short m_CollisionIndex;
+  u_char m_SpawnState;
+  u_char m_Ticks;
+  u_char m_RotX;
+  u_char m_RotY;
+  u_char m_RotZ;
+  u_char m_RotationTicks;
+  u_char m_SparkleHandle;
+} MobyCollectableProps;
 
 typedef struct {
   Vector3D m_CameraPosition;

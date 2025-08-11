@@ -497,7 +497,7 @@ void func_8005A470(void) {
     break;
   case 10:
     D_800785D8.m_CopyBuf = func_level_10_80088620; // g_CopyBufferPointer
-    D_800758CC = func_level_10_800857CC;           // g_SpawnMoby
+    D_800758CC = SpawnMoby_level_10;               // g_SpawnMoby
     D_80075734 = func_level_10_8007D9C8;           // g_UpdateMoby
     D_800758E4 = func_level_10_800873E0;           // g_SpawnParticle
     D_800756BC = func_level_10_80086134;           // g_UpdateParticle
@@ -513,7 +513,7 @@ void func_8005A470(void) {
     break;
   case 11:
     D_800785D8.m_CopyBuf = func_level_11_8008A3B8; // g_CopyBufferPointer
-    D_800758CC = func_level_11_8008772C;           // g_SpawnMoby
+    D_800758CC = SpawnMoby_level_11;               // g_SpawnMoby
     D_80075734 = func_level_11_8007DA78;           // g_UpdateMoby
     D_800758E4 = func_level_11_800892C4;           // g_SpawnParticle
     D_800756BC = func_level_11_80088098;           // g_UpdateParticle
@@ -529,7 +529,7 @@ void func_8005A470(void) {
     break;
   case 12:
     D_800785D8.m_CopyBuf = func_level_12_80085594; // g_CopyBufferPointer
-    D_800758CC = func_level_12_80082960;           // g_SpawnMoby
+    D_800758CC = SpawnMoby_level_12;               // g_SpawnMoby
     D_80075734 = func_level_12_8007AE40;           // g_UpdateMoby
     D_800758E4 = func_level_12_800844A0;           // g_SpawnParticle
     D_800756BC = func_level_12_80083274;           // g_UpdateParticle
@@ -545,7 +545,7 @@ void func_8005A470(void) {
     break;
   case 13:
     D_800785D8.m_CopyBuf = func_level_13_80089ECC; // g_CopyBufferPointer
-    D_800758CC = func_level_13_800872A4;           // g_SpawnMoby
+    D_800758CC = SpawnMoby_level_13;               // g_SpawnMoby
     D_80075734 = func_level_13_8007DA54;           // g_UpdateMoby
     D_800758E4 = func_level_13_80088F68;           // g_SpawnParticle
     D_800756BC = func_level_13_80087E20;           // g_UpdateParticle
@@ -561,7 +561,7 @@ void func_8005A470(void) {
     break;
   case 14:
     D_800785D8.m_CopyBuf = func_level_14_80084A10; // g_CopyBufferPointer
-    D_800758CC = func_level_14_80081DA8;           // g_SpawnMoby
+    D_800758CC = SpawnMoby_level_14;               // g_SpawnMoby
     D_80075734 = func_level_14_8007AF94;           // g_UpdateMoby
     D_800758E4 = func_level_14_8008391C;           // g_SpawnParticle
     D_800756BC = func_level_14_800826F0;           // g_UpdateParticle

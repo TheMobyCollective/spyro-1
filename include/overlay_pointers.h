@@ -5,6 +5,12 @@
 
 #include "moby.h"
 
+#define PRIMITIVE_CAT3(a, b, c) a##b##c
+#define CAT3(a, b, c) PRIMITIVE_CAT3(a, b, c)
+
+#define NAME_OVERLAY_FUNCTION(func) CAT3(func, _level_, LEVEL)
+#define NAME_OVERLAY_FUNCTION_LEVEL(func, level) CAT3(func, _level_, level)
+
 extern Moby *(*D_800758CC)(int pClass, Moby *pMe); // g_MobySpawn
 extern void (*D_80075734)();                       // g_MobyUpdate
 
@@ -26,5 +32,24 @@ extern void (*D_80075694)(); // g_UnkFunc1Flight (I think update flight stuff?)
 extern void (
     *D_800757A8)(); // g_UnkFunc2Flight (Related to starting / stopping flight)
 extern void (*D_800758C4)(); // g_DrawTime
+
+// These don't all exist yet
+
+// clang-format off
+#define FOR_LEVELS(o) \
+    o(10) \
+    o(11) \
+    o(12) \
+    o(13) \
+    o(14) \
+    o(15)
+
+
+#define o(level) \
+    Moby *NAME_OVERLAY_FUNCTION_LEVEL(SpawnMoby, level)(int pClass, Moby *pParent);
+
+// clang-format on
+
+FOR_LEVELS(o)
 
 #endif

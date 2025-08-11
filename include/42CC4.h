@@ -11,8 +11,12 @@ Moby *func_800524C4(void);
 /// @param pMoby The Moby to free
 void func_80052568(Moby *pMoby);
 
-/// @brief Disables collision for a Moby
-/// @param pMoby The Moby to disable collision for
+/// @brief Updates a Moby's collision
+/// @param pMoby The Moby to update
+void func_800526A8(Moby *pMoby);
+
+/// @brief Sets that a moby is a shaded moby with no collision
+/// @param pMoby The Moby :)
 void func_800529CC(Moby *pMoby);
 
 enum MobyPropUpdateFlags {

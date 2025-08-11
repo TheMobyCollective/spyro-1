@@ -19,6 +19,8 @@ extern short D_8006CC78[256];
 // @brief VRAM size per cutscene
 extern int D_8006EE5C[4];
 
+extern short D_8006F3A0[8][2]; // Dragon fragments offset
+
 // TODO: When the we've used it in more places, check if maybe we have to
 // change the type to char
 // (it matches as char in func_8003838C atleast, then it doesn't need casting)
