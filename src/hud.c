@@ -440,7 +440,7 @@ void GenerateGemCollectMobys(int pGemValue, Moby *pGemPos) {
   for (; pGemValue != 0; pGemValue /= 10, i *= 10) {
     MobyNumberProps *props;
     int rem = (pGemValue % 10);
-    Moby *pMoby = (*D_800758CC)(rem + MOBYCLASS_NUMBER_0, nullptr);
+    Moby *pMoby = (*g_SpawnMoby)(rem + MOBYCLASS_NUMBER_0, nullptr);
     setXYZ(&pMoby->m_Position, moby_x, moby_y, pGemPos->m_Position.z);
     setXYZ(&pMoby->m_Rotation, 0, 0, g_Camera.m_Rotation.z >> 4);
 

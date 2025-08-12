@@ -459,7 +459,7 @@ dlabel D_800758C4
 dlabel D_800758C8
 /* 660A0 800758C8 */ .space 0x04
 
-dlabel D_800758CC
+dlabel g_SpawnMoby
 /* 660A4 800758CC */ .space 0x04
 
 dlabel D_800758D0

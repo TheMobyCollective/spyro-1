@@ -11,8 +11,8 @@
 #define NAME_OVERLAY_FUNCTION(func) CAT3(func, _level_, LEVEL)
 #define NAME_OVERLAY_FUNCTION_LEVEL(func, level) CAT3(func, _level_, level)
 
-extern Moby *(*D_800758CC)(int pClass, Moby *pMe); // g_MobySpawn
-extern void (*D_80075734)();                       // g_MobyUpdate
+extern Moby *(*g_SpawnMoby)(int pClass, Moby *pParent); // g_MobySpawn
+extern void (*D_80075734)();                            // g_MobyUpdate
 
 extern void (*D_800757C0)(); // g_UpdateGameState7
 extern void (*D_8007567C)(); // g_DrawGameState7
@@ -51,5 +51,8 @@ extern void (*D_800758C4)(); // g_DrawTime
 // clang-format on
 
 FOR_LEVELS(o)
+
+#undef o
+#undef FOR_LEVELS
 
 #endif

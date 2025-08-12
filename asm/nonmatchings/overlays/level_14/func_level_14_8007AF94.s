@@ -938,8 +938,8 @@ glabel func_level_14_8007AF94
 /* 1481004 8007BA3C 00000000 */  nop
 /* 1481008 8007BA40 34004004 */  bltz       $v0, .Llevel_14_8007BB14
 /* 148100C 8007BA44 78000424 */   addiu     $a0, $zero, 0x78
-/* 1481010 8007BA48 0780023C */  lui        $v0, %hi(D_800758CC)
-/* 1481014 8007BA4C CC58428C */  lw         $v0, %lo(D_800758CC)($v0)
+/* 1481010 8007BA48 0780023C */  lui        $v0, %hi(g_SpawnMoby)
+/* 1481014 8007BA4C CC58428C */  lw         $v0, %lo(g_SpawnMoby)($v0)
 /* 1481018 8007BA50 00000000 */  nop
 /* 148101C 8007BA54 09F84000 */  jalr       $v0
 /* 1481020 8007BA58 21286002 */   addu      $a1, $s3, $zero
@@ -4184,14 +4184,14 @@ glabel func_level_14_8007AF94
 /* 1483FDC 8007EA14 10004014 */  bnez       $v0, .Llevel_14_8007EA58
 /* 1483FE0 8007EA18 FF000424 */   addiu     $a0, $zero, 0xFF
 /* 1483FE4 8007EA1C 21286002 */  addu       $a1, $s3, $zero
-/* 1483FE8 8007EA20 0780023C */  lui        $v0, %hi(D_800758CC)
-/* 1483FEC 8007EA24 CC58428C */  lw         $v0, %lo(D_800758CC)($v0)
+/* 1483FE8 8007EA20 0780023C */  lui        $v0, %hi(g_SpawnMoby)
+/* 1483FEC 8007EA24 CC58428C */  lw         $v0, %lo(g_SpawnMoby)($v0)
 /* 1483FF0 8007EA28 00000000 */  nop
 /* 1483FF4 8007EA2C 09F84000 */  jalr       $v0
 /* 1483FF8 8007EA30 01001026 */   addiu     $s0, $s0, 0x1
 /* 1483FFC 8007EA34 00010424 */  addiu      $a0, $zero, 0x100
-/* 1484000 8007EA38 0780023C */  lui        $v0, %hi(D_800758CC)
-/* 1484004 8007EA3C CC58428C */  lw         $v0, %lo(D_800758CC)($v0)
+/* 1484000 8007EA38 0780023C */  lui        $v0, %hi(g_SpawnMoby)
+/* 1484004 8007EA3C CC58428C */  lw         $v0, %lo(g_SpawnMoby)($v0)
 /* 1484008 8007EA40 00000000 */  nop
 /* 148400C 8007EA44 09F84000 */  jalr       $v0
 /* 1484010 8007EA48 21286002 */   addu      $a1, $s3, $zero
@@ -4211,8 +4211,8 @@ glabel func_level_14_8007AF94
 /* 1484040 8007EA78 0A004014 */  bnez       $v0, .Llevel_14_8007EAA4
 /* 1484044 8007EA7C 01010424 */   addiu     $a0, $zero, 0x101
 /* 1484048 8007EA80 21286002 */  addu       $a1, $s3, $zero
-/* 148404C 8007EA84 0780023C */  lui        $v0, %hi(D_800758CC)
-/* 1484050 8007EA88 CC58428C */  lw         $v0, %lo(D_800758CC)($v0)
+/* 148404C 8007EA84 0780023C */  lui        $v0, %hi(g_SpawnMoby)
+/* 1484050 8007EA88 CC58428C */  lw         $v0, %lo(g_SpawnMoby)($v0)
 /* 1484054 8007EA8C 00000000 */  nop
 /* 1484058 8007EA90 09F84000 */  jalr       $v0
 /* 148405C 8007EA94 01001026 */   addiu     $s0, $s0, 0x1
@@ -4346,14 +4346,14 @@ glabel func_level_14_8007AF94
 /* 1484238 8007EC70 10004014 */  bnez       $v0, .Llevel_14_8007ECB4
 /* 148423C 8007EC74 36010424 */   addiu     $a0, $zero, 0x136
 /* 1484240 8007EC78 21286002 */  addu       $a1, $s3, $zero
-/* 1484244 8007EC7C 0780023C */  lui        $v0, %hi(D_800758CC)
-/* 1484248 8007EC80 CC58428C */  lw         $v0, %lo(D_800758CC)($v0)
+/* 1484244 8007EC7C 0780023C */  lui        $v0, %hi(g_SpawnMoby)
+/* 1484248 8007EC80 CC58428C */  lw         $v0, %lo(g_SpawnMoby)($v0)
 /* 148424C 8007EC84 00000000 */  nop
 /* 1484250 8007EC88 09F84000 */  jalr       $v0
 /* 1484254 8007EC8C 01001026 */   addiu     $s0, $s0, 0x1
 /* 1484258 8007EC90 37010424 */  addiu      $a0, $zero, 0x137
-/* 148425C 8007EC94 0780023C */  lui        $v0, %hi(D_800758CC)
-/* 1484260 8007EC98 CC58428C */  lw         $v0, %lo(D_800758CC)($v0)
+/* 148425C 8007EC94 0780023C */  lui        $v0, %hi(g_SpawnMoby)
+/* 1484260 8007EC98 CC58428C */  lw         $v0, %lo(g_SpawnMoby)($v0)
 /* 1484264 8007EC9C 00000000 */  nop
 /* 1484268 8007ECA0 09F84000 */  jalr       $v0
 /* 148426C 8007ECA4 21286002 */   addu      $a1, $s3, $zero
@@ -4373,8 +4373,8 @@ glabel func_level_14_8007AF94
 /* 148429C 8007ECD4 0A004014 */  bnez       $v0, .Llevel_14_8007ED00
 /* 14842A0 8007ECD8 35010424 */   addiu     $a0, $zero, 0x135
 /* 14842A4 8007ECDC 21286002 */  addu       $a1, $s3, $zero
-/* 14842A8 8007ECE0 0780023C */  lui        $v0, %hi(D_800758CC)
-/* 14842AC 8007ECE4 CC58428C */  lw         $v0, %lo(D_800758CC)($v0)
+/* 14842A8 8007ECE0 0780023C */  lui        $v0, %hi(g_SpawnMoby)
+/* 14842AC 8007ECE4 CC58428C */  lw         $v0, %lo(g_SpawnMoby)($v0)
 /* 14842B0 8007ECE8 00000000 */  nop
 /* 14842B4 8007ECEC 09F84000 */  jalr       $v0
 /* 14842B8 8007ECF0 01001026 */   addiu     $s0, $s0, 0x1

@@ -1248,8 +1248,8 @@ glabel func_8003EA68
 /* 30314 8003FB14 0780013C */  lui        $at, %hi(D_8006EA34)
 /* 30318 8003FB18 21082200 */  addu       $at, $at, $v0
 /* 3031C 8003FB1C 34EA248C */  lw         $a0, %lo(D_8006EA34)($at)
-/* 30320 8003FB20 0780023C */  lui        $v0, %hi(D_800758CC)
-/* 30324 8003FB24 CC58428C */  lw         $v0, %lo(D_800758CC)($v0)
+/* 30320 8003FB20 0780023C */  lui        $v0, %hi(g_SpawnMoby)
+/* 30324 8003FB24 CC58428C */  lw         $v0, %lo(g_SpawnMoby)($v0)
 /* 30328 8003FB28 00000000 */  nop
 /* 3032C 8003FB2C 09F84000 */  jalr       $v0
 /* 30330 8003FB30 21280000 */   addu      $a1, $zero, $zero

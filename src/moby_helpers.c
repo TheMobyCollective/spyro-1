@@ -816,7 +816,7 @@ void func_8003C358(Moby *pMoby, int pIsLevelName) {
         char_moby_class = MOBYCLASS_LETTER_APOSTROPHE;
       }
 
-      char_moby = (*D_800758CC)(char_moby_class, pMoby);
+      char_moby = (*g_SpawnMoby)(char_moby_class, pMoby);
       setMobyLetterProps((MobyLetterProps *)char_moby->m_Props, pMoby, i,
                          string_len);
       pos = &char_moby->m_Position;

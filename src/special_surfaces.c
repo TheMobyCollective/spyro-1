@@ -62,7 +62,7 @@ void func_80056F64(int surfaceIdx, u_int arg1) {
   case 5: // Invisible wall
 
     g_Spyro.m_DamageFlags = (g_Spyro.m_DamageFlags & 0x3FF) | 0x8000;
-    D_800758CC(234, 0);
+    g_SpawnMoby(234, nullptr);
     break;
 
   case 6: // Portals
