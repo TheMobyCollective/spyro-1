@@ -438,6 +438,7 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A850);
 // Unused (Might be an early version of func_8003BFC0?)
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A920);
 
+/// @brief: Specular version of func_8003AA84
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A9EC);
 
 /// @brief: Apply flame heat
