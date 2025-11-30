@@ -434,8 +434,6 @@ extern int g_MobyPodCount;   // The number of pods in the current level
 
 extern Moby *D_80075758; // Pointer to the key Moby for this level
 
-extern Moby *D_800770C0; // Pointer to the dragon Moby that is being rescued
-
 extern Moby *D_80075828; // The Mobys in the current level
 
 extern Moby *D_80075890; // Pointer to the first dynamic Moby, used for

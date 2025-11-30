@@ -5,6 +5,7 @@
 #include "cheats.h"
 #include "common.h"
 #include "cyclorama.h"
+#include "dragon.h"
 #include "gamestates/draw.h"
 #include "graphics.h"
 #include "hud.h"
@@ -258,7 +259,10 @@ void func_8002CB6C(void) {
   // Turn off the screen border
   D_8007570C = 0;
 
-  moby_idx = ((RescuedDragonMobyProps *)D_800770C0->m_Props)->m_DragonPadLink;
+  moby_idx =
+      ((RescuedDragonMobyProps *)(D_80077030.m_RescuedDragonMoby)->m_Props)
+          ->m_DragonPadLink;
+
   if (moby_idx != -1) {
     moby = &D_80075828[moby_idx];
     moby->m_AnimationState.m_Animation = 0;

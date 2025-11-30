@@ -1,13 +1,12 @@
 #include "42CC4.h"
 #include "collision.h"
+#include "dragon.h"
 #include "math.h"
 #include "moby_helpers.h"
 #include "overlay_pointers.h"
 #include "spyro.h"
 
 #include "rand.h"
-
-extern int D_80077058; // TODO: Part of the dragon struct, it's the state
 
 // We have to replace LEVEL with preprocessor LEVEL
 
@@ -311,9 +310,9 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     moby->m_SpecularMetalColor[2] = 0;
     moby->m_SpecularMetalType = 14;
 
-    if (D_80077058 == 3) {
+    if (D_80077030.unk_0x28 == 3) {
       moby->m_ScaleOverride = 20;
-    } else if (D_80077058 == 1) {
+    } else if (D_80077030.unk_0x28 == 1) {
       moby->m_ScaleOverride = 48;
     }
 

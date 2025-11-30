@@ -5,6 +5,7 @@
 #include "checkpoint.h"
 #include "common.h"
 #include "cyclorama.h"
+#include "dragon.h"
 #include "graphics.h"
 #include "math.h"
 #include "memory.h"
