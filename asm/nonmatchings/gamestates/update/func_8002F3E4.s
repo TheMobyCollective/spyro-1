@@ -1881,8 +1881,8 @@ glabel func_8002F3E4
 /* 217C4 80030FC4 0880043C */  lui        $a0, %hi(g_Spyro + 0x58)
 /* 217C8 80030FC8 B08A848C */  lw         $a0, %lo(g_Spyro + 0x58)($a0)
 /* 217CC 80030FCC 21880000 */  addu       $s1, $zero, $zero
-/* 217D0 80030FD0 0780143C */  lui        $s4, %hi(D_8006E77C)
-/* 217D4 80030FD4 7CE79426 */  addiu      $s4, $s4, %lo(D_8006E77C)
+/* 217D0 80030FD0 0780143C */  lui        $s4, %hi(g_HudOpeningOffsets)
+/* 217D4 80030FD4 7CE79426 */  addiu      $s4, $s4, %lo(g_HudOpeningOffsets)
 /* 217D8 80030FD8 0880103C */  lui        $s0, %hi(D_800781B4)
 /* 217DC 80030FDC B4811026 */  addiu      $s0, $s0, %lo(D_800781B4)
 /* 217E0 80030FE0 21980000 */  addu       $s3, $zero, $zero
@@ -1918,8 +1918,8 @@ glabel func_8002F3E4
 /* 21854 80031054 20C40008 */  j          .L80031080
 /* 21858 80031058 000003AE */   sw        $v1, 0x0($s0)
 .L8003105C:
-/* 2185C 8003105C 0780023C */  lui        $v0, %hi(D_8006E794)
-/* 21860 80031060 94E74284 */  lh         $v0, %lo(D_8006E794)($v0)
+/* 2185C 8003105C 0780023C */  lui        $v0, %hi(g_HudOpeningOffsets + 0x18)
+/* 21860 80031060 94E74284 */  lh         $v0, %lo(g_HudOpeningOffsets + 0x18)($v0)
 /* 21864 80031064 00000000 */  nop
 /* 21868 80031068 40180200 */  sll        $v1, $v0, 1
 /* 2186C 8003106C 21186200 */  addu       $v1, $v1, $v0

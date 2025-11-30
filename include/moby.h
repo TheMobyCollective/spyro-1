@@ -226,9 +226,11 @@ typedef struct {
   AnimationHeader *m_Animations[1];
 } Model;
 
-extern Model *D_80076378[512];
+#define MODEL_COUNT 512
 
-#define SPYRO_MODEL (D_80076378[0])
+extern Model *g_Models[MODEL_COUNT];
+
+#define SPYRO_MODEL (g_Models[0])
 
 typedef struct {
   int m_NumAnimations; // < 0 == SimpleModel (always -1 in reality)
@@ -329,6 +331,9 @@ typedef struct {
 typedef struct {
   PathData *m_Path;
   Vector3D unk_0x4;
+  int m_Sidedness;
+  int unk_0x14;
+  int unk_0x18; // Some kinda link? not sure
 } PortalPathMobyData;
 
 typedef struct {

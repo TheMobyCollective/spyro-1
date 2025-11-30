@@ -44,8 +44,8 @@ glabel func_8001F158
 /* F9D4 8001F1D4 F8CB1026 */  addiu      $s0, $s0, %lo(D_8006CBF8)
 /* F9D8 8001F1D8 0780113C */  lui        $s1, %hi(D_8006CC78)
 /* F9DC 8001F1DC 78CC3126 */  addiu      $s1, $s1, %lo(D_8006CC78)
-/* F9E0 8001F1E0 07801C3C */  lui        $gp, %hi(D_80076378)
-/* F9E4 8001F1E4 78639C27 */  addiu      $gp, $gp, %lo(D_80076378)
+/* F9E0 8001F1E0 07801C3C */  lui        $gp, %hi(g_Models)
+/* F9E4 8001F1E4 78639C27 */  addiu      $gp, $gp, %lo(g_Models)
 .L8001F1E8:
 /* F9E8 8001F1E8 0000FD8F */  lw         $sp, 0x0($ra)
 /* F9EC 8001F1EC 0400FF23 */  addi       $ra, $ra, 0x4 /* handwritten instruction */
@@ -1686,8 +1686,8 @@ glabel func_800208FC
 /* 11180 80020980 F8CB1026 */  addiu      $s0, $s0, %lo(D_8006CBF8)
 /* 11184 80020984 0780113C */  lui        $s1, %hi(D_8006CC78)
 /* 11188 80020988 78CC3126 */  addiu      $s1, $s1, %lo(D_8006CC78)
-/* 1118C 8002098C 07801C3C */  lui        $gp, %hi(D_80076378)
-/* 11190 80020990 78639C27 */  addiu      $gp, $gp, %lo(D_80076378)
+/* 1118C 8002098C 07801C3C */  lui        $gp, %hi(g_Models)
+/* 11190 80020990 78639C27 */  addiu      $gp, $gp, %lo(g_Models)
 .L80020994:
 /* 11194 80020994 0000FD8F */  lw         $sp, 0x0($ra)
 /* 11198 80020998 0400FF23 */  addi       $ra, $ra, 0x4 /* handwritten instruction */
@@ -4061,8 +4061,8 @@ glabel func_80022A2C
 /* 133BC 80022BBC 00588148 */  mtc2       $at, C2_IR3 /* handwritten instruction */
 /* 133C0 80022BC0 00488248 */  mtc2       $v0, C2_IR1 /* handwritten instruction */
 /* 133C4 80022BC4 00508348 */  mtc2       $v1, C2_IR2 /* handwritten instruction */
-/* 133C8 80022BC8 0780163C */  lui        $s6, %hi(D_80076378)
-/* 133CC 80022BCC 7863D626 */  addiu      $s6, $s6, %lo(D_80076378)
+/* 133C8 80022BC8 0780163C */  lui        $s6, %hi(g_Models)
+/* 133CC 80022BCC 7863D626 */  addiu      $s6, $s6, %lo(g_Models)
 /* 133D0 80022BD0 12E0494A */  MVMVA      1, 0, 3, 3, 0
 /* 133D4 80022BD4 3600D597 */  lhu        $s5, 0x36($fp)
 /* 133D8 80022BD8 00D80348 */  mfc2       $v1, C2_MAC3 /* handwritten instruction */
@@ -4166,8 +4166,8 @@ glabel func_80022A2C
 /* 13544 80022D44 00001720 */  addi       $s7, $zero, 0x0 /* handwritten instruction */
 /* 13548 80022D48 3600C497 */  lhu        $a0, 0x36($fp)
 /* 1354C 80022D4C 4400D48F */  lw         $s4, 0x44($fp)
-/* 13550 80022D50 0780163C */  lui        $s6, %hi(D_80076378)
-/* 13554 80022D54 7863D626 */  addiu      $s6, $s6, %lo(D_80076378)
+/* 13550 80022D50 0780163C */  lui        $s6, %hi(g_Models)
+/* 13554 80022D54 7863D626 */  addiu      $s6, $s6, %lo(g_Models)
 /* 13558 80022D58 80200400 */  sll        $a0, $a0, 2
 /* 1355C 80022D5C 20B0C402 */  add        $s6, $s6, $a0 /* handwritten instruction */
 /* 13560 80022D60 0000D68E */  lw         $s6, 0x0($s6)

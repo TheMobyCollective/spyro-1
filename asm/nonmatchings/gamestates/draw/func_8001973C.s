@@ -39,8 +39,8 @@ dlabel D_80010B14
 
 glabel func_8001973C
 /* 9F3C 8001973C 6666023C */  lui        $v0, (0x66666667 >> 16)
-/* 9F40 80019740 0780053C */  lui        $a1, %hi(D_800758B4)
-/* 9F44 80019744 B458A58C */  lw         $a1, %lo(D_800758B4)($a1)
+/* 9F40 80019740 0780053C */  lui        $a1, %hi(g_NextLevelId)
+/* 9F44 80019744 B458A58C */  lw         $a1, %lo(g_NextLevelId)($a1)
 /* 9F48 80019748 67664234 */  ori        $v0, $v0, (0x66666667 & 0xFFFF)
 /* 9F4C 8001974C 1800A200 */  mult       $a1, $v0
 /* 9F50 80019750 98FFBD27 */  addiu      $sp, $sp, -0x68
@@ -344,8 +344,8 @@ glabel func_8001973C
 /* A3A0 80019BA0 80006228 */  slti       $v0, $v1, 0x80
 /* A3A4 80019BA4 0C004010 */  beqz       $v0, .L80019BD8
 /* A3A8 80019BA8 E0006228 */   slti      $v0, $v1, 0xE0
-/* A3AC 80019BAC 0780023C */  lui        $v0, %hi(D_80075688)
-/* A3B0 80019BB0 8856428C */  lw         $v0, %lo(D_80075688)($v0)
+/* A3AC 80019BAC 0780023C */  lui        $v0, %hi(g_PreviousLevelIndex)
+/* A3B0 80019BB0 8856428C */  lw         $v0, %lo(g_PreviousLevelIndex)($v0)
 /* A3B4 80019BB4 00000000 */  nop
 /* A3B8 80019BB8 80100200 */  sll        $v0, $v0, 2
 /* A3BC 80019BBC 0780013C */  lui        $at, %hi(g_LevelGemCount)
@@ -378,8 +378,8 @@ glabel func_8001973C
 /* A41C 80019C1C 00000000 */   nop
 /* A420 80019C20 21288000 */  addu       $a1, $a0, $zero
 .L80019C24:
-/* A424 80019C24 0780023C */  lui        $v0, %hi(D_80075688)
-/* A428 80019C28 8856428C */  lw         $v0, %lo(D_80075688)($v0)
+/* A424 80019C24 0780023C */  lui        $v0, %hi(g_PreviousLevelIndex)
+/* A428 80019C28 8856428C */  lw         $v0, %lo(g_PreviousLevelIndex)($v0)
 /* A42C 80019C2C 0780033C */  lui        $v1, %hi(D_8007587C)
 /* A430 80019C30 7C58638C */  lw         $v1, %lo(D_8007587C)($v1)
 /* A434 80019C34 80100200 */  sll        $v0, $v0, 2
@@ -410,8 +410,8 @@ glabel func_8001973C
 .L80019C90:
 /* A490 80019C90 0E004010 */  beqz       $v0, .L80019CCC
 /* A494 80019C94 00000000 */   nop
-/* A498 80019C98 0780023C */  lui        $v0, %hi(D_80075688)
-/* A49C 80019C9C 8856428C */  lw         $v0, %lo(D_80075688)($v0)
+/* A498 80019C98 0780023C */  lui        $v0, %hi(g_PreviousLevelIndex)
+/* A49C 80019C9C 8856428C */  lw         $v0, %lo(g_PreviousLevelIndex)($v0)
 /* A4A0 80019CA0 0780033C */  lui        $v1, %hi(D_8007587C)
 /* A4A4 80019CA4 7C58638C */  lw         $v1, %lo(D_8007587C)($v1)
 /* A4A8 80019CA8 80100200 */  sll        $v0, $v0, 2
@@ -444,8 +444,8 @@ glabel func_8001973C
 /* A508 80019D08 00000000 */   nop
 /* A50C 80019D0C 21288000 */  addu       $a1, $a0, $zero
 .L80019D10:
-/* A510 80019D10 0780023C */  lui        $v0, %hi(D_80075688)
-/* A514 80019D14 8856428C */  lw         $v0, %lo(D_80075688)($v0)
+/* A510 80019D10 0780023C */  lui        $v0, %hi(g_PreviousLevelIndex)
+/* A514 80019D14 8856428C */  lw         $v0, %lo(g_PreviousLevelIndex)($v0)
 /* A518 80019D18 0780033C */  lui        $v1, %hi(D_8007587C)
 /* A51C 80019D1C 7C58638C */  lw         $v1, %lo(D_8007587C)($v1)
 /* A520 80019D20 80100200 */  sll        $v0, $v0, 2

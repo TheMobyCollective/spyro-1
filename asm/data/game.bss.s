@@ -34,7 +34,7 @@ dlabel D_80076273
 dlabel D_80076278
 /* 661C0 80076278 */ .space 0x100
 
-dlabel D_80076378
+dlabel g_Models
 /* 662C0 80076378 */ .space 0x04
 
 dlabel D_8007637C
@@ -664,7 +664,7 @@ dlabel D_80078638
 dlabel D_8007863C
 /* 68584 8007863C */ .space 0x04
 
-dlabel D_80078640
+dlabel g_Portals
 /* 68588 80078640 */ .space 0x18
 
 dlabel D_80078658
@@ -784,7 +784,7 @@ dlabel D_80078DE0
 dlabel D_80078E50
 /* 68D98 80078E50 */ .space 0x22
 
-dlabel D_80078E72
+dlabel g_VisitedFlags
 /* Total size from 80078E72 to 80078E9C */ .space 0x2A
 dlabel D_80078E9C
 /* 68DE4 80078E9C */ .space 0x04
@@ -801,7 +801,7 @@ dlabel D_80078EA8
 dlabel D_80078EAC
 /* 68DF4 80078EAC */ .space 0x17FC
 
-dlabel D_8007A6A8
+dlabel g_LevelVortexExitFlags
 /* Total size from 8007A6A8 to 8007A6D0 */ .space 0x28
 
 dlabel g_WadHeader

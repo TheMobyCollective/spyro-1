@@ -50,8 +50,8 @@ glabel func_80049FAC
 /* 3A85C 8004A05C 0880013C */  lui        $at, %hi(D_8007AA10 + 0x1C)
 /* 3A860 8004A060 2CAA22AC */  sw         $v0, %lo(D_8007AA10 + 0x1C)($at)
 .L8004A064:
-/* 3A864 8004A064 0780023C */  lui        $v0, %hi(D_80075964)
-/* 3A868 8004A068 6459428C */  lw         $v0, %lo(D_80075964)($v0)
+/* 3A864 8004A064 0780023C */  lui        $v0, %hi(g_LevelIndex)
+/* 3A868 8004A068 6459428C */  lw         $v0, %lo(g_LevelIndex)($v0)
 /* 3A86C 8004A06C 0880013C */  lui        $at, %hi(D_8007AA10 + 0x24)
 /* 3A870 8004A070 34AA20AC */  sw         $zero, %lo(D_8007AA10 + 0x24)($at)
 /* 3A874 8004A074 80100200 */  sll        $v0, $v0, 2

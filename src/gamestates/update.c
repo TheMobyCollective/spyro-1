@@ -26,8 +26,6 @@ void func_8002DF9C(void) {
   }
 }
 
-extern SphericalCoordsOffset D_8006CA84; // Dunno
-
 /// @brief Gamestate 9
 void func_8002E000(void) {
   func_8004A200(); // Spyro update
@@ -137,19 +135,19 @@ void func_800333DC(void) {
     // If we started the credits with the cheat,
     // return us to where we started it
     if (D_80075818 != -1) {
-      D_800758B4 = D_80075818;
+      g_NextLevelId = D_80075818;
       D_80075818 = -1;
     } else {
       // Otherwise, check if we completed loot, if we did, return us to Artisans
       if (g_GemTotal == 14000) {
-        D_800758B4 = 10; // Artisans
+        g_NextLevelId = 10; // Artisans
       } else {
-        D_800758B4 = 60; // Gnorc Gnexus
+        g_NextLevelId = 60; // Gnorc Gnexus
       }
     }
 
-    D_800758AC = 0; // Reset portal level id
-    D_800756D0 = 0; // Set no level transition
+    g_PortalLevelId = 0; // Reset portal level id
+    D_800756D0 = 0;      // Set no level transition
     D_800756F8 = 0;
 
     D_80075704++; // Start loading level

@@ -205,12 +205,12 @@ int func_80038494(Moby *pMoby) {
 
 void func_8003851C(Moby *pMoby, int pSoundIndex, u_char *pChannel) {
   if (pChannel != nullptr) {
-    PlaySound(D_80076378[pMoby->m_Class]->m_Sounds[pSoundIndex], pMoby,
+    PlaySound(g_Models[pMoby->m_Class]->m_Sounds[pSoundIndex], pMoby,
               0x08 /* 3D */, pChannel);
   } else {
     // stop sounds from this moby
     func_800562A4(pMoby, 1);
-    PlaySound(D_80076378[pMoby->m_Class]->m_Sounds[pSoundIndex], pMoby,
+    PlaySound(g_Models[pMoby->m_Class]->m_Sounds[pSoundIndex], pMoby,
               0x08 /* 3D */, &pMoby->m_SoundChannel);
   }
 }

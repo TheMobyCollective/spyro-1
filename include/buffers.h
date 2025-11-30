@@ -4,7 +4,7 @@
 extern struct {
   void *m_CopyBuf;
   void *m_DiscCopyBuf;
-  void *m_EndOfSceneData; // TODO: Rename?
+  void *m_ModelData;
   void *m_LevelLayout;
   void *m_LowerPolyBuffer;
   void *m_HigherPolyBuffer;
@@ -17,5 +17,7 @@ extern struct {
 } D_800785D8;
 
 extern void *D_80075780; // Something skybox related
+
+extern void *g_OverlaySpacePointer; // Pointer to overlay space
 
 #endif

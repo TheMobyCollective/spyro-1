@@ -7,7 +7,6 @@
 
 // Misc global variables
 
-extern int D_80075964; // Current absolute level id
 extern int D_80075690; // Is flight
 
 extern int g_DragonTotal; // gDragonTotal

@@ -74,7 +74,7 @@ void HudMobyRotate(int pIdx, int pLen, int pZRot) {
 }
 
 void HudGemUpdate(void) {
-  g_Hud.m_GemCount = g_LevelGemCount[D_80075964];
+  g_Hud.m_GemCount = g_LevelGemCount[g_LevelIndex];
   HudPrint(0, 4, g_Hud.m_GemCount, 1);
   if (g_Hud.m_GemDisplayState == HDS_Opening ||
       g_Hud.m_GemDisplayState == HDS_Open ||
@@ -126,7 +126,7 @@ void HudReset(int pArg) {
   g_Hud.m_EggSteadyTicks = 0;
   g_Hud.m_KeySteadyTicks = 0;
 
-  g_Hud.m_GemCount = g_LevelGemCount[D_80075964];
+  g_Hud.m_GemCount = g_LevelGemCount[g_LevelIndex];
   g_Hud.m_DragonCount = g_DragonTotal;
   g_Hud.m_LifeCount = D_8007582C;
   g_Hud.m_EggCount = g_EggTotal;
@@ -163,7 +163,7 @@ void HudTick(void) {
   g_Hud.m_Mobys[4].m_Rotation.z = (u_char)g_Hud.unk_0x3c;
 
   if (g_Hud.m_GemDisplayState == HDS_Hidden) {
-    if (g_Hud.m_GemCount != g_LevelGemCount[D_80075964]) {
+    if (g_Hud.m_GemCount != g_LevelGemCount[g_LevelIndex]) {
       g_Hud.m_GemDisplayState = HDS_Opening;
       g_Hud.m_GemProgress = 0;
     }
@@ -172,14 +172,14 @@ void HudTick(void) {
       g_Hud.m_GemDisplayState = HDS_Open;
       g_Hud.m_GemProgress = 0;
       g_Hud.m_GemSteadyTicks = 0;
-      if (g_Hud.m_GemCount == g_LevelGemCount[D_80075964]) {
+      if (g_Hud.m_GemCount == g_LevelGemCount[g_LevelIndex]) {
         g_Hud.m_GemSteadyTicks = -40;
       }
     } else {
       HudMoveMoby(0, 5, g_HudOpeningOffsets[g_Hud.m_GemProgress++]);
     }
   } else if (g_Hud.m_GemDisplayState == HDS_Open) {
-    if (g_Hud.m_GemCount == g_LevelGemCount[D_80075964] &&
+    if (g_Hud.m_GemCount == g_LevelGemCount[g_LevelIndex] &&
         g_Hud.m_GemProgress == 0) {
       g_Hud.m_GemSteadyTicks++;
       if (g_Hud.m_GemSteadyTicks == 20) {
@@ -188,7 +188,7 @@ void HudTick(void) {
       }
     } else {
       g_Hud.m_GemSteadyTicks = 0;
-      if (g_LevelGemCount[D_80075964] - g_Hud.m_GemCount >= 3 &&
+      if (g_LevelGemCount[g_LevelIndex] - g_Hud.m_GemCount >= 3 &&
           (g_Hud.m_GemProgress & 0x1F) == 0) {
         g_Hud.m_GemProgress -= 0x20;
       } else {
@@ -196,20 +196,20 @@ void HudTick(void) {
       }
       HudPrint(0, 4, g_Hud.m_GemCount + 1, 0);
       HudMobyRotate(0, 4, g_Hud.m_GemProgress);
-      if (g_LevelGemCount[D_80075964] - g_Hud.m_GemCount > 200) {
+      if (g_LevelGemCount[g_LevelIndex] - g_Hud.m_GemCount > 200) {
         g_Hud.m_GemCount += 8;
-      } else if (g_LevelGemCount[D_80075964] - g_Hud.m_GemCount > 20 ||
+      } else if (g_LevelGemCount[g_LevelIndex] - g_Hud.m_GemCount > 20 ||
                  g_Hud.m_GemProgress == 0xC0) {
         g_Hud.m_GemCount += 1;
       }
 
-      if (g_Hud.m_GemCount == g_TargetGemCounts[D_80075964] &&
+      if (g_Hud.m_GemCount == g_TargetGemCounts[g_LevelIndex] &&
           g_Hud.m_GemProgress == 0) {
         g_Hud.m_GemDisplayState = HDS_Completed;
       }
     }
   } else if (g_Hud.m_GemDisplayState == HDS_Closing) {
-    if (g_Hud.m_GemCount != g_LevelGemCount[D_80075964]) {
+    if (g_Hud.m_GemCount != g_LevelGemCount[g_LevelIndex]) {
       g_Hud.m_GemDisplayState = HDS_Opening;
     } else if (g_Hud.m_GemProgress == 0) {
       g_Hud.m_GemDisplayState = HDS_Hidden;

@@ -17,18 +17,14 @@
 #include "loaders.h"
 #include "memory.h"
 #include "music.h"
+#include "save_file.h"
 #include "sony_image.h"
 #include "spu.h"
 #include "spyro.h"
 #include "variables.h"
 #include "wad.h"
 
-extern void *D_800113A0; // Pointer to overlay space
 extern int _stacksize;
-
-// Wouldn't know where to put these
-extern int D_80075838;
-extern int D_8007583C;
 
 // Graphics init
 void GraphicsInitialize(void) {
@@ -133,10 +129,10 @@ void WadInitialize(void) {
   g_CdState.m_WadSector = 37;
 
   // Read the WAD header into overlay space
-  CDLoadSync(g_CdState.m_WadSector, D_800113A0, 2048, 0, 600);
+  CDLoadSync(g_CdState.m_WadSector, g_OverlaySpacePointer, 2048, 0, 600);
 
   // Copy the WAD header to the global struct
-  Memcpy(&g_WadHeader, D_800113A0, sizeof(g_WadHeader));
+  Memcpy(&g_WadHeader, g_OverlaySpacePointer, sizeof(g_WadHeader));
 }
 
 // Initializes the music table
@@ -173,8 +169,8 @@ void func_80012604(void) {
       g_LevelEggCount[i] = 0;
     }
 
-    D_80078E72.m_Levels[i] = 0;
-    D_8007A6A8[i] = 0;
+    g_VisitedFlags.m_Levels[i] = 0;
+    g_LevelVortexExitFlags[i] = 0;
   }
 
   // I had to create the writer variable to get it to match
@@ -297,11 +293,11 @@ void Initialize(void) {
 
   WadInitialize(); // Load the WAD header
 
-  CDLoadSync(g_CdState.m_WadSector, D_800113A0, 2048,
+  CDLoadSync(g_CdState.m_WadSector, g_OverlaySpacePointer, 2048,
              g_WadHeader.m_CutsceneData[Cutscene_Titlescreen].m_Offset,
              600); // Load titlescreen_data.wad's header
 
-  Memcpy(&g_LevelHeader, D_800113A0,
+  Memcpy(&g_LevelHeader, g_OverlaySpacePointer,
          sizeof(g_LevelHeader)); // Copy it to the header struct
 
   levelVram = (char *)0x80200000 - _stacksize - 0x40000;
@@ -311,7 +307,7 @@ void Initialize(void) {
                  g_WadHeader.m_CutsceneData[Cutscene_Titlescreen].m_Offset,
              600); // Load the titlescreen VRAM
 
-  CDLoadSync(g_CdState.m_WadSector, D_800113A0,
+  CDLoadSync(g_CdState.m_WadSector, g_OverlaySpacePointer,
              g_WadHeader.m_TitleScreenOverlay.m_Length,
              g_WadHeader.m_TitleScreenOverlay.m_Offset,
              600); // Load the titlescreen overlay

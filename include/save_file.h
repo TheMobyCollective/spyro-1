@@ -35,4 +35,10 @@ typedef struct {
   int m_Checksum;
 } SaveFile;
 
+// Wouldn't know where else to put these ones
+// They're unused, only initialized to 0
+// and saved to the save file
+extern int D_80075838;
+extern int D_8007583C;
+
 #endif // __SAVE_FILE_H

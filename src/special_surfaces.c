@@ -69,13 +69,13 @@ void func_80056F64(int surfaceIdx, u_int arg1) {
 
     if (g_Spyro.m_health >= 0) { // Make sure we're not dead
 
-      D_800758B4 = surfaceFlags[0]; // Level traveling to
+      g_NextLevelId = surfaceFlags[0]; // Level traveling to
 
-      // If the level ID is over 64, we set traveling back to the current level
-      // and return This used to be why the 'THE END' portal in June was
-      // disabled
-      if (D_800758B4 > 64) {
-        D_800758B4 = g_LevelId;
+      // If the level ID is over 64, we set
+      // traveling back to the current level and return
+      // This used to be how the 'THE END' portal in June was disabled
+      if (g_NextLevelId > 64) {
+        g_NextLevelId = g_LevelId;
         return;
       }
 
@@ -83,11 +83,11 @@ void func_80056F64(int surfaceIdx, u_int arg1) {
       D_8007576C = surfaceFlags[1]; // Portal
 
       if (g_LevelId != ((g_LevelId / 10) * 10)) {
-        D_800758AC = g_LevelId;
+        g_PortalLevelId = g_LevelId;
       }
 
       // This is a bit fucky wucky ??
-      pportal2 = D_80078640;
+      pportal2 = g_Portals;
       pportal = pportal2 + D_8007576C;
 
       VecSub(&spyroPortalDist, &g_Spyro.m_Position, (*pportal)->m_Points);

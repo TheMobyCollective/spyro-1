@@ -132,8 +132,8 @@ glabel func_8002EDF0
 /* 1F7DC 8002EFDC 0780043C */  lui        $a0, %hi(g_Checkpoint)
 /* 1F7E0 8002EFE0 88788424 */  addiu      $a0, $a0, %lo(g_Checkpoint)
 /* 1F7E4 8002EFE4 21280000 */  addu       $a1, $zero, $zero
-/* 1F7E8 8002EFE8 0780033C */  lui        $v1, %hi(D_80075964)
-/* 1F7EC 8002EFEC 6459638C */  lw         $v1, %lo(D_80075964)($v1)
+/* 1F7E8 8002EFE8 0780033C */  lui        $v1, %hi(g_LevelIndex)
+/* 1F7EC 8002EFEC 6459638C */  lw         $v1, %lo(g_LevelIndex)($v1)
 /* 1F7F0 8002EFF0 10000224 */  addiu      $v0, $zero, 0x10
 /* 1F7F4 8002EFF4 0880013C */  lui        $at, %hi(g_Spyro + 0x18)
 /* 1F7F8 8002EFF8 708A22A0 */  sb         $v0, %lo(g_Spyro + 0x18)($at)
@@ -152,8 +152,8 @@ glabel func_8002EDF0
 /* 1F82C 8002F02C BC8B22AC */  sw         $v0, %lo(g_Spyro + 0x164)($at)
 /* 1F830 8002F030 0780013C */  lui        $at, %hi(D_800756D0)
 /* 1F834 8002F034 D05620AC */  sw         $zero, %lo(D_800756D0)($at)
-/* 1F838 8002F038 0780013C */  lui        $at, %hi(D_800758AC)
-/* 1F83C 8002F03C AC5820AC */  sw         $zero, %lo(D_800758AC)($at)
+/* 1F838 8002F038 0780013C */  lui        $at, %hi(g_PortalLevelId)
+/* 1F83C 8002F03C AC5820AC */  sw         $zero, %lo(g_PortalLevelId)($at)
 /* 1F840 8002F040 0780013C */  lui        $at, %hi(D_800757E8)
 /* 1F844 8002F044 E85723AC */  sw         $v1, %lo(D_800757E8)($at)
 /* 1F848 8002F048 455A000C */  jal        Memset
@@ -172,8 +172,8 @@ glabel func_8002EDF0
 /* 1F87C 8002F07C 40100200 */  sll        $v0, $v0, 1
 /* 1F880 8002F080 0B008210 */  beq        $a0, $v0, .L8002F0B0
 /* 1F884 8002F084 00000000 */   nop
-/* 1F888 8002F088 0780013C */  lui        $at, %hi(D_800758B4)
-/* 1F88C 8002F08C B45822AC */  sw         $v0, %lo(D_800758B4)($at)
+/* 1F888 8002F088 0780013C */  lui        $at, %hi(g_NextLevelId)
+/* 1F88C 8002F08C B45822AC */  sw         $v0, %lo(g_NextLevelId)($at)
 /* 1F890 8002F090 02000224 */  addiu      $v0, $zero, 0x2
 /* 1F894 8002F094 0780013C */  lui        $at, %hi(g_LoadStage)
 /* 1F898 8002F098 645822AC */  sw         $v0, %lo(g_LoadStage)($at)

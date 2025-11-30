@@ -64,9 +64,9 @@ glabel func_8002EB2C
 /* 1F414 8002EC14 40100300 */   sll       $v0, $v1, 1
 /* 1F418 8002EC18 21104300 */  addu       $v0, $v0, $v1
 /* 1F41C 8002EC1C 40100200 */  sll        $v0, $v0, 1
-/* 1F420 8002EC20 0880013C */  lui        $at, %hi(D_80078E72)
+/* 1F420 8002EC20 0880013C */  lui        $at, %hi(g_VisitedFlags)
 /* 1F424 8002EC24 21082200 */  addu       $at, $at, $v0
-/* 1F428 8002EC28 728E2290 */  lbu        $v0, %lo(D_80078E72)($at)
+/* 1F428 8002EC28 728E2290 */  lbu        $v0, %lo(g_VisitedFlags)($at)
 /* 1F42C 8002EC2C 00000000 */  nop
 /* 1F430 8002EC30 14004010 */  beqz       $v0, .L8002EC84
 /* 1F434 8002EC34 05006228 */   slti      $v0, $v1, 0x5
@@ -95,9 +95,9 @@ glabel func_8002EB2C
 /* 1F488 8002EC88 40100300 */   sll       $v0, $v1, 1
 /* 1F48C 8002EC8C 21104300 */  addu       $v0, $v0, $v1
 /* 1F490 8002EC90 40100200 */  sll        $v0, $v0, 1
-/* 1F494 8002EC94 0880013C */  lui        $at, %hi(D_80078E72 + 0xC)
+/* 1F494 8002EC94 0880013C */  lui        $at, %hi(g_VisitedFlags + 0xC)
 /* 1F498 8002EC98 21082200 */  addu       $at, $at, $v0
-/* 1F49C 8002EC9C 7E8E2290 */  lbu        $v0, %lo(D_80078E72 + 0xC)($at)
+/* 1F49C 8002EC9C 7E8E2290 */  lbu        $v0, %lo(g_VisitedFlags + 0xC)($at)
 /* 1F4A0 8002ECA0 00000000 */  nop
 /* 1F4A4 8002ECA4 10004010 */  beqz       $v0, .L8002ECE8
 /* 1F4A8 8002ECA8 00000000 */   nop

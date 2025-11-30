@@ -196,15 +196,15 @@ void CheatProcessLevelWarp(void) {
   /* clang-format on */
   case PAD_UP:
     // Move to next level
-    D_800758B4 = g_LevelId + 1;
-    if ((D_800758B4 % 10) > 5) {
-      D_800758B4 = ((D_800758B4 / 10) + 1) * 10;
+    g_NextLevelId = g_LevelId + 1;
+    if ((g_NextLevelId % 10) > 5) {
+      g_NextLevelId = ((g_NextLevelId / 10) + 1) * 10;
     }
-    if (D_800758B4 < 10 || D_800758B4 > 64) {
-      D_800758B4 = 10;
+    if (g_NextLevelId < 10 || g_NextLevelId > 64) {
+      g_NextLevelId = 10;
     }
-    cheat_HomeworldSelected = D_800758B4 / 10;
-    level = D_800758B4 % 10;
+    cheat_HomeworldSelected = g_NextLevelId / 10;
+    level = g_NextLevelId % 10;
     break;
   }
 
@@ -215,20 +215,20 @@ void CheatProcessLevelWarp(void) {
     if (cheat_HomeworldSelected != 0) {
       // Calculate target level
       cheat_LevelSelected = level;
-      D_800758B4 = cheat_HomeworldSelected * 10 + cheat_LevelSelected;
+      g_NextLevelId = cheat_HomeworldSelected * 10 + cheat_LevelSelected;
 
       // Check if level is valid
-      if (D_800758B4 < 10 || D_800758B4 >= 65 || level >= 6) {
+      if (g_NextLevelId < 10 || g_NextLevelId >= 65 || level >= 6) {
         // If it isn't, set the target level to the current level
         // to not break the game similar to Tuco
-        D_800758B4 = g_LevelId;
+        g_NextLevelId = g_LevelId;
       } else {
         // Reset game state for level transition
         func_80056B28(0); // Stop all sounds
         SpecularReset();  // Reset specular table
 
-        D_800758AC = 0;  // Reset portal level id
-        D_8007576C = -1; // Reset loading part
+        g_PortalLevelId = 0; // Reset portal level id
+        D_8007576C = -1;     // Reset loading part
 
         func_8004AC24(0);  // Reset Spyro
         func_8003FDC8(15); // Reset Spyro to gliding state
@@ -267,7 +267,7 @@ void CheatApplyEffect(int pCheatId) {
 
   case 3: // Unlock all levels cheat
     for (i = 0; i < 32; i++)
-      D_80078E72.m_Levels[i] = 1;
+      g_VisitedFlags.m_Levels[i] = 1;
     for (i = 0; i < 6; i++)
       D_800758D0[i] = 2;
 

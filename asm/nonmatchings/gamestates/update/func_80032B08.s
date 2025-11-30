@@ -26,8 +26,8 @@ glabel func_80032B08
 /* 2335C 80032B5C 7C8D30AC */  sw         $s0, %lo(g_TitlescreenState + 0x4)($at)
 /* 23360 80032B60 0D006014 */  bnez       $v1, .L80032B98
 /* 23364 80032B64 00000000 */   nop
-/* 23368 80032B68 0180023C */  lui        $v0, %hi(D_800113A0)
-/* 2336C 80032B6C A013428C */  lw         $v0, %lo(D_800113A0)($v0)
+/* 23368 80032B68 0180023C */  lui        $v0, %hi(g_OverlaySpacePointer)
+/* 2336C 80032B6C A013428C */  lw         $v0, %lo(g_OverlaySpacePointer)($v0)
 /* 23370 80032B70 0780013C */  lui        $at, %hi(D_8007566C)
 /* 23374 80032B74 6C5630AC */  sw         $s0, %lo(D_8007566C)($at)
 /* 23378 80032B78 0780013C */  lui        $at, %hi(g_LoadStage)
@@ -47,8 +47,8 @@ glabel func_80032B08
 /* 233AC 80032BAC 905620AC */  sw         $zero, %lo(D_80075690)($at)
 /* 233B0 80032BB0 0780013C */  lui        $at, %hi(g_LoadStage)
 /* 233B4 80032BB4 645830AC */  sw         $s0, %lo(g_LoadStage)($at)
-/* 233B8 80032BB8 0780013C */  lui        $at, %hi(D_800758AC)
-/* 233BC 80032BBC AC5820AC */  sw         $zero, %lo(D_800758AC)($at)
+/* 233B8 80032BB8 0780013C */  lui        $at, %hi(g_PortalLevelId)
+/* 233BC 80032BBC AC5820AC */  sw         $zero, %lo(g_PortalLevelId)($at)
 /* 233C0 80032BC0 0780013C */  lui        $at, %hi(D_800756D0)
 /* 233C4 80032BC4 D05620AC */  sw         $zero, %lo(D_800756D0)($at)
 /* 233C8 80032BC8 09CB0008 */  j          .L80032C24
@@ -69,15 +69,15 @@ glabel func_80032B08
 /* 23400 80032C00 905620AC */  sw         $zero, %lo(D_80075690)($at)
 /* 23404 80032C04 0780013C */  lui        $at, %hi(g_LoadStage)
 /* 23408 80032C08 645830AC */  sw         $s0, %lo(g_LoadStage)($at)
-/* 2340C 80032C0C 0780013C */  lui        $at, %hi(D_800758AC)
-/* 23410 80032C10 AC5820AC */  sw         $zero, %lo(D_800758AC)($at)
+/* 2340C 80032C0C 0780013C */  lui        $at, %hi(g_PortalLevelId)
+/* 23410 80032C10 AC5820AC */  sw         $zero, %lo(g_PortalLevelId)($at)
 /* 23414 80032C14 0780013C */  lui        $at, %hi(D_800756D0)
 /* 23418 80032C18 D05620AC */  sw         $zero, %lo(D_800756D0)($at)
 /* 2341C 80032C1C 0780013C */  lui        $at, %hi(g_LevelId)
 /* 23420 80032C20 6C5922AC */  sw         $v0, %lo(g_LevelId)($at)
 .L80032C24:
-/* 23424 80032C24 0780013C */  lui        $at, %hi(D_800758B4)
-/* 23428 80032C28 B45822AC */  sw         $v0, %lo(D_800758B4)($at)
+/* 23424 80032C24 0780013C */  lui        $at, %hi(g_NextLevelId)
+/* 23428 80032C28 B45822AC */  sw         $v0, %lo(g_NextLevelId)($at)
 /* 2342C 80032C2C 00040224 */  addiu      $v0, $zero, 0x400
 .L80032C30:
 /* 23430 80032C30 0780013C */  lui        $at, %hi(g_Camera + 0x50)

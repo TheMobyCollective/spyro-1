@@ -32,8 +32,8 @@ glabel func_800331AC
 /* 23A18 80033218 1600A2A7 */   sh        $v0, 0x16($sp)
 /* 23A1C 8003321C D97D010C */  jal        DrawSync
 /* 23A20 80033220 21200000 */   addu      $a0, $zero, $zero
-/* 23A24 80033224 0180023C */  lui        $v0, %hi(D_800113A0)
-/* 23A28 80033228 A013428C */  lw         $v0, %lo(D_800113A0)($v0)
+/* 23A24 80033224 0180023C */  lui        $v0, %hi(g_OverlaySpacePointer)
+/* 23A28 80033228 A013428C */  lw         $v0, %lo(g_OverlaySpacePointer)($v0)
 /* 23A2C 8003322C 0780033C */  lui        $v1, %hi(D_8007566C)
 /* 23A30 80033230 6C56638C */  lw         $v1, %lo(D_8007566C)($v1)
 /* 23A34 80033234 0780013C */  lui        $at, %hi(g_LoadStage)

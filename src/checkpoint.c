@@ -22,10 +22,10 @@ void CheckpointSave(Moby *checkpoint, u_int checkpointRotation) {
 
   // These values are written here, but never read
   g_Checkpoint.m_DragonCount =
-      g_LevelDragonCount[D_80075964]; // Get the current level's dragon count
+      g_LevelDragonCount[g_LevelIndex]; // Get the current level's dragon count
 
   g_Checkpoint.m_GemCount =
-      g_LevelGemCount[D_80075964]; // Get the current level's dragon count
+      g_LevelGemCount[g_LevelIndex]; // Get the current level's dragon count
 
   g_Checkpoint.m_unusedCount = 0; // Only written here, never read.
 

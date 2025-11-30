@@ -1,6 +1,8 @@
 #include "loaders.h"
 #include "buffers.h"
+#include "camera.h"
 #include "cd.h"
+#include "checkpoint.h"
 #include "common.h"
 #include "cyclorama.h"
 #include "graphics.h"
@@ -8,6 +10,7 @@
 #include "memory.h"
 #include "moby_helpers.h"
 #include "music.h"
+#include "save_file.h"
 #include "spu.h"
 #include "spyro.h"
 #include "variables.h"
@@ -196,7 +199,7 @@ void func_800144C8(void) {
   CDLoadSync(g_CdState.m_WadSector, D_800785D8.m_LevelLayout,
              D_800785D8.m_LevelLayoutSize,
              D_800785D8.m_LevelLayoutOffset +
-                 g_WadHeader.m_LevelEntry[D_80075964].m_Data.m_Offset,
+                 g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
              600);
 
   // Call load layout
@@ -218,7 +221,7 @@ void func_80014564(void) {
   RECT r;
   int i;
   int j;
-  int size_to_load;
+  int dataSize;
 
   CDLoadTime();
 
@@ -292,25 +295,23 @@ void func_80014564(void) {
   } else if (g_LoadStage == 5) {
 
     // Initialize the scene data
-    D_800785D8.m_EndOfSceneData =
-        (void *)func_80012D58(D_800785D8.m_DiscCopyBuf, 1);
+    D_800785D8.m_ModelData = (void *)func_80012D58(D_800785D8.m_DiscCopyBuf, 1);
 
     // Switch to the new skybox
     g_Cyclorama = g_NewCyclorama;
 
     if (D_8007566C == Cutscene_Intro) {
 
-      size_to_load = g_LevelHeader.m_ModelDataSize - 0x60000;
+      dataSize = g_LevelHeader.m_ModelDataSize - 0x60000;
       g_LoadStage = 6;
 
     } else {
 
-      size_to_load = g_LevelHeader.m_ModelDataSize;
+      dataSize = g_LevelHeader.m_ModelDataSize;
       g_LoadStage = 8;
     }
 
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_EndOfSceneData,
-                size_to_load,
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_ModelData, dataSize,
                 g_LevelHeader.m_ModelDataOffset +
                     g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
                 600);
@@ -322,8 +323,8 @@ void func_80014564(void) {
   } else if (g_LoadStage == 7) {
 
     CDLoadAsync(g_CdState.m_WadSector,
-                (char *)D_800785D8.m_EndOfSceneData +
-                    g_LevelHeader.m_ModelDataSize - 0x60000,
+                (char *)D_800785D8.m_ModelData + g_LevelHeader.m_ModelDataSize -
+                    0x60000,
                 0x60000,
                 g_LevelHeader.m_ModelDataOffset +
                     g_LevelHeader.m_ModelDataSize - 0x60000 +
@@ -336,14 +337,14 @@ void func_80014564(void) {
 
     // Go over the models and patch the pointers
     for (i = 0; g_LevelHeader.m_ModelOffsets[i] > 0; ++i) {
-      D_80076378[1 + i] =
-          PatchMobyModelPointers((Model *)((char *)D_800785D8.m_EndOfSceneData +
+      g_Models[1 + i] =
+          PatchMobyModelPointers((Model *)((char *)D_800785D8.m_ModelData +
                                            (g_LevelHeader.m_ModelOffsets[i] -
                                             g_LevelHeader.m_ModelDataOffset)));
     }
 
     D_800785D8.m_LevelLayout =
-        (char *)D_800785D8.m_EndOfSceneData + g_LevelHeader.m_ModelDataSize;
+        (char *)D_800785D8.m_ModelData + g_LevelHeader.m_ModelDataSize;
     D_800785D8.m_LevelLayoutSize = g_LevelHeader.m_LayoutSize;
     D_800785D8.m_LevelLayoutOffset = g_LevelHeader.m_LayoutOffset;
 
@@ -390,5 +391,584 @@ void func_80014564(void) {
 /// @brief Loads a dragon cutscene
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80014B70);
 
+// Only used here (see usage below)
+extern int D_80075670; // Unused [0]
+extern int D_80075674; // Unused [1]
+extern int D_8007577C; // Unused
+extern int D_80075850; // Unused [0]
+extern int D_80075854; // Unused [1]
+extern int D_80075870; // Unused [0]
+extern int D_80075874; // Unused [1]
+
 /// @brief "Load level" runs through the load stages
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80015370);
+void func_80015370(int pArg) {
+  RECT rc;
+
+  // Extremely likely to be an unused string buffer
+  char _pad[32];
+
+  int i, j;
+
+  // Used in stage 0
+  int *pointerOffsetNew;
+  int *pointerOffsetOld;
+  int *dest;
+  int *portalCycloramaComponent;
+  int cycloramaSize;
+
+  // Wait for the CD subsystem to finish loading if the load stage is over 1
+  if (g_LoadStage > 1) {
+    CDLoadTime();
+    if (g_CdState.m_IsReading != 0 || CdSync(1, 0) != CdlComplete ||
+        (g_CdMusic.m_Flags & 0x40) == 0)
+      return;
+  }
+
+  switch (g_LoadStage) {
+
+  case 0: // Copy the Cyclorama temporarily into free memory
+
+    func_80056B28(0); // stop all sounds/music
+
+    if (D_8007576C >= 0) {
+
+      // The portal one has a bunch of duplicate values that aren't used by the
+      // game as far as I could tell, so the component size is at + 0x14
+      portalCycloramaComponent = g_Portals[D_8007576C]->m_Skybox;
+      pointerOffsetOld = &portalCycloramaComponent[5];
+
+      cycloramaSize = portalCycloramaComponent[5] + 1024;
+      dest = (int *)((char *)D_800785D8.m_LowerPolyBuffer - cycloramaSize);
+      Memcpy(dest, portalCycloramaComponent, cycloramaSize);
+
+      dest += 5; // Skip over the extra bytes
+
+      pointerOffsetNew = dest++;
+
+      *((int *)&g_Cyclorama.m_BackgroundColor) = *dest++;
+      g_Cyclorama.m_SectorCount = *dest++;
+      g_Cyclorama.m_Sectors = (void **)dest;
+
+      // Patch the cyclorama sector pointer into their new place
+      for (j = 0; j < g_Cyclorama.m_SectorCount; ++j) {
+        *dest++ = (int)pointerOffsetNew + *dest - (int)pointerOffsetOld;
+      }
+
+    } else {
+
+      portalCycloramaComponent = ((int *)g_Cyclorama.m_Sectors - 3);
+      pointerOffsetOld = portalCycloramaComponent;
+
+      cycloramaSize = *portalCycloramaComponent + 1024;
+      dest = (int *)((char *)D_800785D8.m_LowerPolyBuffer - cycloramaSize);
+      Memcpy(dest, portalCycloramaComponent, cycloramaSize);
+
+      pointerOffsetNew = dest++;
+
+      dest++; // Doesn't alter the color..?
+
+      g_Cyclorama.m_SectorCount = *dest++;
+      g_Cyclorama.m_Sectors = (void **)dest;
+
+      // Patch the cyclorama sector pointer into their new place
+      for (j = 0; j < g_Cyclorama.m_SectorCount; ++j) {
+        *dest++ = (int)pointerOffsetNew + *dest - (int)pointerOffsetOld;
+      }
+    }
+
+    // Copy the Sound Table over too, to preserve it during the Level Transition
+    dest = (int *)((char *)D_800785D8.m_LowerPolyBuffer - cycloramaSize -
+                   g_Spu.m_SoundTableSize);
+    Memcpy(dest, g_Spu.m_SoundTable, g_Spu.m_SoundTableSize);
+    func_80012CF0((char *)dest, 0); // Reinitialize the table with the new base
+
+    g_Camera.m_OcclusionGroup = -1;
+
+    g_LoadStage = 2;
+    break;
+
+  case 1: // Remove the Cyclorama immediately and start loading (leftover)
+
+    // stop all sounds/music, let voices keep playing
+    func_80056B28(0);
+
+    g_Cyclorama.m_SectorCount = 0;
+    g_Camera.m_OcclusionGroup = -1;
+
+    g_LoadStage++;
+    // No break, just moves onto the next stage right away
+
+  case 2: // Load level overlay, update indices
+
+    g_LevelId = g_NextLevelId; // Set the current level
+
+    func_8005A470(); // Set overlay pointers
+
+    g_PreviousLevelIndex = g_LevelIndex; // Last absolute level ID, used by the
+                                         // transition I believe
+    g_Homeworld = (g_LevelId / 10) - 1;  // Homeworld ID, used by Flight levels
+    g_LevelIndex =
+        (g_Homeworld * 6) + (g_LevelId % 10); // Current absolute level ID
+
+    if (pArg) {
+      // Load the level's overlay from Disc
+      CDLoadAsync(g_CdState.m_WadSector, g_OverlaySpacePointer,
+                  g_WadHeader.m_LevelEntry[g_LevelIndex].m_Overlay.m_Length,
+                  g_WadHeader.m_LevelEntry[g_LevelIndex].m_Overlay.m_Offset,
+                  600);
+    }
+
+    g_LoadStage++;
+    break;
+
+  case 3: // Load the level header from Disc
+
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf, 0x800,
+                g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset, 600);
+
+    g_LoadStage++;
+    break;
+
+  case 4: // Place header and start loading VRAM
+
+    Memcpy(&g_LevelHeader, D_800785D8.m_DiscCopyBuf, sizeof(g_LevelHeader));
+
+    // Load the 512x512 VRAM image
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf, 512 * 512 * 2,
+                g_LevelHeader.m_VramSramOffset +
+                    g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
+                600);
+
+    // Used as VRAM index now, reset it
+    D_8007576C = 0;
+
+    g_LoadStage++;
+    break;
+
+  case 5: // Transfer VRAM data in chunks of 512x256 (Normal levels have two)
+
+    // D_8007576C now used as which part of VRAM we're transfering
+
+    setRECT(&rc, 512, D_8007576C * 256, 512, 256);
+
+    LoadImage(&rc, (void *)((char *)D_800785D8.m_DiscCopyBuf +
+                            D_8007576C * (512 * 256 * 2)));
+
+    D_8007576C++;
+
+    if (D_8007576C == 2) { // If we transfered the second (final) part, move on
+
+      g_LoadStage++;
+
+      // Load the entirety of SPU data
+      CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf,
+                  g_LevelHeader.m_VramSramSize - (512 * 512 * 2),
+                  g_LevelHeader.m_VramSramOffset +
+                      g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset +
+                      (512 * 512 * 2),
+                  600);
+    }
+
+    break;
+
+  case 6: // Transfer the SPU data to SPU RAM
+
+    // Usable SPU RAM starts at 0x1010
+    SpuSetTransferStartAddr(0x1010);
+
+    // Size is wrong, should be g_LevelHeader.m_VramSramSize - 0x80000
+    SpuWrite(D_800785D8.m_DiscCopyBuf, 0x80000 - 0x1010);
+
+    g_LoadStage++;
+    break;
+
+  case 7: // Wait for the SPU DMA transfer to complete, then move on
+
+    if (!SpuIsTransferCompleted(0))
+      break;
+
+    g_LoadStage++;
+    break;
+
+  case 8: // Load scene data from Disc
+
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf,
+                g_LevelHeader.m_SceneSize,
+                g_LevelHeader.m_SceneOffset +
+                    g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
+                600);
+
+    g_LoadStage++;
+    break;
+
+  case 9: // Initialize scene data
+
+    D_800785D8.m_ModelData = (void *)func_80012D58(D_800785D8.m_DiscCopyBuf,
+                                                   0); // process scene data
+
+    if (g_Cyclorama.m_SectorCount != 0 && g_Gamestate != GS_GameOver &&
+        g_Gamestate != GS_Balloonist) {
+
+      // Afaik, this is an unused optimization
+      // that used to be more relevant before E3, when there were still
+      // portals inside of the level
+
+      if (g_PortalLevelId) { // Is Portal transition
+        for (i = 0; i < g_PortalCount; i++) {
+          Cyclorama *skybox;
+          if (g_Portals[i]->m_LevelId == g_PortalLevelId) { // Portal level ID
+            // This appears to be... broken
+            // The format of that pointer got changed at some point,
+            // i'm guessing. But hey, it matches :D
+            skybox = (Cyclorama *)g_Portals[i]->m_Skybox;
+            g_Cyclorama = *skybox;
+
+            // I think, this would be more correct:
+            // skybox = g_Portals[i]->m_Skybox;
+            // *(int*)(&g_Cyclorama.m_BackgroundColor) =
+            // *((int*)&skybox->m_BackgroundColor); g_Cyclorama.m_SectorCount =
+            // skybox->m_SectorCount; g_Cyclorama.m_Sectors = skybox->m_Sectors;
+            break;
+          }
+        }
+
+      } else {
+        g_Cyclorama = g_NewCyclorama;
+      }
+    }
+
+    // Load model data
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_ModelData,
+                g_LevelHeader.m_ModelDataSize,
+                g_LevelHeader.m_ModelDataOffset +
+                    g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
+                600);
+
+    g_LoadStage++;
+    break;
+
+  case 10: // Initialize model pointers
+
+#define MODEL_OFFSET(idx)                                                      \
+  (g_LevelHeader.m_ModelOffsets[idx] - g_LevelHeader.m_ModelDataOffset +       \
+   (char *)D_800785D8.m_ModelData)
+
+    if (pArg) {
+      // Patch in Spyro's Level animations
+      func_80013230(MODEL_OFFSET(0));
+    }
+
+    // Clear stale Moby model pointers
+    for (i = 0; i < MODEL_COUNT; ++i) {
+      if (((int)g_Models[i] & 0xffffff) <
+          ((int)D_800785D8.m_SharedAnimations & 0xffffff)) {
+        g_Models[i] = nullptr;
+      }
+    }
+
+    // Patch model pointers for this level, and put them in the model list
+    for (i = 1; i < 64; ++i) {
+      // Break early on the last model
+      if (g_LevelHeader.m_ModelOffsets[i] <= 0)
+        break;
+
+      g_Models[g_LevelHeader.m_ModelIndices[i]] =
+          PatchMobyModelPointers((Model *)MODEL_OFFSET(i));
+    }
+
+#undef MODEL_OFFSET
+
+    D_800785D8.m_LevelLayout =
+        (char *)D_800785D8.m_ModelData + g_LevelHeader.m_ModelDataSize;
+    D_800785D8.m_LevelLayoutSize = g_LevelHeader.m_LayoutSize;
+    D_800785D8.m_LevelLayoutOffset = g_LevelHeader.m_LayoutOffset;
+
+#if 0
+    // There used to be a printf here that said:
+    printf("Level %d:  Memory Available: %ld\n", g_LevelId,
+           ((int)D_800785D8.m_LowerPolyBuffer - (int)D_800785D8.m_LevelLayout) -
+               g_LevelHeader.m_LayoutSize);
+
+    // Which was originally placed in the final load stage (in tabloid)
+    // but got moved here because it was probably more useful here
+#endif
+
+    g_LoadStage++;
+    break;
+
+  case 11: // Load level layout data
+
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_LevelLayout,
+                D_800785D8.m_LevelLayoutSize,
+                D_800785D8.m_LevelLayoutOffset +
+                    g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
+                600);
+
+    g_LoadStage++;
+    break;
+
+  case 12: // Wait for camera to center on Spyro during level transition
+    if (!D_800756D0) { // No transition, just increment
+      g_LoadStage++;
+      break;
+    }
+
+    if (D_80075910) { // Wait for the portal to stabilize
+      break;
+    }
+
+    if (g_PortalLevelId) { // Portal transition
+      int dist = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ +
+                     g_Camera.m_Simulation.m_Coords.azimuth &
+                 0xfff;
+
+      if (dist > 2048) {
+        dist -= 4096;
+      }
+
+      if (ABS(dist) < 128) {
+        g_LoadStage++;
+      }
+
+    } else { // Otherwise
+      int dist = g_Spyro.m_bodyRotation.z - g_Spyro.m_portalAngle.z & 0xff;
+
+      if (dist > 128)
+        dist -= 256;
+
+      if (ABS(dist) < 16) {
+        g_LoadStage++;
+      }
+    }
+
+    break;
+
+  // Final initialization
+  // Set up Spyro's position and camera based on entry type
+  // Initialize the layout, which was copied from Disc earlier
+  case 13:
+
+    // Set the Easter Egg timer depending on whether this level
+    // has been visited before
+
+    if (!g_VisitedFlags.m_Levels[g_LevelIndex])
+      g_CdMusic.m_EasterEggTicks = 12 * 60 * 60; // 12 Minutes
+    else
+      g_CdMusic.m_EasterEggTicks = 8 * 60 * 60; // 8 Minutes
+
+    D_800774B0 = D_8006EF9C[g_LevelIndex]; // Set currently playing track
+
+    g_VisitedFlags.m_Levels[g_LevelIndex] = 1; // Mark this level as visited
+
+    Memset(&g_Checkpoint, 0, sizeof(CheckpointData)); // Clear checkpoint data
+
+    D_8007587C = g_LevelGemCount[g_LevelIndex]; // prev gem count for this level
+
+    D_80075830 = 0; // Key flag
+    D_800756C8 =
+        0; // Counter used for the collected gems shown in the transition
+
+    func_8001364C(pArg); // Initialize the Level Layout
+
+    if (D_800756D0) { // Has level transition
+
+      if (D_80075690) { // Is flying level
+
+        g_Spyro.m_walkingState = 10;
+
+        func_80033F08(&g_Camera.m_Position);
+
+        g_Camera.m_Simulation.m_Coords.azimuth +=
+            g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+        VecCopy(&g_Spyro.m_Position, &g_Checkpoint.m_StartingPosition);
+        g_Spyro.m_bodyRotation.z = g_Checkpoint.m_StartingRotation;
+
+        g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z * 16;
+
+        g_Camera.m_Sphere = g_Camera.m_Simulation;
+        g_Camera.m_Sphere.m_Coords.azimuth += -g_Spyro.m_bodyRotation.z * 16;
+
+        func_80034204(&g_Camera.m_Position);
+        VecAdd(&g_Camera.m_Position, &g_Camera.m_Position, &g_Spyro.m_Position);
+        func_800342F8(); // Updte camera rotation
+
+        VecCopy(&D_8006EBCC.m_CameraPosition, &g_Camera.m_Position);
+        func_80037714(&D_8006EBCC);
+
+        g_Gamestate = GS_EntranceAnimation;
+
+      } else {
+
+        if (g_PortalLevelId) { // Portal transition
+
+          // Go through all the portals until we find the one
+          // we're exiting out of
+          for (i = 0; i < g_PortalCount; i++) {
+            if (g_Portals[i]->m_LevelId == g_PortalLevelId) {
+              PortalPathMobyData *pathData;
+              int rotZ;
+
+              rotZ = g_Spyro.m_bodyRotation.z;
+              pathData = D_80075828[g_Portals[i]->m_PathMoby].m_Props;
+
+              func_8003EA68(15); // Set Spyro's state to glide
+              g_Spyro.m_walkingState = 9;
+
+              func_80033F08(&g_Camera.m_Position);
+
+              g_Camera.m_Simulation.m_Coords.azimuth +=
+                  g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+              // Determine forward/backward portal direction
+              // So we know how to rotate Spyro
+              if (pathData->m_Sidedness) {
+                VecCopy(&g_Spyro.m_Position,
+                        &pathData->m_Path->m_Nodes[0].m_Position);
+                VecCopy(&g_Spyro.m_portalEndPos,
+                        &pathData->m_Path->m_Nodes[1].m_Position);
+
+                g_Spyro.m_bodyRotation.z =
+                    Atan2(pathData->m_Path->m_Nodes[1].m_Position.x -
+                              pathData->m_Path->m_Nodes[0].m_Position.x,
+                          pathData->m_Path->m_Nodes[1].m_Position.y -
+                              pathData->m_Path->m_Nodes[0].m_Position.y,
+                          0);
+              } else {
+                VecCopy(&g_Spyro.m_Position,
+                        &pathData->m_Path->m_Nodes[1].m_Position);
+                VecCopy(&g_Spyro.m_portalEndPos,
+                        &pathData->m_Path->m_Nodes[0].m_Position);
+
+                g_Spyro.m_bodyRotation.z =
+                    Atan2(pathData->m_Path->m_Nodes[0].m_Position.x -
+                              pathData->m_Path->m_Nodes[1].m_Position.x,
+                          pathData->m_Path->m_Nodes[0].m_Position.y -
+                              pathData->m_Path->m_Nodes[1].m_Position.y,
+                          0);
+              }
+
+              // Instantly rotate Spyro and the camera
+              g_Spyro.m_Physics.m_SpeedAngle.m_RotZ =
+                  g_Spyro.m_bodyRotation.z * 16;
+
+              g_Camera.m_Sphere = g_Camera.m_Simulation;
+              g_Camera.m_Sphere.m_Coords.azimuth +=
+                  -g_Spyro.m_bodyRotation.z * 16;
+
+              func_80034204(&g_Camera.m_Position); // Sphere -> pos
+              VecAdd(&g_Camera.m_Position, &g_Camera.m_Position,
+                     &g_Spyro.m_Position);
+              func_800342F8(); // Update camera rotation
+
+              g_Spyro.m_sortingDepth = 127; // Sort Spyro over the portal
+
+              // Align the portal rotation with the skybox that was visible
+              // during the transition
+              D_800758FC = 0;
+              D_80075858 = (rotZ - g_Spyro.m_bodyRotation.z) * 16;
+
+              break;
+            }
+          }
+
+        } else {
+
+          // Non-portal entrance
+          func_8003EA68(0xF); // Set Spyro's state to glide
+
+          func_80033F08(
+              &g_Camera.m_Position); // Set spherical coords to match pos
+
+          g_Camera.m_Simulation.m_Coords.azimuth +=
+              g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+          g_Spyro.m_bodyRotation.z = g_Checkpoint.m_StartingRotation;
+          g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z * 16;
+
+          g_Camera.m_Sphere = g_Camera.m_Simulation;
+          g_Camera.m_Sphere.m_Coords.azimuth += -g_Spyro.m_bodyRotation.z * 16;
+
+          VecCopy(&g_Spyro.m_Position, &g_Checkpoint.m_StartingPosition);
+          func_80034204(&g_Camera.m_Position);
+
+          VecNull(&g_Spyro.m_Physics.m_TrueVelocity);
+
+          // This is part of an array
+          // This value is used by the entrance of High Caves, for example
+          if (g_Camera.m_0xD8 == &D_8006CA84) {
+
+            g_Spyro.m_Position.z -= 0x1600; // 5.5M
+
+            g_Spyro.m_Position.x -=
+                (COSINE_8(g_Spyro.m_bodyRotation.z) * 5 >> 1); // * 2.5
+
+            g_Spyro.m_Position.y -=
+                (SINE_8(g_Spyro.m_bodyRotation.z) * 5 >> 1); // * 2.5
+
+            VecAdd(&g_Camera.m_Position, &g_Camera.m_Position,
+                   &g_Spyro.m_Position);
+            func_800342F8(); // Update Camera rotation
+            g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+
+            g_Gamestate = GS_Playing;
+            g_Spyro.m_walkingState = 11;
+            g_Spyro.m_sortingDepth = 4;
+          } else {
+            VecAdd(&g_Camera.m_Position, &g_Camera.m_Position,
+                   &g_Spyro.m_Position);
+            func_800342F8(); // Update Camera rotation
+            VecCopy(&D_8006EBCC.m_CameraPosition, &g_Camera.m_Position);
+            func_80037714(&D_8006EBCC);
+            g_Spyro.m_walkingState = 10;
+            g_Gamestate = GS_EntranceAnimation;
+          }
+        }
+      }
+
+    } else {            // no level transition
+      if (D_80075690) { // flight level
+        g_Spyro.m_walkingState = 0;
+      } else {
+
+        if (g_Gamestate != GS_Balloonist) { // Skip if balloon transition
+          func_8003EA68(0);                 // Set Spyro state to 0 (idle)
+        }
+      }
+    }
+
+    g_Cyclorama = g_NewCyclorama;
+    D_800756D0 = 0;      // Has level transition
+    g_PortalLevelId = 0; // Portal level id
+
+    // SKELETON:
+    // This is weird..
+    // So this showed up sometime between Jun15 and Jul18.
+    // And in Jul5 it's partially here, but only the
+    // ones saved into the save file are there.
+
+    // There's another build right in the middle of Jul5 and Jul18
+    // that might give us some insight here
+    // but it's not been released yet :)
+
+    D_80075870 = 0; // Unused Var
+    D_80075874 = 0; // Unused Var
+
+    D_80075838 = 0; // Saved into save file, unused var 1
+    D_8007583C = 0; // Saved into save file, unused var 2
+
+    D_80075670 = 0; // Unused Var
+    D_80075674 = 0; // Unused Var
+
+    D_8007577C = 0; // Unused Var
+
+    D_80075854 = 0; // Unused Var
+    D_80075850 = 0; // Unused Var
+
+    D_80075818 = -1; // Credits cheat return level ID
+
+    g_LoadStage = -1;
+    break;
+  default:
+    break;
+  }
+}

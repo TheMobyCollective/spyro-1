@@ -28,7 +28,7 @@ dlabel D_80075680
 dlabel D_80075684
 /* 65E5C 80075684 */ .space 0x04
 
-dlabel D_80075688
+dlabel g_PreviousLevelIndex
 /* 65E60 80075688 */ .space 0x04
 
 dlabel D_8007568C
@@ -435,19 +435,19 @@ dlabel D_800758A4
 dlabel D_800758A8
 /* 66080 800758A8 */ .space 0x04
 
-dlabel D_800758AC
+dlabel g_PortalLevelId
 /* 66084 800758AC */ .space 0x04
 
 dlabel D_800758B0
 /* 66088 800758B0 */ .space 0x04
 
-dlabel D_800758B4
+dlabel g_NextLevelId
 /* 6608C 800758B4 */ .space 0x04
 
 dlabel D_800758B8
 /* 66090 800758B8 */ .space 0x04
 
-dlabel D_800758BC
+dlabel g_PortalCount
 /* 66094 800758BC */ .space 0x04
 
 dlabel D_800758C0
@@ -570,13 +570,13 @@ dlabel D_80075950
 dlabel D_80075958
 /* 66130 80075958 */ .space 0x04
 
-dlabel D_8007595C
+dlabel g_Homeworld
 /* 66134 8007595C */ .space 0x04
 
 dlabel D_80075960
 /* 66138 80075960 */ .space 0x04
 
-dlabel D_80075964
+dlabel g_LevelIndex
 /* 6613C 80075964 */ .space 0x04
 
 dlabel D_80075968

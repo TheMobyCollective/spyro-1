@@ -599,8 +599,8 @@ glabel func_level_40_8007D784
 /* 358F57C 8007DFB4 04F80108 */  j          .Llevel_40_8007E010
 /* 358F580 8007DFB8 B800A427 */   addiu     $a0, $sp, 0xB8
 .Llevel_40_8007DFBC:
-/* 358F584 8007DFBC 0780053C */  lui        $a1, %hi(D_800758B4)
-/* 358F588 8007DFC0 B458A58C */  lw         $a1, %lo(D_800758B4)($a1)
+/* 358F584 8007DFBC 0780053C */  lui        $a1, %hi(g_NextLevelId)
+/* 358F588 8007DFC0 B458A58C */  lw         $a1, %lo(g_NextLevelId)($a1)
 /* 358F58C 8007DFC4 67664234 */  ori        $v0, $v0, (0x66666667 & 0xFFFF)
 /* 358F590 8007DFC8 1800A200 */  mult       $a1, $v0
 /* 358F594 8007DFCC B800A427 */  addiu      $a0, $sp, 0xB8

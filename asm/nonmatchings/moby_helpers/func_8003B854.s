@@ -17,8 +17,8 @@ glabel func_8003B854
 /* 2C084 8003B884 F355010C */  jal        GenerateGemCollectMobys
 /* 2C088 8003B888 00000000 */   nop
 .L8003B88C:
-/* 2C08C 8003B88C 0780043C */  lui        $a0, %hi(D_80075964)
-/* 2C090 8003B890 6459848C */  lw         $a0, %lo(D_80075964)($a0)
+/* 2C08C 8003B88C 0780043C */  lui        $a0, %hi(g_LevelIndex)
+/* 2C090 8003B890 6459848C */  lw         $a0, %lo(g_LevelIndex)($a0)
 /* 2C094 8003B894 0780023C */  lui        $v0, %hi(g_LevelGemCount)
 /* 2C098 8003B898 20744224 */  addiu      $v0, $v0, %lo(g_LevelGemCount)
 /* 2C09C 8003B89C 80200400 */  sll        $a0, $a0, 2
@@ -79,8 +79,8 @@ glabel func_8003B854
 /* 2C16C 8003B96C 0780033C */  lui        $v1, %hi(D_80077908)
 /* 2C170 8003B970 08796324 */  addiu      $v1, $v1, %lo(D_80077908)
 /* 2C174 8003B974 80200400 */  sll        $a0, $a0, 2
-/* 2C178 8003B978 0780023C */  lui        $v0, %hi(D_80075964)
-/* 2C17C 8003B97C 6459428C */  lw         $v0, %lo(D_80075964)($v0)
+/* 2C178 8003B978 0780023C */  lui        $v0, %hi(g_LevelIndex)
+/* 2C17C 8003B97C 6459428C */  lw         $v0, %lo(g_LevelIndex)($v0)
 /* 2C180 8003B980 21282002 */  addu       $a1, $s1, $zero
 /* 2C184 8003B984 40110200 */  sll        $v0, $v0, 5
 /* 2C188 8003B988 21104300 */  addu       $v0, $v0, $v1

@@ -2190,8 +2190,8 @@ glabel func_80043FE4
 /* 36654 80045E54 0E006334 */  ori        $v1, $v1, (0x8000000E & 0xFFFF)
 /* 36658 80045E58 08004310 */  beq        $v0, $v1, .L80045E7C
 /* 3665C 80045E5C 00000000 */   nop
-/* 36660 80045E60 0780103C */  lui        $s0, %hi(D_8006EBE4)
-/* 36664 80045E64 E4EB1026 */  addiu      $s0, $s0, %lo(D_8006EBE4)
+/* 36660 80045E60 0780103C */  lui        $s0, %hi(D_8006EBCC + 0x18)
+/* 36664 80045E64 E4EB1026 */  addiu      $s0, $s0, %lo(D_8006EBCC + 0x18)
 /* 36668 80045E68 21200002 */  addu       $a0, $s0, $zero
 /* 3666C 80045E6C C05D000C */  jal        VecCopy
 /* 36670 80045E70 D0FFA524 */   addiu     $a1, $a1, -0x30
@@ -2712,8 +2712,8 @@ glabel func_80043FE4
 /* 36DC0 800465C0 748B23AC */  sw         $v1, %lo(g_Spyro + 0x11C)($at)
 /* 36DC4 800465C4 32008214 */  bne        $a0, $v0, .L80046690
 /* 36DC8 800465C8 09000224 */   addiu     $v0, $zero, 0x9
-/* 36DCC 800465CC 0780023C */  lui        $v0, %hi(D_800758AC)
-/* 36DD0 800465D0 AC58428C */  lw         $v0, %lo(D_800758AC)($v0)
+/* 36DCC 800465CC 0780023C */  lui        $v0, %hi(g_PortalLevelId)
+/* 36DD0 800465D0 AC58428C */  lw         $v0, %lo(g_PortalLevelId)($v0)
 /* 36DD4 800465D4 00000000 */  nop
 /* 36DD8 800465D8 27004014 */  bnez       $v0, .L80046678
 /* 36DDC 800465DC 00000000 */   nop

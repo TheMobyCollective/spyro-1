@@ -8,10 +8,6 @@
 #include "spu.h"
 #include "variables.h"
 
-// Wouldn't know where to put these ones
-extern int D_80075838;
-extern int D_8007583C;
-
 /// @brief Generate checksum for save file
 int SaveChecksum(u_char *saveFile) {
   int checksum = 0;
@@ -66,10 +62,10 @@ int SaveLoad(SaveFile *pSaveFile) {
     }
   }
 
-  Memcpy(D_80078E72.m_Levels, pSaveFile->m_LevelsVisited,
+  Memcpy(g_VisitedFlags.m_Levels, pSaveFile->m_LevelsVisited,
          sizeof(pSaveFile->m_LevelsVisited));
 
-  Memcpy(D_8007A6A8, pSaveFile->m_LevelsCompleted,
+  Memcpy(g_LevelVortexExitFlags, pSaveFile->m_LevelsCompleted,
          sizeof(pSaveFile->m_LevelsCompleted));
 
   g_DragonTotal = 0;
@@ -129,10 +125,10 @@ void SaveCreate(SaveFile *pSaveFile) {
     }
   }
 
-  Memcpy(pSaveFile->m_LevelsVisited, D_80078E72.m_Levels,
+  Memcpy(pSaveFile->m_LevelsVisited, g_VisitedFlags.m_Levels,
          sizeof(pSaveFile->m_LevelsVisited));
 
-  Memcpy(pSaveFile->m_LevelsCompleted, D_8007A6A8,
+  Memcpy(pSaveFile->m_LevelsCompleted, g_LevelVortexExitFlags,
          sizeof(pSaveFile->m_LevelsCompleted));
 
   for (i = 0; i < TOTAL_LEVEL_COUNT; i++) {

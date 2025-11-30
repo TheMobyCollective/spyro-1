@@ -198,8 +198,8 @@ glabel func_credits_8007AA50
 /* 5C97AD8 8007AD10 0880013C */  lui        $at, %hi(g_WadHeader + 0x290)
 /* 5C97ADC 8007AD14 21082200 */  addu       $at, $at, $v0
 /* 5C97AE0 8007AD18 60A9278C */  lw         $a3, %lo(g_WadHeader + 0x290)($at)
-/* 5C97AE4 8007AD1C 0780013C */  lui        $at, %hi(D_800758BC)
-/* 5C97AE8 8007AD20 BC5820AC */  sw         $zero, %lo(D_800758BC)($at)
+/* 5C97AE4 8007AD1C 0780013C */  lui        $at, %hi(g_PortalCount)
+/* 5C97AE8 8007AD20 BC5820AC */  sw         $zero, %lo(g_PortalCount)($at)
 /* 5C97AEC 8007AD24 1000B2AF */  sw         $s2, 0x10($sp)
 /* 5C97AF0 8007AD28 4059000C */  jal        CDLoadSync
 /* 5C97AF4 8007AD2C 21386700 */   addu      $a3, $v1, $a3

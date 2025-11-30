@@ -69,7 +69,7 @@ void func_8005B7D8(void) {
     if (!peteData->models[i].m_Offset)
       break;
 
-    D_80076378[peteData->models[i].m_Class] =
+    g_Models[peteData->models[i].m_Class] =
         PatchMobyModelPointers((void *)((char *)D_800785D8.m_SharedAnimations +
                                         peteData->models[i].m_Offset - 0x800));
   }

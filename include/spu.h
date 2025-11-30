@@ -99,6 +99,10 @@ void func_800567F4(int pSong, int pFlags);
 /// @brief Stops all sounds and music, except for the voices that are skipped
 void func_80056B28(int pSkipVoices);
 
+/// @brief Stereo sound calculation
+void func_80056C84(SpuVolume *pVolumeOut, u_int pDistance, u_char pAngleToSound,
+                   u_int pMaxDistance, SpuVolume *pVolumeIn);
+
 /// @brief Is moby playing this sound?
 int IsMobyPlayingSound(Moby *pMoby, u_int pSoundId);
 

@@ -13,8 +13,8 @@ glabel func_level_45_8007AE08
 /* 4256BF0 8007AE28 D85723AC */  sw         $v1, %lo(g_Gamestate)($at)
 /* 4256BF4 8007AE2C 80180200 */  sll        $v1, $v0, 2
 /* 4256BF8 8007AE30 21186200 */  addu       $v1, $v1, $v0
-/* 4256BFC 8007AE34 0780023C */  lui        $v0, %hi(D_8007595C)
-/* 4256C00 8007AE38 5C59428C */  lw         $v0, %lo(D_8007595C)($v0)
+/* 4256BFC 8007AE34 0780023C */  lui        $v0, %hi(g_Homeworld)
+/* 4256C00 8007AE38 5C59428C */  lw         $v0, %lo(g_Homeworld)($v0)
 /* 4256C04 8007AE3C 0880043C */  lui        $a0, %hi(D_80078618)
 /* 4256C08 8007AE40 18868424 */  addiu      $a0, $a0, %lo(D_80078618)
 /* 4256C0C 8007AE44 0780013C */  lui        $at, %hi(D_80075720)

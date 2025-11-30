@@ -1,7 +1,9 @@
-#include "common.h"
 #include "spu.h"
-#include "spyro.h"
+#include "camera.h"
+#include "common.h"
+#include "math.h"
 #include "memory.h"
+#include "spyro.h"
 
 // Mixed sounds and music stuff
 
@@ -239,7 +241,7 @@ static void KillOrphans(void) {
   u_char keysStatus[24];
   int i;
 
-  SpuGetAllKeysStatus((char*)keysStatus);
+  SpuGetAllKeysStatus((char *)keysStatus);
 
   for (i = 0; i < 24; i++) {
     if (keysStatus[i] == 1 && (g_Spu.m_ActiveSounds[i].m_Flags & 0xC1) == 0) {

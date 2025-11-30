@@ -104,8 +104,8 @@ glabel func_80059A48
 /* 4A3B4 80059BB4 0018CA48 */  ctc2       $t2, C2_R31R32 /* handwritten instruction */
 /* 4A3B8 80059BB8 0020CB48 */  ctc2       $t3, C2_R33 /* handwritten instruction */
 /* 4A3BC 80059BBC 24000793 */  lbu        $a3, 0x24($t8)
-/* 4A3C0 80059BC0 0780023C */  lui        $v0, %hi(D_80076378)
-/* 4A3C4 80059BC4 78634224 */  addiu      $v0, $v0, %lo(D_80076378)
+/* 4A3C0 80059BC0 0780023C */  lui        $v0, %hi(g_Models)
+/* 4A3C4 80059BC4 78634224 */  addiu      $v0, $v0, %lo(g_Models)
 /* 4A3C8 80059BC8 4600E010 */  beqz       $a3, .L80059CE4
 /* 4A3CC 80059BCC 0000428C */   lw        $v0, 0x0($v0)
 /* 4A3D0 80059BD0 18000397 */  lhu        $v1, 0x18($t8)

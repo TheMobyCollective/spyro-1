@@ -17,23 +17,23 @@ glabel func_8002C924
 /* 1D154 8002C954 00000000 */  nop
 /* 1D158 8002C958 16006214 */  bne        $v1, $v0, .L8002C9B4
 /* 1D15C 8002C95C 00000000 */   nop
-/* 1D160 8002C960 0880023C */  lui        $v0, %hi(D_8007A6A8 + 0x1)
-/* 1D164 8002C964 A9A64290 */  lbu        $v0, %lo(D_8007A6A8 + 0x1)($v0)
+/* 1D160 8002C960 0880023C */  lui        $v0, %hi(g_LevelVortexExitFlags + 0x1)
+/* 1D164 8002C964 A9A64290 */  lbu        $v0, %lo(g_LevelVortexExitFlags + 0x1)($v0)
 /* 1D168 8002C968 00000000 */  nop
 /* 1D16C 8002C96C 10004014 */  bnez       $v0, .L8002C9B0
 /* 1D170 8002C970 02000224 */   addiu     $v0, $zero, 0x2
-/* 1D174 8002C974 0880023C */  lui        $v0, %hi(D_8007A6A8 + 0x2)
-/* 1D178 8002C978 AAA64290 */  lbu        $v0, %lo(D_8007A6A8 + 0x2)($v0)
+/* 1D174 8002C974 0880023C */  lui        $v0, %hi(g_LevelVortexExitFlags + 0x2)
+/* 1D178 8002C978 AAA64290 */  lbu        $v0, %lo(g_LevelVortexExitFlags + 0x2)($v0)
 /* 1D17C 8002C97C 00000000 */  nop
 /* 1D180 8002C980 0B004014 */  bnez       $v0, .L8002C9B0
 /* 1D184 8002C984 02000224 */   addiu     $v0, $zero, 0x2
-/* 1D188 8002C988 0880023C */  lui        $v0, %hi(D_8007A6A8 + 0x3)
-/* 1D18C 8002C98C ABA64290 */  lbu        $v0, %lo(D_8007A6A8 + 0x3)($v0)
+/* 1D188 8002C988 0880023C */  lui        $v0, %hi(g_LevelVortexExitFlags + 0x3)
+/* 1D18C 8002C98C ABA64290 */  lbu        $v0, %lo(g_LevelVortexExitFlags + 0x3)($v0)
 /* 1D190 8002C990 00000000 */  nop
 /* 1D194 8002C994 06004014 */  bnez       $v0, .L8002C9B0
 /* 1D198 8002C998 02000224 */   addiu     $v0, $zero, 0x2
-/* 1D19C 8002C99C 0880023C */  lui        $v0, %hi(D_8007A6A8 + 0x5)
-/* 1D1A0 8002C9A0 ADA64290 */  lbu        $v0, %lo(D_8007A6A8 + 0x5)($v0)
+/* 1D19C 8002C99C 0880023C */  lui        $v0, %hi(g_LevelVortexExitFlags + 0x5)
+/* 1D1A0 8002C9A0 ADA64290 */  lbu        $v0, %lo(g_LevelVortexExitFlags + 0x5)($v0)
 /* 1D1A4 8002C9A4 00000000 */  nop
 /* 1D1A8 8002C9A8 02004010 */  beqz       $v0, .L8002C9B4
 /* 1D1AC 8002C9AC 02000224 */   addiu     $v0, $zero, 0x2
@@ -45,8 +45,8 @@ glabel func_8002C924
 /* 1D1BC 8002C9BC 3C000224 */  addiu      $v0, $zero, 0x3C
 /* 1D1C0 8002C9C0 1D006214 */  bne        $v1, $v0, .L8002CA38
 /* 1D1C4 8002C9C4 08000224 */   addiu     $v0, $zero, 0x8
-/* 1D1C8 8002C9C8 0880023C */  lui        $v0, %hi(D_8007A6A8 + 0x21)
-/* 1D1CC 8002C9CC C9A64290 */  lbu        $v0, %lo(D_8007A6A8 + 0x21)($v0)
+/* 1D1C8 8002C9C8 0880023C */  lui        $v0, %hi(g_LevelVortexExitFlags + 0x21)
+/* 1D1CC 8002C9CC C9A64290 */  lbu        $v0, %lo(g_LevelVortexExitFlags + 0x21)($v0)
 /* 1D1D0 8002C9D0 00000000 */  nop
 /* 1D1D4 8002C9D4 17004010 */  beqz       $v0, .L8002CA34
 /* 1D1D8 8002C9D8 0100053C */   lui       $a1, (0x134BF >> 16)
@@ -82,8 +82,8 @@ glabel func_8002C924
 /* 1D248 8002CA48 01000424 */  addiu      $a0, $zero, 0x1
 /* 1D24C 8002CA4C 0780103C */  lui        $s0, %hi(D_80077058)
 /* 1D250 8002CA50 58701026 */  addiu      $s0, $s0, %lo(D_80077058)
-/* 1D254 8002CA54 0780033C */  lui        $v1, %hi(D_80075964)
-/* 1D258 8002CA58 6459638C */  lw         $v1, %lo(D_80075964)($v1)
+/* 1D254 8002CA54 0780033C */  lui        $v1, %hi(g_LevelIndex)
+/* 1D258 8002CA58 6459638C */  lw         $v1, %lo(g_LevelIndex)($v1)
 /* 1D25C 8002CA5C 0780053C */  lui        $a1, %hi(g_DragonTotal)
 /* 1D260 8002CA60 5057A58C */  lw         $a1, %lo(g_DragonTotal)($a1)
 /* 1D264 8002CA64 80180300 */  sll        $v1, $v1, 2

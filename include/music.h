@@ -3,6 +3,8 @@
 
 #include <libcd.h>
 
+#include "common.h"
+
 #define PETE_XA_COUNT 6
 #define PETE_XA_TRACKS 8
 
@@ -21,6 +23,8 @@ typedef struct {
 
 extern int D_8006EEDC[PETE_XA_COUNT][PETE_XA_TRACKS]; // Track lengths
 extern int D_8006F200[PETE_XA_COUNT];                 // Pete XA offsets
+
+extern int D_8006EF9C[TOTAL_LEVEL_COUNT]; // Level to track mapping
 
 extern CdMusic g_CdMusic;
 

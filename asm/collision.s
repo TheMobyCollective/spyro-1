@@ -708,8 +708,8 @@ glabel D_8004B610
 /* 3C064 8004B864 0030C048 */  ctc2       $zero, C2_TRY /* handwritten instruction */
 /* 3C068 8004B868 0038C048 */  ctc2       $zero, C2_TRZ /* handwritten instruction */
 /* 3C06C 8004B86C 3600C597 */  lhu        $a1, 0x36($fp)
-/* 3C070 8004B870 0780063C */  lui        $a2, %hi(D_80076378)
-/* 3C074 8004B874 7863C624 */  addiu      $a2, $a2, %lo(D_80076378)
+/* 3C070 8004B870 0780063C */  lui        $a2, %hi(g_Models)
+/* 3C074 8004B874 7863C624 */  addiu      $a2, $a2, %lo(g_Models)
 /* 3C078 8004B878 80280500 */  sll        $a1, $a1, 2
 /* 3C07C 8004B87C 2028A600 */  add        $a1, $a1, $a2 /* handwritten instruction */
 /* 3C080 8004B880 3C00C693 */  lbu        $a2, 0x3C($fp)
@@ -2037,8 +2037,8 @@ glabel D_8004C820
 /* 3D400 8004CC00 0030C048 */  ctc2       $zero, C2_TRY /* handwritten instruction */
 /* 3D404 8004CC04 0038C048 */  ctc2       $zero, C2_TRZ /* handwritten instruction */
 /* 3D408 8004CC08 3600C597 */  lhu        $a1, 0x36($fp)
-/* 3D40C 8004CC0C 0780063C */  lui        $a2, %hi(D_80076378)
-/* 3D410 8004CC10 7863C624 */  addiu      $a2, $a2, %lo(D_80076378)
+/* 3D40C 8004CC0C 0780063C */  lui        $a2, %hi(g_Models)
+/* 3D410 8004CC10 7863C624 */  addiu      $a2, $a2, %lo(g_Models)
 /* 3D414 8004CC14 80280500 */  sll        $a1, $a1, 2
 /* 3D418 8004CC18 2028A600 */  add        $a1, $a1, $a2 /* handwritten instruction */
 /* 3D41C 8004CC1C 3C00C693 */  lbu        $a2, 0x3C($fp)
@@ -3104,8 +3104,8 @@ glabel func_8004D5EC
 /* 3E3CC 8004DBCC 0030C048 */  ctc2       $zero, C2_TRY /* handwritten instruction */
 /* 3E3D0 8004DBD0 0038C048 */  ctc2       $zero, C2_TRZ /* handwritten instruction */
 /* 3E3D4 8004DBD4 3600C597 */  lhu        $a1, 0x36($fp)
-/* 3E3D8 8004DBD8 0780063C */  lui        $a2, %hi(D_80076378)
-/* 3E3DC 8004DBDC 7863C624 */  addiu      $a2, $a2, %lo(D_80076378)
+/* 3E3D8 8004DBD8 0780063C */  lui        $a2, %hi(g_Models)
+/* 3E3DC 8004DBDC 7863C624 */  addiu      $a2, $a2, %lo(g_Models)
 /* 3E3E0 8004DBE0 80280500 */  sll        $a1, $a1, 2
 /* 3E3E4 8004DBE4 2028A600 */  add        $a1, $a1, $a2 /* handwritten instruction */
 /* 3E3E8 8004DBE8 3C00C693 */  lbu        $a2, 0x3C($fp)
@@ -3966,8 +3966,8 @@ glabel D_8004E5B8
 /* 3F05C 8004E85C 0030C048 */  ctc2       $zero, C2_TRY /* handwritten instruction */
 /* 3F060 8004E860 0038C048 */  ctc2       $zero, C2_TRZ /* handwritten instruction */
 /* 3F064 8004E864 3600CB97 */  lhu        $t3, 0x36($fp)
-/* 3F068 8004E868 07800C3C */  lui        $t4, %hi(D_80076378)
-/* 3F06C 8004E86C 78638C25 */  addiu      $t4, $t4, %lo(D_80076378)
+/* 3F068 8004E868 07800C3C */  lui        $t4, %hi(g_Models)
+/* 3F06C 8004E86C 78638C25 */  addiu      $t4, $t4, %lo(g_Models)
 /* 3F070 8004E870 80580B00 */  sll        $t3, $t3, 2
 /* 3F074 8004E874 20586C01 */  add        $t3, $t3, $t4 /* handwritten instruction */
 /* 3F078 8004E878 3C00CC93 */  lbu        $t4, 0x3C($fp)

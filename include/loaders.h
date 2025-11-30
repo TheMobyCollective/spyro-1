@@ -6,15 +6,15 @@
 #include "moby.h"
 #include "vector.h"
 
-extern int D_800758AC;  // Portal level id
-extern int g_LoadStage; // Load stage
-extern int D_8007566C;  // Cutscene type
+extern int g_PortalLevelId; // Portal level id
+extern int g_LoadStage;     // Load stage
+extern int D_8007566C;      // Cutscene type
 
 extern int D_800756D0; // Has level transition
 extern int D_800756B0; // Show transition text
 extern int D_800756AC; // Ticks in level transition
 
-Model* PatchMobyModelPointers(Model* pModel);
+Model *PatchMobyModelPointers(Model *pModel);
 
 void func_80014564(void); // Load titlescreen
 

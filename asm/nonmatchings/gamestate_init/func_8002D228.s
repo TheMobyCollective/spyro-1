@@ -62,8 +62,8 @@ glabel func_8002D228
 /* 1DB04 8002D304 5CA9C68C */  lw         $a2, %lo(D_8007A95C)($a2)
 /* 1DB08 8002D308 0880073C */  lui        $a3, %hi(D_8007A958)
 /* 1DB0C 8002D30C 58A9E78C */  lw         $a3, %lo(D_8007A958)($a3)
-/* 1DB10 8002D310 0180053C */  lui        $a1, %hi(D_800113A0)
-/* 1DB14 8002D314 A013A58C */  lw         $a1, %lo(D_800113A0)($a1)
+/* 1DB10 8002D310 0180053C */  lui        $a1, %hi(g_OverlaySpacePointer)
+/* 1DB14 8002D314 A013A58C */  lw         $a1, %lo(g_OverlaySpacePointer)($a1)
 /* 1DB18 8002D318 58020224 */  addiu      $v0, $zero, 0x258
 /* 1DB1C 8002D31C 4059000C */  jal        CDLoadSync
 /* 1DB20 8002D320 1000A2AF */   sw        $v0, 0x10($sp)

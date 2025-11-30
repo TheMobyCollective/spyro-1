@@ -260,9 +260,9 @@ glabel func_level_53_8008590C
 /* 4B6BA88 80085CC0 400060A2 */  sb         $zero, 0x40($s3)
 /* 4B6BA8C 80085CC4 80100200 */  sll        $v0, $v0, 2
 /* 4B6BA90 80085CC8 460064A2 */  sb         $a0, 0x46($s3)
-/* 4B6BA94 80085CCC 0780013C */  lui        $at, %hi(D_80076378)
+/* 4B6BA94 80085CCC 0780013C */  lui        $at, %hi(g_Models)
 /* 4B6BA98 80085CD0 21082200 */  addu       $at, $at, $v0
-/* 4B6BA9C 80085CD4 7863228C */  lw         $v0, %lo(D_80076378)($at)
+/* 4B6BA9C 80085CD4 7863228C */  lw         $v0, %lo(g_Models)($at)
 /* 4B6BAA0 80085CD8 00000000 */  nop
 /* 4B6BAA4 80085CDC 4400428C */  lw         $v0, 0x44($v0)
 /* 4B6BAA8 80085CE0 00000000 */  nop
@@ -336,9 +336,9 @@ glabel func_level_53_8008590C
 /* 4B6BBA8 80085DE0 480063A2 */  sb         $v1, 0x48($s3)
 /* 4B6BBAC 80085DE4 400060A2 */  sb         $zero, 0x40($s3)
 /* 4B6BBB0 80085DE8 80100200 */  sll        $v0, $v0, 2
-/* 4B6BBB4 80085DEC 0780013C */  lui        $at, %hi(D_80076378)
+/* 4B6BBB4 80085DEC 0780013C */  lui        $at, %hi(g_Models)
 /* 4B6BBB8 80085DF0 21082200 */  addu       $at, $at, $v0
-/* 4B6BBBC 80085DF4 7863228C */  lw         $v0, %lo(D_80076378)($at)
+/* 4B6BBBC 80085DF4 7863228C */  lw         $v0, %lo(g_Models)($at)
 /* 4B6BBC0 80085DF8 04000424 */  addiu      $a0, $zero, 0x4
 /* 4B6BBC4 80085DFC 4000428C */  lw         $v0, 0x40($v0)
 /* 4B6BBC8 80085E00 07000524 */  addiu      $a1, $zero, 0x7
@@ -367,9 +367,9 @@ glabel func_level_53_8008590C
 /* 4B6BC20 80085E58 400060A2 */  sb         $zero, 0x40($s3)
 /* 4B6BC24 80085E5C 80100200 */  sll        $v0, $v0, 2
 /* 4B6BC28 80085E60 460064A2 */  sb         $a0, 0x46($s3)
-/* 4B6BC2C 80085E64 0780013C */  lui        $at, %hi(D_80076378)
+/* 4B6BC2C 80085E64 0780013C */  lui        $at, %hi(g_Models)
 /* 4B6BC30 80085E68 21082200 */  addu       $at, $at, $v0
-/* 4B6BC34 80085E6C 7863228C */  lw         $v0, %lo(D_80076378)($at)
+/* 4B6BC34 80085E6C 7863228C */  lw         $v0, %lo(g_Models)($at)
 /* 4B6BC38 80085E70 00000000 */  nop
 /* 4B6BC3C 80085E74 3C00428C */  lw         $v0, 0x3C($v0)
 /* 4B6BC40 80085E78 00000000 */  nop

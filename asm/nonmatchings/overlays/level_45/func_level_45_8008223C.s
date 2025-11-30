@@ -704,8 +704,8 @@ glabel func_level_45_8008223C
 /* 425EA6C 80082CA4 CA0B0208 */  j          .Llevel_45_80082F28
 /* 425EA70 80082CA8 000002AE */   sw        $v0, 0x0($s0)
 .Llevel_45_80082CAC:
-/* 425EA74 80082CAC 0780023C */  lui        $v0, %hi(D_8007595C)
-/* 425EA78 80082CB0 5C59428C */  lw         $v0, %lo(D_8007595C)($v0)
+/* 425EA74 80082CAC 0780023C */  lui        $v0, %hi(g_Homeworld)
+/* 425EA78 80082CB0 5C59428C */  lw         $v0, %lo(g_Homeworld)($v0)
 /* 425EA7C 80082CB4 00000000 */  nop
 /* 425EA80 80082CB8 80100200 */  sll        $v0, $v0, 2
 /* 425EA84 80082CBC 0880013C */  lui        $at, %hi(D_80078618)

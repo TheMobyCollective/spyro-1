@@ -143,13 +143,13 @@ void func_8002C664(void) {
 
   // Set the level you're traveling to
   // to the homeworld of the current level
-  D_800758B4 = (g_LevelId / 10) * 10;
+  g_NextLevelId = (g_LevelId / 10) * 10;
 
   g_LoadStage = 0;
   D_800756AC = 0;
   g_Camera.unk_0xC0 = 0x80000012;
   D_8007576C = -1;
-  D_800758AC = g_LevelId;
+  g_PortalLevelId = g_LevelId;
 
   g_Gamestate = GS_LevelTransition;
 
@@ -178,7 +178,7 @@ void func_8002C714(int pEnteringFromGameplay) {
   // Set the current inventory screen to the current level's index / 6.
   // This causes the inventory screen to open up to page that shows the current
   // world.
-  D_80075744 = D_80075964 / LEVEL_PER_HOMEWORLD;
+  D_80075744 = g_LevelIndex / LEVEL_PER_HOMEWORLD;
   if (pEnteringFromGameplay) {
     D_800758B8 = 0; // Pause menu text rotation ticks
   }
@@ -407,7 +407,7 @@ void func_8002D440(void) {
     g_Gamestate = GS_TitleScreen;
 
     // reset/init this thing
-    Memset(&g_TitlescreenState, 0, 0x5C);
+    Memset(&g_TitlescreenState, 0, sizeof(g_TitlescreenState));
     g_TitlescreenState.m_0x00 = 3;
     g_TitlescreenState.m_0x04 = 0;
     g_TitlescreenState.m_0x1C = 1;

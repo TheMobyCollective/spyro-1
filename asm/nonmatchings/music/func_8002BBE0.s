@@ -116,8 +116,8 @@ glabel func_8002BBE0
 /* 1C588 8002BD88 5555033C */  lui        $v1, (0x55555556 >> 16)
 /* 1C58C 8002BD8C 56556334 */  ori        $v1, $v1, (0x55555556 & 0xFFFF)
 /* 1C590 8002BD90 18004300 */  mult       $v0, $v1
-/* 1C594 8002BD94 0780033C */  lui        $v1, %hi(D_80075964)
-/* 1C598 8002BD98 6459638C */  lw         $v1, %lo(D_80075964)($v1)
+/* 1C594 8002BD94 0780033C */  lui        $v1, %hi(g_LevelIndex)
+/* 1C598 8002BD98 6459638C */  lw         $v1, %lo(g_LevelIndex)($v1)
 /* 1C59C 8002BD9C 0780043C */  lui        $a0, %hi(D_8006F05C)
 /* 1C5A0 8002BDA0 5CF08424 */  addiu      $a0, $a0, %lo(D_8006F05C)
 /* 1C5A4 8002BDA4 40280300 */  sll        $a1, $v1, 1

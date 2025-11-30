@@ -217,8 +217,8 @@ glabel func_800522C0
 /* 42AC8 800522C8 13002000 */  mtlo       $at
 /* 42ACC 800522CC 00009920 */  addi       $t9, $a0, 0x0 /* handwritten instruction */
 /* 42AD0 800522D0 801F183C */  lui        $t8, (0x1F800004 >> 16)
-/* 42AD4 800522D4 07800F3C */  lui        $t7, %hi(D_80076378)
-/* 42AD8 800522D8 7863EF25 */  addiu      $t7, $t7, %lo(D_80076378)
+/* 42AD4 800522D4 07800F3C */  lui        $t7, %hi(g_Models)
+/* 42AD8 800522D8 7863EF25 */  addiu      $t7, $t7, %lo(g_Models)
 /* 42ADC 800522DC 0000AE20 */  addi       $t6, $a1, 0x0 /* handwritten instruction */
 .L800522E0:
 /* 42AE0 800522E0 00002D8F */  lw         $t5, 0x0($t9)

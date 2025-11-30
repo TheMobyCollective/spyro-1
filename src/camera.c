@@ -389,10 +389,6 @@ void func_80037714(LevelFlyInParameters *param) {
   g_Camera.unk_0xC0 = 0x8000000E; // I think this is the next state?
 }
 
-// SKELETON: Weird shit array of three parameters that
-// don't match any levels in the final game
-extern LevelFlyInParameters D_8006EB24[3];
-
 /// @brief Bad bad function
 void func_800377A8(void) {
   Vector3D tempVector;
@@ -487,7 +483,7 @@ void func_80037A20(void) {
 
   g_Camera.m_Focus = &g_Spyro.m_Position;
   g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
-  if (D_800758AC != 0) {
+  if (g_PortalLevelId != 0) {
     if (g_LoadStage >= 0xA) {
       g_Camera.m_0xD8 = &D_8006C964;
     } else {

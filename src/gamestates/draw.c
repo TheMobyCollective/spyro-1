@@ -439,16 +439,16 @@ void func_8001E24C(void) {
 
       if (D_800777E8.m_Homeworld < 5) {
         // Minus one is due to the homeworlds starting at 10
-        int homeworld = D_800758B4 / 10;
+        int homeworld = g_NextLevelId / 10;
         sprintf(buf, "ENTERING %s WORLD", homeworldNameTable[homeworld - 1]);
       } else if (D_800777E8.m_Homeworld == 5) {
         // Exception for Gnasty's World so it doesn't display
         // GNASTY'S WORLD WORLD (like in July)
-        int homeworld = D_800758B4 / 10;
+        int homeworld = g_NextLevelId / 10;
         sprintf(buf, "ENTERING %s", homeworldNameTable[homeworld - 1]);
       } else {
-        int homeworld = D_800758B4 / 10;
-        int level = D_800758B4 % 10;
+        int homeworld = g_NextLevelId / 10;
+        int level = g_NextLevelId % 10;
         sprintf(buf, "ENTERING %s", D_8006F7F0[level + ((homeworld - 1) * 6)]);
       }
 
@@ -562,7 +562,7 @@ void func_8001E6B8() {
     } else if (g_TitlescreenState.m_0x1C == 1) {
 
       // Have we visited Artisans before?
-      if (D_80078E72.m_Levels[0]) {
+      if (g_VisitedFlags.m_Levels[0]) {
         position.x = 80;
         func_800181AC("THE ADVENTURE CONTINUES...", &position, &spacing, 0x10,
                       0xB);
@@ -763,7 +763,7 @@ void GamestateDraw(void) {
       D_8007567C();
     } else if (g_Gamestate == GS_Dragon) {
       func_8001CFDC();
-    } else if (g_Gamestate == 9) {
+    } else if (g_Gamestate == GS_EntranceAnimation) {
       func_8001A050();
     } else if (g_Gamestate == GS_ExitLevel) {
       func_8001C694();

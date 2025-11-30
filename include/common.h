@@ -52,6 +52,8 @@ typedef enum {
 
   GS_Dragon = 8,
 
+  GS_EntranceAnimation = 9,
+
   GS_ExitLevel = 10,
   GS_Fairy = 11,
   GS_Balloonist = 12,
@@ -80,13 +82,15 @@ extern int D_8007576C; // For loading, the VRAM part we're loading
 
 extern int g_Fade; // Fade
 
-extern int g_LevelId;  // Current level id
-extern int D_800758B4; // The level you're traveling to
+extern int g_LevelId;     // Current level id
+extern int g_NextLevelId; // The level you're traveling to
+extern int g_Homeworld;   // Homeworld ID, used by Flight levels
+
+extern int g_LevelIndex;         // Current absolute level id
+extern int g_PreviousLevelIndex; // Last absolute level ID
 
 // Used to save which level you started the credits cheat on
 extern int D_80075818;
-
-extern unsigned char D_800758D0[8]; // Unlocked homeworlds
 
 extern int D_80075830; // Key flag
 
@@ -104,11 +108,14 @@ typedef struct {
 extern struct {
   unsigned char m_Homeworlds[HOMEWORLD_COUNT];
   unsigned char m_Levels[TOTAL_LEVEL_COUNT];
-} D_80078E72;
+} g_VisitedFlags;
 
-extern unsigned char D_8007A6A8[TOTAL_LEVEL_COUNT]; // Level completion flags
+extern unsigned char
+    g_LevelVortexExitFlags[TOTAL_LEVEL_COUNT]; // Level completion flags
 
-// 7 due to thigh master
+extern unsigned char D_800758D0[8]; // Unlocked homeworlds
+
+// 7 due to Thigh Masters
 extern const char *homeworldNameTable[7];
 extern const char *D_8006F7F0[]; // Level name table
 

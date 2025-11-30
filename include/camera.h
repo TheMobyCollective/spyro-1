@@ -10,14 +10,22 @@ typedef struct {
   Vector3D m_SpyroRotation;
   Vector3D m_CameraPosition;
   Vector3D m_CameraRotation;
-  int unk_0x30;
-  int unk_0x34;
+  int unk_0x30; // Usually 1
+  int unk_0x34; // Usually 0x2000
 } LevelFlyInParameters;
+
+// SKELETON: Weird shit array of three parameters that
+// don't match any levels in the final game
+extern LevelFlyInParameters D_8006EB24[3];
+
+extern LevelFlyInParameters D_8006EBCC; // Used as temporary storage
 
 typedef struct {
   SphericalCoordinates m_Coords;
   SphericalCoordinates m_Offset;
 } SphericalCoordsOffset;
+
+extern SphericalCoordsOffset D_8006CA84; // Dunno
 
 typedef struct {
   SHORTMATRIX m_ProjectionMatrix; // Scaled for the aspect ratio
@@ -70,7 +78,7 @@ extern Camera g_Camera;
 /// @brief Creates the Camera's view and projection matrices
 void CameraUpdateMatrices(void);
 
-/// @brief
+/// @brief Something for updating spherical coordinates
 int func_80033F08(Vector3D *pVec);
 
 /// @brief Some camera reset stuff

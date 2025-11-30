@@ -1578,9 +1578,9 @@ glabel func_8001A40C
 /* C2BC 8001BABC 40100300 */   sll       $v0, $v1, 1
 /* C2C0 8001BAC0 21104300 */  addu       $v0, $v0, $v1
 /* C2C4 8001BAC4 40100200 */  sll        $v0, $v0, 1
-/* C2C8 8001BAC8 0880013C */  lui        $at, %hi(D_80078E72)
+/* C2C8 8001BAC8 0880013C */  lui        $at, %hi(g_VisitedFlags)
 /* C2CC 8001BACC 21082200 */  addu       $at, $at, $v0
-/* C2D0 8001BAD0 728E2290 */  lbu        $v0, %lo(D_80078E72)($at)
+/* C2D0 8001BAD0 728E2290 */  lbu        $v0, %lo(g_VisitedFlags)($at)
 /* C2D4 8001BAD4 00000000 */  nop
 /* C2D8 8001BAD8 0E004010 */  beqz       $v0, .L8001BB14
 /* C2DC 8001BADC 4000A427 */   addiu     $a0, $sp, 0x40
@@ -1604,9 +1604,9 @@ glabel func_8001A40C
 /* C320 8001BB20 40100300 */   sll       $v0, $v1, 1
 /* C324 8001BB24 21104300 */  addu       $v0, $v0, $v1
 /* C328 8001BB28 40100200 */  sll        $v0, $v0, 1
-/* C32C 8001BB2C 0880013C */  lui        $at, %hi(D_80078E72 + 0xC)
+/* C32C 8001BB2C 0880013C */  lui        $at, %hi(g_VisitedFlags + 0xC)
 /* C330 8001BB30 21082200 */  addu       $at, $at, $v0
-/* C334 8001BB34 7E8E2290 */  lbu        $v0, %lo(D_80078E72 + 0xC)($at)
+/* C334 8001BB34 7E8E2290 */  lbu        $v0, %lo(g_VisitedFlags + 0xC)($at)
 /* C338 8001BB38 00000000 */  nop
 /* C33C 8001BB3C 0C004010 */  beqz       $v0, .L8001BB70
 /* C340 8001BB40 4000A427 */   addiu     $a0, $sp, 0x40
@@ -1801,9 +1801,9 @@ glabel func_8001A40C
 /* C624 8001BE24 21186200 */  addu       $v1, $v1, $v0
 /* C628 8001BE28 40180300 */  sll        $v1, $v1, 1
 /* C62C 8001BE2C 21187300 */  addu       $v1, $v1, $s3
-/* C630 8001BE30 0880013C */  lui        $at, %hi(D_80078E72 + 0x6)
+/* C630 8001BE30 0880013C */  lui        $at, %hi(g_VisitedFlags + 0x6)
 /* C634 8001BE34 21082300 */  addu       $at, $at, $v1
-/* C638 8001BE38 788E2290 */  lbu        $v0, %lo(D_80078E72 + 0x6)($at)
+/* C638 8001BE38 788E2290 */  lbu        $v0, %lo(g_VisitedFlags + 0x6)($at)
 /* C63C 8001BE3C 00000000 */  nop
 /* C640 8001BE40 A5014010 */  beqz       $v0, .L8001C4D8
 /* C644 8001BE44 21300000 */   addu      $a2, $zero, $zero
@@ -2081,8 +2081,8 @@ glabel func_8001A40C
 /* CA70 8001C270 40180200 */  sll        $v1, $v0, 1
 /* CA74 8001C274 21186200 */  addu       $v1, $v1, $v0
 /* CA78 8001C278 40180300 */  sll        $v1, $v1, 1
-/* CA7C 8001C27C 0780023C */  lui        $v0, %hi(D_80075964)
-/* CA80 8001C280 6459428C */  lw         $v0, %lo(D_80075964)($v0)
+/* CA7C 8001C27C 0780023C */  lui        $v0, %hi(g_LevelIndex)
+/* CA80 8001C280 6459428C */  lw         $v0, %lo(g_LevelIndex)($v0)
 /* CA84 8001C284 21187300 */  addu       $v1, $v1, $s3
 /* CA88 8001C288 1E006214 */  bne        $v1, $v0, .L8001C304
 /* CA8C 8001C28C 00000000 */   nop
