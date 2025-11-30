@@ -400,6 +400,9 @@ extern int D_80075854; // Unused [1]
 extern int D_80075870; // Unused [0]
 extern int D_80075874; // Unused [1]
 
+// Set up level overlay pointers
+extern void func_8005A470(void);
+
 /// @brief "Load level" runs through the load stages
 void func_80015370(int pArg) {
   RECT rc;

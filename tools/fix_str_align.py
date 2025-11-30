@@ -19,6 +19,14 @@ import sys
 def fix_section(lines):
     lines = iter(lines)
     for line in lines:
+
+        # Fix issue with modern compiler
+        # Look for .section	.rodata.str1.4,"aMS",@progbits,1
+        # Turn it into .section .rodata
+        if line.strip().replace("\t", " ").startswith('.section .rodata.str'):
+            yield '.section .rodata\n'
+            continue
+
         if line.strip().startswith('.ascii'):
             # Check if the next line is .align 2
             next_line = next(lines, "")

@@ -8,6 +8,7 @@
 #include "fairy.h"
 #include "gamepad.h"
 #include "graphics.h"
+#include "images.h"
 #include "math.h"
 #include "memory.h"
 #include "moby.h"
@@ -20,6 +21,8 @@
 
 #include <libetc.h>
 #include <libgpu.h>
+#include <stdio.h>
+#include <strings.h>
 
 // HAS to be local to this file.
 struct {

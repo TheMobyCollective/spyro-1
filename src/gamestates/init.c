@@ -12,14 +12,12 @@
 #include "loaders.h"
 #include "memory.h"
 #include "music.h"
+#include "rand.h"
 #include "specular_and_metal.h"
 #include "spu.h"
 #include "spyro.h"
 #include "titlescreen.h"
 #include "variables.h"
-
-extern int rand(void); // From psyq
-extern void srand(unsigned int);
 
 extern int D_8007568C; // Pause menu no button ticks
 extern int D_800758B8; // Pause menu text rotation ticks

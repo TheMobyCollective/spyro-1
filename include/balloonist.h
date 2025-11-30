@@ -6,7 +6,7 @@
 #include "moby.h"
 
 // Balloonist struct
-struct {
+extern struct {
   int m_State;
   int unk_0x04;
   int unk_0x08;

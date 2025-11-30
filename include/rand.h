@@ -1,6 +1,9 @@
 #ifndef __RAND_H
 #define __RAND_H
 
+extern int rand(void);
+extern void srand(unsigned int);
+
 /// @brief returns a value between [pMin, pMax] both inclusive
 int RandRange(int pMin, int pMax);
 

@@ -24,6 +24,8 @@
 #include "variables.h"
 #include "wad.h"
 
+#include <stdio.h>
+
 extern int _stacksize;
 
 // Graphics init

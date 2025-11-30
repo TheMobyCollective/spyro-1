@@ -7,12 +7,10 @@
 #include "loaders.h"
 #include "math.h"
 #include "memory.h"
+#include "rand.h"
 #include "spyro.h"
 
 #include <libgte.h>
-
-extern int rand(void); // From psyq
-extern void srand(unsigned int);
 
 // FYI, these are inside of this file rather than just extern,
 // because otherwise the compiler didn't make use of gp_rel!

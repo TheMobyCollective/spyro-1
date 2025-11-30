@@ -5,6 +5,8 @@
 #include "overlay_pointers.h"
 #include "spyro.h"
 
+#include "rand.h"
+
 extern int D_80077058; // TODO: Part of the dragon struct, it's the state
 
 // We have to replace LEVEL with preprocessor LEVEL

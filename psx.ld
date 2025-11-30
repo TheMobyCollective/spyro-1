@@ -18,7 +18,7 @@ SECTIONS
     /****************************************************************************************
      * MAIN
      ****************************************************************************************/
-    .main 0x80010000 : AT(header_END) SUBALIGN(2)
+    .main 0x80010000 : AT(header_END) SUBALIGN(4)
     {
         FILL(0x00000000);
         main_RODATA_START = .;
@@ -360,7 +360,7 @@ SECTIONS
         . = ALIGN(., 2048);
     }
 
-    .main_bss main_SDATA_END (NOLOAD) : AT(main_SDATA_END) SUBALIGN(2)
+    .main_bss main_SDATA_END (NOLOAD) : AT(main_SDATA_END) SUBALIGN(4)
     {
         FILL(0x00000000);
         main_SBSS_START = .;

@@ -81,6 +81,12 @@ void CameraUpdateMatrices(void);
 /// @brief Something for updating spherical coordinates
 int func_80033F08(Vector3D *pVec);
 
+/// @brief: Converts the camera's spherical coordinates to cartesian coordinates
+void func_80034204(Vector3D *pOut);
+
+/// @brief Updates the camera's rotation based on it's spherical coordinates
+void func_800342F8(void);
+
 /// @brief Some camera reset stuff
 void func_80034358(void);
 
