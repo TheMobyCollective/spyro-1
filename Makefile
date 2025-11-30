@@ -138,13 +138,6 @@ MASPSX_COMMAND = $(if ${MODERN_COMPILER},,$(PYTHON) $(MASPSX) -G4 --aspsx-versio
 
 build/src/%.o: src/%.c
 	@echo "\e[0;36m[Compiling] $<\e[0m"
-
-	@$(GCC) $(MODERN_COMPILER_FLAG) $(NEW_PSYQ_FLAG) $(DEBUG_FLAG) -Iinclude -Ipsyq/include -ffreestanding -MT $@ -MMD -MP -MF $@.d $< | \
-		$(CC) $(C_FLAGS) |\
-		$(MASPSX_COMMAND) \
-		$(PYTHON) $(REMOVE_SECTIONS) | \
-		$(PYTHON) $(FIX_STR_ALIGN) | \
-		$(PYTHON) $(FIX_JTBL_ALIGN) > $@.s
 		
 	@$(GCC) $(MODERN_COMPILER_FLAG) $(NEW_PSYQ_FLAG) $(DEBUG_FLAG) -Iinclude -Ipsyq/include -ffreestanding -MT $@ -MMD -MP -MF $@.d $< | \
 		$(CC) $(C_FLAGS) |\
