@@ -35,22 +35,7 @@ dlabel D_80076278
 /* 661C0 80076278 */ .space 0x100
 
 dlabel g_Models
-/* 662C0 80076378 */ .space 0x04
-
-dlabel D_8007637C
-/* 662C4 8007637C */ .space 0x3E4
-
-dlabel D_80076760
-/* 666A8 80076760 */ .space 0x104
-
-dlabel D_80076864
-/* 667AC 80076864 */ .space 0x30C
-
-dlabel D_80076B70
-/* 66AB8 80076B70 */ .space 0x04
-
-dlabel D_80076B74
-/* 66ABC 80076B74 */ .space 0x04
+/* Total size from 80076378 to 80076B78 */ .space 0x800
 
 dlabel D_80076B78
 /* 66AC0 80076B78 */ .space 0x08
@@ -67,27 +52,11 @@ dlabel D_80076B88
 dlabel D_80076B8C
 /* 66AD4 80076B8C */ .space 0x04
 
-dlabel D_80076B90
 dlabel g_CdState
-/* 66AD8 80076B90 */ .space 0x04
-
-dlabel D_80076B94
-/* 66ADC 80076B94 */ .space 0x04
-
-dlabel D_80076B98
-/* 66AE0 80076B98 */ .space 0x04
-
-dlabel D_80076B9C
-/* 66AE4 80076B9C */ .space 0x1C
-
-dlabel D_80076BB8
-/* 66B00 80076BB8 */ .space 0x08
+/* Total size from 80076B90 to 80076BC0 */ .space 0x30
 
 dlabel cheat_InputBuffer
-/* 66B08 80076BC0 */ .space 0x3C
-
-dlabel D_80076BFC
-/* 66B44 80076BFC */ .space 0x04
+/* 66B08 80076BC0 */ .space 0x40
 
 dlabel g_LevelHeader
 /* Total size from 80076C00 to 80076DD0 */ .space 0x1D0
@@ -101,32 +70,11 @@ dlabel g_DB
 dlabel g_LevelEggCount
 /* 66F30 80076FE8 */ .space 0x48
 
-dlabel D_80077030
+dlabel D_80077030 /* Dragon cutscene data */
 /* Total size from 80077030 to 800770C8 */ .space 0x98
 
-dlabel D_800770C8
-/* 67010 800770C8 */ .space 0x04
-
-dlabel D_800770CC
-/* 67014 800770CC */ .space 0x04
-
-dlabel D_800770D0
-/* 67018 800770D0 */ .space 0x04
-
-dlabel D_800770D4
-/* 6701C 800770D4 */ .space 0x04
-
-dlabel D_800770D8
-/* 67020 800770D8 */ .space 0x04
-
-dlabel D_800770DC
-/* 67024 800770DC */ .space 0x04
-
-dlabel D_800770E0
-/* 67028 800770E0 */ .space 0x14
-
-dlabel D_800770F4
-/* 6703C 800770F4 */ .space 0x04
+dlabel D_800770C8 /* Specular and Metal data */
+/* Total size from 800770C8 to 800770F8 */ .space 0x30
 
 dlabel D_800770F8
 /* 67040 800770F8 */ .space 0x04
@@ -146,20 +94,17 @@ dlabel D_80077108
 dlabel D_80077114
 /* 6705C 80077114 */ .space 0xB4
 
-dlabel D_800771C8
+dlabel D_800771C8 /* Rendered world sectors flags */
 /* 67110 800771C8 */ .space 0x100
 
-dlabel D_800772C8
+dlabel D_800772C8 /* Storage for tracers */
 /* 67210 800772C8 */ .space 0x10
 
 dlabel g_LevelDragonCount
 /* 67220 800772D8 */ .space 0x90
 
 dlabel D_80077368
-/* 672B0 80077368 */ .space 0x08
-
-dlabel D_80077370
-/* 672B8 80077370 */ .space 0x08
+/* Total size from 80077368 to 80077378 */ .space 0x10
 
 dlabel g_Pad
 /* Total size from 80077378 to 80077420 */ .space 0xA8
@@ -170,7 +115,7 @@ dlabel g_LevelGemCount
 dlabel g_CdMusic
 /* Total size from 800774B0 to 800776D8 */ .space 0x228
 
-dlabel D_800776D8
+dlabel D_800776D8 /* Pad clone */
 /* 67620 800776D8 */ .space 0xA8
 
 dlabel g_NewCyclorama
@@ -440,16 +385,9 @@ dlabel D_80078410
 dlabel D_80078412
 /* 6835A 80078412 */ .space 0xFA
 
-dlabel D_8007850C
-/* 68454 8007850C */ .space 0x04
+dlabel D_8007850C /* 2D sprites */
+/* Total size from 8007850C to 80078560 */ .space 0x54
 
-dlabel D_80078510
-/* 68458 80078510 */ .space 0x04
-
-dlabel D_80078514
-/* 6845C 80078514 */ .space 0x4C
-
-/* Environment animations */
 dlabel D_80078560
 /* Total size from 80078560 to 800785A8 */ .space 0x48
 

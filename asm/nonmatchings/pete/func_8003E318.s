@@ -68,8 +68,8 @@ glabel func_8003E318
 /* 2EC14 8003E414 7F5C000C */  jal        VecMagnitude
 /* 2EC18 8003E418 21280000 */   addu      $a1, $zero, $zero
 /* 2EC1C 8003E41C 21284000 */  addu       $a1, $v0, $zero
-/* 2EC20 8003E420 0780043C */  lui        $a0, %hi(D_80077370)
-/* 2EC24 8003E424 7073848C */  lw         $a0, %lo(D_80077370)($a0)
+/* 2EC20 8003E420 0780043C */  lui        $a0, %hi(D_80077368 + 0x8)
+/* 2EC24 8003E424 7073848C */  lw         $a0, %lo(D_80077368 + 0x8)($a0)
 /* 2EC28 8003E428 AD5A000C */  jal        Atan2
 /* 2EC2C 8003E42C 21300000 */   addu      $a2, $zero, $zero
 /* 2EC30 8003E430 00160200 */  sll        $v0, $v0, 24

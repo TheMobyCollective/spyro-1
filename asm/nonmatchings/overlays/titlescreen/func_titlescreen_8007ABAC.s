@@ -162,8 +162,8 @@ glabel func_titlescreen_8007ABAC
 /* 5BB3C 8007AD74 02001324 */   addiu     $s3, $zero, 0x2
 /* 5BB40 8007AD78 F958000C */  jal        CDLoadTime
 /* 5BB44 8007AD7C 00000000 */   nop
-/* 5BB48 8007AD80 0780023C */  lui        $v0, %hi(D_80076BB8)
-/* 5BB4C 8007AD84 B86B4224 */  addiu      $v0, $v0, %lo(D_80076BB8)
+/* 5BB48 8007AD80 0780023C */  lui        $v0, %hi(g_CdState + 0x28)
+/* 5BB4C 8007AD84 B86B4224 */  addiu      $v0, $v0, %lo(g_CdState + 0x28)
 /* 5BB50 8007AD88 0000428C */  lw         $v0, 0x0($v0)
 /* 5BB54 8007AD8C 00000000 */  nop
 /* 5BB58 8007AD90 AD074014 */  bnez       $v0, .Ltitlescreen_8007CC48
@@ -185,8 +185,8 @@ glabel func_titlescreen_8007ABAC
 /* 5BB98 8007ADD0 0E004014 */  bnez       $v0, .Ltitlescreen_8007AE0C
 /* 5BB9C 8007ADD4 0400063C */   lui       $a2, (0x40000 >> 16)
 /* 5BBA0 8007ADD8 58020224 */  addiu      $v0, $zero, 0x258
-/* 5BBA4 8007ADDC 0780043C */  lui        $a0, %hi(D_80076B90)
-/* 5BBA8 8007ADE0 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
+/* 5BBA4 8007ADDC 0780043C */  lui        $a0, %hi(g_CdState)
+/* 5BBA8 8007ADE0 906B848C */  lw         $a0, %lo(g_CdState)($a0)
 /* 5BBAC 8007ADE4 FCFF053C */  lui        $a1, (0xFFFC0000 >> 16)
 /* 5BBB0 8007ADE8 1000A2AF */  sw         $v0, 0x10($sp)
 /* 5BBB4 8007ADEC 0880023C */  lui        $v0, %hi(D_800785D8 + 0x10)
@@ -270,8 +270,8 @@ glabel func_titlescreen_8007ABAC
 /* 5BCD8 8007AF10 09000424 */   addiu     $a0, $zero, 0x9
 /* 5BCDC 8007AF14 B55B010C */  jal        SpuUpdate
 /* 5BCE0 8007AF18 02001024 */   addiu     $s0, $zero, 0x2
-/* 5BCE4 8007AF1C 0780113C */  lui        $s1, %hi(D_80076BB8)
-/* 5BCE8 8007AF20 B86B3126 */  addiu      $s1, $s1, %lo(D_80076BB8)
+/* 5BCE4 8007AF1C 0780113C */  lui        $s1, %hi(g_CdState + 0x28)
+/* 5BCE8 8007AF20 B86B3126 */  addiu      $s1, $s1, %lo(g_CdState + 0x28)
 .Ltitlescreen_8007AF24:
 /* 5BCEC 8007AF24 0000228E */  lw         $v0, 0x0($s1)
 /* 5BCF0 8007AF28 00000000 */  nop

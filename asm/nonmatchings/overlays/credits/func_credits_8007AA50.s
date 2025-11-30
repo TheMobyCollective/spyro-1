@@ -64,8 +64,8 @@ glabel func_credits_8007AA50
 /* 5C978C8 8007AB00 DC8522AC */  sw         $v0, %lo(D_800785D8 + 0x4)($at)
 /* 5C978CC 8007AB04 00080624 */  addiu      $a2, $zero, 0x800
 .Lcredits_8007AB08:
-/* 5C978D0 8007AB08 0780123C */  lui        $s2, %hi(D_80076B90)
-/* 5C978D4 8007AB0C 906B5226 */  addiu      $s2, $s2, %lo(D_80076B90)
+/* 5C978D0 8007AB08 0780123C */  lui        $s2, %hi(g_CdState)
+/* 5C978D4 8007AB0C 906B5226 */  addiu      $s2, $s2, %lo(g_CdState)
 /* 5C978D8 8007AB10 0880103C */  lui        $s0, %hi(D_800785D8 + 0x4)
 /* 5C978DC 8007AB14 DC851026 */  addiu      $s0, $s0, %lo(D_800785D8 + 0x4)
 /* 5C978E0 8007AB18 0000448E */  lw         $a0, 0x0($s2)
@@ -136,8 +136,8 @@ glabel func_credits_8007AA50
 /* 5C979E0 8007AC18 21200000 */   addu      $a0, $zero, $zero
 /* 5C979E4 8007AC1C FDFF4010 */  beqz       $v0, .Lcredits_8007AC14
 /* 5C979E8 8007AC20 58021224 */   addiu     $s2, $zero, 0x258
-/* 5C979EC 8007AC24 0780113C */  lui        $s1, %hi(D_80076B90)
-/* 5C979F0 8007AC28 906B3126 */  addiu      $s1, $s1, %lo(D_80076B90)
+/* 5C979EC 8007AC24 0780113C */  lui        $s1, %hi(g_CdState)
+/* 5C979F0 8007AC28 906B3126 */  addiu      $s1, $s1, %lo(g_CdState)
 /* 5C979F4 8007AC2C 0880103C */  lui        $s0, %hi(D_800785D8 + 0x4)
 /* 5C979F8 8007AC30 DC851026 */  addiu      $s0, $s0, %lo(D_800785D8 + 0x4)
 /* 5C979FC 8007AC34 0000248E */  lw         $a0, 0x0($s1)
@@ -1221,8 +1221,8 @@ glabel func_credits_8007AA50
 /* 5C989C4 8007BBFC 0500622C */   sltiu     $v0, $v1, 0x5
 /* 5C989C8 8007BC00 F958000C */  jal        CDLoadTime
 /* 5C989CC 8007BC04 00000000 */   nop
-/* 5C989D0 8007BC08 0780023C */  lui        $v0, %hi(D_80076BB8)
-/* 5C989D4 8007BC0C B86B4224 */  addiu      $v0, $v0, %lo(D_80076BB8)
+/* 5C989D0 8007BC08 0780023C */  lui        $v0, %hi(g_CdState + 0x28)
+/* 5C989D4 8007BC0C B86B4224 */  addiu      $v0, $v0, %lo(g_CdState + 0x28)
 /* 5C989D8 8007BC10 0000428C */  lw         $v0, 0x0($v0)
 /* 5C989DC 8007BC14 00000000 */  nop
 /* 5C989E0 8007BC18 E0004014 */  bnez       $v0, .Lcredits_8007BF9C
@@ -1247,8 +1247,8 @@ glabel func_credits_8007AA50
 /* 5C98A28 8007BC60 00000000 */   nop
 .L8007BC64_:
 /* 5C98A2C 8007BC64 00080624 */  addiu      $a2, $zero, 0x800
-/* 5C98A30 8007BC68 0780043C */  lui        $a0, %hi(D_80076B90)
-/* 5C98A34 8007BC6C 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
+/* 5C98A30 8007BC68 0780043C */  lui        $a0, %hi(g_CdState)
+/* 5C98A34 8007BC6C 906B848C */  lw         $a0, %lo(g_CdState)($a0)
 /* 5C98A38 8007BC70 0780023C */  lui        $v0, %hi(D_800757AC)
 /* 5C98A3C 8007BC74 AC57428C */  lw         $v0, %lo(D_800757AC)($v0)
 /* 5C98A40 8007BC78 0780053C */  lui        $a1, %hi(D_800757EC)
@@ -1269,8 +1269,8 @@ glabel func_credits_8007AA50
 /* 5C98A78 8007BCB0 565A000C */  jal        Memcpy
 /* 5C98A7C 8007BCB4 D0010624 */   addiu     $a2, $zero, 0x1D0
 /* 5C98A80 8007BCB8 0200063C */  lui        $a2, (0x20000 >> 16)
-/* 5C98A84 8007BCBC 0780043C */  lui        $a0, %hi(D_80076B90)
-/* 5C98A88 8007BCC0 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
+/* 5C98A84 8007BCBC 0780043C */  lui        $a0, %hi(g_CdState)
+/* 5C98A88 8007BCC0 906B848C */  lw         $a0, %lo(g_CdState)($a0)
 /* 5C98A8C 8007BCC4 0780053C */  lui        $a1, %hi(D_800757EC)
 /* 5C98A90 8007BCC8 EC57A58C */  lw         $a1, %lo(D_800757EC)($a1)
 /* 5C98A94 8007BCCC 0780023C */  lui        $v0, %hi(D_800757AC)
@@ -1302,8 +1302,8 @@ glabel func_credits_8007AA50
 /* 5C98AF8 8007BD30 0400033C */  lui        $v1, (0x40000 >> 16)
 /* 5C98AFC 8007BD34 0780053C */  lui        $a1, %hi(D_800757EC)
 /* 5C98B00 8007BD38 EC57A58C */  lw         $a1, %lo(D_800757EC)($a1)
-/* 5C98B04 8007BD3C 0780043C */  lui        $a0, %hi(D_80076B90)
-/* 5C98B08 8007BD40 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
+/* 5C98B04 8007BD3C 0780043C */  lui        $a0, %hi(g_CdState)
+/* 5C98B08 8007BD40 906B848C */  lw         $a0, %lo(g_CdState)($a0)
 /* 5C98B0C 8007BD44 0780023C */  lui        $v0, %hi(g_LevelHeader + 0x1C)
 /* 5C98B10 8007BD48 1C6C428C */  lw         $v0, %lo(g_LevelHeader + 0x1C)($v0)
 /* 5C98B14 8007BD4C 0780063C */  lui        $a2, %hi(g_LevelHeader + 0xC)

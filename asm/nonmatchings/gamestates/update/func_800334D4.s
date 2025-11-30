@@ -82,8 +82,8 @@ glabel func_800334D4
 /* 23DF8 800335F8 1E00A2A7 */   sh        $v0, 0x1E($sp)
 /* 23DFC 800335FC D97D010C */  jal        DrawSync
 /* 23E00 80033600 21200000 */   addu      $a0, $zero, $zero
-/* 23E04 80033604 0780043C */  lui        $a0, %hi(D_80076B90)
-/* 23E08 80033608 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
+/* 23E04 80033604 0780043C */  lui        $a0, %hi(g_CdState)
+/* 23E08 80033608 906B848C */  lw         $a0, %lo(g_CdState)($a0)
 /* 23E0C 8003360C 0880063C */  lui        $a2, %hi(g_WadHeader + 0x14)
 /* 23E10 80033610 E4A6C68C */  lw         $a2, %lo(g_WadHeader + 0x14)($a2)
 /* 23E14 80033614 0880073C */  lui        $a3, %hi(g_WadHeader + 0x10)
@@ -209,8 +209,8 @@ glabel func_800334D4
 /* 23FE8 800337E8 0400063C */  lui        $a2, (0x40000 >> 16)
 .L800337EC:
 /* 23FEC 800337EC 01001024 */  addiu      $s0, $zero, 0x1
-/* 23FF0 800337F0 0780043C */  lui        $a0, %hi(D_80076B90)
-/* 23FF4 800337F4 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
+/* 23FF0 800337F0 0780043C */  lui        $a0, %hi(g_CdState)
+/* 23FF4 800337F4 906B848C */  lw         $a0, %lo(g_CdState)($a0)
 /* 23FF8 800337F8 0880073C */  lui        $a3, %hi(g_WadHeader + 0x8)
 /* 23FFC 800337FC D8A6E78C */  lw         $a3, %lo(g_WadHeader + 0x8)($a3)
 /* 24000 80033800 58020224 */  addiu      $v0, $zero, 0x258

@@ -56,8 +56,8 @@ glabel func_8002D228
 /* 1DAF0 8002D2F0 0780013C */  lui        $at, %hi(D_800757AC)
 /* 1DAF4 8002D2F4 AC5720AC */  sw         $zero, %lo(D_800757AC)($at)
 .L8002D2F8:
-/* 1DAF8 8002D2F8 0780043C */  lui        $a0, %hi(D_80076B90)
-/* 1DAFC 8002D2FC 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
+/* 1DAF8 8002D2F8 0780043C */  lui        $a0, %hi(g_CdState)
+/* 1DAFC 8002D2FC 906B848C */  lw         $a0, %lo(g_CdState)($a0)
 /* 1DB00 8002D300 0880063C */  lui        $a2, %hi(g_WadHeader + 0x28C)
 /* 1DB04 8002D304 5CA9C68C */  lw         $a2, %lo(g_WadHeader + 0x28C)($a2)
 /* 1DB08 8002D308 0880073C */  lui        $a3, %hi(g_WadHeader + 0x288)

@@ -129,8 +129,8 @@ glabel func_8002E12C
 /* 1EAD0 8002E2D0 1E00A2A7 */   sh        $v0, 0x1E($sp)
 /* 1EAD4 8002E2D4 D97D010C */  jal        DrawSync
 /* 1EAD8 8002E2D8 21200000 */   addu      $a0, $zero, $zero
-/* 1EADC 8002E2DC 0780043C */  lui        $a0, %hi(D_80076B90)
-/* 1EAE0 8002E2E0 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
+/* 1EADC 8002E2DC 0780043C */  lui        $a0, %hi(g_CdState)
+/* 1EAE0 8002E2E0 906B848C */  lw         $a0, %lo(g_CdState)($a0)
 /* 1EAE4 8002E2E4 0880063C */  lui        $a2, %hi(g_WadHeader + 0x14)
 /* 1EAE8 8002E2E8 E4A6C68C */  lw         $a2, %lo(g_WadHeader + 0x14)($a2)
 /* 1EAEC 8002E2EC 0880073C */  lui        $a3, %hi(g_WadHeader + 0x10)

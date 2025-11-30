@@ -288,8 +288,8 @@ glabel func_8003ABC0
 /* 2B7CC 8003AFCC 00FC6324 */  addiu      $v1, $v1, -0x400
 /* 2B7D0 8003AFD0 7F5C000C */  jal        VecMagnitude
 /* 2B7D4 8003AFD4 3000A3AF */   sw        $v1, 0x30($sp)
-/* 2B7D8 8003AFD8 0780043C */  lui        $a0, %hi(D_80077370)
-/* 2B7DC 8003AFDC 7073848C */  lw         $a0, %lo(D_80077370)($a0)
+/* 2B7D8 8003AFD8 0780043C */  lui        $a0, %hi(D_80077368 + 0x8)
+/* 2B7DC 8003AFDC 7073848C */  lw         $a0, %lo(D_80077368 + 0x8)($a0)
 /* 2B7E0 8003AFE0 6B5A000C */  jal        Atan2Fast
 /* 2B7E4 8003AFE4 21284000 */   addu      $a1, $v0, $zero
 /* 2B7E8 8003AFE8 00160200 */  sll        $v0, $v0, 24

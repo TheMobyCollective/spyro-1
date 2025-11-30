@@ -47,8 +47,8 @@ glabel func_8002EDF0
 .L8002EE94:
 /* 1F694 8002EE94 0880103C */  lui        $s0, %hi(g_WadHeader + 0x3C)
 /* 1F698 8002EE98 0CA71026 */  addiu      $s0, $s0, %lo(g_WadHeader + 0x3C)
-/* 1F69C 8002EE9C 0780043C */  lui        $a0, %hi(D_80076B90)
-/* 1F6A0 8002EEA0 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
+/* 1F69C 8002EE9C 0780043C */  lui        $a0, %hi(g_CdState)
+/* 1F6A0 8002EEA0 906B848C */  lw         $a0, %lo(g_CdState)($a0)
 /* 1F6A4 8002EEA4 0000068E */  lw         $a2, 0x0($s0)
 /* 1F6A8 8002EEA8 0880113C */  lui        $s1, %hi(D_800785D8 + 0x10)
 /* 1F6AC 8002EEAC E8853126 */  addiu      $s1, $s1, %lo(D_800785D8 + 0x10)
