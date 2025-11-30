@@ -95,8 +95,8 @@ glabel func_8001A40C
 /* AC88 8001A488 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* AC8C 8001A48C 0C80010C */  jal        PutDispEnv
 /* AC90 8001A490 5C008424 */   addiu     $a0, $a0, 0x5C
-/* AC94 8001A494 0880103C */  lui        $s0, %hi(D_800785F0)
-/* AC98 8001A498 F0851026 */  addiu      $s0, $s0, %lo(D_800785F0)
+/* AC94 8001A494 0880103C */  lui        $s0, %hi(D_800785D8 + 0x18)
+/* AC98 8001A498 F0851026 */  addiu      $s0, $s0, %lo(D_800785D8 + 0x18)
 /* AC9C 8001A49C 0780043C */  lui        $a0, %hi(g_CurDB)
 /* ACA0 8001A4A0 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* ACA4 8001A4A4 767F010C */  jal        PutDrawEnv
@@ -195,10 +195,10 @@ glabel func_8001A40C
 /* AE08 8001A608 00C08434 */  ori        $a0, $a0, (0x1C000 & 0xFFFF)
 /* AE0C 8001A60C FEFF053C */  lui        $a1, (0xFFFE3E00 >> 16)
 /* AE10 8001A610 003EA534 */  ori        $a1, $a1, (0xFFFE3E00 & 0xFFFF)
-/* AE14 8001A614 0880033C */  lui        $v1, %hi(D_800785E8)
-/* AE18 8001A618 E885638C */  lw         $v1, %lo(D_800785E8)($v1)
-/* AE1C 8001A61C 0880023C */  lui        $v0, %hi(D_800785F0)
-/* AE20 8001A620 F085428C */  lw         $v0, %lo(D_800785F0)($v0)
+/* AE14 8001A614 0880033C */  lui        $v1, %hi(D_800785D8 + 0x10)
+/* AE18 8001A618 E885638C */  lw         $v1, %lo(D_800785D8 + 0x10)($v1)
+/* AE1C 8001A61C 0880023C */  lui        $v0, %hi(D_800785D8 + 0x18)
+/* AE20 8001A620 F085428C */  lw         $v0, %lo(D_800785D8 + 0x18)($v0)
 /* AE24 8001A624 0780013C */  lui        $at, %hi(D_800758B0)
 /* AE28 8001A628 B05820AC */  sw         $zero, %lo(D_800758B0)($at)
 /* AE2C 8001A62C 0780013C */  lui        $at, %hi(D_800757B0)

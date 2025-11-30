@@ -8,8 +8,8 @@ glabel func_level_55_8007AEDC
 /* 502FCB0 8007AEE8 FEFF033C */  lui        $v1, (0xFFFE3E00 >> 16)
 /* 502FCB4 8007AEEC 003E6334 */  ori        $v1, $v1, (0xFFFE3E00 & 0xFFFF)
 /* 502FCB8 8007AEF0 1000A427 */  addiu      $a0, $sp, 0x10
-/* 502FCBC 8007AEF4 0880053C */  lui        $a1, %hi(D_800785F0)
-/* 502FCC0 8007AEF8 F085A58C */  lw         $a1, %lo(D_800785F0)($a1)
+/* 502FCBC 8007AEF4 0880053C */  lui        $a1, %hi(D_800785D8 + 0x18)
+/* 502FCC0 8007AEF8 F085A58C */  lw         $a1, %lo(D_800785D8 + 0x18)($a1)
 /* 502FCC4 8007AEFC 00020224 */  addiu      $v0, $zero, 0x200
 /* 502FCC8 8007AF00 1000A2A7 */  sh         $v0, 0x10($sp)
 /* 502FCCC 8007AF04 00010224 */  addiu      $v0, $zero, 0x100

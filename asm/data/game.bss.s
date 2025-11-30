@@ -461,40 +461,7 @@ dlabel D_800785D4
 /* 6851C 800785D4 */ .space 0x04
 
 dlabel D_800785D8
-/* 68520 800785D8 */ .space 0x04
-
-dlabel D_800785DC
-/* 68524 800785DC */ .space 0x04
-
-dlabel D_800785E0
-/* 68528 800785E0 */ .space 0x04
-
-dlabel D_800785E4
-/* 6852C 800785E4 */ .space 0x04
-
-dlabel D_800785E8
-/* 68530 800785E8 */ .space 0x04
-
-dlabel D_800785EC
-/* 68534 800785EC */ .space 0x04
-
-dlabel D_800785F0
-/* 68538 800785F0 */ .space 0x04
-
-dlabel D_800785F4
-/* 6853C 800785F4 */ .space 0x04
-
-dlabel D_800785F8
-/* 68540 800785F8 */ .space 0x04
-
-dlabel D_800785FC
-/* 68544 800785FC */ .space 0x04
-
-dlabel D_80078600
-/* 68548 80078600 */ .space 0x04
-
-dlabel D_80078604
-/* 6854C 80078604 */ .space 0x04
+/* Total size from 800785D8 to 80078608 */ .space 0x30
 
 dlabel D_80078608
 /* 68550 80078608 */ .space 0x04
@@ -648,6 +615,7 @@ dlabel D_80078E50
 
 dlabel g_VisitedFlags
 /* Total size from 80078E72 to 80078E9C */ .space 0x2A
+
 dlabel D_80078E9C
 /* 68DE4 80078E9C */ .space 0x04
 
@@ -660,56 +628,14 @@ dlabel D_80078EA4
 dlabel D_80078EA8
 /* 68DF0 80078EA8 */ .space 0x04
 
-dlabel D_80078EAC
+dlabel D_80078EAC /* PSYQ moment */
 /* 68DF4 80078EAC */ .space 0x17FC
 
 dlabel g_LevelVortexExitFlags
 /* Total size from 8007A6A8 to 8007A6D0 */ .space 0x28
 
 dlabel g_WadHeader
-/* 6A618 8007A6D0 */ .space 0x04
-
-dlabel D_8007A6D4
-/* 6A61C 8007A6D4 */ .space 0x04
-
-dlabel D_8007A6D8
-/* 6A620 8007A6D8 */ .space 0x08
-
-dlabel D_8007A6E0
-/* 6A628 8007A6E0 */ .space 0x04
-
-dlabel D_8007A6E4
-/* 6A62C 8007A6E4 */ .space 0x04
-
-dlabel D_8007A6E8
-/* 6A630 8007A6E8 */ .space 0x20
-
-dlabel D_8007A708
-/* 6A650 8007A708 */ .space 0x04
-
-dlabel D_8007A70C
-/* 6A654 8007A70C */ .space 0x04
-
-dlabel D_8007A710
-/* 6A658 8007A710 */ .space 0x04
-
-dlabel D_8007A714
-/* 6A65C 8007A714 */ .space 0x04
-
-dlabel D_8007A718
-/* 6A660 8007A718 */ .space 0x04
-
-dlabel D_8007A71C
-/* 6A664 8007A71C */ .space 0x04
-
-dlabel D_8007A720
-/* 6A668 8007A720 */ .space 0x238
-
-dlabel D_8007A958
-/* 6A8A0 8007A958 */ .space 0x04
-
-dlabel D_8007A95C
-/* 6A8A4 8007A95C */ .space 0xA4
+/* Total size from 8007A6D0 to 8007AA00 */ .space 0x330
 
 dlabel D_8007AA00
 /* 6A948 8007AA00 */ .space 0x04

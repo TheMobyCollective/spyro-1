@@ -58,10 +58,10 @@ glabel func_8002D228
 .L8002D2F8:
 /* 1DAF8 8002D2F8 0780043C */  lui        $a0, %hi(D_80076B90)
 /* 1DAFC 8002D2FC 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
-/* 1DB00 8002D300 0880063C */  lui        $a2, %hi(D_8007A95C)
-/* 1DB04 8002D304 5CA9C68C */  lw         $a2, %lo(D_8007A95C)($a2)
-/* 1DB08 8002D308 0880073C */  lui        $a3, %hi(D_8007A958)
-/* 1DB0C 8002D30C 58A9E78C */  lw         $a3, %lo(D_8007A958)($a3)
+/* 1DB00 8002D300 0880063C */  lui        $a2, %hi(g_WadHeader + 0x28C)
+/* 1DB04 8002D304 5CA9C68C */  lw         $a2, %lo(g_WadHeader + 0x28C)($a2)
+/* 1DB08 8002D308 0880073C */  lui        $a3, %hi(g_WadHeader + 0x288)
+/* 1DB0C 8002D30C 58A9E78C */  lw         $a3, %lo(g_WadHeader + 0x288)($a3)
 /* 1DB10 8002D310 0180053C */  lui        $a1, %hi(g_OverlaySpacePointer)
 /* 1DB14 8002D314 A013A58C */  lw         $a1, %lo(g_OverlaySpacePointer)($a1)
 /* 1DB18 8002D318 58020224 */  addiu      $v0, $zero, 0x258

@@ -45,18 +45,18 @@ glabel func_8002EDF0
 /* 1F68C 8002EE8C E9BC0008 */  j          .L8002F3A4
 /* 1F690 8002EE90 00000000 */   nop
 .L8002EE94:
-/* 1F694 8002EE94 0880103C */  lui        $s0, %hi(D_8007A70C)
-/* 1F698 8002EE98 0CA71026 */  addiu      $s0, $s0, %lo(D_8007A70C)
+/* 1F694 8002EE94 0880103C */  lui        $s0, %hi(g_WadHeader + 0x3C)
+/* 1F698 8002EE98 0CA71026 */  addiu      $s0, $s0, %lo(g_WadHeader + 0x3C)
 /* 1F69C 8002EE9C 0780043C */  lui        $a0, %hi(D_80076B90)
 /* 1F6A0 8002EEA0 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
 /* 1F6A4 8002EEA4 0000068E */  lw         $a2, 0x0($s0)
-/* 1F6A8 8002EEA8 0880113C */  lui        $s1, %hi(D_800785E8)
-/* 1F6AC 8002EEAC E8853126 */  addiu      $s1, $s1, %lo(D_800785E8)
+/* 1F6A8 8002EEA8 0880113C */  lui        $s1, %hi(D_800785D8 + 0x10)
+/* 1F6AC 8002EEAC E8853126 */  addiu      $s1, $s1, %lo(D_800785D8 + 0x10)
 /* 1F6B0 8002EEB0 1000A2AF */  sw         $v0, 0x10($sp)
 /* 1F6B4 8002EEB4 0000228E */  lw         $v0, 0x0($s1)
 /* 1F6B8 8002EEB8 0000058E */  lw         $a1, 0x0($s0)
-/* 1F6BC 8002EEBC 0880073C */  lui        $a3, %hi(D_8007A708)
-/* 1F6C0 8002EEC0 08A7E78C */  lw         $a3, %lo(D_8007A708)($a3)
+/* 1F6BC 8002EEBC 0880073C */  lui        $a3, %hi(g_WadHeader + 0x38)
+/* 1F6C0 8002EEC0 08A7E78C */  lw         $a3, %lo(g_WadHeader + 0x38)($a3)
 /* 1F6C4 8002EEC4 4059000C */  jal        CDLoadSync
 /* 1F6C8 8002EEC8 23284500 */   subu      $a1, $v0, $a1
 /* 1F6CC 8002EECC 0000238E */  lw         $v1, 0x0($s1)

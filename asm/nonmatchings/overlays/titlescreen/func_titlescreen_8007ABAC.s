@@ -189,10 +189,10 @@ glabel func_titlescreen_8007ABAC
 /* 5BBA8 8007ADE0 906B848C */  lw         $a0, %lo(D_80076B90)($a0)
 /* 5BBAC 8007ADE4 FCFF053C */  lui        $a1, (0xFFFC0000 >> 16)
 /* 5BBB0 8007ADE8 1000A2AF */  sw         $v0, 0x10($sp)
-/* 5BBB4 8007ADEC 0880023C */  lui        $v0, %hi(D_800785E8)
-/* 5BBB8 8007ADF0 E885428C */  lw         $v0, %lo(D_800785E8)($v0)
-/* 5BBBC 8007ADF4 0880073C */  lui        $a3, %hi(D_8007A6D8)
-/* 5BBC0 8007ADF8 D8A6E78C */  lw         $a3, %lo(D_8007A6D8)($a3)
+/* 5BBB4 8007ADEC 0880023C */  lui        $v0, %hi(D_800785D8 + 0x10)
+/* 5BBB8 8007ADF0 E885428C */  lw         $v0, %lo(D_800785D8 + 0x10)($v0)
+/* 5BBBC 8007ADF4 0880073C */  lui        $a3, %hi(g_WadHeader + 0x8)
+/* 5BBC0 8007ADF8 D8A6E78C */  lw         $a3, %lo(g_WadHeader + 0x8)($a3)
 /* 5BBC4 8007ADFC A659000C */  jal        CDLoadAsync
 /* 5BBC8 8007AE00 21284500 */   addu      $a1, $v0, $a1
 /* 5BBCC 8007AE04 12F30108 */  j          .Ltitlescreen_8007CC48
@@ -214,8 +214,8 @@ glabel func_titlescreen_8007ABAC
 /* 5BC08 8007AE40 00010224 */  addiu      $v0, $zero, 0x100
 /* 5BC0C 8007AE44 1A00A2A7 */  sh         $v0, 0x1A($sp)
 /* 5BC10 8007AE48 1E00A2A7 */  sh         $v0, 0x1E($sp)
-/* 5BC14 8007AE4C 0880023C */  lui        $v0, %hi(D_800785E8)
-/* 5BC18 8007AE50 E885428C */  lw         $v0, %lo(D_800785E8)($v0)
+/* 5BC14 8007AE4C 0880023C */  lui        $v0, %hi(D_800785D8 + 0x10)
+/* 5BC18 8007AE50 E885428C */  lw         $v0, %lo(D_800785D8 + 0x10)($v0)
 /* 5BC1C 8007AE54 FCFF053C */  lui        $a1, (0xFFFC0000 >> 16)
 /* 5BC20 8007AE58 1800A3A7 */  sh         $v1, 0x18($sp)
 /* 5BC24 8007AE5C 1C00A3A7 */  sh         $v1, 0x1C($sp)

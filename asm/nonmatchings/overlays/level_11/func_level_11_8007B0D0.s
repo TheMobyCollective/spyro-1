@@ -1623,8 +1623,8 @@ glabel func_level_11_8007B0D0
 /* B85694 8007C8CC 565A000C */  jal        Memcpy
 /* B85698 8007C8D0 58000624 */   addiu     $a2, $zero, 0x58
 /* B8569C 8007C8D4 1F80023C */  lui        $v0, (0x801FFFFF >> 16)
-/* B856A0 8007C8D8 0880033C */  lui        $v1, %hi(D_800785E8)
-/* B856A4 8007C8DC E885638C */  lw         $v1, %lo(D_800785E8)($v1)
+/* B856A0 8007C8D8 0880033C */  lui        $v1, %hi(D_800785D8 + 0x10)
+/* B856A4 8007C8DC E885638C */  lw         $v1, %lo(D_800785D8 + 0x10)($v1)
 /* B856A8 8007C8E0 FFFF4234 */  ori        $v0, $v0, (0x801FFFFF & 0xFFFF)
 /* B856AC 8007C8E4 0780013C */  lui        $at, %hi(D_800777E8 + 0x68)
 /* B856B0 8007C8E8 507830AC */  sw         $s0, %lo(D_800777E8 + 0x68)($at)
