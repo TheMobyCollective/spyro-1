@@ -971,8 +971,8 @@ glabel func_8001364C
 /* 4C88 80014488 8051010C */  jal        HudReset
 /* 4C8C 8001448C 01000424 */   addiu     $a0, $zero, 0x1
 .L80014490:
-/* 4C90 80014490 0780043C */  lui        $a0, %hi(D_800774B0)
-/* 4C94 80014494 B074848C */  lw         $a0, %lo(D_800774B0)($a0)
+/* 4C90 80014490 0780043C */  lui        $a0, %hi(g_CdMusic)
+/* 4C94 80014494 B074848C */  lw         $a0, %lo(g_CdMusic)($a0)
 /* 4C98 80014498 FD59010C */  jal        func_800567F4
 /* 4C9C 8001449C 01000524 */   addiu     $a1, $zero, 0x1
 /* 4CA0 800144A0 7800BF8F */  lw         $ra, 0x78($sp)

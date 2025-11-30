@@ -9,6 +9,7 @@
 #define PETE_XA_TRACKS 8
 
 typedef struct {
+  int m_CurrentTrack;
   int m_Flags;
   struct {
     int start, end;
@@ -27,8 +28,6 @@ extern int D_8006F200[PETE_XA_COUNT];                 // Pete XA offsets
 extern int D_8006EF9C[TOTAL_LEVEL_COUNT]; // Level to track mapping
 
 extern CdMusic g_CdMusic;
-
-extern int D_800774B0; // Currently playing track
 
 void func_8002BBE0(void); // Music update
 

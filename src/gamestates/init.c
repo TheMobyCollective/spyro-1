@@ -122,7 +122,7 @@ void func_8002C534(int pResumeMusic) {
 
   if (pResumeMusic) {
     // Resume the level music
-    func_800567F4(D_800774B0, 8);
+    func_800567F4(g_CdMusic.m_CurrentTrack, 8);
   }
 }
 
@@ -206,7 +206,7 @@ void func_8002C7BC(void) {
   g_Hud.m_KeyDisplayState = HDS_Hidden;
 
   // Resume the level music
-  func_800567F4(D_800774B0, 8);
+  func_800567F4(g_CdMusic.m_CurrentTrack, 8);
 }
 
 extern int D_8007593C;
@@ -302,7 +302,7 @@ void func_8002CB6C(void) {
   g_Hud.m_KeyDisplayState = HDS_Hidden;
 
   // start up the music
-  func_800567F4(D_800774B0, 8);
+  func_800567F4(g_CdMusic.m_CurrentTrack, 8);
 }
 
 /// @brief Talk to a fairy
@@ -355,7 +355,7 @@ void func_8002D02C(void) {
   g_Hud.m_KeyDisplayState = HDS_Hidden;
 
   // start up the music
-  func_800567F4(D_800774B0, 8);
+  func_800567F4(g_CdMusic.m_CurrentTrack, 8);
 }
 
 /// @brief Start the titlescreen gamestate

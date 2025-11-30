@@ -174,8 +174,8 @@ glabel func_titlescreen_8007ABAC
 /* 5BB6C 8007ADA4 02000224 */  addiu      $v0, $zero, 0x2
 /* 5BB70 8007ADA8 A7074216 */  bne        $s2, $v0, .Ltitlescreen_8007CC48
 /* 5BB74 8007ADAC 00000000 */   nop
-/* 5BB78 8007ADB0 0780023C */  lui        $v0, %hi(D_800774B4)
-/* 5BB7C 8007ADB4 B474428C */  lw         $v0, %lo(D_800774B4)($v0)
+/* 5BB78 8007ADB0 0780023C */  lui        $v0, %hi(g_CdMusic + 0x4)
+/* 5BB7C 8007ADB4 B474428C */  lw         $v0, %lo(g_CdMusic + 0x4)($v0)
 /* 5BB80 8007ADB8 00000000 */  nop
 /* 5BB84 8007ADBC 40004230 */  andi       $v0, $v0, 0x40
 /* 5BB88 8007ADC0 A1074010 */  beqz       $v0, .Ltitlescreen_8007CC48
@@ -203,10 +203,10 @@ glabel func_titlescreen_8007ABAC
 /* 5BBDC 8007AE14 000C6334 */  ori        $v1, $v1, (0x9450C00 & 0xFFFF)
 /* 5BBE0 8007AE18 14000424 */  addiu      $a0, $zero, 0x14
 /* 5BBE4 8007AE1C 14000224 */  addiu      $v0, $zero, 0x14
-/* 5BBE8 8007AE20 0780013C */  lui        $at, %hi(D_800774B0)
-/* 5BBEC 8007AE24 B07422AC */  sw         $v0, %lo(D_800774B0)($at)
-/* 5BBF0 8007AE28 0780013C */  lui        $at, %hi(D_800776CC)
-/* 5BBF4 8007AE2C CC7623AC */  sw         $v1, %lo(D_800776CC)($at)
+/* 5BBE8 8007AE20 0780013C */  lui        $at, %hi(g_CdMusic)
+/* 5BBEC 8007AE24 B07422AC */  sw         $v0, %lo(g_CdMusic)($at)
+/* 5BBF0 8007AE28 0780013C */  lui        $at, %hi(g_CdMusic + 0x21C)
+/* 5BBF4 8007AE2C CC7623AC */  sw         $v1, %lo(g_CdMusic + 0x21C)($at)
 /* 5BBF8 8007AE30 FD59010C */  jal        func_800567F4
 /* 5BBFC 8007AE34 01000524 */   addiu     $a1, $zero, 0x1
 /* 5BC00 8007AE38 1800A427 */  addiu      $a0, $sp, 0x18
@@ -281,8 +281,8 @@ glabel func_titlescreen_8007ABAC
 /* 5BD00 8007AF38 21280000 */   addu      $a1, $zero, $zero
 /* 5BD04 8007AF3C 07005014 */  bne        $v0, $s0, .Ltitlescreen_8007AF5C
 /* 5BD08 8007AF40 00000000 */   nop
-/* 5BD0C 8007AF44 0780023C */  lui        $v0, %hi(D_800774B4)
-/* 5BD10 8007AF48 B474428C */  lw         $v0, %lo(D_800774B4)($v0)
+/* 5BD0C 8007AF44 0780023C */  lui        $v0, %hi(g_CdMusic + 0x4)
+/* 5BD10 8007AF48 B474428C */  lw         $v0, %lo(g_CdMusic + 0x4)($v0)
 /* 5BD14 8007AF4C 00000000 */  nop
 /* 5BD18 8007AF50 40004230 */  andi       $v0, $v0, 0x40
 /* 5BD1C 8007AF54 09004014 */  bnez       $v0, .Ltitlescreen_8007AF7C

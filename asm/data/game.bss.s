@@ -265,48 +265,12 @@ dlabel D_80077370
 
 dlabel g_Pad
 /* Total size from 80077378 to 80077420 */ .space 0xA8
+
 dlabel g_LevelGemCount
 /* 67368 80077420 */ .space 0x90
 
-dlabel D_800774B0
-/* 673F8 800774B0 */ .space 0x04
-
-dlabel D_800774B4
 dlabel g_CdMusic
-/* 673FC 800774B4 */ .space 0x04
-
-dlabel D_800774B8
-/* 67400 800774B8 */ .space 0x04
-
-dlabel D_800774BC
-/* 67404 800774BC */ .space 0x1FC
-
-dlabel D_800776B8
-/* 67600 800776B8 */ .space 0x04
-
-dlabel D_800776BC
-/* 67604 800776BC */ .space 0x08
-
-dlabel D_800776C4
-/* 6760C 800776C4 */ .space 0x04
-
-dlabel D_800776C8
-/* 67610 800776C8 */ .space 0x04
-
-dlabel D_800776CC
-/* 67614 800776CC */ .space 0x04
-
-dlabel D_800776D0
-/* 67618 800776D0 */ .space 0x01
-
-dlabel D_800776D1
-/* 67619 800776D1 */ .space 0x01
-
-dlabel D_800776D2
-/* 6761A 800776D2 */ .space 0x01
-
-dlabel D_800776D3
-/* 6761B 800776D3 */ .space 0x05
+/* Total size from 800774B0 to 800776D8 */ .space 0x228
 
 dlabel D_800776D8
 /* 67620 800776D8 */ .space 0xA8

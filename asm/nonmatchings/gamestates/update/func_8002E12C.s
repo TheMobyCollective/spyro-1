@@ -420,29 +420,29 @@ glabel func_8002E12C
 /* 1EF18 8002E718 0C004010 */  beqz       $v0, .L8002E74C
 /* 1EF1C 8002E71C 000082AC */   sw        $v0, 0x0($a0)
 /* 1EF20 8002E720 3F000224 */  addiu      $v0, $zero, 0x3F
-/* 1EF24 8002E724 0780013C */  lui        $at, %hi(D_800776D3)
-/* 1EF28 8002E728 D37622A0 */  sb         $v0, %lo(D_800776D3)($at)
-/* 1EF2C 8002E72C 0780013C */  lui        $at, %hi(D_800776D2)
-/* 1EF30 8002E730 D27622A0 */  sb         $v0, %lo(D_800776D2)($at)
-/* 1EF34 8002E734 0780013C */  lui        $at, %hi(D_800776D1)
-/* 1EF38 8002E738 D17622A0 */  sb         $v0, %lo(D_800776D1)($at)
-/* 1EF3C 8002E73C 0780013C */  lui        $at, %hi(D_800776D0)
-/* 1EF40 8002E740 D07622A0 */  sb         $v0, %lo(D_800776D0)($at)
+/* 1EF24 8002E724 0780013C */  lui        $at, %hi(g_CdMusic + 0x223)
+/* 1EF28 8002E728 D37622A0 */  sb         $v0, %lo(g_CdMusic + 0x223)($at)
+/* 1EF2C 8002E72C 0780013C */  lui        $at, %hi(g_CdMusic + 0x222)
+/* 1EF30 8002E730 D27622A0 */  sb         $v0, %lo(g_CdMusic + 0x222)($at)
+/* 1EF34 8002E734 0780013C */  lui        $at, %hi(g_CdMusic + 0x221)
+/* 1EF38 8002E738 D17622A0 */  sb         $v0, %lo(g_CdMusic + 0x221)($at)
+/* 1EF3C 8002E73C 0780013C */  lui        $at, %hi(g_CdMusic + 0x220)
+/* 1EF40 8002E740 D07622A0 */  sb         $v0, %lo(g_CdMusic + 0x220)($at)
 /* 1EF44 8002E744 DCB90008 */  j          .L8002E770
 /* 1EF48 8002E748 00000000 */   nop
 .L8002E74C:
 /* 1EF4C 8002E74C 7F000224 */  addiu      $v0, $zero, 0x7F
-/* 1EF50 8002E750 0780013C */  lui        $at, %hi(D_800776D2)
-/* 1EF54 8002E754 D27622A0 */  sb         $v0, %lo(D_800776D2)($at)
-/* 1EF58 8002E758 0780013C */  lui        $at, %hi(D_800776D0)
-/* 1EF5C 8002E75C D07622A0 */  sb         $v0, %lo(D_800776D0)($at)
-/* 1EF60 8002E760 0780013C */  lui        $at, %hi(D_800776D3)
-/* 1EF64 8002E764 D37620A0 */  sb         $zero, %lo(D_800776D3)($at)
-/* 1EF68 8002E768 0780013C */  lui        $at, %hi(D_800776D1)
-/* 1EF6C 8002E76C D17620A0 */  sb         $zero, %lo(D_800776D1)($at)
+/* 1EF50 8002E750 0780013C */  lui        $at, %hi(g_CdMusic + 0x222)
+/* 1EF54 8002E754 D27622A0 */  sb         $v0, %lo(g_CdMusic + 0x222)($at)
+/* 1EF58 8002E758 0780013C */  lui        $at, %hi(g_CdMusic + 0x220)
+/* 1EF5C 8002E75C D07622A0 */  sb         $v0, %lo(g_CdMusic + 0x220)($at)
+/* 1EF60 8002E760 0780013C */  lui        $at, %hi(g_CdMusic + 0x223)
+/* 1EF64 8002E764 D37620A0 */  sb         $zero, %lo(g_CdMusic + 0x223)($at)
+/* 1EF68 8002E768 0780013C */  lui        $at, %hi(g_CdMusic + 0x221)
+/* 1EF6C 8002E76C D17620A0 */  sb         $zero, %lo(g_CdMusic + 0x221)($at)
 .L8002E770:
-/* 1EF70 8002E770 0780043C */  lui        $a0, %hi(D_800776D0)
-/* 1EF74 8002E774 D0768424 */  addiu      $a0, $a0, %lo(D_800776D0)
+/* 1EF70 8002E770 0780043C */  lui        $a0, %hi(g_CdMusic + 0x220)
+/* 1EF74 8002E774 D0768424 */  addiu      $a0, $a0, %lo(g_CdMusic + 0x220)
 /* 1EF78 8002E778 FC8F010C */  jal        CdMix
 /* 1EF7C 8002E77C 00000000 */   nop
 /* 1EF80 8002E780 C5BA0008 */  j          .L8002EB14

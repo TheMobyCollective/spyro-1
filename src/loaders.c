@@ -756,7 +756,8 @@ void func_80015370(int pArg) {
     else
       g_CdMusic.m_EasterEggTicks = 8 * 60 * 60; // 8 Minutes
 
-    D_800774B0 = D_8006EF9C[g_LevelIndex]; // Set currently playing track
+    g_CdMusic.m_CurrentTrack =
+        D_8006EF9C[g_LevelIndex]; // Set currently playing track
 
     g_VisitedFlags.m_Levels[g_LevelIndex] = 1; // Mark this level as visited
 

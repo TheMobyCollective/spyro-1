@@ -36,8 +36,8 @@ glabel func_80014B70
 /* 53B0 80014BB0 02000324 */  addiu      $v1, $zero, 0x2
 /* 53B4 80014BB4 E5014314 */  bne        $v0, $v1, .L8001534C
 /* 53B8 80014BB8 00000000 */   nop
-/* 53BC 80014BBC 0780023C */  lui        $v0, %hi(D_800774B4)
-/* 53C0 80014BC0 B474428C */  lw         $v0, %lo(D_800774B4)($v0)
+/* 53BC 80014BBC 0780023C */  lui        $v0, %hi(g_CdMusic + 0x4)
+/* 53C0 80014BC0 B474428C */  lw         $v0, %lo(g_CdMusic + 0x4)($v0)
 /* 53C4 80014BC4 00000000 */  nop
 /* 53C8 80014BC8 40004230 */  andi       $v0, $v0, 0x40
 /* 53CC 80014BCC DF014010 */  beqz       $v0, .L8001534C
