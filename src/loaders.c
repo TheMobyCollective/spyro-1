@@ -597,11 +597,11 @@ void LoadDragonCutscene(void) {
     g_DragonCutscene.unk_0x4C =
         g_DragonCutscene.m_Header.m_CameraData.m_Length / 24;
 
-    g_Models[510] = PatchMobyModelPointers((char *)D_800785D8.m_ModelData);
+    g_Models[510] = PatchMobyModelPointers((Model *)D_800785D8.m_ModelData);
     g_Models[511] = PatchMobyModelPointers(
-        (char *)D_800785D8.m_ModelData +
-        g_DragonCutscene.m_Header.m_SpyroModel.m_Offset -
-        g_DragonCutscene.m_Header.m_DragonModel.m_Offset);
+        (Model *)((char *)D_800785D8.m_ModelData +
+                  g_DragonCutscene.m_Header.m_SpyroModel.m_Offset -
+                  g_DragonCutscene.m_Header.m_DragonModel.m_Offset));
     g_DragonCutscene.m_Stage++;
 
     break;
@@ -677,9 +677,10 @@ void LoadDragonCutscene(void) {
         break;
       }
 
-      g_Models[g_LevelHeader.m_ModelIndices[i]] = PatchMobyModelPointers(
-          (char *)D_800785D8.m_ModelData +
-          (g_LevelHeader.m_ModelOffsets[i] - g_LevelHeader.m_ModelDataOffset));
+      g_Models[g_LevelHeader.m_ModelIndices[i]] =
+          PatchMobyModelPointers((Model *)((char *)D_800785D8.m_ModelData +
+                                           (g_LevelHeader.m_ModelOffsets[i] -
+                                            g_LevelHeader.m_ModelDataOffset)));
     }
 
     g_DragonCutscene.m_Stage++;
