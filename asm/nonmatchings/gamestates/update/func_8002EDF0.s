@@ -339,7 +339,7 @@ glabel func_8002EDF0
 /* 1FAF8 8002F2F8 0B004228 */  slti       $v0, $v0, 0xB
 /* 1FAFC 8002F2FC 05004010 */  beqz       $v0, .L8002F314
 /* 1FB00 8002F300 00000000 */   nop
-/* 1FB04 8002F304 DC54000C */  jal        func_80015370
+/* 1FB04 8002F304 DC54000C */  jal        LoadLevel
 /* 1FB08 8002F308 01000424 */   addiu     $a0, $zero, 0x1
 /* 1FB0C 8002F30C E9BC0008 */  j          .L8002F3A4
 /* 1FB10 8002F310 00000000 */   nop
@@ -373,7 +373,7 @@ glabel func_8002EDF0
 /* 1FB74 8002F374 11004228 */  slti       $v0, $v0, 0x11
 /* 1FB78 8002F378 0A004014 */  bnez       $v0, .L8002F3A4
 /* 1FB7C 8002F37C 00000000 */   nop
-/* 1FB80 8002F380 DC54000C */  jal        func_80015370
+/* 1FB80 8002F380 DC54000C */  jal        LoadLevel
 /* 1FB84 8002F384 01000424 */   addiu     $a0, $zero, 0x1
 /* 1FB88 8002F388 0780023C */  lui        $v0, %hi(g_LoadStage)
 /* 1FB8C 8002F38C 6458428C */  lw         $v0, %lo(g_LoadStage)($v0)

@@ -361,7 +361,7 @@ void Initialize(void) {
   g_CutsceneIdx = 0;
 
   do {
-    func_80014564();
+    LoadCutscene();
   } while (g_LoadStage < 10);
 
   // Wait for 210 frames, / 60 = 3.5 seconds

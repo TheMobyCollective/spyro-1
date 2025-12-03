@@ -82,8 +82,8 @@ glabel func_titlescreen_8007ABAC
 /* 5BA18 8007AC50 40084230 */  andi       $v0, $v0, 0x840
 /* 5BA1C 8007AC54 1E004010 */  beqz       $v0, .Ltitlescreen_8007ACD0
 /* 5BA20 8007AC58 00000000 */   nop
-/* 5BA24 8007AC5C 0780043C */  lui        $a0, %hi(D_80077030 + 0x54)
-/* 5BA28 8007AC60 8470848C */  lw         $a0, %lo(D_80077030 + 0x54)($a0)
+/* 5BA24 8007AC5C 0780043C */  lui        $a0, %hi(g_DragonCutscene + 0x54)
+/* 5BA28 8007AC60 8470848C */  lw         $a0, %lo(g_DragonCutscene + 0x54)($a0)
 /* 5BA2C 8007AC64 8058010C */  jal        StopSound
 /* 5BA30 8007AC68 04000524 */   addiu     $a1, $zero, 0x4
 /* 5BA34 8007AC6C 0780033C */  lui        $v1, %hi(D_80075680)

@@ -321,7 +321,7 @@ glabel func_80012D58
 /* 39FC 800131FC 0000C28C */  lw         $v0, 0x0($a2)
 /* 3A00 80013200 0780013C */  lui        $at, %hi(g_Spu + 0x32C)
 /* 3A04 80013204 346222AC */  sw         $v0, %lo(g_Spu + 0x32C)($at)
-/* 3A08 80013208 3C4B000C */  jal        func_80012CF0
+/* 3A08 80013208 3C4B000C */  jal        SetNewSoundTable
 /* 3A0C 8001320C 04000426 */   addiu     $a0, $s0, 0x4
 /* 3A10 80013210 0000028E */  lw         $v0, 0x0($s0)
 /* 3A14 80013214 00000000 */  nop

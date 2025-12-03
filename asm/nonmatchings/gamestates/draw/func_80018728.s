@@ -2,8 +2,8 @@
 .set noreorder /* don't insert nops after branches */
 
 glabel func_80018728
-/* 8F28 80018728 0780023C */  lui        $v0, %hi(D_80077030 + 0x90)
-/* 8F2C 8001872C C070428C */  lw         $v0, %lo(D_80077030 + 0x90)($v0)
+/* 8F28 80018728 0780023C */  lui        $v0, %hi(g_DragonCutscene + 0x90)
+/* 8F2C 8001872C C070428C */  lw         $v0, %lo(g_DragonCutscene + 0x90)($v0)
 /* 8F30 80018730 C8FFBD27 */  addiu      $sp, $sp, -0x38
 /* 8F34 80018734 3000BFAF */  sw         $ra, 0x30($sp)
 /* 8F38 80018738 2C00B3AF */  sw         $s3, 0x2C($sp)
@@ -57,8 +57,8 @@ glabel func_80018728
 /* 8FF8 800187F8 2A106202 */  slt        $v0, $s3, $v0
 /* 8FFC 800187FC 16004014 */  bnez       $v0, .L80018858
 /* 9000 80018800 21180000 */   addu      $v1, $zero, $zero
-/* 9004 80018804 0780053C */  lui        $a1, %hi(D_80077030 + 0x50)
-/* 9008 80018808 8070A524 */  addiu      $a1, $a1, %lo(D_80077030 + 0x50)
+/* 9004 80018804 0780053C */  lui        $a1, %hi(g_DragonCutscene + 0x50)
+/* 9008 80018808 8070A524 */  addiu      $a1, $a1, %lo(g_DragonCutscene + 0x50)
 /* 900C 8001880C 0780043C */  lui        $a0, %hi(D_8006CC78)
 /* 9010 80018810 78CC8424 */  addiu      $a0, $a0, %lo(D_8006CC78)
 .L80018814:

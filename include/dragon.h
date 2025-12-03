@@ -48,6 +48,6 @@ extern struct {
   Moby *m_CutsceneDragon;    // Cutscene Spyro
   Moby *m_RescuedDragonMoby; // The dragon Moby being rescued
   int padding;
-} D_80077030; // Dragon cutscene struct
+} g_DragonCutscene; // Dragon cutscene struct
 
 #endif

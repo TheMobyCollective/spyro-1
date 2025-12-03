@@ -70,7 +70,7 @@ dlabel g_DB
 dlabel g_LevelEggCount
 /* 66F30 80076FE8 */ .space 0x48
 
-dlabel D_80077030 /* Dragon cutscene data */
+dlabel g_DragonCutscene /* Dragon cutscene data */
 /* Total size from 80077030 to 800770C8 */ .space 0x98
 
 dlabel D_800770C8 /* Specular and Metal data */

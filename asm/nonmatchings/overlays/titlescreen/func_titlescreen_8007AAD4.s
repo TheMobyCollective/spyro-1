@@ -39,8 +39,8 @@ glabel func_titlescreen_8007AAD4
 /* 5B924 8007AB5C 0E0040A4 */  sh         $zero, 0xE($v0)
 /* 5B928 8007AB60 0780023C */  lui        $v0, %hi(g_Spu + 0x2C8)
 /* 5B92C 8007AB64 D061428C */  lw         $v0, %lo(g_Spu + 0x2C8)($v0)
-/* 5B930 8007AB68 0780073C */  lui        $a3, %hi(D_80077030 + 0x54)
-/* 5B934 8007AB6C 8470E724 */  addiu      $a3, $a3, %lo(D_80077030 + 0x54)
+/* 5B930 8007AB68 0780073C */  lui        $a3, %hi(g_DragonCutscene + 0x54)
+/* 5B934 8007AB6C 8470E724 */  addiu      $a3, $a3, %lo(g_DragonCutscene + 0x54)
 /* 5B938 8007AB70 100040AC */  sw         $zero, 0x10($v0)
 /* 5B93C 8007AB74 01000224 */  addiu      $v0, $zero, 0x1
 /* 5B940 8007AB78 0780013C */  lui        $at, %hi(g_Spu + 0x2D4)

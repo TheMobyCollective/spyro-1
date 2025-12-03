@@ -519,8 +519,8 @@ glabel func_level_11_80088098
 /* B9149C 800886D4 C0100200 */  sll        $v0, $v0, 3
 /* B914A0 800886D8 21186200 */  addu       $v1, $v1, $v0
 /* B914A4 800886DC 1B0023A2 */  sb         $v1, 0x1B($s1)
-/* B914A8 800886E0 0780033C */  lui        $v1, %hi(D_80077030 + 0x3C)
-/* B914AC 800886E4 6C70638C */  lw         $v1, %lo(D_80077030 + 0x3C)($v1)
+/* B914A8 800886E0 0780033C */  lui        $v1, %hi(g_DragonCutscene + 0x3C)
+/* B914AC 800886E4 6C70638C */  lw         $v1, %lo(g_DragonCutscene + 0x3C)($v1)
 /* B914B0 800886E8 00000000 */  nop
 /* B914B4 800886EC 40006228 */  slti       $v0, $v1, 0x40
 /* B914B8 800886F0 02004010 */  beqz       $v0, .Llevel_11_800886FC

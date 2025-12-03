@@ -50,7 +50,7 @@
 - [x] StopSound
 - [x] func_800562A4
 - [ ] func_8005637C
-- [ ] func_800567F4
+- [x] func_800567F4
 - [x] func_80056B28
 - [x] func_80056C84
 - [x] IsMobyPlayingSound
@@ -135,15 +135,15 @@
 - [x] func_80012604
 - [x] func_8001277C
 - [x] Initialize
-- [x] func_80012CF0
+- [x] SetNewSoundTable
 - [ ] func_80012D58
-- [x] func_80013230
+- [x] PatchInSpyroAnimations
 - [x] PatchMobyModelPointers
 - [ ] func_8001364C
 - [x] func_800144C8
-- [x] func_80014564
-- [x] func_80014B70
-- [x] func_80015370
+- [x] LoadCutscene
+- [x] LoadDragonCutscene
+- [x] LoadLevel
 - [x] main
 - [x] func_80037F90
 - [x] func_80038074

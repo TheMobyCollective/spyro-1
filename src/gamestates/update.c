@@ -22,7 +22,7 @@ void func_8002DF9C(void) {
   func_8002DA74();
 
   if (g_LoadStage < 11 || !D_800756B0) {
-    func_80015370(1);
+    LoadLevel(1);
   }
 }
 
@@ -155,7 +155,7 @@ void func_800333DC(void) {
   case 100:
     // Load level
     D_800756F8 += g_DeltaTime;
-    func_80015370(1);
+    LoadLevel(1);
     return;
   }
 }

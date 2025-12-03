@@ -16,12 +16,12 @@ extern int D_800756AC; // Ticks in level transition
 
 Model *PatchMobyModelPointers(Model *pModel);
 
-void func_80014564(void); // Load titlescreen
+void LoadCutscene(void); // Load titlescreen
 
 /// @brief Load dragon cutscene
-void func_80014B70(void);
+void LoadDragonCutscene(void);
 
-void func_80015370(int); // Load level
+void LoadLevel(int); // Load level
 
 typedef struct {
   Vector3D m_Position;

@@ -457,8 +457,8 @@ glabel func_level_20_8008A258
 /* 188DEC4 8008A8FC 4D0060A2 */  sb         $zero, 0x4D($s3)
 /* 188DEC8 8008A900 4E0060A2 */  sb         $zero, 0x4E($s3)
 /* 188DECC 8008A904 4F0062A2 */  sb         $v0, 0x4F($s3)
-/* 188DED0 8008A908 0780033C */  lui        $v1, %hi(D_80077030 + 0x28)
-/* 188DED4 8008A90C 5870638C */  lw         $v1, %lo(D_80077030 + 0x28)($v1)
+/* 188DED0 8008A908 0780033C */  lui        $v1, %hi(g_DragonCutscene + 0x28)
+/* 188DED4 8008A90C 5870638C */  lw         $v1, %lo(g_DragonCutscene + 0x28)($v1)
 /* 188DED8 8008A910 03000224 */  addiu      $v0, $zero, 0x3
 /* 188DEDC 8008A914 03006214 */  bne        $v1, $v0, .Llevel_20_8008A924
 /* 188DEE0 8008A918 01000224 */   addiu     $v0, $zero, 0x1

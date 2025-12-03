@@ -20,7 +20,7 @@
 /// @brief Loads in a new sound table
 /// @param pData The data to load
 /// @param pPatchAddressesInTable Whether to patch the addresses in the table
-void func_80012CF0(char *pData, int pPatchAddressesInTable) {
+void SetNewSoundTable(char *pData, int pPatchAddressesInTable) {
   int soundCount;
 
   // You have to do this weird sliding char pointer
@@ -53,7 +53,7 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80012D58);
 
 /// @brief Patches the pointers inside of Spyro's model
 // Has some cool code added after July
-void func_80013230(void *data) {
+void PatchInSpyroAnimations(void *data) {
   int animation_index;
   int j;
   int frame_data_size;
@@ -219,7 +219,7 @@ void func_800144C8(void) {
 }
 
 /// @brief Load a cutscene (titlescreen, intro, outro)
-void func_80014564(void) {
+void LoadCutscene(void) {
   RECT r;
   int i;
   int j;
@@ -393,7 +393,7 @@ void func_80014564(void) {
 }
 
 /// @brief Loads a dragon cutscene
-void func_80014B70(void) {
+void LoadDragonCutscene(void) {
 
   // Extremely likely to be an unused string buffer
   char _pad[40];
@@ -417,7 +417,7 @@ void func_80014B70(void) {
       (g_CdMusic.m_Flags & 0x40) == 0)
     return;
 
-  switch (D_80077030.m_Stage) {
+  switch (g_DragonCutscene.m_Stage) {
   case 0: // Prepare to load dragon cutscene data, compute lengths and overflow
 
     // Compute space of the original model buffer
@@ -425,63 +425,67 @@ void func_80014B70(void) {
     modelSpaceLeft = (int)g_Models[250] - (int)D_800785D8.m_ModelData;
 
     // Full read if it fits
-    if (g_LevelHeader.m_Dragons[D_80077030.m_CutsceneIdx].m_Length <=
+    if (g_LevelHeader.m_Dragons[g_DragonCutscene.m_CutsceneIdx].m_Length <=
         modelSpaceLeft) {
-      D_80077030.m_LoadLength =
-          g_LevelHeader.m_Dragons[D_80077030.m_CutsceneIdx].m_Length;
-      D_80077030.m_HasOverflow = 0;
+      g_DragonCutscene.m_LoadLength =
+          g_LevelHeader.m_Dragons[g_DragonCutscene.m_CutsceneIdx].m_Length;
+      g_DragonCutscene.m_HasOverflow = 0;
     } else {
       // Otherwise read only a multiple of 2048 bytes
-      D_80077030.m_LoadLength = (u_int)(modelSpaceLeft / 2048) * 2048;
-      D_80077030.m_HasOverflow = 1;
+      g_DragonCutscene.m_LoadLength = (u_int)(modelSpaceLeft / 2048) * 2048;
+      g_DragonCutscene.m_HasOverflow = 1;
     }
 
     // In practice, overflow is: The models and camera data fit
     // but not in combination with SPU data
 
     // Load the entire dragon cutscene data from disc
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_ModelData,
-                D_80077030.m_LoadLength,
-                g_LevelHeader.m_Dragons[D_80077030.m_CutsceneIdx].m_Offset +
-                    g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
-                600);
+    CDLoadAsync(
+        g_CdState.m_WadSector, D_800785D8.m_ModelData,
+        g_DragonCutscene.m_LoadLength,
+        g_LevelHeader.m_Dragons[g_DragonCutscene.m_CutsceneIdx].m_Offset +
+            g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
+        600);
 
-    D_80077030.m_Stage++;
+    g_DragonCutscene.m_Stage++;
     break;
 
   case 1: // Copy header, initialize models if no overflow, else start overflow
           // process
 
-    Memcpy(&D_80077030.m_Header, D_800785D8.m_ModelData,
-           sizeof(D_80077030.m_Header));
+    Memcpy(&g_DragonCutscene.m_Header, D_800785D8.m_ModelData,
+           sizeof(g_DragonCutscene.m_Header));
 
     // If there is no overflow, everything is already loaded
-    if (!D_80077030.m_HasOverflow) {
+    if (!g_DragonCutscene.m_HasOverflow) {
 
       // Set camera data pointer and node count
-      D_80077030.unk_0x48 = (char *)D_800785D8.m_ModelData +
-                            D_80077030.m_Header.m_CameraData.m_Offset;
+      g_DragonCutscene.unk_0x48 =
+          (char *)D_800785D8.m_ModelData +
+          g_DragonCutscene.m_Header.m_CameraData.m_Offset;
 
-      D_80077030.unk_0x4C = D_80077030.m_Header.m_CameraData.m_Length / 24;
+      g_DragonCutscene.unk_0x4C =
+          g_DragonCutscene.m_Header.m_CameraData.m_Length / 24;
 
       // Patch Dragon & Spyro models into temporary classes 510 and 511
       g_Models[510] = PatchMobyModelPointers(
           (Model *)((char *)D_800785D8.m_ModelData +
-                    D_80077030.m_Header.m_DragonModel.m_Offset));
+                    g_DragonCutscene.m_Header.m_DragonModel.m_Offset));
 
       g_Models[511] = PatchMobyModelPointers(
           (Model *)((char *)D_800785D8.m_ModelData +
-                    D_80077030.m_Header.m_SpyroModel.m_Offset));
+                    g_DragonCutscene.m_Header.m_SpyroModel.m_Offset));
 
-      D_80077030.m_BlocksRead = 0;
+      g_DragonCutscene.m_BlocksRead = 0;
 
     } else {
 
       // First load SPU data into SPU RAM, synchronously...
-      SpuSetTransferStartAddr(0x80000 - D_80077030.m_Header.m_SpuData.m_Length);
+      SpuSetTransferStartAddr(0x80000 -
+                              g_DragonCutscene.m_Header.m_SpuData.m_Length);
       SpuWrite((void *)((int)D_800785D8.m_ModelData +
-                        D_80077030.m_Header.m_SpuData.m_Offset),
-               D_80077030.m_Header.m_SpuData.m_Length);
+                        g_DragonCutscene.m_Header.m_SpuData.m_Offset),
+               g_DragonCutscene.m_Header.m_SpuData.m_Length);
 
       while (!SpuIsTransferCompleted(0))
         ;
@@ -489,40 +493,42 @@ void func_80014B70(void) {
       // Shift already-loaded data to the front of buffer
       Memcpy(D_800785D8.m_ModelData,
              (char *)D_800785D8.m_ModelData +
-                 D_80077030.m_Header.m_DragonModel.m_Offset,
-             D_80077030.m_LoadLength -
-                 D_80077030.m_Header.m_DragonModel.m_Offset);
+                 g_DragonCutscene.m_Header.m_DragonModel.m_Offset,
+             g_DragonCutscene.m_LoadLength -
+                 g_DragonCutscene.m_Header.m_DragonModel.m_Offset);
 
       // Load remaining part of dragon data
-      CDLoadAsync(g_CdState.m_WadSector,
-                  (char *)D_800785D8.m_ModelData + D_80077030.m_LoadLength -
-                      D_80077030.m_Header.m_DragonModel.m_Offset,
-                  g_LevelHeader.m_Dragons[D_80077030.m_CutsceneIdx].m_Length -
-                      D_80077030.m_LoadLength,
-                  g_LevelHeader.m_Dragons[D_80077030.m_CutsceneIdx].m_Offset +
-                      g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset +
-                      D_80077030.m_LoadLength,
-                  600);
+      CDLoadAsync(
+          g_CdState.m_WadSector,
+          (char *)D_800785D8.m_ModelData + g_DragonCutscene.m_LoadLength -
+              g_DragonCutscene.m_Header.m_DragonModel.m_Offset,
+          g_LevelHeader.m_Dragons[g_DragonCutscene.m_CutsceneIdx].m_Length -
+              g_DragonCutscene.m_LoadLength,
+          g_LevelHeader.m_Dragons[g_DragonCutscene.m_CutsceneIdx].m_Offset +
+              g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset +
+              g_DragonCutscene.m_LoadLength,
+          600);
     }
 
-    D_80077030.m_Stage++;
+    g_DragonCutscene.m_Stage++;
     break;
 
   case 2: // Load SPU if no overflow, else set up pointers after overflow load
 
     // State 1 is the moment you touch the dragon
     // State 2 is when Spyro is in position
-    if (D_80077030.m_State < 2) {
+    if (g_DragonCutscene.m_State < 2) {
       return;
     }
 
     // If no overflow, start loading SPU data block by block
     // replacing the data in SPU RAM, while reading the original into main
     // memory..?
-    if (!D_80077030.m_HasOverflow) {
+    if (!g_DragonCutscene.m_HasOverflow) {
 
-      SpuSetTransferStartAddr(0x80000 - D_80077030.m_Header.m_SpuData.m_Length +
-                              (D_80077030.m_BlocksRead * 0x8000));
+      SpuSetTransferStartAddr(0x80000 -
+                              g_DragonCutscene.m_Header.m_SpuData.m_Length +
+                              (g_DragonCutscene.m_BlocksRead * 0x8000));
 
       if (g_CurDB == &g_DB[0]) {
         buf = g_DB[1].m_PolyBuf;
@@ -532,9 +538,9 @@ void func_80014B70(void) {
 
       // Determine length to read, if last block, it can be less than 0x8000
       // otherwise always 0x8000 bytes
-      if (D_80077030.m_Header.m_SpuData.m_Length <
-          D_80077030.m_BlocksRead * 0x8000 + 0x8000) {
-        lenToRead = D_80077030.m_Header.m_SpuData.m_Length % 0x8000;
+      if (g_DragonCutscene.m_Header.m_SpuData.m_Length <
+          g_DragonCutscene.m_BlocksRead * 0x8000 + 0x8000) {
+        lenToRead = g_DragonCutscene.m_Header.m_SpuData.m_Length % 0x8000;
       } else {
         lenToRead = 0x8000;
       }
@@ -546,13 +552,14 @@ void func_80014B70(void) {
       while (!SpuIsTransferCompleted(0))
         ;
 
-      SpuSetTransferStartAddr(0x80000 - D_80077030.m_Header.m_SpuData.m_Length +
-                              (D_80077030.m_BlocksRead * 0x8000));
+      SpuSetTransferStartAddr(0x80000 -
+                              g_DragonCutscene.m_Header.m_SpuData.m_Length +
+                              (g_DragonCutscene.m_BlocksRead * 0x8000));
 
       // Write new SPU data block into SPU RAM
       SpuWrite((char *)D_800785D8.m_ModelData +
-                   D_80077030.m_Header.m_SpuData.m_Offset +
-                   D_80077030.m_BlocksRead * 0x8000,
+                   g_DragonCutscene.m_Header.m_SpuData.m_Offset +
+                   g_DragonCutscene.m_BlocksRead * 0x8000,
                lenToRead);
 
       // ... synchronously
@@ -561,16 +568,16 @@ void func_80014B70(void) {
 
       // Copy the SPU data block back into main memory
       Memcpy((char *)D_800785D8.m_ModelData +
-                 D_80077030.m_Header.m_SpuData.m_Offset +
-                 D_80077030.m_BlocksRead * 0x8000,
+                 g_DragonCutscene.m_Header.m_SpuData.m_Offset +
+                 g_DragonCutscene.m_BlocksRead * 0x8000,
              buf, lenToRead);
 
-      D_80077030.m_BlocksRead += 1;
+      g_DragonCutscene.m_BlocksRead += 1;
 
       // All SPU data loaded?
-      if (D_80077030.m_BlocksRead * 0x8000 >=
-          D_80077030.m_Header.m_SpuData.m_Length)
-        D_80077030.m_Stage++;
+      if (g_DragonCutscene.m_BlocksRead * 0x8000 >=
+          g_DragonCutscene.m_Header.m_SpuData.m_Length)
+        g_DragonCutscene.m_Stage++;
 
       break;
     }
@@ -578,39 +585,42 @@ void func_80014B70(void) {
     // If there is an overflow, all data is now loaded, so set up pointers
 
     // What in the fuck?! Needed for matching
-    // D_800785D8.m_ModelData + D_80077030.m_Header.m_CameraData.m_Offset -
-    // D_80077030.m_Header.m_DragonModel.m_Offset Would be equivalent
-    D_80077030.unk_0x48 = (((char *)D_800785D8.m_ModelData -
-                            D_80077030.m_Header.m_DragonModel.m_Offset) +
-                           D_80077030.m_Header.m_CameraData.m_Offset +
-                           D_80077030.m_Header.m_DragonModel.m_Offset) -
-                          D_80077030.m_Header.m_DragonModel.m_Offset;
+    // D_800785D8.m_ModelData + g_DragonCutscene.m_Header.m_CameraData.m_Offset
+    // - g_DragonCutscene.m_Header.m_DragonModel.m_Offset Would be equivalent
+    g_DragonCutscene.unk_0x48 =
+        (((char *)D_800785D8.m_ModelData -
+          g_DragonCutscene.m_Header.m_DragonModel.m_Offset) +
+         g_DragonCutscene.m_Header.m_CameraData.m_Offset +
+         g_DragonCutscene.m_Header.m_DragonModel.m_Offset) -
+        g_DragonCutscene.m_Header.m_DragonModel.m_Offset;
 
-    D_80077030.unk_0x4C = D_80077030.m_Header.m_CameraData.m_Length / 24;
+    g_DragonCutscene.unk_0x4C =
+        g_DragonCutscene.m_Header.m_CameraData.m_Length / 24;
 
     g_Models[510] = PatchMobyModelPointers((char *)D_800785D8.m_ModelData);
-    g_Models[511] =
-        PatchMobyModelPointers((char *)D_800785D8.m_ModelData +
-                               D_80077030.m_Header.m_SpyroModel.m_Offset -
-                               D_80077030.m_Header.m_DragonModel.m_Offset);
-    D_80077030.m_Stage++;
+    g_Models[511] = PatchMobyModelPointers(
+        (char *)D_800785D8.m_ModelData +
+        g_DragonCutscene.m_Header.m_SpyroModel.m_Offset -
+        g_DragonCutscene.m_Header.m_DragonModel.m_Offset);
+    g_DragonCutscene.m_Stage++;
 
     break;
   case 3: // Wait for cutscene to end, then load overflow SPU data if needed
 
     // Wait for the cutscene to end first
-    if (D_80077030.m_State < 6) {
+    if (g_DragonCutscene.m_State < 6) {
       return;
     }
 
     // If there was an overflow, load the SPU data back in now
     // from disc
-    if (D_80077030.m_HasOverflow == 1) {
-      x = ((D_80077030.m_Header.m_SpuData.m_Length + 0x180f) / 2048) * 2048;
-      D_80077030.m_LoadLength = x;
+    if (g_DragonCutscene.m_HasOverflow == 1) {
+      x = ((g_DragonCutscene.m_Header.m_SpuData.m_Length + 0x180f) / 2048) *
+          2048;
+      g_DragonCutscene.m_LoadLength = x;
 
       if (0x100000 - g_LevelHeader.m_VramSramSize < x) {
-        x = D_80077030.m_LoadLength - 0x100000;
+        x = g_DragonCutscene.m_LoadLength - 0x100000;
 
         CDLoadAsync(g_CdState.m_WadSector, (char *)D_800785D8.m_ModelData,
                     g_LevelHeader.m_VramSramSize + x,
@@ -621,21 +631,21 @@ void func_80014B70(void) {
       } else {
 
         // Remove the overflow flag, everything fits now
-        D_80077030.m_HasOverflow = 0;
+        g_DragonCutscene.m_HasOverflow = 0;
       }
     }
 
-    D_80077030.m_Stage++;
+    g_DragonCutscene.m_Stage++;
     break;
 
   case 4: // Start loading the original model data back in
           // Transfer the SPU data back too (if overflowed)
 
-    if (D_80077030.m_HasOverflow == 1) {
-      SpuSetTransferStartAddr(0x81010 - D_80077030.m_LoadLength);
-      SpuWrite((char *)D_800785D8.m_ModelData, g_LevelHeader.m_VramSramSize -
-                                                   0x100000 +
-                                                   D_80077030.m_LoadLength);
+    if (g_DragonCutscene.m_HasOverflow == 1) {
+      SpuSetTransferStartAddr(0x81010 - g_DragonCutscene.m_LoadLength);
+      SpuWrite((char *)D_800785D8.m_ModelData,
+               g_LevelHeader.m_VramSramSize - 0x100000 +
+                   g_DragonCutscene.m_LoadLength);
       while (!SpuIsTransferCompleted(0))
         ;
     }
@@ -647,11 +657,11 @@ void func_80014B70(void) {
                     g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
                 600);
 
-    D_80077030.m_Stage++;
+    g_DragonCutscene.m_Stage++;
     break;
   case 5: // Patch the model pointers back in and finish
 
-    func_80013230(
+    PatchInSpyroAnimations(
         (char *)D_800785D8.m_ModelData +
         (g_LevelHeader.m_ModelOffsets[0] - g_LevelHeader.m_ModelDataOffset));
 
@@ -672,7 +682,7 @@ void func_80014B70(void) {
           (g_LevelHeader.m_ModelOffsets[i] - g_LevelHeader.m_ModelDataOffset));
     }
 
-    D_80077030.m_Stage++;
+    g_DragonCutscene.m_Stage++;
     break;
   }
 }
@@ -689,8 +699,8 @@ extern int D_80075874; // Unused [1]
 // Set up level overlay pointers
 extern void func_8005A470(void);
 
-/// @brief "Load level" runs through the load stages
-void func_80015370(int pArg) {
+/// @brief Runs through load stages to load a level
+void LoadLevel(int pArg) {
   RECT rc;
 
   // Extremely likely to be an unused string buffer
@@ -769,7 +779,8 @@ void func_80015370(int pArg) {
     dest = (int *)((char *)D_800785D8.m_LowerPolyBuffer - cycloramaSize -
                    g_Spu.m_SoundTableSize);
     Memcpy(dest, g_Spu.m_SoundTable, g_Spu.m_SoundTableSize);
-    func_80012CF0((char *)dest, 0); // Reinitialize the table with the new base
+    SetNewSoundTable((char *)dest,
+                     0); // Reinitialize the table with the new base
 
     g_Camera.m_OcclusionGroup = -1;
 
@@ -944,7 +955,7 @@ void func_80015370(int pArg) {
 
     if (pArg) {
       // Patch in Spyro's Level animations
-      func_80013230(MODEL_OFFSET(0));
+      PatchInSpyroAnimations(MODEL_OFFSET(0));
     }
 
     // Clear stale Moby model pointers

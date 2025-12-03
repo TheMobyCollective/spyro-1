@@ -1613,7 +1613,7 @@ glabel func_level_50_8007BA18
 /* 43DD7B4 8007D1EC 00026324 */  addiu      $v1, $v1, 0x200
 /* 43DD7B8 8007D1F0 0780013C */  lui        $at, %hi(D_800777E8 + 0x58)
 /* 43DD7BC 8007D1F4 407823AC */  sw         $v1, %lo(D_800777E8 + 0x58)($at)
-/* 43DD7C0 8007D1F8 DC54000C */  jal        func_80015370
+/* 43DD7C0 8007D1F8 DC54000C */  jal        LoadLevel
 /* 43DD7C4 8007D1FC 01000424 */   addiu     $a0, $zero, 0x1
 /* 43DD7C8 8007D200 0780103C */  lui        $s0, %hi(D_8006FCF4 + 0x21A8)
 /* 43DD7CC 8007D204 9C1E1026 */  addiu      $s0, $s0, %lo(D_8006FCF4 + 0x21A8)
@@ -1688,7 +1688,7 @@ glabel func_level_50_8007BA18
 /* 43DD8D4 8007D30C 0D004228 */  slti       $v0, $v0, 0xD
 /* 43DD8D8 8007D310 03004010 */  beqz       $v0, .Llevel_50_8007D320
 /* 43DD8DC 8007D314 00000000 */   nop
-/* 43DD8E0 8007D318 DC54000C */  jal        func_80015370
+/* 43DD8E0 8007D318 DC54000C */  jal        LoadLevel
 /* 43DD8E4 8007D31C 01000424 */   addiu     $a0, $zero, 0x1
 .Llevel_50_8007D320:
 /* 43DD8E8 8007D320 0780053C */  lui        $a1, %hi(D_800777E8 + 0x4)
@@ -1813,7 +1813,7 @@ glabel func_level_50_8007BA18
 /* 43DDAB8 8007D4F0 06000224 */  addiu      $v0, $zero, 0x6
 /* 43DDABC 8007D4F4 0780013C */  lui        $at, %hi(D_800777E8)
 /* 43DDAC0 8007D4F8 E87722AC */  sw         $v0, %lo(D_800777E8)($at)
-/* 43DDAC4 8007D4FC DC54000C */  jal        func_80015370
+/* 43DDAC4 8007D4FC DC54000C */  jal        LoadLevel
 /* 43DDAC8 8007D500 0000A0AC */   sw        $zero, 0x0($a1)
 /* 43DDACC 8007D504 66F60108 */  j          .Llevel_50_8007D998
 /* 43DDAD0 8007D508 00000000 */   nop

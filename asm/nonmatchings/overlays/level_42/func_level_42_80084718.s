@@ -449,8 +449,8 @@ glabel func_level_42_80084718
 /* 3A78368 80084DA0 4D0060A2 */  sb         $zero, 0x4D($s3)
 /* 3A7836C 80084DA4 4E0060A2 */  sb         $zero, 0x4E($s3)
 /* 3A78370 80084DA8 4F0062A2 */  sb         $v0, 0x4F($s3)
-/* 3A78374 80084DAC 0780033C */  lui        $v1, %hi(D_80077030 + 0x28)
-/* 3A78378 80084DB0 5870638C */  lw         $v1, %lo(D_80077030 + 0x28)($v1)
+/* 3A78374 80084DAC 0780033C */  lui        $v1, %hi(g_DragonCutscene + 0x28)
+/* 3A78378 80084DB0 5870638C */  lw         $v1, %lo(g_DragonCutscene + 0x28)($v1)
 /* 3A7837C 80084DB4 03000224 */  addiu      $v0, $zero, 0x3
 /* 3A78380 80084DB8 03006214 */  bne        $v1, $v0, .Llevel_42_80084DC8
 /* 3A78384 80084DBC 01000224 */   addiu     $v0, $zero, 0x1

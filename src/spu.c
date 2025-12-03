@@ -120,7 +120,133 @@ void func_800562A4(Moby *pMoby, u_int pType) {
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/spu", func_8005637C);
 
 // Set music state
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/spu", func_800567F4);
+void func_800567F4(int pSong, int pFlags) {
+
+  // Uhhh, not sure why they made cdFlags 8 bytes long
+  u_char cdFlags[8];
+  CdlLOC loc;
+  CdlFILTER filter;
+
+  // Locked, so exit
+  if (g_CdMusic.m_Flags & 0x80)
+    return;
+
+  switch (pFlags) {
+
+  // PLAY SONG
+  case 1:
+    // 0x40 not set and Music volume not 0
+    if (g_CdMusic.m_Flags & 0x40 && D_80075748 != 0) {
+
+      // Turn on filter, enable realtime (no retry) and set double speed
+      // Effectively, 8 audio channels
+      cdFlags[0] = CdlModeSF | CdlModeRT | CdlModeSpeed;
+      CdControlB(CdlSetmode, cdFlags, nullptr);
+
+      // Set up the filter
+      filter.file = 1;
+      filter.chan = pSong % 8;
+
+      CdControlB(CdlSetfilter, (u_char *)&filter, nullptr);
+
+      // Convert track start sector and attempt to begin streaming.
+      CdIntToPos(g_CdMusic.m_MusicTable[pSong].start, &loc);
+      if (CdControlB(CdlReadS, (u_char *)&loc, nullptr)) {
+
+        // Begin fade-in sequence
+        g_CdMusic.m_PostCDCommand = 0;
+        g_CdMusic.m_Flags2 = 0;
+        g_CdMusic.m_Flags = 0x10;
+
+        g_Spu.m_MusicFadeTarget = g_Spu.m_MusicVolume;
+        g_Spu.m_MusicFadeCurrent =
+            (g_Spu.m_MusicVolume - g_Spu.m_CommonAttr.cd.volume.left) >> 3;
+
+        break;
+      }
+
+      // If the read command didn't return OK immediately, store flags
+      g_CdMusic.m_Flags2 = pFlags;
+      break;
+    } else {
+      if (g_CdMusic.m_Flags2 != 0 || g_CdMusic.m_PostCDCommand != 0) {
+        if (g_CdMusic.m_Flags2 != 1) {
+          g_CdMusic.m_Flags2 = 1;
+        }
+      }
+      break;
+    }
+    break;
+
+  // STOP / FADE OUT
+  case 2:
+  case 4:
+    // If currently in fade-in, handle fade-out
+    if (g_CdMusic.m_Flags & 0x10) {
+      if (g_Spu.m_CommonAttr.cd.volume.left != 0) {
+        // Begin fade out
+        g_Spu.m_MusicFadeCurrent = -g_Spu.m_CommonAttr.cd.volume.left >> 3;
+        g_CdMusic.m_PostCDCommand = 9;
+        g_Spu.m_MusicFadeTarget = 0;
+        g_CdMusic.m_Flags = 0x200;
+        break;
+      }
+
+      // Volume already 0, mark as silent
+      g_CdMusic.m_Flags = 0x40;
+      break;
+    }
+
+    if (g_CdMusic.m_Flags2 != 0 || g_CdMusic.m_PostCDCommand != 0) {
+      if (g_CdMusic.m_Flags2 != 4 && g_CdMusic.m_Flags2 != 2) {
+        g_CdMusic.m_Flags2 = 2;
+      }
+    }
+    break;
+
+  // RESUME TRACK
+  case 8:
+
+    // Same preconditions as play
+    if ((g_CdMusic.m_Flags & 0x40) && (D_80075748 != 0)) {
+
+      // This matches play
+      cdFlags[0] = CdlModeSF | CdlModeRT | CdlModeSpeed;
+      CdControlB(CdlSetmode, cdFlags, nullptr);
+
+      // Set up the filter
+      filter.file = 1;
+      filter.chan = pSong % 8;
+
+      CdControlB(CdlSetfilter, (u_char *)&filter, nullptr);
+
+      // Resume from previous stored track position
+      CdIntToPos(g_CdMusic.m_TrackPosition, &loc);
+      if (CdControlB(CdlReadS, (u_char *)&loc, nullptr)) {
+        // Fade the music back in
+        g_CdMusic.m_PostCDCommand = 0;
+        g_CdMusic.m_Flags2 = 0;
+        g_CdMusic.m_Flags = 0x10;
+
+        g_Spu.m_MusicFadeTarget = g_Spu.m_MusicVolume;
+        g_Spu.m_MusicFadeCurrent =
+            (g_Spu.m_MusicVolume - g_Spu.m_CommonAttr.cd.volume.left) >> 3;
+
+        break;
+      }
+
+      g_CdMusic.m_Flags2 = pFlags;
+      break;
+    }
+
+    if (g_CdMusic.m_Flags2 != 0 || g_CdMusic.m_PostCDCommand != 0) {
+      if (g_CdMusic.m_Flags2 != 8) {
+        g_CdMusic.m_Flags2 = 8;
+      }
+    }
+    break;
+  }
+}
 
 // Stop all sounds, and stop music
 void func_80056B28(int pSkipVoices) {
