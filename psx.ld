@@ -358,6 +358,7 @@ SECTIONS
 
         /* Padding for the .exe */
         . = ALIGN(., 2048);
+        EXE_TEXT_SIZE = . - 0x80010000;
     }
 
     .main_bss main_SDATA_END (NOLOAD) : AT(main_SDATA_END) SUBALIGN(4)
