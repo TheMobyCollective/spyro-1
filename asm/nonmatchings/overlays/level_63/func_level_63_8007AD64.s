@@ -5241,8 +5241,8 @@ glabel func_level_63_8007AD64
 /* 591675C 8007F994 0E000224 */  addiu      $v0, $zero, 0xE
 /* 5916760 8007F998 0780013C */  lui        $at, %hi(D_800757AC)
 /* 5916764 8007F99C AC5720AC */  sw         $zero, %lo(D_800757AC)($at)
-/* 5916768 8007F9A0 0780013C */  lui        $at, %hi(D_8007566C)
-/* 591676C 8007F9A4 6C5629AC */  sw         $t1, %lo(D_8007566C)($at)
+/* 5916768 8007F9A0 0780013C */  lui        $at, %hi(g_CutsceneIdx)
+/* 591676C 8007F9A4 6C5629AC */  sw         $t1, %lo(g_CutsceneIdx)($at)
 /* 5916770 8007F9A8 0780013C */  lui        $at, %hi(g_Gamestate)
 /* 5916774 8007F9AC D85722AC */  sw         $v0, %lo(g_Gamestate)($at)
 /* 5916778 8007F9B0 0780013C */  lui        $at, %hi(g_StateSwitch)
@@ -6415,8 +6415,8 @@ glabel func_level_63_8007AD64
 /* 5917878 80080AB0 200049AE */  sw         $t1, 0x20($s2)
 /* 591787C 80080AB4 2A006010 */  beqz       $v1, .Llevel_63_80080B60
 /* 5917880 80080AB8 000040A6 */   sh        $zero, 0x0($s2)
-/* 5917884 80080ABC 0780023C */  lui        $v0, %hi(D_8007566C)
-/* 5917888 80080AC0 6C564224 */  addiu      $v0, $v0, %lo(D_8007566C)
+/* 5917884 80080ABC 0780023C */  lui        $v0, %hi(g_CutsceneIdx)
+/* 5917888 80080AC0 6C564224 */  addiu      $v0, $v0, %lo(g_CutsceneIdx)
 /* 591788C 80080AC4 80180300 */  sll        $v1, $v1, 2
 /* 5917890 80080AC8 21186200 */  addu       $v1, $v1, $v0
 /* 5917894 80080ACC 0000628C */  lw         $v0, 0x0($v1)

@@ -358,7 +358,7 @@ void Initialize(void) {
 
   // Load in the titlescreen
   g_LoadStage = 3;
-  D_8007566C = 0;
+  g_CutsceneIdx = 0;
 
   do {
     func_80014564();

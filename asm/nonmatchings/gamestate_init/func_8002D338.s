@@ -6,8 +6,8 @@ glabel func_8002D338
 /* 1DB3C 8002D33C 0E000224 */  addiu      $v0, $zero, 0xE
 /* 1DB40 8002D340 0780033C */  lui        $v1, %hi(D_80075680)
 /* 1DB44 8002D344 8056638C */  lw         $v1, %lo(D_80075680)($v1)
-/* 1DB48 8002D348 0780043C */  lui        $a0, %hi(D_8007566C)
-/* 1DB4C 8002D34C 6C56848C */  lw         $a0, %lo(D_8007566C)($a0)
+/* 1DB48 8002D348 0780043C */  lui        $a0, %hi(g_CutsceneIdx)
+/* 1DB4C 8002D34C 6C56848C */  lw         $a0, %lo(g_CutsceneIdx)($a0)
 /* 1DB50 8002D350 01000524 */  addiu      $a1, $zero, 0x1
 /* 1DB54 8002D354 1000BFAF */  sw         $ra, 0x10($sp)
 /* 1DB58 8002D358 0780013C */  lui        $at, %hi(g_Gamestate)

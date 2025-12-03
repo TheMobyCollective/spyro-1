@@ -310,9 +310,9 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     moby->m_SpecularMetalColor[2] = 0;
     moby->m_SpecularMetalType = 14;
 
-    if (D_80077030.unk_0x28 == 3) {
+    if (D_80077030.m_State == 3) {
       moby->m_ScaleOverride = 20;
-    } else if (D_80077030.unk_0x28 == 1) {
+    } else if (D_80077030.m_State == 1) {
       moby->m_ScaleOverride = 48;
     }
 

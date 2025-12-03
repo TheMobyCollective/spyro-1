@@ -393,7 +393,7 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002D338);
 void func_8002D440(void) {
   RECT rc;
 
-  if (D_8007566C == 1) {
+  if (g_CutsceneIdx == 1) {
     // clear the screen
     setRECT(&rc, 0, 0, 0x200, 0x1E0);
     ClearImage(&rc, 0U, 0U, 0U);
@@ -420,11 +420,11 @@ void func_8002D440(void) {
     // change to artisans home
     g_LevelId = 10;
     g_StateSwitch = 1;
-  } else if (D_8007566C == 2) {
+  } else if (g_CutsceneIdx == 2) {
     // play credits 1
     func_8002D228(0);
     g_StateSwitch = 1;
-  } else if (D_8007566C == 3) {
+  } else if (g_CutsceneIdx == 3) {
     // play credits 2
     D_800757AC = 10;
     func_8002D228(1);

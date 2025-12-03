@@ -191,7 +191,8 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_8001364C);
 
 /// @brief Reload the current level's layout
 void func_800144C8(void) {
-  char _pad[32]; // Might've been a buffer to store a string into!
+  // Extremely likely to be an unused string buffer
+  char _pad[32];
 
   // Stop sounds
   func_80056B28(0);
@@ -217,13 +218,14 @@ void func_800144C8(void) {
   g_Spyro.m_health = 3;
 }
 
-/// @brief Loads the titlescreen
+/// @brief Load a cutscene (titlescreen, intro, outro)
 void func_80014564(void) {
   RECT r;
   int i;
   int j;
   int dataSize;
 
+  // Wait for the CD subsystem to finish loading
   CDLoadTime();
 
   if (g_CdState.m_IsReading != 0 || CdSync(1, 0) != CdlComplete ||
@@ -234,7 +236,7 @@ void func_80014564(void) {
 
     // Load the level header from disc
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf, 2048,
-                g_WadHeader.m_CutsceneData[D_8007566C].m_Offset, 600);
+                g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset, 600);
 
     g_LoadStage = 1;
 
@@ -245,9 +247,9 @@ void func_80014564(void) {
 
     // Load the VRAM for the cutscene from disc
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf,
-                D_8006EE5C[D_8007566C],
+                D_8006EE5C[g_CutsceneIdx],
                 g_LevelHeader.m_VramSramOffset +
-                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
+                    g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
                 600);
 
     g_LoadStage = 2;
@@ -256,7 +258,7 @@ void func_80014564(void) {
 
     // Load the cutscene VRAM from the buffer into VRAM
     // The shift for is dividing by 1024, because every line is 1024 bytes
-    setRECT(&r, 512, 0, 512, D_8006EE5C[D_8007566C] >> 10);
+    setRECT(&r, 512, 0, 512, D_8006EE5C[g_CutsceneIdx] >> 10);
     LoadImage(&r, D_800785D8.m_CopyBuf);
 
     g_LoadStage = 3;
@@ -267,7 +269,8 @@ void func_80014564(void) {
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf,
                 g_LevelHeader.m_VramSramSize - 0x80000,
                 g_LevelHeader.m_VramSramOffset +
-                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset + 0x80000,
+                    g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset +
+                    0x80000,
                 600);
 
     g_LoadStage = 4;
@@ -288,7 +291,7 @@ void func_80014564(void) {
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf,
                 g_LevelHeader.m_SceneSize,
                 g_LevelHeader.m_SceneOffset +
-                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
+                    g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
                 600);
 
     g_LoadStage = 5;
@@ -301,7 +304,7 @@ void func_80014564(void) {
     // Switch to the new skybox
     g_Cyclorama = g_NewCyclorama;
 
-    if (D_8007566C == Cutscene_Intro) {
+    if (g_CutsceneIdx == Cutscene_Intro) {
 
       dataSize = g_LevelHeader.m_ModelDataSize - 0x60000;
       g_LoadStage = 6;
@@ -314,7 +317,7 @@ void func_80014564(void) {
 
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_ModelData, dataSize,
                 g_LevelHeader.m_ModelDataOffset +
-                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
+                    g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
                 600);
 
   } else if (g_LoadStage == 6) {
@@ -329,7 +332,7 @@ void func_80014564(void) {
                 0x60000,
                 g_LevelHeader.m_ModelDataOffset +
                     g_LevelHeader.m_ModelDataSize - 0x60000 +
-                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
+                    g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
                 600);
 
     g_LoadStage = 8;
@@ -353,7 +356,7 @@ void func_80014564(void) {
     CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_LevelLayout,
                 D_800785D8.m_LevelLayoutSize,
                 g_LevelHeader.m_LayoutOffset +
-                    g_WadHeader.m_CutsceneData[D_8007566C].m_Offset,
+                    g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
                 600);
 
     g_LoadStage = 9;
@@ -390,7 +393,289 @@ void func_80014564(void) {
 }
 
 /// @brief Loads a dragon cutscene
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80014B70);
+void func_80014B70(void) {
+
+  // Extremely likely to be an unused string buffer
+  char _pad[40];
+
+  int i;
+
+  // Used in stage 0
+  int modelSpaceLeft;
+
+  // Used in stage 2
+  void *buf;
+  int lenToRead;
+
+  // Used in stage 3
+  int x;
+
+  // Wait for the CD subsystem to finish loading
+  CDLoadTime();
+
+  if (g_CdState.m_IsReading != 0 || CdSync(1, 0) != CdlComplete ||
+      (g_CdMusic.m_Flags & 0x40) == 0)
+    return;
+
+  switch (D_80077030.m_Stage) {
+  case 0: // Prepare to load dragon cutscene data, compute lengths and overflow
+
+    // Compute space of the original model buffer
+    // (up to Moby class 250, the Crystal Dragon, which is always the last one)
+    modelSpaceLeft = (int)g_Models[250] - (int)D_800785D8.m_ModelData;
+
+    // Full read if it fits
+    if (g_LevelHeader.m_Dragons[D_80077030.m_CutsceneIdx].m_Length <=
+        modelSpaceLeft) {
+      D_80077030.m_LoadLength =
+          g_LevelHeader.m_Dragons[D_80077030.m_CutsceneIdx].m_Length;
+      D_80077030.m_HasOverflow = 0;
+    } else {
+      // Otherwise read only a multiple of 2048 bytes
+      D_80077030.m_LoadLength = (u_int)(modelSpaceLeft / 2048) * 2048;
+      D_80077030.m_HasOverflow = 1;
+    }
+
+    // In practice, overflow is: The models and camera data fit
+    // but not in combination with SPU data
+
+    // Load the entire dragon cutscene data from disc
+    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_ModelData,
+                D_80077030.m_LoadLength,
+                g_LevelHeader.m_Dragons[D_80077030.m_CutsceneIdx].m_Offset +
+                    g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
+                600);
+
+    D_80077030.m_Stage++;
+    break;
+
+  case 1: // Copy header, initialize models if no overflow, else start overflow
+          // process
+
+    Memcpy(&D_80077030.m_Header, D_800785D8.m_ModelData,
+           sizeof(D_80077030.m_Header));
+
+    // If there is no overflow, everything is already loaded
+    if (!D_80077030.m_HasOverflow) {
+
+      // Set camera data pointer and node count
+      D_80077030.unk_0x48 = (char *)D_800785D8.m_ModelData +
+                            D_80077030.m_Header.m_CameraData.m_Offset;
+
+      D_80077030.unk_0x4C = D_80077030.m_Header.m_CameraData.m_Length / 24;
+
+      // Patch Dragon & Spyro models into temporary classes 510 and 511
+      g_Models[510] = PatchMobyModelPointers(
+          (Model *)((char *)D_800785D8.m_ModelData +
+                    D_80077030.m_Header.m_DragonModel.m_Offset));
+
+      g_Models[511] = PatchMobyModelPointers(
+          (Model *)((char *)D_800785D8.m_ModelData +
+                    D_80077030.m_Header.m_SpyroModel.m_Offset));
+
+      D_80077030.m_BlocksRead = 0;
+
+    } else {
+
+      // First load SPU data into SPU RAM, synchronously...
+      SpuSetTransferStartAddr(0x80000 - D_80077030.m_Header.m_SpuData.m_Length);
+      SpuWrite((void *)((int)D_800785D8.m_ModelData +
+                        D_80077030.m_Header.m_SpuData.m_Offset),
+               D_80077030.m_Header.m_SpuData.m_Length);
+
+      while (!SpuIsTransferCompleted(0))
+        ;
+
+      // Shift already-loaded data to the front of buffer
+      Memcpy(D_800785D8.m_ModelData,
+             (char *)D_800785D8.m_ModelData +
+                 D_80077030.m_Header.m_DragonModel.m_Offset,
+             D_80077030.m_LoadLength -
+                 D_80077030.m_Header.m_DragonModel.m_Offset);
+
+      // Load remaining part of dragon data
+      CDLoadAsync(g_CdState.m_WadSector,
+                  (char *)D_800785D8.m_ModelData + D_80077030.m_LoadLength -
+                      D_80077030.m_Header.m_DragonModel.m_Offset,
+                  g_LevelHeader.m_Dragons[D_80077030.m_CutsceneIdx].m_Length -
+                      D_80077030.m_LoadLength,
+                  g_LevelHeader.m_Dragons[D_80077030.m_CutsceneIdx].m_Offset +
+                      g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset +
+                      D_80077030.m_LoadLength,
+                  600);
+    }
+
+    D_80077030.m_Stage++;
+    break;
+
+  case 2: // Load SPU if no overflow, else set up pointers after overflow load
+
+    // State 1 is the moment you touch the dragon
+    // State 2 is when Spyro is in position
+    if (D_80077030.m_State < 2) {
+      return;
+    }
+
+    // If no overflow, start loading SPU data block by block
+    // replacing the data in SPU RAM, while reading the original into main
+    // memory..?
+    if (!D_80077030.m_HasOverflow) {
+
+      SpuSetTransferStartAddr(0x80000 - D_80077030.m_Header.m_SpuData.m_Length +
+                              (D_80077030.m_BlocksRead * 0x8000));
+
+      if (g_CurDB == &g_DB[0]) {
+        buf = g_DB[1].m_PolyBuf;
+      } else {
+        buf = g_DB[0].m_PolyBuf;
+      }
+
+      // Determine length to read, if last block, it can be less than 0x8000
+      // otherwise always 0x8000 bytes
+      if (D_80077030.m_Header.m_SpuData.m_Length <
+          D_80077030.m_BlocksRead * 0x8000 + 0x8000) {
+        lenToRead = D_80077030.m_Header.m_SpuData.m_Length % 0x8000;
+      } else {
+        lenToRead = 0x8000;
+      }
+
+      // Read original SPU data block into buffer
+      SpuRead(buf, lenToRead);
+
+      // ... synchronously
+      while (!SpuIsTransferCompleted(0))
+        ;
+
+      SpuSetTransferStartAddr(0x80000 - D_80077030.m_Header.m_SpuData.m_Length +
+                              (D_80077030.m_BlocksRead * 0x8000));
+
+      // Write new SPU data block into SPU RAM
+      SpuWrite((char *)D_800785D8.m_ModelData +
+                   D_80077030.m_Header.m_SpuData.m_Offset +
+                   D_80077030.m_BlocksRead * 0x8000,
+               lenToRead);
+
+      // ... synchronously
+      while (!SpuIsTransferCompleted(0))
+        ;
+
+      // Copy the SPU data block back into main memory
+      Memcpy((char *)D_800785D8.m_ModelData +
+                 D_80077030.m_Header.m_SpuData.m_Offset +
+                 D_80077030.m_BlocksRead * 0x8000,
+             buf, lenToRead);
+
+      D_80077030.m_BlocksRead += 1;
+
+      // All SPU data loaded?
+      if (D_80077030.m_BlocksRead * 0x8000 >=
+          D_80077030.m_Header.m_SpuData.m_Length)
+        D_80077030.m_Stage++;
+
+      break;
+    }
+
+    // If there is an overflow, all data is now loaded, so set up pointers
+
+    // What in the fuck?! Needed for matching
+    // D_800785D8.m_ModelData + D_80077030.m_Header.m_CameraData.m_Offset -
+    // D_80077030.m_Header.m_DragonModel.m_Offset Would be equivalent
+    D_80077030.unk_0x48 = (((char *)D_800785D8.m_ModelData -
+                            D_80077030.m_Header.m_DragonModel.m_Offset) +
+                           D_80077030.m_Header.m_CameraData.m_Offset +
+                           D_80077030.m_Header.m_DragonModel.m_Offset) -
+                          D_80077030.m_Header.m_DragonModel.m_Offset;
+
+    D_80077030.unk_0x4C = D_80077030.m_Header.m_CameraData.m_Length / 24;
+
+    g_Models[510] = PatchMobyModelPointers((char *)D_800785D8.m_ModelData);
+    g_Models[511] =
+        PatchMobyModelPointers((char *)D_800785D8.m_ModelData +
+                               D_80077030.m_Header.m_SpyroModel.m_Offset -
+                               D_80077030.m_Header.m_DragonModel.m_Offset);
+    D_80077030.m_Stage++;
+
+    break;
+  case 3: // Wait for cutscene to end, then load overflow SPU data if needed
+
+    // Wait for the cutscene to end first
+    if (D_80077030.m_State < 6) {
+      return;
+    }
+
+    // If there was an overflow, load the SPU data back in now
+    // from disc
+    if (D_80077030.m_HasOverflow == 1) {
+      x = ((D_80077030.m_Header.m_SpuData.m_Length + 0x180f) / 2048) * 2048;
+      D_80077030.m_LoadLength = x;
+
+      if (0x100000 - g_LevelHeader.m_VramSramSize < x) {
+        x = D_80077030.m_LoadLength - 0x100000;
+
+        CDLoadAsync(g_CdState.m_WadSector, (char *)D_800785D8.m_ModelData,
+                    g_LevelHeader.m_VramSramSize + x,
+                    g_LevelHeader.m_VramSramOffset +
+                        g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset -
+                        x,
+                    600);
+      } else {
+
+        // Remove the overflow flag, everything fits now
+        D_80077030.m_HasOverflow = 0;
+      }
+    }
+
+    D_80077030.m_Stage++;
+    break;
+
+  case 4: // Start loading the original model data back in
+          // Transfer the SPU data back too (if overflowed)
+
+    if (D_80077030.m_HasOverflow == 1) {
+      SpuSetTransferStartAddr(0x81010 - D_80077030.m_LoadLength);
+      SpuWrite((char *)D_800785D8.m_ModelData, g_LevelHeader.m_VramSramSize -
+                                                   0x100000 +
+                                                   D_80077030.m_LoadLength);
+      while (!SpuIsTransferCompleted(0))
+        ;
+    }
+
+    // Load the original model data back in from disc
+    CDLoadAsync(g_CdState.m_WadSector, (char *)D_800785D8.m_ModelData,
+                g_LevelHeader.m_ModelDataSize,
+                g_LevelHeader.m_ModelDataOffset +
+                    g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
+                600);
+
+    D_80077030.m_Stage++;
+    break;
+  case 5: // Patch the model pointers back in and finish
+
+    func_80013230(
+        (char *)D_800785D8.m_ModelData +
+        (g_LevelHeader.m_ModelOffsets[0] - g_LevelHeader.m_ModelDataOffset));
+
+    for (i = 0; i < 512; ++i) {
+      if (((int)g_Models[i] & 0xffffff) <
+          ((int)D_800785D8.m_SharedAnimations & 0xffffff)) {
+        g_Models[i] = nullptr;
+      }
+    }
+
+    for (i = 1; i < 64; ++i) {
+      if (g_LevelHeader.m_ModelOffsets[i] < 1) {
+        break;
+      }
+
+      g_Models[g_LevelHeader.m_ModelIndices[i]] = PatchMobyModelPointers(
+          (char *)D_800785D8.m_ModelData +
+          (g_LevelHeader.m_ModelOffsets[i] - g_LevelHeader.m_ModelDataOffset));
+    }
+
+    D_80077030.m_Stage++;
+    break;
+  }
+}
 
 // Only used here (see usage below)
 extern int D_80075670; // Unused [0]

@@ -28,8 +28,8 @@ glabel func_80032B08
 /* 23364 80032B64 00000000 */   nop
 /* 23368 80032B68 0180023C */  lui        $v0, %hi(g_OverlaySpacePointer)
 /* 2336C 80032B6C A013428C */  lw         $v0, %lo(g_OverlaySpacePointer)($v0)
-/* 23370 80032B70 0780013C */  lui        $at, %hi(D_8007566C)
-/* 23374 80032B74 6C5630AC */  sw         $s0, %lo(D_8007566C)($at)
+/* 23370 80032B70 0780013C */  lui        $at, %hi(g_CutsceneIdx)
+/* 23374 80032B74 6C5630AC */  sw         $s0, %lo(g_CutsceneIdx)($at)
 /* 23378 80032B78 0780013C */  lui        $at, %hi(g_LoadStage)
 /* 2337C 80032B7C 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
 /* 23380 80032B80 0880013C */  lui        $at, %hi(D_800785D8)

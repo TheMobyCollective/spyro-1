@@ -2,8 +2,8 @@
 .set noreorder /* don't insert nops after branches */
 
 glabel func_800331AC
-/* 239AC 800331AC 0780023C */  lui        $v0, %hi(D_8007566C)
-/* 239B0 800331B0 6C56428C */  lw         $v0, %lo(D_8007566C)($v0)
+/* 239AC 800331AC 0780023C */  lui        $v0, %hi(g_CutsceneIdx)
+/* 239B0 800331B0 6C56428C */  lw         $v0, %lo(g_CutsceneIdx)($v0)
 /* 239B4 800331B4 E0FFBD27 */  addiu      $sp, $sp, -0x20
 /* 239B8 800331B8 02004228 */  slti       $v0, $v0, 0x2
 /* 239BC 800331BC 3C004014 */  bnez       $v0, .L800332B0
@@ -34,8 +34,8 @@ glabel func_800331AC
 /* 23A20 80033220 21200000 */   addu      $a0, $zero, $zero
 /* 23A24 80033224 0180023C */  lui        $v0, %hi(g_OverlaySpacePointer)
 /* 23A28 80033228 A013428C */  lw         $v0, %lo(g_OverlaySpacePointer)($v0)
-/* 23A2C 8003322C 0780033C */  lui        $v1, %hi(D_8007566C)
-/* 23A30 80033230 6C56638C */  lw         $v1, %lo(D_8007566C)($v1)
+/* 23A2C 8003322C 0780033C */  lui        $v1, %hi(g_CutsceneIdx)
+/* 23A30 80033230 6C56638C */  lw         $v1, %lo(g_CutsceneIdx)($v1)
 /* 23A34 80033234 0780013C */  lui        $at, %hi(g_LoadStage)
 /* 23A38 80033238 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
 /* 23A3C 8003323C 0880013C */  lui        $at, %hi(D_800785D8)
@@ -107,8 +107,8 @@ glabel func_800331AC
 /* 23B2C 8003332C 0780013C */  lui        $at, %hi(g_Fade)
 /* 23B30 80033330 185922AC */  sw         $v0, %lo(g_Fade)($at)
 .L80033334:
-/* 23B34 80033334 0780033C */  lui        $v1, %hi(D_8007566C)
-/* 23B38 80033338 6C56638C */  lw         $v1, %lo(D_8007566C)($v1)
+/* 23B34 80033334 0780033C */  lui        $v1, %hi(g_CutsceneIdx)
+/* 23B38 80033338 6C56638C */  lw         $v1, %lo(g_CutsceneIdx)($v1)
 /* 23B3C 8003333C 01000224 */  addiu      $v0, $zero, 0x1
 /* 23B40 80033340 18006214 */  bne        $v1, $v0, .L800333A4
 /* 23B44 80033344 00000000 */   nop

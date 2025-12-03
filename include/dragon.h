@@ -5,22 +5,20 @@
 #include "wad.h"
 
 typedef struct {
-  int unk_0x0;               // Unknown, always 0
-  OffsetLength m_SpuData;    // Spu data
-  int unk_0x0c;              // Dragon model offset
-  int unk_0x10;              // Dragon model size?
-  int unk_0x14;              // Spyro model offset
-  int unk_0x18;              // Spyro model size?
-  OffsetLength m_CameraData; // Camera data
+  int unk_0x0; // Unknown, always 0
+  OffsetLength m_SpuData;
+  OffsetLength m_DragonModel;
+  OffsetLength m_SpyroModel;
+  OffsetLength m_CameraData;
 } WadDragonHeader;
 
 extern struct {
   WadDragonHeader m_Header;
 
-  int unk_0x24;     // m_CutsceneIdx;
-  int unk_0x28;     // m_State
-  int m_Stage;      // Load stage
-  int m_BlocksRead; // Spu transfer stage
+  int m_CutsceneIdx; // Dragon index for the cutscene
+  int m_State;       // Cutscene state
+  int m_Stage;       // Load stage
+  int m_BlocksRead;  // Spu transfer stage
   int m_HasOverflow;
   int m_LoadLength;
   int unk_0x3C; // Cutscene ticks

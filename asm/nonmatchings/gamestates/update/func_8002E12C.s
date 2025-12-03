@@ -146,8 +146,8 @@ glabel func_8002E12C
 /* 1EB14 8002E314 58020224 */  addiu      $v0, $zero, 0x258
 /* 1EB18 8002E318 0780013C */  lui        $at, %hi(g_LoadStage)
 /* 1EB1C 8002E31C 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
-/* 1EB20 8002E320 0780013C */  lui        $at, %hi(D_8007566C)
-/* 1EB24 8002E324 6C5620AC */  sw         $zero, %lo(D_8007566C)($at)
+/* 1EB20 8002E320 0780013C */  lui        $at, %hi(g_CutsceneIdx)
+/* 1EB24 8002E324 6C5620AC */  sw         $zero, %lo(g_CutsceneIdx)($at)
 /* 1EB28 8002E328 4059000C */  jal        CDLoadSync
 /* 1EB2C 8002E32C 1000A2AF */   sw        $v0, 0x10($sp)
 /* 1EB30 8002E330 D2B80008 */  j          .L8002E348

@@ -7,7 +7,7 @@
 dlabel D_80075668
 /* 65E40 80075668 */ .space 0x04
 
-dlabel D_8007566C
+dlabel g_CutsceneIdx
 /* 65E44 8007566C */ .space 0x04
 
 dlabel D_80075670

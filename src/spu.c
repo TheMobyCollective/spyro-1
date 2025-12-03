@@ -1,9 +1,13 @@
 #include "spu.h"
 #include "camera.h"
+#include "cd.h"
 #include "common.h"
 #include "math.h"
 #include "memory.h"
+#include "moby.h"
+#include "music.h"
 #include "spyro.h"
+#include "variables.h"
 
 // Mixed sounds and music stuff
 
