@@ -335,7 +335,37 @@ void func_8003DFA4(void) {
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003DFEC);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003E0B4);
+/// @brief Applies slope-based gravity adjustment
+/// Uses floor position on slope to calculate a gravity-scaled adjustment vector
+void ApplySlopeGravity(void) {
+  Vector3D tempVec;
+  int magnitude;
+  int scaledZ;
+
+  VecCopy(&tempVec, &g_Spyro.m_floorPositonOnSlope);
+  magnitude = VecMagnitude(&tempVec, 1);
+
+  if (magnitude == 0) {
+    return;
+  }
+
+  scaledZ = (g_Spyro.m_Physics.m_gravity * tempVec.z) / magnitude;
+  VecScaleToLength(&tempVec, magnitude, scaledZ);
+
+  // Negate vector if z > 0 (pointing upward)
+  if (tempVec.z > 0) {
+    tempVec.x = -tempVec.x;
+    tempVec.y = -tempVec.y;
+    tempVec.z = -tempVec.z;
+  }
+
+  // Zero out the target speed angle Y/X rotation and m_SlopeGravityZ
+  // Then store gravity and subtract tempVec
+  VecNull((Vector3D *)&g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotY);
+  g_Spyro.m_Physics.m_SlopeGravityZ = g_Spyro.m_Physics.m_gravity;
+  VecSub((Vector3D *)&g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotY,
+         (Vector3D *)&g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotY, &tempVec);
+}
 
 void func_8003E1AC(void) {
   Vector3D nullVec;

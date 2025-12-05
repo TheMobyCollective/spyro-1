@@ -227,7 +227,7 @@
 - [x] func_8003DF60
 - [x] func_8003DFA4
 - [ ] func_8003DFEC
-- [ ] func_8003E0B4
+- [x] ApplySlopeGravity
 - [x] func_8003E1AC
 - [ ] func_8003E218
 - [ ] func_8003E318
