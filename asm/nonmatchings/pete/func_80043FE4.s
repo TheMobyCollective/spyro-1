@@ -3288,7 +3288,7 @@ glabel func_80043FE4
 /* 37604 80046E04 000020AE */  sw         $zero, 0x0($s1)
 .L80046E08:
 /* 37608 80046E08 08000424 */  addiu      $a0, $zero, 0x8
-/* 3760C 80046E0C FBF7000C */  jal        func_8003DFEC
+/* 3760C 80046E0C FBF7000C */  jal        TurnBodyToVelocity
 /* 37610 80046E10 04000524 */   addiu     $a1, $zero, 0x4
 /* 37614 80046E14 0880023C */  lui        $v0, %hi(g_Spyro + 0xB0)
 /* 37618 80046E18 088B428C */  lw         $v0, %lo(g_Spyro + 0xB0)($v0)
