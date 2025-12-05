@@ -333,7 +333,36 @@ void func_8003DFA4(void) {
   g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 0;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003DFEC);
+/// @brief Smoothly turns Spyro's body to face his velocity direction
+/// @param pMaxTurnSpeed Maximum turn amount per frame (8-bit angle units)
+/// @param pDeadzone Minimum angle difference required before turning
+void TurnBodyToVelocity(int pMaxTurnSpeed, int pDeadzone) {
+  int currentAngle;
+  int targetAngle;
+  int angleDiff;
+
+  angleDiff = (targetAngle = Atan2(g_Spyro.m_Physics.m_TrueVelocity.x,
+                                   g_Spyro.m_Physics.m_TrueVelocity.y, 0)) -
+              (currentAngle = g_Spyro.m_bodyRotation.z);
+
+  angleDiff &= 0xFF;
+
+  if (!(pDeadzone < angleDiff))
+    return;
+
+  if (!(angleDiff < 256 - pDeadzone))
+    return;
+
+  if (!(pMaxTurnSpeed < angleDiff) || !(angleDiff < 256 - pMaxTurnSpeed)) {
+    g_Spyro.m_bodyRotation.z = targetAngle;
+  } else if ((u_int)angleDiff < 0x80u) {
+    g_Spyro.m_bodyRotation.z = currentAngle + pMaxTurnSpeed;
+  } else {
+    g_Spyro.m_bodyRotation.z = currentAngle - pMaxTurnSpeed;
+  }
+
+  g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z << 4;
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003E0B4);
 

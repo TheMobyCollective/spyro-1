@@ -226,7 +226,7 @@
 - [ ] func_8003DE44
 - [x] func_8003DF60
 - [x] func_8003DFA4
-- [ ] func_8003DFEC
+- [x] TurnBodyToVelocity
 - [ ] func_8003E0B4
 - [x] func_8003E1AC
 - [ ] func_8003E218
