@@ -761,7 +761,7 @@ glabel func_80047B60
 /* 38D7C 8004857C 00000000 */   nop
 /* 38D80 80048580 6BF8000C */  jal        func_8003E1AC
 /* 38D84 80048584 00000000 */   nop
-/* 38D88 80048588 2DF8000C */  jal        func_8003E0B4
+/* 38D88 80048588 2DF8000C */  jal        ApplySlopeGravity
 /* 38D8C 8004858C 00000000 */   nop
 /* 38D90 80048590 D6F9000C */  jal        func_8003E758
 /* 38D94 80048594 00000000 */   nop
@@ -786,7 +786,7 @@ glabel func_80047B60
 /* 38DD8 800485D8 00000000 */   nop
 /* 38DDC 800485DC 6BF8000C */  jal        func_8003E1AC
 /* 38DE0 800485E0 00000000 */   nop
-/* 38DE4 800485E4 2DF8000C */  jal        func_8003E0B4
+/* 38DE4 800485E4 2DF8000C */  jal        ApplySlopeGravity
 /* 38DE8 800485E8 00000000 */   nop
 /* 38DEC 800485EC F8210108 */  j          .L800487E0
 /* 38DF0 800485F0 00000000 */   nop
@@ -880,7 +880,7 @@ glabel func_80047B60
 /* 38F38 80048738 00000000 */   nop
 /* 38F3C 8004873C 6BF8000C */  jal        func_8003E1AC
 /* 38F40 80048740 00000000 */   nop
-/* 38F44 80048744 2DF8000C */  jal        func_8003E0B4
+/* 38F44 80048744 2DF8000C */  jal        ApplySlopeGravity
 /* 38F48 80048748 00000000 */   nop
 /* 38F4C 8004874C 6000B227 */  addiu      $s2, $sp, 0x60
 /* 38F50 80048750 21204002 */  addu       $a0, $s2, $zero

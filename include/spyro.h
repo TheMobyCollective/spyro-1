@@ -18,7 +18,7 @@ typedef struct {
 
 typedef struct { // Needed to match atleast one place
   SpyroSpeedAngle m_TargetSpeedAngle;
-  int unk_0xd8;
+  int m_SlopeGravityZ; // Set by ApplySlopeGravity but never read (unused)
   Vector3D unk_0xdc;
   Vector3D unk_0xe8; // Probably some kind of momentum, not sure
   Vector3D m_Acceleration;

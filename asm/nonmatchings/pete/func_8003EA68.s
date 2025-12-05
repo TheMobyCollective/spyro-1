@@ -494,7 +494,7 @@ glabel func_8003EA68
 /* 2F81C 8003F01C A48B22AC */  sw         $v0, %lo(g_Spyro + 0x14C)($at)
 /* 2F820 8003F020 6BF8000C */  jal        func_8003E1AC
 /* 2F824 8003F024 B8FE1126 */   addiu     $s1, $s0, -0x148
-/* 2F828 8003F028 2DF8000C */  jal        func_8003E0B4
+/* 2F828 8003F028 2DF8000C */  jal        ApplySlopeGravity
 /* 2F82C 8003F02C 00000000 */   nop
 /* 2F830 8003F030 21282002 */  addu       $a1, $s1, $zero
 /* 2F834 8003F034 04000624 */  addiu      $a2, $zero, 0x4
@@ -1033,7 +1033,7 @@ glabel func_8003EA68
 /* 2FFF4 8003F7F4 A48B22AC */  sw         $v0, %lo(g_Spyro + 0x14C)($at)
 /* 2FFF8 8003F7F8 6BF8000C */  jal        func_8003E1AC
 /* 2FFFC 8003F7FC 00000000 */   nop
-/* 30000 8003F800 2DF8000C */  jal        func_8003E0B4
+/* 30000 8003F800 2DF8000C */  jal        ApplySlopeGravity
 /* 30004 8003F804 00000000 */   nop
 /* 30008 8003F808 DDFD0008 */  j          .L8003F774
 /* 3000C 8003F80C 00000000 */   nop
@@ -1386,7 +1386,7 @@ glabel func_8003EA68
 /* 30508 8003FD08 A48B22AC */  sw         $v0, %lo(g_Spyro + 0x14C)($at)
 /* 3050C 8003FD0C 6BF8000C */  jal        func_8003E1AC
 /* 30510 8003FD10 00000000 */   nop
-/* 30514 8003FD14 2DF8000C */  jal        func_8003E0B4
+/* 30514 8003FD14 2DF8000C */  jal        ApplySlopeGravity
 /* 30518 8003FD18 00000000 */   nop
 /* 3051C 8003FD1C 84FF0526 */  addiu      $a1, $s0, -0x7C
 /* 30520 8003FD20 04000624 */  addiu      $a2, $zero, 0x4
