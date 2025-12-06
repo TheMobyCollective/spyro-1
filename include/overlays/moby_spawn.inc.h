@@ -216,7 +216,7 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     func_8003A720(moby); // Reset the Moby first
     VecCopy(&moby->m_Position, &g_Spyro.unk_0x17c);
     moby->m_Rotation.z =
-        Atan2(g_Spyro.unk_0x188.x, g_Spyro.unk_0x188.y, 0) + 64;
+        Atan2(g_Spyro.m_KnockbackDirection.x, g_Spyro.m_KnockbackDirection.y, 0) + 64;
     func_800526A8(moby); // Update collision
     break;
   }
