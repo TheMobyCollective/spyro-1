@@ -3,6 +3,7 @@
 #include "gamepad.h"
 #include "math.h"
 #include "spyro.h"
+#include "variables.h"
 #include "vector.h"
 
 extern struct {
@@ -385,7 +386,50 @@ void func_8003E628(void) {
   }
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003E758);
+/// @brief Adjusts Spyro's position based on ground collision during air time
+void AdjustAirCollision(void) {
+  Vector3D vec2, vec3, vec1;
+
+  vec2.x = 0;
+  vec2.y = 0;
+  vec2.z = -0x164;
+
+  VecCopy(&vec1, &vec2);
+  vec1.z -= 0x80;
+
+  VecCopy(&vec3, &vec2);
+  vec3.z += 0x80;
+
+  VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec1, &vec1);
+  VecAdd(&vec1, &g_Spyro.m_Position, &vec1);
+
+  func_800170C0(&vec3, &vec3);
+  VecAdd(&vec3, &g_Spyro.m_Position, &vec3);
+
+  func_800170C0(&vec2, &vec2);
+  VecAdd(&vec2, &g_Spyro.m_Position, &vec2);
+
+  if (func_8004AE38(&vec3, &vec1) != 0 && D_80077368.z > 0) {
+    VecSub(&vec2, &D_80076B80, &vec2);
+
+    if (ABS(vec2.x) < 8) {
+      vec2.x = 0;
+    }
+
+    if (ABS(vec2.y) < 8) {
+      vec2.y = 0;
+    }
+
+    if (ABS(vec2.z) < 8) {
+      vec2.z = 0;
+    }
+
+    VecAdd(&g_Spyro.m_Position, &g_Spyro.m_Position, &vec2);
+    g_Spyro.m_airTime = 0;
+  } else {
+    g_Spyro.m_airTime++;
+  }
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003E90C);
 

@@ -29,6 +29,7 @@ extern u_char D_80077908[1200]; // Gem collection mask
 
 extern u_char g_RecentGemsCollected[32];
 
+extern Vector3D D_80076B80; // Collision point output (set by collision functions)
 extern Vector3D D_80077368;
 
 extern int D_80075754; // Sound volume
