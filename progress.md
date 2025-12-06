@@ -229,7 +229,7 @@
 - [ ] func_8003DFEC
 - [ ] func_8003E0B4
 - [x] func_8003E1AC
-- [ ] func_8003E218
+- [x] CheckWallCollision
 - [ ] func_8003E318
 - [x] func_8003E628
 - [ ] func_8003E758
