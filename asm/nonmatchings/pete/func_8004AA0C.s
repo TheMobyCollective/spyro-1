@@ -82,7 +82,7 @@ glabel func_8004AA0C
 /* 3B328 8004AB28 11004018 */  blez       $v0, .L8004AB70
 /* 3B32C 8004AB2C 21800000 */   addu      $s0, $zero, $zero
 .L8004AB30:
-/* 3B330 8004AB30 65F4000C */  jal        func_8003D194
+/* 3B330 8004AB30 65F4000C */  jal        UpdateBodyAnimationState
 /* 3B334 8004AB34 01001026 */   addiu     $s0, $s0, 0x1
 /* 3B338 8004AB38 7026010C */  jal        func_800499C0
 /* 3B33C 8004AB3C 00000000 */   nop

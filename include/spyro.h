@@ -11,6 +11,20 @@
 // This is literally the largest structure in the game
 // a massive pain to document and figure out
 
+/// @brief Body animation transition types
+/// Used by UpdateBodyAnimationState to control animation blending
+typedef enum {
+  TRANSITION_NONE = 0,            // Normal playback, no transition
+  TRANSITION_SLOW_BLEND = 1,      // Slow blend from frame 0 (+2/tick)
+  TRANSITION_SLOW_AT_END = 2,     // Slow blend at animation end
+  TRANSITION_SPECIAL = 3,         // Special transition (may play sound)
+  TRANSITION_HOLD_END = 4,        // Hold at end frame, manual control
+  TRANSITION_FAST_BLEND = 5,      // Fast blend (+4/tick)
+  TRANSITION_SLOW_FROM_START = 6, // Slow blend from start frame
+  TRANSITION_FAST_FROM_ZERO = 8,  // Fast blend from frame 0 (+2 immediate)
+  TRANSITION_SPECIAL_ALT = 10     // Same behavior as TRANSITION_SPECIAL
+} BodyTransitionType;
+
 typedef struct {
   int m_Speed;
   int m_RotZ, m_RotY, m_RotX;
@@ -117,11 +131,13 @@ typedef struct {
   /// @brief Spyro's rotation matrix
   MATRIX m_RotationMatrix;
 
-  // Some kind of animation state iirc
-  int unk_0x54;
+  /// @brief Current body animation transition type (0=normal, 1-8=various blends)
+  int m_bodyTransitionType;
 
   int m_bodyAnimationSpeed;
-  int unk_0x5C;
+
+  /// @brief Previous animation state, used as "from" in transition lookup table
+  int m_lastAnimationState;
   int unk_0x60;
   int m_headAnimationSpeed;
   int unk_0x68;
