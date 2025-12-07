@@ -229,7 +229,7 @@
 - [x] TurnBodyToVelocity
 - [x] ApplySlopeGravity
 - [x] func_8003E1AC
-- [ ] func_8003E218
+- [x] CheckWallCollision
 - [ ] func_8003E318
 - [x] func_8003E628
 - [ ] func_8003E758

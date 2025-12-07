@@ -3,6 +3,7 @@
 #include "gamepad.h"
 #include "math.h"
 #include "spyro.h"
+#include "variables.h"
 #include "vector.h"
 
 /* Forward declarations for sound - avoids pulling in full spu.h */
@@ -476,7 +477,40 @@ void func_8003E1AC(void) {
   VecSub(&g_Spyro.m_Physics.unk_0xdc, &nullVec, &g_Spyro.m_Physics.unk_0xdc);
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003E218);
+/// @brief Checks if Spyro is against a wall
+/// Casts a ray from front to back and checks the collision angle
+void CheckWallCollision(void) {
+  Vector3D vec1, vec2;
+  int magnitude;
+  int angle;
+
+  vec1.z = -0x164;
+  vec2.x = 0x1C4;
+  vec1.y = 0;
+  vec1.x = 0;
+  vec2.y = 0;
+  vec2.z = -0x1A4;
+
+  VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec1, &vec1);
+  VecAdd(&vec1, &vec1, &g_Spyro.m_Position);
+
+  func_800170C0(&vec2, &vec2);
+  VecAdd(&vec2, &vec2, &g_Spyro.m_Position);
+
+  if (func_8004AE38(&vec1, &vec2) == 0)
+    return;
+
+  magnitude = VecMagnitude(&D_80077368, 0);
+  angle = Atan2(D_80077368.z, magnitude, 0);
+
+  angle = (angle << 24) >> 24;
+
+  if (angle < 0x17)
+    return;
+
+  g_Spyro.m_againstWall = 1;
+  VecCopy(&g_Spyro.m_wallAgainstSpyro, &D_80077368);
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003E318);
 
