@@ -214,7 +214,7 @@
 - [x] func_8003CB24
 - [x] func_8003CBB8
 - [x] func_8003CCE4
-- [ ] func_8003D194
+- [x] UpdateBodyAnimationState
 - [ ] func_8003D3B8
 - [x] func_8003D52C
 - [ ] func_8003D6D0

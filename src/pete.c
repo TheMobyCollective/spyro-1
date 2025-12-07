@@ -5,6 +5,13 @@
 #include "spyro.h"
 #include "vector.h"
 
+/* Forward declarations for sound - avoids pulling in full spu.h */
+extern struct {
+  char _pad[0x2CC];
+  u_char *m_SoundTable;
+} g_Spu;
+void PlaySound(u_int pSoundId, Moby *pMoby, u_int pFlags, u_char *pSoundRefOut);
+
 extern struct {
   u_char m_StartFrame, m_EndFrame;
   u_char m_TransitionLastFrame, m_FrameRate;
@@ -55,7 +62,7 @@ int func_8003CBB8(int pDeltaTime) {
       g_Spyro.m_nextBodyAnimation =
           spyro_StateDefaultAnimation[g_Spyro.m_State];
 
-      if (D_8006BC84[g_Spyro.unk_0x5C][g_Spyro.m_State] == 10) {
+      if (D_8006BC84[g_Spyro.m_lastAnimationState][g_Spyro.m_State] == 10) {
         g_Spyro.m_nextBodyAnimationFrame =
             spyro_AnimationDetails[spyro_StateDefaultAnimation[g_Spyro.m_State]]
                 .m_StartFrame;
@@ -63,7 +70,7 @@ int func_8003CBB8(int pDeltaTime) {
         g_Spyro.m_nextBodyAnimationFrame = 1;
         g_Spyro.m_bodyFrameProgress = 4;
       }
-      g_Spyro.unk_0x5C = g_Spyro.m_State;
+      g_Spyro.m_lastAnimationState = g_Spyro.m_State;
       return 1;
     }
   }
@@ -73,9 +80,9 @@ int func_8003CBB8(int pDeltaTime) {
 
 /// @brief Handles the state transition for Spyro's body animation
 void func_8003CCE4(void) {
-  switch (D_8006BC84[g_Spyro.unk_0x5C][g_Spyro.m_State]) {
+  switch (D_8006BC84[g_Spyro.m_lastAnimationState][g_Spyro.m_State]) {
   case 1:
-    g_Spyro.unk_0x54 = 1;
+    g_Spyro.m_bodyTransitionType = TRANSITION_SLOW_BLEND;
     g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
     g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
 
@@ -83,11 +90,11 @@ void func_8003CCE4(void) {
     g_Spyro.m_nextBodyAnimationFrame = 0;
     g_Spyro.m_bodyFrameProgress = 2;
 
-    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
   case 8:
-    g_Spyro.unk_0x54 = 8;
+    g_Spyro.m_bodyTransitionType = TRANSITION_FAST_FROM_ZERO;
     g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
     g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
 
@@ -95,20 +102,20 @@ void func_8003CCE4(void) {
     g_Spyro.m_nextBodyAnimationFrame = 0;
     g_Spyro.m_bodyFrameProgress = 4;
 
-    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
   case 2:
     if (g_Spyro.m_nextBodyAnimationFrame >=
         spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_EndFrame) {
-      g_Spyro.unk_0x54 = 2;
+      g_Spyro.m_bodyTransitionType = TRANSITION_SLOW_AT_END;
       g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
       g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
       g_Spyro.m_nextBodyAnimationFrame =
           spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_StartFrame;
       g_Spyro.m_bodyFrameProgress = 2;
     } else {
-      g_Spyro.unk_0x54 = 0;
+      g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
     }
     break;
 
@@ -126,33 +133,33 @@ void func_8003CCE4(void) {
     }
 
     g_Spyro.m_bodyFrameProgress = 4;
-    g_Spyro.unk_0x54 = 5;
-    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    g_Spyro.m_bodyTransitionType = TRANSITION_FAST_BLEND;
+    g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
   case 3:
   case 10:
-    g_Spyro.unk_0x54 = 3;
+    g_Spyro.m_bodyTransitionType = TRANSITION_SPECIAL;
     break;
 
   case 4:
     g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
     g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
 
-    if (g_Spyro.unk_0x5C == 6 && g_Spyro.unk_0x84 < 24) {
-      g_Spyro.unk_0x54 = 1;
+    if (g_Spyro.m_lastAnimationState == 6 && g_Spyro.unk_0x84 < 24) {
+      g_Spyro.m_bodyTransitionType = TRANSITION_SLOW_BLEND;
       g_Spyro.m_nextBodyAnimation =
           spyro_StateDefaultAnimation[g_Spyro.m_State];
       g_Spyro.m_nextBodyAnimationFrame = 0;
       g_Spyro.m_bodyFrameProgress = 2;
-      g_Spyro.unk_0x5C = g_Spyro.m_State;
+      g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     } else {
       g_Spyro.m_nextBodyAnimationFrame =
           spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_EndFrame;
       g_Spyro.m_bodyFrameProgress = 4;
-      g_Spyro.unk_0x54 = 4;
+      g_Spyro.m_bodyTransitionType = TRANSITION_HOLD_END;
 
-      if (g_Spyro.unk_0x5C == 6) {
+      if (g_Spyro.m_lastAnimationState == 6) {
         D_8007584C = 0xA0;
         if (D_800757D0 < 0xF) {
           D_800757D0 = 0xF;
@@ -162,7 +169,7 @@ void func_8003CCE4(void) {
     break;
 
   case 6:
-    g_Spyro.unk_0x54 = 6;
+    g_Spyro.m_bodyTransitionType = TRANSITION_SLOW_FROM_START;
     g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
     g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
 
@@ -171,7 +178,7 @@ void func_8003CCE4(void) {
         spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_StartFrame;
     g_Spyro.m_bodyFrameProgress = 2;
 
-    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
   case 7:
@@ -182,8 +189,8 @@ void func_8003CCE4(void) {
     g_Spyro.m_nextBodyAnimationFrame = 1;
 
     g_Spyro.m_bodyFrameProgress = 0;
-    g_Spyro.unk_0x54 = 0;
-    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+    g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
   case 11:
@@ -196,19 +203,82 @@ void func_8003CCE4(void) {
         spyro_AnimationDetails[g_Spyro.m_bodyAnimation].m_StartFrame + 1;
 
     g_Spyro.m_bodyFrameProgress = 0;
-    g_Spyro.unk_0x54 = 0;
-    g_Spyro.unk_0x5C = g_Spyro.m_State;
+    g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+    g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
   default:
     // There used to be a printf here (removed after July) that said:
-    // printf("illegal animation transition from %d to %d\n", g_Spyro.unk_0x5C,
-    // g_Spyro.m_State)
+    // printf("illegal animation transition from %d to %d\n",
+    // g_Spyro.m_lastAnimationState, g_Spyro.m_State)
     return;
   }
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003D194);
+/// @brief Handles Spyro's body animation state machine
+void UpdateBodyAnimationState(void) {
+  switch (g_Spyro.m_bodyTransitionType) {
+  case TRANSITION_NONE:
+    if (g_Spyro.m_State == g_Spyro.m_lastAnimationState) {
+      func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
+    } else {
+      func_8003CCE4();
+    }
+    break;
+
+  case TRANSITION_SLOW_BLEND:
+  case TRANSITION_SLOW_AT_END:
+  case TRANSITION_SLOW_FROM_START:
+    g_Spyro.m_bodyFrameProgress += 2;
+    if (g_Spyro.m_bodyFrameProgress < 16)
+      break;
+    func_8003CB24(0);
+    g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+    break;
+
+  case TRANSITION_FAST_BLEND:
+    g_Spyro.m_bodyFrameProgress += 4;
+    if (g_Spyro.m_bodyFrameProgress < 16)
+      break;
+    func_8003CB24(0);
+    g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+    break;
+
+  case TRANSITION_FAST_FROM_ZERO:
+    func_8003CB24(2);
+    g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+    break;
+
+  case TRANSITION_SPECIAL:
+  case TRANSITION_SPECIAL_ALT: {
+    u_char transType =
+        D_8006BC84[g_Spyro.m_lastAnimationState][g_Spyro.m_State];
+    if (transType != 3 && transType != 10 && transType != 4) {
+      func_8003CCE4();
+      break;
+    }
+    if (func_8003CBB8(
+            spyro_AnimationDetails[g_Spyro.m_bodyAnimation].m_FrameRate)) {
+      if (g_Spyro.m_bodyAnimation == 0x1A) {
+        PlaySound(g_Spu.m_SoundTable[0x1B], (Moby *)&g_Spyro, 0x10, nullptr);
+      }
+      g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+    }
+    break;
+  }
+
+  case TRANSITION_HOLD_END:
+    g_Spyro.m_bodyFrameProgress += g_Spyro.m_bodyAnimationSpeed;
+    if (g_Spyro.m_bodyFrameProgress < 16)
+      break;
+    g_Spyro.m_bodyFrameProgress = 0;
+    g_Spyro.m_bodyTransitionType = TRANSITION_SPECIAL;
+    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
+    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+    g_Spyro.m_nextBodyAnimationFrame++;
+    break;
+  }
+}
 
 /// @brief Creates the target speed and angle based on the stick
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003D3B8);
@@ -458,8 +528,8 @@ void func_8003FDC8(int pNewState) {
   g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
   g_Spyro.m_nextBodyAnimationFrame = 1;
   g_Spyro.m_bodyFrameProgress = 0;
-  g_Spyro.unk_0x54 = 0;
-  g_Spyro.unk_0x5C = g_Spyro.m_State;
+  g_Spyro.m_bodyTransitionType = 0;
+  g_Spyro.m_lastAnimationState = g_Spyro.m_State;
 }
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003FE40);
