@@ -232,7 +232,7 @@
 - [x] CheckWallCollision
 - [ ] func_8003E318
 - [x] func_8003E628
-- [ ] func_8003E758
+- [x] AdjustAirCollision
 - [ ] func_8003E90C
 - [ ] func_8003EA68
 - [x] func_8003FDC8
