@@ -34,4 +34,6 @@ extern Vector3D D_80077368;
 extern int D_80075754; // Sound volume
 extern int D_80075748; // Music volume
 
+extern short D_80075788; // Animation timer
+
 #endif

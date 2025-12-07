@@ -239,7 +239,7 @@
 - [ ] func_8003FE40
 - [ ] func_80040F68
 - [ ] func_80041270
-- [ ] func_80041558
+- [x] CycleSpyroAnimation
 - [ ] func_80041670
 - [ ] func_80043FE4
 - [ ] func_80047B60

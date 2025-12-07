@@ -3,6 +3,7 @@
 #include "gamepad.h"
 #include "math.h"
 #include "spyro.h"
+#include "variables.h"
 #include "vector.h"
 
 extern struct {
@@ -14,6 +15,8 @@ extern u_char spyro_StateDefaultAnimation[48]; // State to animation
 extern u_char
     spyro_FlameBlockedInAnimation[48]; // Is flaming blocked in this animation
 extern u_char D_8006BC84[45][45];      // Transition types
+extern int D_8006BC60[9];              // Animation state table
+extern int D_80075970;                 // Animation cycle index
 
 // Spyro g_Spyro;
 
@@ -409,8 +412,40 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80040F68);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80041270);
 
-/// @brief Finds a suitable idle animation and sets the state for it
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80041558);
+/// @brief Cycles through animation states until finding one with a loaded model
+/// Sets Spyro's state to the first available animation from the state table
+void CycleSpyroAnimation(void) {
+  int *stateTable = D_8006BC60;
+  u_char *animTable = spyro_StateDefaultAnimation;
+  int startIndex = D_80075970;
+  Model *spyroModel = g_Models[0];
+
+  do {
+    // Advance to next animation index, wrapping at 9
+    D_80075970++;
+    if (D_80075970 >= 9) {
+      D_80075970 = 0;
+    }
+
+    // Check if animation is loaded for this state
+    // NOTE: The (u_int) casts force correct addu operand order to match
+    // original. Without casts, GCC puts the pointer first: addu v0, a1, v0 With
+    // casts, GCC puts the index first:   addu v0, v0, a1
+    if (D_80075970 == startIndex) {
+      // We've cycled through all states
+      if (spyroModel->m_Animations[((u_char *)((u_int)stateTable[D_80075970] +
+                                               (u_int)animTable))[0]] != 0) {
+        break;
+      }
+      // No valid animation found, set timer and return
+      D_80075788 = 0x2710;
+      return;
+    }
+  } while (spyroModel->m_Animations[((u_char *)((u_int)stateTable[D_80075970] +
+                                                (u_int)animTable))[0]] == 0);
+
+  func_8003EA68(D_8006BC60[D_80075970]);
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80041670);
 
