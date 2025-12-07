@@ -237,7 +237,7 @@
 - [ ] func_8003EA68
 - [x] func_8003FDC8
 - [ ] func_8003FE40
-- [ ] func_80040F68
+- [x] HandleSpyroDamage
 - [ ] func_80041270
 - [ ] func_80041558
 - [ ] func_80041670

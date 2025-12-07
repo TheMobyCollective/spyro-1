@@ -8,6 +8,7 @@
 // Misc global variables
 
 extern int D_80075690; // Is flight
+extern int D_800756A0; // God mode / invincibility cheat flag
 
 extern int g_DragonTotal; // gDragonTotal
 extern int g_GemTotal;    // gGemTotal

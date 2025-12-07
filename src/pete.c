@@ -611,7 +611,136 @@ void func_8003FDC8(int pNewState) {
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003FE40);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80040F68);
+// Damage flag bits:
+//   0x0010 - Bounce damage (enemy contact, causes Spyro to bounce back)
+//   0x0020 - Hazard damage (plays hurt sound, e.g. fire/electricity)
+//   0x0040 - Unknown damage type (state 27)
+//   0x0080 - Unknown damage type (state 28)
+//   0x0100 - Unknown damage type (state 22)
+//   0x0400 - Charge damage (hit while charging, stops momentum)
+//   0x0800 - Electrified/frozen toggle (state 17 - stuck in place)
+//   0x2000 - Supercharge flag
+//   0x8000 - Knockback (applies m_KnockbackDirection to acceleration)
+//
+// Invulnerability mask: -0x1F2 (0xFFFFFE0E) clears bits 0,4,5,6,7,8
+// Charge immunity mask: -0x401 (0xFFFFFBFF) clears bit 10 (charge)
+
+/// @brief Processes damage and action flags for Spyro
+/// @param pFlags The action/damage flags to process
+/// @return 1 if action was processed, 0 if level transition or no action
+int HandleSpyroDamage(int pFlags) {
+  int result = 0;
+  int highFlags;
+
+  // Don't process damage during level transitions
+  if (g_NextLevelId != g_LevelId) {
+    return 0;
+  }
+
+  // When invulnerable, mask off most damage types
+  if (g_Spyro.m_invulverabilityTimer != 0) {
+    pFlags &= -0x1F2; // Clear low damage bits
+    if (g_Spyro.m_Physics.m_TrueVelocity.z > 0) {
+      // Rising in air - also immune to charge damage
+      pFlags &= -0x401;
+    }
+  }
+
+  // Filter by what damage types Spyro can currently receive
+  pFlags &= g_Spyro.m_DamageFlags;
+
+  // Check for "normal" damage flags (0x5F1 = bits 0,4,5,6,7,8,10)
+  if ((pFlags & 0x5F1) != 0 && g_Spyro.m_health >= 0) {
+    // Decrement health unless god mode is active
+    if (D_800756A0 == 0) {
+      g_Spyro.m_health--;
+    }
+
+    if (pFlags & 0x10) {
+      // Bounce damage - state depends on whether Spyro survived
+      if (g_Spyro.m_health < 0) {
+        func_8003EA68(0x1F); // State 31: Death
+      } else {
+        func_8003EA68(0x19); // State 25: Hurt bounce
+      }
+    } else if (pFlags & 0x20) {
+      // Hazard damage with sound effect
+      PlaySound(g_Spu.m_SoundTable[0x1F], (Moby *)&g_Spyro, 4,
+                &g_Spyro.m_damageSoundChannel);
+      func_8003EA68(7); // State 7: Hurt (hazard)
+    } else if (pFlags & 0x40) {
+      func_8003EA68(0x1B); // State 27
+    } else if (pFlags & 0x80) {
+      func_8003EA68(0x1C); // State 28
+    } else if (pFlags & 0x100) {
+      func_8003EA68(0x16); // State 22
+    } else if (pFlags & 0x400) {
+      // Charge damage in normal damage path
+      func_8003EA68(0x1D); // State 29: Charge interrupted
+      // Instant death on certain floor types
+      if (*g_Spyro.m_floorFlagsPointer != 0 && D_800756A0 == 0) {
+        g_Spyro.m_health = -1;
+      }
+    } else {
+      func_8003EA68(0xE); // State 14: Default hurt state
+    }
+
+    // Grant invulnerability frames (0x5A = 90 frames)
+    if (g_Spyro.m_invulverabilityTimer < 0x5A) {
+      g_Spyro.m_invulverabilityTimer = 0x5A;
+    }
+    return 1;
+  }
+
+  // Extract high flags for special behaviors
+  highFlags = pFlags & 0xFC00;
+
+  // Charge damage when no other damage flags apply
+  if (pFlags & 0x400) {
+    if (g_Spyro.m_health >= 0) {
+      func_8003DFA4(); // Reset all velocity/momentum
+      if (D_800756A0 == 0) {
+        g_Spyro.m_health--;
+      }
+      if (g_Spyro.m_invulverabilityTimer < 0x5A) {
+        g_Spyro.m_invulverabilityTimer = 0x5A;
+      }
+      func_8003EA68(0x1D); // State 29: Charge interrupted
+    }
+    result = 1;
+  }
+
+  // Knockback - applies external momentum (e.g. from cannons, wind)
+  if (highFlags & 0x8000) {
+    func_8003EA68(0xC); // State 12: Knockback
+    func_80017330(&g_Spyro.m_KnockbackDirection,
+                  0x800); // Normalize to magnitude 0x800
+    VecCopy(&g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_KnockbackDirection);
+    result = 1;
+  }
+
+  // Electrified/frozen state toggle
+  if (highFlags & 0x800) {
+    if (g_Spyro.m_State != 0x11) {
+      func_8003EA68(0x11); // State 17: Electrified/stuck
+      result = 1;
+    }
+  } else if (g_Spyro.m_State == 0x11) {
+    // Release from electrified state
+    func_8003EA68(0xF); // State 15: Recovery
+  }
+
+  // Supercharge flag management (state 44 is immune)
+  if (g_Spyro.m_State != 0x2C) {
+    if (highFlags & 0x2000) {
+      g_Spyro.m_doingSupercharge = 1;
+    } else {
+      g_Spyro.m_doingSupercharge = 0;
+    }
+  }
+
+  return result;
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80041270);
 

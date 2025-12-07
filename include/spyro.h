@@ -171,7 +171,7 @@ typedef struct {
   int m_damagingFloorIndex;
   int *m_damagingFloorFlags;
   Vector3D unk_0x17c;
-  Vector3D unk_0x188; // Momentum related?
+  Vector3D m_KnockbackDirection; // Direction vector applied to acceleration on knockback
   int unk_0x194;      // Used to force spyro to flame in cutscenes
   int unk_0x198;
   int unk_0x19c;
