@@ -2,16 +2,10 @@
 #include "common.h"
 #include "gamepad.h"
 #include "math.h"
+#include "spu.h"
 #include "spyro.h"
 #include "variables.h"
 #include "vector.h"
-
-/* Forward declarations for sound - avoids pulling in full spu.h */
-extern struct {
-  char _pad[0x2CC];
-  u_char *m_SoundTable;
-} g_Spu;
-void PlaySound(u_int pSoundId, Moby *pMoby, u_int pFlags, u_char *pSoundRefOut);
 
 extern struct {
   u_char m_StartFrame, m_EndFrame;
@@ -263,7 +257,8 @@ void UpdateBodyAnimationState(void) {
     if (func_8003CBB8(
             spyro_AnimationDetails[g_Spyro.m_bodyAnimation].m_FrameRate)) {
       if (g_Spyro.m_bodyAnimation == 0x1A) {
-        PlaySound(g_Spu.m_SoundTable[0x1B], (Moby *)&g_Spyro, 0x10, nullptr);
+        PlaySound(g_Spu.m_SoundTable->spyroStars, (Moby *)&g_Spyro, 0x10,
+                  nullptr);
       }
       g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
     }
@@ -667,7 +662,7 @@ int HandleSpyroDamage(int pFlags) {
       }
     } else if (pFlags & 0x20) {
       // Hazard damage with sound effect
-      PlaySound(g_Spu.m_SoundTable[0x1F], (Moby *)&g_Spyro, 4,
+      PlaySound(g_Spu.m_SoundTable->electricShock, (Moby *)&g_Spyro, 4,
                 &g_Spyro.m_damageSoundChannel);
       func_8003EA68(7); // State 7: Hurt (hazard)
     } else if (pFlags & 0x40) {
