@@ -22,8 +22,8 @@ extern u_char spyro_StateDefaultAnimation[48]; // State to animation
 extern u_char
     spyro_FlameBlockedInAnimation[48]; // Is flaming blocked in this animation
 extern u_char D_8006BC84[45][45];      // Transition types
-extern int D_8006BC60[9];              // Animation state table
-extern int D_80075970;                 // Animation cycle index
+extern int D_8006BC60[9];              // Idle animation states table
+extern int D_80075970;                 // Idle animation index
 
 // Spyro g_Spyro;
 
@@ -746,10 +746,11 @@ int HandleSpyroDamage(int pFlags) {
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80041270);
 
-/// @brief Cycles through animation states until finding one with a loaded model
-/// Sets Spyro's state to the first available animation from the state table
-void CycleSpyroAnimation(void) {
-  int *stateTable = D_8006BC60;
+/// @brief Cycles through animation states until finding a loaded idle animation
+/// Sets Spyro's state to the first available animation from the idle animation
+/// table
+void CycleSpyroIdleAnimation(void) {
+  int *idleAnimationTable = D_8006BC60;
   u_char *animTable = spyro_StateDefaultAnimation;
   int startIndex = D_80075970;
   Model *spyroModel = g_Models[0];
@@ -767,16 +768,20 @@ void CycleSpyroAnimation(void) {
     // casts, GCC puts the index first:   addu v0, v0, a1
     if (D_80075970 == startIndex) {
       // We've cycled through all states
-      if (spyroModel->m_Animations[((u_char *)((u_int)stateTable[D_80075970] +
-                                               (u_int)animTable))[0]] != 0) {
+      if (spyroModel
+              ->m_Animations[((u_char *)((u_int)idleAnimationTable[D_80075970] +
+                                         (u_int)animTable))[0]] != 0) {
         break;
       }
+
       // No valid animation found, set timer and return
       D_80075788 = 0x2710;
       return;
     }
-  } while (spyroModel->m_Animations[((u_char *)((u_int)stateTable[D_80075970] +
-                                                (u_int)animTable))[0]] == 0);
+  } while (
+      spyroModel
+          ->m_Animations[((u_char *)((u_int)idleAnimationTable[D_80075970] +
+                                     (u_int)animTable))[0]] == 0);
 
   func_8003EA68(D_8006BC60[D_80075970]);
 }
