@@ -205,7 +205,7 @@
 - [x] func_8003C358
 - [x] UpdateMobyDragonFragment
 - [x] SetSpyroHeadLookTarget
-- [ ] func_8003C994
+- [x] UpdatePufferBirdMobyPathNode
 - [x] RegisterFlightMobyCollectibleType
 - [x] func_80037E98
 - [ ] func_8002BBE0

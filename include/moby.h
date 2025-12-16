@@ -322,7 +322,7 @@ typedef struct {
   u_char m_NodeCount;
   u_char m_CurrentNode;
   char unk_0x2[4]; // No clue, padding? Usually 0
-  short unk_0x6;   // Who knows (-1 or 1, might be winding?)
+  short m_Reversed; // Path traversal: -1 = normal, 1 = reversed
   struct {
     Vector3D m_Position;
     int unk_0xC; // Padding I assume
