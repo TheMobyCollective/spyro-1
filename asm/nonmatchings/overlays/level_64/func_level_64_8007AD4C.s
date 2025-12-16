@@ -4650,7 +4650,7 @@ glabel func_level_64_8007AD4C
 .Llevel_64_8007F0D0:
 /* 5AEEE98 8007F0D0 06000524 */  addiu      $a1, $zero, 0x6
 /* 5AEEE9C 8007F0D4 21300000 */  addu       $a2, $zero, $zero
-/* 5AEEEA0 8007F0D8 70E3000C */  jal        func_80038DC0
+/* 5AEEEA0 8007F0D8 70E3000C */  jal        RotateMobyToSpyro
 /* 5AEEEA4 8007F0DC 21380000 */   addu      $a3, $zero, $zero
 /* 5AEEEA8 8007F0E0 0880053C */  lui        $a1, %hi(g_Spyro)
 /* 5AEEEAC 8007F0E4 588AA524 */  addiu      $a1, $a1, %lo(g_Spyro)

@@ -3048,7 +3048,7 @@ glabel func_level_45_8007CFB4
 .Llevel_45_8007FBF4:
 /* 425B9BC 8007FBF4 04000524 */  addiu      $a1, $zero, 0x4
 /* 425B9C0 8007FBF8 21300000 */  addu       $a2, $zero, $zero
-/* 425B9C4 8007FBFC 70E3000C */  jal        func_80038DC0
+/* 425B9C4 8007FBFC 70E3000C */  jal        RotateMobyToSpyro
 /* 425B9C8 8007FC00 21380000 */   addu      $a3, $zero, $zero
 /* 425B9CC 8007FC04 21206002 */  addu       $a0, $s3, $zero
 /* 425B9D0 8007FC08 30000526 */  addiu      $a1, $s0, 0x30

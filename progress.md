@@ -167,7 +167,7 @@
 - [x] func_80038BB0
 - [x] func_80038C4C
 - [x] func_80038D54
-- [ ] func_80038DC0
+- [x] RotateMobyToSpyro
 - [ ] func_80038EE0
 - [ ] func_80038FC8
 - [x] func_80039228

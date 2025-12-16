@@ -1877,7 +1877,7 @@ glabel func_level_54_8007AF50
 .Llevel_54_8007C820:
 /* 4DF1DE8 8007C820 07000524 */  addiu      $a1, $zero, 0x7
 /* 4DF1DEC 8007C824 05000624 */  addiu      $a2, $zero, 0x5
-/* 4DF1DF0 8007C828 70E3000C */  jal        func_80038DC0
+/* 4DF1DF0 8007C828 70E3000C */  jal        RotateMobyToSpyro
 /* 4DF1DF4 8007C82C 21380000 */   addu      $a3, $zero, $zero
 /* 4DF1DF8 8007C830 4800228E */  lw         $v0, 0x48($s1)
 /* 4DF1DFC 8007C834 00000000 */  nop
@@ -1954,7 +1954,7 @@ glabel func_level_54_8007AF50
 /* 4DF1F08 8007C940 21206002 */  addu       $a0, $s3, $zero
 /* 4DF1F0C 8007C944 07000524 */  addiu      $a1, $zero, 0x7
 /* 4DF1F10 8007C948 05000624 */  addiu      $a2, $zero, 0x5
-/* 4DF1F14 8007C94C 70E3000C */  jal        func_80038DC0
+/* 4DF1F14 8007C94C 70E3000C */  jal        RotateMobyToSpyro
 /* 4DF1F18 8007C950 21380000 */   addu      $a3, $zero, $zero
 /* 4DF1F1C 8007C954 0780023C */  lui        $v0, %hi(D_80075794)
 /* 4DF1F20 8007C958 9457428C */  lw         $v0, %lo(D_80075794)($v0)
@@ -5077,7 +5077,7 @@ glabel func_level_54_8007AF50
 /* 4DF4CFC 8007F734 21206002 */  addu       $a0, $s3, $zero
 /* 4DF4D00 8007F738 04000524 */  addiu      $a1, $zero, 0x4
 /* 4DF4D04 8007F73C 21300000 */  addu       $a2, $zero, $zero
-/* 4DF4D08 8007F740 70E3000C */  jal        func_80038DC0
+/* 4DF4D08 8007F740 70E3000C */  jal        RotateMobyToSpyro
 /* 4DF4D0C 8007F744 21380000 */   addu      $a3, $zero, $zero
 /* 4DF4D10 8007F748 0400228E */  lw         $v0, 0x4($s1)
 /* 4DF4D14 8007F74C 03000924 */  addiu      $t1, $zero, 0x3
@@ -5352,7 +5352,7 @@ glabel func_level_54_8007AF50
 /* 4DF5120 8007FB58 21206002 */  addu       $a0, $s3, $zero
 /* 4DF5124 8007FB5C 04000524 */  addiu      $a1, $zero, 0x4
 /* 4DF5128 8007FB60 21300000 */  addu       $a2, $zero, $zero
-/* 4DF512C 8007FB64 70E3000C */  jal        func_80038DC0
+/* 4DF512C 8007FB64 70E3000C */  jal        RotateMobyToSpyro
 /* 4DF5130 8007FB68 21380000 */   addu      $a3, $zero, $zero
 /* 4DF5134 8007FB6C 0880053C */  lui        $a1, %hi(g_Spyro)
 /* 4DF5138 8007FB70 588AA524 */  addiu      $a1, $a1, %lo(g_Spyro)
@@ -5437,7 +5437,7 @@ glabel func_level_54_8007AF50
 .Llevel_54_8007FC9C:
 /* 4DF5264 8007FC9C 04000524 */  addiu      $a1, $zero, 0x4
 /* 4DF5268 8007FCA0 21300000 */  addu       $a2, $zero, $zero
-/* 4DF526C 8007FCA4 70E3000C */  jal        func_80038DC0
+/* 4DF526C 8007FCA4 70E3000C */  jal        RotateMobyToSpyro
 /* 4DF5270 8007FCA8 21380000 */   addu      $a3, $zero, $zero
 /* 4DF5274 8007FCAC 21206002 */  addu       $a0, $s3, $zero
 /* 4DF5278 8007FCB0 794A010C */  jal        func_800529E4
@@ -5553,7 +5553,7 @@ glabel func_level_54_8007AF50
 /* 4DF5400 8007FE38 21206002 */  addu       $a0, $s3, $zero
 /* 4DF5404 8007FE3C 04000524 */  addiu      $a1, $zero, 0x4
 /* 4DF5408 8007FE40 21300000 */  addu       $a2, $zero, $zero
-/* 4DF540C 8007FE44 70E3000C */  jal        func_80038DC0
+/* 4DF540C 8007FE44 70E3000C */  jal        RotateMobyToSpyro
 /* 4DF5410 8007FE48 21380000 */   addu      $a3, $zero, $zero
 /* 4DF5414 8007FE4C 21206002 */  addu       $a0, $s3, $zero
 /* 4DF5418 8007FE50 794A010C */  jal        func_800529E4
@@ -5903,7 +5903,7 @@ glabel func_level_54_8007AF50
 .Llevel_54_80080360:
 /* 4DF5928 80080360 10000524 */  addiu      $a1, $zero, 0x10
 /* 4DF592C 80080364 21300000 */  addu       $a2, $zero, $zero
-/* 4DF5930 80080368 70E3000C */  jal        func_80038DC0
+/* 4DF5930 80080368 70E3000C */  jal        RotateMobyToSpyro
 /* 4DF5934 8008036C 21380000 */   addu      $a3, $zero, $zero
 /* 4DF5938 80080370 21202002 */  addu       $a0, $s1, $zero
 /* 4DF593C 80080374 645E000C */  jal        OctDistance
@@ -5976,7 +5976,7 @@ glabel func_level_54_8007AF50
 /* 4DF5A40 80080478 21206002 */  addu       $a0, $s3, $zero
 /* 4DF5A44 8008047C 10000524 */  addiu      $a1, $zero, 0x10
 /* 4DF5A48 80080480 21300000 */  addu       $a2, $zero, $zero
-/* 4DF5A4C 80080484 70E3000C */  jal        func_80038DC0
+/* 4DF5A4C 80080484 70E3000C */  jal        RotateMobyToSpyro
 /* 4DF5A50 80080488 21380000 */   addu      $a3, $zero, $zero
 /* 4DF5A54 8008048C 21202002 */  addu       $a0, $s1, $zero
 /* 4DF5A58 80080490 645E000C */  jal        OctDistance

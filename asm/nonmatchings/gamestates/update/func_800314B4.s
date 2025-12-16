@@ -176,7 +176,7 @@ glabel func_800314B4
 /* 21EE8 800316E8 140083AC */  sw         $v1, 0x14($a0)
 /* 21EEC 800316EC 0880043C */  lui        $a0, %hi(D_80078D00 + 0x74)
 /* 21EF0 800316F0 748D848C */  lw         $a0, %lo(D_80078D00 + 0x74)($a0)
-/* 21EF4 800316F4 70E3000C */  jal        func_80038DC0
+/* 21EF4 800316F4 70E3000C */  jal        RotateMobyToSpyro
 /* 21EF8 800316F8 21380000 */   addu      $a3, $zero, $zero
 /* 21EFC 800316FC 0880043C */  lui        $a0, %hi(D_80078D00 + 0x74)
 /* 21F00 80031700 748D848C */  lw         $a0, %lo(D_80078D00 + 0x74)($a0)

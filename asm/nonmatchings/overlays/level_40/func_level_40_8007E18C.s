@@ -4338,7 +4338,7 @@ glabel func_level_40_8007E18C
 .Llevel_40_80081890:
 /* 3592E58 80081890 0A000524 */  addiu      $a1, $zero, 0xA
 /* 3592E5C 80081894 21300000 */  addu       $a2, $zero, $zero
-/* 3592E60 80081898 70E3000C */  jal        func_80038DC0
+/* 3592E60 80081898 70E3000C */  jal        RotateMobyToSpyro
 /* 3592E64 8008189C 21380000 */   addu      $a3, $zero, $zero
 /* 3592E68 800818A0 C5060208 */  j          .Llevel_40_80081B14
 /* 3592E6C 800818A4 00000000 */   nop
@@ -4903,7 +4903,7 @@ glabel func_level_40_8007E18C
 .Llevel_40_800820C0:
 /* 3593688 800820C0 04000524 */  addiu      $a1, $zero, 0x4
 /* 359368C 800820C4 21300000 */  addu       $a2, $zero, $zero
-/* 3593690 800820C8 70E3000C */  jal        func_80038DC0
+/* 3593690 800820C8 70E3000C */  jal        RotateMobyToSpyro
 /* 3593694 800820CC 21380000 */   addu      $a3, $zero, $zero
 /* 3593698 800820D0 21206002 */  addu       $a0, $s3, $zero
 /* 359369C 800820D4 21300000 */  addu       $a2, $zero, $zero

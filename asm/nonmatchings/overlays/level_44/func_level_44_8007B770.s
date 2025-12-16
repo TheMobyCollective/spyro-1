@@ -2261,7 +2261,7 @@ glabel func_level_44_8007B770
 .Llevel_44_8007CE3C:
 /* 4026C04 8007CE3C 04000524 */  addiu      $a1, $zero, 0x4
 /* 4026C08 8007CE40 21300000 */  addu       $a2, $zero, $zero
-/* 4026C0C 8007CE44 70E3000C */  jal        func_80038DC0
+/* 4026C0C 8007CE44 70E3000C */  jal        RotateMobyToSpyro
 /* 4026C10 8007CE48 21380000 */   addu      $a3, $zero, $zero
 /* 4026C14 8007CE4C 2000A28E */  lw         $v0, 0x20($s5)
 /* 4026C18 8007CE50 00000000 */  nop
@@ -2441,7 +2441,7 @@ glabel func_level_44_8007B770
 /* 4026E84 8007D0BC 21208002 */  addu       $a0, $s4, $zero
 /* 4026E88 8007D0C0 06000524 */  addiu      $a1, $zero, 0x6
 /* 4026E8C 8007D0C4 21300000 */  addu       $a2, $zero, $zero
-/* 4026E90 8007D0C8 70E3000C */  jal        func_80038DC0
+/* 4026E90 8007D0C8 70E3000C */  jal        RotateMobyToSpyro
 /* 4026E94 8007D0CC 21380000 */   addu      $a3, $zero, $zero
 /* 4026E98 8007D0D0 0780023C */  lui        $v0, %hi(D_80075794)
 /* 4026E9C 8007D0D4 9457428C */  lw         $v0, %lo(D_80075794)($v0)
@@ -2982,7 +2982,7 @@ glabel func_level_44_8007B770
 /* 4027690 8007D8C8 21208002 */  addu       $a0, $s4, $zero
 /* 4027694 8007D8CC 06000524 */  addiu      $a1, $zero, 0x6
 /* 4027698 8007D8D0 04000624 */  addiu      $a2, $zero, 0x4
-/* 402769C 8007D8D4 70E3000C */  jal        func_80038DC0
+/* 402769C 8007D8D4 70E3000C */  jal        RotateMobyToSpyro
 /* 40276A0 8007D8D8 01000724 */   addiu     $a3, $zero, 0x1
 /* 40276A4 8007D8DC F4264010 */  beqz       $v0, .Llevel_44_800874B0
 /* 40276A8 8007D8E0 21208002 */   addu      $a0, $s4, $zero
@@ -3834,7 +3834,7 @@ glabel func_level_44_8007B770
 /* 4028324 8007E55C 21208002 */  addu       $a0, $s4, $zero
 /* 4028328 8007E560 04000524 */  addiu      $a1, $zero, 0x4
 /* 402832C 8007E564 21300000 */  addu       $a2, $zero, $zero
-/* 4028330 8007E568 70E3000C */  jal        func_80038DC0
+/* 4028330 8007E568 70E3000C */  jal        RotateMobyToSpyro
 /* 4028334 8007E56C 21380000 */   addu      $a3, $zero, $zero
 /* 4028338 8007E570 2800A28E */  lw         $v0, 0x28($s5)
 /* 402833C 8007E574 00000000 */  nop
@@ -3983,7 +3983,7 @@ glabel func_level_44_8007B770
 /* 402854C 8007E784 21208002 */  addu       $a0, $s4, $zero
 /* 4028550 8007E788 08000524 */  addiu      $a1, $zero, 0x8
 /* 4028554 8007E78C 21300000 */  addu       $a2, $zero, $zero
-/* 4028558 8007E790 70E3000C */  jal        func_80038DC0
+/* 4028558 8007E790 70E3000C */  jal        RotateMobyToSpyro
 /* 402855C 8007E794 21380000 */   addu      $a3, $zero, $zero
 /* 4028560 8007E798 3F008292 */  lbu        $v0, 0x3F($s4)
 /* 4028564 8007E79C 00000000 */  nop
@@ -4300,7 +4300,7 @@ glabel func_level_44_8007B770
 /* 4028A10 8007EC48 21208002 */  addu       $a0, $s4, $zero
 /* 4028A14 8007EC4C 06000524 */  addiu      $a1, $zero, 0x6
 /* 4028A18 8007EC50 21300000 */  addu       $a2, $zero, $zero
-/* 4028A1C 8007EC54 70E3000C */  jal        func_80038DC0
+/* 4028A1C 8007EC54 70E3000C */  jal        RotateMobyToSpyro
 /* 4028A20 8007EC58 21380000 */   addu      $a3, $zero, $zero
 /* 4028A24 8007EC5C 49008292 */  lbu        $v0, 0x49($s4)
 /* 4028A28 8007EC60 00000000 */  nop
@@ -5203,7 +5203,7 @@ glabel func_level_44_8007B770
 /* 4029768 8007F9A0 21208002 */  addu       $a0, $s4, $zero
 /* 402976C 8007F9A4 04000524 */  addiu      $a1, $zero, 0x4
 /* 4029770 8007F9A8 21300000 */  addu       $a2, $zero, $zero
-/* 4029774 8007F9AC 70E3000C */  jal        func_80038DC0
+/* 4029774 8007F9AC 70E3000C */  jal        RotateMobyToSpyro
 /* 4029778 8007F9B0 21380000 */   addu      $a3, $zero, $zero
 /* 402977C 8007F9B4 0880053C */  lui        $a1, %hi(g_Spyro)
 /* 4029780 8007F9B8 588AA524 */  addiu      $a1, $a1, %lo(g_Spyro)
@@ -5229,7 +5229,7 @@ glabel func_level_44_8007B770
 /* 40297CC 8007FA04 0880033C */  lui        $v1, %hi(g_Spyro + 0x8)
 /* 40297D0 8007FA08 608A638C */  lw         $v1, %lo(g_Spyro + 0x8)($v1)
 /* 40297D4 8007FA0C 23104800 */  subu       $v0, $v0, $t0
-/* 40297D8 8007FA10 70E3000C */  jal        func_80038DC0
+/* 40297D8 8007FA10 70E3000C */  jal        RotateMobyToSpyro
 /* 40297DC 8007FA14 23884300 */   subu      $s1, $v0, $v1
 /* 40297E0 8007FA18 0124022A */  slti       $v0, $s0, 0x2401
 /* 40297E4 8007FA1C 0D004014 */  bnez       $v0, .Llevel_44_8007FA54
@@ -5277,7 +5277,7 @@ glabel func_level_44_8007B770
 /* 4029884 8007FABC 06000524 */  addiu      $a1, $zero, 0x6
 /* 4029888 8007FAC0 21300000 */  addu       $a2, $zero, $zero
 /* 402988C 8007FAC4 21380000 */  addu       $a3, $zero, $zero
-/* 4029890 8007FAC8 70E3000C */  jal        func_80038DC0
+/* 4029890 8007FAC8 70E3000C */  jal        RotateMobyToSpyro
 /* 4029894 8007FACC 21804000 */   addu      $s0, $v0, $zero
 /* 4029898 8007FAD0 3F008392 */  lbu        $v1, 0x3F($s4)
 /* 402989C 8007FAD4 00000000 */  nop
@@ -5392,7 +5392,7 @@ glabel func_level_44_8007B770
 /* 4029A38 8007FC70 21208002 */  addu       $a0, $s4, $zero
 /* 4029A3C 8007FC74 04000524 */  addiu      $a1, $zero, 0x4
 /* 4029A40 8007FC78 21300000 */  addu       $a2, $zero, $zero
-/* 4029A44 8007FC7C 70E3000C */  jal        func_80038DC0
+/* 4029A44 8007FC7C 70E3000C */  jal        RotateMobyToSpyro
 /* 4029A48 8007FC80 21380000 */   addu      $a3, $zero, $zero
 /* 4029A4C 8007FC84 7000A28E */  lw         $v0, 0x70($s5)
 /* 4029A50 8007FC88 8400A38E */  lw         $v1, 0x84($s5)
@@ -5495,7 +5495,7 @@ glabel func_level_44_8007B770
 /* 4029BC0 8007FDF8 21208002 */  addu       $a0, $s4, $zero
 /* 4029BC4 8007FDFC 04000524 */  addiu      $a1, $zero, 0x4
 /* 4029BC8 8007FE00 21300000 */  addu       $a2, $zero, $zero
-/* 4029BCC 8007FE04 70E3000C */  jal        func_80038DC0
+/* 4029BCC 8007FE04 70E3000C */  jal        RotateMobyToSpyro
 /* 4029BD0 8007FE08 21380000 */   addu      $a3, $zero, $zero
 /* 4029BD4 8007FE0C 49008292 */  lbu        $v0, 0x49($s4)
 /* 4029BD8 8007FE10 00000000 */  nop
@@ -5565,7 +5565,7 @@ glabel func_level_44_8007B770
 /* 4029CD0 8007FF08 21208002 */  addu       $a0, $s4, $zero
 /* 4029CD4 8007FF0C 06000524 */  addiu      $a1, $zero, 0x6
 /* 4029CD8 8007FF10 21300000 */  addu       $a2, $zero, $zero
-/* 4029CDC 8007FF14 70E3000C */  jal        func_80038DC0
+/* 4029CDC 8007FF14 70E3000C */  jal        RotateMobyToSpyro
 /* 4029CE0 8007FF18 21380000 */   addu      $a3, $zero, $zero
 /* 4029CE4 8007FF1C 3F008292 */  lbu        $v0, 0x3F($s4)
 /* 4029CE8 8007FF20 00000000 */  nop
