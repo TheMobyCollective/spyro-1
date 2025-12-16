@@ -36,4 +36,9 @@ void CollectItem(Moby *pMoby);
 /// @brief Create portal text
 void func_8003C358(Moby *pMoby, int pIsLevelName);
 
+/// @brief Flight level active object slots (4 slots, negative = empty)
+extern int D_80078608;
+/// @brief Flight level object type counters
+extern int D_80078630;
+
 #endif

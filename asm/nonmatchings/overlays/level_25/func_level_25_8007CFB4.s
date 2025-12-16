@@ -3084,7 +3084,7 @@ glabel func_level_25_8007CFB4
 /* 2594A78 8007FCB0 47E1000C */  jal        func_8003851C
 /* 2594A7C 8007FCB4 21300000 */   addu      $a2, $zero, $zero
 /* 2594A80 8007FCB8 0400048E */  lw         $a0, 0x4($s0)
-/* 2594A84 8007FCBC B1F2000C */  jal        func_8003CAC4
+/* 2594A84 8007FCBC B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 2594A88 8007FCC0 00000000 */   nop
 /* 2594A8C 8007FCC4 21286002 */  addu       $a1, $s3, $zero
 /* 2594A90 8007FCC8 0000048E */  lw         $a0, 0x0($s0)
@@ -3272,7 +3272,7 @@ glabel func_level_25_8007CFB4
 /* 2594D40 8007FF78 7D064010 */  beqz       $v0, .Llevel_25_80081970
 /* 2594D44 8007FF7C 00000000 */   nop
 /* 2594D48 8007FF80 1800248E */  lw         $a0, 0x18($s1)
-/* 2594D4C 8007FF84 B1F2000C */  jal        func_8003CAC4
+/* 2594D4C 8007FF84 B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 2594D50 8007FF88 00000000 */   nop
 /* 2594D54 8007FF8C 1000258E */  lw         $a1, 0x10($s1)
 /* 2594D58 8007FF90 00000000 */  nop
@@ -3505,7 +3505,7 @@ glabel func_level_25_8007CFB4
 /* 25950AC 800802E4 57004010 */  beqz       $v0, .Llevel_25_80080444
 /* 25950B0 800802E8 00000000 */   nop
 /* 25950B4 800802EC 1800248E */  lw         $a0, 0x18($s1)
-/* 25950B8 800802F0 B1F2000C */  jal        func_8003CAC4
+/* 25950B8 800802F0 B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 25950BC 800802F4 00000000 */   nop
 /* 25950C0 800802F8 1000258E */  lw         $a1, 0x10($s1)
 /* 25950C4 800802FC 00000000 */  nop
@@ -4770,7 +4770,7 @@ glabel func_level_25_8007CFB4
 /* 2596368 800815A0 F3004010 */  beqz       $v0, .Llevel_25_80081970
 /* 259636C 800815A4 00000000 */   nop
 /* 2596370 800815A8 0000048E */  lw         $a0, 0x0($s0)
-/* 2596374 800815AC B1F2000C */  jal        func_8003CAC4
+/* 2596374 800815AC B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 2596378 800815B0 00000000 */   nop
 /* 259637C 800815B4 21286002 */  addu       $a1, $s3, $zero
 /* 2596380 800815B8 0400048E */  lw         $a0, 0x4($s0)

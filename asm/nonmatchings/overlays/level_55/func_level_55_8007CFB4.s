@@ -1189,7 +1189,7 @@ glabel func_level_55_8007CFB4
 /* 5032E80 8007E0B8 480057A0 */  sb         $s7, 0x48($v0)
 .Llevel_55_8007E0BC:
 /* 5032E84 8007E0BC 0400048E */  lw         $a0, 0x4($s0)
-/* 5032E88 8007E0C0 B1F2000C */  jal        func_8003CAC4
+/* 5032E88 8007E0C0 B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 5032E8C 8007E0C4 21880000 */   addu      $s1, $zero, $zero
 /* 5032E90 8007E0C8 21204002 */  addu       $a0, $s2, $zero
 /* 5032E94 8007E0CC 00100524 */  addiu      $a1, $zero, 0x1000
@@ -2925,7 +2925,7 @@ glabel func_level_55_8007CFB4
 /* 5034808 8007FA40 3D004014 */  bnez       $v0, .Llevel_55_8007FB38
 /* 503480C 8007FA44 00000000 */   nop
 /* 5034810 8007FA48 0400048E */  lw         $a0, 0x4($s0)
-/* 5034814 8007FA4C B1F2000C */  jal        func_8003CAC4
+/* 5034814 8007FA4C B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 5034818 8007FA50 00000000 */   nop
 /* 503481C 8007FA54 21286002 */  addu       $a1, $s3, $zero
 /* 5034820 8007FA58 0000048E */  lw         $a0, 0x0($s0)
@@ -3403,7 +3403,7 @@ glabel func_level_55_8007CFB4
 /* 5034F28 80080160 47E1000C */  jal        func_8003851C
 /* 5034F2C 80080164 21300000 */   addu      $a2, $zero, $zero
 /* 5034F30 80080168 0400048E */  lw         $a0, 0x4($s0)
-/* 5034F34 8008016C B1F2000C */  jal        func_8003CAC4
+/* 5034F34 8008016C B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 5034F38 80080170 00000000 */   nop
 /* 5034F3C 80080174 21286002 */  addu       $a1, $s3, $zero
 /* 5034F40 80080178 0000048E */  lw         $a0, 0x0($s0)
@@ -4942,7 +4942,7 @@ glabel func_level_55_8007CFB4
 /* 50365F8 80081830 EA014010 */  beqz       $v0, .Llevel_55_80081FDC
 /* 50365FC 80081834 00000000 */   nop
 /* 5036600 80081838 0000048E */  lw         $a0, 0x0($s0)
-/* 5036604 8008183C B1F2000C */  jal        func_8003CAC4
+/* 5036604 8008183C B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 5036608 80081840 00000000 */   nop
 /* 503660C 80081844 21286002 */  addu       $a1, $s3, $zero
 /* 5036610 80081848 0400048E */  lw         $a0, 0x4($s0)
