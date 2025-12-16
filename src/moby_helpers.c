@@ -432,8 +432,31 @@ int func_8003A79C(Moby *pMoby, PathData *path, int pDivider) {
   return VecMagnitude(&dist, 1) / pDivider;
 }
 
-// Unused
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A850);
+/// @brief Compute interpolated velocity to reach a target position
+/// @param pMoby Moby whose position is used as starting point
+/// @param pParam Frame timing data (indices 1-3) and target positions
+/// @param pDest Output vector for the computed velocity adjustment
+/// @param pVec Scratch vector (preserves original pDest value)
+/// @note Unused
+void unused_MobyInterpolateVelocity(Moby *pMoby, u_char *pParam,
+                                    Vector3D *pDest, Vector3D *pVec) {
+  u_char val;
+  int offset;
+
+  val = pParam[3] & 0xFE;
+  pParam[2] = val;
+
+  if (val >= 9) {
+    pParam[2] = 8;
+  }
+
+  VecCopy(pVec, pDest);
+  VecMult(pDest, pVec, pParam[2] >> 1);
+  VecAdd(pDest, pDest, &pMoby->m_Position);
+  offset = (pParam[1] << 4) + 8;
+  VecSub(pDest, (Vector3D *)(pParam + offset), pDest);
+  func_800177F8(pDest, pDest, pParam[3] - (pParam[2] >> 1));
+}
 
 // Unused (Might be an early version of func_8003BFC0?)
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A920);
