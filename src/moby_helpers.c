@@ -741,8 +741,43 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BAD0);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BCCC);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers",
-                         func_8003BED8); // Unused
+/// @brief Determines which quadrant Spyro is in relative to the moby
+/// @param pMoby The moby to check from
+/// @return A bitmask (1, 2, 4, or 8) indicating the quadrant
+/// @note Unused
+int unused_GetSpyroQuadrant(Moby *pMoby) {
+  MATRIX matrix;
+  Vector3D8 rot;
+  Vector3D diff;
+  int result;
+
+  result = 0xF;
+
+  if (pMoby->m_Rotation.z != 0) {
+    rot.x = 0;
+    rot.y = 0;
+    rot.z = -pMoby->m_Rotation.z;
+    RotVec8ToMatrix(&rot, &matrix, nullptr);
+    VecSub(&diff, &pMoby->m_Position, &g_Spyro.m_Position);
+    VecRotateByMatrix(&matrix, &diff, &diff);
+  } else {
+    VecSub(&diff, &pMoby->m_Position, &g_Spyro.m_Position);
+  }
+
+  if (diff.x > 0) {
+    result &= 0x6;
+  } else {
+    result &= 0x9;
+  }
+
+  if (diff.y > 0) {
+    result &= 0x3;
+  } else {
+    result &= 0xC;
+  }
+
+  return result;
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BFC0);
 
