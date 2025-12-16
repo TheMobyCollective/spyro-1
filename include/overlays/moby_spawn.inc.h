@@ -345,7 +345,7 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     dragonFragmentProps->unk_0x11 = rand() & 0xf;
     dragonFragmentProps->unk_0x12 = rand() & 0xf;
     dragonFragmentProps->initZ = pParent->m_Position.z;
-    dragonFragmentProps->unk_0x13 = (rand() & 3) + 16;
+    dragonFragmentProps->m_Lifetime = (rand() & 3) + 16;
     break;
   }
 

@@ -203,7 +203,7 @@
 - [ ] func_8003BED8
 - [ ] func_8003BFC0
 - [x] func_8003C358
-- [ ] func_8003C6E4
+- [x] UpdateMobyDragonFragment
 - [ ] func_8003C85C
 - [ ] func_8003C994
 - [ ] func_8003CAC4

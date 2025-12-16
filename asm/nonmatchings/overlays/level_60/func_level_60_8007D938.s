@@ -4917,7 +4917,7 @@ glabel func_level_60_8007D938
 /* 51EA650 80082088 470D0208 */  j          .Llevel_60_8008351C
 /* 51EA654 8008208C 00000000 */   nop
 .Llevel_60_80082090:
-/* 51EA658 80082090 B9F1000C */  jal        func_8003C6E4
+/* 51EA658 80082090 B9F1000C */  jal        UpdateMobyDragonFragment
 /* 51EA65C 80082094 21206002 */   addu      $a0, $s3, $zero
 /* 51EA660 80082098 470D0208 */  j          .Llevel_60_8008351C
 /* 51EA664 8008209C 00000000 */   nop

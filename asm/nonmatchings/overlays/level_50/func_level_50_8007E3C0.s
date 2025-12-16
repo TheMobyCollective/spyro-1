@@ -9129,7 +9129,7 @@ glabel func_level_50_8007E3C0
 /* 43E64F4 80085F2C 76230208 */  j          .Llevel_50_80088DD8
 /* 43E64F8 80085F30 00000000 */   nop
 .L80085F34_:
-/* 43E64FC 80085F34 B9F1000C */  jal        func_8003C6E4
+/* 43E64FC 80085F34 B9F1000C */  jal        UpdateMobyDragonFragment
 /* 43E6500 80085F38 21206002 */   addu      $a0, $s3, $zero
 /* 43E6504 80085F3C 76230208 */  j          .Llevel_50_80088DD8
 /* 43E6508 80085F40 00000000 */   nop

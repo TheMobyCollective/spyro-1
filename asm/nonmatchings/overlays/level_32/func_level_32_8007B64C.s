@@ -9849,7 +9849,7 @@ glabel func_level_32_8007B64C
 /* 2CB5AC8 80083D00 FC210208 */  j          .Llevel_32_800887F0
 /* 2CB5ACC 80083D04 00000000 */   nop
 .L80083D08_:
-/* 2CB5AD0 80083D08 B9F1000C */  jal        func_8003C6E4
+/* 2CB5AD0 80083D08 B9F1000C */  jal        UpdateMobyDragonFragment
 /* 2CB5AD4 80083D0C 21206002 */   addu      $a0, $s3, $zero
 /* 2CB5AD8 80083D10 FC210208 */  j          .Llevel_32_800887F0
 /* 2CB5ADC 80083D14 00000000 */   nop

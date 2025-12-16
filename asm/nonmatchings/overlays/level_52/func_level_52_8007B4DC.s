@@ -6999,7 +6999,7 @@ glabel func_level_52_8007B4DC
 /* 4942998 800813D0 75110208 */  j          .Llevel_52_800845D4
 /* 494299C 800813D4 00000000 */   nop
 .L800813D8_:
-/* 49429A0 800813D8 B9F1000C */  jal        func_8003C6E4
+/* 49429A0 800813D8 B9F1000C */  jal        UpdateMobyDragonFragment
 /* 49429A4 800813DC 21206002 */   addu      $a0, $s3, $zero
 /* 49429A8 800813E0 75110208 */  j          .Llevel_52_800845D4
 /* 49429AC 800813E4 00000000 */   nop
