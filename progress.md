@@ -181,7 +181,7 @@
 - [x] func_8003A720
 - [x] func_8003A79C
 - [ ] func_8003A850
-- [ ] func_8003A920
+- [x] unused_VecInterpolateCurve
 - [ ] func_8003A9EC
 - [x] func_8003AA84
 - [ ] func_8003AAEC

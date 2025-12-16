@@ -27,6 +27,19 @@ void func_8003851C(Moby *pMoby, int pSoundIndex, u_char *pChannel);
 /// @brief Initialize a Moby
 void func_8003A720(Moby *pMoby);
 
+// Vector interpolation curve lookup tables
+// Each table contains pairs of weights (w1, w2) where w1 + w2 = 1024
+// Used for smooth interpolation between two vectors along a curve
+
+/// @brief Linear interpolation weights (1 pair for 2 steps)
+extern short D_80075280[];
+/// @brief Interpolation curve weights (4 pairs for 5 steps)
+extern short D_8006CBA4[];
+/// @brief Interpolation curve weights (6 pairs for 7 steps)
+extern short D_8006CBB4[];
+/// @brief Interpolation curve weights (8 pairs for 9 steps)
+extern short D_8006CBCC[];
+
 /// @brief Persist a collected gem to checkpoint / global collected mask
 void func_8003B854(int pGemValue, Moby* pMoby);
 

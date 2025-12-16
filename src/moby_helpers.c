@@ -435,8 +435,38 @@ int func_8003A79C(Moby *pMoby, PathData *path, int pDivider) {
 // Unused
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A850);
 
-// Unused (Might be an early version of func_8003BFC0?)
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A920);
+/// @brief Interpolate between two vectors using precomputed curve weights
+/// @param pDest Output vector for the interpolated result
+/// @param pParam Parameter struct where byte at offset 2 selects curve type
+/// @param pIndex Index into the weight table (selects which weight pair)
+/// @param pVec1 First input vector
+/// @param pVec2 Second input vector
+/// @note Unused (possibly an early version of func_8003BFC0)
+void unused_VecInterpolateCurve(Vector3D *pDest, u_char *pParam, int pIndex,
+                                Vector3D *pVec1, Vector3D *pVec2) {
+  Vector3D vec1;
+  Vector3D vec2;
+  short *table;
+  short *weights;
+
+  if (pParam[2] == 2) {
+    table = D_80075280;
+  } else if (pParam[2] == 4) {
+    table = D_8006CBA4;
+  } else {
+    table = D_8006CBCC;
+    if (pParam[2] == 6) {
+      table = D_8006CBB4;
+    }
+  }
+
+  weights = (short *)((u_int)(pIndex << 2) + (u_int)table);
+
+  VecMult(&vec1, pVec1, weights[0]);
+  VecMult(&vec2, pVec2, weights[1]);
+  VecAdd(pDest, &vec1, &vec2);
+  VecShiftRight(pDest, 10);
+}
 
 /// @brief: Specular version of func_8003AA84
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A9EC);
