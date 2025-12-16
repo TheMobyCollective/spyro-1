@@ -64,7 +64,7 @@
 - [x] func_800342F8
 - [x] func_80034358
 - [ ] func_80034480
-- [ ] func_80034C84
+- [x] CameraForceToDestination
 - [ ] func_80034CE8
 - [ ] func_800357A4
 - [x] func_80035F58

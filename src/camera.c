@@ -21,6 +21,9 @@
 int D_80075894;
 int D_80075924; // L2 and R2 rotation speed
 
+// Flag: set to 1 when camera forced to destination, 0 in collision func
+int D_800756B8;
+
 /// @brief Creates the Camera's view and projection matrices
 void CameraUpdateMatrices(void) {
   // If it wasn't for the projection part, this function could've
@@ -214,10 +217,15 @@ void func_80034358(void) {
 // Does the camera's collision, updates the spherical coordinates
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80034480);
 
-void func_80034C84(void);
-
-// Forces the camera to it's destination forcefully
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80034C84);
+/// @brief Forces the camera to its destination position
+void CameraForceToDestination(void) {
+  VecCopy(&g_Camera.m_Position, &g_Camera.m_DestinationPosition);
+  g_Camera.unk_0xC4 = 0;
+  g_Camera.m_SpyroOffCenterFrames = 0;
+  g_Camera.unk_0xCC = 1;
+  D_800756B8 = 1;
+  g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+}
 
 void func_80034CE8(int);
 
@@ -506,7 +514,7 @@ void func_80037A20(void) {
   func_80034204(&g_Camera.m_DestinationPosition);
   VecAdd(&g_Camera.m_DestinationPosition, &g_Camera.m_DestinationPosition,
          g_Camera.m_Focus);
-  func_80034C84();
+  CameraForceToDestination();
   func_800342F8();
 
   // Update the sphere coordinates
