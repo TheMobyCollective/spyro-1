@@ -1197,7 +1197,7 @@ void LoadLevel(int pArg) {
 
           // This is part of an array
           // This value is used by the entrance of High Caves, for example
-          if (g_Camera.m_0xD8 == &D_8006CA84) {
+          if (g_Camera.m_SphericalPreset == &D_8006CA84) {
 
             g_Spyro.m_Position.z -= 0x1600; // 5.5M
 

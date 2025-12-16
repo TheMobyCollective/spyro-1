@@ -36,7 +36,8 @@ void func_8002E000(void) {
   if (g_Camera.m_Rotation.y > 0x800)
     g_Camera.m_Rotation.y -= 0x1000;
 
-  if (g_Camera.m_Rotation.y < -0x200 || g_Camera.m_0xD8 == &D_8006CA84) {
+  if (g_Camera.m_Rotation.y < -0x200 ||
+      g_Camera.m_SphericalPreset == &D_8006CA84) {
     g_Gamestate = GS_Playing;
   }
 }

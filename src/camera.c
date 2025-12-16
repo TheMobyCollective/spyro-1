@@ -121,9 +121,18 @@ int func_80033F08(Vector3D *pVec);
 // Function for updating the spherical coordinates
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80033F08);
 
-// Updates the spherical coordinates, rotation related?
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80034198);
-void func_80034198(void);
+/// @brief: Updates the spherical coordinates
+void ApplySphericalPreset(void) {
+  SphericalCoordsOffset *src = g_Camera.m_SphericalPreset;
+
+  g_Camera.m_LastSimulation.m_Coords.azimuth =
+      (src->m_Coords.azimuth - g_Camera.m_FocusRotation) & 0xFFF;
+  g_Camera.m_LastSimulation.m_Coords.elevation = src->m_Coords.elevation;
+  g_Camera.m_LastSimulation.m_Coords.radius = src->m_Coords.radius;
+  g_Camera.m_LastSimulation.m_Offset.azimuth = src->m_Offset.azimuth;
+  g_Camera.m_LastSimulation.m_Offset.elevation = src->m_Offset.elevation;
+  g_Camera.m_LastSimulation.m_Offset.radius = src->m_Offset.radius;
+}
 
 /// @brief: Converts the camera's spherical coordinates to cartesian coordinates
 void func_80034204(Vector3D *pOut) {
@@ -164,7 +173,7 @@ void func_800342F8(void) {
 
 // Some camera reset stuff
 void func_80034358(void) {
-  func_80034198();
+  ApplySphericalPreset();
 
   g_Camera.m_Sphere.m_Coords.azimuth =
       g_Camera.m_LastSimulation.m_Coords.azimuth;
@@ -483,19 +492,19 @@ void func_80037A20(void) {
   g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
   if (g_PortalLevelId != 0) {
     if (g_LoadStage >= 0xA) {
-      g_Camera.m_0xD8 = &D_8006C964;
+      g_Camera.m_SphericalPreset = &D_8006C964;
     } else {
-      g_Camera.m_0xD8 = &D_8006CA54;
+      g_Camera.m_SphericalPreset = &D_8006CA54;
     }
-  } else if (g_Camera.m_0xD8 == nullptr) {
+  } else if (g_Camera.m_SphericalPreset == nullptr) {
     if (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ < g_Camera.m_Rotation.z) {
-      g_Camera.m_0xD8 = &D_8006CA3C;
+      g_Camera.m_SphericalPreset = &D_8006CA3C;
     } else {
-      g_Camera.m_0xD8 = &D_8006CA6C;
+      g_Camera.m_SphericalPreset = &D_8006CA6C;
     }
   }
 
-  func_80034198();
+  ApplySphericalPreset();
 
   D_80075924 = 0;
 

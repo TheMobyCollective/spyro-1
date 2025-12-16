@@ -167,7 +167,7 @@ glabel func_80035FB4
 /* 26A14 80036214 03004010 */  beqz       $v0, .L80036224
 /* 26A18 80036218 00000000 */   nop
 .L8003621C:
-/* 26A1C 8003621C 66D0000C */  jal        func_80034198
+/* 26A1C 8003621C 66D0000C */  jal        ApplySphericalPreset
 /* 26A20 80036220 00000000 */   nop
 .L80036224:
 /* 26A24 80036224 0780023C */  lui        $v0, %hi(D_80075914)
@@ -292,7 +292,7 @@ glabel func_80035FB4
 /* 26BDC 800363DC 486E23AC */  sw         $v1, %lo(g_Camera + 0x78)($at)
 /* 26BE0 800363E0 03008014 */  bnez       $a0, .L800363F0
 /* 26BE4 800363E4 00000000 */   nop
-/* 26BE8 800363E8 66D0000C */  jal        func_80034198
+/* 26BE8 800363E8 66D0000C */  jal        ApplySphericalPreset
 /* 26BEC 800363EC 00000000 */   nop
 .L800363F0:
 /* 26BF0 800363F0 D406828F */  lw         $v0, %gp_rel(D_80075938)($gp)
@@ -347,7 +347,7 @@ glabel func_80035FB4
 /* 26CAC 800364AC 0780013C */  lui        $at, %hi(g_Camera + 0x78)
 /* 26CB0 800364B0 486E23AC */  sw         $v1, %lo(g_Camera + 0x78)($at)
 .L800364B4:
-/* 26CB4 800364B4 66D0000C */  jal        func_80034198
+/* 26CB4 800364B4 66D0000C */  jal        ApplySphericalPreset
 /* 26CB8 800364B8 00000000 */   nop
 /* 26CBC 800364BC 1000A427 */  addiu      $a0, $sp, 0x10
 /* 26CC0 800364C0 0880113C */  lui        $s1, %hi(g_Spyro)
@@ -402,7 +402,7 @@ glabel func_80035FB4
 /* 26D80 80036580 486E23AC */  sw         $v1, %lo(g_Camera + 0x78)($at)
 /* 26D84 80036584 E9028014 */  bnez       $a0, .L8003712C
 /* 26D88 80036588 21200002 */   addu      $a0, $s0, $zero
-/* 26D8C 8003658C 66D0000C */  jal        func_80034198
+/* 26D8C 8003658C 66D0000C */  jal        ApplySphericalPreset
 /* 26D90 80036590 00000000 */   nop
 /* 26D94 80036594 0880023C */  lui        $v0, %hi(g_Spyro + 0x148)
 /* 26D98 80036598 A08B428C */  lw         $v0, %lo(g_Spyro + 0x148)($v0)
@@ -520,7 +520,7 @@ glabel func_80035FB4
 /* 26F30 80036730 CCFF448E */  lw         $a0, -0x34($s2)
 /* 26F34 80036734 200042AE */  sw         $v0, 0x20($s2)
 /* 26F38 80036738 B0FF43AE */  sw         $v1, -0x50($s2)
-/* 26F3C 8003673C 66D0000C */  jal        func_80034198
+/* 26F3C 8003673C 66D0000C */  jal        ApplySphericalPreset
 /* 26F40 80036740 B4FF44AE */   sw        $a0, -0x4C($s2)
 /* 26F44 80036744 3000B127 */  addiu      $s1, $sp, 0x30
 /* 26F48 80036748 21202002 */  addu       $a0, $s1, $zero
@@ -591,7 +591,7 @@ glabel func_80035FB4
 /* 27044 80036844 0780013C */  lui        $at, %hi(g_Camera + 0x7C)
 /* 27048 80036848 4C6E24AC */  sw         $a0, %lo(g_Camera + 0x7C)($at)
 .L8003684C:
-/* 2704C 8003684C 66D0000C */  jal        func_80034198
+/* 2704C 8003684C 66D0000C */  jal        ApplySphericalPreset
 /* 27050 80036850 00000000 */   nop
 /* 27054 80036854 3000B227 */  addiu      $s2, $sp, 0x30
 /* 27058 80036858 21204002 */  addu       $a0, $s2, $zero
@@ -832,7 +832,7 @@ glabel func_80035FB4
 /* 273BC 80036BBC 506E25AC */  sw         $a1, %lo(g_Camera + 0x80)($at)
 /* 273C0 80036BC0 6E01C014 */  bnez       $a2, .L8003717C
 /* 273C4 80036BC4 05001424 */   addiu     $s4, $zero, 0x5
-/* 273C8 80036BC8 66D0000C */  jal        func_80034198
+/* 273C8 80036BC8 66D0000C */  jal        ApplySphericalPreset
 /* 273CC 80036BCC 00000000 */   nop
 /* 273D0 80036BD0 0780043C */  lui        $a0, %hi(D_800757E0)
 /* 273D4 80036BD4 E057848C */  lw         $a0, %lo(D_800757E0)($a0)
@@ -1038,7 +1038,7 @@ glabel func_80035FB4
 /* 276A4 80036EA4 0780013C */  lui        $at, %hi(g_Camera + 0xD8)
 /* 276A8 80036EA8 A86E22AC */  sw         $v0, %lo(g_Camera + 0xD8)($at)
 .L80036EAC:
-/* 276AC 80036EAC 66D0000C */  jal        func_80034198
+/* 276AC 80036EAC 66D0000C */  jal        ApplySphericalPreset
 /* 276B0 80036EB0 00000000 */   nop
 /* 276B4 80036EB4 60DC0008 */  j          .L80037180
 /* 276B8 80036EB8 0080023C */   lui       $v0, (0x80000009 >> 16)
@@ -1142,7 +1142,7 @@ glabel func_80035FB4
 /* 27830 80037030 506E25AC */  sw         $a1, %lo(g_Camera + 0x80)($at)
 /* 27834 80037034 0500C014 */  bnez       $a2, .L8003704C
 /* 27838 80037038 00000000 */   nop
-/* 2783C 8003703C 66D0000C */  jal        func_80034198
+/* 2783C 8003703C 66D0000C */  jal        ApplySphericalPreset
 /* 27840 80037040 00000000 */   nop
 /* 27844 80037044 27DC0008 */  j          .L8003709C
 /* 27848 80037048 00000000 */   nop

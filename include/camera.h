@@ -48,7 +48,7 @@ typedef struct {
   int unk_0xCC;
   Vector3D *m_Focus;
   int m_FocusRotation;
-  SphericalCoordsOffset *m_0xD8;
+  SphericalCoordsOffset *m_SphericalPreset;
   int unk_0xDC;
   int unk_0xE0;
   int unk_0xE4;
