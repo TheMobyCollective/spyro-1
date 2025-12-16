@@ -46,7 +46,7 @@ extern int D_800758B8; // Pause menu text rotation ticks
 
 /// @brief Gamestate 10
 void func_8002E084(void) {
-  func_8004AA0C(); // Spyro -> return home
+  UpdateSpyroReturnHome();
   func_80037BD4(); // Camera update
 
   D_8007568C++;
