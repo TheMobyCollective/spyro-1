@@ -204,7 +204,7 @@
 - [ ] func_8003BFC0
 - [x] func_8003C358
 - [ ] func_8003C6E4
-- [ ] func_8003C85C
+- [x] SetSpyroHeadLookTarget
 - [ ] func_8003C994
 - [ ] func_8003CAC4
 - [x] func_80037E98

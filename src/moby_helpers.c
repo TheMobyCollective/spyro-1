@@ -851,7 +851,45 @@ void func_8003C358(Moby *pMoby, int pIsLevelName) {
 // Fragment animation
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003C6E4);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003C85C);
+/// @brief Calculates viewing angles from Spyro to a target position
+/// @param pTarget The target position to look at
+/// Stores clamped elevation angle in g_Spyro.m_HeadLookTarget.y
+/// Stores clamped azimuth angle in g_Spyro.m_HeadLookTarget.z
+void SetSpyroHeadLookTarget(Vector3D *pTarget) {
+  MATRIX matrix;
+  Vector3D vec;
+  int magnitude;
+  int angle;
+
+  vec.x = 0x64;
+  vec.y = 0;
+  vec.z = 0x40;
+
+  VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec, &vec);
+  VecAdd(&vec, &vec, &g_Spyro.m_Position);
+  VecSub(&vec, pTarget, &vec);
+  func_80016FD0(&matrix, &g_Spyro.m_RotationMatrix);
+  VecRotateByMatrix(&matrix, &vec, &vec);
+
+  magnitude = VecMagnitude(&vec, 0);
+  angle = Atan2(magnitude, vec.z, 1);
+  g_Spyro.m_HeadLookTarget.y = angle;
+
+  if ((u_int)(angle - 0x181) < 0x67F) {
+    g_Spyro.m_HeadLookTarget.y = 0x180;
+  } else if ((u_int)(angle - 0x800) < 0x680) {
+    g_Spyro.m_HeadLookTarget.y = 0xE80;
+  }
+
+  angle = Atan2(vec.x, vec.y, 1);
+  g_Spyro.m_HeadLookTarget.z = angle;
+
+  if ((u_int)(angle - 0x201) < 0x5FF) {
+    g_Spyro.m_HeadLookTarget.z = 0x200;
+  } else if ((u_int)(angle - 0x800) < 0x600) {
+    g_Spyro.m_HeadLookTarget.z = 0xE00;
+  }
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003C994);
 

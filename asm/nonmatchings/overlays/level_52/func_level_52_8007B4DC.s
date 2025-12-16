@@ -1477,7 +1477,7 @@ glabel func_level_52_8007B4DC
 /* 493D850 8007C288 0300422C */  sltiu      $v0, $v0, 0x3
 /* 493D854 8007C28C 0C004010 */  beqz       $v0, .Llevel_52_8007C2C0
 /* 493D858 8007C290 00000000 */   nop
-/* 493D85C 8007C294 17F2000C */  jal        func_8003C85C
+/* 493D85C 8007C294 17F2000C */  jal        SetSpyroHeadLookTarget
 /* 493D860 8007C298 0C006426 */   addiu     $a0, $s3, 0xC
 /* 493D864 8007C29C 01000424 */  addiu      $a0, $zero, 0x1
 /* 493D868 8007C2A0 0C000524 */  addiu      $a1, $zero, 0xC
