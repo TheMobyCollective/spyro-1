@@ -1315,7 +1315,7 @@ glabel func_level_51_8007B4F8
 /* 467B5E4 8007C01C 04000624 */  addiu      $a2, $zero, 0x4
 /* 467B5E8 8007C020 11002592 */  lbu        $a1, 0x11($s1)
 /* 467B5EC 8007C024 0A000724 */  addiu      $a3, $zero, 0xA
-/* 467B5F0 8007C028 B8E3000C */  jal        func_80038EE0
+/* 467B5F0 8007C028 B8E3000C */  jal        RotateMobyToAngle
 /* 467B5F4 8007C02C 1000BEAF */   sw        $fp, 0x10($sp)
 /* 467B5F8 8007C030 21206002 */  addu       $a0, $s3, $zero
 /* 467B5FC 8007C034 1E000524 */  addiu      $a1, $zero, 0x1E
@@ -2326,7 +2326,7 @@ glabel func_level_51_8007B4F8
 /* 467C508 8007CF40 21206002 */  addu       $a0, $s3, $zero
 /* 467C50C 8007CF44 21284002 */  addu       $a1, $s2, $zero
 /* 467C510 8007CF48 04000624 */  addiu      $a2, $zero, 0x4
-/* 467C514 8007CF4C B8E3000C */  jal        func_80038EE0
+/* 467C514 8007CF4C B8E3000C */  jal        RotateMobyToAngle
 /* 467C518 8007CF50 18000724 */   addiu     $a3, $zero, 0x18
 /* 467C51C 8007CF54 CA104010 */  beqz       $v0, .Llevel_51_80081280
 /* 467C520 8007CF58 37000224 */   addiu     $v0, $zero, 0x37
@@ -2768,7 +2768,7 @@ glabel func_level_51_8007B4F8
 /* 467CB90 8007D5C8 21206002 */  addu       $a0, $s3, $zero
 /* 467CB94 8007D5CC 21284002 */  addu       $a1, $s2, $zero
 /* 467CB98 8007D5D0 04000624 */  addiu      $a2, $zero, 0x4
-/* 467CB9C 8007D5D4 B8E3000C */  jal        func_80038EE0
+/* 467CB9C 8007D5D4 B8E3000C */  jal        RotateMobyToAngle
 /* 467CBA0 8007D5D8 18000724 */   addiu     $a3, $zero, 0x18
 /* 467CBA4 8007D5DC 7E004010 */  beqz       $v0, .Llevel_51_8007D7D8
 /* 467CBA8 8007D5E0 37000224 */   addiu     $v0, $zero, 0x37
@@ -3580,7 +3580,7 @@ glabel func_level_51_8007B4F8
 /* 467D778 8007E1B0 20000724 */  addiu      $a3, $zero, 0x20
 /* 467D77C 8007E1B4 1000BEAF */  sw         $fp, 0x10($sp)
 /* 467D780 8007E1B8 8000A524 */  addiu      $a1, $a1, 0x80
-/* 467D784 8007E1BC B8E3000C */  jal        func_80038EE0
+/* 467D784 8007E1BC B8E3000C */  jal        RotateMobyToAngle
 /* 467D788 8007E1C0 FF00A530 */   andi      $a1, $a1, 0xFF
 /* 467D78C 8007E1C4 21206002 */  addu       $a0, $s3, $zero
 /* 467D790 8007E1C8 21280002 */  addu       $a1, $s0, $zero
@@ -3624,7 +3624,7 @@ glabel func_level_51_8007B4F8
 /* 467D820 8007E258 20000724 */  addiu      $a3, $zero, 0x20
 /* 467D824 8007E25C 1000BEAF */  sw         $fp, 0x10($sp)
 /* 467D828 8007E260 8000A524 */  addiu      $a1, $a1, 0x80
-/* 467D82C 8007E264 B8E3000C */  jal        func_80038EE0
+/* 467D82C 8007E264 B8E3000C */  jal        RotateMobyToAngle
 /* 467D830 8007E268 FF00A530 */   andi      $a1, $a1, 0xFF
 /* 467D834 8007E26C A1040208 */  j          .Llevel_51_80081284
 /* 467D838 8007E270 21206002 */   addu      $a0, $s3, $zero
@@ -5709,7 +5709,7 @@ glabel func_level_51_8007B4F8
 /* 467F6D8 80080110 21284000 */  addu       $a1, $v0, $zero
 /* 467F6DC 80080114 0A000624 */  addiu      $a2, $zero, 0xA
 /* 467F6E0 80080118 21380000 */  addu       $a3, $zero, $zero
-/* 467F6E4 8008011C B8E3000C */  jal        func_80038EE0
+/* 467F6E4 8008011C B8E3000C */  jal        RotateMobyToAngle
 /* 467F6E8 80080120 1000A0AF */   sw        $zero, 0x10($sp)
 /* 467F6EC 80080124 21200002 */  addu       $a0, $s0, $zero
 /* 467F6F0 80080128 7F5C000C */  jal        VecMagnitude
@@ -5876,7 +5876,7 @@ glabel func_level_51_8007B4F8
 /* 467F94C 80080384 21284000 */  addu       $a1, $v0, $zero
 /* 467F950 80080388 0A000624 */  addiu      $a2, $zero, 0xA
 /* 467F954 8008038C 21380000 */  addu       $a3, $zero, $zero
-/* 467F958 80080390 B8E3000C */  jal        func_80038EE0
+/* 467F958 80080390 B8E3000C */  jal        RotateMobyToAngle
 /* 467F95C 80080394 1000A0AF */   sw        $zero, 0x10($sp)
 /* 467F960 80080398 21200002 */  addu       $a0, $s0, $zero
 /* 467F964 8008039C 7F5C000C */  jal        VecMagnitude
@@ -6037,7 +6037,7 @@ glabel func_level_51_8007B4F8
 /* 467FBA0 800805D8 0880053C */  lui        $a1, %hi(g_Spyro + 0xE)
 /* 467FBA4 800805DC 668AA590 */  lbu        $a1, %lo(g_Spyro + 0xE)($a1)
 /* 467FBA8 800805E0 21380000 */  addu       $a3, $zero, $zero
-/* 467FBAC 800805E4 B8E3000C */  jal        func_80038EE0
+/* 467FBAC 800805E4 B8E3000C */  jal        RotateMobyToAngle
 /* 467FBB0 800805E8 1000A0AF */   sw        $zero, 0x10($sp)
 .Llevel_51_800805EC:
 /* 467FBB4 800805EC 0880033C */  lui        $v1, %hi(g_Spyro + 0x164)

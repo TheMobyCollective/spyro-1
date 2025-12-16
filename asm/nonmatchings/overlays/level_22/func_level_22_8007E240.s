@@ -1418,7 +1418,7 @@ glabel func_level_22_8007E240
 /* 1E06354 8007ED8C 04000624 */  addiu      $a2, $zero, 0x4
 /* 1E06358 8007ED90 11002592 */  lbu        $a1, 0x11($s1)
 /* 1E0635C 8007ED94 0A000724 */  addiu      $a3, $zero, 0xA
-/* 1E06360 8007ED98 B8E3000C */  jal        func_80038EE0
+/* 1E06360 8007ED98 B8E3000C */  jal        RotateMobyToAngle
 /* 1E06364 8007ED9C 1000BEAF */   sw        $fp, 0x10($sp)
 /* 1E06368 8007EDA0 21206002 */  addu       $a0, $s3, $zero
 /* 1E0636C 8007EDA4 1E000524 */  addiu      $a1, $zero, 0x1E
@@ -1846,7 +1846,7 @@ glabel func_level_22_8007E240
 /* 1E069AC 8007F3E4 21284000 */  addu       $a1, $v0, $zero
 /* 1E069B0 8007F3E8 08000624 */  addiu      $a2, $zero, 0x8
 /* 1E069B4 8007F3EC 21380000 */  addu       $a3, $zero, $zero
-/* 1E069B8 8007F3F0 B8E3000C */  jal        func_80038EE0
+/* 1E069B8 8007F3F0 B8E3000C */  jal        RotateMobyToAngle
 /* 1E069BC 8007F3F4 1000A0AF */   sw        $zero, 0x10($sp)
 /* 1E069C0 8007F3F8 21206002 */  addu       $a0, $s3, $zero
 /* 1E069C4 8007F3FC 21288002 */  addu       $a1, $s4, $zero
@@ -2020,7 +2020,7 @@ glabel func_level_22_8007E240
 /* 1E06C40 8007F678 08000624 */  addiu      $a2, $zero, 0x8
 /* 1E06C44 8007F67C 21380000 */  addu       $a3, $zero, $zero
 /* 1E06C48 8007F680 21804000 */  addu       $s0, $v0, $zero
-/* 1E06C4C 8007F684 B8E3000C */  jal        func_80038EE0
+/* 1E06C4C 8007F684 B8E3000C */  jal        RotateMobyToAngle
 /* 1E06C50 8007F688 1000A0AF */   sw        $zero, 0x10($sp)
 /* 1E06C54 8007F68C 21206002 */  addu       $a0, $s3, $zero
 /* 1E06C58 8007F690 21288002 */  addu       $a1, $s4, $zero
@@ -2377,7 +2377,7 @@ glabel func_level_22_8007E240
 /* 1E0716C 8007FBA4 21284000 */  addu       $a1, $v0, $zero
 /* 1E07170 8007FBA8 06000624 */  addiu      $a2, $zero, 0x6
 /* 1E07174 8007FBAC 21380000 */  addu       $a3, $zero, $zero
-/* 1E07178 8007FBB0 B8E3000C */  jal        func_80038EE0
+/* 1E07178 8007FBB0 B8E3000C */  jal        RotateMobyToAngle
 /* 1E0717C 8007FBB4 1000A0AF */   sw        $zero, 0x10($sp)
 /* 1E07180 8007FBB8 21206002 */  addu       $a0, $s3, $zero
 /* 1E07184 8007FBBC 96000524 */  addiu      $a1, $zero, 0x96
@@ -2488,7 +2488,7 @@ glabel func_level_22_8007E240
 /* 1E07314 8007FD4C 21206002 */  addu       $a0, $s3, $zero
 /* 1E07318 8007FD50 21280002 */  addu       $a1, $s0, $zero
 /* 1E0731C 8007FD54 08000624 */  addiu      $a2, $zero, 0x8
-/* 1E07320 8007FD58 B8E3000C */  jal        func_80038EE0
+/* 1E07320 8007FD58 B8E3000C */  jal        RotateMobyToAngle
 /* 1E07324 8007FD5C 14000724 */   addiu     $a3, $zero, 0x14
 /* 1E07328 8007FD60 87044010 */  beqz       $v0, .Llevel_22_80080F80
 /* 1E0732C 8007FD64 05000924 */   addiu     $t1, $zero, 0x5
@@ -2533,7 +2533,7 @@ glabel func_level_22_8007E240
 /* 1E073BC 8007FDF4 21284000 */  addu       $a1, $v0, $zero
 /* 1E073C0 8007FDF8 06000624 */  addiu      $a2, $zero, 0x6
 /* 1E073C4 8007FDFC 21380000 */  addu       $a3, $zero, $zero
-/* 1E073C8 8007FE00 B8E3000C */  jal        func_80038EE0
+/* 1E073C8 8007FE00 B8E3000C */  jal        RotateMobyToAngle
 /* 1E073CC 8007FE04 1000A0AF */   sw        $zero, 0x10($sp)
 /* 1E073D0 8007FE08 0000458E */  lw         $a1, 0x0($s2)
 /* 1E073D4 8007FE0C 0C006426 */  addiu      $a0, $s3, 0xC
@@ -2878,7 +2878,7 @@ glabel func_level_22_8007E240
 /* 1E078D4 8008030C 21284000 */  addu       $a1, $v0, $zero
 /* 1E078D8 80080310 08000624 */  addiu      $a2, $zero, 0x8
 /* 1E078DC 80080314 1E000724 */  addiu      $a3, $zero, 0x1E
-/* 1E078E0 80080318 B8E3000C */  jal        func_80038EE0
+/* 1E078E0 80080318 B8E3000C */  jal        RotateMobyToAngle
 /* 1E078E4 8008031C 1000BEAF */   sw        $fp, 0x10($sp)
 /* 1E078E8 80080320 17034010 */  beqz       $v0, .Llevel_22_80080F80
 /* 1E078EC 80080324 21206002 */   addu      $a0, $s3, $zero
@@ -3302,7 +3302,7 @@ glabel func_level_22_8007E240
 /* 1E07EF4 8008092C 21284000 */  addu       $a1, $v0, $zero
 /* 1E07EF8 80080930 06000624 */  addiu      $a2, $zero, 0x6
 /* 1E07EFC 80080934 21380000 */  addu       $a3, $zero, $zero
-/* 1E07F00 80080938 B8E3000C */  jal        func_80038EE0
+/* 1E07F00 80080938 B8E3000C */  jal        RotateMobyToAngle
 /* 1E07F04 8008093C 1000A0AF */   sw        $zero, 0x10($sp)
 /* 1E07F08 80080940 0101822A */  slti       $v0, $s4, 0x101
 /* 1E07F0C 80080944 08004014 */  bnez       $v0, .Llevel_22_80080968
@@ -3471,7 +3471,7 @@ glabel func_level_22_8007E240
 /* 1E08170 80080BA8 21284000 */  addu       $a1, $v0, $zero
 /* 1E08174 80080BAC 06000624 */  addiu      $a2, $zero, 0x6
 /* 1E08178 80080BB0 21380000 */  addu       $a3, $zero, $zero
-/* 1E0817C 80080BB4 B8E3000C */  jal        func_80038EE0
+/* 1E0817C 80080BB4 B8E3000C */  jal        RotateMobyToAngle
 /* 1E08180 80080BB8 1000A0AF */   sw        $zero, 0x10($sp)
 /* 1E08184 80080BBC 0101222A */  slti       $v0, $s1, 0x101
 /* 1E08188 80080BC0 08004014 */  bnez       $v0, .Llevel_22_80080BE4
@@ -6081,7 +6081,7 @@ glabel func_level_22_8007E240
 /* 1E0A804 8008323C 21284000 */  addu       $a1, $v0, $zero
 /* 1E0A808 80083240 0A000624 */  addiu      $a2, $zero, 0xA
 /* 1E0A80C 80083244 21380000 */  addu       $a3, $zero, $zero
-/* 1E0A810 80083248 B8E3000C */  jal        func_80038EE0
+/* 1E0A810 80083248 B8E3000C */  jal        RotateMobyToAngle
 /* 1E0A814 8008324C 1000A0AF */   sw        $zero, 0x10($sp)
 /* 1E0A818 80083250 3800A427 */  addiu      $a0, $sp, 0x38
 /* 1E0A81C 80083254 7F5C000C */  jal        VecMagnitude
@@ -6248,7 +6248,7 @@ glabel func_level_22_8007E240
 /* 1E0AA78 800834B0 21284000 */  addu       $a1, $v0, $zero
 /* 1E0AA7C 800834B4 0A000624 */  addiu      $a2, $zero, 0xA
 /* 1E0AA80 800834B8 21380000 */  addu       $a3, $zero, $zero
-/* 1E0AA84 800834BC B8E3000C */  jal        func_80038EE0
+/* 1E0AA84 800834BC B8E3000C */  jal        RotateMobyToAngle
 /* 1E0AA88 800834C0 1000A0AF */   sw        $zero, 0x10($sp)
 /* 1E0AA8C 800834C4 21200002 */  addu       $a0, $s0, $zero
 /* 1E0AA90 800834C8 7F5C000C */  jal        VecMagnitude
@@ -6409,7 +6409,7 @@ glabel func_level_22_8007E240
 /* 1E0ACCC 80083704 0880053C */  lui        $a1, %hi(g_Spyro + 0xE)
 /* 1E0ACD0 80083708 668AA590 */  lbu        $a1, %lo(g_Spyro + 0xE)($a1)
 /* 1E0ACD4 8008370C 21380000 */  addu       $a3, $zero, $zero
-/* 1E0ACD8 80083710 B8E3000C */  jal        func_80038EE0
+/* 1E0ACD8 80083710 B8E3000C */  jal        RotateMobyToAngle
 /* 1E0ACDC 80083714 1000A0AF */   sw        $zero, 0x10($sp)
 .Llevel_22_80083718:
 /* 1E0ACE0 80083718 0880033C */  lui        $v1, %hi(g_Spyro + 0x164)
@@ -7547,7 +7547,7 @@ glabel func_level_22_8007E240
 /* 1E0BD78 800847B0 21284000 */  addu       $a1, $v0, $zero
 /* 1E0BD7C 800847B4 04000624 */  addiu      $a2, $zero, 0x4
 /* 1E0BD80 800847B8 21380000 */  addu       $a3, $zero, $zero
-/* 1E0BD84 800847BC B8E3000C */  jal        func_80038EE0
+/* 1E0BD84 800847BC B8E3000C */  jal        RotateMobyToAngle
 /* 1E0BD88 800847C0 1000A0AF */   sw        $zero, 0x10($sp)
 /* 1E0BD8C 800847C4 21206002 */  addu       $a0, $s3, $zero
 /* 1E0BD90 800847C8 6E000524 */  addiu      $a1, $zero, 0x6E
@@ -7916,7 +7916,7 @@ glabel func_level_22_8007E240
 /* 1E0C2E0 80084D18 04000624 */  addiu      $a2, $zero, 0x4
 /* 1E0C2E4 80084D1C 1000A0AF */  sw         $zero, 0x10($sp)
 /* 1E0C2E8 80084D20 1000458E */  lw         $a1, 0x10($s2)
-/* 1E0C2EC 80084D24 B8E3000C */  jal        func_80038EE0
+/* 1E0C2EC 80084D24 B8E3000C */  jal        RotateMobyToAngle
 /* 1E0C2F0 80084D28 21380000 */   addu      $a3, $zero, $zero
 /* 1E0C2F4 80084D2C 3C006292 */  lbu        $v0, 0x3C($s3)
 /* 1E0C2F8 80084D30 02000924 */  addiu      $t1, $zero, 0x2
@@ -8056,7 +8056,7 @@ glabel func_level_22_8007E240
 /* 1E0C4F4 80084F2C 21206002 */  addu       $a0, $s3, $zero
 /* 1E0C4F8 80084F30 21280002 */  addu       $a1, $s0, $zero
 /* 1E0C4FC 80084F34 04000624 */  addiu      $a2, $zero, 0x4
-/* 1E0C500 80084F38 B8E3000C */  jal        func_80038EE0
+/* 1E0C500 80084F38 B8E3000C */  jal        RotateMobyToAngle
 /* 1E0C504 80084F3C 21380000 */   addu      $a3, $zero, $zero
 .Llevel_22_80084F40:
 /* 1E0C508 80084F40 0780023C */  lui        $v0, %hi(D_80075794)
@@ -8214,7 +8214,7 @@ glabel func_level_22_8007E240
 /* 1E0C73C 80085174 21284000 */  addu       $a1, $v0, $zero
 /* 1E0C740 80085178 06000624 */  addiu      $a2, $zero, 0x6
 /* 1E0C744 8008517C 21380000 */  addu       $a3, $zero, $zero
-/* 1E0C748 80085180 B8E3000C */  jal        func_80038EE0
+/* 1E0C748 80085180 B8E3000C */  jal        RotateMobyToAngle
 /* 1E0C74C 80085184 1000A0AF */   sw        $zero, 0x10($sp)
 /* 1E0C750 80085188 0780023C */  lui        $v0, %hi(D_800757F4)
 /* 1E0C754 8008518C F457428C */  lw         $v0, %lo(D_800757F4)($v0)
@@ -8328,7 +8328,7 @@ glabel func_level_22_8007E240
 /* 1E0C8F4 8008532C 21284000 */  addu       $a1, $v0, $zero
 /* 1E0C8F8 80085330 08000624 */  addiu      $a2, $zero, 0x8
 /* 1E0C8FC 80085334 06000724 */  addiu      $a3, $zero, 0x6
-/* 1E0C900 80085338 B8E3000C */  jal        func_80038EE0
+/* 1E0C900 80085338 B8E3000C */  jal        RotateMobyToAngle
 /* 1E0C904 8008533C 1000BEAF */   sw        $fp, 0x10($sp)
 /* 1E0C908 80085340 12004010 */  beqz       $v0, .Llevel_22_8008538C
 /* 1E0C90C 80085344 08000224 */   addiu     $v0, $zero, 0x8
@@ -8575,7 +8575,7 @@ glabel func_level_22_8007E240
 /* 1E0CC90 800856C8 04000624 */  addiu      $a2, $zero, 0x4
 /* 1E0CC94 800856CC 1000A0AF */  sw         $zero, 0x10($sp)
 /* 1E0CC98 800856D0 0400058E */  lw         $a1, 0x4($s0)
-/* 1E0CC9C 800856D4 B8E3000C */  jal        func_80038EE0
+/* 1E0CC9C 800856D4 B8E3000C */  jal        RotateMobyToAngle
 /* 1E0CCA0 800856D8 21380000 */   addu      $a3, $zero, $zero
 /* 1E0CCA4 800856DC 3000028E */  lw         $v0, 0x30($s0)
 /* 1E0CCA8 800856E0 00000000 */  nop
@@ -9184,7 +9184,7 @@ glabel func_level_22_8007E240
 /* 1E0D568 80085FA0 21284002 */  addu       $a1, $s2, $zero
 /* 1E0D56C 80085FA4 02000624 */  addiu      $a2, $zero, 0x2
 .Llevel_22_80085FA8:
-/* 1E0D570 80085FA8 B8E3000C */  jal        func_80038EE0
+/* 1E0D570 80085FA8 B8E3000C */  jal        RotateMobyToAngle
 /* 1E0D574 80085FAC 21380000 */   addu      $a3, $zero, $zero
 /* 1E0D578 80085FB0 21206002 */  addu       $a0, $s3, $zero
 /* 1E0D57C 80085FB4 21300000 */  addu       $a2, $zero, $zero

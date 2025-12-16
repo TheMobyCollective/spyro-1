@@ -98,7 +98,7 @@ glabel func_80039AA8
 /* 2A400 80039C00 1000A2AF */  sw         $v0, 0x10($sp)
 /* 2A404 80039C04 21206002 */  addu       $a0, $s3, $zero
 /* 2A408 80039C08 21308002 */  addu       $a2, $s4, $zero
-/* 2A40C 80039C0C B8E3000C */  jal        func_80038EE0
+/* 2A40C 80039C0C B8E3000C */  jal        RotateMobyToAngle
 /* 2A410 80039C10 05000724 */   addiu     $a3, $zero, 0x5
 /* 2A414 80039C14 02004014 */  bnez       $v0, .L80039C20
 /* 2A418 80039C18 00000000 */   nop
