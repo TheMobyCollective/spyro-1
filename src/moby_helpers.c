@@ -381,7 +381,95 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039398);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039688);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039910);
+/**
+ * @brief Updates moby movement with timed horizontal motion and gravity.
+ *
+ * Handles two types of movement:
+ * 1. Horizontal movement via timer - calls func_80039688 while timer > 0
+ * 2. Vertical movement with gravity - applies velocity and detects landing
+ *
+ * @param pMoby The moby to update
+ * @param pTimer Pointer to movement timer (decremented each frame until 0)
+ * @param pSpeed Speed/angle parameter passed to horizontal movement
+ * @param pZVelocity Pointer to vertical velocity (NULL or 0xFFFF to disable)
+ * @param pTimerDecrement Amount to subtract from timer each frame
+ * @param pGravity Gravity to subtract from z velocity each frame
+ * @return 0 = normal, 2 = horizontal collision, 3 = landed on ground
+ */
+int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
+                        int pTimerDecrement, int pGravity) {
+  int result;
+  int flags;
+  int floorOffset;
+  int floorZ;
+  u_char collisionRange;
+
+  result = 0;
+  flags = 0x21;
+  floorOffset = 0x12C;
+
+  // Check if pZVelocity is valid
+  if (pZVelocity == NULL || *pZVelocity == 0xFFFF) {
+    flags = 0x25;
+  }
+
+  // Check collisionRange for floor offset and flag modifications
+  collisionRange = pMoby->m_CollisionRange;
+  if (collisionRange == 0xFE) {
+    flags = 1;
+  } else if (collisionRange != 0) {
+    flags &= ~0x20;
+    floorOffset = collisionRange << 2;
+    if (collisionRange == 0xFF) {
+      floorOffset = 0;
+    }
+  }
+
+  // Handle horizontal movement with timer
+  if (*pTimer != 0) {
+    // Horizontal movement with floor collision detection
+    result = func_80039688(pMoby, pSpeed, *pTimer, floorOffset, 500, flags);
+    *pTimer -= pTimerDecrement;
+    if (*pTimer < 0) {
+      *pTimer = 0;
+    }
+  }
+
+  // Early return if collision detected
+  if (result == 2) {
+    return 2;
+  }
+
+  // Skip z handling if pZVelocity invalid
+  if (pZVelocity == NULL) {
+    return result;
+  }
+
+  if (*pZVelocity == 0xFFFF) {
+    return result;
+  }
+
+  // Handle z movement
+  floorZ = func_80038400(pMoby, 600); // Get floor Z height at moby position
+  pMoby->m_Position.z += *pZVelocity;
+  *pZVelocity -= pGravity;
+  if (*pZVelocity < -260) {
+    *pZVelocity = -260;
+  }
+
+  // Check if landed
+  if (*pZVelocity <= 0) {
+    int landingZ = floorZ + pMoby->m_FloorDistance;
+    if (pMoby->m_Position.z < landingZ) {
+      pMoby->m_Position.z = landingZ;
+      result = 3;
+    }
+  }
+
+  func_800533D0(pMoby); // Update moby collision/position
+
+  return result;
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039AA8);
 

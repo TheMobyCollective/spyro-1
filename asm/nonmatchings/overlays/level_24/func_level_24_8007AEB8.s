@@ -7443,7 +7443,7 @@ glabel func_level_24_8007AEB8
 /* 2383FC0 800819F8 1000A2AF */  sw         $v0, 0x10($sp)
 /* 2383FC4 800819FC 1400A2AF */  sw         $v0, 0x14($sp)
 /* 2383FC8 80081A00 0C00268E */  lw         $a2, 0xC($s1)
-/* 2383FCC 80081A04 44E6000C */  jal        func_80039910
+/* 2383FCC 80081A04 44E6000C */  jal        MoveMobyWithGravity
 /* 2383FD0 80081A08 08002726 */   addiu     $a3, $s1, 0x8
 /* 2383FD4 80081A0C 03000924 */  addiu      $t1, $zero, 0x3
 /* 2383FD8 80081A10 13004914 */  bne        $v0, $t1, .Llevel_24_80081A60
@@ -7840,7 +7840,7 @@ glabel func_level_24_8007AEB8
 /* 238457C 80081FB4 1000A2AF */  sw         $v0, 0x10($sp)
 /* 2384580 80081FB8 1400A2AF */  sw         $v0, 0x14($sp)
 /* 2384584 80081FBC 0C00268E */  lw         $a2, 0xC($s1)
-/* 2384588 80081FC0 44E6000C */  jal        func_80039910
+/* 2384588 80081FC0 44E6000C */  jal        MoveMobyWithGravity
 /* 238458C 80081FC4 08002726 */   addiu     $a3, $s1, 0x8
 /* 2384590 80081FC8 89100208 */  j          .Llevel_24_80084224
 /* 2384594 80081FCC 21206002 */   addu      $a0, $s3, $zero

@@ -6700,7 +6700,7 @@ glabel func_level_14_8007AF94
 /* 14864A8 80080EE0 0A000224 */  addiu      $v0, $zero, 0xA
 /* 14864AC 80080EE4 1400A2AF */  sw         $v0, 0x14($sp)
 /* 14864B0 80080EE8 4C00268E */  lw         $a2, 0x4C($s1)
-/* 14864B4 80080EEC 44E6000C */  jal        func_80039910
+/* 14864B4 80080EEC 44E6000C */  jal        MoveMobyWithGravity
 /* 14864B8 80080EF0 54002726 */   addiu     $a3, $s1, 0x54
 /* 14864BC 80080EF4 0780023C */  lui        $v0, %hi(D_80075794)
 /* 14864C0 80080EF8 9457428C */  lw         $v0, %lo(D_80075794)($v0)

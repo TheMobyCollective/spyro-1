@@ -4378,7 +4378,7 @@ glabel func_level_10_8007D9C8
 /* 7F9658 80081890 1000A2AF */  sw         $v0, 0x10($sp)
 /* 7F965C 80081894 1400A2AF */  sw         $v0, 0x14($sp)
 /* 7F9660 80081898 0C00068E */  lw         $a2, 0xC($s0)
-/* 7F9664 8008189C 44E6000C */  jal        func_80039910
+/* 7F9664 8008189C 44E6000C */  jal        MoveMobyWithGravity
 /* 7F9668 800818A0 14000726 */   addiu     $a3, $s0, 0x14
 /* 7F966C 800818A4 75060208 */  j          .Llevel_10_800819D4
 /* 7F9670 800818A8 21206002 */   addu      $a0, $s3, $zero
@@ -4401,7 +4401,7 @@ glabel func_level_10_8007D9C8
 /* 7F96AC 800818E4 1000A2AF */  sw         $v0, 0x10($sp)
 /* 7F96B0 800818E8 1400A2AF */  sw         $v0, 0x14($sp)
 /* 7F96B4 800818EC 0C00068E */  lw         $a2, 0xC($s0)
-/* 7F96B8 800818F0 44E6000C */  jal        func_80039910
+/* 7F96B8 800818F0 44E6000C */  jal        MoveMobyWithGravity
 /* 7F96BC 800818F4 14000726 */   addiu     $a3, $s0, 0x14
 /* 7F96C0 800818F8 53060208 */  j          .Llevel_10_8008194C
 /* 7F96C4 800818FC 21206002 */   addu      $a0, $s3, $zero
@@ -4413,7 +4413,7 @@ glabel func_level_10_8007D9C8
 /* 7F96D8 80081910 1000A2AF */  sw         $v0, 0x10($sp)
 /* 7F96DC 80081914 1400AAAF */  sw         $t2, 0x14($sp)
 /* 7F96E0 80081918 0C00068E */  lw         $a2, 0xC($s0)
-/* 7F96E4 8008191C 44E6000C */  jal        func_80039910
+/* 7F96E4 8008191C 44E6000C */  jal        MoveMobyWithGravity
 /* 7F96E8 80081920 14000726 */   addiu     $a3, $s0, 0x14
 /* 7F96EC 80081924 03000A24 */  addiu      $t2, $zero, 0x3
 /* 7F96F0 80081928 08004A14 */  bne        $v0, $t2, .Llevel_10_8008194C
@@ -7489,7 +7489,7 @@ glabel func_level_10_8007D9C8
 /* 7FC3B8 800845F0 1000A2AF */  sw         $v0, 0x10($sp)
 /* 7FC3BC 800845F4 1400A0AF */  sw         $zero, 0x14($sp)
 /* 7FC3C0 800845F8 0000A68E */  lw         $a2, 0x0($s5)
-/* 7FC3C4 800845FC 44E6000C */  jal        func_80039910
+/* 7FC3C4 800845FC 44E6000C */  jal        MoveMobyWithGravity
 /* 7FC3C8 80084600 21380000 */   addu      $a3, $zero, $zero
 /* 7FC3CC 80084604 E0150208 */  j          .Llevel_10_80085780
 /* 7FC3D0 80084608 00000000 */   nop

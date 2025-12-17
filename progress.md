@@ -173,7 +173,7 @@
 - [x] func_80039228
 - [ ] func_80039398
 - [ ] func_80039688
-- [ ] func_80039910
+- [x] MoveMobyWithGravity
 - [ ] func_80039AA8
 - [ ] func_80039E94
 - [ ] func_8003A16C

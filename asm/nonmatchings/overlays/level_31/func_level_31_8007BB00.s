@@ -12036,7 +12036,7 @@ glabel func_level_31_8007BB00
 /* 2A04B88 80085DC0 0C000224 */  addiu      $v0, $zero, 0xC
 /* 2A04B8C 80085DC4 1400A2AF */  sw         $v0, 0x14($sp)
 /* 2A04B90 80085DC8 1C00268E */  lw         $a2, 0x1C($s1)
-/* 2A04B94 80085DCC 44E6000C */  jal        func_80039910
+/* 2A04B94 80085DCC 44E6000C */  jal        MoveMobyWithGravity
 /* 2A04B98 80085DD0 20002726 */   addiu     $a3, $s1, 0x20
 /* 2A04B9C 80085DD4 0780023C */  lui        $v0, %hi(D_80075794)
 /* 2A04BA0 80085DD8 9457428C */  lw         $v0, %lo(D_80075794)($v0)

@@ -1986,7 +1986,7 @@ glabel func_level_54_8007AF50
 /* 4DF1F84 8007C9BC 1000A2AF */  sw         $v0, 0x10($sp)
 /* 4DF1F88 8007C9C0 1400B6AF */  sw         $s6, 0x14($sp)
 /* 4DF1F8C 8007C9C4 1400268E */  lw         $a2, 0x14($s1)
-/* 4DF1F90 8007C9C8 44E6000C */  jal        func_80039910
+/* 4DF1F90 8007C9C8 44E6000C */  jal        MoveMobyWithGravity
 /* 4DF1F94 8007C9CC 0C002726 */   addiu     $a3, $s1, 0xC
 /* 4DF1F98 8007C9D0 0780023C */  lui        $v0, %hi(D_80075794)
 /* 4DF1F9C 8007C9D4 9457428C */  lw         $v0, %lo(D_80075794)($v0)
