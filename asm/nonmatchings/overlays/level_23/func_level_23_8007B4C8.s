@@ -2116,8 +2116,8 @@ glabel func_level_23_8007B4C8
 .Llevel_23_8007CBE0:
 /* 209C1A8 8007CBE0 2130C200 */  addu       $a2, $a2, $v0
 /* 209C1AC 8007CBE4 C0300600 */  sll        $a2, $a2, 3
-/* 209C1B0 8007CBE8 0780023C */  lui        $v0, %hi(D_80077108)
-/* 209C1B4 8007CBEC 08714224 */  addiu      $v0, $v0, %lo(D_80077108)
+/* 209C1B0 8007CBE8 0780023C */  lui        $v0, %hi(g_Sparkles)
+/* 209C1B4 8007CBEC 08714224 */  addiu      $v0, $v0, %lo(g_Sparkles)
 /* 209C1B8 8007CBF0 125C000C */  jal        VecRotateByMatrix
 /* 209C1BC 8007CBF4 2130C200 */   addu      $a2, $a2, $v0
 /* 209C1C0 8007CBF8 14002292 */  lbu        $v0, 0x14($s1)
@@ -2125,8 +2125,8 @@ glabel func_level_23_8007B4C8
 /* 209C1C8 8007CC00 40200200 */  sll        $a0, $v0, 1
 /* 209C1CC 8007CC04 21208200 */  addu       $a0, $a0, $v0
 /* 209C1D0 8007CC08 C0200400 */  sll        $a0, $a0, 3
-/* 209C1D4 8007CC0C 0780023C */  lui        $v0, %hi(D_80077108)
-/* 209C1D8 8007CC10 08714224 */  addiu      $v0, $v0, %lo(D_80077108)
+/* 209C1D4 8007CC0C 0780023C */  lui        $v0, %hi(g_Sparkles)
+/* 209C1D8 8007CC10 08714224 */  addiu      $v0, $v0, %lo(g_Sparkles)
 /* 209C1DC 8007CC14 21208200 */  addu       $a0, $a0, $v0
 /* 209C1E0 8007CC18 D65D000C */  jal        VecAdd
 /* 209C1E4 8007CC1C 21288000 */   addu      $a1, $a0, $zero
@@ -2135,9 +2135,9 @@ glabel func_level_23_8007B4C8
 /* 209C1F0 8007CC28 40100300 */  sll        $v0, $v1, 1
 /* 209C1F4 8007CC2C 21104300 */  addu       $v0, $v0, $v1
 /* 209C1F8 8007CC30 C0100200 */  sll        $v0, $v0, 3
-/* 209C1FC 8007CC34 0780013C */  lui        $at, %hi(D_80077114)
+/* 209C1FC 8007CC34 0780013C */  lui        $at, %hi(g_Sparkles + 0xC)
 /* 209C200 8007CC38 21082200 */  addu       $at, $at, $v0
-/* 209C204 8007CC3C 14712290 */  lbu        $v0, %lo(D_80077114)($at)
+/* 209C204 8007CC3C 14712290 */  lbu        $v0, %lo(g_Sparkles + 0xC)($at)
 /* 209C208 8007CC40 00000000 */  nop
 /* 209C20C 8007CC44 0500422C */  sltiu      $v0, $v0, 0x5
 /* 209C210 8007CC48 17004010 */  beqz       $v0, .Llevel_23_8007CCA8
@@ -4317,8 +4317,8 @@ glabel func_level_23_8007B4C8
 /* 209E1F8 8007EC30 0780053C */  lui        $a1, %hi(D_8006E5AC)
 /* 209E1FC 8007EC34 ACE5A524 */  addiu      $a1, $a1, %lo(D_8006E5AC)
 /* 209E200 8007EC38 03004292 */  lbu        $v0, 0x3($s2)
-/* 209E204 8007EC3C 0780103C */  lui        $s0, %hi(D_80077108)
-/* 209E208 8007EC40 08711026 */  addiu      $s0, $s0, %lo(D_80077108)
+/* 209E204 8007EC3C 0780103C */  lui        $s0, %hi(g_Sparkles)
+/* 209E208 8007EC40 08711026 */  addiu      $s0, $s0, %lo(g_Sparkles)
 /* 209E20C 8007EC44 40300200 */  sll        $a2, $v0, 1
 /* 209E210 8007EC48 2130C200 */  addu       $a2, $a2, $v0
 /* 209E214 8007EC4C C0300600 */  sll        $a2, $a2, 3
@@ -4337,9 +4337,9 @@ glabel func_level_23_8007B4C8
 /* 209E248 8007EC80 40100300 */  sll        $v0, $v1, 1
 /* 209E24C 8007EC84 21104300 */  addu       $v0, $v0, $v1
 /* 209E250 8007EC88 C0100200 */  sll        $v0, $v0, 3
-/* 209E254 8007EC8C 0780013C */  lui        $at, %hi(D_80077114)
+/* 209E254 8007EC8C 0780013C */  lui        $at, %hi(g_Sparkles + 0xC)
 /* 209E258 8007EC90 21082200 */  addu       $at, $at, $v0
-/* 209E25C 8007EC94 14712290 */  lbu        $v0, %lo(D_80077114)($at)
+/* 209E25C 8007EC94 14712290 */  lbu        $v0, %lo(g_Sparkles + 0xC)($at)
 /* 209E260 8007EC98 00000000 */  nop
 /* 209E264 8007EC9C 0500422C */  sltiu      $v0, $v0, 0x5
 /* 209E268 8007ECA0 1C004010 */  beqz       $v0, .Llevel_23_8007ED14

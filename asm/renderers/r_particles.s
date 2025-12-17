@@ -1186,8 +1186,8 @@ glabel func_800584C4
 /* 48D44 80058544 2800CC8C */  lw         $t4, 0x28($a2)
 /* 48D48 80058548 2C00CD8C */  lw         $t5, 0x2C($a2)
 /* 48D4C 8005854C 3000CE8C */  lw         $t6, 0x30($a2)
-/* 48D50 80058550 0780183C */  lui        $t8, %hi(D_80077108)
-/* 48D54 80058554 08711827 */  addiu      $t8, $t8, %lo(D_80077108)
+/* 48D50 80058550 0780183C */  lui        $t8, %hi(g_Sparkles)
+/* 48D54 80058554 08711827 */  addiu      $t8, $t8, %lo(g_Sparkles)
 /* 48D58 80058558 E8FF1823 */  addi       $t8, $t8, -0x18 /* handwritten instruction */
 /* 48D5C 8005855C C0001923 */  addi       $t9, $t8, 0xC0 /* handwritten instruction */
 .L80058560:
@@ -1382,8 +1382,8 @@ glabel func_800584C4
 
 /* Handwritten function */
 glabel func_8005882C
-/* 4902C 8005882C 0780013C */  lui        $at, %hi(D_80077108)
-/* 49030 80058830 08712124 */  addiu      $at, $at, %lo(D_80077108)
+/* 4902C 8005882C 0780013C */  lui        $at, %hi(g_Sparkles)
+/* 49030 80058830 08712124 */  addiu      $at, $at, %lo(g_Sparkles)
 /* 49034 80058834 C0002220 */  addi       $v0, $at, 0xC0 /* handwritten instruction */
 /* 49038 80058838 00000420 */  addi       $a0, $zero, 0x0 /* handwritten instruction */
 .L8005883C:
@@ -1622,9 +1622,9 @@ glabel func_80058B68
 /* 49380 80058B80 00000000 */   nop
 /* 49384 80058B84 A8000224 */  addiu      $v0, $zero, 0xA8
 .L80058B88:
-/* 49388 80058B88 0780013C */  lui        $at, %hi(D_80077114)
+/* 49388 80058B88 0780013C */  lui        $at, %hi(g_Sparkles + 0xC)
 /* 4938C 80058B8C 21082200 */  addu       $at, $at, $v0
-/* 49390 80058B90 147120A0 */  sb         $zero, %lo(D_80077114)($at)
+/* 49390 80058B90 147120A0 */  sb         $zero, %lo(g_Sparkles + 0xC)($at)
 /* 49394 80058B94 E8FF4224 */  addiu      $v0, $v0, -0x18
 /* 49398 80058B98 FBFF4104 */  bgez       $v0, .L80058B88
 /* 4939C 80058B9C 00000000 */   nop

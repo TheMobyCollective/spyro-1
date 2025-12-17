@@ -1,6 +1,7 @@
 #ifndef __RENDERERS_H
 #define __RENDERERS_H
 
+#include "common.h"
 #include "matrix.h"
 
 // Various renderers
@@ -14,8 +15,21 @@ void func_800573C8(void);
 /// @return The slot index, or -1 if no slot available
 int func_8005882C(void);
 
-/// @brief Spark particle array (8 particles of 24 bytes each)
-extern u_char D_80077108[];
+typedef struct {
+  Vector3D m_Position;
+
+  u_char m_Life;  // Remaining life in ticks
+  u_char m_Speed; // Speed
+  u_char m_0x0E;  // Not sure, variation
+  u_char m_0x0F;  // Not sure
+
+  Color m_Color;
+  u_char m_Fade;
+  u_char m_Size;
+} Sparkle;
+
+/// @brief Sparkle array
+extern Sparkle g_Sparkles[8];
 
 // r_cyclorama:
 

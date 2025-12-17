@@ -88,11 +88,8 @@ dlabel D_80077100
 dlabel D_80077104
 /* 6704C 80077104 */ .space 0x04
 
-dlabel D_80077108
-/* 67050 80077108 */ .space 0x0C
-
-dlabel D_80077114
-/* 6705C 80077114 */ .space 0xB4
+dlabel g_Sparkles
+/* Total size from 80077108 to 800771C8 */ .space 0xC0
 
 dlabel D_800771C8 /* Rendered world sectors flags */
 /* 67110 800771C8 */ .space 0x100
