@@ -1060,7 +1060,7 @@ void UpdateMobyDragonFragment(Moby *pMoby) {
     }
   } else {
     // Fragment finished - spawn end particles and deactivate
-    (*D_800758E4)(3, 0x46, &pMoby->m_Position, 0x10);
+    (*D_800758E4)(3, 0x46, &pMoby->m_Position, (void *)0x10);
     func_80052568(pMoby);
   }
 }
