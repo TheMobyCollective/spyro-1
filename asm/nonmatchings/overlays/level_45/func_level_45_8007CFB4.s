@@ -2805,7 +2805,7 @@ glabel func_level_45_8007CFB4
 /* 425B644 8007F87C 480057A0 */  sb         $s7, 0x48($v0)
 .Llevel_45_8007F880:
 /* 425B648 8007F880 1C00048E */  lw         $a0, 0x1C($s0)
-/* 425B64C 8007F884 B1F2000C */  jal        func_8003CAC4
+/* 425B64C 8007F884 B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 425B650 8007F888 21880000 */   addu      $s1, $zero, $zero
 /* 425B654 8007F88C 21300000 */  addu       $a2, $zero, $zero
 /* 425B658 8007F890 C8000224 */  addiu      $v0, $zero, 0xC8
@@ -3378,7 +3378,7 @@ glabel func_level_45_8007CFB4
 /* 425BEA4 800800DC 47E1000C */  jal        func_8003851C
 /* 425BEA8 800800E0 21300000 */   addu      $a2, $zero, $zero
 /* 425BEAC 800800E4 0400048E */  lw         $a0, 0x4($s0)
-/* 425BEB0 800800E8 B1F2000C */  jal        func_8003CAC4
+/* 425BEB0 800800E8 B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 425BEB4 800800EC 00000000 */   nop
 /* 425BEB8 800800F0 21286002 */  addu       $a1, $s3, $zero
 /* 425BEBC 800800F4 0000048E */  lw         $a0, 0x0($s0)
@@ -3536,7 +3536,7 @@ glabel func_level_45_8007CFB4
 /* 425C0F4 8008032C 480057A0 */  sb         $s7, 0x48($v0)
 .Llevel_45_80080330:
 /* 425C0F8 80080330 0800248E */  lw         $a0, 0x8($s1)
-/* 425C0FC 80080334 B1F2000C */  jal        func_8003CAC4
+/* 425C0FC 80080334 B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 425C100 80080338 21800000 */   addu      $s0, $zero, $zero
 /* 425C104 8008033C 21300000 */  addu       $a2, $zero, $zero
 /* 425C108 80080340 5E010224 */  addiu      $v0, $zero, 0x15E
@@ -3983,7 +3983,7 @@ glabel func_level_45_8007CFB4
 /* 425C77C 800809B4 57004010 */  beqz       $v0, .Llevel_45_80080B14
 /* 425C780 800809B8 00000000 */   nop
 /* 425C784 800809BC 1800248E */  lw         $a0, 0x18($s1)
-/* 425C788 800809C0 B1F2000C */  jal        func_8003CAC4
+/* 425C788 800809C0 B1F2000C */  jal        RegisterFlightMobyCollectibleType
 /* 425C78C 800809C4 00000000 */   nop
 /* 425C790 800809C8 1000258E */  lw         $a1, 0x10($s1)
 /* 425C794 800809CC 00000000 */  nop

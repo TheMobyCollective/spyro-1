@@ -206,7 +206,7 @@
 - [ ] func_8003C6E4
 - [ ] func_8003C85C
 - [ ] func_8003C994
-- [ ] func_8003CAC4
+- [x] RegisterFlightMobyCollectibleType
 - [x] func_80037E98
 - [ ] func_8002BBE0
 - [ ] func_8002BFE0

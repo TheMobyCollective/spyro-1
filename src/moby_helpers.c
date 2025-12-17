@@ -855,5 +855,22 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003C85C);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003C994);
 
-// Random flight related thingy
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003CAC4);
+/// @brief Registers a flight level collectible moby type in one of 4 slots
+/// @param index The moby type index to register
+void RegisterFlightMobyCollectibleType(int index) {
+  int i;
+  int *pCounter = &D_80078630;
+  int *pSlots = &D_80078608;
+
+  pCounter[index]++;
+
+  for (i = 0; i < 4; i++) {
+    if (pSlots[i] < 0) {
+      pSlots[i] = index;
+      return;
+    }
+    if (pSlots[i] == index) {
+      return;
+    }
+  }
+}
