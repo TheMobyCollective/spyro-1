@@ -3063,7 +3063,7 @@ glabel func_level_55_8007CFB4
 .Llevel_55_8007FC4C:
 /* 5034A14 8007FC4C 04000524 */  addiu      $a1, $zero, 0x4
 /* 5034A18 8007FC50 21300000 */  addu       $a2, $zero, $zero
-/* 5034A1C 8007FC54 70E3000C */  jal        func_80038DC0
+/* 5034A1C 8007FC54 70E3000C */  jal        RotateMobyToSpyro
 /* 5034A20 8007FC58 21380000 */   addu      $a3, $zero, $zero
 /* 5034A24 8007FC5C 21206002 */  addu       $a0, $s3, $zero
 /* 5034A28 8007FC60 20000526 */  addiu      $a1, $s0, 0x20

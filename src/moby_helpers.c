@@ -339,7 +339,51 @@ int func_80038D54(Vector3D *param_1, Vector3D *param_2) {
 }
 
 /// @brief Rotate moby to face Spyro
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038DC0);
+/// @param pMoby The moby to rotate
+/// @param rotSpeed The rotation speed
+/// @param withinAngle The threshold angle for "close enough"
+/// @param continueRotation Whether to continue rotating when close
+/// @return 1 if close to target angle, 0 otherwise
+int RotateMobyToSpyro(Moby *pMoby, int rotSpeed, int withinAngle,
+                      int continueRotation) {
+  int angleDiff;
+  int targetAngle;
+
+  // Calculate angle from moby to Spyro
+  targetAngle = Atan2(g_Spyro.m_Position.x - pMoby->m_Position.x,
+                      g_Spyro.m_Position.y - pMoby->m_Position.y, 0);
+
+  // Calculate absolute angle difference
+  angleDiff = func_80017908(targetAngle, pMoby->m_Rotation.z);
+
+  // Scale rotation speed based on delta time
+  if (D_800756C4 == 3) {
+    rotSpeed += rotSpeed >> 1; // 1.5x speed
+  } else if (D_800756C4 == 4) {
+    rotSpeed <<= 1; // 2x speed
+  }
+
+  // Clamp rotSpeed to not exceed angleDiff
+  if (angleDiff < rotSpeed) {
+    rotSpeed = angleDiff;
+  }
+
+  // Check if close enough to target
+  if (withinAngle < func_80017908(targetAngle, pMoby->m_Rotation.z)) {
+    // Not close enough - rotate and return 0
+    pMoby->m_Rotation.z = func_800179F0(targetAngle, pMoby->m_Rotation.z,
+                                        rotSpeed, (rotSpeed >> 1) + 1);
+    return 0;
+  }
+
+  // Close enough to target - optionally continue rotating for smooth finish
+  if (continueRotation) {
+    pMoby->m_Rotation.z = func_800179F0(targetAngle, pMoby->m_Rotation.z,
+                                        rotSpeed, (rotSpeed >> 1) + 1);
+  }
+
+  return 1; // Moby is facing close enough to target
+}
 
 /// @brief Rotate moby to face an angle
 /// @param pMoby The moby to rotate

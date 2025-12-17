@@ -4095,7 +4095,7 @@ glabel func_level_62_8007AE5C
 .Llevel_62_8007E8C4:
 /* 56CD68C 8007E8C4 04000524 */  addiu      $a1, $zero, 0x4
 /* 56CD690 8007E8C8 21300000 */  addu       $a2, $zero, $zero
-/* 56CD694 8007E8CC 70E3000C */  jal        func_80038DC0
+/* 56CD694 8007E8CC 70E3000C */  jal        RotateMobyToSpyro
 /* 56CD698 8007E8D0 21380000 */   addu      $a3, $zero, $zero
 /* 56CD69C 8007E8D4 1000C426 */  addiu      $a0, $s6, 0x10
 /* 56CD6A0 8007E8D8 E4DF000C */  jal        func_80037F90
@@ -4184,7 +4184,7 @@ glabel func_level_62_8007AE5C
 /* 56CD7E0 8007EA18 2120A002 */  addu       $a0, $s5, $zero
 /* 56CD7E4 8007EA1C 04000524 */  addiu      $a1, $zero, 0x4
 /* 56CD7E8 8007EA20 21300000 */  addu       $a2, $zero, $zero
-/* 56CD7EC 8007EA24 70E3000C */  jal        func_80038DC0
+/* 56CD7EC 8007EA24 70E3000C */  jal        RotateMobyToSpyro
 /* 56CD7F0 8007EA28 21380000 */   addu      $a3, $zero, $zero
 /* 56CD7F4 8007EA2C 1400C38E */  lw         $v1, 0x14($s6)
 /* 56CD7F8 8007EA30 0780023C */  lui        $v0, %hi(g_DeltaTime)
@@ -4344,7 +4344,7 @@ glabel func_level_62_8007AE5C
 /* 56CDA48 8007EC80 2120A002 */  addu       $a0, $s5, $zero
 /* 56CDA4C 8007EC84 06000524 */  addiu      $a1, $zero, 0x6
 /* 56CDA50 8007EC88 21300000 */  addu       $a2, $zero, $zero
-/* 56CDA54 8007EC8C 70E3000C */  jal        func_80038DC0
+/* 56CDA54 8007EC8C 70E3000C */  jal        RotateMobyToSpyro
 /* 56CDA58 8007EC90 21380000 */   addu      $a3, $zero, $zero
 /* 56CDA5C 8007EC94 09114010 */  beqz       $v0, .Llevel_62_800830BC
 /* 56CDA60 8007EC98 00000000 */   nop
@@ -4507,7 +4507,7 @@ glabel func_level_62_8007AE5C
 .Llevel_62_8007EEEC:
 /* 56CDCB4 8007EEEC 04000524 */  addiu      $a1, $zero, 0x4
 /* 56CDCB8 8007EEF0 21300000 */  addu       $a2, $zero, $zero
-/* 56CDCBC 8007EEF4 70E3000C */  jal        func_80038DC0
+/* 56CDCBC 8007EEF4 70E3000C */  jal        RotateMobyToSpyro
 /* 56CDCC0 8007EEF8 21380000 */   addu      $a3, $zero, $zero
 /* 56CDCC4 8007EEFC 0000228E */  lw         $v0, 0x0($s1)
 /* 56CDCC8 8007EF00 01000924 */  addiu      $t1, $zero, 0x1
@@ -4870,7 +4870,7 @@ glabel func_level_62_8007AE5C
 /* 56CE204 8007F43C 2120A002 */  addu       $a0, $s5, $zero
 /* 56CE208 8007F440 06000524 */  addiu      $a1, $zero, 0x6
 /* 56CE20C 8007F444 21300000 */  addu       $a2, $zero, $zero
-/* 56CE210 8007F448 70E3000C */  jal        func_80038DC0
+/* 56CE210 8007F448 70E3000C */  jal        RotateMobyToSpyro
 /* 56CE214 8007F44C 21380000 */   addu      $a3, $zero, $zero
 /* 56CE218 8007F450 1A0F4010 */  beqz       $v0, .Llevel_62_800830BC
 /* 56CE21C 8007F454 00000000 */   nop
@@ -5066,7 +5066,7 @@ glabel func_level_62_8007AE5C
 .Llevel_62_8007F724:
 /* 56CE4EC 8007F724 04000524 */  addiu      $a1, $zero, 0x4
 /* 56CE4F0 8007F728 21300000 */  addu       $a2, $zero, $zero
-/* 56CE4F4 8007F72C 70E3000C */  jal        func_80038DC0
+/* 56CE4F4 8007F72C 70E3000C */  jal        RotateMobyToSpyro
 /* 56CE4F8 8007F730 21380000 */   addu      $a3, $zero, $zero
 /* 56CE4FC 8007F734 30002426 */  addiu      $a0, $s1, 0x30
 /* 56CE500 8007F738 E4DF000C */  jal        func_80037F90
@@ -5228,7 +5228,7 @@ glabel func_level_62_8007AE5C
 /* 56CE744 8007F97C 2120A002 */  addu       $a0, $s5, $zero
 /* 56CE748 8007F980 06000524 */  addiu      $a1, $zero, 0x6
 /* 56CE74C 8007F984 21300000 */  addu       $a2, $zero, $zero
-/* 56CE750 8007F988 70E3000C */  jal        func_80038DC0
+/* 56CE750 8007F988 70E3000C */  jal        RotateMobyToSpyro
 /* 56CE754 8007F98C 21380000 */   addu      $a3, $zero, $zero
 /* 56CE758 8007F990 0780023C */  lui        $v0, %hi(D_80075794)
 /* 56CE75C 8007F994 9457428C */  lw         $v0, %lo(D_80075794)($v0)
@@ -5438,7 +5438,7 @@ glabel func_level_62_8007AE5C
 /* 56CEA58 8007FC90 2120A002 */  addu       $a0, $s5, $zero
 /* 56CEA5C 8007FC94 06000524 */  addiu      $a1, $zero, 0x6
 /* 56CEA60 8007FC98 21300000 */  addu       $a2, $zero, $zero
-/* 56CEA64 8007FC9C 70E3000C */  jal        func_80038DC0
+/* 56CEA64 8007FC9C 70E3000C */  jal        RotateMobyToSpyro
 /* 56CEA68 8007FCA0 21380000 */   addu      $a3, $zero, $zero
 /* 56CEA6C 8007FCA4 CA034010 */  beqz       $v0, .Llevel_62_80080BD0
 /* 56CEA70 8007FCA8 2120A002 */   addu      $a0, $s5, $zero
