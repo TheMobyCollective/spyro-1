@@ -149,7 +149,7 @@ typedef struct {
   int m_idleTimer;
   int unk_0x84;
   int m_touchingMoby;
-  Vector3D unk_0x8c;
+  Vector3D m_previousPosition; // 0x8c - Position before movement update
   int m_floorIdleTime; // 0x98
   int m_airTime;       // 0x9c
   int m_surfaceBelowSpyro;
@@ -183,7 +183,7 @@ typedef struct {
   int unk_0x1bc;
   int unk_0x1c0;
   int unk_0x1c4;
-  MATRIX unk_0x1c8;
+  MATRIX m_headRotationMatrix; // 0x1c8 - Combined body+head rotation for rendering
   int m_seperateTailAnimation; // Whether the tail is animated seperately from
                                // the body, otherwise it copies the body
   int m_flameableFrames; // How many frames have we been able to flame? Not used
@@ -245,7 +245,7 @@ void func_8004A7EC(void);
 
 void func_8004A200(void);
 
-void func_8004AA0C(void);
+void UpdateSpyroReturnHome(void);
 
 /// @brief Handles the state transition for Spyro's body animation
 void func_8003CCE4(void);

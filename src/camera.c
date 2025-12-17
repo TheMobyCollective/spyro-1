@@ -418,7 +418,7 @@ void func_800377A8(void) {
       VecSub(&tempVector, &g_Camera.m_Position, &g_Spyro.m_Position);
       spyroCameraDistance = VecMagnitude(&tempVector, 1);
 
-      VecSub(&tempVector, &g_Camera.m_Position, &g_Spyro.unk_0x8c);
+      VecSub(&tempVector, &g_Camera.m_Position, &g_Spyro.m_previousPosition);
 
       if (spyroCameraDistance > g_Camera.unk_0xEC->unk_0x34 &&
           spyroCameraDistance > VecMagnitude(&tempVector, 1)) {

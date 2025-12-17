@@ -394,7 +394,7 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003DE44);
 
 /// Unused function
 void func_8003DF60(void) {
-  VecCopy(&g_Spyro.m_Position, &g_Spyro.unk_0x8c);
+  VecCopy(&g_Spyro.m_Position, &g_Spyro.m_previousPosition);
   VecNull(&g_Spyro.m_Physics.m_TrueVelocity);
   g_Spyro.m_Physics.m_TrueSpeed = 0;
 }
@@ -874,6 +874,84 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004A200);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004A7EC);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004AA0C);
+/// @brief Updates Spyro during the return home portal animation
+void UpdateSpyroReturnHome(void) {
+  char _pad[32]; // Stack padding to match original 0x58 frame
+  int i;
+  Vector3D8 *bodyRot;
+  MATRIX *rotMatrix;
+
+  // Swap gamepad states
+  D_80075944 = 0;
+  func_80053708(&g_Pad, &D_800776D8);
+
+  // If state is 15 (return home state), set walking state to 8
+  if (g_Spyro.m_State == 0xF) {
+    g_Spyro.m_walkingState = 8;
+  }
+
+  // Ensure gamepad update frames is at least 1
+  if (g_Spyro.m_noGamepadUpdateFrames <= 0) {
+    g_Spyro.m_noGamepadUpdateFrames = 1;
+  }
+
+  // Zero out velocity
+  VecNull(&g_Spyro.m_Physics.m_Velocity);
+
+  // Run state update loop
+  for (i = 0; i < g_DeltaTime; i++) {
+    func_80043FE4(i);
+  }
+
+  // Shift velocity right by 6
+  VecShiftRight(&g_Spyro.m_Physics.m_Velocity, 6);
+
+  // Save current position before movement
+  VecCopy(&g_Spyro.m_previousPosition, &g_Spyro.m_Position);
+
+  // Add velocity to position
+  VecAdd(&g_Spyro.m_Position, &g_Spyro.m_Position,
+         &g_Spyro.m_Physics.m_Velocity);
+
+  // Run physics update loop
+  for (i = 0; i < g_DeltaTime; i++) {
+    func_8004888C();
+  }
+
+  // Run animation update loop
+  for (i = 0; i < g_DeltaTime; i++) {
+    UpdateBodyAnimationState();
+    func_800499C0();
+    func_80049660();
+    func_80049F3C();
+    func_80049E8C();
+  }
+
+  // Cache pointers for matrix operations
+  bodyRot = &g_Spyro.m_bodyRotation;
+  rotMatrix = &g_Spyro.m_RotationMatrix;
+
+  // Update body rotation from speed angles
+  bodyRot->x = g_Spyro.m_Physics.m_SpeedAngle.m_RotX >> 4;
+  g_Spyro.m_bodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
+  g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
+
+  // Create rotation matrix from body rotation
+  RotVec8ToMatrix(bodyRot, rotMatrix, NULL);
+
+  // Create head rotation matrix from m_headRotation (bodyRot + 4 for padding)
+  RotVec8ToMatrix((Vector3D8 *)((u_char *)bodyRot + 4),
+                  &g_Spyro.m_headRotationMatrix, NULL);
+
+  // Combine body and head rotation: head = body * head
+  MulMatrix0(rotMatrix, &g_Spyro.m_headRotationMatrix,
+             &g_Spyro.m_headRotationMatrix);
+
+  // Clear cutscene flags
+  g_Spyro.unk_0x1f4 = 0;
+
+  // Swap gamepad states back
+  func_80053708(&D_800776D8, &g_Pad);
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004AC24);

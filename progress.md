@@ -256,7 +256,7 @@
 - [ ] func_80049FAC
 - [ ] func_8004A200
 - [ ] func_8004A7EC
-- [ ] func_8004AA0C
+- [x] UpdateSpyroReturnHome
 - [ ] func_8004AC24
 - [x] RandRange
 - [x] RandRangeSigned
