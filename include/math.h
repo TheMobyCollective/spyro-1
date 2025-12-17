@@ -78,6 +78,14 @@ void VecMult(Vector3D *pOut, Vector3D *pIn, int pVal);
 /// @return 8 bit value
 int func_80017908(int pAngle1, int pAngle2);
 
+/// @brief Steps an angle towards a target angle
+/// @param pTargetAngle The target angle
+/// @param pAngle The starting angle
+/// @param pSpeed The step speed
+/// @param pMinStep The minimum step size, snaps to target if within this range
+/// @return The new angle
+int func_800179F0(int pTargetAngle, int pAngle, int pSpeed, int pMinStep);
+
 /// @brief Returns the octagonal distance between two angles
 /// This function is a lot faster than using square roots
 int OctDistance(Vector3D *pPos1, Vector3D *pPos2);
