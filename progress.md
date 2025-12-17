@@ -200,7 +200,7 @@
 - [x] CollectItem
 - [ ] func_8003BAD0
 - [ ] func_8003BCCC
-- [ ] func_8003BED8
+- [x] unused_GetSpyroQuadrant
 - [ ] func_8003BFC0
 - [x] func_8003C358
 - [ ] func_8003C6E4
