@@ -278,7 +278,7 @@ void func_8002CB6C(void) {
   g_Camera.m_Focus = &g_Spyro.m_Position;
   g_Camera.m_State = 0;
   g_Camera.unk_0xC0 = 0;
-  g_Camera.m_0xD8 = &D_8006C8BC;
+  g_Camera.m_SphericalPreset = &D_8006C8BC;
 
   D_80078768 = D_800758A4;
 
@@ -330,7 +330,7 @@ void func_8002D02C(void) {
   g_Camera.m_Focus = &g_Spyro.m_Position;
   g_Camera.m_State = 0;
   g_Camera.unk_0xC0 = 0;
-  g_Camera.m_0xD8 = &D_8006C8BC;
+  g_Camera.m_SphericalPreset = &D_8006C8BC;
 
   //?? some sort of counter
   D_80078768 = D_800758A4;
