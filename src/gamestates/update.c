@@ -1,7 +1,9 @@
+#include "buffers.h"
 #include "camera.h"
 #include "common.h"
 #include "gamepad.h"
 #include "gamestates/init.h"
+#include "graphics.h"
 #include "loaders.h"
 #include "specular_and_metal.h"
 #include "spyro.h"
@@ -9,6 +11,8 @@
 #include "variables.h"
 
 #include <libmcrd.h>
+
+extern int _stacksize;
 
 /// @brief Updates level transition gems and text
 void func_8002DA74(void);
@@ -118,8 +122,86 @@ void func_80032AB0(void) {
 /// @brief Gamestate 13
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_80032B08);
 
-/// @brief Gamestate 14
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800331AC);
+/// @brief Gamestate 14 - Cutscene update
+void GamestateCutsceneUpdate(void) {
+  RECT rc;
+  int duration;
+  int currentTick;
+
+  if (g_CutsceneIdx >= 2) {
+    if (D_80075680->m_CurrentTick == 0) {
+      // Initial cutscene setup
+      func_80056B28(0); // Stop all sounds
+      SpuUpdate();
+
+      // Clear screen
+      setRECT(&rc, 0, 0, 0x200, 0x1E0);
+      ClearImage(&rc, 0, 0, 0);
+      DrawSync(0);
+
+      g_LoadStage = 0;
+      D_800785D8.m_CopyBuf = g_OverlaySpacePointer;
+      D_800785D8.m_DiscCopyBuf = g_OverlaySpacePointer;
+
+      if (g_CutsceneIdx == 3) {
+        D_800785D8.m_SharedAnimations = (void *)(0x80200000 - _stacksize);
+        AllocateBuffers(1); // Allocate buffers with reduced space for credits 2
+      }
+
+      // Load cutscene data loop
+      while (g_LoadStage < 10) {
+        LoadCutscene();
+        func_8002BBE0(); // Music update (processes CD audio)
+      }
+
+      func_8002D338(); // Initialize cutscene playback state
+    }
+  }
+
+  // Main update
+  currentTick = D_80075680->m_CurrentTick;
+  duration = D_80075680->m_Duration;
+  currentTick += g_DeltaTime;
+  duration <<= 1;
+  D_80075680->m_CurrentTick = currentTick;
+
+  if (currentTick < duration) {
+    // Fade logic
+    if (currentTick < 0x10) {
+      g_Fade = 0x10 - currentTick;
+    } else {
+      currentTick = duration - currentTick;
+      if (currentTick < 0x10) {
+        g_Fade = 0x10 - currentTick;
+      } else {
+        g_Fade = 0;
+      }
+    }
+
+    if (g_Fade >= 0x10) {
+      g_Fade = 0xF;
+    }
+
+    // Skip functionality for intro cutscene
+    if (g_CutsceneIdx == 1) {
+      if (g_Pad.m_Held & (PAD_START | PAD_CROSS)) {
+        CutsceneLayout *pCutscene;
+        int tick;
+        pCutscene = D_80075680;
+        tick = pCutscene->m_CurrentTick;
+        if (tick >= 0xF1) {
+          if (tick < (pCutscene->m_Duration << 1) - 0x20) {
+            pCutscene->m_Duration = (tick >> 1) + 0x10;
+          }
+        }
+      }
+    }
+
+    func_8002BFE0(D_80075680->m_CurrentTick); // Update/render cutscene frame
+  } else {
+    func_8002D440(); // End cutscene, transition to next gamestate
+  }
+}
 
 extern int D_80075704; // Credits sequence
 extern int D_800756F8;
