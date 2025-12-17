@@ -180,8 +180,8 @@
 - [ ] func_8003A420
 - [x] func_8003A720
 - [x] func_8003A79C
-- [ ] func_8003A850
 - [x] unused_VecInterpolateCurve
+- [x] unused_MobyInterpolateVelocity
 - [ ] func_8003A9EC
 - [x] func_8003AA84
 - [ ] func_8003AAEC
