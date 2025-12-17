@@ -1332,7 +1332,7 @@ glabel func_level_61_8007B528
 /* 544B628 8007C060 0A000724 */  addiu      $a3, $zero, 0xA
 /* 544B62C 8007C064 11002592 */  lbu        $a1, 0x11($s1)
 /* 544B630 8007C068 01000924 */  addiu      $t1, $zero, 0x1
-/* 544B634 8007C06C B8E3000C */  jal        func_80038EE0
+/* 544B634 8007C06C B8E3000C */  jal        RotateMobyToAngle
 /* 544B638 8007C070 1000A9AF */   sw        $t1, 0x10($sp)
 /* 544B63C 8007C074 21206002 */  addu       $a0, $s3, $zero
 /* 544B640 8007C078 1E000524 */  addiu      $a1, $zero, 0x1E
@@ -3805,7 +3805,7 @@ glabel func_level_61_8007B528
 /* 544DAC4 8007E4FC 21284000 */  addu       $a1, $v0, $zero
 /* 544DAC8 8007E500 0A000624 */  addiu      $a2, $zero, 0xA
 /* 544DACC 8007E504 21380000 */  addu       $a3, $zero, $zero
-/* 544DAD0 8007E508 B8E3000C */  jal        func_80038EE0
+/* 544DAD0 8007E508 B8E3000C */  jal        RotateMobyToAngle
 /* 544DAD4 8007E50C 1000A0AF */   sw        $zero, 0x10($sp)
 /* 544DAD8 8007E510 3800A427 */  addiu      $a0, $sp, 0x38
 /* 544DADC 8007E514 7F5C000C */  jal        VecMagnitude
@@ -3973,7 +3973,7 @@ glabel func_level_61_8007B528
 /* 544DD3C 8007E774 21284000 */  addu       $a1, $v0, $zero
 /* 544DD40 8007E778 0A000624 */  addiu      $a2, $zero, 0xA
 /* 544DD44 8007E77C 21380000 */  addu       $a3, $zero, $zero
-/* 544DD48 8007E780 B8E3000C */  jal        func_80038EE0
+/* 544DD48 8007E780 B8E3000C */  jal        RotateMobyToAngle
 /* 544DD4C 8007E784 1000A0AF */   sw        $zero, 0x10($sp)
 /* 544DD50 8007E788 21200002 */  addu       $a0, $s0, $zero
 /* 544DD54 8007E78C 7F5C000C */  jal        VecMagnitude
@@ -4133,7 +4133,7 @@ glabel func_level_61_8007B528
 /* 544DF8C 8007E9C4 0880053C */  lui        $a1, %hi(g_Spyro + 0xE)
 /* 544DF90 8007E9C8 668AA590 */  lbu        $a1, %lo(g_Spyro + 0xE)($a1)
 /* 544DF94 8007E9CC 21380000 */  addu       $a3, $zero, $zero
-/* 544DF98 8007E9D0 B8E3000C */  jal        func_80038EE0
+/* 544DF98 8007E9D0 B8E3000C */  jal        RotateMobyToAngle
 /* 544DF9C 8007E9D4 1000A0AF */   sw        $zero, 0x10($sp)
 .Llevel_61_8007E9D8:
 /* 544DFA0 8007E9D8 0880033C */  lui        $v1, %hi(g_Spyro + 0x164)

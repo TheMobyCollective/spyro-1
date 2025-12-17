@@ -168,7 +168,7 @@
 - [x] func_80038C4C
 - [x] func_80038D54
 - [ ] func_80038DC0
-- [ ] func_80038EE0
+- [x] RotateMobyToAngle
 - [ ] func_80038FC8
 - [x] func_80039228
 - [ ] func_80039398

@@ -120,7 +120,7 @@ glabel func_80039E94
 /* 2A840 8003A040 01000224 */  addiu      $v0, $zero, 0x1
 /* 2A844 8003A044 490042A2 */  sb         $v0, 0x49($s2)
 /* 2A848 8003A048 01000224 */  addiu      $v0, $zero, 0x1
-/* 2A84C 8003A04C B8E3000C */  jal        func_80038EE0
+/* 2A84C 8003A04C B8E3000C */  jal        RotateMobyToAngle
 /* 2A850 8003A050 1000A2AF */   sw        $v0, 0x10($sp)
 /* 2A854 8003A054 21204002 */  addu       $a0, $s2, $zero
 /* 2A858 8003A058 21286002 */  addu       $a1, $s3, $zero

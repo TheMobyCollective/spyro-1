@@ -1098,7 +1098,7 @@ glabel func_level_14_8007AF94
 /* 1481250 8007BC88 04000624 */  addiu      $a2, $zero, 0x4
 /* 1481254 8007BC8C 11002592 */  lbu        $a1, 0x11($s1)
 /* 1481258 8007BC90 0A000724 */  addiu      $a3, $zero, 0xA
-/* 148125C 8007BC94 B8E3000C */  jal        func_80038EE0
+/* 148125C 8007BC94 B8E3000C */  jal        RotateMobyToAngle
 /* 1481260 8007BC98 1000B7AF */   sw        $s7, 0x10($sp)
 /* 1481264 8007BC9C 21206002 */  addu       $a0, $s3, $zero
 /* 1481268 8007BCA0 1E000524 */  addiu      $a1, $zero, 0x1E
@@ -3551,7 +3551,7 @@ glabel func_level_14_8007AF94
 /* 148369C 8007E0D4 21284000 */  addu       $a1, $v0, $zero
 /* 14836A0 8007E0D8 0A000624 */  addiu      $a2, $zero, 0xA
 /* 14836A4 8007E0DC 21380000 */  addu       $a3, $zero, $zero
-/* 14836A8 8007E0E0 B8E3000C */  jal        func_80038EE0
+/* 14836A8 8007E0E0 B8E3000C */  jal        RotateMobyToAngle
 /* 14836AC 8007E0E4 1000A0AF */   sw        $zero, 0x10($sp)
 /* 14836B0 8007E0E8 3800A427 */  addiu      $a0, $sp, 0x38
 /* 14836B4 8007E0EC 7F5C000C */  jal        VecMagnitude
@@ -3718,7 +3718,7 @@ glabel func_level_14_8007AF94
 /* 1483910 8007E348 21284000 */  addu       $a1, $v0, $zero
 /* 1483914 8007E34C 0A000624 */  addiu      $a2, $zero, 0xA
 /* 1483918 8007E350 21380000 */  addu       $a3, $zero, $zero
-/* 148391C 8007E354 B8E3000C */  jal        func_80038EE0
+/* 148391C 8007E354 B8E3000C */  jal        RotateMobyToAngle
 /* 1483920 8007E358 1000A0AF */   sw        $zero, 0x10($sp)
 /* 1483924 8007E35C 21200002 */  addu       $a0, $s0, $zero
 /* 1483928 8007E360 7F5C000C */  jal        VecMagnitude
@@ -3878,7 +3878,7 @@ glabel func_level_14_8007AF94
 /* 1483B60 8007E598 0880053C */  lui        $a1, %hi(g_Spyro + 0xE)
 /* 1483B64 8007E59C 668AA590 */  lbu        $a1, %lo(g_Spyro + 0xE)($a1)
 /* 1483B68 8007E5A0 21380000 */  addu       $a3, $zero, $zero
-/* 1483B6C 8007E5A4 B8E3000C */  jal        func_80038EE0
+/* 1483B6C 8007E5A4 B8E3000C */  jal        RotateMobyToAngle
 /* 1483B70 8007E5A8 1000A0AF */   sw        $zero, 0x10($sp)
 .Llevel_14_8007E5AC:
 /* 1483B74 8007E5AC 0880033C */  lui        $v1, %hi(g_Spyro + 0x164)
@@ -6503,7 +6503,7 @@ glabel func_level_14_8007AF94
 /* 14861C8 80080C00 21284000 */  addu       $a1, $v0, $zero
 /* 14861CC 80080C04 0A000624 */  addiu      $a2, $zero, 0xA
 /* 14861D0 80080C08 04000724 */  addiu      $a3, $zero, 0x4
-/* 14861D4 80080C0C B8E3000C */  jal        func_80038EE0
+/* 14861D4 80080C0C B8E3000C */  jal        RotateMobyToAngle
 /* 14861D8 80080C10 1000B7AF */   sw        $s7, 0x10($sp)
 /* 14861DC 80080C14 A6014010 */  beqz       $v0, .Llevel_14_800812B0
 /* 14861E0 80080C18 21206002 */   addu      $a0, $s3, $zero
@@ -6801,7 +6801,7 @@ glabel func_level_14_8007AF94
 /* 1486628 80081060 21284000 */  addu       $a1, $v0, $zero
 /* 148662C 80081064 07000624 */  addiu      $a2, $zero, 0x7
 /* 1486630 80081068 21380000 */  addu       $a3, $zero, $zero
-/* 1486634 8008106C B8E3000C */  jal        func_80038EE0
+/* 1486634 8008106C B8E3000C */  jal        RotateMobyToAngle
 /* 1486638 80081070 1000A0AF */   sw        $zero, 0x10($sp)
 /* 148663C 80081074 3F006292 */  lbu        $v0, 0x3F($s3)
 /* 1486640 80081078 00000000 */  nop
@@ -6901,7 +6901,7 @@ glabel func_level_14_8007AF94
 /* 14867A4 800811DC 06000624 */  addiu      $a2, $zero, 0x6
 /* 14867A8 800811E0 1000B7AF */  sw         $s7, 0x10($sp)
 /* 14867AC 800811E4 3400258E */  lw         $a1, 0x34($s1)
-/* 14867B0 800811E8 B8E3000C */  jal        func_80038EE0
+/* 14867B0 800811E8 B8E3000C */  jal        RotateMobyToAngle
 /* 14867B4 800811EC 05000724 */   addiu     $a3, $zero, 0x5
 /* 14867B8 800811F0 2F004010 */  beqz       $v0, .Llevel_14_800812B0
 /* 14867BC 800811F4 00000000 */   nop
@@ -6943,7 +6943,7 @@ glabel func_level_14_8007AF94
 /* 1486844 8008127C 21284000 */  addu       $a1, $v0, $zero
 /* 1486848 80081280 06000624 */  addiu      $a2, $zero, 0x6
 /* 148684C 80081284 14000724 */  addiu      $a3, $zero, 0x14
-/* 1486850 80081288 B8E3000C */  jal        func_80038EE0
+/* 1486850 80081288 B8E3000C */  jal        RotateMobyToAngle
 /* 1486854 8008128C 1000B7AF */   sw        $s7, 0x10($sp)
 /* 1486858 80081290 07004010 */  beqz       $v0, .Llevel_14_800812B0
 /* 148685C 80081294 05000224 */   addiu     $v0, $zero, 0x5

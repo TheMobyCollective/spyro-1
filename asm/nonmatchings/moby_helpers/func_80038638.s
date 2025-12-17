@@ -152,7 +152,7 @@ glabel func_80038638
 /* 29058 80038858 21284000 */  addu       $a1, $v0, $zero
 /* 2905C 8003885C 6800A68F */  lw         $a2, 0x68($sp)
 /* 29060 80038860 21380000 */  addu       $a3, $zero, $zero
-/* 29064 80038864 B8E3000C */  jal        func_80038EE0
+/* 29064 80038864 B8E3000C */  jal        RotateMobyToAngle
 /* 29068 80038868 1000A0AF */   sw        $zero, 0x10($sp)
 /* 2906C 8003886C 21206002 */  addu       $a0, $s3, $zero
 /* 29070 80038870 7800A78F */  lw         $a3, 0x78($sp)
@@ -171,7 +171,7 @@ glabel func_80038638
 /* 290A0 800388A0 6800A68F */  lw         $a2, 0x68($sp)
 /* 290A4 800388A4 6C00A78F */  lw         $a3, 0x6C($sp)
 /* 290A8 800388A8 21280002 */  addu       $a1, $s0, $zero
-/* 290AC 800388AC B8E3000C */  jal        func_80038EE0
+/* 290AC 800388AC B8E3000C */  jal        RotateMobyToAngle
 /* 290B0 800388B0 1000A2AF */   sw        $v0, 0x10($sp)
 /* 290B4 800388B4 09004010 */  beqz       $v0, .L800388DC
 /* 290B8 800388B8 21206002 */   addu      $a0, $s3, $zero
