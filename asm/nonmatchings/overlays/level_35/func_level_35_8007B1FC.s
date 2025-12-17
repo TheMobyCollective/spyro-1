@@ -94,8 +94,8 @@ glabel func_level_35_8007B1FC
 /* 33E0114 8007B34C 64004228 */  slti       $v0, $v0, 0x64
 /* 33E0118 8007B350 1A004010 */  beqz       $v0, .Llevel_35_8007B3BC
 /* 33E011C 8007B354 00000000 */   nop
-/* 33E0120 8007B358 0880023C */  lui        $v0, %hi(D_80078630)
-/* 33E0124 8007B35C 3086428C */  lw         $v0, %lo(D_80078630)($v0)
+/* 33E0120 8007B358 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
+/* 33E0124 8007B35C 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
 /* 33E0128 8007B360 0880033C */  lui        $v1, %hi(D_80078634)
 /* 33E012C 8007B364 3486638C */  lw         $v1, %lo(D_80078634)($v1)
 /* 33E0130 8007B368 00000000 */  nop

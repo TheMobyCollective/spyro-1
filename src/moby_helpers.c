@@ -859,17 +859,15 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003C994);
 /// @param index The moby type index to register
 void RegisterFlightMobyCollectibleType(int index) {
   int i;
-  int *pCounter = &D_80078630;
-  int *pSlots = &D_80078608;
 
-  pCounter[index]++;
+  g_FlightObjectiveCounters[index]++;
 
   for (i = 0; i < 4; i++) {
-    if (pSlots[i] < 0) {
-      pSlots[i] = index;
+    if (g_FlightObjectiveActiveSlots[i] < 0) {
+      g_FlightObjectiveActiveSlots[i] = index;
       return;
     }
-    if (pSlots[i] == index) {
+    if (g_FlightObjectiveActiveSlots[i] == index) {
       return;
     }
   }

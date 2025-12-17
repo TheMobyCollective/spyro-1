@@ -401,7 +401,7 @@ dlabel D_800785D4
 dlabel D_800785D8
 /* Total size from 800785D8 to 80078608 */ .space 0x30
 
-dlabel D_80078608
+dlabel g_FlightObjectiveActiveSlots
 /* 68550 80078608 */ .space 0x04
 
 dlabel D_8007860C
@@ -419,7 +419,7 @@ dlabel D_80078618
 dlabel D_8007862C
 /* 68574 8007862C */ .space 0x04
 
-dlabel D_80078630
+dlabel g_FlightObjectiveCounters
 /* 68578 80078630 */ .space 0x04
 
 dlabel D_80078634

@@ -28,7 +28,7 @@ void func_8003851C(Moby *pMoby, int pSoundIndex, u_char *pChannel);
 void func_8003A720(Moby *pMoby);
 
 /// @brief Persist a collected gem to checkpoint / global collected mask
-void func_8003B854(int pGemValue, Moby* pMoby);
+void func_8003B854(int pGemValue, Moby *pMoby);
 
 /// @brief Collect an item (gem, key, ...)
 void CollectItem(Moby *pMoby);
@@ -37,8 +37,9 @@ void CollectItem(Moby *pMoby);
 void func_8003C358(Moby *pMoby, int pIsLevelName);
 
 /// @brief Flight level active object slots (4 slots, negative = empty)
-extern int D_80078608;
-/// @brief Flight level object type counters
-extern int D_80078630;
+extern int g_FlightObjectiveActiveSlots[4];
+
+/// @brief Flight level objective counters
+extern int g_FlightObjectiveCounters[4];
 
 #endif

@@ -359,8 +359,8 @@ glabel func_level_15_8007B68C
 /* 16A8FD4 8007BA0C 64004228 */  slti       $v0, $v0, 0x64
 /* 16A8FD8 8007BA10 B1034010 */  beqz       $v0, .Llevel_15_8007C8D8
 /* 16A8FDC 8007BA14 3800B327 */   addiu     $s3, $sp, 0x38
-/* 16A8FE0 8007BA18 0880023C */  lui        $v0, %hi(D_80078630)
-/* 16A8FE4 8007BA1C 3086428C */  lw         $v0, %lo(D_80078630)($v0)
+/* 16A8FE0 8007BA18 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
+/* 16A8FE4 8007BA1C 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
 /* 16A8FE8 8007BA20 0880033C */  lui        $v1, %hi(D_80078634)
 /* 16A8FEC 8007BA24 3486638C */  lw         $v1, %lo(D_80078634)($v1)
 /* 16A8FF0 8007BA28 00000000 */  nop
@@ -515,8 +515,8 @@ glabel func_level_15_8007B68C
 /* 16A9230 8007BC68 00000000 */  nop
 /* 16A9234 8007BC6C 14004018 */  blez       $v0, .Llevel_15_8007BCC0
 /* 16A9238 8007BC70 02004228 */   slti      $v0, $v0, 0x2
-/* 16A923C 8007BC74 0880063C */  lui        $a2, %hi(D_80078630)
-/* 16A9240 8007BC78 3086C68C */  lw         $a2, %lo(D_80078630)($a2)
+/* 16A923C 8007BC74 0880063C */  lui        $a2, %hi(g_FlightObjectiveCounters)
+/* 16A9240 8007BC78 3086C68C */  lw         $a2, %lo(g_FlightObjectiveCounters)($a2)
 /* 16A9244 8007BC7C 0880053C */  lui        $a1, %hi(D_level_15_8007AA88)
 /* 16A9248 8007BC80 88AAA524 */  addiu      $a1, $a1, %lo(D_level_15_8007AA88)
 /* 16A924C 8007BC84 F58B010C */  jal        sprintf
@@ -537,8 +537,8 @@ glabel func_level_15_8007B68C
 .Llevel_15_8007BCC0:
 /* 16A9288 8007BCC0 54004014 */  bnez       $v0, .Llevel_15_8007BE14
 /* 16A928C 8007BCC4 08000224 */   addiu     $v0, $zero, 0x8
-/* 16A9290 8007BCC8 0880033C */  lui        $v1, %hi(D_80078630)
-/* 16A9294 8007BCCC 3086638C */  lw         $v1, %lo(D_80078630)($v1)
+/* 16A9290 8007BCC8 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters)
+/* 16A9294 8007BCCC 3086638C */  lw         $v1, %lo(g_FlightObjectiveCounters)($v1)
 /* 16A9298 8007BCD0 00000000 */  nop
 /* 16A929C 8007BCD4 26006214 */  bne        $v1, $v0, .Llevel_15_8007BD70
 /* 16A92A0 8007BCD8 00000000 */   nop
@@ -1038,8 +1038,8 @@ glabel func_level_15_8007B68C
 /* 16A9A08 8007C440 09004228 */  slti       $v0, $v0, 0x9
 /* 16A9A0C 8007C444 5F004014 */  bnez       $v0, .Llevel_15_8007C5C4
 /* 16A9A10 8007C448 A0010424 */   addiu     $a0, $zero, 0x1A0
-/* 16A9A14 8007C44C 0880023C */  lui        $v0, %hi(D_80078630)
-/* 16A9A18 8007C450 3086428C */  lw         $v0, %lo(D_80078630)($v0)
+/* 16A9A14 8007C44C 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
+/* 16A9A18 8007C450 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
 /* 16A9A1C 8007C454 0880033C */  lui        $v1, %hi(D_80078634)
 /* 16A9A20 8007C458 3486638C */  lw         $v1, %lo(D_80078634)($v1)
 /* 16A9A24 8007C45C 00000000 */  nop
@@ -1419,8 +1419,8 @@ glabel func_level_15_8007B68C
 /* 16A9FBC 8007C9F4 0B001124 */   addiu     $s1, $zero, 0xB
 /* 16A9FC0 8007C9F8 08001124 */  addiu      $s1, $zero, 0x8
 .Llevel_15_8007C9FC:
-/* 16A9FC4 8007C9FC 0880023C */  lui        $v0, %hi(D_80078630)
-/* 16A9FC8 8007CA00 3086428C */  lw         $v0, %lo(D_80078630)($v0)
+/* 16A9FC4 8007C9FC 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
+/* 16A9FC8 8007CA00 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
 /* 16A9FCC 8007CA04 0880033C */  lui        $v1, %hi(D_80078634)
 /* 16A9FD0 8007CA08 3486638C */  lw         $v1, %lo(D_80078634)($v1)
 /* 16A9FD4 8007CA0C 00000000 */  nop
@@ -1477,8 +1477,8 @@ glabel func_level_15_8007B68C
 /* 16AA098 8007CAD0 09F84000 */  jalr       $v0
 /* 16AA09C 8007CAD4 0B000624 */   addiu     $a2, $zero, 0xB
 .Llevel_15_8007CAD8:
-/* 16AA0A0 8007CAD8 0880023C */  lui        $v0, %hi(D_80078630)
-/* 16AA0A4 8007CADC 3086428C */  lw         $v0, %lo(D_80078630)($v0)
+/* 16AA0A0 8007CAD8 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
+/* 16AA0A4 8007CADC 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
 /* 16AA0A8 8007CAE0 0880033C */  lui        $v1, %hi(D_80078634)
 /* 16AA0AC 8007CAE4 3486638C */  lw         $v1, %lo(D_80078634)($v1)
 /* 16AA0B0 8007CAE8 00000000 */  nop

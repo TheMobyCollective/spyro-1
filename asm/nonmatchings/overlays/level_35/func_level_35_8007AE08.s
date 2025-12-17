@@ -37,8 +37,8 @@ glabel func_level_35_8007AE08
 /* 33DFC50 8007AE88 F45825AC */  sw         $a1, %lo(D_800758F4)($at)
 /* 33DFC54 8007AE8C 11004014 */  bnez       $v0, .Llevel_35_8007AED4
 /* 33DFC58 8007AE90 00000000 */   nop
-/* 33DFC5C 8007AE94 0880023C */  lui        $v0, %hi(D_80078630)
-/* 33DFC60 8007AE98 3086428C */  lw         $v0, %lo(D_80078630)($v0)
+/* 33DFC5C 8007AE94 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
+/* 33DFC60 8007AE98 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
 /* 33DFC64 8007AE9C 0880033C */  lui        $v1, %hi(D_80078634)
 /* 33DFC68 8007AEA0 3486638C */  lw         $v1, %lo(D_80078634)($v1)
 /* 33DFC6C 8007AEA4 00000000 */  nop
