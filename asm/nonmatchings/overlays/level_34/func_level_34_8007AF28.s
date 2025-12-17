@@ -6018,7 +6018,7 @@ glabel func_level_34_8007AF28
 /* 31FAAF4 8008052C 1000A2AF */  sw         $v0, 0x10($sp)
 /* 31FAAF8 80080530 1400A0AF */  sw         $zero, 0x14($sp)
 /* 31FAAFC 80080534 2400068E */  lw         $a2, 0x24($s0)
-/* 31FAB00 80080538 44E6000C */  jal        func_80039910
+/* 31FAB00 80080538 44E6000C */  jal        MoveMobyWithGravity
 /* 31FAB04 8008053C 21380000 */   addu      $a3, $zero, $zero
 /* 31FAB08 80080540 0780023C */  lui        $v0, %hi(D_80075794)
 /* 31FAB0C 80080544 9457428C */  lw         $v0, %lo(D_80075794)($v0)

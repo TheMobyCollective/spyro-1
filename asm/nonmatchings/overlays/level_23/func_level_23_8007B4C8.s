@@ -6930,7 +6930,7 @@ glabel func_level_23_8007B4C8
 .Llevel_23_80081298:
 /* 20A0860 80081298 1400A0AF */  sw         $zero, 0x14($sp)
 /* 20A0864 8008129C 0000268E */  lw         $a2, 0x0($s1)
-/* 20A0868 800812A0 44E6000C */  jal        func_80039910
+/* 20A0868 800812A0 44E6000C */  jal        MoveMobyWithGravity
 /* 20A086C 800812A4 21380000 */   addu      $a3, $zero, $zero
 /* 20A0870 800812A8 0C006426 */  addiu      $a0, $s3, 0xC
 .Llevel_23_800812AC:

@@ -7456,7 +7456,7 @@ glabel func_level_22_8007E240
 /* 1E0BC20 80084658 1000A2AF */  sw         $v0, 0x10($sp)
 /* 1E0BC24 8008465C 1400A9AF */  sw         $t1, 0x14($sp)
 /* 1E0BC28 80084660 1400068E */  lw         $a2, 0x14($s0)
-/* 1E0BC2C 80084664 44E6000C */  jal        func_80039910
+/* 1E0BC2C 80084664 44E6000C */  jal        MoveMobyWithGravity
 /* 1E0BC30 80084668 0C000726 */   addiu     $a3, $s0, 0xC
 /* 1E0BC34 8008466C 21884000 */  addu       $s1, $v0, $zero
 /* 1E0BC38 80084670 03000224 */  addiu      $v0, $zero, 0x3

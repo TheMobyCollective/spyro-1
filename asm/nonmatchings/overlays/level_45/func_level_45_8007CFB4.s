@@ -3056,7 +3056,7 @@ glabel func_level_45_8007CFB4
 /* 425B9D8 8007FC10 1000A2AF */  sw         $v0, 0x10($sp)
 /* 425B9DC 8007FC14 1400A2AF */  sw         $v0, 0x14($sp)
 /* 425B9E0 8007FC18 2C00068E */  lw         $a2, 0x2C($s0)
-/* 425B9E4 8007FC1C 44E6000C */  jal        func_80039910
+/* 425B9E4 8007FC1C 44E6000C */  jal        MoveMobyWithGravity
 /* 425B9E8 8007FC20 28000726 */   addiu     $a3, $s0, 0x28
 /* 425B9EC 8007FC24 03000324 */  addiu      $v1, $zero, 0x3
 /* 425B9F0 8007FC28 11004314 */  bne        $v0, $v1, .Llevel_45_8007FC70
@@ -3700,7 +3700,7 @@ glabel func_level_45_8007CFB4
 /* 425C34C 80080584 1000A2AF */  sw         $v0, 0x10($sp)
 /* 425C350 80080588 1400A2AF */  sw         $v0, 0x14($sp)
 /* 425C354 8008058C 1800268E */  lw         $a2, 0x18($s1)
-/* 425C358 80080590 44E6000C */  jal        func_80039910
+/* 425C358 80080590 44E6000C */  jal        MoveMobyWithGravity
 /* 425C35C 80080594 14002726 */   addiu     $a3, $s1, 0x14
 /* 425C360 80080598 03000324 */  addiu      $v1, $zero, 0x3
 /* 425C364 8008059C 0F004314 */  bne        $v0, $v1, .Llevel_45_800805DC
@@ -3749,7 +3749,7 @@ glabel func_level_45_8007CFB4
 /* 425C404 8008063C 1000A2AF */  sw         $v0, 0x10($sp)
 /* 425C408 80080640 1400A2AF */  sw         $v0, 0x14($sp)
 /* 425C40C 80080644 1800268E */  lw         $a2, 0x18($s1)
-/* 425C410 80080648 44E6000C */  jal        func_80039910
+/* 425C410 80080648 44E6000C */  jal        MoveMobyWithGravity
 /* 425C414 8008064C 14002726 */   addiu     $a3, $s1, 0x14
 /* 425C418 80080650 03000324 */  addiu      $v1, $zero, 0x3
 /* 425C41C 80080654 E6064314 */  bne        $v0, $v1, .Llevel_45_800821F0

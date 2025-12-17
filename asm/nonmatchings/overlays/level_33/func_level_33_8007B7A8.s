@@ -8806,7 +8806,7 @@ glabel func_level_33_8007B7A8
 /* 2F63418 80082E50 1000A2AF */  sw         $v0, 0x10($sp)
 /* 2F6341C 80082E54 1400A0AF */  sw         $zero, 0x14($sp)
 /* 2F63420 80082E58 2400068E */  lw         $a2, 0x24($s0)
-/* 2F63424 80082E5C 44E6000C */  jal        func_80039910
+/* 2F63424 80082E5C 44E6000C */  jal        MoveMobyWithGravity
 /* 2F63428 80082E60 21380000 */   addu      $a3, $zero, $zero
 .L80082E64_:
 /* 2F6342C 80082E64 0780023C */  lui        $v0, %hi(D_80075794)
@@ -9326,7 +9326,7 @@ glabel func_level_33_8007B7A8
 /* 2F63BD4 8008360C 1000A2AF */  sw         $v0, 0x10($sp)
 /* 2F63BD8 80083610 1400A0AF */  sw         $zero, 0x14($sp)
 /* 2F63BDC 80083614 0400A68C */  lw         $a2, 0x4($a1)
-/* 2F63BE0 80083618 44E6000C */  jal        func_80039910
+/* 2F63BE0 80083618 44E6000C */  jal        MoveMobyWithGravity
 /* 2F63BE4 8008361C 21380000 */   addu      $a3, $zero, $zero
 /* 2F63BE8 80083620 0780023C */  lui        $v0, %hi(D_80075794)
 /* 2F63BEC 80083624 9457428C */  lw         $v0, %lo(D_80075794)($v0)
@@ -9342,7 +9342,7 @@ glabel func_level_33_8007B7A8
 /* 2F63C10 80083648 1000A2AF */  sw         $v0, 0x10($sp)
 /* 2F63C14 8008364C 1400A0AF */  sw         $zero, 0x14($sp)
 /* 2F63C18 80083650 0400A68C */  lw         $a2, 0x4($a1)
-/* 2F63C1C 80083654 44E6000C */  jal        func_80039910
+/* 2F63C1C 80083654 44E6000C */  jal        MoveMobyWithGravity
 /* 2F63C20 80083658 21380000 */   addu      $a3, $zero, $zero
 /* 2F63C24 8008365C 0780023C */  lui        $v0, %hi(D_80075794)
 /* 2F63C28 80083660 9457428C */  lw         $v0, %lo(D_80075794)($v0)
@@ -10136,7 +10136,7 @@ glabel func_level_33_8007B7A8
 /* 2F647D8 80084210 1000A2AF */  sw         $v0, 0x10($sp)
 /* 2F647DC 80084214 1400A2AF */  sw         $v0, 0x14($sp)
 /* 2F647E0 80084218 2000268E */  lw         $a2, 0x20($s1)
-/* 2F647E4 8008421C 44E6000C */  jal        func_80039910
+/* 2F647E4 8008421C 44E6000C */  jal        MoveMobyWithGravity
 /* 2F647E8 80084220 24002726 */   addiu     $a3, $s1, 0x24
 /* 2F647EC 80084224 0780023C */  lui        $v0, %hi(D_80075794)
 /* 2F647F0 80084228 9457428C */  lw         $v0, %lo(D_80075794)($v0)

@@ -1421,7 +1421,7 @@ glabel func_level_42_8007AFBC
 /* 3A6F708 8007C140 1000A2AF */  sw         $v0, 0x10($sp)
 /* 3A6F70C 8007C144 1400B7AF */  sw         $s7, 0x14($sp)
 /* 3A6F710 8007C148 1000068E */  lw         $a2, 0x10($s0)
-/* 3A6F714 8007C14C 44E6000C */  jal        func_80039910
+/* 3A6F714 8007C14C 44E6000C */  jal        MoveMobyWithGravity
 /* 3A6F718 8007C150 0C000726 */   addiu     $a3, $s0, 0xC
 /* 3A6F71C 8007C154 0780033C */  lui        $v1, %hi(D_80075718)
 /* 3A6F720 8007C158 1857638C */  lw         $v1, %lo(D_80075718)($v1)
@@ -7992,7 +7992,7 @@ glabel func_level_42_8007AFBC
 /* 3A757D4 8008220C 1000A2AF */  sw         $v0, 0x10($sp)
 /* 3A757D8 80082210 1400B7AF */  sw         $s7, 0x14($sp)
 /* 3A757DC 80082214 0800468E */  lw         $a2, 0x8($s2)
-/* 3A757E0 80082218 44E6000C */  jal        func_80039910
+/* 3A757E0 80082218 44E6000C */  jal        MoveMobyWithGravity
 /* 3A757E4 8008221C 10004726 */   addiu     $a3, $s2, 0x10
 /* 3A757E8 80082220 0780023C */  lui        $v0, %hi(D_80075718)
 /* 3A757EC 80082224 1857428C */  lw         $v0, %lo(D_80075718)($v0)
@@ -9241,7 +9241,7 @@ glabel func_level_42_8007AFBC
 /* 3A76A54 8008348C 1000A2AF */  sw         $v0, 0x10($sp)
 /* 3A76A58 80083490 1400B7AF */  sw         $s7, 0x14($sp)
 /* 3A76A5C 80083494 1000268E */  lw         $a2, 0x10($s1)
-/* 3A76A60 80083498 44E6000C */  jal        func_80039910
+/* 3A76A60 80083498 44E6000C */  jal        MoveMobyWithGravity
 /* 3A76A64 8008349C 18002726 */   addiu     $a3, $s1, 0x18
 /* 3A76A68 800834A0 0780023C */  lui        $v0, %hi(D_80075794)
 /* 3A76A6C 800834A4 9457428C */  lw         $v0, %lo(D_80075794)($v0)
@@ -9946,7 +9946,7 @@ glabel func_level_42_8007AFBC
 /* 3A774B8 80083EF0 0E000224 */  addiu      $v0, $zero, 0xE
 /* 3A774BC 80083EF4 1400A2AF */  sw         $v0, 0x14($sp)
 /* 3A774C0 80083EF8 2000468E */  lw         $a2, 0x20($s2)
-/* 3A774C4 80083EFC 44E6000C */  jal        func_80039910
+/* 3A774C4 80083EFC 44E6000C */  jal        MoveMobyWithGravity
 /* 3A774C8 80083F00 28004726 */   addiu     $a3, $s2, 0x28
 /* 3A774CC 80083F04 03000924 */  addiu      $t1, $zero, 0x3
 /* 3A774D0 80083F08 7E014914 */  bne        $v0, $t1, .Llevel_42_80084504
