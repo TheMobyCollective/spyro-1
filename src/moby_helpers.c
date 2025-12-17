@@ -489,10 +489,10 @@ int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
 
   result = 0;
   flags = 0x21;
-  floorOffset = 0x12C;
+  floorOffset = 300;
 
   // Check if pZVelocity is valid
-  if (pZVelocity == NULL || *pZVelocity == 0xFFFF) {
+  if (pZVelocity == nullptr || *pZVelocity == 0xFFFF) {
     flags = 0x25;
   }
 
