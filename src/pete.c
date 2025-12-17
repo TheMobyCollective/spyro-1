@@ -937,11 +937,11 @@ void UpdateSpyroReturnHome(void) {
   g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
 
   // Create rotation matrix from body rotation
-  RotVec8ToMatrix(bodyRot, rotMatrix, NULL);
+  RotVec8ToMatrix(bodyRot, rotMatrix, nullptr);
 
   // Create head rotation matrix from m_headRotation (bodyRot + 4 for padding)
   RotVec8ToMatrix((Vector3D8 *)((u_char *)bodyRot + 4),
-                  &g_Spyro.m_headRotationMatrix, NULL);
+                  &g_Spyro.m_headRotationMatrix, nullptr);
 
   // Combine body and head rotation: head = body * head
   MulMatrix0(rotMatrix, &g_Spyro.m_headRotationMatrix,
