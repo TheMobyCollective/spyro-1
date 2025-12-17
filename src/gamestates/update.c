@@ -1,6 +1,7 @@
 #include "buffers.h"
 #include "camera.h"
 #include "common.h"
+#include "cutscene.h"
 #include "gamepad.h"
 #include "gamestates/init.h"
 #include "graphics.h"
@@ -136,7 +137,7 @@ void GamestateCutsceneUpdate(void) {
       SpuUpdate();
 
       // Clear screen
-      setRECT(&rc, 0, 0, 0x200, 0x1E0);
+      setRECT(&rc, 0, 0, 512, 480);
       ClearImage(&rc, 0, 0, 0);
       DrawSync(0);
 
@@ -168,19 +169,19 @@ void GamestateCutsceneUpdate(void) {
 
   if (currentTick < duration) {
     // Fade logic
-    if (currentTick < 0x10) {
-      g_Fade = 0x10 - currentTick;
+    if (currentTick < 16) {
+      g_Fade = 16 - currentTick;
     } else {
       currentTick = duration - currentTick;
-      if (currentTick < 0x10) {
-        g_Fade = 0x10 - currentTick;
+      if (currentTick < 16) {
+        g_Fade = 16 - currentTick;
       } else {
         g_Fade = 0;
       }
     }
 
-    if (g_Fade >= 0x10) {
-      g_Fade = 0xF;
+    if (g_Fade >= 16) {
+      g_Fade = 15;
     }
 
     // Skip functionality for intro cutscene
@@ -190,9 +191,9 @@ void GamestateCutsceneUpdate(void) {
         int tick;
         pCutscene = D_80075680;
         tick = pCutscene->m_CurrentTick;
-        if (tick >= 0xF1) {
-          if (tick < (pCutscene->m_Duration << 1) - 0x20) {
-            pCutscene->m_Duration = (tick >> 1) + 0x10;
+        if (tick >= 241) {
+          if (tick < (pCutscene->m_Duration << 1) - 32) {
+            pCutscene->m_Duration = (tick >> 1) + 16;
           }
         }
       }

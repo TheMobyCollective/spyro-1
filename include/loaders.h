@@ -4,7 +4,6 @@
 #include <sys/types.h>
 
 #include "moby.h"
-#include "vector.h"
 
 extern int g_PortalLevelId; // Portal level id
 extern int g_LoadStage;     // Load stage
@@ -22,28 +21,5 @@ void LoadCutscene(void); // Load titlescreen
 void LoadDragonCutscene(void);
 
 void LoadLevel(int); // Load level
-
-typedef struct {
-  Vector3D m_Position;
-  Vector3D m_Rotation; // Yeah, Vector3D..
-} CutsceneCameraData;
-
-typedef struct {
-  u_char m_0x00;
-  u_char m_0x01;
-  u_char m_0x02;
-  u_char m_0x03;
-} CutsceneMobyData;
-
-typedef struct {
-  int m_CurrentTick;
-  int m_0x04;
-  int m_Duration;
-  int m_MobyCount;
-  CutsceneCameraData *m_CameraData;
-  CutsceneMobyData *m_MobyData[1]; // Variable length array, size m_MobyCount
-} CutsceneLayout;
-
-extern CutsceneLayout *D_80075680;
 
 #endif

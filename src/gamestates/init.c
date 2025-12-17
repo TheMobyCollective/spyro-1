@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "cheats.h"
 #include "common.h"
+#include "cutscene.h"
 #include "cyclorama.h"
 #include "dragon.h"
 #include "gamestates/draw.h"

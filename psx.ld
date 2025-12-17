@@ -93,6 +93,8 @@ SECTIONS
         build/src/completion.o(.rodata.jtbl);
         build/src/music.o(.rodata);
         build/src/music.o(.rodata.jtbl);
+        build/src/cutscene.o(.rodata);
+        build/src/cutscene.o(.rodata.jtbl);
         build/src/gamestates/init.o(.rodata);
         build/src/gamestates/init.o(.rodata.jtbl);
         build/src/cheats.o(.rodata);
@@ -158,6 +160,7 @@ SECTIONS
         build/src/crash_demo.o(.text);
         build/src/completion.o(.text);
         build/src/music.o(.text);
+        build/src/cutscene.o(.text);
         build/src/gamestates/init.o(.text);
         build/src/cheats.o(.text);
         build/src/gamestates/update.o(.text);
@@ -237,6 +240,8 @@ SECTIONS
         build/src/completion.o(.data);
         music = .;
         build/src/music.o(.data);
+        cutscene = .;
+        build/src/cutscene.o(.data);
         gamestates_init = .;
         build/src/gamestates/init.o(.data);
         names_data = .;
@@ -441,6 +446,7 @@ SECTIONS
         build/src/environment.o(.bss);
         build/src/completion.o(.bss);
         build/src/music.o(.bss);
+        build/src/cutscene.o(.bss);
         build/src/gamestates/init.o(.bss);
         build/src/cheats.o(.bss);
         build/src/camera.o(.bss);

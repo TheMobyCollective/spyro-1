@@ -4,6 +4,7 @@
 #include "cd.h"
 #include "checkpoint.h"
 #include "common.h"
+#include "cutscene.h"
 #include "cyclorama.h"
 #include "dragon.h"
 #include "graphics.h"
