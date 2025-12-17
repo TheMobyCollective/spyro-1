@@ -714,7 +714,7 @@ glabel func_80035FB4
 /* 271FC 800369FC A06EC68C */  lw         $a2, %lo(g_Camera + 0xD0)($a2)
 /* 27200 80036A00 D65D000C */  jal        VecAdd
 /* 27204 80036A04 21288000 */   addu      $a1, $a0, $zero
-/* 27208 80036A08 21D3000C */  jal        func_80034C84
+/* 27208 80036A08 21D3000C */  jal        CameraForceToDestination
 /* 2720C 80036A0C 00000000 */   nop
 /* 27210 80036A10 BED0000C */  jal        func_800342F8
 /* 27214 80036A14 00000000 */   nop

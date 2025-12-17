@@ -43,16 +43,16 @@ typedef struct {
   SphericalCoordsOffset m_Simulation;
   SphericalCoordsOffset unk_0xA8;
   int unk_0xC0; // Related to states
-  int unk_0xC4;
+  int unk_0xC4; // Accumulator/counter used in camera smoothing/collision
   int m_SpyroOffCenterFrames;
-  int unk_0xCC;
+  int unk_0xCC; // Flag: set to 1 when camera forced to destination
   Vector3D *m_Focus;
   int m_FocusRotation;
   SphericalCoordsOffset *m_0xD8;
   int unk_0xDC;
   int unk_0xE0;
   int unk_0xE4;
-  int unk_0xE8;
+  int unk_0xE8; // Result of func_80033F08: whether azimuth changed
   LevelFlyInParameters *unk_0xEC;
   int m_OnMovingPlatform;
   int unk_0xF4;
