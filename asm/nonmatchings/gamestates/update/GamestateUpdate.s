@@ -122,7 +122,7 @@ glabel GamestateUpdate
 .L800339FC:
 /* 241FC 800339FC 05006214 */  bne        $v1, $v0, .L80033A14
 /* 24200 80033A00 0F000224 */   addiu     $v0, $zero, 0xF
-/* 24204 80033A04 6BCC000C */  jal        func_800331AC
+/* 24204 80033A04 6BCC000C */  jal        GamestateCutsceneUpdate
 /* 24208 80033A08 00000000 */   nop
 /* 2420C 80033A0C 0CCF0008 */  j          .L80033C30
 /* 24210 80033A10 00000000 */   nop

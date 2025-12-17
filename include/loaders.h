@@ -38,7 +38,7 @@ typedef struct {
 typedef struct {
   int m_CurrentTick;
   int m_0x04;
-  int m_0x08;
+  int m_Duration;
   int m_MobyCount;
   CutsceneCameraData *m_CameraData;
   CutsceneMobyData *m_MobyData[1]; // Variable length array, size m_MobyCount

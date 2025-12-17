@@ -39,7 +39,7 @@
 - [x] func_80032A20
 - [x] func_80032AB0
 - [ ] func_80032B08
-- [ ] func_800331AC
+- [x] GamestateCutsceneUpdate
 - [x] func_800333DC
 - [ ] func_800334D4
 - [ ] GamestateUpdate
