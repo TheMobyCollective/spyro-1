@@ -3559,7 +3559,7 @@ glabel func_level_33_8007B7A8
 /* 2F5E6E0 8007E118 0300422C */  sltiu      $v0, $v0, 0x3
 /* 2F5E6E4 8007E11C 0C004010 */  beqz       $v0, .Llevel_33_8007E150
 /* 2F5E6E8 8007E120 00000000 */   nop
-/* 2F5E6EC 8007E124 17F2000C */  jal        func_8003C85C
+/* 2F5E6EC 8007E124 17F2000C */  jal        SetSpyroHeadLookTarget
 /* 2F5E6F0 8007E128 0C006426 */   addiu     $a0, $s3, 0xC
 /* 2F5E6F4 8007E12C 01000424 */  addiu      $a0, $zero, 0x1
 /* 2F5E6F8 8007E130 0C000524 */  addiu      $a1, $zero, 0xC

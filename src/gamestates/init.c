@@ -318,7 +318,7 @@ void func_8002D02C(void) {
   D_8007570C = 0;
 
   SpecularReset();
-  VecNull(&g_Spyro.unk_0x1a4);
+  VecNull(&g_Spyro.m_HeadLookTarget);
 
   // reset spyro
   func_8004AC24(1);

@@ -176,7 +176,7 @@ typedef struct {
   int unk_0x198;
   int unk_0x19c;
   int unk_0x1a0;
-  Vector3D unk_0x1a4;
+  Vector3D m_HeadLookTarget; // Target angles for head look-at (set by SetSpyroHeadLookTarget, consumed by func_80049880)
   int unk_0x1b0;
   int unk_0x1b4;
   int unk_0x1b8;
