@@ -8,6 +8,7 @@
 #include "math.h"
 #include "moby_helpers.h"
 #include "overlay_pointers.h"
+#include "renderers.h"
 #include "spu.h"
 #include "spyro.h"
 #include "variables.h"
@@ -460,7 +461,42 @@ void func_8003AA84(Moby *pMoby) {
   }
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003AAEC);
+/// @brief Spawns a sparkle particle attached to a moby
+/// @param pMoby The moby to attach the sparkle to
+/// @param pOffset The offset vector to rotate by the moby's rotation matrix
+/// @return The slot index, or -1 if no slot available
+int SpawnMobySparkle(Moby *pMoby, Vector3D *pOffset) {
+  u_char *particle;
+  int slot;
+
+  slot = func_8005882C(); // Allocate sparkle particle slot
+
+  if (slot >= 0) {
+    particle = &D_80077108[slot * 24]; // 24 bytes per particle
+
+    // Set color to white (RGB)
+    particle[0x10] = 0xFF;
+    particle[0x11] = 0xFF;
+    particle[0x12] = 0xFF;
+
+    // Ensure moby's rotation matrix is up-to-date before using it
+    func_800529E4(pMoby, UPDATE_PROP_ROTMATRIX);
+
+    // Calculate world position: rotate offset by moby's matrix, add moby
+    // position
+    VecRotateByMatrix(&pMoby->m_RotationMatrix, pOffset, (Vector3D *)particle);
+    VecAdd((Vector3D *)particle, (Vector3D *)particle, &pMoby->m_Position);
+
+    particle[0x0E] = rand(); // Random variation
+    particle[0x0F] = 3;      // Particle type
+    particle[0x0C] = 0x20;   // Duration
+    particle[0x0D] = 0x10;   // Speed
+    particle[0x14] = 0x20;   // Fade duration
+    particle[0x15] = 0x40;   // Size
+  }
+
+  return slot;
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003ABC0);
 

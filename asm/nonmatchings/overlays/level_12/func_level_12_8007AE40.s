@@ -1847,7 +1847,7 @@ glabel func_level_12_8007AE40
 /* EF7D70 8007C7A8 00000000 */   nop
 /* EF7D74 8007C7AC 0780053C */  lui        $a1, %hi(D_8006E5A0)
 /* EF7D78 8007C7B0 A0E5A524 */  addiu      $a1, $a1, %lo(D_8006E5A0)
-/* EF7D7C 8007C7B4 BBEA000C */  jal        func_8003AAEC
+/* EF7D7C 8007C7B4 BBEA000C */  jal        SpawnMobySparkle
 /* EF7D80 8007C7B8 21206002 */   addu      $a0, $s3, $zero
 /* EF7D84 8007C7BC 21184000 */  addu       $v1, $v0, $zero
 /* EF7D88 8007C7C0 04006004 */  bltz       $v1, .Llevel_12_8007C7D4
@@ -5894,7 +5894,7 @@ glabel func_level_12_8007AE40
 /* EFB8F8 80080330 00000000 */   nop
 /* EFB8FC 80080334 0780053C */  lui        $a1, %hi(D_8006E5AC)
 /* EFB900 80080338 ACE5A524 */  addiu      $a1, $a1, %lo(D_8006E5AC)
-/* EFB904 8008033C BBEA000C */  jal        func_8003AAEC
+/* EFB904 8008033C BBEA000C */  jal        SpawnMobySparkle
 /* EFB908 80080340 21206002 */   addu      $a0, $s3, $zero
 /* EFB90C 80080344 21804000 */  addu       $s0, $v0, $zero
 /* EFB910 80080348 09000006 */  bltz       $s0, .Llevel_12_80080370
@@ -6772,7 +6772,7 @@ glabel func_level_12_8007AE40
 /* EFC5D8 80081010 0780053C */  lui        $a1, %hi(D_8006E594)
 /* EFC5DC 80081014 94E5A524 */  addiu      $a1, $a1, %lo(D_8006E594)
 .Llevel_12_80081018:
-/* EFC5E0 80081018 BBEA000C */  jal        func_8003AAEC
+/* EFC5E0 80081018 BBEA000C */  jal        SpawnMobySparkle
 /* EFC5E4 8008101C 00000000 */   nop
 .Llevel_12_80081020:
 /* EFC5E8 80081020 0C007226 */  addiu      $s2, $s3, 0xC

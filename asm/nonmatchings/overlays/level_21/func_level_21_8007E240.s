@@ -4409,7 +4409,7 @@ glabel func_level_21_8007E240
 /* 1B35F48 80081980 00000000 */   nop
 /* 1B35F4C 80081984 0780053C */  lui        $a1, %hi(D_8006E5A0)
 /* 1B35F50 80081988 A0E5A524 */  addiu      $a1, $a1, %lo(D_8006E5A0)
-/* 1B35F54 8008198C BBEA000C */  jal        func_8003AAEC
+/* 1B35F54 8008198C BBEA000C */  jal        SpawnMobySparkle
 /* 1B35F58 80081990 21208002 */   addu      $a0, $s4, $zero
 /* 1B35F5C 80081994 21184000 */  addu       $v1, $v0, $zero
 /* 1B35F60 80081998 04006004 */  bltz       $v1, .Llevel_21_800819AC
@@ -6729,7 +6729,7 @@ glabel func_level_21_8007E240
 /* 1B3815C 80083B94 00000000 */   nop
 /* 1B38160 80083B98 0780053C */  lui        $a1, %hi(D_8006E5AC)
 /* 1B38164 80083B9C ACE5A524 */  addiu      $a1, $a1, %lo(D_8006E5AC)
-/* 1B38168 80083BA0 BBEA000C */  jal        func_8003AAEC
+/* 1B38168 80083BA0 BBEA000C */  jal        SpawnMobySparkle
 /* 1B3816C 80083BA4 21208002 */   addu      $a0, $s4, $zero
 /* 1B38170 80083BA8 21804000 */  addu       $s0, $v0, $zero
 /* 1B38174 80083BAC 09000006 */  bltz       $s0, .Llevel_21_80083BD4
@@ -10347,7 +10347,7 @@ glabel func_level_21_8007E240
 /* 1B3B65C 80087094 0780053C */  lui        $a1, %hi(D_8006E594)
 /* 1B3B660 80087098 94E5A524 */  addiu      $a1, $a1, %lo(D_8006E594)
 .Llevel_21_8008709C:
-/* 1B3B664 8008709C BBEA000C */  jal        func_8003AAEC
+/* 1B3B664 8008709C BBEA000C */  jal        SpawnMobySparkle
 /* 1B3B668 800870A0 00000000 */   nop
 .Llevel_21_800870A4:
 /* 1B3B66C 800870A4 0C009226 */  addiu      $s2, $s4, 0xC
@@ -12173,7 +12173,7 @@ glabel func_level_21_8007E240
 /* 1B3D14C 80088B84 80280500 */  sll        $a1, $a1, 2
 /* 1B3D150 80088B88 0780023C */  lui        $v0, %hi(D_8006E5C4)
 /* 1B3D154 80088B8C C4E54224 */  addiu      $v0, $v0, %lo(D_8006E5C4)
-/* 1B3D158 80088B90 BBEA000C */  jal        func_8003AAEC
+/* 1B3D158 80088B90 BBEA000C */  jal        SpawnMobySparkle
 /* 1B3D15C 80088B94 2128A200 */   addu      $a1, $a1, $v0
 /* 1B3D160 80088B98 CB89010C */  jal        rand
 /* 1B3D164 80088B9C 00000000 */   nop

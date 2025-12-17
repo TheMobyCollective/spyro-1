@@ -1811,7 +1811,7 @@ glabel func_level_64_8007AD4C
 /* 5AEC4EC 8007C724 00000000 */   nop
 /* 5AEC4F0 8007C728 0780053C */  lui        $a1, %hi(D_8006E5A0)
 /* 5AEC4F4 8007C72C A0E5A524 */  addiu      $a1, $a1, %lo(D_8006E5A0)
-/* 5AEC4F8 8007C730 BBEA000C */  jal        func_8003AAEC
+/* 5AEC4F8 8007C730 BBEA000C */  jal        SpawnMobySparkle
 /* 5AEC4FC 8007C734 21206002 */   addu      $a0, $s3, $zero
 /* 5AEC500 8007C738 21184000 */  addu       $v1, $v0, $zero
 /* 5AEC504 8007C73C 04006004 */  bltz       $v1, .Llevel_64_8007C750
@@ -3600,7 +3600,7 @@ glabel func_level_64_8007AD4C
 /* 5AEDF54 8007E18C 00000000 */   nop
 /* 5AEDF58 8007E190 0780053C */  lui        $a1, %hi(D_8006E5AC)
 /* 5AEDF5C 8007E194 ACE5A524 */  addiu      $a1, $a1, %lo(D_8006E5AC)
-/* 5AEDF60 8007E198 BBEA000C */  jal        func_8003AAEC
+/* 5AEDF60 8007E198 BBEA000C */  jal        SpawnMobySparkle
 /* 5AEDF64 8007E19C 21206002 */   addu      $a0, $s3, $zero
 /* 5AEDF68 8007E1A0 21804000 */  addu       $s0, $v0, $zero
 /* 5AEDF6C 8007E1A4 09000006 */  bltz       $s0, .Llevel_64_8007E1CC
@@ -5376,7 +5376,7 @@ glabel func_level_64_8007AD4C
 /* 5AEF934 8007FB6C 00000000 */   nop
 /* 5AEF938 8007FB70 0780053C */  lui        $a1, %hi(D_8006E5AC)
 /* 5AEF93C 8007FB74 ACE5A524 */  addiu      $a1, $a1, %lo(D_8006E5AC)
-/* 5AEF940 8007FB78 BBEA000C */  jal        func_8003AAEC
+/* 5AEF940 8007FB78 BBEA000C */  jal        SpawnMobySparkle
 /* 5AEF944 8007FB7C 21206002 */   addu      $a0, $s3, $zero
 /* 5AEF948 8007FB80 21804000 */  addu       $s0, $v0, $zero
 /* 5AEF94C 8007FB84 09000006 */  bltz       $s0, .Llevel_64_8007FBAC
@@ -7590,7 +7590,7 @@ glabel func_level_64_8007AD4C
 /* 5AF19EC 80081C24 80280500 */  sll        $a1, $a1, 2
 /* 5AF19F0 80081C28 0780023C */  lui        $v0, %hi(D_8006E5C4)
 /* 5AF19F4 80081C2C C4E54224 */  addiu      $v0, $v0, %lo(D_8006E5C4)
-/* 5AF19F8 80081C30 BBEA000C */  jal        func_8003AAEC
+/* 5AF19F8 80081C30 BBEA000C */  jal        SpawnMobySparkle
 /* 5AF19FC 80081C34 2128A200 */   addu      $a1, $a1, $v0
 /* 5AF1A00 80081C38 CB89010C */  jal        rand
 /* 5AF1A04 80081C3C 00000000 */   nop

@@ -1213,7 +1213,7 @@ glabel func_level_45_8007CFB4
 /* 4259ED8 8007E110 00000000 */   nop
 /* 4259EDC 8007E114 0780053C */  lui        $a1, %hi(D_8006E5A0)
 /* 4259EE0 8007E118 A0E5A524 */  addiu      $a1, $a1, %lo(D_8006E5A0)
-/* 4259EE4 8007E11C BBEA000C */  jal        func_8003AAEC
+/* 4259EE4 8007E11C BBEA000C */  jal        SpawnMobySparkle
 /* 4259EE8 8007E120 21206002 */   addu      $a0, $s3, $zero
 /* 4259EEC 8007E124 21184000 */  addu       $v1, $v0, $zero
 /* 4259EF0 8007E128 04006004 */  bltz       $v1, .Llevel_45_8007E13C
@@ -3220,7 +3220,7 @@ glabel func_level_45_8007CFB4
 /* 425BC48 8007FE80 00000000 */   nop
 /* 425BC4C 8007FE84 0780053C */  lui        $a1, %hi(D_8006E5AC)
 /* 425BC50 8007FE88 ACE5A524 */  addiu      $a1, $a1, %lo(D_8006E5AC)
-/* 425BC54 8007FE8C BBEA000C */  jal        func_8003AAEC
+/* 425BC54 8007FE8C BBEA000C */  jal        SpawnMobySparkle
 /* 425BC58 8007FE90 21206002 */   addu      $a0, $s3, $zero
 /* 425BC5C 8007FE94 21804000 */  addu       $s0, $v0, $zero
 /* 425BC60 8007FE98 09000006 */  bltz       $s0, .Llevel_45_8007FEC0

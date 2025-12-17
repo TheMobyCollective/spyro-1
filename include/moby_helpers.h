@@ -27,6 +27,12 @@ void func_8003851C(Moby *pMoby, int pSoundIndex, u_char *pChannel);
 /// @brief Initialize a Moby
 void func_8003A720(Moby *pMoby);
 
+/// @brief Spawns a sparkle particle attached to a moby
+/// @param pMoby The moby to attach the sparkle to
+/// @param pOffset The offset vector to rotate by the moby's rotation matrix
+/// @return The slot index, or -1 if no slot available
+int SpawnMobySparkle(Moby *pMoby, Vector3D *pOffset);
+
 /// @brief Persist a collected gem to checkpoint / global collected mask
 void func_8003B854(int pGemValue, Moby* pMoby);
 
