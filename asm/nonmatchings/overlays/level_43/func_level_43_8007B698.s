@@ -5210,7 +5210,7 @@ glabel func_level_43_8007B698
 /* 3D7DFC4 8007F9FC 00000000 */   nop
 /* 3D7DFC8 8007FA00 0780053C */  lui        $a1, %hi(D_8006E5A0)
 /* 3D7DFCC 8007FA04 A0E5A524 */  addiu      $a1, $a1, %lo(D_8006E5A0)
-/* 3D7DFD0 8007FA08 BBEA000C */  jal        func_8003AAEC
+/* 3D7DFD0 8007FA08 BBEA000C */  jal        SpawnMobySparkle
 /* 3D7DFD4 8007FA0C 21208002 */   addu      $a0, $s4, $zero
 /* 3D7DFD8 8007FA10 21184000 */  addu       $v1, $v0, $zero
 /* 3D7DFDC 8007FA14 04006004 */  bltz       $v1, .Llevel_43_8007FA28
@@ -7438,7 +7438,7 @@ glabel func_level_43_8007B698
 /* 3D80080 80081AB8 00000000 */   nop
 /* 3D80084 80081ABC 0780053C */  lui        $a1, %hi(D_8006E5AC)
 /* 3D80088 80081AC0 ACE5A524 */  addiu      $a1, $a1, %lo(D_8006E5AC)
-/* 3D8008C 80081AC4 BBEA000C */  jal        func_8003AAEC
+/* 3D8008C 80081AC4 BBEA000C */  jal        SpawnMobySparkle
 /* 3D80090 80081AC8 21208002 */   addu      $a0, $s4, $zero
 /* 3D80094 80081ACC 21804000 */  addu       $s0, $v0, $zero
 /* 3D80098 80081AD0 09000006 */  bltz       $s0, .Llevel_43_80081AF8
@@ -8500,7 +8500,7 @@ glabel func_level_43_8007B698
 /* 3D81010 80082A48 0780053C */  lui        $a1, %hi(D_8006E594)
 /* 3D81014 80082A4C 94E5A524 */  addiu      $a1, $a1, %lo(D_8006E594)
 .Llevel_43_80082A50:
-/* 3D81018 80082A50 BBEA000C */  jal        func_8003AAEC
+/* 3D81018 80082A50 BBEA000C */  jal        SpawnMobySparkle
 /* 3D8101C 80082A54 00000000 */   nop
 .Llevel_43_80082A58:
 /* 3D81020 80082A58 0C009226 */  addiu      $s2, $s4, 0xC
@@ -10763,7 +10763,7 @@ glabel func_level_43_8007B698
 /* 3D83168 80084BA0 80280500 */  sll        $a1, $a1, 2
 /* 3D8316C 80084BA4 0780023C */  lui        $v0, %hi(D_8006E5C4)
 /* 3D83170 80084BA8 C4E54224 */  addiu      $v0, $v0, %lo(D_8006E5C4)
-/* 3D83174 80084BAC BBEA000C */  jal        func_8003AAEC
+/* 3D83174 80084BAC BBEA000C */  jal        SpawnMobySparkle
 /* 3D83178 80084BB0 2128A200 */   addu      $a1, $a1, $v0
 /* 3D8317C 80084BB4 CB89010C */  jal        rand
 /* 3D83180 80084BB8 00000000 */   nop

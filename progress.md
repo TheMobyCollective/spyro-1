@@ -184,7 +184,7 @@
 - [x] unused_VecInterpolateCurve
 - [ ] func_8003A9EC
 - [x] func_8003AA84
-- [ ] func_8003AAEC
+- [x] SpawnMobySparkle
 - [ ] func_8003ABC0
 - [x] func_8003B0DC
 - [x] func_8003B160

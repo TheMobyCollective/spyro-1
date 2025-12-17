@@ -40,6 +40,12 @@ extern short D_8006CBB4[];
 /// @brief Interpolation curve weights (8 pairs for 9 steps)
 extern short D_8006CBCC[];
 
+/// @brief Spawns a sparkle particle attached to a moby
+/// @param pMoby The moby to attach the sparkle to
+/// @param pOffset The offset vector to rotate by the moby's rotation matrix
+/// @return The slot index, or -1 if no slot available
+int SpawnMobySparkle(Moby *pMoby, Vector3D *pOffset);
+
 /// @brief Persist a collected gem to checkpoint / global collected mask
 void func_8003B854(int pGemValue, Moby *pMoby);
 

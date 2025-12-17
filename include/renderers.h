@@ -10,6 +10,13 @@
 // r_particles:
 void func_800573C8(void);
 
+/// @brief Allocates a spark particle slot
+/// @return The slot index, or -1 if no slot available
+int func_8005882C(void);
+
+/// @brief Spark particle array (8 particles of 24 bytes each)
+extern u_char D_80077108[];
+
 // r_cyclorama:
 
 /// @brief: Renders the cyclorama / sky
