@@ -11038,7 +11038,7 @@ glabel func_level_20_8007E3A0
 /* 188B0CC 80087B04 83280208 */  j          .Llevel_20_8008A20C
 /* 188B0D0 80087B08 00000000 */   nop
 .L80087B0C_:
-/* 188B0D4 80087B0C B9F1000C */  jal        func_8003C6E4
+/* 188B0D4 80087B0C B9F1000C */  jal        UpdateMobyDragonFragment
 /* 188B0D8 80087B10 21208002 */   addu      $a0, $s4, $zero
 /* 188B0DC 80087B14 83280208 */  j          .Llevel_20_8008A20C
 /* 188B0E0 80087B18 00000000 */   nop

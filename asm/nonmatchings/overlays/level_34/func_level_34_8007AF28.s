@@ -5469,7 +5469,7 @@ glabel func_level_34_8007AF28
 /* 31FA2D0 8007FD08 9A0E0208 */  j          .Llevel_34_80083A68
 /* 31FA2D4 8007FD0C 00000000 */   nop
 .Llevel_34_8007FD10:
-/* 31FA2D8 8007FD10 B9F1000C */  jal        func_8003C6E4
+/* 31FA2D8 8007FD10 B9F1000C */  jal        UpdateMobyDragonFragment
 /* 31FA2DC 8007FD14 21206002 */   addu      $a0, $s3, $zero
 /* 31FA2E0 8007FD18 9A0E0208 */  j          .Llevel_34_80083A68
 /* 31FA2E4 8007FD1C 00000000 */   nop

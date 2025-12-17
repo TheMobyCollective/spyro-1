@@ -9180,7 +9180,7 @@ glabel func_level_11_8007DA78
 /* B8ECAC 80085EE4 B81D0208 */  j          .Llevel_11_800876E0
 /* B8ECB0 80085EE8 00000000 */   nop
 .Llevel_11_80085EEC:
-/* B8ECB4 80085EEC B9F1000C */  jal        func_8003C6E4
+/* B8ECB4 80085EEC B9F1000C */  jal        UpdateMobyDragonFragment
 /* B8ECB8 80085EF0 21206002 */   addu      $a0, $s3, $zero
 /* B8ECBC 80085EF4 B81D0208 */  j          .Llevel_11_800876E0
 /* B8ECC0 80085EF8 00000000 */   nop

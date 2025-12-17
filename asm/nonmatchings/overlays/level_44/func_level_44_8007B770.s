@@ -10517,7 +10517,7 @@ glabel func_level_44_8007B770
 /* 402E5A8 800847E0 2C1D0208 */  j          .Llevel_44_800874B0
 /* 402E5AC 800847E4 00000000 */   nop
 .L800847E8_:
-/* 402E5B0 800847E8 B9F1000C */  jal        func_8003C6E4
+/* 402E5B0 800847E8 B9F1000C */  jal        UpdateMobyDragonFragment
 /* 402E5B4 800847EC 21208002 */   addu      $a0, $s4, $zero
 /* 402E5B8 800847F0 2C1D0208 */  j          .Llevel_44_800874B0
 /* 402E5BC 800847F4 00000000 */   nop

@@ -203,7 +203,7 @@
 - [x] unused_GetSpyroQuadrant
 - [ ] func_8003BFC0
 - [x] func_8003C358
-- [ ] func_8003C6E4
+- [x] UpdateMobyDragonFragment
 - [x] SetSpyroHeadLookTarget
 - [ ] func_8003C994
 - [x] RegisterFlightMobyCollectibleType

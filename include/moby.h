@@ -389,7 +389,7 @@ typedef struct {
   char unk_0x10;
   char unk_0x11;
   char unk_0x12;
-  char unk_0x13;
+  char m_Lifetime;
 } MobyDragonFragmentProps;
 
 typedef struct {

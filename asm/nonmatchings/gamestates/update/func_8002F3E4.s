@@ -2193,7 +2193,7 @@ glabel func_8002F3E4
 /* 21C68 80031468 8000422C */  sltiu      $v0, $v0, 0x80
 /* 21C6C 8003146C 03004010 */  beqz       $v0, .L8003147C
 /* 21C70 80031470 00000000 */   nop
-/* 21C74 80031474 B9F1000C */  jal        func_8003C6E4
+/* 21C74 80031474 B9F1000C */  jal        UpdateMobyDragonFragment
 /* 21C78 80031478 21202002 */   addu      $a0, $s1, $zero
 .L8003147C:
 /* 21C7C 8003147C 58001026 */  addiu      $s0, $s0, 0x58

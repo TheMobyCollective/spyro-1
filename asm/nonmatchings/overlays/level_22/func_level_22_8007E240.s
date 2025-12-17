@@ -9860,7 +9860,7 @@ glabel func_level_22_8007E240
 /* 1E0DF38 80086970 CF220208 */  j          .Llevel_22_80088B3C
 /* 1E0DF3C 80086974 00000000 */   nop
 .L80086978_:
-/* 1E0DF40 80086978 B9F1000C */  jal        func_8003C6E4
+/* 1E0DF40 80086978 B9F1000C */  jal        UpdateMobyDragonFragment
 /* 1E0DF44 8008697C 21206002 */   addu      $a0, $s3, $zero
 /* 1E0DF48 80086980 CF220208 */  j          .Llevel_22_80088B3C
 /* 1E0DF4C 80086984 00000000 */   nop

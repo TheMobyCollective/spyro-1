@@ -1019,8 +1019,51 @@ void func_8003C358(Moby *pMoby, int pIsLevelName) {
   }
 }
 
-// Fragment animation
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003C6E4);
+/// @brief Updates a dragon fragment's animation each frame
+/// @param pMoby The fragment moby to update
+/// Applies velocity to position, gravity to z velocity (clamped to -128),
+/// rotation deltas, and spawns particles every other frame. When lifetime
+/// expires or fragment falls below initZ, spawns end particles and deactivates
+/// the moby.
+void UpdateMobyDragonFragment(Moby *pMoby) {
+  MobyDragonFragmentProps *props = pMoby->m_Props;
+  int particleParams[3];
+
+  if ((u_char)props->m_Lifetime != 0 && pMoby->m_Position.z > props->initZ) {
+    // Update position with velocity
+    pMoby->m_Position.x += props->trajectory.x;
+    pMoby->m_Position.y += props->trajectory.y;
+
+    // Apply gravity to z velocity
+    props->trajectory.z -= 6;
+    if (props->trajectory.z < -0x80) {
+      props->trajectory.z = -0x80;
+    }
+
+    // Update z position
+    pMoby->m_Position.z += props->trajectory.z;
+
+    // Update rotation
+    pMoby->m_Rotation.x += props->unk_0x10;
+    pMoby->m_Rotation.y += props->unk_0x11;
+    pMoby->m_Rotation.z += props->unk_0x12;
+
+    // Decrement timer
+    props->m_Lifetime--;
+
+    // Spawn particles every other frame
+    if ((props->m_Lifetime & 1) == 0) {
+      particleParams[0] = rand() & 3;
+      particleParams[1] = rand() & 3;
+      particleParams[2] = 0x14;
+      (*D_800758E4)(1, 1, &pMoby->m_Position, particleParams);
+    }
+  } else {
+    // Fragment finished - spawn end particles and deactivate
+    (*D_800758E4)(3, 0x46, &pMoby->m_Position, 0x10);
+    func_80052568(pMoby);
+  }
+}
 
 /// @brief Calculates viewing angles from Spyro to a target position
 /// @param pTarget The target position to look at

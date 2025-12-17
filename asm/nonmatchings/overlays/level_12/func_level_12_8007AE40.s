@@ -6971,7 +6971,7 @@ glabel func_level_12_8007AE40
 /* EFC8BC 800812F4 450A0208 */  j          .Llevel_12_80082914
 /* EFC8C0 800812F8 00000000 */   nop
 .Llevel_12_800812FC:
-/* EFC8C4 800812FC B9F1000C */  jal        func_8003C6E4
+/* EFC8C4 800812FC B9F1000C */  jal        UpdateMobyDragonFragment
 /* EFC8C8 80081300 21206002 */   addu      $a0, $s3, $zero
 /* EFC8CC 80081304 450A0208 */  j          .Llevel_12_80082914
 /* EFC8D0 80081308 00000000 */   nop

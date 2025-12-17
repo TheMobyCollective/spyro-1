@@ -8260,7 +8260,7 @@ glabel func_level_33_8007B7A8
 /* 2F62BFC 80082634 631B0208 */  j          .Llevel_33_80086D8C
 /* 2F62C00 80082638 00000000 */   nop
 .L8008263C_:
-/* 2F62C04 8008263C B9F1000C */  jal        func_8003C6E4
+/* 2F62C04 8008263C B9F1000C */  jal        UpdateMobyDragonFragment
 /* 2F62C08 80082640 21206002 */   addu      $a0, $s3, $zero
 /* 2F62C0C 80082644 631B0208 */  j          .Llevel_33_80086D8C
 /* 2F62C10 80082648 00000000 */   nop
