@@ -59,7 +59,7 @@ glabel func_8003D840
 /* 2E10C 8003D90C FF0F4230 */  andi       $v0, $v0, 0xFFF
 /* 2E110 8003D910 000082AC */  sw         $v0, 0x0($a0)
 .L8003D914:
-/* 2E114 8003D914 B4F5000C */  jal        func_8003D6D0
+/* 2E114 8003D914 B4F5000C */  jal        UpdateSpyroTurnMomentum
 /* 2E118 8003D918 21200000 */   addu      $a0, $zero, $zero
 /* 2E11C 8003D91C 2000BF8F */  lw         $ra, 0x20($sp)
 /* 2E120 8003D920 2800BD27 */  addiu      $sp, $sp, 0x28

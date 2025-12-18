@@ -230,7 +230,7 @@ glabel func_80043FE4
 /* 34A1C 8004421C 02000424 */   addiu     $a0, $zero, 0x2
 /* 34A20 80044220 01000424 */  addiu      $a0, $zero, 0x1
 .L80044224:
-/* 34A24 80044224 B4F5000C */  jal        func_8003D6D0
+/* 34A24 80044224 B4F5000C */  jal        UpdateSpyroTurnMomentum
 /* 34A28 80044228 00000000 */   nop
 /* 34A2C 8004422C 21184000 */  addu       $v1, $v0, $zero
 .L80044230:
@@ -436,7 +436,7 @@ glabel func_80043FE4
 /* 34D08 80044508 02000424 */   addiu     $a0, $zero, 0x2
 /* 34D0C 8004450C 01000424 */  addiu      $a0, $zero, 0x1
 .L80044510:
-/* 34D10 80044510 B4F5000C */  jal        func_8003D6D0
+/* 34D10 80044510 B4F5000C */  jal        UpdateSpyroTurnMomentum
 /* 34D14 80044514 00000000 */   nop
 /* 34D18 80044518 21184000 */  addu       $v1, $v0, $zero
 .L8004451C:
@@ -534,7 +534,7 @@ glabel func_80043FE4
 .L80044670:
 /* 34E70 80044670 EEF4000C */  jal        func_8003D3B8
 /* 34E74 80044674 800C0424 */   addiu     $a0, $zero, 0xC80
-/* 34E78 80044678 B4F5000C */  jal        func_8003D6D0
+/* 34E78 80044678 B4F5000C */  jal        UpdateSpyroTurnMomentum
 /* 34E7C 8004467C 02000424 */   addiu     $a0, $zero, 0x2
 /* 34E80 80044680 40010424 */  addiu      $a0, $zero, 0x140
 /* 34E84 80044684 4BF6000C */  jal        func_8003D92C
@@ -838,7 +838,7 @@ glabel func_80043FE4
 .L80044AEC:
 /* 352EC 80044AEC EEF4000C */  jal        func_8003D3B8
 /* 352F0 80044AF0 00100424 */   addiu     $a0, $zero, 0x1000
-/* 352F4 80044AF4 B4F5000C */  jal        func_8003D6D0
+/* 352F4 80044AF4 B4F5000C */  jal        UpdateSpyroTurnMomentum
 /* 352F8 80044AF8 03000424 */   addiu     $a0, $zero, 0x3
 /* 352FC 80044AFC 40010424 */  addiu      $a0, $zero, 0x140
 /* 35300 80044B00 00100224 */  addiu      $v0, $zero, 0x1000
@@ -3764,7 +3764,7 @@ glabel func_80043FE4
 /* 37CFC 800474FC 83910200 */  sra        $s2, $v0, 6
 /* 37D00 80047500 EEF4000C */  jal        func_8003D3B8
 /* 37D04 80047504 80020424 */   addiu     $a0, $zero, 0x280
-/* 37D08 80047508 B4F5000C */  jal        func_8003D6D0
+/* 37D08 80047508 B4F5000C */  jal        UpdateSpyroTurnMomentum
 /* 37D0C 8004750C 21200000 */   addu      $a0, $zero, $zero
 /* 37D10 80047510 0780023C */  lui        $v0, %hi(D_800758A0)
 /* 37D14 80047514 A058428C */  lw         $v0, %lo(D_800758A0)($v0)

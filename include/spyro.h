@@ -45,7 +45,7 @@ typedef struct { // Needed to match atleast one place
   int unk_0x13c;
   int unk_0x140;
   int unk_0x144;
-  int unk_0x148;
+  int m_TurnMomentum; // -6 (hard left) to +6 (hard right)
   int m_gravity;
 } SpyroPhysics;
 
