@@ -1627,9 +1627,9 @@ glabel func_8001A40C
 /* C378 8001BB78 21980000 */  addu       $s3, $zero, $zero
 /* C37C 8001BB7C 80180200 */  sll        $v1, $v0, 2
 /* C380 8001BB80 03004228 */  slti       $v0, $v0, 0x3
-/* C384 8001BB84 0780013C */  lui        $at, %hi(homeworldNameTable)
+/* C384 8001BB84 0780013C */  lui        $at, %hi(g_HomeworldNames)
 /* C388 8001BB88 21082300 */  addu       $at, $at, $v1
-/* C38C 8001BB8C D4F7248C */  lw         $a0, %lo(homeworldNameTable)($at)
+/* C38C 8001BB8C D4F7248C */  lw         $a0, %lo(g_HomeworldNames)($at)
 /* C390 8001BB90 DB89010C */  jal        strlen
 /* C394 8001BB94 C0B80200 */   sll       $s7, $v0, 3
 /* C398 8001BB98 4000A527 */  addiu      $a1, $sp, 0x40
@@ -1657,18 +1657,18 @@ glabel func_8001A40C
 /* C3F0 8001BBF0 80200400 */  sll        $a0, $a0, 2
 /* C3F4 8001BBF4 4000A2AF */  sw         $v0, 0x40($sp)
 /* C3F8 8001BBF8 1000A7AF */  sw         $a3, 0x10($sp)
-/* C3FC 8001BBFC 0780013C */  lui        $at, %hi(homeworldNameTable)
+/* C3FC 8001BBFC 0780013C */  lui        $at, %hi(g_HomeworldNames)
 /* C400 8001BC00 21082400 */  addu       $at, $at, $a0
-/* C404 8001BC04 D4F7248C */  lw         $a0, %lo(homeworldNameTable)($at)
+/* C404 8001BC04 D4F7248C */  lw         $a0, %lo(g_HomeworldNames)($at)
 /* C408 8001BC08 6B60000C */  jal        func_800181AC
 /* C40C 8001BC0C 17000724 */   addiu     $a3, $zero, 0x17
 /* C410 8001BC10 0780023C */  lui        $v0, %hi(D_80075744)
 /* C414 8001BC14 4457428C */  lw         $v0, %lo(D_80075744)($v0)
-/* C418 8001BC18 0780053C */  lui        $a1, %hi(D_8007555C)
-/* C41C 8001BC1C 5C55A524 */  addiu      $a1, $a1, %lo(D_8007555C)
-/* C420 8001BC20 0780013C */  lui        $at, %hi(D_8007555C)
+/* C418 8001BC18 0780053C */  lui        $a1, %hi(g_HomeworldNamesLength)
+/* C41C 8001BC1C 5C55A524 */  addiu      $a1, $a1, %lo(g_HomeworldNamesLength)
+/* C420 8001BC20 0780013C */  lui        $at, %hi(g_HomeworldNamesLength)
 /* C424 8001BC24 21082200 */  addu       $at, $at, $v0
-/* C428 8001BC28 5C552290 */  lbu        $v0, %lo(D_8007555C)($at)
+/* C428 8001BC28 5C552290 */  lbu        $v0, %lo(g_HomeworldNamesLength)($at)
 /* C42C 8001BC2C 0780103C */  lui        $s0, %hi(g_HudMobys)
 /* C430 8001BC30 1057108E */  lw         $s0, %lo(g_HudMobys)($s0)
 /* C434 8001BC34 1A004018 */  blez       $v0, .L8001BCA0
@@ -1890,9 +1890,9 @@ glabel func_8001A40C
 /* C788 8001BF88 40100200 */  sll        $v0, $v0, 1
 /* C78C 8001BF8C 21105300 */  addu       $v0, $v0, $s3
 /* C790 8001BF90 80100200 */  sll        $v0, $v0, 2
-/* C794 8001BF94 0780013C */  lui        $at, %hi(D_8006F7F0)
+/* C794 8001BF94 0780013C */  lui        $at, %hi(g_LevelNames)
 /* C798 8001BF98 21082200 */  addu       $at, $at, $v0
-/* C79C 8001BF9C F0F7248C */  lw         $a0, %lo(D_8006F7F0)($at)
+/* C79C 8001BF9C F0F7248C */  lw         $a0, %lo(g_LevelNames)($at)
 /* C7A0 8001BFA0 0780103C */  lui        $s0, %hi(g_HudMobys)
 /* C7A4 8001BFA4 1057108E */  lw         $s0, %lo(g_HudMobys)($s0)
 /* C7A8 8001BFA8 6B60000C */  jal        func_800181AC

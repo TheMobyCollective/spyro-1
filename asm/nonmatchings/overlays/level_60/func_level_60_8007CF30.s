@@ -77,9 +77,9 @@ glabel func_level_60_8007CF30
 /* 51E555C 8007CF94 83100800 */  sra        $v0, $t0, 2
 /* 51E5560 8007CF98 23104300 */  subu       $v0, $v0, $v1
 /* 51E5564 8007CF9C 80100200 */  sll        $v0, $v0, 2
-/* 51E5568 8007CFA0 0780013C */  lui        $at, %hi(D_8006F884 - 0x04)
+/* 51E5568 8007CFA0 0780013C */  lui        $at, %hi(g_BalloonistNames - 0x04)
 /* 51E556C 8007CFA4 21082200 */  addu       $at, $at, $v0
-/* 51E5570 8007CFA8 80F8268C */  lw         $a2, %lo(D_8006F884 - 0x04)($at)
+/* 51E5570 8007CFA8 80F8268C */  lw         $a2, %lo(g_BalloonistNames - 0x04)($at)
 /* 51E5574 8007CFAC 0780113C */  lui        $s1, %hi(g_HudMobys)
 /* 51E5578 8007CFB0 1057318E */  lw         $s1, %lo(g_HudMobys)($s1)
 /* 51E557C 8007CFB4 F58B010C */  jal        sprintf
@@ -164,20 +164,20 @@ glabel func_level_60_8007CF30
 /* 51E56B0 8007D0E8 00140224 */  addiu      $v0, $zero, 0x1400
 /* 51E56B4 8007D0EC 6C00B3AF */  sw         $s3, 0x6C($sp)
 /* 51E56B8 8007D0F0 7000A2AF */  sw         $v0, 0x70($sp)
-/* 51E56BC 8007D0F4 0780013C */  lui        $at, %hi(balloonistDialogue)
+/* 51E56BC 8007D0F4 0780013C */  lui        $at, %hi(g_BalloonistDialogueIndices)
 /* 51E56C0 8007D0F8 21082300 */  addu       $at, $at, $v1
-/* 51E56C4 8007D0FC 9CF83090 */  lbu        $s0, %lo(balloonistDialogue)($at)
-/* 51E56C8 8007D100 0780013C */  lui        $at, %hi(D_8006F89D)
+/* 51E56C4 8007D0FC 9CF83090 */  lbu        $s0, %lo(g_BalloonistDialogueIndices)($at)
+/* 51E56C8 8007D100 0780013C */  lui        $at, %hi(g_BalloonistDialogueIndices + 0x01)
 /* 51E56CC 8007D104 21082300 */  addu       $at, $at, $v1
-/* 51E56D0 8007D108 9DF82290 */  lbu        $v0, %lo(D_8006F89D)($at)
+/* 51E56D0 8007D108 9DF82290 */  lbu        $v0, %lo(g_BalloonistDialogueIndices + 0x01)($at)
 /* 51E56D4 8007D10C 0780123C */  lui        $s2, %hi(g_HudMobys)
 /* 51E56D8 8007D110 1057528E */  lw         $s2, %lo(g_HudMobys)($s2)
 /* 51E56DC 8007D114 2A100202 */  slt        $v0, $s0, $v0
 /* 51E56E0 8007D118 1A004010 */  beqz       $v0, .Llevel_60_8007D184
 /* 51E56E4 8007D11C 80101000 */   sll       $v0, $s0, 2
 /* 51E56E8 8007D120 5E001324 */  addiu      $s3, $zero, 0x5E
-/* 51E56EC 8007D124 0780033C */  lui        $v1, %hi(balloonistDialogueText)
-/* 51E56F0 8007D128 C4F86324 */  addiu      $v1, $v1, %lo(balloonistDialogueText)
+/* 51E56EC 8007D124 0780033C */  lui        $v1, %hi(g_BalloonistDialogue)
+/* 51E56F0 8007D128 C4F86324 */  addiu      $v1, $v1, %lo(g_BalloonistDialogue)
 /* 51E56F4 8007D12C 21884300 */  addu       $s1, $v0, $v1
 /* 51E56F8 8007D130 5800A527 */  addiu      $a1, $sp, 0x58
 .Llevel_60_8007D134:
@@ -194,9 +194,9 @@ glabel func_level_60_8007CF30
 /* 51E5724 8007D15C F477638C */  lw         $v1, %lo(D_800777E8 + 0xC)($v1)
 /* 51E5728 8007D160 12004224 */  addiu      $v0, $v0, 0x12
 /* 51E572C 8007D164 5C00A2AF */  sw         $v0, 0x5C($sp)
-/* 51E5730 8007D168 0780013C */  lui        $at, %hi(D_8006F89D)
+/* 51E5730 8007D168 0780013C */  lui        $at, %hi(g_BalloonistDialogueIndices + 0x01)
 /* 51E5734 8007D16C 21082300 */  addu       $at, $at, $v1
-/* 51E5738 8007D170 9DF82290 */  lbu        $v0, %lo(D_8006F89D)($at)
+/* 51E5738 8007D170 9DF82290 */  lbu        $v0, %lo(g_BalloonistDialogueIndices + 0x01)($at)
 /* 51E573C 8007D174 01001026 */  addiu      $s0, $s0, 0x1
 /* 51E5740 8007D178 2A100202 */  slt        $v0, $s0, $v0
 /* 51E5744 8007D17C EDFF4014 */  bnez       $v0, .Llevel_60_8007D134
@@ -392,9 +392,9 @@ glabel func_level_60_8007CF30
 /* 51E5A0C 8007D444 80101100 */  sll        $v0, $s1, 2
 /* 51E5A10 8007D448 0780033C */  lui        $v1, %hi(g_HudMobys)
 /* 51E5A14 8007D44C 1057638C */  lw         $v1, %lo(g_HudMobys)($v1)
-/* 51E5A18 8007D450 0780013C */  lui        $at, %hi(homeworldNameTable)
+/* 51E5A18 8007D450 0780013C */  lui        $at, %hi(g_HomeworldNames)
 /* 51E5A1C 8007D454 21082200 */  addu       $at, $at, $v0
-/* 51E5A20 8007D458 D4F7248C */  lw         $a0, %lo(homeworldNameTable)($at)
+/* 51E5A20 8007D458 D4F7248C */  lw         $a0, %lo(g_HomeworldNames)($at)
 /* 51E5A24 8007D45C 6B60000C */  jal        func_800181AC
 /* 51E5A28 8007D460 A8FF7024 */   addiu     $s0, $v1, -0x58
 /* 51E5A2C 8007D464 7C00A28F */  lw         $v0, 0x7C($sp)
@@ -593,9 +593,9 @@ glabel func_level_60_8007CF30
 /* 51E5D10 8007D748 83100800 */  sra        $v0, $t0, 2
 /* 51E5D14 8007D74C 23104300 */  subu       $v0, $v0, $v1
 /* 51E5D18 8007D750 80100200 */  sll        $v0, $v0, 2
-/* 51E5D1C 8007D754 0780013C */  lui        $at, %hi(homeworldNameTable)
+/* 51E5D1C 8007D754 0780013C */  lui        $at, %hi(g_HomeworldNames)
 /* 51E5D20 8007D758 21082200 */  addu       $at, $at, $v0
-/* 51E5D24 8007D75C D4F7268C */  lw         $a2, %lo(homeworldNameTable)($at)
+/* 51E5D24 8007D75C D4F7268C */  lw         $a2, %lo(g_HomeworldNames)($at)
 /* 51E5D28 8007D760 EFF50108 */  j          .Llevel_60_8007D7BC
 /* 51E5D2C 8007D764 B800A427 */   addiu     $a0, $sp, 0xB8
 .Llevel_60_8007D768:
@@ -617,9 +617,9 @@ glabel func_level_60_8007CF30
 /* 51E5D6C 8007D7A4 40100200 */  sll        $v0, $v0, 1
 /* 51E5D70 8007D7A8 21104500 */  addu       $v0, $v0, $a1
 /* 51E5D74 8007D7AC 80100200 */  sll        $v0, $v0, 2
-/* 51E5D78 8007D7B0 0780013C */  lui        $at, %hi(D_8006F7D8)
+/* 51E5D78 8007D7B0 0780013C */  lui        $at, %hi(g_HomeworldNames + 0x04)
 /* 51E5D7C 8007D7B4 21082200 */  addu       $at, $at, $v0
-/* 51E5D80 8007D7B8 D8F7268C */  lw         $a2, %lo(D_8006F7D8)($at)
+/* 51E5D80 8007D7B8 D8F7268C */  lw         $a2, %lo(g_HomeworldNames + 0x04)($at)
 .Llevel_60_8007D7BC:
 /* 51E5D84 8007D7BC 0880053C */  lui        $a1, %hi(D_level_60_8007AAE0)
 /* 51E5D88 8007D7C0 E0AAA524 */  addiu      $a1, $a1, %lo(D_level_60_8007AAE0)

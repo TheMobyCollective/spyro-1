@@ -16,6 +16,7 @@
 #include "overlay_pointers.h"
 #include "renderers.h"
 #include "sony_image.h"
+#include "strings.h"
 #include "titlescreen.h"
 #include "variables.h"
 
@@ -443,16 +444,17 @@ void func_8001E24C(void) {
       if (D_800777E8.m_Homeworld < 5) {
         // Minus one is due to the homeworlds starting at 10
         int homeworld = g_NextLevelId / 10;
-        sprintf(buf, "ENTERING %s WORLD", homeworldNameTable[homeworld - 1]);
+        sprintf(buf, "ENTERING %s WORLD", g_HomeworldNames[homeworld - 1]);
       } else if (D_800777E8.m_Homeworld == 5) {
         // Exception for Gnasty's World so it doesn't display
         // GNASTY'S WORLD WORLD (like in July)
         int homeworld = g_NextLevelId / 10;
-        sprintf(buf, "ENTERING %s", homeworldNameTable[homeworld - 1]);
+        sprintf(buf, "ENTERING %s", g_HomeworldNames[homeworld - 1]);
       } else {
         int homeworld = g_NextLevelId / 10;
         int level = g_NextLevelId % 10;
-        sprintf(buf, "ENTERING %s", D_8006F7F0[level + ((homeworld - 1) * 6)]);
+        sprintf(buf, "ENTERING %s",
+                g_LevelNames[level + ((homeworld - 1) * 6)]);
       }
 
       // sprintf(buf, fmt, levelName);

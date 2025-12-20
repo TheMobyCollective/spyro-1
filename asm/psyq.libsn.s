@@ -92,8 +92,8 @@ glabel __main
 /* 4C1A4 8005B9A4 01000834 */   ori       $t0, $zero, 0x1
 /* 4C1A8 8005B9A8 0780013C */  lui        $at, %hi(D_800730BC)
 /* 4C1AC 8005B9AC BC3028AC */  sw         $t0, %lo(D_800730BC)($at)
-/* 4C1B0 8005B9B0 0180103C */  lui        $s0, %hi(D_80010000)
-/* 4C1B4 8005B9B4 00001026 */  addiu      $s0, $s0, %lo(D_80010000)
+/* 4C1B0 8005B9B0 0180103C */  lui        $s0, %hi(main_RODATA_START)
+/* 4C1B4 8005B9B4 00001026 */  addiu      $s0, $s0, %lo(main_RODATA_START)
 /* 4C1B8 8005B9B8 0000113C */  lui        $s1, (0x0 >> 16)
 /* 4C1BC 8005B9BC 00003126 */  addiu      $s1, $s1, 0x0
 /* 4C1C0 8005B9C0 07002012 */  beqz       $s1, .L8005B9E0

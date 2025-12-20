@@ -115,8 +115,4 @@ extern unsigned char
 
 extern unsigned char D_800758D0[8]; // Unlocked homeworlds
 
-// 7 due to Thigh Masters
-extern const char *homeworldNameTable[7];
-extern const char *D_8006F7F0[]; // Level name table
-
 #endif

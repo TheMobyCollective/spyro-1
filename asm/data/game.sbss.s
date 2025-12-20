@@ -307,10 +307,7 @@ dlabel D_800757FC
 /* 65FD4 800757FC */ .space 0x04
 
 dlabel D_80075800
-/* 65FD8 80075800 */ .space 0x01
-
-dlabel D_80075801
-/* 65FD9 80075801 */ .space 0x03
+/* 65FD8 80075800 */ .space 0x04
 
 dlabel D_80075804
 /* 65FDC 80075804 */ .space 0x04

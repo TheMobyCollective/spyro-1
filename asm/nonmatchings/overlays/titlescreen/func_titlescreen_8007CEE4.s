@@ -115,18 +115,18 @@ glabel func_titlescreen_8007CEE4
 .Ltitlescreen_8007D028:
 /* 5DDF0 8007D028 6C000424 */  addiu      $a0, $zero, 0x6C
 /* 5DDF4 8007D02C 01000624 */  addiu      $a2, $zero, 0x1
-/* 5DDF8 8007D030 0780013C */  lui        $at, %hi(D_8006FA64)
+/* 5DDF8 8007D030 0780013C */  lui        $at, %hi(D_8006FA74 - 0x10)
 /* 5DDFC 8007D034 21082300 */  addu       $at, $at, $v1
-/* 5DE00 8007D038 64FA2590 */  lbu        $a1, %lo(D_8006FA64)($at)
+/* 5DE00 8007D038 64FA2590 */  lbu        $a1, %lo(D_8006FA74 - 0x10)($at)
 /* 5DE04 8007D03C 4EF3010C */  jal        func_titlescreen_8007CD38
 /* 5DE08 8007D040 89FFA524 */   addiu     $a1, $a1, -0x77
 /* 5DE0C 8007D044 FF000424 */  addiu      $a0, $zero, 0xFF
 /* 5DE10 8007D048 0880023C */  lui        $v0, %hi(g_TitlescreenState + 0xC)
 /* 5DE14 8007D04C 848D428C */  lw         $v0, %lo(g_TitlescreenState + 0xC)($v0)
 /* 5DE18 8007D050 FFFF0624 */  addiu      $a2, $zero, -0x1
-/* 5DE1C 8007D054 0780013C */  lui        $at, %hi(D_8006FA64)
+/* 5DE1C 8007D054 0780013C */  lui        $at, %hi(D_8006FA74 - 0x10)
 /* 5DE20 8007D058 21082200 */  addu       $at, $at, $v0
-/* 5DE24 8007D05C 64FA2590 */  lbu        $a1, %lo(D_8006FA64)($at)
+/* 5DE24 8007D05C 64FA2590 */  lbu        $a1, %lo(D_8006FA74 - 0x10)($at)
 /* 5DE28 8007D060 21380000 */  addu       $a3, $zero, $zero
 /* 5DE2C 8007D064 0BF70108 */  j          .Ltitlescreen_8007DC2C
 /* 5DE30 8007D068 89FFA524 */   addiu     $a1, $a1, -0x77

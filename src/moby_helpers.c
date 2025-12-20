@@ -11,6 +11,7 @@
 #include "renderers.h"
 #include "spu.h"
 #include "spyro.h"
+#include "strings.h"
 #include "variables.h"
 
 /// @brief Function that ticks a timer
@@ -525,7 +526,7 @@ int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
   }
 
   // Skip z handling if pZVelocity invalid
-  if (pZVelocity == NULL) {
+  if (pZVelocity == nullptr) {
     return result;
   }
 
@@ -1063,10 +1064,10 @@ void func_8003C358(Moby *pMoby, int pIsLevelName) {
   int i;
 
   if (pIsLevelName) {
-    level_name = D_8006F7F0[*(int *)(pMoby->m_Props)];
+    level_name = g_LevelNames[*(int *)(pMoby->m_Props)];
     z_rot = pMoby->m_Rotation.z;
   } else {
-    level_name = D_8006F7F0[36]; //"RETURN HOME"
+    level_name = g_LevelNames[36]; //"RETURN HOME"
     z_rot = Atan2(g_Spyro.m_Position.x - pMoby->m_Position.x,
                   g_Spyro.m_Position.y - pMoby->m_Position.y, 0);
   }

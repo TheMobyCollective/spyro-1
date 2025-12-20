@@ -79,18 +79,18 @@ glabel func_8001973C
 /* 9FCC 800197CC 0800A214 */  bne        $a1, $v0, .L800197F0
 /* 9FD0 800197D0 80100300 */   sll       $v0, $v1, 2
 .L800197D4:
-/* 9FD4 800197D4 0780013C */  lui        $at, %hi(D_8006F7F0)
+/* 9FD4 800197D4 0780013C */  lui        $at, %hi(g_LevelNames)
 /* 9FD8 800197D8 21082200 */  addu       $at, $at, $v0
-/* 9FDC 800197DC F0F7268C */  lw         $a2, %lo(D_8006F7F0)($at)
+/* 9FDC 800197DC F0F7268C */  lw         $a2, %lo(g_LevelNames)($at)
 /* 9FE0 800197E0 0180053C */  lui        $a1, %hi(D_80010AE0)
 /* 9FE4 800197E4 E00AA524 */  addiu      $a1, $a1, %lo(D_80010AE0)
 /* 9FE8 800197E8 02660008 */  j          .L80019808
 /* 9FEC 800197EC 3800A427 */   addiu     $a0, $sp, 0x38
 .L800197F0:
 /* 9FF0 800197F0 3800A427 */  addiu      $a0, $sp, 0x38
-/* 9FF4 800197F4 0780013C */  lui        $at, %hi(D_8006F7F0)
+/* 9FF4 800197F4 0780013C */  lui        $at, %hi(g_LevelNames)
 /* 9FF8 800197F8 21082200 */  addu       $at, $at, $v0
-/* 9FFC 800197FC F0F7268C */  lw         $a2, %lo(D_8006F7F0)($at)
+/* 9FFC 800197FC F0F7268C */  lw         $a2, %lo(g_LevelNames)($at)
 /* A000 80019800 0180053C */  lui        $a1, %hi(D_80010AF4)
 /* A004 80019804 F40AA524 */  addiu      $a1, $a1, %lo(D_80010AF4)
 .L80019808:

@@ -22,10 +22,8 @@ SECTIONS
     {
         FILL(0x00000000);
         main_RODATA_START = .;
-        build/asm/data/names.rodata.o(.rodata);
-        build/asm/data/names.rodata.o(.rodata.jtbl);
-        build/asm/data/balloonist_dialogue.rodata.o(.rodata);
-        build/asm/data/balloonist_dialogue.rodata.o(.rodata.jtbl);
+        build/src/strings.o(.rodata);
+        build/src/strings.o(.rodata.jtbl);
         build/src/loaders.o(.rodata);
         build/src/loaders.o(.rodata.jtbl);
         build/src/gamestates/draw.o(.rodata);
@@ -38,8 +36,10 @@ SECTIONS
         build/src/pete.o(.rodata.jtbl);
         build/src/special_surfaces.o(.rodata);
         build/src/special_surfaces.o(.rodata.jtbl);
-        build/asm/data/overlay_pointer.rodata.o(.rodata);
-        build/asm/data/overlay_pointer.rodata.o(.rodata.jtbl);
+
+        /* Putting overlay_pointer's .sdata here is cleaner than */
+        /* Having the pointer in a seperate assembly file */
+        build/src/overlay_pointers.o(.sdata);
         build/src/overlay_pointers.o(.rodata);
         build/src/overlay_pointers.o(.rodata.jtbl);
 
@@ -79,14 +79,17 @@ SECTIONS
         build/asm/math.o(.rodata.jtbl);
         build/asm/images.o(.rodata);
         build/asm/images.o(.rodata.jtbl);
+        
         build/asm/system_time.o(.rodata);
         build/asm/system_time.o(.rodata.jtbl);
+
         build/asm/renderers/r_moby.o(.rodata);
         build/asm/renderers/r_moby.o(.rodata.jtbl);
         build/asm/renderers/r_pete.o(.rodata);
         build/asm/renderers/r_pete.o(.rodata.jtbl);
         build/asm/renderers/r_environment.o(.rodata);
         build/asm/renderers/r_environment.o(.rodata.jtbl);
+
         build/src/environment.o(.rodata);
         build/src/environment.o(.rodata.jtbl);
         build/src/completion.o(.rodata);
@@ -147,15 +150,20 @@ SECTIONS
         build/src/initialization.o(.text);
         build/src/loaders.o(.text);
         build/src/cd.o(.text);
+
         build/asm/order_table.o(.text);
         build/asm/memory.o(.text);
         build/asm/math.o(.text);
         build/asm/images.o(.text);
+
         build/asm/system_time.o(.text);
+
         build/src/gamestates/draw.o(.text);
+
         build/asm/renderers/r_moby.o(.text);
         build/asm/renderers/r_pete.o(.text);
         build/asm/renderers/r_environment.o(.text);
+
         build/src/environment.o(.text);
         build/src/crash_demo.o(.text);
         build/src/completion.o(.text);
@@ -215,99 +223,57 @@ SECTIONS
         main_TEXT_END = .;
         main_TEXT_SIZE = ABSOLUTE(main_TEXT_END - main_TEXT_START);
         main_DATA_START = .;
-        game_data = .;
         build/asm/data/game.data.o(.data);
-
-        math_data = .;
         build/asm/data/math.data.o(.data);
-
-        save_header = .;
         build/asm/data/save_header.o(.data);
-
-        images = .;
         build/asm/images.o(.data);
-        system_time = .;
+
         build/asm/system_time.o(.data);
-        renderers_r_moby = .;
+
         build/asm/renderers/r_moby.o(.data);
-        renderers_r_pete = .;
         build/asm/renderers/r_pete.o(.data);
-        renderers_r_environment = .;
         build/asm/renderers/r_environment.o(.data);
-        environment = .;
+
         build/src/environment.o(.data);
-        completion = .;
         build/src/completion.o(.data);
-        music = .;
         build/src/music.o(.data);
-        cutscene = .;
         build/src/cutscene.o(.data);
-        gamestates_init = .;
         build/src/gamestates/init.o(.data);
-        names_data = .;
-        build/asm/data/names.data.o(.data);
-        balloonist_dialogue_data = .;
-        build/asm/data/balloonist_dialogue.data.o(.data);
-        loaders = .;
+        build/src/strings.o(.data);
+        build/asm/data/titlescreen_data.o(.data);
+        build/asm/data/pad_act_align.o(.data);
+        build/asm/data/unknown_data.o(.data);
         build/src/loaders.o(.data);
-        gamestates_draw = .;
         build/src/gamestates/draw.o(.data);
-        crash_demo = .;
         build/src/crash_demo.o(.data);
-        gamestates_update = .;
         build/src/gamestates/update.o(.data);
-        pete = .;
         build/src/pete.o(.data);
-        special_surfaces = .;
         build/src/special_surfaces.o(.data);
-        overlay_pointer_rodata = .;
-        build/asm/data/overlay_pointer.rodata.o(.data);
-        overlay_pointers = .;
         build/src/overlay_pointers.o(.data);
-        sony_text = .;
         build/asm/data/sony_text.o(.data);
-        cheats_data = .;
         build/src/cheats.o(.data);
-        build/asm/data/cheats.data.o(.data);
-        camera = .;
+        build/asm/data/entrance_stones.o(.data);
         build/src/camera.o(.data);
-        moby_interpolation_check = .;
         build/src/moby_interpolation_check.o(.data);
         build/src/rand.o(.data);
-        moby_helpers = .;
         build/src/moby_helpers.o(.data);
-        collision = .;
         build/asm/collision.o(.data);
-        renderers_r_cyclorama = .;
         build/asm/renderers/r_cyclorama.o(.data);
-        cyclorama = .;
         build/src/cyclorama.o(.data);
-        moby_lists = .;
         build/asm/moby_lists.o(.data);
-        _42CC4 = .;
         build/asm/42CC4.o(.data);
-        particle_alloc = .;
         build/asm/particle_alloc.o(.data);
-        gamepad = .;
         build/src/gamepad.o(.data);
-        hud = .;
         build/src/hud.o(.data);
-        _spu = .;
         build/src/spu.o(.data);
-        renderers_r_particles = .;
         build/asm/renderers/r_particles.o(.data);
-        specular_and_metal = .;
         build/src/specular_and_metal.o(.data);
-        renderers_r_flame = .;
         build/asm/renderers/r_flame.o(.data);
-        checkpoint = .;
         build/src/checkpoint.o(.data);
-        save_file = .;
         build/src/save_file.o(.data);
-        renderers_r_shadows = .;
         build/asm/renderers/r_shadows.o(.data);
-        _4BEF8 = .;
         build/src/4BEF8.o(.data);
+
         psyq_data = .;
 
         #ifndef _NEW_PSYQ
@@ -335,13 +301,9 @@ SECTIONS
 
 
         build/src/main.o(.data);
-        initialization = .;
         build/src/initialization.o(.data);
-        cd = .;
         build/src/cd.o(.data);
-        order_table = .;
         build/asm/order_table.o(.data);
-        memory = .;
         build/asm/memory.o(.data);
         . = ALIGN(., 4);
         main_DATA_END = .;
@@ -353,8 +315,7 @@ SECTIONS
         _gp = .;
 
         build/asm/data/game.sdata.o(.sdata);
-        build/asm/data/names.sdata.o(.sdata);
-        build/asm/data/balloonist_dialogue.sdata.o(.sdata);
+        build/src/strings.o(.sdata);
         build/asm/data/initialization.sdata.o(.sdata);
         build/asm/data/gamestates/draw.sdata.o(.sdata);
         . = ALIGN(., 4);
@@ -398,15 +359,13 @@ SECTIONS
         main_SBSS_END = .;
         main_SBSS_SIZE = ABSOLUTE(main_SBSS_END - main_SBSS_START);
         main_BSS_START = .;
-        build/asm/data/names.rodata.o(.bss);
-        build/asm/data/balloonist_dialogue.rodata.o(.bss);
+        build/src/strings.o(.bss);
         build/src/loaders.o(.bss);
         build/src/gamestates/draw.o(.bss);
         build/src/crash_demo.o(.bss);
         build/src/gamestates/update.o(.bss);
         build/src/pete.o(.bss);
         build/src/special_surfaces.o(.bss);
-        build/asm/data/overlay_pointer.rodata.o(.bss);
         build/src/overlay_pointers.o(.bss);
 
         #ifndef _NEW_PSYQ

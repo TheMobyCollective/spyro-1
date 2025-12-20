@@ -3,6 +3,12 @@
 #include "common.h"
 #include "moby.h"
 
+extern void *main_BSS_END;
+
+// This is placed into sdata, but I think this is cleaner than having an
+// assembly file
+void *g_OverlaySpacePointer = &main_BSS_END;
+
 // TODO: This file is fucked up
 
 /// Unused levels
