@@ -21,9 +21,9 @@ extern u_char D_8006BC84[45][45];      // Transition types
 // Which translates to the animations
 // { 19, 37, 38, 39, 40, 41, 42, 43, 44 }
 
-extern int D_8006BC60[9];  // Idle animation states table
-extern int D_80075970;     // Idle animation index
-extern short D_8006C5F0[]; // Turn rate lookup table (13 values per row)
+extern int D_8006BC60[9];      // Idle animation states table
+extern int D_80075970;         // Idle animation index
+extern short D_8006C5F0[][13]; // Turn rate lookup table
 
 // Spyro g_Spyro;
 
@@ -328,7 +328,6 @@ void func_8003D52C(int pUnknown) {
 void UpdateSpyroTurnMomentum(int pTableIndex) {
   int angleDiff;
   int threshold;
-  short *tableBase;
 
   // Calculate unsigned 12-bit angle difference (0-4095)
   angleDiff = g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ -
@@ -343,7 +342,7 @@ void UpdateSpyroTurnMomentum(int pTableIndex) {
     if (g_Spyro.m_Physics.m_TurnMomentum <= 0) {
       g_Spyro.m_Physics.m_TurnMomentum = 1; // Snap to positive if crossing zero
     }
-    if (g_Spyro.m_Physics.m_TurnMomentum >= 7) {
+    if (g_Spyro.m_Physics.m_TurnMomentum > 6) {
       g_Spyro.m_Physics.m_TurnMomentum = 6; // Clamp max
     }
   } else {
@@ -352,7 +351,7 @@ void UpdateSpyroTurnMomentum(int pTableIndex) {
     if (g_Spyro.m_Physics.m_TurnMomentum < -6) {
       g_Spyro.m_Physics.m_TurnMomentum = -6; // Clamp min
     }
-    if (g_Spyro.m_Physics.m_TurnMomentum >= 0) {
+    if (g_Spyro.m_Physics.m_TurnMomentum > -1) {
       // Snap to negative if crossing zero
       g_Spyro.m_Physics.m_TurnMomentum = -1;
     }
@@ -360,12 +359,9 @@ void UpdateSpyroTurnMomentum(int pTableIndex) {
 
   // Look up turn rate threshold from table (13 values per row, 26 bytes)
   // Index by momentum+6 converts range [-6,+6] to [0,12]
-  tableBase = D_8006C5F0;
-  threshold =
-      ((short *)((u_char *)tableBase +
-                 pTableIndex * 26))[g_Spyro.m_Physics.m_TurnMomentum + 6];
+  threshold = D_8006C5F0[pTableIndex][g_Spyro.m_Physics.m_TurnMomentum + 6];
 
-  if (threshold < angleDiff && angleDiff < threshold + 4096) {
+  if (angleDiff > threshold && angleDiff < threshold + 4096) {
     // Within threshold range - apply gradual turn using table value
     func_8003D52C(threshold); // Applies rotation delta to Spyro's Z angle
   } else {
@@ -382,7 +378,7 @@ void UpdateSpyroTurnMomentum(int pTableIndex) {
     func_8003D52C(turnAmount); // Applies rotation delta to Spyro's Z angle
   }
 
-  // Calculate angular distance
+  // Calculate angular distance (And.. does nothing with it?)
   func_80017928(g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ,
                 g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
 }

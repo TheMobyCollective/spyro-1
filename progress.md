@@ -217,7 +217,7 @@
 - [x] UpdateBodyAnimationState
 - [ ] func_8003D3B8
 - [x] func_8003D52C
-- [ ] UpdateSpyroTurnMomentum
+- [x] UpdateSpyroTurnMomentum
 - [ ] func_8003D840
 - [x] func_8003D92C
 - [x] func_8003D978

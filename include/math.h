@@ -72,6 +72,12 @@ void VecShiftRight(Vector3D *pVec, int pNumBits);
 /// @brief Use the GTE to multiply each element by a fixed value
 void VecMult(Vector3D *pOut, Vector3D *pIn, int pVal);
 
+/// @brief Subtracts two 12 bit angles
+/// @param pAngle1
+/// @param pAngle2
+/// @return 12 bit value
+int func_80017928(int pAngle1, int pAngle2);
+
 /// @brief Subtracts two angles
 /// @param pAngle1
 /// @param pAngle2
