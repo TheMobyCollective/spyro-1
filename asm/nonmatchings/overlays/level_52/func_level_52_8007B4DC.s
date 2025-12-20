@@ -2392,7 +2392,7 @@ glabel func_level_52_8007B4DC
 /* 493E5F4 8007D02C 1400A2AF */  sw         $v0, 0x14($sp)
 /* 493E5F8 8007D030 1800A9AF */  sw         $t1, 0x18($sp)
 /* 493E5FC 8007D034 1C00258E */  lw         $a1, 0x1C($s1)
-/* 493E600 8007D038 65F2000C */  jal        func_8003C994
+/* 493E600 8007D038 65F2000C */  jal        UpdatePufferBirdMobyPathNode
 /* 493E604 8007D03C 5C000724 */   addiu     $a3, $zero, 0x5C
 /* 493E608 8007D040 28F40108 */  j          .Llevel_52_8007D0A0
 /* 493E60C 8007D044 00000000 */   nop

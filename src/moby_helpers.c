@@ -1230,7 +1230,55 @@ void SetSpyroHeadLookTarget(Vector3D *pTarget) {
   }
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003C994);
+/// @brief Updates a moby to follow a path, advancing waypoints when close
+/// @param pMoby The moby to move along the path
+/// @param pPath The path data containing waypoints
+/// @param threshold Distance threshold to advance to the next waypoint
+/// @param maxSpeed Maximum movement speed (clamped)
+/// @param pBounds Collision bounds (passed to func_8003BAD0)
+/// @param turnRateH Horizontal/yaw turn rate
+/// @param turnRateV Vertical/pitch turn rate
+/// @note Only used for Puffer Bird in Lofty Castle
+void UpdatePufferBirdMobyPathNode(Moby *pMoby, PathData *pPath, int threshold,
+                                  int maxSpeed, int pBounds, int turnRateH,
+                                  int turnRateV) {
+  Vector3D localVec;
+  int dist;
+
+  // Calculate vector from current waypoint to moby position
+  VecSub(&localVec, &pMoby->m_Position,
+         &pPath->m_Nodes[pPath->m_CurrentNode].m_Position);
+  dist = VecMagnitude(&localVec, 1);
+
+  // If moby is close enough to the current waypoint, advance to the next one
+  if (dist < threshold) {
+    if (pPath->m_Reversed == -1) {
+      // Normal direction: increment node index
+      pPath->m_CurrentNode++;
+      if ((pPath->m_CurrentNode & 0xFF) == pPath->m_NodeCount) {
+        // Wrap around to the beginning
+        pPath->m_CurrentNode = 0;
+      }
+    } else {
+      // Reversed direction: decrement node index
+      pPath->m_CurrentNode--;
+      if ((pPath->m_CurrentNode & 0xFF) == 0xFF) {
+        // Wrap around to the last node
+        pPath->m_CurrentNode = pPath->m_NodeCount - 1;
+      }
+    }
+  }
+
+  // Convert distance to speed (divide by 16) and clamp to max
+  dist >>= 4;
+  if (maxSpeed < dist) {
+    dist = maxSpeed;
+  }
+
+  // Move the moby toward the current waypoint
+  func_8003BAD0(pMoby, &pPath->m_Nodes[pPath->m_CurrentNode].m_Position, dist,
+                turnRateH, turnRateV, pBounds);
+}
 
 /// @brief Registers a flight level collectible moby type in one of 4 slots
 /// @param index The moby type index to register
