@@ -364,7 +364,10 @@ void func_8003D978(void) {
                     &g_Spyro.m_Physics.m_Acceleration);
 }
 
-void func_8003DA08(void) {
+/// @brief Smoothly rotates Spyro's orientation back to neutral
+/// Uses a spring-damper system via m_RotXAccumulator and m_RotYAccumulator
+/// to gradually transition RotX and RotY toward zero
+void RotateSpyroToNeutral(void) {
   Vector3D t; // Wtf is up with these temporaries?
 
   t.x = 0;
@@ -378,11 +381,13 @@ void func_8003DA08(void) {
   if (t.y > 0x7ff) {
     t.y -= 0x1000;
   }
-  g_Spyro.unk_0x258 += ((t.x << 2) >> 4) - ((g_Spyro.unk_0x258 << 4) >> 6);
-  g_Spyro.unk_0x25c += ((t.y << 2) >> 4) - ((g_Spyro.unk_0x25c << 4) >> 6);
+  g_Spyro.m_RotXAccumulator +=
+      ((t.x << 2) >> 4) - ((g_Spyro.m_RotXAccumulator << 4) >> 6);
+  g_Spyro.m_RotYAccumulator +=
+      ((t.y << 2) >> 4) - ((g_Spyro.m_RotYAccumulator << 4) >> 6);
 
-  t.x = (g_Spyro.unk_0x258 >> 2);
-  t.y = (g_Spyro.unk_0x25c >> 2);
+  t.x = (g_Spyro.m_RotXAccumulator >> 2);
+  t.y = (g_Spyro.m_RotYAccumulator >> 2);
 
   g_Spyro.m_Physics.m_SpeedAngle.m_RotX += t.x;
   g_Spyro.m_Physics.m_SpeedAngle.m_RotY += t.y;
@@ -390,7 +395,44 @@ void func_8003DA08(void) {
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003DAE4);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003DE44);
+/// @brief Smoothly rotates Spyro's orientation to align with his acceleration
+/// Uses a spring-damper system via m_RotXAccumulator and m_RotYAccumulator.
+/// RotX approaches 0 (neutral), RotY approaches the elevation angle derived
+/// from acceleration magnitude and z-component (Atan2 + 0x8E offset)
+void RotateSpyroToAcceleration(void) {
+  Vector3D t;
+  int rotX, rotY;
+  int tx, ty;
+
+  t.x = 0;
+  t.z = VecMagnitude(&g_Spyro.m_Physics.m_Acceleration, 0);
+  t.y = Atan2(t.z, g_Spyro.m_Physics.m_Acceleration.z, 1) + 0x8E;
+
+  tx = t.x;
+  rotX = g_Spyro.m_Physics.m_SpeedAngle.m_RotX;
+  t.x = (tx - rotX) & 0xFFF;
+  if (t.x > 0x7FF) {
+    t.x -= 0x1000;
+  }
+
+  ty = t.y;
+  rotY = g_Spyro.m_Physics.m_SpeedAngle.m_RotY;
+  t.y = (ty - rotY) & 0xFFF;
+  if (t.y > 0x7FF) {
+    t.y -= 0x1000;
+  }
+
+  g_Spyro.m_RotXAccumulator +=
+      ((t.x << 2) >> 4) - ((g_Spyro.m_RotXAccumulator << 4) >> 6);
+  g_Spyro.m_RotYAccumulator +=
+      ((t.y << 2) >> 4) - ((g_Spyro.m_RotYAccumulator << 4) >> 6);
+
+  t.x = g_Spyro.m_RotXAccumulator >> 2;
+  t.y = g_Spyro.m_RotYAccumulator >> 2;
+
+  g_Spyro.m_Physics.m_SpeedAngle.m_RotX = rotX + t.x;
+  g_Spyro.m_Physics.m_SpeedAngle.m_RotY = rotY + t.y;
+}
 
 /// Unused function
 void func_8003DF60(void) {

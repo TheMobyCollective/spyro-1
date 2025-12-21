@@ -14,7 +14,7 @@ glabel func_8003DAE4
 /* 2E308 8003DB08 17004228 */  slti       $v0, $v0, 0x17
 /* 2E30C 8003DB0C 05004014 */  bnez       $v0, .L8003DB24
 /* 2E310 8003DB10 00000000 */   nop
-/* 2E314 8003DB14 82F6000C */  jal        func_8003DA08
+/* 2E314 8003DB14 82F6000C */  jal        RotateSpyroToNeutral
 /* 2E318 8003DB18 00000000 */   nop
 /* 2E31C 8003DB1C 8AF70008 */  j          .L8003DE28
 /* 2E320 8003DB20 00000000 */   nop
