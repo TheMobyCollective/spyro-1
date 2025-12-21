@@ -112,8 +112,9 @@ commits = list(repo.iter_commits(paths='progress.md'))
 # Process each commit
 progress = []
 for commit in commits:
-    date = commit.committed_datetime
-    date = datetime.datetime(date.year, date.month, date.day, 0, 0, 0, tzinfo=datetime.timezone.utc)
+    # Preserve commit order by using the true commit timestamp (UTC) instead of
+    # truncating to midnight, otherwise multiple updates in a day can regress.
+    date = commit.committed_datetime.astimezone(datetime.timezone.utc)
 
     content = commit.tree / 'progress.md'
     content = content.data_stream.read().decode('utf-8')
@@ -144,7 +145,7 @@ for date in date_range:
     bytes_unmatched = 0
 
     for d, fm, fu, bm, bu in progress:
-        if d.date() <= date.date():
+        if d <= date:
             funcs_matched = fm
             funcs_unmatched = fu
             bytes_matched = bm
