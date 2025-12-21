@@ -182,8 +182,8 @@
 - [x] func_8003A79C
 - [x] unused_MobyInterpolateVelocity
 - [x] unused_VecInterpolateCurve
-- [ ] func_8003A9EC
-- [x] func_8003AA84
+- [x] ApplyFlameHeatExternal
+- [x] ApplyFlameHeat
 - [x] SpawnMobySparkle
 - [ ] func_8003ABC0
 - [x] func_8003B0DC

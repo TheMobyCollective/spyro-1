@@ -4219,7 +4219,7 @@ glabel func_level_60_8007D938
 /* 51E9C20 80081658 180060AE */   sw        $zero, 0x18($s3)
 .Llevel_60_8008165C:
 /* 51E9C24 8008165C 1400058E */  lw         $a1, 0x14($s0)
-/* 51E9C28 80081660 7BEA000C */  jal        func_8003A9EC
+/* 51E9C28 80081660 7BEA000C */  jal        ApplyFlameHeatExternal
 /* 51E9C2C 80081664 21206002 */   addu      $a0, $s3, $zero
 /* 51E9C30 80081668 140002AE */  sw         $v0, 0x14($s0)
 /* 51E9C34 8008166C 1800628E */  lw         $v0, 0x18($s3)

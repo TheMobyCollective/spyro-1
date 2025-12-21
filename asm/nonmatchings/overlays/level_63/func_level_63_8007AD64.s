@@ -3935,7 +3935,7 @@ glabel func_level_63_8007AD64
 /* 5915438 8007E670 645E000C */  jal        OctDistance
 /* 591543C 8007E674 21200002 */   addu      $a0, $s0, $zero
 /* 5915440 8007E678 21206002 */  addu       $a0, $s3, $zero
-/* 5915444 8007E67C A1EA000C */  jal        func_8003AA84
+/* 5915444 8007E67C A1EA000C */  jal        ApplyFlameHeat
 /* 5915448 8007E680 21884000 */   addu      $s1, $v0, $zero
 /* 591544C 8007E684 1800628E */  lw         $v0, 0x18($s3)
 /* 5915450 8007E688 0100033C */  lui        $v1, (0x10000 >> 16)
@@ -7042,7 +7042,7 @@ glabel func_level_63_8007AD64
 /* 59181B8 800813F0 00000000 */   nop
 .Llevel_63_800813F4:
 /* 59181BC 800813F4 1400058E */  lw         $a1, 0x14($s0)
-/* 59181C0 800813F8 7BEA000C */  jal        func_8003A9EC
+/* 59181C0 800813F8 7BEA000C */  jal        ApplyFlameHeatExternal
 /* 59181C4 800813FC 21206002 */   addu      $a0, $s3, $zero
 /* 59181C8 80081400 140002AE */  sw         $v0, 0x14($s0)
 /* 59181CC 80081404 1800628E */  lw         $v0, 0x18($s3)
