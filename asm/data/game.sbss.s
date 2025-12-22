@@ -109,7 +109,7 @@ dlabel D_800756F0
 dlabel D_800756F4
 /* 65ECC 800756F4 */ .space 0x04
 
-dlabel D_800756F8
+dlabel g_CreditsTimer
 /* 65ED0 800756F8 */ .space 0x04
 
 dlabel D_800756FC
@@ -118,7 +118,7 @@ dlabel D_800756FC
 dlabel D_80075700
 /* 65ED8 80075700 */ .space 0x04
 
-dlabel D_80075704
+dlabel g_CreditsStage
 /* 65EDC 80075704 */ .space 0x04
 
 dlabel D_80075708
@@ -194,7 +194,7 @@ dlabel g_UnprocessedFrames
 dlabel D_80075764
 /* 65F3C 80075764 */ .space 0x04
 
-dlabel D_80075768
+dlabel g_CreditsBuffer
 /* 65F40 80075768 */ .space 0x04
 
 dlabel D_8007576C
@@ -242,7 +242,7 @@ dlabel g_ActEnabled
 dlabel D_800757A8
 /* 65F80 800757A8 */ .space 0x04
 
-dlabel D_800757AC
+dlabel g_CreditsSequence
 /* 65F84 800757AC */ .space 0x04
 
 dlabel D_800757B0
@@ -254,7 +254,7 @@ dlabel g_MobyPodCount
 dlabel D_800757B8
 /* 65F90 800757B8 */ .space 0x04
 
-dlabel D_800757BC
+dlabel g_CreditsDataPtr
 /* 65F94 800757BC */ .space 0x04
 
 dlabel D_800757C0
@@ -279,7 +279,7 @@ dlabel D_800757D4
 dlabel g_Gamestate
 /* 65FB0 800757D8 */ .space 0x04
 
-dlabel D_800757DC
+dlabel g_CreditsTotalEntries
 /* 65FB4 800757DC */ .space 0x04
 
 dlabel D_800757E0
@@ -393,7 +393,7 @@ dlabel D_80075870
 dlabel D_80075874
 /* 6604C 80075874 */ .space 0x04
 
-dlabel D_80075878
+dlabel g_CreditsDisplayedCount
 /* 66050 80075878 */ .space 0x04
 
 dlabel D_8007587C
@@ -576,7 +576,7 @@ dlabel D_80075960
 dlabel g_LevelIndex
 /* 6613C 80075964 */ .space 0x04
 
-dlabel D_80075968
+dlabel g_CreditsEntryIndex
 /* 66140 80075968 */ .space 0x04
 
 dlabel g_LevelId

@@ -2,6 +2,7 @@
 #include "4BEF8.h"
 #include "buffers.h"
 #include "camera.h"
+#include "cd.h"
 #include "cheats.h"
 #include "common.h"
 #include "cutscene.h"
@@ -41,8 +42,6 @@ extern int D_800757CC; // Transition progress between inventory pages.
 extern int D_80078768;
 
 extern int D_800758A4; // Stores the fairy kiss timer temporarily
-
-extern int D_800757AC;
 
 extern SphericalCoordsOffset D_8006C8BC;
 
@@ -384,8 +383,80 @@ void func_8002D170(void) {
   srand(345);
 }
 
-/// @brief Plays the credits
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002D228);
+/**
+ * @brief Initializes and starts the credits sequence.
+ *
+ * This function transitions the game into credits mode by:
+ * 1. Clearing the entire framebuffer to black
+ * 2. Stopping all audio (SPU voices and CD music)
+ * 3. Optionally loading shared Spyro models from PETE.WAD
+ * 4. Resetting Spyro's state machine
+ * 5. Setting gamestate to GS_Credits and initializing credits variables
+ * 6. Loading the credits overlay code from WAD.WAD
+ *
+ * Called in three contexts:
+ * - Cheat code activation (pLoadSharedModels=0)
+ * - After cutscene 2 / Gnasty's Loot intro (pLoadSharedModels=0)
+ * - After cutscene 3 / 100% completion ending (pLoadSharedModels=1)
+ *
+ * The game has two credits sequences:
+ * - Short credits (g_CreditsSequence=0): After defeating Gnasty Gnorc
+ * - Full credits (g_CreditsSequence=10): After 100% completion
+ *
+ * @param pLoadSharedModels If non-zero, loads PETE.WAD containing Spyro's
+ *                          shared models/animations needed for 100% credits.
+ */
+void InitCreditsSequence(int pLoadSharedModels) {
+  char _pad[32]; // Stack padding to match original 72-byte frame
+  RECT rect;
+  int creditsType;
+
+  // Clear the entire framebuffer to black
+  setRECT(&rect, 0, 0, 512, 480);
+  ClearImage(&rect, 0, 0, 0);
+  DrawSync(0);
+
+  // Stop all 24 SPU voice channels, clear moby sound refs, and stop CD music
+  func_80056B28(0);
+  SpuUpdate();
+
+  // Load shared Spyro models from PETE.WAD if requested (for 100% credits)
+  // This loads model data, patches pointers into g_Models[], and sets up
+  // buffers
+  if (pLoadSharedModels) {
+    func_8005B7D8();
+  }
+
+  // Reset Spyro's state machine with full reset (preserves position/rotation)
+  func_8004AC24(1);
+
+  // Cache credits type before resetting state variables
+  // g_CreditsSequence: 0 = short credits, 10 = full credits
+  creditsType = g_CreditsSequence;
+
+  // Set gamestate to credits mode
+  g_Gamestate = GS_Credits;
+
+  // Initialize credits sequence state variables
+  g_CreditsStage = -1;
+  g_CreditsEntryIndex = 0;
+  g_CreditsDisplayedCount = 0;
+  g_CreditsTotalEntries = 0;
+  g_CreditsDataPtr = 0;
+  g_CreditsBuffer = 0;
+  g_CreditsTimer = 0;
+
+  // Reset to short credits unless this is the full 100% credits sequence
+  if (creditsType != 10) {
+    g_CreditsSequence = 0;
+  }
+
+  // Load the credits overlay code from WAD.WAD into overlay memory
+  // Timeout of 600 (10 seconds max read time)
+  CDLoadSync(g_CdState.m_WadSector, g_OverlaySpacePointer,
+             g_WadHeader.m_CreditsOverlay.m_Length,
+             g_WadHeader.m_CreditsOverlay.m_Offset, 600);
+}
 
 /// @brief Starts cutscene
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002D338);
@@ -423,12 +494,12 @@ void func_8002D440(void) {
     g_StateSwitch = 1;
   } else if (g_CutsceneIdx == 2) {
     // play credits 1
-    func_8002D228(0);
+    InitCreditsSequence(0);
     g_StateSwitch = 1;
   } else if (g_CutsceneIdx == 3) {
     // play credits 2
-    D_800757AC = 10;
-    func_8002D228(1);
+    g_CreditsSequence = 10;
+    InitCreditsSequence(1);
     g_StateSwitch = 1;
   }
 }

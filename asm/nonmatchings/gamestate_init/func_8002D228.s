@@ -30,8 +30,8 @@ glabel func_8002D228
 .L8002D28C:
 /* 1DA8C 8002D28C 092B010C */  jal        func_8004AC24
 /* 1DA90 8002D290 01000424 */   addiu     $a0, $zero, 0x1
-/* 1DA94 8002D294 0780033C */  lui        $v1, %hi(D_800757AC)
-/* 1DA98 8002D298 AC57638C */  lw         $v1, %lo(D_800757AC)($v1)
+/* 1DA94 8002D294 0780033C */  lui        $v1, %hi(g_CreditsSequence)
+/* 1DA98 8002D298 AC57638C */  lw         $v1, %lo(g_CreditsSequence)($v1)
 /* 1DA9C 8002D29C 0F000224 */  addiu      $v0, $zero, 0xF
 /* 1DAA0 8002D2A0 0780013C */  lui        $at, %hi(g_Gamestate)
 /* 1DAA4 8002D2A4 D85722AC */  sw         $v0, %lo(g_Gamestate)($at)
@@ -53,8 +53,8 @@ glabel func_8002D228
 /* 1DAE4 8002D2E4 F85620AC */  sw         $zero, %lo(D_800756F8)($at)
 /* 1DAE8 8002D2E8 03006210 */  beq        $v1, $v0, .L8002D2F8
 /* 1DAEC 8002D2EC 00000000 */   nop
-/* 1DAF0 8002D2F0 0780013C */  lui        $at, %hi(D_800757AC)
-/* 1DAF4 8002D2F4 AC5720AC */  sw         $zero, %lo(D_800757AC)($at)
+/* 1DAF0 8002D2F0 0780013C */  lui        $at, %hi(g_CreditsSequence)
+/* 1DAF4 8002D2F4 AC5720AC */  sw         $zero, %lo(g_CreditsSequence)($at)
 .L8002D2F8:
 /* 1DAF8 8002D2F8 0780043C */  lui        $a0, %hi(g_CdState)
 /* 1DAFC 8002D2FC 906B848C */  lw         $a0, %lo(g_CdState)($a0)

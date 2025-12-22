@@ -3,6 +3,7 @@
 #include "buffers.h"
 #include "camera.h"
 #include "common.h"
+#include "cutscene.h"
 #include "cyclorama.h"
 #include "environment.h"
 #include "fairy.h"
@@ -31,8 +32,6 @@ struct {
   int pre;
 } D_80075950;
 
-extern int D_80075704; // Credits sequence
-extern int D_800756F8;
 
 // TODO: Remove once func_8001973C is implemented
 extern char D_80010ACC[1]; // "RETURNING HOME..."
@@ -701,7 +700,7 @@ void func_8001EB80(void) {
 
   // Wtf are these int casts?
   while ((int)(--curMoby) >= (int)g_HudMobys) {
-    curMoby->m_Rotation.z = COSINE_8(((D_800756F8 * 2) + rotOff) & 0xFF) >> 7;
+    curMoby->m_Rotation.z = COSINE_8(((g_CreditsTimer * 2) + rotOff) & 0xFF) >> 7;
     rotOff += 12;
   };
 
@@ -785,7 +784,7 @@ void GamestateDraw(void) {
     } else if (g_Gamestate == GS_Cutscene) {
       func_8001E9C8();
     } else if (g_Gamestate == GS_Credits) {
-      if (D_80075704 < 99) {
+      if (g_CreditsStage < 99) {
         func_credits_8007BFD0(); // Overlay function
       } else {
         func_8001EB80();

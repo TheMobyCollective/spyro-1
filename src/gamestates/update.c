@@ -205,14 +205,12 @@ void GamestateCutsceneUpdate(void) {
   }
 }
 
-extern int D_80075704; // Credits sequence
-extern int D_800756F8;
 
 /// @brief Gamestate 15
 void func_800333DC(void) {
   SpecularUpdate(3);
 
-  switch (D_80075704) {
+  switch (g_CreditsStage) {
   case 99:
     g_LoadStage = 1;
 
@@ -232,13 +230,13 @@ void func_800333DC(void) {
 
     g_PortalLevelId = 0; // Reset portal level id
     D_800756D0 = 0;      // Set no level transition
-    D_800756F8 = 0;
+    g_CreditsTimer = 0;
 
-    D_80075704++; // Start loading level
+    g_CreditsStage++; // Start loading level
     return;
   case 100:
     // Load level
-    D_800756F8 += g_DeltaTime;
+    g_CreditsTimer += g_DeltaTime;
     LoadLevel(1);
     return;
   }

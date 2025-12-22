@@ -3,8 +3,8 @@
 
 glabel func_credits_8007BFD0
 /* 5C98D98 8007BFD0 D0FFBD27 */  addiu      $sp, $sp, -0x30
-/* 5C98D9C 8007BFD4 0780033C */  lui        $v1, %hi(D_80075704)
-/* 5C98DA0 8007BFD8 0457638C */  lw         $v1, %lo(D_80075704)($v1)
+/* 5C98D9C 8007BFD4 0780033C */  lui        $v1, %hi(g_CreditsStage)
+/* 5C98DA0 8007BFD8 0457638C */  lw         $v1, %lo(g_CreditsStage)($v1)
 /* 5C98DA4 8007BFDC FFFF0224 */  addiu      $v0, $zero, -0x1
 /* 5C98DA8 8007BFE0 2C00BFAF */  sw         $ra, 0x2C($sp)
 /* 5C98DAC 8007BFE4 2800B2AF */  sw         $s2, 0x28($sp)

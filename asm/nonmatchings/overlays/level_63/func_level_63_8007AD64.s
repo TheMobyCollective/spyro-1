@@ -5239,8 +5239,8 @@ glabel func_level_63_8007AD64
 /* 5916754 8007F98C 0780033C */  lui        $v1, %hi(D_80075680)
 /* 5916758 8007F990 8056638C */  lw         $v1, %lo(D_80075680)($v1)
 /* 591675C 8007F994 0E000224 */  addiu      $v0, $zero, 0xE
-/* 5916760 8007F998 0780013C */  lui        $at, %hi(D_800757AC)
-/* 5916764 8007F99C AC5720AC */  sw         $zero, %lo(D_800757AC)($at)
+/* 5916760 8007F998 0780013C */  lui        $at, %hi(g_CreditsSequence)
+/* 5916764 8007F99C AC5720AC */  sw         $zero, %lo(g_CreditsSequence)($at)
 /* 5916768 8007F9A0 0780013C */  lui        $at, %hi(g_CutsceneIdx)
 /* 591676C 8007F9A4 6C5629AC */  sw         $t1, %lo(g_CutsceneIdx)($at)
 /* 5916770 8007F9A8 0780013C */  lui        $at, %hi(g_Gamestate)

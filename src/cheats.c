@@ -258,7 +258,7 @@ void CheatApplyEffect(int pCheatId) {
   switch (pCheatId) {
   case 2: // Credits cheat
     D_80075818 = g_LevelId;
-    func_8002D228(0);
+    InitCreditsSequence(0);
 
     // Confirmation sound
     PlaySound(g_Spu.m_SoundTable->gemPickup, nullptr, 0x10 /* 2D space */,
