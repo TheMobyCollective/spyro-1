@@ -42,13 +42,13 @@ glabel func_8001364C
 /* 3EDC 800136DC 00000000 */   nop
 .L800136E0:
 /* 3EE0 800136E0 01000224 */  addiu      $v0, $zero, 0x1
-/* 3EE4 800136E4 0780013C */  lui        $at, %hi(D_8007591C)
-/* 3EE8 800136E8 1C5922AC */  sw         $v0, %lo(D_8007591C)($at)
+/* 3EE4 800136E4 0780013C */  lui        $at, %hi(g_SkipLowPolyWorld)
+/* 3EE8 800136E8 1C5922AC */  sw         $v0, %lo(g_SkipLowPolyWorld)($at)
 /* 3EEC 800136EC BF4D0008 */  j          .L800136FC
 /* 3EF0 800136F0 00000000 */   nop
 .L800136F4:
-/* 3EF4 800136F4 0780013C */  lui        $at, %hi(D_8007591C)
-/* 3EF8 800136F8 1C5920AC */  sw         $zero, %lo(D_8007591C)($at)
+/* 3EF4 800136F4 0780013C */  lui        $at, %hi(g_SkipLowPolyWorld)
+/* 3EF8 800136F8 1C5920AC */  sw         $zero, %lo(g_SkipLowPolyWorld)($at)
 .L800136FC:
 /* 3EFC 800136FC 0780043C */  lui        $a0, %hi(g_Pad)
 /* 3F00 80013700 78738424 */  addiu      $a0, $a0, %lo(g_Pad)

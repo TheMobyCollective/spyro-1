@@ -620,8 +620,8 @@ glabel func_800258F0
 /* 169CC 800261CC 0010CC48 */  ctc2       $t4, C2_R22R23 /* handwritten instruction */
 /* 169D0 800261D0 0018CD48 */  ctc2       $t5, C2_R31R32 /* handwritten instruction */
 /* 169D4 800261D4 0020CE48 */  ctc2       $t6, C2_R33 /* handwritten instruction */
-/* 169D8 800261D8 0780013C */  lui        $at, %hi(D_8007591C)
-/* 169DC 800261DC 1C592124 */  addiu      $at, $at, %lo(D_8007591C)
+/* 169D8 800261D8 0780013C */  lui        $at, %hi(g_SkipLowPolyWorld)
+/* 169DC 800261DC 1C592124 */  addiu      $at, $at, %lo(g_SkipLowPolyWorld)
 /* 169E0 800261E0 0000218C */  lw         $at, 0x0($at)
 /* 169E4 800261E4 07801F3C */  lui        $ra, %hi(D_8006FCF4)
 /* 169E8 800261E8 F4FCFF27 */  addiu      $ra, $ra, %lo(D_8006FCF4)

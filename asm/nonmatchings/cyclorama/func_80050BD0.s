@@ -270,8 +270,8 @@ glabel func_80050BD0
 /* 417C0 80050FC0 00000000 */   nop
 /* 417C4 80050FC4 21A00000 */  addu       $s4, $zero, $zero
 .L80050FC8:
-/* 417C8 80050FC8 0780023C */  lui        $v0, %hi(D_8007591C)
-/* 417CC 80050FCC 1C59428C */  lw         $v0, %lo(D_8007591C)($v0)
+/* 417C8 80050FC8 0780023C */  lui        $v0, %hi(g_SkipLowPolyWorld)
+/* 417CC 80050FCC 1C59428C */  lw         $v0, %lo(g_SkipLowPolyWorld)($v0)
 /* 417D0 80050FD0 00000000 */  nop
 /* 417D4 80050FD4 15004010 */  beqz       $v0, .L8005102C
 /* 417D8 80050FD8 00000000 */   nop

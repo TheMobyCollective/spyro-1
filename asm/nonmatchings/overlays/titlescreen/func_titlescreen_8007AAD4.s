@@ -3,8 +3,8 @@
 
 glabel func_titlescreen_8007AAD4
 /* 5B89C 8007AAD4 E8FFBD27 */  addiu      $sp, $sp, -0x18
-/* 5B8A0 8007AAD8 0780023C */  lui        $v0, %hi(D_800778F0)
-/* 5B8A4 8007AADC F0784224 */  addiu      $v0, $v0, %lo(D_800778F0)
+/* 5B8A0 8007AAD8 0780023C */  lui        $v0, %hi(g_CutsceneSoundDef)
+/* 5B8A4 8007AADC F0784224 */  addiu      $v0, $v0, %lo(g_CutsceneSoundDef)
 /* 5B8A8 8007AAE0 80200400 */  sll        $a0, $a0, 2
 /* 5B8AC 8007AAE4 1000BFAF */  sw         $ra, 0x10($sp)
 /* 5B8B0 8007AAE8 0780013C */  lui        $at, %hi(g_Spu + 0x2C8)

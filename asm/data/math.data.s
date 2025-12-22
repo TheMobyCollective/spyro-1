@@ -2747,12 +2747,12 @@ dlabel D_8006EE5C /* VRAM Size per cutscene */
 /* 5F668 8006EE68 00000800 */ .word 0x00080000
 .size D_8006EE5C, . - D_8006EE5C
 
-dlabel D_8006EE6C
+dlabel g_CutscenePitchTable
 /* 5F66C 8006EE6C 00080000 */ .word 0x00000800
 /* 5F670 8006EE70 59060000 */ .word 0x00000659
 /* 5F674 8006EE74 00080000 */ .word 0x00000800
 /* 5F678 8006EE78 00080000 */ .word 0x00000800
-.size D_8006EE6C, . - D_8006EE6C
+.size g_CutscenePitchTable, . - g_CutscenePitchTable
 
 dlabel D_8006EE7C
 /* 5F67C 8006EE7C 0B000000 */ .word 0x0000000B

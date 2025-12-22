@@ -150,12 +150,12 @@ glabel func_800334D4
 /* 23F00 80033700 2A186200 */  slt        $v1, $v1, $v0
 /* 23F04 80033704 34006014 */  bnez       $v1, .L800337D8
 /* 23F08 80033708 0200043C */   lui       $a0, (0x262D0 >> 16)
-/* 23F0C 8003370C 0780033C */  lui        $v1, %hi(D_80075680)
-/* 23F10 80033710 8056638C */  lw         $v1, %lo(D_80075680)($v1)
+/* 23F0C 8003370C 0780033C */  lui        $v1, %hi(g_CutsceneLayout)
+/* 23F10 80033710 8056638C */  lw         $v1, %lo(g_CutsceneLayout)($v1)
 /* 23F14 80033714 D0020224 */  addiu      $v0, $zero, 0x2D0
 /* 23F18 80033718 000062AC */  sw         $v0, 0x0($v1)
-/* 23F1C 8003371C 0780023C */  lui        $v0, %hi(D_800778F0)
-/* 23F20 80033720 F0784224 */  addiu      $v0, $v0, %lo(D_800778F0)
+/* 23F1C 8003371C 0780023C */  lui        $v0, %hi(g_CutsceneSoundDef)
+/* 23F20 80033720 F0784224 */  addiu      $v0, $v0, %lo(g_CutsceneSoundDef)
 /* 23F24 80033724 0780013C */  lui        $at, %hi(g_Spu + 0x2C8)
 /* 23F28 80033728 D06122AC */  sw         $v0, %lo(g_Spu + 0x2C8)($at)
 /* 23F2C 8003372C 0780023C */  lui        $v0, %hi(g_Spu + 0x2C8)
@@ -172,8 +172,8 @@ glabel func_800334D4
 /* 23F58 80033758 080062A4 */  sh         $v0, 0x8($v1)
 /* 23F5C 8003375C 0780033C */  lui        $v1, %hi(g_Spu + 0x2C8)
 /* 23F60 80033760 D061638C */  lw         $v1, %lo(g_Spu + 0x2C8)($v1)
-/* 23F64 80033764 0780023C */  lui        $v0, %hi(D_8006EE6C)
-/* 23F68 80033768 6CEE428C */  lw         $v0, %lo(D_8006EE6C)($v0)
+/* 23F64 80033764 0780023C */  lui        $v0, %hi(g_CutscenePitchTable)
+/* 23F68 80033768 6CEE428C */  lw         $v0, %lo(g_CutscenePitchTable)($v0)
 /* 23F6C 8003376C 21280000 */  addu       $a1, $zero, $zero
 /* 23F70 80033770 0A0062A4 */  sh         $v0, 0xA($v1)
 /* 23F74 80033774 0780023C */  lui        $v0, %hi(g_Spu + 0x2C8)
@@ -202,8 +202,8 @@ glabel func_800334D4
 /* 23FD0 800337D0 FBCD0008 */  j          .L800337EC
 /* 23FD4 800337D4 0400063C */   lui       $a2, (0x40000 >> 16)
 .L800337D8:
-/* 23FD8 800337D8 0780033C */  lui        $v1, %hi(D_80075680)
-/* 23FDC 800337DC 8056638C */  lw         $v1, %lo(D_80075680)($v1)
+/* 23FD8 800337D8 0780033C */  lui        $v1, %hi(g_CutsceneLayout)
+/* 23FDC 800337DC 8056638C */  lw         $v1, %lo(g_CutsceneLayout)($v1)
 /* 23FE0 800337E0 90040224 */  addiu      $v0, $zero, 0x490
 /* 23FE4 800337E4 000062AC */  sw         $v0, 0x0($v1)
 /* 23FE8 800337E8 0400063C */  lui        $a2, (0x40000 >> 16)

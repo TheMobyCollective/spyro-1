@@ -56,7 +56,7 @@ extern struct {
 
   int unk_0x2d8; // No XREFs
   int unk_0x2dc; // No XREFs
-  SpuVolume unk_0x2e0;
+  SpuVolume m_VolumeOverride; // Used when m_NextSoundOverrideFlags & 1
   int unk_0x2e4; // No XREFs
   int unk_0x2e8; // No XREFs
 

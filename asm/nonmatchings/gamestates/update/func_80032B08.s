@@ -392,7 +392,7 @@ glabel func_80032B08
 /* 238C4 800330C4 0A004228 */  slti       $v0, $v0, 0xA
 /* 238C8 800330C8 F7FF4014 */  bnez       $v0, .L800330A8
 /* 238CC 800330CC 00000000 */   nop
-/* 238D0 800330D0 CEB4000C */  jal        func_8002D338
+/* 238D0 800330D0 CEB4000C */  jal        StartCutscenePlayback
 /* 238D4 800330D4 00000000 */   nop
 /* 238D8 800330D8 01000224 */  addiu      $v0, $zero, 0x1
 /* 238DC 800330DC 0780013C */  lui        $at, %hi(g_StateSwitch)

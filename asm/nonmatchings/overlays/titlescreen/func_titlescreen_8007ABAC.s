@@ -55,8 +55,8 @@ glabel func_titlescreen_8007ABAC
 /* 5B9B0 8007ABE8 0880143C */  lui        $s4, %hi(g_TitlescreenState + 0x4)
 /* 5B9B4 8007ABEC 7C8D948E */  lw         $s4, %lo(g_TitlescreenState + 0x4)($s4)
 .Ltitlescreen_8007ABF0:
-/* 5B9B8 8007ABF0 0780043C */  lui        $a0, %hi(D_80075680)
-/* 5B9BC 8007ABF4 8056848C */  lw         $a0, %lo(D_80075680)($a0)
+/* 5B9B8 8007ABF0 0780043C */  lui        $a0, %hi(g_CutsceneLayout)
+/* 5B9BC 8007ABF4 8056848C */  lw         $a0, %lo(g_CutsceneLayout)($a0)
 /* 5B9C0 8007ABF8 00000000 */  nop
 /* 5B9C4 8007ABFC 0000828C */  lw         $v0, 0x0($a0)
 /* 5B9C8 8007AC00 00000000 */  nop
@@ -86,8 +86,8 @@ glabel func_titlescreen_8007ABAC
 /* 5BA28 8007AC60 8470848C */  lw         $a0, %lo(g_DragonCutscene + 0x54)($a0)
 /* 5BA2C 8007AC64 8058010C */  jal        StopSound
 /* 5BA30 8007AC68 04000524 */   addiu     $a1, $zero, 0x4
-/* 5BA34 8007AC6C 0780033C */  lui        $v1, %hi(D_80075680)
-/* 5BA38 8007AC70 8056638C */  lw         $v1, %lo(D_80075680)($v1)
+/* 5BA34 8007AC6C 0780033C */  lui        $v1, %hi(g_CutsceneLayout)
+/* 5BA38 8007AC70 8056638C */  lw         $v1, %lo(g_CutsceneLayout)($v1)
 /* 5BA3C 8007AC74 33EB0108 */  j          .Ltitlescreen_8007ACCC
 /* 5BA40 8007AC78 92040224 */   addiu     $v0, $zero, 0x492
 .Ltitlescreen_8007AC7C:
@@ -99,13 +99,13 @@ glabel func_titlescreen_8007ABAC
 /* 5BA58 8007AC90 03004230 */  andi       $v0, $v0, 0x3
 /* 5BA5C 8007AC94 05004010 */  beqz       $v0, .Ltitlescreen_8007ACAC
 /* 5BA60 8007AC98 94040224 */   addiu     $v0, $zero, 0x494
-/* 5BA64 8007AC9C 0780033C */  lui        $v1, %hi(D_80075680)
-/* 5BA68 8007ACA0 8056638C */  lw         $v1, %lo(D_80075680)($v1)
+/* 5BA64 8007AC9C 0780033C */  lui        $v1, %hi(g_CutsceneLayout)
+/* 5BA68 8007ACA0 8056638C */  lw         $v1, %lo(g_CutsceneLayout)($v1)
 /* 5BA6C 8007ACA4 33EB0108 */  j          .Ltitlescreen_8007ACCC
 /* 5BA70 8007ACA8 00000000 */   nop
 .Ltitlescreen_8007ACAC:
-/* 5BA74 8007ACAC 0780033C */  lui        $v1, %hi(D_80075680)
-/* 5BA78 8007ACB0 8056638C */  lw         $v1, %lo(D_80075680)($v1)
+/* 5BA74 8007ACAC 0780033C */  lui        $v1, %hi(g_CutsceneLayout)
+/* 5BA78 8007ACB0 8056638C */  lw         $v1, %lo(g_CutsceneLayout)($v1)
 /* 5BA7C 8007ACB4 00000000 */  nop
 /* 5BA80 8007ACB8 0000628C */  lw         $v0, 0x0($v1)
 /* 5BA84 8007ACBC 00000000 */  nop
@@ -123,8 +123,8 @@ glabel func_titlescreen_8007ABAC
 /* 5BAAC 8007ACE4 0780013C */  lui        $at, %hi(g_Fade)
 /* 5BAB0 8007ACE8 185922AC */  sw         $v0, %lo(g_Fade)($at)
 .Ltitlescreen_8007ACEC:
-/* 5BAB4 8007ACEC 0780023C */  lui        $v0, %hi(D_80075680)
-/* 5BAB8 8007ACF0 8056428C */  lw         $v0, %lo(D_80075680)($v0)
+/* 5BAB4 8007ACEC 0780023C */  lui        $v0, %hi(g_CutsceneLayout)
+/* 5BAB8 8007ACF0 8056428C */  lw         $v0, %lo(g_CutsceneLayout)($v0)
 /* 5BABC 8007ACF4 00000000 */  nop
 /* 5BAC0 8007ACF8 0000448C */  lw         $a0, 0x0($v0)
 /* 5BAC4 8007ACFC F8AF000C */  jal        func_8002BFE0
@@ -226,8 +226,8 @@ glabel func_titlescreen_8007ABAC
 .Ltitlescreen_8007AE70:
 /* 5BC38 8007AE70 1C007314 */  bne        $v1, $s3, .Ltitlescreen_8007AEE4
 /* 5BC3C 8007AE74 03001224 */   addiu     $s2, $zero, 0x3
-/* 5BC40 8007AE78 0780023C */  lui        $v0, %hi(D_80075680)
-/* 5BC44 8007AE7C 8056428C */  lw         $v0, %lo(D_80075680)($v0)
+/* 5BC40 8007AE78 0780023C */  lui        $v0, %hi(g_CutsceneLayout)
+/* 5BC44 8007AE7C 8056428C */  lw         $v0, %lo(g_CutsceneLayout)($v0)
 /* 5BC48 8007AE80 00000000 */  nop
 /* 5BC4C 8007AE84 0000428C */  lw         $v0, 0x0($v0)
 /* 5BC50 8007AE88 00000000 */  nop

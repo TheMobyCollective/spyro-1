@@ -10,6 +10,7 @@
 #include "cd.h"
 #include "checkpoint.h"
 #include "common.h"
+#include "cutscene.h"
 #include "environment.h"
 #include "gamepad.h"
 #include "graphics.h"
@@ -227,7 +228,6 @@ void func_titlescreen_8007DDE8(void); // Titlescreen terminator
 
 void func_8005B7D8(void); // Load shared models from WAD.WAD (todo)
 
-void func_8002D338(void); // Gamestate init cutscene (why?)
 void func_8002D170(void); // Gamestate init titlescreen
 
 // Init function
@@ -401,8 +401,8 @@ void Initialize(void) {
 
   D_800785D8.m_SharedAnimations = (char *)0x80200000 - _stacksize;
 
-  func_8005B7D8(); // Load shared models from WAD.WAD
-  func_8002D338(); // Initialize the gamestate to cutscene
+  func_8005B7D8();         // Load shared models from WAD.WAD
+  StartCutscenePlayback(); // Initialize the gamestate to cutscene
 
   g_Fade = 15; // Fade
 

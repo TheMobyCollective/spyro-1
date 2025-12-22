@@ -42,8 +42,6 @@ extern int D_80078768;
 
 extern int D_800758A4; // Stores the fairy kiss timer temporarily
 
-extern int D_800757AC;
-
 extern SphericalCoordsOffset D_8006C8BC;
 
 /// @brief Pauses the game
@@ -378,8 +376,8 @@ void func_8002D170(void) {
   g_Spu.m_CommonAttr.mask = SPU_COMMON_CDVOLL | SPU_COMMON_CDVOLR;
   SpuSetCommonAttr(&g_Spu.m_CommonAttr);
 
-  D_8007591C = 0;
-  D_80075680->m_CurrentTick = 0;
+  g_SkipLowPolyWorld = 0;
+  g_CutsceneLayout->m_CurrentTick = 0;
 
   srand(345);
 }
@@ -387,11 +385,79 @@ void func_8002D170(void) {
 /// @brief Plays the credits
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002D228);
 
-/// @brief Starts cutscene
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002D338);
+/**
+ * @brief Initializes and starts cutscene playback.
+ *
+ * This function transitions the game into cutscene mode by:
+ * 1. Setting the gamestate to GS_Cutscene
+ * 2. Resetting visual fade and tick counter
+ * 3. Configuring SPU audio for cutscene playback at max volume
+ * 4. Starting the cutscene audio via PlaySound
+ *
+ * Called in two contexts:
+ * - During initial boot (from Initialize()) before switching to titlescreen
+ * - After cutscene data finishes loading (when g_LoadStage >= 10)
+ */
+void StartCutscenePlayback(void) {
+  int cutsceneIdx;
 
-/// @brief Ends cutscene, moves to In the World of Dragons or plays credits
-void func_8002D440(void) {
+  // Set gamestate to cutscene mode (14 = GS_Cutscene)
+  g_Gamestate = GS_Cutscene;
+
+  // Reset fade (0 = no fade effect)
+  g_Fade = 0;
+
+  // Cache cutscene index and reset playback tick counter
+  cutsceneIdx = g_CutsceneIdx;
+  g_CutsceneLayout->m_CurrentTick = 0;
+
+  // Intro cutscene special handling: skip low-poly world rendering
+  if (cutsceneIdx == 1) {
+    g_SkipLowPolyWorld = 1;
+  }
+
+  // Configure SPU sound definition for cutscene audio
+  // Point to the temporary sound definition buffer
+  g_Spu.m_SoundDefinitions = &g_CutsceneSoundDef;
+
+  // Initialize the sound definition structure
+  g_Spu.m_SoundDefinitions->m_Addr = 0x1010; // SPU address/flags
+  g_Spu.m_SoundDefinitions->m_LoopAddr = -1; // -1 = looping audio
+  g_Spu.m_SoundDefinitions->unk_0x8 = 0x50;  // Unused?
+  g_Spu.m_SoundDefinitions->m_Pitch =
+      g_CutscenePitchTable[cutsceneIdx];         // Cutscene-specific pitch
+  g_Spu.m_SoundDefinitions->m_PitchVariance = 0; // No pitch randomization
+  g_Spu.m_SoundDefinitions->m_PitchMultiplier = 0;
+  g_Spu.m_SoundDefinitions->m_VarianceType = 0;
+
+  // Enable volume override and set to max stereo volume (0x3FFF = 16383)
+  // This ensures cutscene audio plays at full volume
+  g_Spu.m_NextSoundOverrideFlags = 1;
+  g_Spu.m_VolumeOverride.left = 0x3FFF;
+  g_Spu.m_VolumeOverride.right = 0x3FFF;
+
+  // Start cutscene audio playback
+  PlaySound(0, 0, 0x10, (u_char *)&g_DragonCutscene.m_SoundVoice);
+}
+
+/**
+ * @brief Ends cutscene playback and transitions to the next gamestate.
+ *
+ * Called when a cutscene finishes playing (tick >= duration * 2).
+ * The transition depends on which cutscene just ended:
+ *
+ * - **Cutscene 1 (Intro "In the World of Dragons")**:
+ *   Clears screen, stops all sounds, loads shared models from WAD.WAD,
+ *   resets game state (gems, dragons, lives), and transitions to
+ *   Artisans Home (level 10) with titlescreen overlay.
+ *
+ * - **Cutscene 2 (Credits Part 1)**:
+ *   Plays the first credits sequence via func_8002D228(0).
+ *
+ * - **Cutscene 3 (Credits Part 2)**:
+ *   Plays the second credits sequence via func_8002D228(1).
+ */
+void EndCutscenePlayback(void) {
   RECT rc;
 
   if (g_CutsceneIdx == 1) {
@@ -427,7 +493,7 @@ void func_8002D440(void) {
     g_StateSwitch = 1;
   } else if (g_CutsceneIdx == 3) {
     // play credits 2
-    D_800757AC = 10;
+    g_CreditsSequence = 10;
     func_8002D228(1);
     g_StateSwitch = 1;
   }
