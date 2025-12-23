@@ -1068,9 +1068,126 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80049FAC);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004A200);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004A7EC);
+/**
+ * @brief Updates Spyro during gamestate 1 (return home portal sequence).
+ *
+ * This function handles Spyro's update loop when entering a return home portal:
+ * 1. Backing up gamepad state and disabling player input
+ * 2. Forcing Spyro into state 0xF (gliding) if not already there
+ * 3. Setting walking state to 8 and ensuring input lockout
+ * 4. Running physics updates (velocity, position)
+ * 5. Running animation updates (body, flame, head, tail)
+ * 6. Updating rotation matrices from speed angles
+ * 7. Clearing control flags and restoring gamepad state
+ *
+ * Called from gamestate 1 in src/gamestates/update.c.
+ *
+ * Key differences from UpdateSpyroReturnHome:
+ * - Forces state to 0xF (gliding) if not already in that state
+ * - Sets walking state unconditionally (not inside state check)
+ */
+void UpdateSpyroEnterReturnHome(void) {
+  char _pad[32]; // Stack padding to match original 0x58 frame
+  int i;
+  Vector3D8 *bodyRot;
+  MATRIX *rotMatrix;
 
-/// @brief Updates Spyro during the return home portal animation
+  // Swap gamepad states
+  g_PadSwapFlag = 0;
+  func_80053708(&g_Pad, &g_PadBackup);
+
+  // Force state to 15 (gliding) if not already there
+  if (g_Spyro.m_State != 0xF) {
+    func_8003EA68(0xF);
+  }
+
+  // Set walking state to 8
+  g_Spyro.m_walkingState = 8;
+
+  // Ensure gamepad update frames is at least 1
+  if (g_Spyro.m_noGamepadUpdateFrames <= 0) {
+    g_Spyro.m_noGamepadUpdateFrames = 1;
+  }
+
+  // Zero out velocity
+  VecNull(&g_Spyro.m_Physics.m_Velocity);
+
+  // Run state update loop
+  for (i = 0; i < g_DeltaTime; i++) {
+    func_80043FE4(i);
+  }
+
+  // Shift velocity right by 6
+  VecShiftRight(&g_Spyro.m_Physics.m_Velocity, 6);
+
+  // Save current position before movement
+  VecCopy(&g_Spyro.m_previousPosition, &g_Spyro.m_Position);
+
+  // Add velocity to position
+  VecAdd(&g_Spyro.m_Position, &g_Spyro.m_Position,
+         &g_Spyro.m_Physics.m_Velocity);
+
+  // Run physics update loop
+  for (i = 0; i < g_DeltaTime; i++) {
+    func_8004888C();
+  }
+
+  // Run animation update loop
+  for (i = 0; i < g_DeltaTime; i++) {
+    UpdateBodyAnimationState();
+    func_800499C0();
+    func_80049660();
+    func_80049F3C();
+    func_80049E8C();
+  }
+
+  // Cache pointers for matrix operations
+  bodyRot = &g_Spyro.m_bodyRotation;
+  rotMatrix = &g_Spyro.m_RotationMatrix;
+
+  // Update body rotation from speed angles
+  bodyRot->x = g_Spyro.m_Physics.m_SpeedAngle.m_RotX >> 4;
+  g_Spyro.m_bodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
+  g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
+
+  // Create rotation matrix from body rotation
+  RotVec8ToMatrix(bodyRot, rotMatrix, nullptr);
+
+  // Create head rotation matrix from m_headRotation
+  RotVec8ToMatrix((Vector3D8 *)((u_char *)bodyRot + 4),
+                  &g_Spyro.m_headRotationMatrix, nullptr);
+
+  // Combine body and head rotation
+  MulMatrix0(rotMatrix, &g_Spyro.m_headRotationMatrix,
+             &g_Spyro.m_headRotationMatrix);
+
+  // Clear control flags
+  g_Spyro.m_ControlFlags = 0;
+
+  // Swap gamepad states back
+  func_80053708(&g_PadBackup, &g_Pad);
+}
+
+/**
+ * @brief Updates Spyro during the return home portal animation (gamestate 10).
+ *
+ * This function handles Spyro's update loop during the return home sequence:
+ * 1. Backing up gamepad state and disabling player input
+ * 2. Setting walking state to 8 if already in state 0xF (gliding)
+ * 3. Ensuring input lockout (m_noGamepadUpdateFrames >= 1)
+ * 4. Zeroing velocity and running physics state updates
+ * 5. Applying velocity to position (shift right 6, then add)
+ * 6. Running rotation updates via func_8004888C
+ * 7. Running animation updates (body, flame, head, flame-block, tail)
+ * 8. Updating body/head rotation matrices from speed angles
+ * 9. Clearing control flags and restoring gamepad state
+ *
+ * Called from gamestate 10 in src/gamestates/update.c.
+ *
+ * Key differences from UpdateSpyroEnterReturnHome:
+ * - Does NOT force state to 0xF (assumes already in correct state)
+ * - Only sets walking state if state == 0xF (conditional)
+ */
 void UpdateSpyroReturnHome(void) {
   char _pad[32]; // Stack padding to match original 0x58 frame
   int i;
@@ -1078,10 +1195,10 @@ void UpdateSpyroReturnHome(void) {
   MATRIX *rotMatrix;
 
   // Swap gamepad states
-  D_80075944 = 0;
-  func_80053708(&g_Pad, &D_800776D8);
+  g_PadSwapFlag = 0;
+  func_80053708(&g_Pad, &g_PadBackup);
 
-  // If state is 15 (return home state), set walking state to 8
+  // If state is 15 (gliding), set walking state to 8
   if (g_Spyro.m_State == 0xF) {
     g_Spyro.m_walkingState = 8;
   }
@@ -1147,7 +1264,7 @@ void UpdateSpyroReturnHome(void) {
   g_Spyro.m_ControlFlags = 0;
 
   // Swap gamepad states back
-  func_80053708(&D_800776D8, &g_Pad);
+  func_80053708(&g_PadBackup, &g_Pad);
 }
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004AC24);

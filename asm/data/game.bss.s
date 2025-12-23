@@ -112,7 +112,7 @@ dlabel g_LevelGemCount
 dlabel g_CdMusic
 /* Total size from 800774B0 to 800776D8 */ .space 0x228
 
-dlabel D_800776D8 /* Pad clone */
+dlabel g_PadBackup
 /* 67620 800776D8 */ .space 0xA8
 
 dlabel g_NewCyclorama

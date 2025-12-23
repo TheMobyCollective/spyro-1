@@ -550,10 +550,10 @@ void func_80037BD4(void) {
     D_8007592C = 0;
   }
 
-  D_80075944 = 0;
+  g_PadSwapFlag = 0;
 
   if (g_Spyro.m_noGamepadUpdateFrames != 0) {
-    func_80053708(&g_Pad, &D_800776D8);
+    func_80053708(&g_Pad, &g_PadBackup);
   }
 
   if (g_Spyro.unk_0x194 != 0) {
@@ -609,7 +609,7 @@ void func_80037BD4(void) {
     }
   }
 
-  if (D_80075944 != 0) {
-    func_80053708(&D_800776D8, &g_Pad);
+  if (g_PadSwapFlag != 0) {
+    func_80053708(&g_PadBackup, &g_Pad);
   }
 }

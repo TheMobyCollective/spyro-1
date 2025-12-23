@@ -36,7 +36,7 @@ void PadReset(Gamepad *pad) {
 // Temporarily copies the gamepad, then resets the input gamepad
 // Used to disable player input, for example (horrible)
 void func_80053708(Gamepad *oldPad, Gamepad *newPad) {
-  D_80075944 = 1 - D_80075944; // Flag for if we've copied the gamepad
+  g_PadSwapFlag = 1 - g_PadSwapFlag; // Flag for if we've copied the gamepad
 
   Memcpy(newPad, oldPad, sizeof(Gamepad)); // Copy the gamepad
 

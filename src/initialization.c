@@ -78,8 +78,8 @@ void GraphicsInitialize(void) {
 // Gamepad init, sets up VSync callback
 void GamepadInitialize(void) {
   PadInitDirect((u_char *)&g_PadBuffer, (u_char *)&g_PadBufferSecondController);
-  PadCaliReset(&D_800776D8); // Clears the backup's calibration values
-  PadCaliInit(&D_800776D8);  // Initializes it's calibration deadzone values
+  PadCaliReset(&g_PadBackup); // Clears the backup's calibration values
+  PadCaliInit(&g_PadBackup);  // Initializes its calibration deadzone values
 
   // Reset the vibration timers
   D_80075904 = 0;
