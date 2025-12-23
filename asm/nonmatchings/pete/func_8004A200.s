@@ -28,14 +28,14 @@ glabel func_8004A200
 /* 3AA54 8004A254 0880103C */  lui        $s0, %hi(g_Spyro + 0x1F0)
 /* 3AA58 8004A258 488C1026 */  addiu      $s0, $s0, %lo(g_Spyro + 0x1F0)
 /* 3AA5C 8004A25C 0000028E */  lw         $v0, 0x0($s0)
-/* 3AA60 8004A260 0780013C */  lui        $at, %hi(D_80075944)
-/* 3AA64 8004A264 445920A0 */  sb         $zero, %lo(D_80075944)($at)
+/* 3AA60 8004A260 0780013C */  lui        $at, %hi(g_PadSwapFlag)
+/* 3AA64 8004A264 445920A0 */  sb         $zero, %lo(g_PadSwapFlag)($at)
 /* 3AA68 8004A268 0B004010 */  beqz       $v0, .L8004A298
 /* 3AA6C 8004A26C 00000000 */   nop
 /* 3AA70 8004A270 0780043C */  lui        $a0, %hi(g_Pad)
 /* 3AA74 8004A274 78738424 */  addiu      $a0, $a0, %lo(g_Pad)
-/* 3AA78 8004A278 0780053C */  lui        $a1, %hi(D_800776D8)
-/* 3AA7C 8004A27C D876A524 */  addiu      $a1, $a1, %lo(D_800776D8)
+/* 3AA78 8004A278 0780053C */  lui        $a1, %hi(g_PadBackup)
+/* 3AA7C 8004A27C D876A524 */  addiu      $a1, $a1, %lo(g_PadBackup)
 /* 3AA80 8004A280 C24D010C */  jal        func_80053708
 /* 3AA84 8004A284 00000000 */   nop
 /* 3AA88 8004A288 0000028E */  lw         $v0, 0x0($s0)
@@ -384,8 +384,8 @@ glabel func_8004A200
 /* 3AF8C 8004A78C 2400448C */  lw         $a0, 0x24($v0)
 /* 3AF90 8004A790 0880023C */  lui        $v0, %hi(g_Spyro + 0x1F4)
 /* 3AF94 8004A794 4C8C428C */  lw         $v0, %lo(g_Spyro + 0x1F4)($v0)
-/* 3AF98 8004A798 0780033C */  lui        $v1, %hi(D_80075944)
-/* 3AF9C 8004A79C 44596390 */  lbu        $v1, %lo(D_80075944)($v1)
+/* 3AF98 8004A798 0780033C */  lui        $v1, %hi(g_PadSwapFlag)
+/* 3AF9C 8004A79C 44596390 */  lbu        $v1, %lo(g_PadSwapFlag)($v1)
 /* 3AFA0 8004A7A0 24104500 */  and        $v0, $v0, $a1
 /* 3AFA4 8004A7A4 0880013C */  lui        $at, %hi(g_Spyro + 0x1F4)
 /* 3AFA8 8004A7A8 4C8C22AC */  sw         $v0, %lo(g_Spyro + 0x1F4)($at)
@@ -393,8 +393,8 @@ glabel func_8004A200
 /* 3AFB0 8004A7B0 C08C24AC */  sw         $a0, %lo(g_Spyro + 0x268)($at)
 /* 3AFB4 8004A7B4 07006010 */  beqz       $v1, .L8004A7D4
 /* 3AFB8 8004A7B8 00000000 */   nop
-/* 3AFBC 8004A7BC 0780043C */  lui        $a0, %hi(D_800776D8)
-/* 3AFC0 8004A7C0 D8768424 */  addiu      $a0, $a0, %lo(D_800776D8)
+/* 3AFBC 8004A7BC 0780043C */  lui        $a0, %hi(g_PadBackup)
+/* 3AFC0 8004A7C0 D8768424 */  addiu      $a0, $a0, %lo(g_PadBackup)
 /* 3AFC4 8004A7C4 0780053C */  lui        $a1, %hi(g_Pad)
 /* 3AFC8 8004A7C8 7873A524 */  addiu      $a1, $a1, %lo(g_Pad)
 /* 3AFCC 8004A7CC C24D010C */  jal        func_80053708

@@ -21,7 +21,7 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002DA74);
 
 /// @brief Gamestate 1
 void func_8002DF9C(void) {
-  func_8004A7EC(); // Spyro update
+  UpdateSpyroEnterReturnHome(); // Spyro update
   func_80037BD4(); // Camera update
 
   func_8002DA74();

@@ -555,7 +555,7 @@ dlabel D_8007593C
 dlabel D_80075940
 /* 66118 80075940 */ .space 0x04
 
-dlabel D_80075944
+dlabel g_PadSwapFlag
 /* 6611C 80075944 */ .space 0x04
 
 dlabel D_80075948

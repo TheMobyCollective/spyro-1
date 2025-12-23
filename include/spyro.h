@@ -360,7 +360,7 @@ void func_8004AC24(int pKeepPosition);
 /// @brief: Forces state to and resets animation
 void func_8003FDC8(int pNewState);
 
-void func_8004A7EC(void);
+void UpdateSpyroEnterReturnHome(void);
 
 void func_8004A200(void);
 

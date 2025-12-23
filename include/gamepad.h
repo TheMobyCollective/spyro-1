@@ -91,10 +91,10 @@ typedef struct {
 
 // static_assert(sizeof(Gamepad) == 0xa4, "Gamepad is the wrong size");
 
-extern Gamepad g_Pad;      // Current gamepad state
-extern Gamepad D_800776D8; // Backup gamepad state
+extern Gamepad g_Pad;       // Current gamepad state
+extern Gamepad g_PadBackup; // Backup gamepad state for cutscenes/portals
 
-extern u_char D_80075944; // Some flag that causes copying
+extern u_char g_PadSwapFlag; // Tracks whether gamepad has been swapped (0 or 1)
 extern u_char g_PadMutex; // Controller update mutex
 
 extern int g_ActEnabled;   // Is vibration enabled in settings
