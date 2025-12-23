@@ -448,7 +448,7 @@ int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6) {
   if (arg6 & 1) {
     vec2.z += 300 + arg5;
   }
-  if (arg4 && func_8004E3C8(&vec2, arg4, 0, nullptr, pMoby, nullptr)) {
+  if (arg4 && func_8004E3C8(&vec2, arg4, nullptr, 0, pMoby, 0)) {
     return 1;
   }
   if (arg5 && func_8004BE4C(&vec2, arg5, arg5)) {
@@ -1070,7 +1070,7 @@ int MoveMobyTowardTarget(Moby *pMoby, Vector3D *pTarget, int pSpeed,
       VecCopy(&pMoby->m_Position, &D_80076B80);
       result = 1;
     }
-    if (func_8004E3C8(&pMoby->m_Position, pBounds, 0, 0, pMoby, 1)) {
+    if (func_8004E3C8(&pMoby->m_Position, pBounds, nullptr, 0, pMoby, 1)) {
       result = 1;
     }
   }
