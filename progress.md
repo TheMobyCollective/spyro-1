@@ -115,7 +115,7 @@
 - [ ] func_8002CCC8
 - [x] func_8002D02C
 - [x] func_8002D170
-- [ ] func_8002D228
+- [x] InitCreditsSequence
 - [x] StartCutscenePlayback
 - [x] EndCutscenePlayback
 - [x] HudPrint

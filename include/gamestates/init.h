@@ -7,7 +7,7 @@ void func_8002C664(void);
 /// @brief Unpauses from the inventory menu
 void func_8002C7BC(void);
 
-/// @brief Play credits
-void func_8002D228(int pLoadSharedModels);
+/// @brief Initializes and starts the credits sequence
+void InitCreditsSequence(int pLoadSharedModels);
 
 #endif // !__GAMESTATE_INIT_H
