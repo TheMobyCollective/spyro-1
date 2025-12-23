@@ -6,7 +6,7 @@
 // TODO: Name arg1
 
 /// @brief Handles the effects of the special surfaces
-void func_80056F64(int surfaceIdx, u_int arg1);
+void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1);
 
 /// @brief Checks if the surface is a special surface, and returns it's type.
 int func_80057380(void);

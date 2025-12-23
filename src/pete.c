@@ -3,6 +3,7 @@
 #include "environment.h"
 #include "gamepad.h"
 #include "math.h"
+#include "special_surfaces.h"
 #include "spu.h"
 #include "spyro.h"
 #include "variables.h"
@@ -883,10 +884,17 @@ void CycleSpyroIdleAnimation(void) {
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80041670);
 
+/// @brief Physics state update for Spyro
+/// @param pDeltaTimeIndex Deltatime index, used for the pad input buffer
+void func_80043FE4(int pDeltaTimeIndex);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80043FE4);
 
+/// @brief Per-frame state dispatch for Spyro
+void func_80047B60(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80047B60);
 
+/// @brief Rotation updates for Spyro
+void func_8004888C(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004888C);
 
 /**
@@ -897,7 +905,7 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004888C);
  * 2. Running state physics (func_80043FE4) for each delta time substep
  * 3. Running per-frame state dispatch (func_80047B60)
  * 4. Running rotation updates (func_8004888C) for each delta time substep
- * 5. Handling special surface interactions via func_80056F64
+ * 5. Handling special surface interactions via ApplySpecialSurfaceEffects
  *
  * Surface interaction priority (handled in order):
  * - If grounded (m_airTime == 0) and close to surface below: mode 2
@@ -944,7 +952,7 @@ void UpdateSpyroPhysicsAndSurfaces(void) {
   if (g_Spyro.m_airTime == 0) {
     surfaceFlag = g_SurfaceBelowFlags & 0x3F;
     if (surfaceFlag != 0x3F && g_Spyro.m_Position.z - surfaceBelow <= 512) {
-      func_80056F64(surfaceFlag, 2);
+      ApplySpecialSurfaceEffects(surfaceFlag, 2);
       return;
     }
   }
@@ -953,7 +961,7 @@ void UpdateSpyroPhysicsAndSurfaces(void) {
   // Lower 6 bits of m_touchingSurface indicate surface type
   touchingLow = g_Spyro.m_touchingSurface & 0x3F;
   if (touchingLow != 0x3F) {
-    func_80056F64(touchingLow, 0);
+    ApplySpecialSurfaceEffects(touchingLow, 0);
     return;
   }
 
@@ -969,7 +977,7 @@ void UpdateSpyroPhysicsAndSurfaces(void) {
   }
 
   // Trigger surface interaction mode 1 (above special surface)
-  func_80056F64(surfaceFlag, 1);
+  ApplySpecialSurfaceEffects(surfaceFlag, 1);
 }
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80048D10);
@@ -996,10 +1004,13 @@ void func_800495D8(int pDeltaTime) {
   }
 }
 
+/// @brief Update the head animation
+void func_80049660(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80049660);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80049880);
 
+/// @brief Update flame
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_800499C0);
 
 /// @brief Updates the tail animation

@@ -28,12 +28,12 @@ typedef enum {
 /// @brief Control/override flags for Spyro's behavior during scripted sequences
 /// Used by m_ControlFlags to modify physics, camera, and surface handling
 typedef enum {
-  CTRL_CAMERA_0200        = 0x0200,   // Camera behavior modifier (unknown)
-  CTRL_CAMERA_0400        = 0x0400,   // Camera behavior modifier (unknown)
-  CTRL_SKIP_CAMERA_CENTER = 0x1000,   // Skip camera auto-centering on Spyro
-  CTRL_SKIP_SURFACE_CHECK = 0x4000,   // Skip surface interaction handling
-  CTRL_CAMERA_8000        = 0x8000,   // Camera behavior modifier (unknown)
-  CTRL_CAMERA_10000       = 0x10000,  // Camera behavior modifier (unknown)
+  CTRL_CAMERA_0200 = 0x0200,        // Camera behavior modifier (unknown)
+  CTRL_CAMERA_0400 = 0x0400,        // Camera behavior modifier (unknown)
+  CTRL_SKIP_CAMERA_CENTER = 0x1000, // Skip camera auto-centering on Spyro
+  CTRL_SKIP_SURFACE_CHECK = 0x4000, // Skip surface interaction handling
+  CTRL_CAMERA_8000 = 0x8000,        // Camera behavior modifier (unknown)
+  CTRL_CAMERA_10000 = 0x10000,      // Camera behavior modifier (unknown)
 } ControlFlags;
 
 typedef struct {
@@ -142,7 +142,8 @@ typedef struct {
   /// @brief Spyro's rotation matrix
   MATRIX m_RotationMatrix;
 
-  /// @brief Current body animation transition type (0=normal, 1-8=various blends)
+  /// @brief Current body animation transition type (0=normal, 1-8=various
+  /// blends)
   int m_bodyTransitionType;
 
   int m_bodyAnimationSpeed;
@@ -161,8 +162,8 @@ typedef struct {
   int unk_0x84;
   int m_touchingMoby;
   Vector3D m_previousPosition; // 0x8c - Position before movement update
-  int m_floorIdleTime; // 0x98
-  int m_airTime;       // 0x9c
+  int m_floorIdleTime;         // 0x98
+  int m_airTime;               // 0x9c
   int m_surfaceBelowSpyro;
   Vector3D m_floorPositonOnSlope;
   int m_slopeAngle;
@@ -182,9 +183,11 @@ typedef struct {
    * Tracks proximity state to special surfaces when Spyro is above but not
    * directly on them.
    *
-   * - Reset to 0 each frame in UpdateSpyroPhysicsAndSurfaces before surface checks
-   * - Set to 1 by func_80056F64 when Spyro is above a type-0 damage floor
-   *   (more than 512 units above) but not close enough for direct contact
+   * - Reset to 0 each frame in UpdateSpyroPhysicsAndSurfaces before surface
+   * checks
+   * - Set to 1 by ApplySpecialSurfaceEffects when Spyro is above a type-0
+   * damage floor (more than 512 units above) but not close enough for direct
+   * contact
    * - Checked by physics (func_80043FE4) to modify behavior when hovering
    *   above special surfaces
    */
@@ -192,19 +195,23 @@ typedef struct {
   int m_damagingFloorIndex;
   int *m_damagingFloorFlags;
   Vector3D unk_0x17c;
-  Vector3D m_KnockbackDirection; // Direction vector applied to acceleration on knockback
-  int unk_0x194;      // Used to force spyro to flame in cutscenes
+  Vector3D m_KnockbackDirection; // Direction vector applied to acceleration on
+                                 // knockback
+  int unk_0x194;                 // Used to force spyro to flame in cutscenes
   int unk_0x198;
   int unk_0x19c;
   int unk_0x1a0;
-  Vector3D m_HeadLookTarget; // Target angles for head look-at (set by SetSpyroHeadLookTarget, consumed by func_80049880)
+  Vector3D
+      m_HeadLookTarget; // Target angles for head look-at (set by
+                        // SetSpyroHeadLookTarget, consumed by func_80049880)
   int unk_0x1b0;
   int unk_0x1b4;
   int unk_0x1b8;
   int unk_0x1bc;
   int unk_0x1c0;
   int unk_0x1c4;
-  MATRIX m_headRotationMatrix; // 0x1c8 - Combined body+head rotation for rendering
+  MATRIX
+      m_headRotationMatrix; // 0x1c8 - Combined body+head rotation for rendering
   int m_seperateTailAnimation; // Whether the tail is animated seperately from
                                // the body, otherwise it copies the body
   int m_flameableFrames; // How many frames have we been able to flame? Not used
@@ -218,9 +225,9 @@ typedef struct {
    * @see ControlFlags
    */
   int m_ControlFlags;
-  Vector3D m_portalEndPos;     // Not 100% sure
-  Vector3D8 m_portalAngle;     // The angle of the portal
-  u_char unk_0x207;            // Padding
+  Vector3D m_portalEndPos; // Not 100% sure
+  Vector3D8 m_portalAngle; // The angle of the portal
+  u_char unk_0x207;        // Padding
   Vector3D unk_0x208;
   int unk_0x214;
   int m_fallingState; // Not sure
@@ -237,9 +244,11 @@ typedef struct {
   int m_flyingAbility; // Used in flying levels and gnasty's loot
   int m_doingSupercharge;
   int unk_0x254;
-  int m_RotXAccumulator; // Spring-damper accumulator for smooth RotX transitions
-  int m_RotYAccumulator; // Spring-damper accumulator for smooth RotY transitions
-  int unk_0x260; // No XREFS
+  int m_RotXAccumulator; // Spring-damper accumulator for smooth RotX
+                         // transitions
+  int m_RotYAccumulator; // Spring-damper accumulator for smooth RotY
+                         // transitions
+  int unk_0x260;         // No XREFS
   int unk_0x264;
   int unk_0x268;
   int unk_0x26c; // No XREFS

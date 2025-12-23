@@ -13,7 +13,7 @@ extern int D_800777C0[8]; // Zapped floors
 // TODO: m_DamageFlags enum / definitions
 
 /// @brief Handles the effects of the special surfaces
-void func_80056F64(int surfaceIdx, u_int arg1) {
+void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
   Vector3D spyroPortalDist;
   PortalPathMobyData *pathData;
   int *surfaceFlags;
