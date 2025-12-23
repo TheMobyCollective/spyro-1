@@ -25,11 +25,15 @@ typedef struct {
 extern int D_8006EEDC[PETE_XA_COUNT][PETE_XA_TRACKS]; // Track lengths
 extern int D_8006F200[PETE_XA_COUNT];                 // Pete XA offsets
 
-extern int D_8006EF9C[TOTAL_LEVEL_COUNT];          // Level to track mapping
-extern int D_8006F05C[(TOTAL_LEVEL_COUNT - 1)][3]; // Egg to track mapping
+// Level to track mapping (12 extra for easter eggs)
+extern int D_8006EF9C[TOTAL_LEVEL_COUNT + 12];
+
+// Egg to track mapping
+extern int D_8006F05C[(TOTAL_LEVEL_COUNT - 1)][3];
 
 extern CdMusic g_CdMusic;
 
-void func_8002BBE0(void); // Music update
+/// @brief Updates the CD music system
+void CDMusicUpdate(void);
 
 #endif

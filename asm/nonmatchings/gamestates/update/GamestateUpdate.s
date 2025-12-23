@@ -10,7 +10,7 @@ glabel GamestateUpdate
 /* 24070 80033870 9C5720AC */  sw         $zero, %lo(g_StateSwitch)($at)
 /* 24074 80033874 DF58010C */  jal        func_8005637C
 /* 24078 80033878 00000000 */   nop
-/* 2407C 8003387C F8AE000C */  jal        func_8002BBE0
+/* 2407C 8003387C F8AE000C */  jal        CDMusicUpdate
 /* 24080 80033880 00000000 */   nop
 /* 24084 80033884 0780033C */  lui        $v1, %hi(g_Gamestate)
 /* 24088 80033888 D857638C */  lw         $v1, %lo(g_Gamestate)($v1)

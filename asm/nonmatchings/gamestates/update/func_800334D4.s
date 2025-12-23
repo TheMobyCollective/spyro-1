@@ -122,7 +122,7 @@ glabel func_800334D4
 .L80033698:
 /* 23E98 80033698 5951000C */  jal        LoadCutscene
 /* 23E9C 8003369C 00000000 */   nop
-/* 23EA0 800336A0 F8AE000C */  jal        func_8002BBE0
+/* 23EA0 800336A0 F8AE000C */  jal        CDMusicUpdate
 /* 23EA4 800336A4 00000000 */   nop
 .L800336A8:
 /* 23EA8 800336A8 0780023C */  lui        $v0, %hi(g_LoadStage)

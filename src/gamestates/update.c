@@ -153,7 +153,7 @@ void GamestateCutsceneUpdate(void) {
       // Load cutscene data loop
       while (g_LoadStage < 10) {
         LoadCutscene();
-        func_8002BBE0(); // Music update (processes CD audio)
+        CDMusicUpdate();
       }
 
       StartCutscenePlayback(); // Initialize cutscene playback state
@@ -205,7 +205,6 @@ void GamestateCutsceneUpdate(void) {
     EndCutscenePlayback();
   }
 }
-
 
 /// @brief Gamestate 15
 void func_800333DC(void) {

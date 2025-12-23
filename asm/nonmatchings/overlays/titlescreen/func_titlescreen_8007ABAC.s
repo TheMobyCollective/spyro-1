@@ -292,7 +292,7 @@ glabel func_titlescreen_8007ABAC
 /* 5BD28 8007AF60 00000000 */   nop
 /* 5BD2C 8007AF64 DF58010C */  jal        func_8005637C
 /* 5BD30 8007AF68 00000000 */   nop
-/* 5BD34 8007AF6C F8AE000C */  jal        func_8002BBE0
+/* 5BD34 8007AF6C F8AE000C */  jal        CDMusicUpdate
 /* 5BD38 8007AF70 00000000 */   nop
 /* 5BD3C 8007AF74 C9EB0108 */  j          .Ltitlescreen_8007AF24
 /* 5BD40 8007AF78 00000000 */   nop

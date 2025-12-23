@@ -208,7 +208,7 @@
 - [x] UpdatePufferBirdMobyPathNode
 - [x] RegisterFlightMobyCollectibleType
 - [x] func_80037E98
-- [ ] func_8002BBE0
+- [x] CDMusicUpdate
 - [ ] func_8002BFE0
 - [x] func_8005A470
 - [x] func_8003CB24

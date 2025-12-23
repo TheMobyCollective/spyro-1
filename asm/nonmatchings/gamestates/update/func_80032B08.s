@@ -137,7 +137,7 @@ glabel func_80032B08
 .L80032D04:
 /* 23504 80032D04 5951000C */  jal        LoadCutscene
 /* 23508 80032D08 00000000 */   nop
-/* 2350C 80032D0C F8AE000C */  jal        func_8002BBE0
+/* 2350C 80032D0C F8AE000C */  jal        CDMusicUpdate
 /* 23510 80032D10 00000000 */   nop
 /* 23514 80032D14 0780023C */  lui        $v0, %hi(g_LoadStage)
 /* 23518 80032D18 6458428C */  lw         $v0, %lo(g_LoadStage)($v0)
@@ -150,7 +150,7 @@ glabel func_80032B08
 .L80032D34:
 /* 23534 80032D34 DC54000C */  jal        LoadLevel
 /* 23538 80032D38 01000424 */   addiu     $a0, $zero, 0x1
-/* 2353C 80032D3C F8AE000C */  jal        func_8002BBE0
+/* 2353C 80032D3C F8AE000C */  jal        CDMusicUpdate
 /* 23540 80032D40 00000000 */   nop
 .L80032D44:
 /* 23544 80032D44 0780023C */  lui        $v0, %hi(g_LoadStage)
@@ -383,7 +383,7 @@ glabel func_80032B08
 .L800330A8:
 /* 238A8 800330A8 5951000C */  jal        LoadCutscene
 /* 238AC 800330AC 00000000 */   nop
-/* 238B0 800330B0 F8AE000C */  jal        func_8002BBE0
+/* 238B0 800330B0 F8AE000C */  jal        CDMusicUpdate
 /* 238B4 800330B4 00000000 */   nop
 .L800330B8:
 /* 238B8 800330B8 0780023C */  lui        $v0, %hi(g_LoadStage)

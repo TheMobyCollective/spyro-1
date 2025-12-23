@@ -61,7 +61,7 @@ void CDLoadSync(int sector, void *buf, int size, int offset, int maxTime) {
          (g_CdMusic.m_Flags & 0x40) == 0) {
     CDLoadTime();
     func_8005637C();
-    func_8002BBE0();
+    CDMusicUpdate();
   };
 
   // Set the mode to double speed

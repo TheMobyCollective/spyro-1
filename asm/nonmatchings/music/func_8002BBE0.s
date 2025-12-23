@@ -1,7 +1,7 @@
 .set noat      /* allow manual use of $at */
 .set noreorder /* don't insert nops after branches */
 
-glabel func_8002BBE0
+glabel CDMusicUpdate
 /* 1C3E0 8002BBE0 D0FFBD27 */  addiu      $sp, $sp, -0x30
 /* 1C3E4 8002BBE4 01000424 */  addiu      $a0, $zero, 0x1
 /* 1C3E8 8002BBE8 0780053C */  lui        $a1, %hi(g_CdMusic + 0x20C)
@@ -276,4 +276,4 @@ glabel func_8002BBE0
 /* 1C7D4 8002BFD4 3000BD27 */  addiu      $sp, $sp, 0x30
 /* 1C7D8 8002BFD8 0800E003 */  jr         $ra
 /* 1C7DC 8002BFDC 00000000 */   nop
-.size func_8002BBE0, . - func_8002BBE0
+.size CDMusicUpdate, . - CDMusicUpdate
