@@ -26,6 +26,6 @@ void func_8002B9CC(void);
 
 extern Environment g_Environment;
 
-extern int D_80075718; // Currently touching surface flag
+extern int g_SurfaceBelowFlags; // Surface type flags from last height query
 
 #endif

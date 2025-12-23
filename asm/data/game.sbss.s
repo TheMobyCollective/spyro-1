@@ -133,7 +133,7 @@ dlabel g_HudMobys
 dlabel g_DemoMode
 /* 65EEC 80075714 */ .space 0x04
 
-dlabel D_80075718
+dlabel g_SurfaceBelowFlags
 /* 65EF0 80075718 */ .space 0x04
 
 dlabel D_8007571C

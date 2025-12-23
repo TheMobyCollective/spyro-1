@@ -28,7 +28,7 @@ void func_80056F64(int surfaceIdx, u_int arg1) {
   case 0:
     if (arg1 == 1) {
       if ((g_Spyro.m_Position.z - g_Spyro.m_surfaceBelowSpyro) > 512) {
-        g_Spyro.unk_0x170 = arg1;
+        g_Spyro.m_SurfaceProximityState = arg1;
         return;
       }
     }
@@ -136,7 +136,7 @@ void func_80056F64(int surfaceIdx, u_int arg1) {
 
 /// @brief Checks if the surface is a special surface, and returns it's type.
 int func_80057380(void) {
-  int idx = D_80075718 & 63;
+  int idx = g_SurfaceBelowFlags & 63;
 
   if (idx != 63) // If the flag is 63, it means we're not touching a surface
     return g_Environment.m_SurfaceData[idx]->m_Type;

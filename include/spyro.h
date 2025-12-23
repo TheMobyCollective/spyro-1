@@ -25,6 +25,17 @@ typedef enum {
   TRANSITION_SPECIAL_ALT = 10     // Same behavior as TRANSITION_SPECIAL
 } BodyTransitionType;
 
+/// @brief Control/override flags for Spyro's behavior during scripted sequences
+/// Used by m_ControlFlags to modify physics, camera, and surface handling
+typedef enum {
+  CTRL_CAMERA_0200        = 0x0200,   // Camera behavior modifier (unknown)
+  CTRL_CAMERA_0400        = 0x0400,   // Camera behavior modifier (unknown)
+  CTRL_SKIP_CAMERA_CENTER = 0x1000,   // Skip camera auto-centering on Spyro
+  CTRL_SKIP_SURFACE_CHECK = 0x4000,   // Skip surface interaction handling
+  CTRL_CAMERA_8000        = 0x8000,   // Camera behavior modifier (unknown)
+  CTRL_CAMERA_10000       = 0x10000,  // Camera behavior modifier (unknown)
+} ControlFlags;
+
 typedef struct {
   int m_Speed;
   int m_RotZ, m_RotY, m_RotX;
@@ -167,7 +178,17 @@ typedef struct {
   int m_health;
   int m_drowningOffset;
   int m_touchingSurface;
-  int unk_0x170;
+  /**
+   * Tracks proximity state to special surfaces when Spyro is above but not
+   * directly on them.
+   *
+   * - Reset to 0 each frame in UpdateSpyroPhysicsAndSurfaces before surface checks
+   * - Set to 1 by func_80056F64 when Spyro is above a type-0 damage floor
+   *   (more than 512 units above) but not close enough for direct contact
+   * - Checked by physics (func_80043FE4) to modify behavior when hovering
+   *   above special surfaces
+   */
+  int m_SurfaceProximityState;
   int m_damagingFloorIndex;
   int *m_damagingFloorFlags;
   Vector3D unk_0x17c;
@@ -190,7 +211,13 @@ typedef struct {
                          // for anything, isn't reset either, useless
   int m_noGamepadUpdateFrames; // How many frames the gamepad can't be updated
                                // for
-  int unk_0x1f4;               // Some kind of cutscene flags
+  /**
+   * Bitfield of ControlFlags that modify Spyro's behavior during scripted
+   * sequences, cutscenes, and special traversal states.
+   * Cleared to 0 when exiting cutscene/scripted playback.
+   * @see ControlFlags
+   */
+  int m_ControlFlags;
   Vector3D m_portalEndPos;     // Not 100% sure
   Vector3D8 m_portalAngle;     // The angle of the portal
   u_char unk_0x207;            // Padding

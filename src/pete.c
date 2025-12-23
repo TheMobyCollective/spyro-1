@@ -1,5 +1,6 @@
 #include "camera.h"
 #include "common.h"
+#include "environment.h"
 #include "gamepad.h"
 #include "math.h"
 #include "spu.h"
@@ -888,7 +889,88 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80047B60);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004888C);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80048B9C);
+/**
+ * @brief Main per-frame update for Spyro's physics and surface interactions.
+ *
+ * This function is called every frame to update Spyro's state by:
+ * 1. Resetting m_Velocity to zero before physics calculations
+ * 2. Running state physics (func_80043FE4) for each delta time substep
+ * 3. Running per-frame state dispatch (func_80047B60)
+ * 4. Running rotation updates (func_8004888C) for each delta time substep
+ * 5. Handling special surface interactions via func_80056F64
+ *
+ * Surface interaction priority (handled in order):
+ * - If grounded (m_airTime == 0) and close to surface below: mode 2
+ * - If touching a special surface (m_touchingSurface): mode 0
+ * - If surface exists below Spyro: mode 1
+ *
+ * Surface flags use the lower 6 bits (& 0x3F), where 0x3F means "no special
+ * surface".
+ */
+void UpdateSpyroPhysicsAndSurfaces(void) {
+  int i;
+  int surfaceBelow;
+  int surfaceFlag;
+  int touchingLow;
+
+  // Reset velocity vector before physics substeps recalculate it
+  VecNull(&g_Spyro.m_Physics.m_Velocity);
+
+  // Run physics state update for each delta time substep
+  for (i = 0; i < g_DeltaTime; i++) {
+    func_80043FE4(i);
+  }
+
+  // Run per-frame state dispatch (handles state-specific logic)
+  func_80047B60();
+
+  // Run rotation updates for each delta time substep
+  for (i = 0; i < g_DeltaTime; i++) {
+    func_8004888C();
+  }
+
+  // Skip surface interaction handling if CTRL_SKIP_SURFACE_CHECK is set
+  if (g_Spyro.m_ControlFlags & CTRL_SKIP_SURFACE_CHECK) {
+    return;
+  }
+
+  // Query the surface height below Spyro (max search depth 0x10000)
+  surfaceBelow = func_8004D5EC(&g_Spyro.m_Position, 0x10000);
+  g_Spyro.m_surfaceBelowSpyro = surfaceBelow;
+  g_Spyro.m_SurfaceProximityState = 0;
+
+  // Grounded and close to special surface below
+  // If Spyro is grounded and within 512 units of the surface, trigger mode 2
+  if (g_Spyro.m_airTime == 0) {
+    surfaceFlag = g_SurfaceBelowFlags & 0x3F;
+    if (surfaceFlag != 0x3F && g_Spyro.m_Position.z - surfaceBelow <= 512) {
+      func_80056F64(surfaceFlag, 2);
+      return;
+    }
+  }
+
+  // Currently touching a special surface
+  // Lower 6 bits of m_touchingSurface indicate surface type
+  touchingLow = g_Spyro.m_touchingSurface & 0x3F;
+  if (touchingLow != 0x3F) {
+    func_80056F64(touchingLow, 0);
+    return;
+  }
+
+  // Surface exists below Spyro (surfaceBelow > 0)
+  if (g_Spyro.m_surfaceBelowSpyro <= 0) {
+    return;
+  }
+
+  // Check if surface below has special properties
+  surfaceFlag = g_SurfaceBelowFlags & 0x3F;
+  if (surfaceFlag == 0x3F) {
+    return;
+  }
+
+  // Trigger surface interaction mode 1 (above special surface)
+  func_80056F64(surfaceFlag, 1);
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80048D10);
 
@@ -1050,8 +1132,8 @@ void UpdateSpyroReturnHome(void) {
   MulMatrix0(rotMatrix, &g_Spyro.m_headRotationMatrix,
              &g_Spyro.m_headRotationMatrix);
 
-  // Clear cutscene flags
-  g_Spyro.unk_0x1f4 = 0;
+  // Clear control flags (exit scripted/cutscene mode)
+  g_Spyro.m_ControlFlags = 0;
 
   // Swap gamepad states back
   func_80053708(&D_800776D8, &g_Pad);
