@@ -4282,8 +4282,8 @@ glabel func_level_62_8007AE5C
 /* 56CD960 8007EB98 0800C68E */  lw         $a2, 0x8($s6)
 /* 56CD964 8007EB9C 44E6000C */  jal        MoveMobyWithGravity
 /* 56CD968 8007EBA0 0C00C726 */   addiu     $a3, $s6, 0xC
-/* 56CD96C 8007EBA4 0780023C */  lui        $v0, %hi(D_80075718)
-/* 56CD970 8007EBA8 1857428C */  lw         $v0, %lo(D_80075718)($v0)
+/* 56CD96C 8007EBA4 0780023C */  lui        $v0, %hi(g_SurfaceBelowFlags)
+/* 56CD970 8007EBA8 1857428C */  lw         $v0, %lo(g_SurfaceBelowFlags)($v0)
 /* 56CD974 8007EBAC 00000000 */  nop
 /* 56CD978 8007EBB0 3F004230 */  andi       $v0, $v0, 0x3F
 /* 56CD97C 8007EBB4 FFFF4224 */  addiu      $v0, $v0, -0x1
@@ -4829,8 +4829,8 @@ glabel func_level_62_8007AE5C
 /* 56CE170 8007F3A8 0C00268E */  lw         $a2, 0xC($s1)
 /* 56CE174 8007F3AC 44E6000C */  jal        MoveMobyWithGravity
 /* 56CE178 8007F3B0 10002726 */   addiu     $a3, $s1, 0x10
-/* 56CE17C 8007F3B4 0780023C */  lui        $v0, %hi(D_80075718)
-/* 56CE180 8007F3B8 1857428C */  lw         $v0, %lo(D_80075718)($v0)
+/* 56CE17C 8007F3B4 0780023C */  lui        $v0, %hi(g_SurfaceBelowFlags)
+/* 56CE180 8007F3B8 1857428C */  lw         $v0, %lo(g_SurfaceBelowFlags)($v0)
 /* 56CE184 8007F3BC 00000000 */  nop
 /* 56CE188 8007F3C0 3F004230 */  andi       $v0, $v0, 0x3F
 /* 56CE18C 8007F3C4 FFFF4224 */  addiu      $v0, $v0, -0x1
@@ -5247,8 +5247,8 @@ glabel func_level_62_8007AE5C
 /* 56CE78C 8007F9C4 0800268E */  lw         $a2, 0x8($s1)
 /* 56CE790 8007F9C8 44E6000C */  jal        MoveMobyWithGravity
 /* 56CE794 8007F9CC 0C002726 */   addiu     $a3, $s1, 0xC
-/* 56CE798 8007F9D0 0780023C */  lui        $v0, %hi(D_80075718)
-/* 56CE79C 8007F9D4 1857428C */  lw         $v0, %lo(D_80075718)($v0)
+/* 56CE798 8007F9D0 0780023C */  lui        $v0, %hi(g_SurfaceBelowFlags)
+/* 56CE79C 8007F9D4 1857428C */  lw         $v0, %lo(g_SurfaceBelowFlags)($v0)
 /* 56CE7A0 8007F9D8 00000000 */  nop
 /* 56CE7A4 8007F9DC 3F004230 */  andi       $v0, $v0, 0x3F
 /* 56CE7A8 8007F9E0 FFFF4224 */  addiu      $v0, $v0, -0x1

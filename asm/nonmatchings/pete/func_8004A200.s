@@ -43,7 +43,7 @@ glabel func_8004A200
 /* 3AA90 8004A290 FFFF4224 */  addiu      $v0, $v0, -0x1
 /* 3AA94 8004A294 000002AE */  sw         $v0, 0x0($s0)
 .L8004A298:
-/* 3AA98 8004A298 E722010C */  jal        func_80048B9C
+/* 3AA98 8004A298 E722010C */  jal        UpdateSpyroPhysicsAndSurfaces
 /* 3AA9C 8004A29C 00000000 */   nop
 /* 3AAA0 8004A2A0 0880033C */  lui        $v1, %hi(g_Spyro + 0x78)
 /* 3AAA4 8004A2A4 D08A638C */  lw         $v1, %lo(g_Spyro + 0x78)($v1)

@@ -1860,8 +1860,8 @@ glabel D_8004C820
 /* 3D160 8004C960 20083C00 */  add        $at, $at, $gp /* handwritten instruction */
 /* 3D164 8004C964 00002290 */  lbu        $v0, 0x0($at)
 .L8004C968:
-/* 3D168 8004C968 0780043C */  lui        $a0, %hi(D_80075718)
-/* 3D16C 8004C96C 18578424 */  addiu      $a0, $a0, %lo(D_80075718)
+/* 3D168 8004C968 0780043C */  lui        $a0, %hi(g_SurfaceBelowFlags)
+/* 3D16C 8004C96C 18578424 */  addiu      $a0, $a0, %lo(g_SurfaceBelowFlags)
 /* 3D170 8004C970 83300108 */  j          .L8004C20C
 /* 3D174 8004C974 000082AC */   sw        $v0, 0x0($a0)
 .L8004C978:
@@ -2579,8 +2579,8 @@ glabel D_8004D2E0
 /* 3DC10 8004D410 00000000 */  nop
 /* 3DC14 8004D414 0000418C */  lw         $at, 0x0($v0)
 .L8004D418:
-/* 3DC18 8004D418 0780033C */  lui        $v1, %hi(D_80075718)
-/* 3DC1C 8004D41C 18576324 */  addiu      $v1, $v1, %lo(D_80075718)
+/* 3DC18 8004D418 0780033C */  lui        $v1, %hi(g_SurfaceBelowFlags)
+/* 3DC1C 8004D41C 18576324 */  addiu      $v1, $v1, %lo(g_SurfaceBelowFlags)
 /* 3DC20 8004D420 34330108 */  j          .L8004CCD0
 /* 3DC24 8004D424 000061AC */   sw        $at, 0x0($v1)
 .L8004D428:
@@ -3018,8 +3018,8 @@ glabel func_8004D5EC
 /* 3E28C 8004DA8C 20083300 */  add        $at, $at, $s3 /* handwritten instruction */
 /* 3E290 8004DA90 00002290 */  lbu        $v0, 0x0($at)
 .L8004DA94:
-/* 3E294 8004DA94 0780043C */  lui        $a0, %hi(D_80075718)
-/* 3E298 8004DA98 18578424 */  addiu      $a0, $a0, %lo(D_80075718)
+/* 3E294 8004DA94 0780043C */  lui        $a0, %hi(g_SurfaceBelowFlags)
+/* 3E298 8004DA98 18578424 */  addiu      $a0, $a0, %lo(g_SurfaceBelowFlags)
 /* 3E29C 8004DA9C 09360108 */  j          .L8004D824
 /* 3E2A0 8004DAA0 000082AC */   sw        $v0, 0x0($a0)
 .L8004DAA4:
@@ -3316,8 +3316,8 @@ glabel func_8004D5EC
 /* 3E704 8004DF04 00000000 */  nop
 /* 3E708 8004DF08 0000418C */  lw         $at, 0x0($v0)
 .L8004DF0C:
-/* 3E70C 8004DF0C 0780033C */  lui        $v1, %hi(D_80075718)
-/* 3E710 8004DF10 18576324 */  addiu      $v1, $v1, %lo(D_80075718)
+/* 3E70C 8004DF0C 0780033C */  lui        $v1, %hi(g_SurfaceBelowFlags)
+/* 3E710 8004DF10 18576324 */  addiu      $v1, $v1, %lo(g_SurfaceBelowFlags)
 /* 3E714 8004DF14 27370108 */  j          .L8004DC9C
 /* 3E718 8004DF18 000061AC */   sw        $at, 0x0($v1)
 .L8004DF1C:

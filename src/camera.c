@@ -250,9 +250,10 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_800357A4);
 void func_80035F58() {
   D_80075924 = 0; // Reset the L2 R2 rotation speed
 
-  // If the 0x1000 flag is set, or spyro isn't in the center of the screen,
-  // return
-  if (g_Spyro.unk_0x1f4 & 0x1000 || g_Camera.m_SpyroOffCenterFrames)
+  // If CTRL_SKIP_CAMERA_CENTER is set, or Spyro isn't in the center of the
+  // screen, return
+  if (g_Spyro.m_ControlFlags & CTRL_SKIP_CAMERA_CENTER ||
+      g_Camera.m_SpyroOffCenterFrames)
     return;
 
   // If L2 or R2 is held, set the rotation speed accordingly
