@@ -5054,7 +5054,7 @@ glabel func_level_34_8007AF28
 /* 31F9CB8 8007F6F0 00000000 */   nop
 .Llevel_34_8007F6F4:
 /* 31F9CBC 8007F6F4 1400058E */  lw         $a1, 0x14($s0)
-/* 31F9CC0 8007F6F8 7BEA000C */  jal        func_8003A9EC
+/* 31F9CC0 8007F6F8 7BEA000C */  jal        ApplyFlameHeatExternal
 /* 31F9CC4 8007F6FC 21206002 */   addu      $a0, $s3, $zero
 /* 31F9CC8 8007F700 140002AE */  sw         $v0, 0x14($s0)
 /* 31F9CCC 8007F704 1800628E */  lw         $v0, 0x18($s3)

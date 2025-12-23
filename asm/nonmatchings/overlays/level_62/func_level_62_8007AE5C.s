@@ -6323,7 +6323,7 @@ glabel func_level_62_8007AE5C
 /* 56CF75C 80080994 10000424 */   addiu     $a0, $zero, 0x10
 .Llevel_62_80080998:
 /* 56CF760 80080998 1400058E */  lw         $a1, 0x14($s0)
-/* 56CF764 8008099C 7BEA000C */  jal        func_8003A9EC
+/* 56CF764 8008099C 7BEA000C */  jal        ApplyFlameHeatExternal
 /* 56CF768 800809A0 2120A002 */   addu      $a0, $s5, $zero
 /* 56CF76C 800809A4 140002AE */  sw         $v0, 0x14($s0)
 /* 56CF770 800809A8 1800A28E */  lw         $v0, 0x18($s5)
@@ -8284,7 +8284,7 @@ glabel func_level_62_8007AE5C
 /* 56D142C 80082664 1800A0AE */   sw        $zero, 0x18($s5)
 .Llevel_62_80082668:
 /* 56D1430 80082668 1000058E */  lw         $a1, 0x10($s0)
-/* 56D1434 8008266C 7BEA000C */  jal        func_8003A9EC
+/* 56D1434 8008266C 7BEA000C */  jal        ApplyFlameHeatExternal
 /* 56D1438 80082670 2120A002 */   addu      $a0, $s5, $zero
 /* 56D143C 80082674 100002AE */  sw         $v0, 0x10($s0)
 /* 56D1440 80082678 1800A28E */  lw         $v0, 0x18($s5)

@@ -664,11 +664,42 @@ void unused_VecInterpolateCurve(Vector3D *pDest, u_char *pParam, int pIndex,
   VecShiftRight(pDest, 10);
 }
 
-/// @brief: Specular version of func_8003AA84
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A9EC);
+///// @brief: Advanced flame heat effect with external heat tracking and RGB
+/// specular color output
+/// @param pMoby The moby to apply the flame heat effect to
+/// @param heat Current heat value (caller-managed, typically 0-80+)
+/// @return Updated heat value (caller should store and pass back on subsequent
+/// frames)
+int ApplyFlameHeatExternal(Moby *pMoby, int heat) {
+  int scaledHeat;
+  int colorTemp, specularColor;
+
+  if (heat || pMoby->m_DamageFlags) {
+    if ((pMoby->m_DamageFlags & 0x10000) && heat < 80) {
+      heat += 16;
+    } else if (heat >= 33) {
+      heat -= 2;
+    } else if (heat > 0) {
+      heat--;
+    }
+
+    scaledHeat = heat >> 2;
+    specularColor = scaledHeat + 24;
+    specularColor = specularColor << 12;
+    colorTemp = 24 - scaledHeat;
+    colorTemp = colorTemp << 6;
+    colorTemp = colorTemp + 0xa00000;
+    specularColor = specularColor + colorTemp;
+    specularColor = specularColor + 24;
+    specularColor = specularColor - scaledHeat;
+    *(int *)&pMoby->m_SpecularMetalColor[0] = specularColor;
+  }
+
+  return heat;
+}
 
 /// @brief: Apply flame heat
-void func_8003AA84(Moby *pMoby) {
+void ApplyFlameHeat(Moby *pMoby) {
   // Are we being flamed?
   if (pMoby->m_DamageFlags & 0x10000) {
     // Being flamed, heat up

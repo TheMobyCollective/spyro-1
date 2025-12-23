@@ -3089,7 +3089,7 @@ glabel func_level_51_8007B4F8
 /* 467D044 8007DA7C 080002AE */   sw        $v0, 0x8($s0)
 .L8007DA80_:
 /* 467D048 8007DA80 0000718E */  lw         $s1, 0x0($s3)
-/* 467D04C 8007DA84 A1EA000C */  jal        func_8003AA84
+/* 467D04C 8007DA84 A1EA000C */  jal        ApplyFlameHeat
 /* 467D050 8007DA88 21206002 */   addu      $a0, $s3, $zero
 /* 467D054 8007DA8C 180060AE */  sw         $zero, 0x18($s3)
 /* 467D058 8007DA90 0C00238E */  lw         $v1, 0xC($s1)
@@ -3319,7 +3319,7 @@ glabel func_level_51_8007B4F8
 /* 467D398 8007DDD0 3D0080A0 */   sb        $zero, 0x3D($a0)
 .L8007DDD4_:
 /* 467D39C 8007DDD4 0000708E */  lw         $s0, 0x0($s3)
-/* 467D3A0 8007DDD8 A1EA000C */  jal        func_8003AA84
+/* 467D3A0 8007DDD8 A1EA000C */  jal        ApplyFlameHeat
 /* 467D3A4 8007DDDC 21206002 */   addu      $a0, $s3, $zero
 /* 467D3A8 8007DDE0 1800628E */  lw         $v0, 0x18($s3)
 /* 467D3AC 8007DDE4 0A00033C */  lui        $v1, (0xA0000 >> 16)
@@ -7313,7 +7313,7 @@ glabel func_level_51_8007B4F8
 /* 4680E5C 80081894 00000000 */   nop
 .Llevel_51_80081898:
 /* 4680E60 80081898 1400058E */  lw         $a1, 0x14($s0)
-/* 4680E64 8008189C 7BEA000C */  jal        func_8003A9EC
+/* 4680E64 8008189C 7BEA000C */  jal        ApplyFlameHeatExternal
 /* 4680E68 800818A0 21206002 */   addu      $a0, $s3, $zero
 /* 4680E6C 800818A4 140002AE */  sw         $v0, 0x14($s0)
 /* 4680E70 800818A8 1800628E */  lw         $v0, 0x18($s3)
@@ -9786,7 +9786,7 @@ glabel func_level_51_8007B4F8
 /* 46832E8 80083D20 00000000 */   nop
 .Llevel_51_80083D24:
 /* 46832EC 80083D24 1000058E */  lw         $a1, 0x10($s0)
-/* 46832F0 80083D28 7BEA000C */  jal        func_8003A9EC
+/* 46832F0 80083D28 7BEA000C */  jal        ApplyFlameHeatExternal
 /* 46832F4 80083D2C 21206002 */   addu      $a0, $s3, $zero
 /* 46832F8 80083D30 100002AE */  sw         $v0, 0x10($s0)
 /* 46832FC 80083D34 1800628E */  lw         $v0, 0x18($s3)

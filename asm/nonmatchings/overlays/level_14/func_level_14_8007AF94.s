@@ -4403,7 +4403,7 @@ glabel func_level_14_8007AF94
 /* 1484310 8007ED48 180060AE */   sw        $zero, 0x18($s3)
 .Llevel_14_8007ED4C:
 /* 1484314 8007ED4C 1400058E */  lw         $a1, 0x14($s0)
-/* 1484318 8007ED50 7BEA000C */  jal        func_8003A9EC
+/* 1484318 8007ED50 7BEA000C */  jal        ApplyFlameHeatExternal
 /* 148431C 8007ED54 21206002 */   addu      $a0, $s3, $zero
 /* 1484320 8007ED58 140002AE */  sw         $v0, 0x14($s0)
 /* 1484324 8007ED5C 1800628E */  lw         $v0, 0x18($s3)
