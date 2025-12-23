@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 // Resets a bunch of PSYQ stuff
-static void func_8002BA68(void) {
+void func_8002BA68(void) {
   SetDispMask(0);
   CdInit();
   CdReadCallback(nullptr);

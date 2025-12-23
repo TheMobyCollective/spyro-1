@@ -367,7 +367,7 @@ int IsMobyPlayingSound(Moby *pMoby, u_int pSoundId) {
 }
 
 // Kills orphaned sounds
-static void KillOrphans(void) {
+void KillOrphans(void) {
   u_char keysStatus[24];
   int i;
 

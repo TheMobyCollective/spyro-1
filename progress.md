@@ -54,7 +54,7 @@
 - [x] func_80056B28
 - [x] func_80056C84
 - [x] IsMobyPlayingSound
-- [x] func_80056E3C
+- [x] KillOrphans
 - [x] SpuUpdate
 - [x] func_80033C50
 - [x] func_80033E40
@@ -111,7 +111,7 @@
 - [x] func_8002C914
 - [x] func_8002C91C
 - [ ] func_8002C924
-- [ ] func_8002CB6C
+- [x] func_8002CB6C
 - [ ] func_8002CCC8
 - [x] func_8002D02C
 - [x] func_8002D170
