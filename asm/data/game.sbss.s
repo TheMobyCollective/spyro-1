@@ -22,7 +22,7 @@ dlabel D_80075678
 dlabel D_8007567C
 /* 65E54 8007567C */ .space 0x04
 
-dlabel D_80075680
+dlabel g_CutsceneLayout
 /* 65E58 80075680 */ .space 0x04
 
 dlabel D_80075684
@@ -242,7 +242,7 @@ dlabel g_ActEnabled
 dlabel D_800757A8
 /* 65F80 800757A8 */ .space 0x04
 
-dlabel D_800757AC
+dlabel g_CreditsSequence
 /* 65F84 800757AC */ .space 0x04
 
 dlabel D_800757B0
@@ -528,7 +528,7 @@ dlabel D_80075914
 dlabel g_Fade
 /* 660F0 80075918 */ .space 0x04
 
-dlabel D_8007591C
+dlabel g_SkipLowPolyWorld
 /* 660F4 8007591C */ .space 0x08
 
 dlabel D_80075924

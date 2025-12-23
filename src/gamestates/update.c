@@ -131,7 +131,7 @@ void GamestateCutsceneUpdate(void) {
   int currentTick;
 
   if (g_CutsceneIdx >= 2) {
-    if (D_80075680->m_CurrentTick == 0) {
+    if (g_CutsceneLayout->m_CurrentTick == 0) {
       // Initial cutscene setup
       func_80056B28(0); // Stop all sounds
       SpuUpdate();
@@ -156,16 +156,16 @@ void GamestateCutsceneUpdate(void) {
         func_8002BBE0(); // Music update (processes CD audio)
       }
 
-      func_8002D338(); // Initialize cutscene playback state
+      StartCutscenePlayback(); // Initialize cutscene playback state
     }
   }
 
   // Main update
-  currentTick = D_80075680->m_CurrentTick;
-  duration = D_80075680->m_Duration;
+  currentTick = g_CutsceneLayout->m_CurrentTick;
+  duration = g_CutsceneLayout->m_Duration;
   currentTick += g_DeltaTime;
   duration <<= 1;
-  D_80075680->m_CurrentTick = currentTick;
+  g_CutsceneLayout->m_CurrentTick = currentTick;
 
   if (currentTick < duration) {
     // Fade logic
@@ -189,7 +189,7 @@ void GamestateCutsceneUpdate(void) {
       if (g_Pad.m_Held & (PAD_START | PAD_CROSS)) {
         CutsceneLayout *pCutscene;
         int tick;
-        pCutscene = D_80075680;
+        pCutscene = g_CutsceneLayout;
         tick = pCutscene->m_CurrentTick;
         if (tick >= 241) {
           if (tick < (pCutscene->m_Duration << 1) - 32) {
@@ -199,9 +199,10 @@ void GamestateCutsceneUpdate(void) {
       }
     }
 
-    func_8002BFE0(D_80075680->m_CurrentTick); // Update/render cutscene frame
+    func_8002BFE0(
+        g_CutsceneLayout->m_CurrentTick); // Update/render cutscene frame
   } else {
-    func_8002D440(); // End cutscene, transition to next gamestate
+    EndCutscenePlayback();
   }
 }
 

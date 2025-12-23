@@ -6179,8 +6179,8 @@ glabel func_level_64_8007AD4C
 /* 5AF050C 80080744 0880013C */  lui        $at, %hi(g_LevelVortexExitFlags)
 /* 5AF0510 80080748 21082300 */  addu       $at, $at, $v1
 /* 5AF0514 8008074C A8A622A0 */  sb         $v0, %lo(g_LevelVortexExitFlags)($at)
-/* 5AF0518 80080750 0780033C */  lui        $v1, %hi(D_80075680)
-/* 5AF051C 80080754 8056638C */  lw         $v1, %lo(D_80075680)($v1)
+/* 5AF0518 80080750 0780033C */  lui        $v1, %hi(g_CutsceneLayout)
+/* 5AF051C 80080754 8056638C */  lw         $v1, %lo(g_CutsceneLayout)($v1)
 /* 5AF0520 80080758 03000224 */  addiu      $v0, $zero, 0x3
 /* 5AF0524 8008075C 0780013C */  lui        $at, %hi(g_CutsceneIdx)
 /* 5AF0528 80080760 6C5622AC */  sw         $v0, %lo(g_CutsceneIdx)($at)

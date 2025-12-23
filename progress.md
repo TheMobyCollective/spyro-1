@@ -116,8 +116,8 @@
 - [x] func_8002D02C
 - [x] func_8002D170
 - [ ] func_8002D228
-- [ ] func_8002D338
-- [x] func_8002D440
+- [x] StartCutscenePlayback
+- [x] EndCutscenePlayback
 - [x] HudPrint
 - [x] HudMoveMoby
 - [x] HudMoveEgg

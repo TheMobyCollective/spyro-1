@@ -196,7 +196,7 @@ dlabel D_800778E8
 dlabel D_800778EC
 /* 67834 800778EC */ .space 0x04
 
-dlabel D_800778F0
+dlabel g_CutsceneSoundDef
 /* 67838 800778F0 */ .space 0x18
 
 dlabel D_80077908

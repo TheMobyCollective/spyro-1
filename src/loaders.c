@@ -365,21 +365,21 @@ void LoadCutscene(void) {
   } else if (g_LoadStage == 9) {
 
     // The layout is actually the cutscene data
-    D_80075680 = D_800785D8.m_LevelLayout;
+    g_CutsceneLayout = D_800785D8.m_LevelLayout;
 
     // While in WAD it's an offset, now we turn it into a pointer
-    PATCH_POINTER(D_80075680->m_CameraData, D_80075680);
+    PATCH_POINTER(g_CutsceneLayout->m_CameraData, g_CutsceneLayout);
 
     // Ditto for the Moby data
-    for (j = 0; j < D_80075680->m_MobyCount; ++j) {
-      PATCH_POINTER(D_80075680->m_MobyData[j], D_800785D8.m_LevelLayout);
+    for (j = 0; j < g_CutsceneLayout->m_MobyCount; ++j) {
+      PATCH_POINTER(g_CutsceneLayout->m_MobyData[j], D_800785D8.m_LevelLayout);
     }
 
     // Set the Moby pointer to the empty space after the cutscene data
     D_80075828 = (Moby *)((char *)D_800785D8.m_LevelLayout +
                           D_800785D8.m_LevelLayoutSize);
 
-    for (j = 0; j < D_80075680->m_MobyCount; ++j) {
+    for (j = 0; j < g_CutsceneLayout->m_MobyCount; ++j) {
       func_8003A720(&D_80075828[j]);
 
       // Set the class and render radius, the class is sequential in cutscenes
@@ -388,7 +388,7 @@ void LoadCutscene(void) {
     }
 
     // Terminate the moby list
-    D_80075828[D_80075680->m_MobyCount].m_State = 0xFF;
+    D_80075828[g_CutsceneLayout->m_MobyCount].m_State = 0xFF;
     g_LoadStage = 10;
   }
 }

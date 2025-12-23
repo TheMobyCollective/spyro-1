@@ -62,8 +62,8 @@ glabel func_titlescreen_8007CEE4
 /* 5DD24 8007CF5C 00000000 */  nop
 /* 5DD28 8007CF60 12006214 */  bne        $v1, $v0, .Ltitlescreen_8007CFAC
 /* 5DD2C 8007CF64 03000224 */   addiu     $v0, $zero, 0x3
-/* 5DD30 8007CF68 0780023C */  lui        $v0, %hi(D_80075680)
-/* 5DD34 8007CF6C 8056428C */  lw         $v0, %lo(D_80075680)($v0)
+/* 5DD30 8007CF68 0780023C */  lui        $v0, %hi(g_CutsceneLayout)
+/* 5DD34 8007CF6C 8056428C */  lw         $v0, %lo(g_CutsceneLayout)($v0)
 /* 5DD38 8007CF70 00000000 */  nop
 /* 5DD3C 8007CF74 0000428C */  lw         $v0, 0x0($v0)
 /* 5DD40 8007CF78 00000000 */  nop

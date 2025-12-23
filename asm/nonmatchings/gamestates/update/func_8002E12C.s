@@ -164,7 +164,7 @@ glabel func_8002E12C
 /* 1EB54 8002E354 0A004228 */  slti       $v0, $v0, 0xA
 /* 1EB58 8002E358 F7FF4014 */  bnez       $v0, .L8002E338
 /* 1EB5C 8002E35C 00000000 */   nop
-/* 1EB60 8002E360 CEB4000C */  jal        func_8002D338
+/* 1EB60 8002E360 CEB4000C */  jal        StartCutscenePlayback
 /* 1EB64 8002E364 00000000 */   nop
 /* 1EB68 8002E368 5CB4000C */  jal        func_8002D170
 /* 1EB6C 8002E36C 00000000 */   nop

@@ -94,7 +94,7 @@ extern int D_80075818;
 
 extern int D_80075830; // Key flag
 
-extern int D_8007591C; // Skip low-poly model in world
+extern int g_SkipLowPolyWorld; // Skip low-poly model in world
 
 extern int D_8007582C; // Spyro's extra life count
 extern int D_800758E8; // Life orb count
