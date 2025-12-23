@@ -28,8 +28,8 @@ glabel func_level_35_8007AEDC
 /* 33DFCFC 8007AF34 00000000 */   nop
 /* 33DFD00 8007AF38 21300000 */  addu       $a2, $zero, $zero
 /* 33DFD04 8007AF3C 08000E24 */  addiu      $t6, $zero, 0x8
-/* 33DFD08 8007AF40 08800D3C */  lui        $t5, %hi(D_80078680)
-/* 33DFD0C 8007AF44 8086AD25 */  addiu      $t5, $t5, %lo(D_80078680)
+/* 33DFD08 8007AF40 08800D3C */  lui        $t5, %hi(g_FlightCollected)
+/* 33DFD0C 8007AF44 8086AD25 */  addiu      $t5, $t5, %lo(g_FlightCollected)
 /* 33DFD10 8007AF48 07800C3C */  lui        $t4, %hi(g_LevelGemCount)
 /* 33DFD14 8007AF4C 20748C25 */  addiu      $t4, $t4, %lo(g_LevelGemCount)
 /* 33DFD18 8007AF50 07800B3C */  lui        $t3, %hi(D_8006E920)
@@ -83,14 +83,14 @@ glabel func_level_35_8007AEDC
 /* 33DFDD0 8007B008 04002925 */   addiu     $t1, $t1, 0x4
 /* 33DFDD4 8007B00C 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
 /* 33DFDD8 8007B010 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
-/* 33DFDDC 8007B014 0880033C */  lui        $v1, %hi(D_80078634)
-/* 33DFDE0 8007B018 3486638C */  lw         $v1, %lo(D_80078634)($v1)
+/* 33DFDDC 8007B014 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x4)
+/* 33DFDE0 8007B018 3486638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x4)($v1)
 /* 33DFDE4 8007B01C 00000000 */  nop
 /* 33DFDE8 8007B020 21104300 */  addu       $v0, $v0, $v1
-/* 33DFDEC 8007B024 0880033C */  lui        $v1, %hi(D_80078638)
-/* 33DFDF0 8007B028 3886638C */  lw         $v1, %lo(D_80078638)($v1)
-/* 33DFDF4 8007B02C 0880043C */  lui        $a0, %hi(D_8007863C)
-/* 33DFDF8 8007B030 3C86848C */  lw         $a0, %lo(D_8007863C)($a0)
+/* 33DFDEC 8007B024 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x8)
+/* 33DFDF0 8007B028 3886638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x8)($v1)
+/* 33DFDF4 8007B02C 0880043C */  lui        $a0, %hi(g_FlightObjectiveCounters + 0xC)
+/* 33DFDF8 8007B030 3C86848C */  lw         $a0, %lo(g_FlightObjectiveCounters + 0xC)($a0)
 /* 33DFDFC 8007B034 21104300 */  addu       $v0, $v0, $v1
 /* 33DFE00 8007B038 21104400 */  addu       $v0, $v0, $a0
 /* 33DFE04 8007B03C 20000324 */  addiu      $v1, $zero, 0x20
@@ -101,9 +101,9 @@ glabel func_level_35_8007AEDC
 /* 33DFE18 8007B050 00000000 */  nop
 /* 33DFE1C 8007B054 80180200 */  sll        $v1, $v0, 2
 /* 33DFE20 8007B058 21306200 */  addu       $a2, $v1, $v0
-/* 33DFE24 8007B05C 0880013C */  lui        $at, %hi(D_80078680 + 0x04)
+/* 33DFE24 8007B05C 0880013C */  lui        $at, %hi(g_FlightCollected + 0x04)
 /* 33DFE28 8007B060 21082600 */  addu       $at, $at, $a2
-/* 33DFE2C 8007B064 84862290 */  lbu        $v0, %lo(D_80078680 + 0x04)($at)
+/* 33DFE2C 8007B064 84862290 */  lbu        $v0, %lo(g_FlightCollected + 0x04)($at)
 /* 33DFE30 8007B068 00000000 */  nop
 /* 33DFE34 8007B06C 1F004014 */  bnez       $v0, .Llevel_35_8007B0EC
 /* 33DFE38 8007B070 80280600 */   sll       $a1, $a2, 2
@@ -134,14 +134,14 @@ glabel func_level_35_8007AEDC
 /* 33DFE9C 8007B0D4 01000224 */  addiu      $v0, $zero, 0x1
 /* 33DFEA0 8007B0D8 0780013C */  lui        $at, %hi(g_GemTotal)
 /* 33DFEA4 8007B0DC 605823AC */  sw         $v1, %lo(g_GemTotal)($at)
-/* 33DFEA8 8007B0E0 0880013C */  lui        $at, %hi(D_80078680 + 0x04)
+/* 33DFEA8 8007B0E0 0880013C */  lui        $at, %hi(g_FlightCollected + 0x04)
 /* 33DFEAC 8007B0E4 21082600 */  addu       $at, $at, $a2
-/* 33DFEB0 8007B0E8 848622A0 */  sb         $v0, %lo(D_80078680 + 0x04)($at)
+/* 33DFEB0 8007B0E8 848622A0 */  sb         $v0, %lo(g_FlightCollected + 0x04)($at)
 .Llevel_35_8007B0EC:
 /* 33DFEB4 8007B0EC 0780023C */  lui        $v0, %hi(g_Homeworld)
 /* 33DFEB8 8007B0F0 5C59428C */  lw         $v0, %lo(g_Homeworld)($v0)
-/* 33DFEBC 8007B0F4 0880033C */  lui        $v1, %hi(D_80078618)
-/* 33DFEC0 8007B0F8 18866324 */  addiu      $v1, $v1, %lo(D_80078618)
+/* 33DFEBC 8007B0F4 0880033C */  lui        $v1, %hi(g_FlightCourseRecords)
+/* 33DFEC0 8007B0F8 18866324 */  addiu      $v1, $v1, %lo(g_FlightCourseRecords)
 /* 33DFEC4 8007B0FC 80100200 */  sll        $v0, $v0, 2
 /* 33DFEC8 8007B100 21204300 */  addu       $a0, $v0, $v1
 /* 33DFECC 8007B104 0000838C */  lw         $v1, 0x0($a0)

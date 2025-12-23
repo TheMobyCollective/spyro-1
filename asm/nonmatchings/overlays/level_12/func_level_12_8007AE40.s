@@ -529,8 +529,8 @@ glabel func_level_12_8007AE40
 /* EF69F0 8007B428 21200000 */   addu      $a0, $zero, $zero
 /* EF69F4 8007B42C 0880013C */  lui        $at, %hi(g_Spyro + 0x24C)
 /* EF69F8 8007B430 A48C20AC */  sw         $zero, %lo(g_Spyro + 0x24C)($at)
-/* EF69FC 8007B434 0880013C */  lui        $at, %hi(D_80078768)
-/* EF6A00 8007B438 688720AC */  sw         $zero, %lo(D_80078768)($at)
+/* EF69FC 8007B434 0880013C */  lui        $at, %hi(g_SpyroFlame + 0xA0)
+/* EF6A00 8007B438 688720AC */  sw         $zero, %lo(g_SpyroFlame + 0xA0)($at)
 /* EF6A04 8007B43C 450A0208 */  j          .Llevel_12_80082914
 /* EF6A08 8007B440 00000000 */   nop
 .Llevel_12_8007B444:

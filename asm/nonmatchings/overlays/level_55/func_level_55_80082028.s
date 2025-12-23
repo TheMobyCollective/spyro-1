@@ -787,9 +787,9 @@ glabel func_level_55_80082028
 /* 5037970 80082BA8 5C59428C */  lw         $v0, %lo(g_Homeworld)($v0)
 /* 5037974 80082BAC 00000000 */  nop
 /* 5037978 80082BB0 80100200 */  sll        $v0, $v0, 2
-/* 503797C 80082BB4 0880013C */  lui        $at, %hi(D_80078618)
+/* 503797C 80082BB4 0880013C */  lui        $at, %hi(g_FlightCourseRecords)
 /* 5037980 80082BB8 21082200 */  addu       $at, $at, $v0
-/* 5037984 80082BBC 1886228C */  lw         $v0, %lo(D_80078618)($at)
+/* 5037984 80082BBC 1886228C */  lw         $v0, %lo(g_FlightCourseRecords)($at)
 /* 5037988 80082BC0 00000000 */  nop
 /* 503798C 80082BC4 07004010 */  beqz       $v0, .Llevel_55_80082BE4
 /* 5037990 80082BC8 00000000 */   nop

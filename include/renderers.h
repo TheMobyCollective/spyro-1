@@ -9,11 +9,33 @@
 // func_80022A2C
 
 // r_particles:
+
+/// @brief Render particles
 void func_800573C8(void);
+
+/// @brief Render Glows
+void func_800580F4(void);
+
+/// @brief Render Sparkles
+void func_800584C4(void);
 
 /// @brief Allocates a spark particle slot
 /// @return The slot index, or -1 if no slot available
 int func_8005882C(void);
+
+/// @brief Renders the flash a rescued dragon makes
+void func_80058864(void);
+
+/// @brief Allocates a Glow particle slot
+/// @return The actual Glow struct pointer, or nullptr if no slot available
+void *func_80058AE8(void);
+
+/// @brief Frees a Glow particle
+/// @param pGlow The Glow particle to free
+void func_80058B60(void *pGlow);
+
+/// @brief Free all Glow and Sparkle particles
+void func_80058B68(void);
 
 typedef struct {
   Vector3D m_Position;

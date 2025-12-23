@@ -638,8 +638,8 @@ glabel func_level_42_8007AFBC
 /* 3A6EB84 8007B5BC 21200000 */   addu      $a0, $zero, $zero
 /* 3A6EB88 8007B5C0 0880013C */  lui        $at, %hi(g_Spyro + 0x24C)
 /* 3A6EB8C 8007B5C4 A48C20AC */  sw         $zero, %lo(g_Spyro + 0x24C)($at)
-/* 3A6EB90 8007B5C8 0880013C */  lui        $at, %hi(D_80078768)
-/* 3A6EB94 8007B5CC 688720AC */  sw         $zero, %lo(D_80078768)($at)
+/* 3A6EB90 8007B5C8 0880013C */  lui        $at, %hi(g_SpyroFlame + 0xA0)
+/* 3A6EB94 8007B5CC 688720AC */  sw         $zero, %lo(g_SpyroFlame + 0xA0)($at)
 /* 3A6EB98 8007B5D0 B3110208 */  j          .Llevel_42_800846CC
 /* 3A6EB9C 8007B5D4 00000000 */   nop
 .Llevel_42_8007B5D8:

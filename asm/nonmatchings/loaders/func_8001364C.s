@@ -344,8 +344,8 @@ glabel func_8001364C
 /* 4360 80013B60 0780013C */  lui        $at, %hi(D_800756C0)
 /* 4364 80013B64 C05620AC */  sw         $zero, %lo(D_800756C0)($at)
 .L80013B68:
-/* 4368 80013B68 0880043C */  lui        $a0, %hi(D_800786C8)
-/* 436C 80013B6C C8868424 */  addiu      $a0, $a0, %lo(D_800786C8)
+/* 4368 80013B68 0880043C */  lui        $a0, %hi(g_SpyroFlame)
+/* 436C 80013B6C C8868424 */  addiu      $a0, $a0, %lo(g_SpyroFlame)
 /* 4370 80013B70 21280000 */  addu       $a1, $zero, $zero
 /* 4374 80013B74 455A000C */  jal        Memset
 /* 4378 80013B78 38010624 */   addiu     $a2, $zero, 0x138
@@ -354,11 +354,11 @@ glabel func_8001364C
 /* 4384 80013B84 21280000 */  addu       $a1, $zero, $zero
 /* 4388 80013B88 0000028E */  lw         $v0, 0x0($s0)
 /* 438C 80013B8C 28000624 */  addiu      $a2, $zero, 0x28
-/* 4390 80013B90 0880013C */  lui        $at, %hi(D_800786D8)
-/* 4394 80013B94 D88622AC */  sw         $v0, %lo(D_800786D8)($at)
+/* 4390 80013B90 0880013C */  lui        $at, %hi(g_SpyroFlame + 0x10)
+/* 4394 80013B94 D88622AC */  sw         $v0, %lo(g_SpyroFlame + 0x10)($at)
 /* 4398 80013B98 0400028E */  lw         $v0, 0x4($s0)
-/* 439C 80013B9C 0880013C */  lui        $at, %hi(D_800786DC)
-/* 43A0 80013BA0 DC8622AC */  sw         $v0, %lo(D_800786DC)($at)
+/* 439C 80013B9C 0880013C */  lui        $at, %hi(g_SpyroFlame + 0x14)
+/* 43A0 80013BA0 DC8622AC */  sw         $v0, %lo(g_SpyroFlame + 0x14)($at)
 /* 43A4 80013BA4 455A000C */  jal        Memset
 /* 43A8 80013BA8 08001026 */   addiu     $s0, $s0, 0x8
 /* 43AC 80013BAC 0000028E */  lw         $v0, 0x0($s0)
@@ -395,12 +395,12 @@ glabel func_8001364C
 /* 4424 80013C24 58001026 */  addiu      $s0, $s0, 0x58
 /* 4428 80013C28 0000028E */  lw         $v0, 0x0($s0)
 /* 442C 80013C2C 21880000 */  addu       $s1, $zero, $zero
-/* 4430 80013C30 0880013C */  lui        $at, %hi(D_800786E0)
-/* 4434 80013C34 E08622AC */  sw         $v0, %lo(D_800786E0)($at)
+/* 4430 80013C30 0880013C */  lui        $at, %hi(g_SpyroFlame + 0x18)
+/* 4434 80013C34 E08622AC */  sw         $v0, %lo(g_SpyroFlame + 0x18)($at)
 /* 4438 80013C38 0400028E */  lw         $v0, 0x4($s0)
 /* 443C 80013C3C 08001026 */  addiu      $s0, $s0, 0x8
-/* 4440 80013C40 0880013C */  lui        $at, %hi(D_800786E4)
-/* 4444 80013C44 E48622AC */  sw         $v0, %lo(D_800786E4)($at)
+/* 4440 80013C40 0880013C */  lui        $at, %hi(g_SpyroFlame + 0x1C)
+/* 4444 80013C44 E48622AC */  sw         $v0, %lo(g_SpyroFlame + 0x1C)($at)
 /* 4448 80013C48 0000028E */  lw         $v0, 0x0($s0)
 /* 444C 80013C4C 0880033C */  lui        $v1, %hi(D_80078560)
 /* 4450 80013C50 60856324 */  addiu      $v1, $v1, %lo(D_80078560)

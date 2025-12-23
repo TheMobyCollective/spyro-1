@@ -113,7 +113,8 @@ extern int D_80075784;  // Extra VSync for DEMO mode
 extern int *D_8007585C; // Pointer to the current demo input
 
 extern PadBuffer g_PadBuffer; // Buffer that PSYQ writes out pad state into
-extern PadBuffer D_80078E50;  // Backup buffer while inputs are disabled
+extern PadBuffer
+    g_PadBufferSecondController; // Backup buffer while inputs are disabled
 
 /// @brief Copies the gamepad over, then resets the input gamepad
 void func_80053708(Gamepad *in, Gamepad *out);

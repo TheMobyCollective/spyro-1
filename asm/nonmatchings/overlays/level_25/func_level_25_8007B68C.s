@@ -362,14 +362,14 @@ glabel func_level_25_8007B68C
 /* 25907DC 8007BA14 3800B327 */   addiu     $s3, $sp, 0x38
 /* 25907E0 8007BA18 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
 /* 25907E4 8007BA1C 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
-/* 25907E8 8007BA20 0880033C */  lui        $v1, %hi(D_80078634)
-/* 25907EC 8007BA24 3486638C */  lw         $v1, %lo(D_80078634)($v1)
+/* 25907E8 8007BA20 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x4)
+/* 25907EC 8007BA24 3486638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x4)($v1)
 /* 25907F0 8007BA28 00000000 */  nop
 /* 25907F4 8007BA2C 21104300 */  addu       $v0, $v0, $v1
-/* 25907F8 8007BA30 0880033C */  lui        $v1, %hi(D_80078638)
-/* 25907FC 8007BA34 3886638C */  lw         $v1, %lo(D_80078638)($v1)
-/* 2590800 8007BA38 0880043C */  lui        $a0, %hi(D_8007863C)
-/* 2590804 8007BA3C 3C86848C */  lw         $a0, %lo(D_8007863C)($a0)
+/* 25907F8 8007BA30 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x8)
+/* 25907FC 8007BA34 3886638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x8)($v1)
+/* 2590800 8007BA38 0880043C */  lui        $a0, %hi(g_FlightObjectiveCounters + 0xC)
+/* 2590804 8007BA3C 3C86848C */  lw         $a0, %lo(g_FlightObjectiveCounters + 0xC)($a0)
 /* 2590808 8007BA40 21104300 */  addu       $v0, $v0, $v1
 /* 259080C 8007BA44 21104400 */  addu       $v0, $v0, $a0
 /* 2590810 8007BA48 20000324 */  addiu      $v1, $zero, 0x20
@@ -548,9 +548,9 @@ glabel func_level_25_8007B68C
 /* 2590AAC 8007BCE4 00000000 */  nop
 /* 2590AB0 8007BCE8 80180200 */  sll        $v1, $v0, 2
 /* 2590AB4 8007BCEC 21186200 */  addu       $v1, $v1, $v0
-/* 2590AB8 8007BCF0 0880013C */  lui        $at, %hi(D_80078680)
+/* 2590AB8 8007BCF0 0880013C */  lui        $at, %hi(g_FlightCollected)
 /* 2590ABC 8007BCF4 21082300 */  addu       $at, $at, $v1
-/* 2590AC0 8007BCF8 80862290 */  lbu        $v0, %lo(D_80078680)($at)
+/* 2590AC0 8007BCF8 80862290 */  lbu        $v0, %lo(g_FlightCollected)($at)
 /* 2590AC4 8007BCFC 00000000 */  nop
 /* 2590AC8 8007BD00 07004010 */  beqz       $v0, .Llevel_25_8007BD20
 /* 2590ACC 8007BD04 80100300 */   sll       $v0, $v1, 2
@@ -648,8 +648,8 @@ glabel func_level_25_8007B68C
 /* 2590C2C 8007BE64 03004228 */  slti       $v0, $v0, 0x3
 /* 2590C30 8007BE68 10004014 */  bnez       $v0, .Llevel_25_8007BEAC
 /* 2590C34 8007BE6C 1800B027 */   addiu     $s0, $sp, 0x18
-/* 2590C38 8007BE70 0880063C */  lui        $a2, %hi(D_80078634)
-/* 2590C3C 8007BE74 3486C68C */  lw         $a2, %lo(D_80078634)($a2)
+/* 2590C38 8007BE70 0880063C */  lui        $a2, %hi(g_FlightObjectiveCounters + 0x4)
+/* 2590C3C 8007BE74 3486C68C */  lw         $a2, %lo(g_FlightObjectiveCounters + 0x4)($a2)
 /* 2590C40 8007BE78 0880053C */  lui        $a1, %hi(D_level_25_8007AA88)
 /* 2590C44 8007BE7C 88AAA524 */  addiu      $a1, $a1, %lo(D_level_25_8007AA88)
 /* 2590C48 8007BE80 F58B010C */  jal        sprintf
@@ -670,8 +670,8 @@ glabel func_level_25_8007B68C
 /* 2590C80 8007BEB8 04004228 */  slti       $v0, $v0, 0x4
 /* 2590C84 8007BEBC 54004014 */  bnez       $v0, .Llevel_25_8007C010
 /* 2590C88 8007BEC0 08000224 */   addiu     $v0, $zero, 0x8
-/* 2590C8C 8007BEC4 0880033C */  lui        $v1, %hi(D_80078634)
-/* 2590C90 8007BEC8 3486638C */  lw         $v1, %lo(D_80078634)($v1)
+/* 2590C8C 8007BEC4 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x4)
+/* 2590C90 8007BEC8 3486638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x4)($v1)
 /* 2590C94 8007BECC 00000000 */  nop
 /* 2590C98 8007BED0 26006214 */  bne        $v1, $v0, .Llevel_25_8007BF6C
 /* 2590C9C 8007BED4 00000000 */   nop
@@ -680,9 +680,9 @@ glabel func_level_25_8007B68C
 /* 2590CA8 8007BEE0 00000000 */  nop
 /* 2590CAC 8007BEE4 80180200 */  sll        $v1, $v0, 2
 /* 2590CB0 8007BEE8 21186200 */  addu       $v1, $v1, $v0
-/* 2590CB4 8007BEEC 0880013C */  lui        $at, %hi(D_80078680 + 0x01)
+/* 2590CB4 8007BEEC 0880013C */  lui        $at, %hi(g_FlightCollected + 0x01)
 /* 2590CB8 8007BEF0 21082300 */  addu       $at, $at, $v1
-/* 2590CBC 8007BEF4 81862290 */  lbu        $v0, %lo(D_80078680 + 0x01)($at)
+/* 2590CBC 8007BEF4 81862290 */  lbu        $v0, %lo(g_FlightCollected + 0x01)($at)
 /* 2590CC0 8007BEF8 00000000 */  nop
 /* 2590CC4 8007BEFC 07004010 */  beqz       $v0, .Llevel_25_8007BF1C
 /* 2590CC8 8007BF00 80100300 */   sll       $v0, $v1, 2
@@ -779,8 +779,8 @@ glabel func_level_25_8007B68C
 /* 2590E24 8007C05C 05004228 */  slti       $v0, $v0, 0x5
 /* 2590E28 8007C060 10004014 */  bnez       $v0, .Llevel_25_8007C0A4
 /* 2590E2C 8007C064 1800B027 */   addiu     $s0, $sp, 0x18
-/* 2590E30 8007C068 0880063C */  lui        $a2, %hi(D_80078638)
-/* 2590E34 8007C06C 3886C68C */  lw         $a2, %lo(D_80078638)($a2)
+/* 2590E30 8007C068 0880063C */  lui        $a2, %hi(g_FlightObjectiveCounters + 0x8)
+/* 2590E34 8007C06C 3886C68C */  lw         $a2, %lo(g_FlightObjectiveCounters + 0x8)($a2)
 /* 2590E38 8007C070 0880053C */  lui        $a1, %hi(D_level_25_8007AA88)
 /* 2590E3C 8007C074 88AAA524 */  addiu      $a1, $a1, %lo(D_level_25_8007AA88)
 /* 2590E40 8007C078 F58B010C */  jal        sprintf
@@ -801,8 +801,8 @@ glabel func_level_25_8007B68C
 /* 2590E78 8007C0B0 06004228 */  slti       $v0, $v0, 0x6
 /* 2590E7C 8007C0B4 55004014 */  bnez       $v0, .Llevel_25_8007C20C
 /* 2590E80 8007C0B8 3800B127 */   addiu     $s1, $sp, 0x38
-/* 2590E84 8007C0BC 0880033C */  lui        $v1, %hi(D_80078638)
-/* 2590E88 8007C0C0 3886638C */  lw         $v1, %lo(D_80078638)($v1)
+/* 2590E84 8007C0BC 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x8)
+/* 2590E88 8007C0C0 3886638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x8)($v1)
 /* 2590E8C 8007C0C4 08000224 */  addiu      $v0, $zero, 0x8
 /* 2590E90 8007C0C8 26006214 */  bne        $v1, $v0, .Llevel_25_8007C164
 /* 2590E94 8007C0CC 00000000 */   nop
@@ -811,9 +811,9 @@ glabel func_level_25_8007B68C
 /* 2590EA0 8007C0D8 00000000 */  nop
 /* 2590EA4 8007C0DC 80180200 */  sll        $v1, $v0, 2
 /* 2590EA8 8007C0E0 21186200 */  addu       $v1, $v1, $v0
-/* 2590EAC 8007C0E4 0880013C */  lui        $at, %hi(D_80078680 + 0x02)
+/* 2590EAC 8007C0E4 0880013C */  lui        $at, %hi(g_FlightCollected + 0x02)
 /* 2590EB0 8007C0E8 21082300 */  addu       $at, $at, $v1
-/* 2590EB4 8007C0EC 82862290 */  lbu        $v0, %lo(D_80078680 + 0x02)($at)
+/* 2590EB4 8007C0EC 82862290 */  lbu        $v0, %lo(g_FlightCollected + 0x02)($at)
 /* 2590EB8 8007C0F0 00000000 */  nop
 /* 2590EBC 8007C0F4 07004010 */  beqz       $v0, .Llevel_25_8007C114
 /* 2590EC0 8007C0F8 80100300 */   sll       $v0, $v1, 2
@@ -912,8 +912,8 @@ glabel func_level_25_8007B68C
 /* 2591020 8007C258 07004228 */  slti       $v0, $v0, 0x7
 /* 2591024 8007C25C 10004014 */  bnez       $v0, .Llevel_25_8007C2A0
 /* 2591028 8007C260 1800B027 */   addiu     $s0, $sp, 0x18
-/* 259102C 8007C264 0880063C */  lui        $a2, %hi(D_8007863C)
-/* 2591030 8007C268 3C86C68C */  lw         $a2, %lo(D_8007863C)($a2)
+/* 259102C 8007C264 0880063C */  lui        $a2, %hi(g_FlightObjectiveCounters + 0xC)
+/* 2591030 8007C268 3C86C68C */  lw         $a2, %lo(g_FlightObjectiveCounters + 0xC)($a2)
 /* 2591034 8007C26C 0880053C */  lui        $a1, %hi(D_level_25_8007AA88)
 /* 2591038 8007C270 88AAA524 */  addiu      $a1, $a1, %lo(D_level_25_8007AA88)
 /* 259103C 8007C274 F58B010C */  jal        sprintf
@@ -934,8 +934,8 @@ glabel func_level_25_8007B68C
 /* 2591074 8007C2AC 08004228 */  slti       $v0, $v0, 0x8
 /* 2591078 8007C2B0 54004014 */  bnez       $v0, .Llevel_25_8007C404
 /* 259107C 8007C2B4 08000224 */   addiu     $v0, $zero, 0x8
-/* 2591080 8007C2B8 0880033C */  lui        $v1, %hi(D_8007863C)
-/* 2591084 8007C2BC 3C86638C */  lw         $v1, %lo(D_8007863C)($v1)
+/* 2591080 8007C2B8 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0xC)
+/* 2591084 8007C2BC 3C86638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0xC)($v1)
 /* 2591088 8007C2C0 00000000 */  nop
 /* 259108C 8007C2C4 26006214 */  bne        $v1, $v0, .Llevel_25_8007C360
 /* 2591090 8007C2C8 00000000 */   nop
@@ -944,9 +944,9 @@ glabel func_level_25_8007B68C
 /* 259109C 8007C2D4 00000000 */  nop
 /* 25910A0 8007C2D8 80180200 */  sll        $v1, $v0, 2
 /* 25910A4 8007C2DC 21186200 */  addu       $v1, $v1, $v0
-/* 25910A8 8007C2E0 0880013C */  lui        $at, %hi(D_80078680 + 0x03)
+/* 25910A8 8007C2E0 0880013C */  lui        $at, %hi(g_FlightCollected + 0x03)
 /* 25910AC 8007C2E4 21082300 */  addu       $at, $at, $v1
-/* 25910B0 8007C2E8 83862290 */  lbu        $v0, %lo(D_80078680 + 0x03)($at)
+/* 25910B0 8007C2E8 83862290 */  lbu        $v0, %lo(g_FlightCollected + 0x03)($at)
 /* 25910B4 8007C2EC 00000000 */  nop
 /* 25910B8 8007C2F0 07004010 */  beqz       $v0, .Llevel_25_8007C310
 /* 25910BC 8007C2F4 80100300 */   sll       $v0, $v1, 2
@@ -1041,14 +1041,14 @@ glabel func_level_25_8007B68C
 /* 2591210 8007C448 A0010424 */   addiu     $a0, $zero, 0x1A0
 /* 2591214 8007C44C 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
 /* 2591218 8007C450 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
-/* 259121C 8007C454 0880033C */  lui        $v1, %hi(D_80078634)
-/* 2591220 8007C458 3486638C */  lw         $v1, %lo(D_80078634)($v1)
+/* 259121C 8007C454 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x4)
+/* 2591220 8007C458 3486638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x4)($v1)
 /* 2591224 8007C45C 00000000 */  nop
 /* 2591228 8007C460 21104300 */  addu       $v0, $v0, $v1
-/* 259122C 8007C464 0880033C */  lui        $v1, %hi(D_80078638)
-/* 2591230 8007C468 3886638C */  lw         $v1, %lo(D_80078638)($v1)
-/* 2591234 8007C46C 0880043C */  lui        $a0, %hi(D_8007863C)
-/* 2591238 8007C470 3C86848C */  lw         $a0, %lo(D_8007863C)($a0)
+/* 259122C 8007C464 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x8)
+/* 2591230 8007C468 3886638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x8)($v1)
+/* 2591234 8007C46C 0880043C */  lui        $a0, %hi(g_FlightObjectiveCounters + 0xC)
+/* 2591238 8007C470 3C86848C */  lw         $a0, %lo(g_FlightObjectiveCounters + 0xC)($a0)
 /* 259123C 8007C474 21104300 */  addu       $v0, $v0, $v1
 /* 2591240 8007C478 21104400 */  addu       $v0, $v0, $a0
 /* 2591244 8007C47C 20000324 */  addiu      $v1, $zero, 0x20
@@ -1059,9 +1059,9 @@ glabel func_level_25_8007B68C
 /* 2591258 8007C490 00000000 */  nop
 /* 259125C 8007C494 80180200 */  sll        $v1, $v0, 2
 /* 2591260 8007C498 21186200 */  addu       $v1, $v1, $v0
-/* 2591264 8007C49C 0880013C */  lui        $at, %hi(D_80078680 + 0x04)
+/* 2591264 8007C49C 0880013C */  lui        $at, %hi(g_FlightCollected + 0x04)
 /* 2591268 8007C4A0 21082300 */  addu       $at, $at, $v1
-/* 259126C 8007C4A4 84862290 */  lbu        $v0, %lo(D_80078680 + 0x04)($at)
+/* 259126C 8007C4A4 84862290 */  lbu        $v0, %lo(g_FlightCollected + 0x04)($at)
 /* 2591270 8007C4A8 00000000 */  nop
 /* 2591274 8007C4AC 07004010 */  beqz       $v0, .Llevel_25_8007C4CC
 /* 2591278 8007C4B0 80100300 */   sll       $v0, $v1, 2
@@ -1193,9 +1193,9 @@ glabel func_level_25_8007B68C
 /* 259145C 8007C694 5C59428C */  lw         $v0, %lo(g_Homeworld)($v0)
 /* 2591460 8007C698 00000000 */  nop
 /* 2591464 8007C69C 80100200 */  sll        $v0, $v0, 2
-/* 2591468 8007C6A0 0880013C */  lui        $at, %hi(D_80078618)
+/* 2591468 8007C6A0 0880013C */  lui        $at, %hi(g_FlightCourseRecords)
 /* 259146C 8007C6A4 21082200 */  addu       $at, $at, $v0
-/* 2591470 8007C6A8 1886228C */  lw         $v0, %lo(D_80078618)($at)
+/* 2591470 8007C6A8 1886228C */  lw         $v0, %lo(g_FlightCourseRecords)($at)
 /* 2591474 8007C6AC 00000000 */  nop
 /* 2591478 8007C6B0 16004010 */  beqz       $v0, .Llevel_25_8007C70C
 /* 259147C 8007C6B4 21284002 */   addu      $a1, $s2, $zero
@@ -1384,9 +1384,9 @@ glabel func_level_25_8007B68C
 /* 259172C 8007C964 3C00B1AF */  sw         $s1, 0x3C($sp)
 /* 2591730 8007C968 4000B0AF */  sw         $s0, 0x40($sp)
 /* 2591734 8007C96C 80100200 */  sll        $v0, $v0, 2
-/* 2591738 8007C970 0880013C */  lui        $at, %hi(D_80078618)
+/* 2591738 8007C970 0880013C */  lui        $at, %hi(g_FlightCourseRecords)
 /* 259173C 8007C974 21082200 */  addu       $at, $at, $v0
-/* 2591740 8007C978 1886248C */  lw         $a0, %lo(D_80078618)($at)
+/* 2591740 8007C978 1886248C */  lw         $a0, %lo(g_FlightCourseRecords)($at)
 /* 2591744 8007C97C 0780023C */  lui        $v0, %hi(D_800758C4)
 /* 2591748 8007C980 C458428C */  lw         $v0, %lo(D_800758C4)($v0)
 /* 259174C 8007C984 00000000 */  nop
@@ -1411,9 +1411,9 @@ glabel func_level_25_8007B68C
 /* 2591798 8007C9D0 3C00B1AF */  sw         $s1, 0x3C($sp)
 /* 259179C 8007C9D4 4000B0AF */  sw         $s0, 0x40($sp)
 /* 25917A0 8007C9D8 80180300 */  sll        $v1, $v1, 2
-/* 25917A4 8007C9DC 0880013C */  lui        $at, %hi(D_80078618)
+/* 25917A4 8007C9DC 0880013C */  lui        $at, %hi(g_FlightCourseRecords)
 /* 25917A8 8007C9E0 21082300 */  addu       $at, $at, $v1
-/* 25917AC 8007C9E4 1886228C */  lw         $v0, %lo(D_80078618)($at)
+/* 25917AC 8007C9E4 1886228C */  lw         $v0, %lo(g_FlightCourseRecords)($at)
 /* 25917B0 8007C9E8 00000000 */  nop
 /* 25917B4 8007C9EC 2A104500 */  slt        $v0, $v0, $a1
 /* 25917B8 8007C9F0 02004014 */  bnez       $v0, .Llevel_25_8007C9FC
@@ -1422,14 +1422,14 @@ glabel func_level_25_8007B68C
 .Llevel_25_8007C9FC:
 /* 25917C4 8007C9FC 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
 /* 25917C8 8007CA00 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
-/* 25917CC 8007CA04 0880033C */  lui        $v1, %hi(D_80078634)
-/* 25917D0 8007CA08 3486638C */  lw         $v1, %lo(D_80078634)($v1)
+/* 25917CC 8007CA04 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x4)
+/* 25917D0 8007CA08 3486638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x4)($v1)
 /* 25917D4 8007CA0C 00000000 */  nop
 /* 25917D8 8007CA10 21104300 */  addu       $v0, $v0, $v1
-/* 25917DC 8007CA14 0880033C */  lui        $v1, %hi(D_80078638)
-/* 25917E0 8007CA18 3886638C */  lw         $v1, %lo(D_80078638)($v1)
-/* 25917E4 8007CA1C 0880043C */  lui        $a0, %hi(D_8007863C)
-/* 25917E8 8007CA20 3C86848C */  lw         $a0, %lo(D_8007863C)($a0)
+/* 25917DC 8007CA14 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x8)
+/* 25917E0 8007CA18 3886638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x8)($v1)
+/* 25917E4 8007CA1C 0880043C */  lui        $a0, %hi(g_FlightObjectiveCounters + 0xC)
+/* 25917E8 8007CA20 3C86848C */  lw         $a0, %lo(g_FlightObjectiveCounters + 0xC)($a0)
 /* 25917EC 8007CA24 21104300 */  addu       $v0, $v0, $v1
 /* 25917F0 8007CA28 21104400 */  addu       $v0, $v0, $a0
 /* 25917F4 8007CA2C 20000324 */  addiu      $v1, $zero, 0x20
@@ -1480,14 +1480,14 @@ glabel func_level_25_8007B68C
 .Llevel_25_8007CAD8:
 /* 25918A0 8007CAD8 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
 /* 25918A4 8007CADC 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
-/* 25918A8 8007CAE0 0880033C */  lui        $v1, %hi(D_80078634)
-/* 25918AC 8007CAE4 3486638C */  lw         $v1, %lo(D_80078634)($v1)
+/* 25918A8 8007CAE0 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x4)
+/* 25918AC 8007CAE4 3486638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x4)($v1)
 /* 25918B0 8007CAE8 00000000 */  nop
 /* 25918B4 8007CAEC 21104300 */  addu       $v0, $v0, $v1
-/* 25918B8 8007CAF0 0880033C */  lui        $v1, %hi(D_80078638)
-/* 25918BC 8007CAF4 3886638C */  lw         $v1, %lo(D_80078638)($v1)
-/* 25918C0 8007CAF8 0880043C */  lui        $a0, %hi(D_8007863C)
-/* 25918C4 8007CAFC 3C86848C */  lw         $a0, %lo(D_8007863C)($a0)
+/* 25918B8 8007CAF0 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x8)
+/* 25918BC 8007CAF4 3886638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x8)($v1)
+/* 25918C0 8007CAF8 0880043C */  lui        $a0, %hi(g_FlightObjectiveCounters + 0xC)
+/* 25918C4 8007CAFC 3C86848C */  lw         $a0, %lo(g_FlightObjectiveCounters + 0xC)($a0)
 /* 25918C8 8007CB00 21104300 */  addu       $v0, $v0, $v1
 /* 25918CC 8007CB04 21104400 */  addu       $v0, $v0, $a0
 /* 25918D0 8007CB08 20004228 */  slti       $v0, $v0, 0x20
@@ -1565,9 +1565,9 @@ glabel func_level_25_8007B68C
 /* 25919E0 8007CC18 0780033C */  lui        $v1, %hi(D_800758F4)
 /* 25919E4 8007CC1C F458638C */  lw         $v1, %lo(D_800758F4)($v1)
 /* 25919E8 8007CC20 80100200 */  sll        $v0, $v0, 2
-/* 25919EC 8007CC24 0880013C */  lui        $at, %hi(D_80078618)
+/* 25919EC 8007CC24 0880013C */  lui        $at, %hi(g_FlightCourseRecords)
 /* 25919F0 8007CC28 21082200 */  addu       $at, $at, $v0
-/* 25919F4 8007CC2C 1886228C */  lw         $v0, %lo(D_80078618)($at)
+/* 25919F4 8007CC2C 1886228C */  lw         $v0, %lo(g_FlightCourseRecords)($at)
 /* 25919F8 8007CC30 00000000 */  nop
 /* 25919FC 8007CC34 2A104300 */  slt        $v0, $v0, $v1
 /* 2591A00 8007CC38 26004014 */  bnez       $v0, .Llevel_25_8007CCD4

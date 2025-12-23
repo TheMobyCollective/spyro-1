@@ -37,10 +37,6 @@ extern int D_800756D4;
 extern int D_80075744; // The index of the current page of the inventory screen
 extern int D_800757CC; // Transition progress between inventory pages.
 
-// This is part of the flame struct starting at 800786C8
-// It's the fairy kiss timer
-extern int D_80078768;
-
 extern int D_800758A4; // Stores the fairy kiss timer temporarily
 
 extern SphericalCoordsOffset D_8006C8BC;
@@ -280,7 +276,7 @@ void func_8002CB6C(void) {
   g_Camera.unk_0xC0 = 0;
   g_Camera.m_SphericalPreset = &D_8006C8BC;
 
-  D_80078768 = D_800758A4;
+  g_SpyroFlame.m_FairyKissTimer = D_800758A4;
 
   g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
 
@@ -333,7 +329,7 @@ void func_8002D02C(void) {
   g_Camera.m_SphericalPreset = &D_8006C8BC;
 
   //?? some sort of counter
-  D_80078768 = D_800758A4;
+  g_SpyroFlame.m_FairyKissTimer = D_800758A4;
 
   g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
 

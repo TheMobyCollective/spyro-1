@@ -15,8 +15,8 @@ glabel func_level_25_8007AE08
 /* 258FBF8 8007AE30 21186200 */  addu       $v1, $v1, $v0
 /* 258FBFC 8007AE34 0780023C */  lui        $v0, %hi(g_Homeworld)
 /* 258FC00 8007AE38 5C59428C */  lw         $v0, %lo(g_Homeworld)($v0)
-/* 258FC04 8007AE3C 0880043C */  lui        $a0, %hi(D_80078618)
-/* 258FC08 8007AE40 18868424 */  addiu      $a0, $a0, %lo(D_80078618)
+/* 258FC04 8007AE3C 0880043C */  lui        $a0, %hi(g_FlightCourseRecords)
+/* 258FC08 8007AE40 18868424 */  addiu      $a0, $a0, %lo(g_FlightCourseRecords)
 /* 258FC0C 8007AE44 0780013C */  lui        $at, %hi(D_80075720)
 /* 258FC10 8007AE48 205720AC */  sw         $zero, %lo(D_80075720)($at)
 /* 258FC14 8007AE4C 0780013C */  lui        $at, %hi(D_8007568C)
@@ -39,14 +39,14 @@ glabel func_level_25_8007AE08
 /* 258FC58 8007AE90 00000000 */   nop
 /* 258FC5C 8007AE94 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
 /* 258FC60 8007AE98 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
-/* 258FC64 8007AE9C 0880033C */  lui        $v1, %hi(D_80078634)
-/* 258FC68 8007AEA0 3486638C */  lw         $v1, %lo(D_80078634)($v1)
+/* 258FC64 8007AE9C 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x4)
+/* 258FC68 8007AEA0 3486638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x4)($v1)
 /* 258FC6C 8007AEA4 00000000 */  nop
 /* 258FC70 8007AEA8 21104300 */  addu       $v0, $v0, $v1
-/* 258FC74 8007AEAC 0880033C */  lui        $v1, %hi(D_80078638)
-/* 258FC78 8007AEB0 3886638C */  lw         $v1, %lo(D_80078638)($v1)
-/* 258FC7C 8007AEB4 0880043C */  lui        $a0, %hi(D_8007863C)
-/* 258FC80 8007AEB8 3C86848C */  lw         $a0, %lo(D_8007863C)($a0)
+/* 258FC74 8007AEAC 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x8)
+/* 258FC78 8007AEB0 3886638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x8)($v1)
+/* 258FC7C 8007AEB4 0880043C */  lui        $a0, %hi(g_FlightObjectiveCounters + 0xC)
+/* 258FC80 8007AEB8 3C86848C */  lw         $a0, %lo(g_FlightObjectiveCounters + 0xC)($a0)
 /* 258FC84 8007AEBC 21104300 */  addu       $v0, $v0, $v1
 /* 258FC88 8007AEC0 21104400 */  addu       $v0, $v0, $a0
 /* 258FC8C 8007AEC4 20000324 */  addiu      $v1, $zero, 0x20

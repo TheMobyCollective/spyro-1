@@ -599,8 +599,8 @@ glabel func_level_54_8007AF50
 /* 4DF0B14 8007B54C 21200000 */   addu      $a0, $zero, $zero
 /* 4DF0B18 8007B550 0880013C */  lui        $at, %hi(g_Spyro + 0x24C)
 /* 4DF0B1C 8007B554 A48C20AC */  sw         $zero, %lo(g_Spyro + 0x24C)($at)
-/* 4DF0B20 8007B558 0880013C */  lui        $at, %hi(D_80078768)
-/* 4DF0B24 8007B55C 688720AC */  sw         $zero, %lo(D_80078768)($at)
+/* 4DF0B20 8007B558 0880013C */  lui        $at, %hi(g_SpyroFlame + 0xA0)
+/* 4DF0B24 8007B55C 688720AC */  sw         $zero, %lo(g_SpyroFlame + 0xA0)($at)
 /* 4DF0B28 8007B560 970D0208 */  j          .Llevel_54_8008365C
 /* 4DF0B2C 8007B564 00000000 */   nop
 .Llevel_54_8007B568:

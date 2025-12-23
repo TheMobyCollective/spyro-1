@@ -245,8 +245,8 @@ glabel func_8002F3E4
 /* 1FF4C 8002F74C 0780013C */  lui        $at, %hi(g_DragonCutscene + 0x40)
 /* 1FF50 8002F750 707022AC */  sw         $v0, %lo(g_DragonCutscene + 0x40)($at)
 .L8002F754:
-/* 1FF54 8002F754 0880023C */  lui        $v0, %hi(D_80078768)
-/* 1FF58 8002F758 6887428C */  lw         $v0, %lo(D_80078768)($v0)
+/* 1FF54 8002F754 0880023C */  lui        $v0, %hi(g_SpyroFlame + 0xA0)
+/* 1FF58 8002F758 6887428C */  lw         $v0, %lo(g_SpyroFlame + 0xA0)($v0)
 /* 1FF5C 8002F75C 0780013C */  lui        $at, %hi(D_800758A4)
 /* 1FF60 8002F760 A45822AC */  sw         $v0, %lo(D_800758A4)($at)
 /* 1FF64 8002F764 092B010C */  jal        func_8004AC24

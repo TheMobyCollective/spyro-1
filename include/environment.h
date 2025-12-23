@@ -9,6 +9,16 @@ typedef struct {
 } SpecialSurface;
 
 typedef struct {
+  int m_TriangleCount;
+  int m_FlagCount;
+  u_short *m_BlockTree;
+  u_short *m_Blocks;
+  void *m_Triangles;
+  u_char *m_TriangleOcclusionAssignment;
+  u_char *m_Flags;
+} TerrainCollision;
+
+typedef struct {
   void *m_SectorPointer; // TODO: Type
   int m_SectorCount;
   void *m_OcclusionGroups; // TODO: Type
@@ -20,6 +30,7 @@ typedef struct {
   int m_TextureCount;
   int m_LodDistance;
   int m_CullingDistance;
+  TerrainCollision *m_TerrainCollision;
 } Environment;
 
 void func_8002B9CC(void);

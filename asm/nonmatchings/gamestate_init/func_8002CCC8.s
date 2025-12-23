@@ -36,8 +36,8 @@ glabel func_8002CCC8
 /* 1D540 8002CD40 088D22AC */  sw         $v0, %lo(D_80078D00 + 0x8)($at)
 /* 1D544 8002CD44 21280000 */  addu       $a1, $zero, $zero
 .L8002CD48:
-/* 1D548 8002CD48 0880023C */  lui        $v0, %hi(D_80078768)
-/* 1D54C 8002CD4C 6887428C */  lw         $v0, %lo(D_80078768)($v0)
+/* 1D548 8002CD48 0880023C */  lui        $v0, %hi(g_SpyroFlame + 0xA0)
+/* 1D54C 8002CD4C 6887428C */  lw         $v0, %lo(g_SpyroFlame + 0xA0)($v0)
 /* 1D550 8002CD50 0780033C */  lui        $v1, %hi(g_Spu + 0x2CC)
 /* 1D554 8002CD54 D461638C */  lw         $v1, %lo(g_Spu + 0x2CC)($v1)
 /* 1D558 8002CD58 10000624 */  addiu      $a2, $zero, 0x10

@@ -77,7 +77,7 @@ void GraphicsInitialize(void) {
 
 // Gamepad init, sets up VSync callback
 void GamepadInitialize(void) {
-  PadInitDirect((u_char *)&g_PadBuffer, (u_char *)&D_80078E50);
+  PadInitDirect((u_char *)&g_PadBuffer, (u_char *)&g_PadBufferSecondController);
   PadCaliReset(&D_800776D8); // Clears the backup's calibration values
   PadCaliInit(&D_800776D8);  // Initializes it's calibration deadzone values
 
@@ -186,9 +186,9 @@ void func_80012604(void) {
 
   // Reset course records and flight collected
   for (i = 0; i < HOMEWORLD_COUNT; i++) {
-    D_80078618[i] = 0; // Course records to 0
+    g_FlightCourseRecords[i] = 0; // Course records to 0
     for (j = 0; j < 5; j++) {
-      D_80078680[i][j] = 0; // Flight collected to 0
+      g_FlightCollected[i][j] = 0; // Flight collected to 0
     }
   }
 

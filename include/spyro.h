@@ -211,7 +211,7 @@ typedef struct {
   int unk_0x1c0;
   int unk_0x1c4;
   MATRIX
-      m_headRotationMatrix; // 0x1c8 - Combined body+head rotation for rendering
+  m_headRotationMatrix; // 0x1c8 - Combined body+head rotation for rendering
   int m_seperateTailAnimation; // Whether the tail is animated seperately from
                                // the body, otherwise it copies the body
   int m_flameableFrames; // How many frames have we been able to flame? Not used
@@ -270,6 +270,89 @@ extern int D_8007592C;        // Is spyro in look mode
 extern u_char D_8006C588[48]; // Maps Spyro's state to camera states
 
 extern int D_8007580C; // Health before entering flight level
+
+typedef struct {
+  int unk_00;
+  int unk_04;
+  int unk_08;
+  int unk_0c;
+  int unk_10;
+  int unk_14;
+  int unk_18;
+  int unk_1c;
+  int unk_20;
+  int unk_24;
+  int unk_28;
+  int unk_2c;
+  int unk_30;
+  int unk_34;
+  int unk_38;
+  int unk_3c;
+  int unk_40;
+  int unk_44;
+  int unk_48;
+  int unk_4c;
+  int unk_50;
+  int unk_54;
+  int unk_58;
+  int unk_5c;
+  int unk_60;
+  int unk_64;
+  int unk_68;
+  int unk_6c;
+  int unk_70;
+  int unk_74;
+  int unk_78;
+  int unk_7c;
+  int unk_80;
+  int unk_84;
+  int unk_88;
+  int unk_8c;
+  int unk_90;
+  int unk_94;
+  int unk_98;
+  int unk_9c;
+  int m_FairyKissTimer;
+  int unk_a4;
+  int unk_a8;
+  int unk_ac;
+  int unk_b0;
+  int unk_b4;
+  int unk_b8;
+  int unk_bc;
+  int unk_c0;
+  int unk_c4;
+  int unk_c8;
+  int unk_cc;
+  int unk_d0;
+  int unk_d4;
+  int unk_d8;
+  int unk_dc;
+  int unk_e0;
+  int unk_e4;
+  int unk_e8;
+  int unk_ec;
+  int unk_f0;
+  int unk_f4;
+  int unk_f8;
+  int unk_fc;
+  int unk_100;
+  int unk_104;
+  int unk_108;
+  int unk_10c;
+  int unk_110;
+  int unk_114;
+  int unk_118;
+  int unk_11c;
+  int unk_120;
+  int unk_124;
+  int unk_128;
+  int unk_12c;
+  int unk_130;
+  int unk_134;
+} SpyroFlame;
+
+extern SpyroFlame g_SpyroFlame;
 
 /// @brief: Resets Spyro
 void func_8004AC24(int pKeepPosition);

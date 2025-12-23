@@ -607,9 +607,9 @@ glabel func_level_35_80081F0C
 /* 33E75C4 800827FC 5C59428C */  lw         $v0, %lo(g_Homeworld)($v0)
 /* 33E75C8 80082800 00000000 */  nop
 /* 33E75CC 80082804 80100200 */  sll        $v0, $v0, 2
-/* 33E75D0 80082808 0880013C */  lui        $at, %hi(D_80078618)
+/* 33E75D0 80082808 0880013C */  lui        $at, %hi(g_FlightCourseRecords)
 /* 33E75D4 8008280C 21082200 */  addu       $at, $at, $v0
-/* 33E75D8 80082810 1886228C */  lw         $v0, %lo(D_80078618)($at)
+/* 33E75D8 80082810 1886228C */  lw         $v0, %lo(g_FlightCourseRecords)($at)
 /* 33E75DC 80082814 00000000 */  nop
 /* 33E75E0 80082818 07004010 */  beqz       $v0, .Llevel_35_80082838
 /* 33E75E4 8008281C 00000000 */   nop

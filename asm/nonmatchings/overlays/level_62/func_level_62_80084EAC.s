@@ -1152,8 +1152,8 @@ glabel func_level_62_80084EAC
 /* 56D4B7C 80085DB4 4800A3AF */   sw        $v1, 0x48($sp)
 /* 56D4B80 80085DB8 02000224 */  addiu      $v0, $zero, 0x2
 /* 56D4B84 80085DBC 170042A2 */  sb         $v0, 0x17($s2)
-/* 56D4B88 80085DC0 0880023C */  lui        $v0, %hi(D_80078764)
-/* 56D4B8C 80085DC4 6487428C */  lw         $v0, %lo(D_80078764)($v0)
+/* 56D4B88 80085DC0 0880023C */  lui        $v0, %hi(g_SpyroFlame + 0x9C)
+/* 56D4B8C 80085DC4 6487428C */  lw         $v0, %lo(g_SpyroFlame + 0x9C)($v0)
 /* 56D4B90 80085DC8 00000000 */  nop
 /* 56D4B94 80085DCC 12004014 */  bnez       $v0, .Llevel_62_80085E18
 /* 56D4B98 80085DD0 00000000 */   nop

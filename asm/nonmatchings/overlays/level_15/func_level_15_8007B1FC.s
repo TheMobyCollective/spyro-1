@@ -96,14 +96,14 @@ glabel func_level_15_8007B1FC
 /* 16A891C 8007B354 00000000 */   nop
 /* 16A8920 8007B358 0880023C */  lui        $v0, %hi(g_FlightObjectiveCounters)
 /* 16A8924 8007B35C 3086428C */  lw         $v0, %lo(g_FlightObjectiveCounters)($v0)
-/* 16A8928 8007B360 0880033C */  lui        $v1, %hi(D_80078634)
-/* 16A892C 8007B364 3486638C */  lw         $v1, %lo(D_80078634)($v1)
+/* 16A8928 8007B360 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x4)
+/* 16A892C 8007B364 3486638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x4)($v1)
 /* 16A8930 8007B368 00000000 */  nop
 /* 16A8934 8007B36C 21104300 */  addu       $v0, $v0, $v1
-/* 16A8938 8007B370 0880033C */  lui        $v1, %hi(D_80078638)
-/* 16A893C 8007B374 3886638C */  lw         $v1, %lo(D_80078638)($v1)
-/* 16A8940 8007B378 0880043C */  lui        $a0, %hi(D_8007863C)
-/* 16A8944 8007B37C 3C86848C */  lw         $a0, %lo(D_8007863C)($a0)
+/* 16A8938 8007B370 0880033C */  lui        $v1, %hi(g_FlightObjectiveCounters + 0x8)
+/* 16A893C 8007B374 3886638C */  lw         $v1, %lo(g_FlightObjectiveCounters + 0x8)($v1)
+/* 16A8940 8007B378 0880043C */  lui        $a0, %hi(g_FlightObjectiveCounters + 0xC)
+/* 16A8944 8007B37C 3C86848C */  lw         $a0, %lo(g_FlightObjectiveCounters + 0xC)($a0)
 /* 16A8948 8007B380 21104300 */  addu       $v0, $v0, $v1
 /* 16A894C 8007B384 21104400 */  addu       $v0, $v0, $a0
 /* 16A8950 8007B388 20004228 */  slti       $v0, $v0, 0x20
@@ -113,9 +113,9 @@ glabel func_level_15_8007B1FC
 /* 16A8960 8007B398 5C59428C */  lw         $v0, %lo(g_Homeworld)($v0)
 /* 16A8964 8007B39C 00000000 */  nop
 /* 16A8968 8007B3A0 80100200 */  sll        $v0, $v0, 2
-/* 16A896C 8007B3A4 0880013C */  lui        $at, %hi(D_80078618)
+/* 16A896C 8007B3A4 0880013C */  lui        $at, %hi(g_FlightCourseRecords)
 /* 16A8970 8007B3A8 21082200 */  addu       $at, $at, $v0
-/* 16A8974 8007B3AC 1886228C */  lw         $v0, %lo(D_80078618)($at)
+/* 16A8974 8007B3AC 1886228C */  lw         $v0, %lo(g_FlightCourseRecords)($at)
 /* 16A8978 8007B3B0 00000000 */  nop
 /* 16A897C 8007B3B4 21004014 */  bnez       $v0, .Llevel_15_8007B43C
 /* 16A8980 8007B3B8 00000000 */   nop

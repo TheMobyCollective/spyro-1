@@ -390,43 +390,19 @@ dlabel D_80078560
 
 /* Environment pointers */
 dlabel g_Environment
-/* Total size from 800785A8 to 800785D4 */ .space 0x2C
-
-dlabel D_800785D4
-/* 6851C 800785D4 */ .space 0x04
+/* Total size from 800785A8 to 800785D8 */ .space 0x30
 
 dlabel D_800785D8
 /* Total size from 800785D8 to 80078608 */ .space 0x30
 
 dlabel g_FlightObjectiveActiveSlots
-/* 68550 80078608 */ .space 0x04
+/* Total size from 80078608 to 80078618 */ .space 0x10
 
-dlabel D_8007860C
-/* 68554 8007860C */ .space 0x04
-
-dlabel D_80078610
-/* 68558 80078610 */ .space 0x04
-
-dlabel D_80078614
-/* 6855C 80078614 */ .space 0x04
-
-dlabel D_80078618
-/* 68560 80078618 */ .space 0x14
-
-dlabel D_8007862C
-/* 68574 8007862C */ .space 0x04
+dlabel g_FlightCourseRecords
+/* 68560 80078618 */ .space 0x18
 
 dlabel g_FlightObjectiveCounters
-/* 68578 80078630 */ .space 0x04
-
-dlabel D_80078634
-/* 6857C 80078634 */ .space 0x04
-
-dlabel D_80078638
-/* 68580 80078638 */ .space 0x04
-
-dlabel D_8007863C
-/* 68584 8007863C */ .space 0x04
+/* Total size from 80078630 to 80078640 */ .space 0x10
 
 dlabel g_Portals
 /* 68588 80078640 */ .space 0x18
@@ -452,74 +428,17 @@ dlabel D_80078678
 dlabel D_8007867C
 /* 685C4 8007867C */ .space 0x04
 
-dlabel D_80078680
+dlabel g_FlightCollected
 /* 685C8 80078680 */ .space 0x20
 
 dlabel g_PadBuffer
 /* Total size from 800786A0 to 800786C8 */ .space 0x28
 
-dlabel D_800786C8
-/* 68610 800786C8 */ .space 0x0C
-
-dlabel D_800786D4
-/* 6861C 800786D4 */ .space 0x01
-
-dlabel D_800786D5
-/* 6861D 800786D5 */ .space 0x01
-
-dlabel D_800786D6
-/* 6861E 800786D6 */ .space 0x02
-
-dlabel D_800786D8
-/* 68620 800786D8 */ .space 0x04
-
-dlabel D_800786DC
-/* 68624 800786DC */ .space 0x04
-
-dlabel D_800786E0
-/* 68628 800786E0 */ .space 0x04
-
-dlabel D_800786E4
-/* 6862C 800786E4 */ .space 0x04
-
-dlabel D_800786E8
-/* 68630 800786E8 */ .space 0x08
-
-dlabel D_800786F0
-/* 68638 800786F0 */ .space 0x08
-
-dlabel D_800786F8
-/* 68640 800786F8 */ .space 0x68
-
-dlabel D_80078760
-/* 686A8 80078760 */ .space 0x01
-
-dlabel D_80078761
-/* 686A9 80078761 */ .space 0x01
-
-dlabel D_80078762
-/* 686AA 80078762 */ .space 0x01
-
-dlabel D_80078763
-/* 686AB 80078763 */ .space 0x01
-
-dlabel D_80078764
-/* 686AC 80078764 */ .space 0x04
-
-dlabel D_80078768
-/* 686B0 80078768 */ .space 0x04
-
-dlabel D_8007876C
-/* 686B4 8007876C */ .space 0x94
+dlabel g_SpyroFlame
+/* Total size from 800786C8 to 80078800 */ .space 0x138
 
 dlabel D_80078800
-/* 68748 80078800 */ .space 0x04
-
-dlabel D_80078804
-/* 6874C 80078804 */ .space 0x1C
-
-dlabel D_80078820
-/* 68768 80078820 */ .space 0x220
+/* Total size from 80078800 to 80078A40 */ .space 0x240
 
 dlabel g_Cyclorama
 /* Total size from 80078A40 to 80078A58 */ .space 0x18
@@ -545,11 +464,17 @@ dlabel D_80078DDC
 dlabel D_80078DE0
 /* 68D28 80078DE0 */ .space 0x70
 
-dlabel D_80078E50
+dlabel g_PadBufferSecondController
 /* 68D98 80078E50 */ .space 0x22
 
 dlabel g_VisitedFlags
 /* Total size from 80078E72 to 80078E9C */ .space 0x2A
+
+/**********************************************************/
+/**********************************************************/
+/**********************************************************/
+
+/* From PSYQ */
 
 dlabel D_80078E9C
 /* 68DE4 80078E9C */ .space 0x04
@@ -566,23 +491,19 @@ dlabel D_80078EA8
 dlabel D_80078EAC /* PSYQ moment */
 /* 68DF4 80078EAC */ .space 0x17FC
 
+/**********************************************************/
+/**********************************************************/
+/**********************************************************/
+
 dlabel g_LevelVortexExitFlags
 /* Total size from 8007A6A8 to 8007A6D0 */ .space 0x28
 
 dlabel g_WadHeader
 /* Total size from 8007A6D0 to 8007AA00 */ .space 0x330
 
+/* Used for something Portal filling related */
 dlabel D_8007AA00
-/* 6A948 8007AA00 */ .space 0x04
-
-dlabel D_8007AA04
-/* 6A94C 8007AA04 */ .space 0x04
-
-dlabel D_8007AA08
-/* 6A950 8007AA08 */ .space 0x04
-
-dlabel D_8007AA0C
-/* 6A954 8007AA0C */ .space 0x04
+/* Total size from 8007AA00 to 8007AA10 */ .space 0x10
 
 /* Spyro's shadow struct */
 dlabel D_8007AA10

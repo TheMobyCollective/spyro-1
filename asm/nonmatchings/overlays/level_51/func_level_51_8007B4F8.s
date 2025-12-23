@@ -812,8 +812,8 @@ glabel func_level_51_8007B4F8
 /* 467AEA0 8007B8D8 21200000 */   addu      $a0, $zero, $zero
 /* 467AEA4 8007B8DC 0880013C */  lui        $at, %hi(g_Spyro + 0x24C)
 /* 467AEA8 8007B8E0 A48C20AC */  sw         $zero, %lo(g_Spyro + 0x24C)($at)
-/* 467AEAC 8007B8E4 0880013C */  lui        $at, %hi(D_80078768)
-/* 467AEB0 8007B8E8 688720AC */  sw         $zero, %lo(D_80078768)($at)
+/* 467AEAC 8007B8E4 0880013C */  lui        $at, %hi(g_SpyroFlame + 0xA0)
+/* 467AEB0 8007B8E8 688720AC */  sw         $zero, %lo(g_SpyroFlame + 0xA0)($at)
 /* 467AEB4 8007B8EC D2120208 */  j          .Llevel_51_80084B48
 /* 467AEB8 8007B8F0 00000000 */   nop
 .L8007B8F4_:

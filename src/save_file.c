@@ -53,12 +53,12 @@ int SaveLoad(SaveFile *pSaveFile) {
     D_8007582C = 4;
   }
 
-  Memcpy(D_80078618, pSaveFile->m_Flight.m_CourseRecords,
+  Memcpy(g_FlightCourseRecords, pSaveFile->m_Flight.m_CourseRecords,
          sizeof(pSaveFile->m_Flight.m_CourseRecords));
 
   for (j = 0; j < 5; j++) {
     for (i = 0; i < 5; i++) {
-      D_80078680[j][i] = pSaveFile->m_Flight.m_FlightCollected[j][i];
+      g_FlightCollected[j][i] = pSaveFile->m_Flight.m_FlightCollected[j][i];
     }
   }
 
@@ -116,12 +116,12 @@ void SaveCreate(SaveFile *pSaveFile) {
   pSaveFile->m_UnusedByte2 = D_8007583C;
   pSaveFile->m_ExtraLifeCount = D_8007582C;
 
-  Memcpy(pSaveFile->m_Flight.m_CourseRecords, D_80078618,
+  Memcpy(pSaveFile->m_Flight.m_CourseRecords, g_FlightCourseRecords,
          sizeof(pSaveFile->m_Flight.m_CourseRecords));
 
   for (j = 0; j < 5; j++) {
     for (i = 0; i < 5; i++) {
-      pSaveFile->m_Flight.m_FlightCollected[j][i] = D_80078680[j][i];
+      pSaveFile->m_Flight.m_FlightCollected[j][i] = g_FlightCollected[j][i];
     }
   }
 

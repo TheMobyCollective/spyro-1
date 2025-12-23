@@ -103,8 +103,8 @@ glabel func_level_21_8007B898
 /* 1B2FF9C 8007B9D4 00000000 */  nop
 /* 1B2FFA0 8007B9D8 0C0040AC */  sw         $zero, 0xC($v0)
 .Llevel_21_8007B9DC:
-/* 1B2FFA4 8007B9DC 0880023C */  lui        $v0, %hi(D_80078768)
-/* 1B2FFA8 8007B9E0 6887428C */  lw         $v0, %lo(D_80078768)($v0)
+/* 1B2FFA4 8007B9DC 0880023C */  lui        $v0, %hi(g_SpyroFlame + 0xA0)
+/* 1B2FFA8 8007B9E0 6887428C */  lw         $v0, %lo(g_SpyroFlame + 0xA0)($v0)
 /* 1B2FFAC 8007B9E4 0780013C */  lui        $at, %hi(D_800758A4)
 /* 1B2FFB0 8007B9E8 A45822AC */  sw         $v0, %lo(D_800758A4)($at)
 /* 1B2FFB4 8007B9EC 092B010C */  jal        func_8004AC24

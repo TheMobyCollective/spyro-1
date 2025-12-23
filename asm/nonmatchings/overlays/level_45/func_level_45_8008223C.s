@@ -708,9 +708,9 @@ glabel func_level_45_8008223C
 /* 425EA78 80082CB0 5C59428C */  lw         $v0, %lo(g_Homeworld)($v0)
 /* 425EA7C 80082CB4 00000000 */  nop
 /* 425EA80 80082CB8 80100200 */  sll        $v0, $v0, 2
-/* 425EA84 80082CBC 0880013C */  lui        $at, %hi(D_80078618)
+/* 425EA84 80082CBC 0880013C */  lui        $at, %hi(g_FlightCourseRecords)
 /* 425EA88 80082CC0 21082200 */  addu       $at, $at, $v0
-/* 425EA8C 80082CC4 1886228C */  lw         $v0, %lo(D_80078618)($at)
+/* 425EA8C 80082CC4 1886228C */  lw         $v0, %lo(g_FlightCourseRecords)($at)
 /* 425EA90 80082CC8 00000000 */  nop
 /* 425EA94 80082CCC 07004010 */  beqz       $v0, .Llevel_45_80082CEC
 /* 425EA98 80082CD0 00000000 */   nop
