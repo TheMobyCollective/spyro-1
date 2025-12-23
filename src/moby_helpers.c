@@ -998,7 +998,89 @@ void CollectItem(Moby *pMoby) {
   func_8003B854(gem_value, pMoby);
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BAD0);
+/// @brief Moves a moby toward a target position, rotating to face it
+/// @param pMoby The moby to move
+/// @param pTarget Target position to move toward
+/// @param pSpeed Movement speed
+/// @param turnRateH Horizontal (yaw) turn rate limit
+/// @param turnRateV Vertical (pitch) turn rate limit
+/// @param pBounds Collision bounds radius (0 to skip collision checks)
+/// @return 1 if collision occurred, 0 otherwise
+int MoveMobyTowardTarget(Moby *pMoby, Vector3D *pTarget, int pSpeed,
+                         int turnRateH, int turnRateV, int pBounds) {
+  Vector3D diff;
+  MATRIX matrix;
+  int result;
+  int azimuth;
+  int elevation;
+
+  result = 0;
+
+  VecSub(&diff, pTarget, &pMoby->m_Position);
+  azimuth = Atan2(diff.x, diff.y, 0);
+  elevation = Atan2(VecMagnitude(&diff, 0), diff.z, 0);
+
+  // Calculate azimuth difference and sign-extend from byte
+  azimuth = (azimuth - pMoby->m_Rotation.z) & 0xFF;
+  if (azimuth >= 128) {
+    azimuth -= 256;
+  }
+
+  // Clamp azimuth diff to turn rate
+  if (azimuth < -turnRateH) {
+    azimuth = -turnRateH;
+  }
+  if (turnRateH < azimuth) {
+    azimuth = turnRateH;
+  }
+
+  // Calculate elevation difference and sign-extend from byte
+  elevation = (elevation - pMoby->m_Rotation.y) & 0xFF;
+  if (elevation >= 128) {
+    elevation -= 256;
+  }
+
+  // Clamp elevation diff to turn rate
+  if (elevation < -turnRateV) {
+    elevation = -turnRateV;
+  }
+  if (turnRateV < elevation) {
+    elevation = turnRateV;
+  }
+
+  // Update rotation
+  pMoby->m_Rotation.z += azimuth;
+  pMoby->m_Rotation.y += elevation;
+
+  // Create rotation matrix from moby rotation
+  RotVec8ToMatrix(&pMoby->m_Rotation, &matrix, nullptr);
+
+  // Create velocity vector (speed, 0, 0) and rotate by matrix
+  diff.x = pSpeed;
+  diff.y = 0;
+  diff.z = 0;
+  VecRotateByMatrix(&matrix, &diff, &diff);
+
+  // Add velocity to position
+  VecAdd(&pMoby->m_Position, &pMoby->m_Position, &diff);
+
+  // Check collisions if bounds specified
+  if (pBounds != 0) {
+    if (func_8004BE4C(&pMoby->m_Position, pBounds, pBounds)) {
+      VecCopy(&pMoby->m_Position, &D_80076B80);
+      result = 1;
+    }
+    if (func_8004E3C8(&pMoby->m_Position, pBounds, 0, 0, pMoby, 1)) {
+      result = 1;
+    }
+  }
+
+  func_800529E4(pMoby, 2);
+  func_80038340(pMoby);
+  func_800533D0(pMoby);
+
+  return result;
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BCCC);
 
@@ -1235,7 +1317,7 @@ void SetSpyroHeadLookTarget(Vector3D *pTarget) {
 /// @param pPath The path data containing waypoints
 /// @param threshold Distance threshold to advance to the next waypoint
 /// @param maxSpeed Maximum movement speed (clamped)
-/// @param pBounds Collision bounds (passed to func_8003BAD0)
+/// @param pBounds Collision bounds (passed to MoveMobyTowardTarget)
 /// @param turnRateH Horizontal/yaw turn rate
 /// @param turnRateV Vertical/pitch turn rate
 /// @note Only used for Puffer Bird in Lofty Castle
@@ -1276,8 +1358,8 @@ void UpdatePufferBirdMobyPathNode(Moby *pMoby, PathData *pPath, int threshold,
   }
 
   // Move the moby toward the current waypoint
-  func_8003BAD0(pMoby, &pPath->m_Nodes[pPath->m_CurrentNode].m_Position, dist,
-                turnRateH, turnRateV, pBounds);
+  MoveMobyTowardTarget(pMoby, &pPath->m_Nodes[pPath->m_CurrentNode].m_Position,
+                       dist, turnRateH, turnRateV, pBounds);
 }
 
 /// @brief Registers a flight level collectible moby type in one of 4 slots

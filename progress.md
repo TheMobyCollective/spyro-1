@@ -198,7 +198,7 @@
 - [x] func_8003B7C0
 - [ ] func_8003B854
 - [x] CollectItem
-- [ ] func_8003BAD0
+- [x] MoveMobyTowardTarget
 - [ ] func_8003BCCC
 - [x] unused_GetSpyroQuadrant
 - [ ] func_8003BFC0
