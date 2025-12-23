@@ -71,7 +71,7 @@ glabel func_8004888C
 /* 390B8 800488B8 08004000 */  jr         $v0
 /* 390BC 800488BC 00000000 */   nop
 .L800488C0:
-/* 390C0 800488C0 82F6000C */  jal        func_8003DA08
+/* 390C0 800488C0 82F6000C */  jal        RotateSpyroToNeutral
 /* 390C4 800488C4 00000000 */   nop
 /* 390C8 800488C8 DE220108 */  j          .L80048B78
 /* 390CC 800488CC 00000000 */   nop
@@ -212,7 +212,7 @@ glabel func_8004888C
 /* 392B8 80048AB8 DE220108 */  j          .L80048B78
 /* 392BC 80048ABC 000062AC */   sw        $v0, 0x0($v1)
 .L80048AC0:
-/* 392C0 80048AC0 91F7000C */  jal        func_8003DE44
+/* 392C0 80048AC0 91F7000C */  jal        RotateSpyroToAcceleration
 /* 392C4 80048AC4 00000000 */   nop
 /* 392C8 80048AC8 DE220108 */  j          .L80048B78
 /* 392CC 80048ACC 00000000 */   nop
@@ -251,7 +251,7 @@ glabel func_8004888C
 /* 39340 80048B40 DE220108 */  j          .L80048B78
 /* 39344 80048B44 00000000 */   nop
 .L80048B48:
-/* 39348 80048B48 91F7000C */  jal        func_8003DE44
+/* 39348 80048B48 91F7000C */  jal        RotateSpyroToAcceleration
 /* 3934C 80048B4C 00000000 */   nop
 /* 39350 80048B50 0880033C */  lui        $v1, %hi(g_Spyro + 0x14C)
 /* 39354 80048B54 A48B6324 */  addiu      $v1, $v1, %lo(g_Spyro + 0x14C)

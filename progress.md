@@ -221,9 +221,9 @@
 - [ ] func_8003D840
 - [x] func_8003D92C
 - [x] func_8003D978
-- [x] func_8003DA08
+- [x] RotateSpyroToNeutral
 - [ ] func_8003DAE4
-- [ ] func_8003DE44
+- [x] RotateSpyroToAcceleration
 - [x] func_8003DF60
 - [x] func_8003DFA4
 - [x] TurnBodyToVelocity

@@ -210,8 +210,8 @@ typedef struct {
   int m_flyingAbility; // Used in flying levels and gnasty's loot
   int m_doingSupercharge;
   int unk_0x254;
-  int unk_0x258;
-  int unk_0x25c;
+  int m_RotXAccumulator; // Spring-damper accumulator for smooth RotX transitions
+  int m_RotYAccumulator; // Spring-damper accumulator for smooth RotY transitions
   int unk_0x260; // No XREFS
   int unk_0x264;
   int unk_0x268;
