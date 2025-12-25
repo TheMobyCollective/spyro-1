@@ -171,7 +171,8 @@ int func_8003838C(Moby *pMoby) {
   pMoby->m_Position.z += 1500;
   func_8004D5EC(&pMoby->m_Position, 4096);
   pMoby->m_Position.z -= 1500;
-  return (char)Atan2Fast(D_80077368.z, VecMagnitude(&D_80077368, 0)) < 24;
+  return (char)Atan2Fast(g_CollisionNormal.z,
+                         VecMagnitude(&g_CollisionNormal, 0)) < 24;
 }
 
 int func_80038400(Moby *pMoby, int pDistFromFloor) {
@@ -1099,7 +1100,7 @@ int MoveMobyTowardTarget(Moby *pMoby, Vector3D *pTarget, int pSpeed,
   // Check collisions if bounds specified
   if (pBounds != 0) {
     if (func_8004BE4C(&pMoby->m_Position, pBounds, pBounds)) {
-      VecCopy(&pMoby->m_Position, &D_80076B80);
+      VecCopy(&pMoby->m_Position, &g_CollisionPoint);
       result = 1;
     }
     if (func_8004E3C8(&pMoby->m_Position, pBounds, nullptr, 0, pMoby, 1)) {

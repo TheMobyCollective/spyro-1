@@ -643,8 +643,8 @@ glabel func_8003FE40
 /* 30F5C 8004075C 00FF1226 */  addiu      $s2, $s0, -0x100
 /* 30F60 80040760 78FF1526 */  addiu      $s5, $s0, -0x88
 /* 30F64 80040764 01001424 */  addiu      $s4, $zero, 0x1
-/* 30F68 80040768 0780173C */  lui        $s7, %hi(D_80077368)
-/* 30F6C 8004076C 6873F726 */  addiu      $s7, $s7, %lo(D_80077368)
+/* 30F68 80040768 0780173C */  lui        $s7, %hi(g_CollisionNormal)
+/* 30F6C 8004076C 6873F726 */  addiu      $s7, $s7, %lo(g_CollisionNormal)
 .L80040770:
 /* 30F70 80040770 2120C003 */  addu       $a0, $fp, $zero
 /* 30F74 80040774 C05D000C */  jal        VecCopy
@@ -860,8 +860,8 @@ glabel func_8003FE40
 .L80040A78:
 /* 31278 80040A78 7F5C000C */  jal        VecMagnitude
 /* 3127C 80040A7C 21280000 */   addu      $a1, $zero, $zero
-/* 31280 80040A80 0780043C */  lui        $a0, %hi(D_80077368 + 0x8)
-/* 31284 80040A84 7073848C */  lw         $a0, %lo(D_80077368 + 0x8)($a0)
+/* 31280 80040A80 0780043C */  lui        $a0, %hi(g_CollisionNormal + 0x8)
+/* 31284 80040A84 7073848C */  lw         $a0, %lo(g_CollisionNormal + 0x8)($a0)
 /* 31288 80040A88 21284000 */  addu       $a1, $v0, $zero
 /* 3128C 80040A8C AD5A000C */  jal        Atan2
 /* 31290 80040A90 21300000 */   addu      $a2, $zero, $zero
@@ -904,8 +904,8 @@ glabel func_8003FE40
 /* 3131C 80040B1C D65D000C */  jal        VecAdd
 /* 31320 80040B20 2130E002 */   addu      $a2, $s7, $zero
 .L80040B24:
-/* 31324 80040B24 0780053C */  lui        $a1, %hi(D_80076B80)
-/* 31328 80040B28 806BA524 */  addiu      $a1, $a1, %lo(D_80076B80)
+/* 31324 80040B24 0780053C */  lui        $a1, %hi(g_CollisionPoint)
+/* 31328 80040B28 806BA524 */  addiu      $a1, $a1, %lo(g_CollisionPoint)
 /* 3132C 80040B2C C05D000C */  jal        VecCopy
 /* 31330 80040B30 21204002 */   addu      $a0, $s2, $zero
 /* 31334 80040B34 0880033C */  lui        $v1, %hi(g_Spyro + 0x16C)
@@ -921,8 +921,8 @@ glabel func_8003FE40
 /* 3135C 80040B5C C48B22AC */  sw         $v0, %lo(g_Spyro + 0x16C)($at)
 /* 31360 80040B60 C05D000C */  jal        VecCopy
 /* 31364 80040B64 7C014426 */   addiu     $a0, $s2, 0x17C
-/* 31368 80040B68 0780053C */  lui        $a1, %hi(D_80077368)
-/* 3136C 80040B6C 6873A524 */  addiu      $a1, $a1, %lo(D_80077368)
+/* 31368 80040B68 0780053C */  lui        $a1, %hi(g_CollisionNormal)
+/* 3136C 80040B6C 6873A524 */  addiu      $a1, $a1, %lo(g_CollisionNormal)
 /* 31370 80040B70 C05D000C */  jal        VecCopy
 /* 31374 80040B74 88014426 */   addiu     $a0, $s2, 0x188
 /* 31378 80040B78 1800A427 */  addiu      $a0, $sp, 0x18
@@ -1023,8 +1023,8 @@ glabel func_8003FE40
 .L80040CD4:
 /* 314D4 80040CD4 7F5C000C */  jal        VecMagnitude
 /* 314D8 80040CD8 21280000 */   addu      $a1, $zero, $zero
-/* 314DC 80040CDC 0780043C */  lui        $a0, %hi(D_80077368 + 0x8)
-/* 314E0 80040CE0 7073848C */  lw         $a0, %lo(D_80077368 + 0x8)($a0)
+/* 314DC 80040CDC 0780043C */  lui        $a0, %hi(g_CollisionNormal + 0x8)
+/* 314E0 80040CE0 7073848C */  lw         $a0, %lo(g_CollisionNormal + 0x8)($a0)
 /* 314E4 80040CE4 21284000 */  addu       $a1, $v0, $zero
 /* 314E8 80040CE8 AD5A000C */  jal        Atan2
 /* 314EC 80040CEC 21300000 */   addu      $a2, $zero, $zero
@@ -1065,8 +1065,8 @@ glabel func_8003FE40
 /* 31570 80040D70 D65D000C */  jal        VecAdd
 /* 31574 80040D74 2130E002 */   addu      $a2, $s7, $zero
 .L80040D78:
-/* 31578 80040D78 0780053C */  lui        $a1, %hi(D_80076B80)
-/* 3157C 80040D7C 806BA524 */  addiu      $a1, $a1, %lo(D_80076B80)
+/* 31578 80040D78 0780053C */  lui        $a1, %hi(g_CollisionPoint)
+/* 3157C 80040D7C 806BA524 */  addiu      $a1, $a1, %lo(g_CollisionPoint)
 /* 31580 80040D80 C05D000C */  jal        VecCopy
 /* 31584 80040D84 21204002 */   addu      $a0, $s2, $zero
 /* 31588 80040D88 0880033C */  lui        $v1, %hi(g_Spyro + 0x16C)
@@ -1082,8 +1082,8 @@ glabel func_8003FE40
 /* 315B0 80040DB0 C48B22AC */  sw         $v0, %lo(g_Spyro + 0x16C)($at)
 /* 315B4 80040DB4 C05D000C */  jal        VecCopy
 /* 315B8 80040DB8 7C014426 */   addiu     $a0, $s2, 0x17C
-/* 315BC 80040DBC 0780053C */  lui        $a1, %hi(D_80077368)
-/* 315C0 80040DC0 6873A524 */  addiu      $a1, $a1, %lo(D_80077368)
+/* 315BC 80040DBC 0780053C */  lui        $a1, %hi(g_CollisionNormal)
+/* 315C0 80040DC0 6873A524 */  addiu      $a1, $a1, %lo(g_CollisionNormal)
 /* 315C4 80040DC4 C05D000C */  jal        VecCopy
 /* 315C8 80040DC8 88014426 */   addiu     $a0, $s2, 0x188
 /* 315CC 80040DCC 1800A427 */  addiu      $a0, $sp, 0x18

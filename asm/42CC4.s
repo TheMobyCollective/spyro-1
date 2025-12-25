@@ -1043,8 +1043,8 @@ glabel func_800530C0
 
 /* Handwritten function */
 glabel func_800533D0
-/* 43BD0 800533D0 0780033C */  lui        $v1, %hi(D_80077368)
-/* 43BD4 800533D4 68736324 */  addiu      $v1, $v1, %lo(D_80077368)
+/* 43BD0 800533D0 0780033C */  lui        $v1, %hi(g_CollisionNormal)
+/* 43BD4 800533D4 68736324 */  addiu      $v1, $v1, %lo(g_CollisionNormal)
 /* 43BD8 800533D8 0000618C */  lw         $at, 0x0($v1)
 /* 43BDC 800533DC 0400628C */  lw         $v0, 0x4($v1)
 /* 43BE0 800533E0 0800638C */  lw         $v1, 0x8($v1)
@@ -1137,8 +1137,8 @@ glabel func_800533D0
 /* 43D18 80053518 1A00C300 */  div        $zero, $a2, $v1
 /* 43D1C 8005351C 80000720 */  addi       $a3, $zero, 0x80 /* handwritten instruction */
 .L80053520:
-/* 43D20 80053520 0780053C */  lui        $a1, %hi(D_80076B80)
-/* 43D24 80053524 806BA524 */  addiu      $a1, $a1, %lo(D_80076B80)
+/* 43D20 80053520 0780053C */  lui        $a1, %hi(g_CollisionPoint)
+/* 43D24 80053524 806BA524 */  addiu      $a1, $a1, %lo(g_CollisionPoint)
 /* 43D28 80053528 0800A58C */  lw         $a1, 0x8($a1)
 /* 43D2C 8005352C 12080000 */  mflo       $at
 /* 43D30 80053530 20082700 */  add        $at, $at, $a3 /* handwritten instruction */

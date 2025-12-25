@@ -95,7 +95,7 @@ glabel func_80047B60
 /* 383E4 80047BE4 00000000 */   nop
 /* 383E8 80047BE8 90FF000C */  jal        func_8003FE40
 /* 383EC 80047BEC 00000000 */   nop
-/* 383F0 80047BF0 C6F8000C */  jal        func_8003E318
+/* 383F0 80047BF0 C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 383F4 80047BF4 00000000 */   nop
 /* 383F8 80047BF8 0880023C */  lui        $v0, %hi(g_Spyro + 0x1F4)
 /* 383FC 80047BFC 4C8C428C */  lw         $v0, %lo(g_Spyro + 0x1F4)($v0)
@@ -111,7 +111,7 @@ glabel func_80047B60
 /* 38420 80047C20 00000000 */   nop
 /* 38424 80047C24 90FF000C */  jal        func_8003FE40
 /* 38428 80047C28 00000000 */   nop
-/* 3842C 80047C2C C6F8000C */  jal        func_8003E318
+/* 3842C 80047C2C C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38430 80047C30 00000000 */   nop
 /* 38434 80047C34 6BF8000C */  jal        func_8003E1AC
 /* 38438 80047C38 00000000 */   nop
@@ -236,7 +236,7 @@ glabel func_80047B60
 /* 385F8 80047DF8 00000000 */   nop
 /* 385FC 80047DFC 90FF000C */  jal        func_8003FE40
 /* 38600 80047E00 00000000 */   nop
-/* 38604 80047E04 C6F8000C */  jal        func_8003E318
+/* 38604 80047E04 C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38608 80047E08 00000000 */   nop
 /* 3860C 80047E0C 6BF8000C */  jal        func_8003E1AC
 /* 38610 80047E10 00000000 */   nop
@@ -260,7 +260,7 @@ glabel func_80047B60
 .L80047E58:
 /* 38658 80047E58 90FF000C */  jal        func_8003FE40
 /* 3865C 80047E5C 00000000 */   nop
-/* 38660 80047E60 C6F8000C */  jal        func_8003E318
+/* 38660 80047E60 C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38664 80047E64 00000000 */   nop
 /* 38668 80047E68 6BF8000C */  jal        func_8003E1AC
 /* 3866C 80047E6C 00000000 */   nop
@@ -300,14 +300,14 @@ glabel func_80047B60
 .L80047EEC:
 /* 386EC 80047EEC 90FF000C */  jal        func_8003FE40
 /* 386F0 80047EF0 00000000 */   nop
-/* 386F4 80047EF4 C6F8000C */  jal        func_8003E318
+/* 386F4 80047EF4 C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 386F8 80047EF8 00000000 */   nop
 /* 386FC 80047EFC F8210108 */  j          .L800487E0
 /* 38700 80047F00 00000000 */   nop
 .L80047F04:
 /* 38704 80047F04 90FF000C */  jal        func_8003FE40
 /* 38708 80047F08 00000000 */   nop
-/* 3870C 80047F0C C6F8000C */  jal        func_8003E318
+/* 3870C 80047F0C C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38710 80047F10 00000000 */   nop
 /* 38714 80047F14 66210108 */  j          .L80048598
 /* 38718 80047F18 00000000 */   nop
@@ -325,7 +325,7 @@ glabel func_80047B60
 .L80047F44:
 /* 38744 80047F44 90FF000C */  jal        func_8003FE40
 /* 38748 80047F48 00000000 */   nop
-/* 3874C 80047F4C C6F8000C */  jal        func_8003E318
+/* 3874C 80047F4C C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38750 80047F50 00000000 */   nop
 /* 38754 80047F54 0000028E */  lw         $v0, 0x0($s0)
 /* 38758 80047F58 00000000 */  nop
@@ -441,7 +441,7 @@ glabel func_80047B60
 .L800480E8:
 /* 388E8 800480E8 90FF000C */  jal        func_8003FE40
 /* 388EC 800480EC 00000000 */   nop
-/* 388F0 800480F0 C6F8000C */  jal        func_8003E318
+/* 388F0 800480F0 C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 388F4 800480F4 00000000 */   nop
 /* 388F8 800480F8 0000028E */  lw         $v0, 0x0($s0)
 /* 388FC 800480FC 00000000 */  nop
@@ -544,7 +544,7 @@ glabel func_80047B60
 .L80048260:
 /* 38A60 80048260 90FF000C */  jal        func_8003FE40
 /* 38A64 80048264 00000000 */   nop
-/* 38A68 80048268 C6F8000C */  jal        func_8003E318
+/* 38A68 80048268 C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38A6C 8004826C 00000000 */   nop
 /* 38A70 80048270 0000028E */  lw         $v0, 0x0($s0)
 /* 38A74 80048274 00000000 */  nop
@@ -662,7 +662,7 @@ glabel func_80047B60
 .L80048414:
 /* 38C14 80048414 90FF000C */  jal        func_8003FE40
 /* 38C18 80048418 00000000 */   nop
-/* 38C1C 8004841C C6F8000C */  jal        func_8003E318
+/* 38C1C 8004841C C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38C20 80048420 00000000 */   nop
 /* 38C24 80048424 0000028E */  lw         $v0, 0x0($s0)
 /* 38C28 80048428 00000000 */  nop
@@ -757,7 +757,7 @@ glabel func_80047B60
 .L80048570:
 /* 38D70 80048570 90FF000C */  jal        func_8003FE40
 /* 38D74 80048574 00000000 */   nop
-/* 38D78 80048578 C6F8000C */  jal        func_8003E318
+/* 38D78 80048578 C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38D7C 8004857C 00000000 */   nop
 /* 38D80 80048580 6BF8000C */  jal        func_8003E1AC
 /* 38D84 80048584 00000000 */   nop
@@ -782,7 +782,7 @@ glabel func_80047B60
 /* 38DC8 800485C8 408B8424 */  addiu      $a0, $a0, %lo(g_Spyro + 0xE8)
 /* 38DCC 800485CC C05D000C */  jal        VecCopy
 /* 38DD0 800485D0 24008524 */   addiu     $a1, $a0, 0x24
-/* 38DD4 800485D4 C6F8000C */  jal        func_8003E318
+/* 38DD4 800485D4 C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38DD8 800485D8 00000000 */   nop
 /* 38DDC 800485DC 6BF8000C */  jal        func_8003E1AC
 /* 38DE0 800485E0 00000000 */   nop
@@ -793,7 +793,7 @@ glabel func_80047B60
 .L800485F4:
 /* 38DF4 800485F4 90FF000C */  jal        func_8003FE40
 /* 38DF8 800485F8 00000000 */   nop
-/* 38DFC 800485FC C6F8000C */  jal        func_8003E318
+/* 38DFC 800485FC C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38E00 80048600 00000000 */   nop
 /* 38E04 80048604 0880123C */  lui        $s2, %hi(g_Spyro + 0x7C)
 /* 38E08 80048608 D48A5226 */  addiu      $s2, $s2, %lo(g_Spyro + 0x7C)
@@ -832,7 +832,7 @@ glabel func_80047B60
 .L8004868C:
 /* 38E8C 8004868C 90FF000C */  jal        func_8003FE40
 /* 38E90 80048690 00000000 */   nop
-/* 38E94 80048694 C6F8000C */  jal        func_8003E318
+/* 38E94 80048694 C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38E98 80048698 00000000 */   nop
 /* 38E9C 8004869C 6BF8000C */  jal        func_8003E1AC
 /* 38EA0 800486A0 00000000 */   nop
@@ -867,7 +867,7 @@ glabel func_80047B60
 .L8004870C:
 /* 38F0C 8004870C 90FF000C */  jal        func_8003FE40
 /* 38F10 80048710 00000000 */   nop
-/* 38F14 80048714 C6F8000C */  jal        func_8003E318
+/* 38F14 80048714 C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38F18 80048718 00000000 */   nop
 /* 38F1C 8004871C D6F9000C */  jal        AdjustAirCollision
 /* 38F20 80048720 00000000 */   nop
@@ -876,7 +876,7 @@ glabel func_80047B60
 .L8004872C:
 /* 38F2C 8004872C 90FF000C */  jal        func_8003FE40
 /* 38F30 80048730 00000000 */   nop
-/* 38F34 80048734 C6F8000C */  jal        func_8003E318
+/* 38F34 80048734 C6F8000C */  jal        UpdateSlopeFloorCollision
 /* 38F38 80048738 00000000 */   nop
 /* 38F3C 8004873C 6BF8000C */  jal        func_8003E1AC
 /* 38F40 80048740 00000000 */   nop
