@@ -93,8 +93,8 @@ glabel func_80039398
 /* 29CE4 800394E4 20004232 */   andi      $v0, $s2, 0x20
 /* 29CE8 800394E8 5F004010 */  beqz       $v0, .L80039668
 /* 29CEC 800394EC 02000224 */   addiu     $v0, $zero, 0x2
-/* 29CF0 800394F0 0780053C */  lui        $a1, %hi(D_80076B80)
-/* 29CF4 800394F4 806BA524 */  addiu      $a1, $a1, %lo(D_80076B80)
+/* 29CF0 800394F0 0780053C */  lui        $a1, %hi(g_CollisionPoint)
+/* 29CF4 800394F4 806BA524 */  addiu      $a1, $a1, %lo(g_CollisionPoint)
 /* 29CF8 800394F8 C05D000C */  jal        VecCopy
 /* 29CFC 800394FC 1800A427 */   addiu     $a0, $sp, 0x18
 .L80039500:
@@ -134,13 +134,13 @@ glabel func_80039398
 .L80039578:
 /* 29D78 80039578 17004010 */  beqz       $v0, .L800395D8
 /* 29D7C 8003957C 00000000 */   nop
-/* 29D80 80039580 0780043C */  lui        $a0, %hi(D_80077368)
-/* 29D84 80039584 68738424 */  addiu      $a0, $a0, %lo(D_80077368)
+/* 29D80 80039580 0780043C */  lui        $a0, %hi(g_CollisionNormal)
+/* 29D84 80039584 68738424 */  addiu      $a0, $a0, %lo(g_CollisionNormal)
 /* 29D88 80039588 7F5C000C */  jal        VecMagnitude
 /* 29D8C 8003958C 21280000 */   addu      $a1, $zero, $zero
 /* 29D90 80039590 21204000 */  addu       $a0, $v0, $zero
-/* 29D94 80039594 0780053C */  lui        $a1, %hi(D_80077368 + 0x8)
-/* 29D98 80039598 7073A58C */  lw         $a1, %lo(D_80077368 + 0x8)($a1)
+/* 29D94 80039594 0780053C */  lui        $a1, %hi(g_CollisionNormal + 0x8)
+/* 29D98 80039598 7073A58C */  lw         $a1, %lo(g_CollisionNormal + 0x8)($a1)
 /* 29D9C 8003959C AD5A000C */  jal        Atan2
 /* 29DA0 800395A0 21300000 */   addu      $a2, $zero, $zero
 /* 29DA4 800395A4 21184000 */  addu       $v1, $v0, $zero

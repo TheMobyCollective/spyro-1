@@ -40,7 +40,7 @@ dlabel g_Models
 dlabel D_80076B78
 /* 66AC0 80076B78 */ .space 0x08
 
-dlabel D_80076B80
+dlabel g_CollisionPoint
 /* 66AC8 80076B80 */ .space 0x04
 
 dlabel D_80076B84
@@ -100,7 +100,7 @@ dlabel D_800772C8 /* Storage for tracers */
 dlabel g_LevelDragonCount
 /* 67220 800772D8 */ .space 0x90
 
-dlabel D_80077368
+dlabel g_CollisionNormal
 /* Total size from 80077368 to 80077378 */ .space 0x10
 
 dlabel g_Pad

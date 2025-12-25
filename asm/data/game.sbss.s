@@ -312,7 +312,7 @@ dlabel D_80075800
 dlabel D_80075804
 /* 65FDC 80075804 */ .space 0x04
 
-dlabel D_80075808
+dlabel g_CollisionTriangleIndex
 /* 65FE0 80075808 */ .space 0x04
 
 dlabel D_8007580C

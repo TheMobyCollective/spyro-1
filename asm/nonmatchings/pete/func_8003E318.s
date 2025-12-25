@@ -1,7 +1,7 @@
 .set noat      /* allow manual use of $at */
 .set noreorder /* don't insert nops after branches */
 
-glabel func_8003E318
+glabel UpdateSlopeFloorCollision
 /* 2EB18 8003E318 B0FFBD27 */  addiu      $sp, $sp, -0x50
 /* 2EB1C 8003E31C 3800B2AF */  sw         $s2, 0x38($sp)
 /* 2EB20 8003E320 0880123C */  lui        $s2, %hi(g_Spyro + 0x9C)
@@ -60,16 +60,16 @@ glabel func_8003E318
 /* 2EBF4 8003E3F4 21282002 */   addu      $a1, $s1, $zero
 /* 2EBF8 8003E3F8 41004010 */  beqz       $v0, .L8003E500
 /* 2EBFC 8003E3FC 21200002 */   addu      $a0, $s0, $zero
-/* 2EC00 8003E400 0780103C */  lui        $s0, %hi(D_80077368)
-/* 2EC04 8003E404 68731026 */  addiu      $s0, $s0, %lo(D_80077368)
+/* 2EC00 8003E400 0780103C */  lui        $s0, %hi(g_CollisionNormal)
+/* 2EC04 8003E404 68731026 */  addiu      $s0, $s0, %lo(g_CollisionNormal)
 /* 2EC08 8003E408 C05D000C */  jal        VecCopy
 /* 2EC0C 8003E40C 21280002 */   addu      $a1, $s0, $zero
 /* 2EC10 8003E410 21200002 */  addu       $a0, $s0, $zero
 /* 2EC14 8003E414 7F5C000C */  jal        VecMagnitude
 /* 2EC18 8003E418 21280000 */   addu      $a1, $zero, $zero
 /* 2EC1C 8003E41C 21284000 */  addu       $a1, $v0, $zero
-/* 2EC20 8003E420 0780043C */  lui        $a0, %hi(D_80077368 + 0x8)
-/* 2EC24 8003E424 7073848C */  lw         $a0, %lo(D_80077368 + 0x8)($a0)
+/* 2EC20 8003E420 0780043C */  lui        $a0, %hi(g_CollisionNormal + 0x8)
+/* 2EC24 8003E424 7073848C */  lw         $a0, %lo(g_CollisionNormal + 0x8)($a0)
 /* 2EC28 8003E428 AD5A000C */  jal        Atan2
 /* 2EC2C 8003E42C 21300000 */   addu      $a2, $zero, $zero
 /* 2EC30 8003E430 00160200 */  sll        $v0, $v0, 24
@@ -81,8 +81,8 @@ glabel func_8003E318
 /* 2EC48 8003E448 0880013C */  lui        $at, %hi(g_Spyro + 0xB0)
 /* 2EC4C 8003E44C 088B22AC */  sw         $v0, %lo(g_Spyro + 0xB0)($at)
 .L8003E450:
-/* 2EC50 8003E450 0780043C */  lui        $a0, %hi(D_80075808)
-/* 2EC54 8003E454 0858848C */  lw         $a0, %lo(D_80075808)($a0)
+/* 2EC50 8003E450 0780043C */  lui        $a0, %hi(g_CollisionTriangleIndex)
+/* 2EC54 8003E454 0858848C */  lw         $a0, %lo(g_CollisionTriangleIndex)($a0)
 /* 2EC58 8003E458 DC014526 */  addiu      $a1, $s2, 0x1DC
 /* 2EC5C 8003E45C 2E5F000C */  jal        ColTriUnpack
 /* 2EC60 8003E460 D80144AE */   sw        $a0, 0x1D8($s2)
@@ -162,8 +162,8 @@ glabel func_8003E318
 /* 2ED80 8003E580 21280002 */   addu      $a1, $s0, $zero
 /* 2ED84 8003E584 1D004010 */  beqz       $v0, .L8003E5FC
 /* 2ED88 8003E588 08005026 */   addiu     $s0, $s2, 0x8
-/* 2ED8C 8003E58C 0780053C */  lui        $a1, %hi(D_80077368)
-/* 2ED90 8003E590 6873A524 */  addiu      $a1, $a1, %lo(D_80077368)
+/* 2ED8C 8003E58C 0780053C */  lui        $a1, %hi(g_CollisionNormal)
+/* 2ED90 8003E590 6873A524 */  addiu      $a1, $a1, %lo(g_CollisionNormal)
 /* 2ED94 8003E594 C05D000C */  jal        VecCopy
 /* 2ED98 8003E598 21200002 */   addu      $a0, $s0, $zero
 /* 2ED9C 8003E59C 21200002 */  addu       $a0, $s0, $zero
@@ -203,4 +203,4 @@ glabel func_8003E318
 /* 2EE1C 8003E61C 5000BD27 */  addiu      $sp, $sp, 0x50
 /* 2EE20 8003E620 0800E003 */  jr         $ra
 /* 2EE24 8003E624 00000000 */   nop
-.size func_8003E318, . - func_8003E318
+.size UpdateSlopeFloorCollision, . - UpdateSlopeFloorCollision

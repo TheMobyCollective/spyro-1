@@ -565,21 +565,21 @@ glabel D_8004B610
 /* 3BE54 8004B654 20082700 */  add        $at, $at, $a3 /* handwritten instruction */
 /* 3BE58 8004B658 20104800 */  add        $v0, $v0, $t0 /* handwritten instruction */
 /* 3BE5C 8004B65C 20186900 */  add        $v1, $v1, $t1 /* handwritten instruction */
-/* 3BE60 8004B660 0780043C */  lui        $a0, %hi(D_80076B80)
-/* 3BE64 8004B664 806B8424 */  addiu      $a0, $a0, %lo(D_80076B80)
+/* 3BE60 8004B660 0780043C */  lui        $a0, %hi(g_CollisionPoint)
+/* 3BE64 8004B664 806B8424 */  addiu      $a0, $a0, %lo(g_CollisionPoint)
 /* 3BE68 8004B668 000081AC */  sw         $at, 0x0($a0)
 /* 3BE6C 8004B66C 040082AC */  sw         $v0, 0x4($a0)
 /* 3BE70 8004B670 080083AC */  sw         $v1, 0x8($a0)
-/* 3BE74 8004B674 0780043C */  lui        $a0, %hi(D_80077368)
-/* 3BE78 8004B678 68738424 */  addiu      $a0, $a0, %lo(D_80077368)
+/* 3BE74 8004B674 0780043C */  lui        $a0, %hi(g_CollisionNormal)
+/* 3BE78 8004B678 68738424 */  addiu      $a0, $a0, %lo(g_CollisionNormal)
 /* 3BE7C 8004B67C 00008DAC */  sw         $t5, 0x0($a0)
 /* 3BE80 8004B680 04008EAC */  sw         $t6, 0x4($a0)
 /* 3BE84 8004B684 08008FAC */  sw         $t7, 0x8($a0)
 /* 3BE88 8004B688 0780043C */  lui        $a0, %hi(D_800757E4)
 /* 3BE8C 8004B68C E4578424 */  addiu      $a0, $a0, %lo(D_800757E4)
 /* 3BE90 8004B690 000080AC */  sw         $zero, 0x0($a0)
-/* 3BE94 8004B694 0780043C */  lui        $a0, %hi(D_80075808)
-/* 3BE98 8004B698 08588424 */  addiu      $a0, $a0, %lo(D_80075808)
+/* 3BE94 8004B694 0780043C */  lui        $a0, %hi(g_CollisionTriangleIndex)
+/* 3BE98 8004B698 08588424 */  addiu      $a0, $a0, %lo(g_CollisionTriangleIndex)
 /* 3BE9C 8004B69C 00009CAC */  sw         $gp, 0x0($a0)
 /* 3BEA0 8004B6A0 5800618E */  lw         $at, (0x1F800058 & 0xFFFF)($s3)
 /* 3BEA4 8004B6A4 7E2C0108 */  j          .L8004B1F8
@@ -1053,21 +1053,21 @@ glabel D_8004BD48
 /* 3C58C 8004BD8C 20082700 */  add        $at, $at, $a3 /* handwritten instruction */
 /* 3C590 8004BD90 20104800 */  add        $v0, $v0, $t0 /* handwritten instruction */
 /* 3C594 8004BD94 20186900 */  add        $v1, $v1, $t1 /* handwritten instruction */
-/* 3C598 8004BD98 0780043C */  lui        $a0, %hi(D_80076B80)
-/* 3C59C 8004BD9C 806B8424 */  addiu      $a0, $a0, %lo(D_80076B80)
+/* 3C598 8004BD98 0780043C */  lui        $a0, %hi(g_CollisionPoint)
+/* 3C59C 8004BD9C 806B8424 */  addiu      $a0, $a0, %lo(g_CollisionPoint)
 /* 3C5A0 8004BDA0 000081AC */  sw         $at, 0x0($a0)
 /* 3C5A4 8004BDA4 040082AC */  sw         $v0, 0x4($a0)
 /* 3C5A8 8004BDA8 080083AC */  sw         $v1, 0x8($a0)
-/* 3C5AC 8004BDAC 0780043C */  lui        $a0, %hi(D_80077368)
-/* 3C5B0 8004BDB0 68738424 */  addiu      $a0, $a0, %lo(D_80077368)
+/* 3C5AC 8004BDAC 0780043C */  lui        $a0, %hi(g_CollisionNormal)
+/* 3C5B0 8004BDB0 68738424 */  addiu      $a0, $a0, %lo(g_CollisionNormal)
 /* 3C5B4 8004BDB4 00008DAC */  sw         $t5, 0x0($a0)
 /* 3C5B8 8004BDB8 04008EAC */  sw         $t6, 0x4($a0)
 /* 3C5BC 8004BDBC 08008FAC */  sw         $t7, 0x8($a0)
 /* 3C5C0 8004BDC0 0780043C */  lui        $a0, %hi(D_800757E4)
 /* 3C5C4 8004BDC4 E4578424 */  addiu      $a0, $a0, %lo(D_800757E4)
 /* 3C5C8 8004BDC8 00009EAC */  sw         $fp, 0x0($a0)
-/* 3C5CC 8004BDCC 0780043C */  lui        $a0, %hi(D_80075808)
-/* 3C5D0 8004BDD0 08588424 */  addiu      $a0, $a0, %lo(D_80075808)
+/* 3C5CC 8004BDCC 0780043C */  lui        $a0, %hi(g_CollisionTriangleIndex)
+/* 3C5D0 8004BDD0 08588424 */  addiu      $a0, $a0, %lo(g_CollisionTriangleIndex)
 /* 3C5D4 8004BDD4 FFFF0120 */  addi       $at, $zero, -0x1 /* handwritten instruction */
 /* 3C5D8 8004BDD8 000081AC */  sw         $at, 0x0($a0)
 /* 3C5DC 8004BDDC D8FF618E */  lw         $at, -0x28($s3)
@@ -1837,16 +1837,16 @@ glabel D_8004C820
 /* 3D104 8004C904 4C00A2AE */  sw         $v0, (0x1F80004C & 0xFFFF)($s5)
 /* 3D108 8004C908 5000A3AE */  sw         $v1, (0x1F800050 & 0xFFFF)($s5)
 /* 3D10C 8004C90C 5400A4AE */  sw         $a0, (0x1F800054 & 0xFFFF)($s5)
-/* 3D110 8004C910 0780013C */  lui        $at, %hi(D_80077368)
-/* 3D114 8004C914 68732124 */  addiu      $at, $at, %lo(D_80077368)
+/* 3D110 8004C910 0780013C */  lui        $at, %hi(g_CollisionNormal)
+/* 3D114 8004C914 68732124 */  addiu      $at, $at, %lo(g_CollisionNormal)
 /* 3D118 8004C918 00002DAC */  sw         $t5, 0x0($at)
 /* 3D11C 8004C91C 04002EAC */  sw         $t6, 0x4($at)
 /* 3D120 8004C920 08002FAC */  sw         $t7, 0x8($at)
 /* 3D124 8004C924 0780013C */  lui        $at, %hi(D_800757E4)
 /* 3D128 8004C928 E4572124 */  addiu      $at, $at, %lo(D_800757E4)
 /* 3D12C 8004C92C 000020AC */  sw         $zero, 0x0($at)
-/* 3D130 8004C930 0780013C */  lui        $at, %hi(D_80075808)
-/* 3D134 8004C934 08582124 */  addiu      $at, $at, %lo(D_80075808)
+/* 3D130 8004C930 0780013C */  lui        $at, %hi(g_CollisionTriangleIndex)
+/* 3D134 8004C934 08582124 */  addiu      $at, $at, %lo(g_CollisionTriangleIndex)
 /* 3D138 8004C938 00003CAC */  sw         $gp, 0x0($at)
 /* 3D13C 8004C93C 0880013C */  lui        $at, %hi(g_Environment)
 /* 3D140 8004C940 A8852124 */  addiu      $at, $at, %lo(g_Environment)
@@ -1953,8 +1953,8 @@ glabel D_8004C820
 /* 3D2C0 8004CAC0 20082400 */  add        $at, $at, $a0 /* handwritten instruction */
 /* 3D2C4 8004CAC4 20104500 */  add        $v0, $v0, $a1 /* handwritten instruction */
 /* 3D2C8 8004CAC8 20186600 */  add        $v1, $v1, $a2 /* handwritten instruction */
-/* 3D2CC 8004CACC 0780043C */  lui        $a0, %hi(D_80076B80)
-/* 3D2D0 8004CAD0 806B8424 */  addiu      $a0, $a0, %lo(D_80076B80)
+/* 3D2CC 8004CACC 0780043C */  lui        $a0, %hi(g_CollisionPoint)
+/* 3D2D0 8004CAD0 806B8424 */  addiu      $a0, $a0, %lo(g_CollisionPoint)
 /* 3D2D4 8004CAD4 000081AC */  sw         $at, 0x0($a0)
 /* 3D2D8 8004CAD8 040082AC */  sw         $v0, 0x4($a0)
 /* 3D2DC 8004CADC 080083AC */  sw         $v1, 0x8($a0)
@@ -2560,16 +2560,16 @@ glabel D_8004D2E0
 /* 3DBC4 8004D3C4 CCFFA2AE */  sw         $v0, -0x34($s5)
 /* 3DBC8 8004D3C8 D0FFA3AE */  sw         $v1, -0x30($s5)
 /* 3DBCC 8004D3CC D4FFA4AE */  sw         $a0, -0x2C($s5)
-/* 3DBD0 8004D3D0 0780013C */  lui        $at, %hi(D_80077368)
-/* 3DBD4 8004D3D4 68732124 */  addiu      $at, $at, %lo(D_80077368)
+/* 3DBD0 8004D3D0 0780013C */  lui        $at, %hi(g_CollisionNormal)
+/* 3DBD4 8004D3D4 68732124 */  addiu      $at, $at, %lo(g_CollisionNormal)
 /* 3DBD8 8004D3D8 00002DAC */  sw         $t5, 0x0($at)
 /* 3DBDC 8004D3DC 04002EAC */  sw         $t6, 0x4($at)
 /* 3DBE0 8004D3E0 08002FAC */  sw         $t7, 0x8($at)
 /* 3DBE4 8004D3E4 0780013C */  lui        $at, %hi(D_800757E4)
 /* 3DBE8 8004D3E8 E4572124 */  addiu      $at, $at, %lo(D_800757E4)
 /* 3DBEC 8004D3EC 00003EAC */  sw         $fp, 0x0($at)
-/* 3DBF0 8004D3F0 0780013C */  lui        $at, %hi(D_80075808)
-/* 3DBF4 8004D3F4 08582124 */  addiu      $at, $at, %lo(D_80075808)
+/* 3DBF0 8004D3F0 0780013C */  lui        $at, %hi(g_CollisionTriangleIndex)
+/* 3DBF4 8004D3F4 08582124 */  addiu      $at, $at, %lo(g_CollisionTriangleIndex)
 /* 3DBF8 8004D3F8 FFFF0220 */  addi       $v0, $zero, -0x1 /* handwritten instruction */
 /* 3DBFC 8004D3FC 000022AC */  sw         $v0, 0x0($at)
 /* 3DC00 8004D400 FF000120 */  addi       $at, $zero, 0xFF /* handwritten instruction */
@@ -2671,8 +2671,8 @@ glabel D_8004D2E0
 /* 3DD6C 8004D56C 20082400 */  add        $at, $at, $a0 /* handwritten instruction */
 /* 3DD70 8004D570 20104500 */  add        $v0, $v0, $a1 /* handwritten instruction */
 /* 3DD74 8004D574 20186600 */  add        $v1, $v1, $a2 /* handwritten instruction */
-/* 3DD78 8004D578 0780043C */  lui        $a0, %hi(D_80076B80)
-/* 3DD7C 8004D57C 806B8424 */  addiu      $a0, $a0, %lo(D_80076B80)
+/* 3DD78 8004D578 0780043C */  lui        $a0, %hi(g_CollisionPoint)
+/* 3DD7C 8004D57C 806B8424 */  addiu      $a0, $a0, %lo(g_CollisionPoint)
 /* 3DD80 8004D580 000081AC */  sw         $at, 0x0($a0)
 /* 3DD84 8004D584 040082AC */  sw         $v0, 0x4($a0)
 /* 3DD88 8004D588 080083AC */  sw         $v1, 0x8($a0)
@@ -2995,16 +2995,16 @@ glabel func_8004D5EC
 /* 3E230 8004DA30 7CFF0106 */  bgez       $s0, .L8004D824
 /* 3E234 8004DA34 00000000 */   nop
 /* 3E238 8004DA38 00003621 */  addi       $s6, $t1, 0x0 /* handwritten instruction */
-/* 3E23C 8004DA3C 0780013C */  lui        $at, %hi(D_80077368)
-/* 3E240 8004DA40 68732124 */  addiu      $at, $at, %lo(D_80077368)
+/* 3E23C 8004DA3C 0780013C */  lui        $at, %hi(g_CollisionNormal)
+/* 3E240 8004DA40 68732124 */  addiu      $at, $at, %lo(g_CollisionNormal)
 /* 3E244 8004DA44 00002DAC */  sw         $t5, 0x0($at)
 /* 3E248 8004DA48 04002EAC */  sw         $t6, 0x4($at)
 /* 3E24C 8004DA4C 08002FAC */  sw         $t7, 0x8($at)
 /* 3E250 8004DA50 0780013C */  lui        $at, %hi(D_800757E4)
 /* 3E254 8004DA54 E4572124 */  addiu      $at, $at, %lo(D_800757E4)
 /* 3E258 8004DA58 000020AC */  sw         $zero, 0x0($at)
-/* 3E25C 8004DA5C 0780013C */  lui        $at, %hi(D_80075808)
-/* 3E260 8004DA60 08582124 */  addiu      $at, $at, %lo(D_80075808)
+/* 3E25C 8004DA5C 0780013C */  lui        $at, %hi(g_CollisionTriangleIndex)
+/* 3E260 8004DA60 08582124 */  addiu      $at, $at, %lo(g_CollisionTriangleIndex)
 /* 3E264 8004DA64 000033AC */  sw         $s3, 0x0($at)
 /* 3E268 8004DA68 0880013C */  lui        $at, %hi(g_Environment)
 /* 3E26C 8004DA6C A8852124 */  addiu      $at, $at, %lo(g_Environment)
@@ -3030,8 +3030,8 @@ glabel func_8004D5EC
 /* 3E2B4 8004DAB4 00000220 */   addi      $v0, $zero, 0x0 /* handwritten instruction */
 /* 3E2B8 8004DAB8 0000C222 */  addi       $v0, $s6, 0x0 /* handwritten instruction */
 .L8004DABC:
-/* 3E2BC 8004DABC 0780033C */  lui        $v1, %hi(D_80076B80)
-/* 3E2C0 8004DAC0 806B6324 */  addiu      $v1, $v1, %lo(D_80076B80)
+/* 3E2BC 8004DABC 0780033C */  lui        $v1, %hi(g_CollisionPoint)
+/* 3E2C0 8004DAC0 806B6324 */  addiu      $v1, $v1, %lo(g_CollisionPoint)
 /* 3E2C4 8004DAC4 0780013C */  lui        $at, %hi(D_80077DD8)
 /* 3E2C8 8004DAC8 D87D2124 */  addiu      $at, $at, %lo(D_80077DD8)
 /* 3E2CC 8004DACC 2C003F8C */  lw         $ra, 0x2C($at)
@@ -3297,16 +3297,16 @@ glabel func_8004D5EC
 /* 3E6B8 8004DEB8 78FF0106 */  bgez       $s0, .L8004DC9C
 /* 3E6BC 8004DEBC 00000000 */   nop
 /* 3E6C0 8004DEC0 00003621 */  addi       $s6, $t1, 0x0 /* handwritten instruction */
-/* 3E6C4 8004DEC4 0780013C */  lui        $at, %hi(D_80077368)
-/* 3E6C8 8004DEC8 68732124 */  addiu      $at, $at, %lo(D_80077368)
+/* 3E6C4 8004DEC4 0780013C */  lui        $at, %hi(g_CollisionNormal)
+/* 3E6C8 8004DEC8 68732124 */  addiu      $at, $at, %lo(g_CollisionNormal)
 /* 3E6CC 8004DECC 00002DAC */  sw         $t5, 0x0($at)
 /* 3E6D0 8004DED0 04002EAC */  sw         $t6, 0x4($at)
 /* 3E6D4 8004DED4 08002FAC */  sw         $t7, 0x8($at)
 /* 3E6D8 8004DED8 0780013C */  lui        $at, %hi(D_800757E4)
 /* 3E6DC 8004DEDC E4572124 */  addiu      $at, $at, %lo(D_800757E4)
 /* 3E6E0 8004DEE0 00003EAC */  sw         $fp, 0x0($at)
-/* 3E6E4 8004DEE4 0780013C */  lui        $at, %hi(D_80075808)
-/* 3E6E8 8004DEE8 08582124 */  addiu      $at, $at, %lo(D_80075808)
+/* 3E6E4 8004DEE4 0780013C */  lui        $at, %hi(g_CollisionTriangleIndex)
+/* 3E6E8 8004DEE8 08582124 */  addiu      $at, $at, %lo(g_CollisionTriangleIndex)
 /* 3E6EC 8004DEEC FFFF0220 */  addi       $v0, $zero, -0x1 /* handwritten instruction */
 /* 3E6F0 8004DEF0 000022AC */  sw         $v0, 0x0($at)
 /* 3E6F4 8004DEF4 FF000120 */  addi       $at, $zero, 0xFF /* handwritten instruction */

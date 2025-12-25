@@ -88,8 +88,8 @@ glabel func_80039688
 /* 29FC0 800397C0 20002232 */   andi      $v0, $s1, 0x20
 /* 29FC4 800397C4 4A004010 */  beqz       $v0, .L800398F0
 /* 29FC8 800397C8 02000224 */   addiu     $v0, $zero, 0x2
-/* 29FCC 800397CC 0780053C */  lui        $a1, %hi(D_80076B80)
-/* 29FD0 800397D0 806BA524 */  addiu      $a1, $a1, %lo(D_80076B80)
+/* 29FCC 800397CC 0780053C */  lui        $a1, %hi(g_CollisionPoint)
+/* 29FD0 800397D0 806BA524 */  addiu      $a1, $a1, %lo(g_CollisionPoint)
 /* 29FD4 800397D4 C05D000C */  jal        VecCopy
 /* 29FD8 800397D8 1800A427 */   addiu     $a0, $sp, 0x18
 .L800397DC:

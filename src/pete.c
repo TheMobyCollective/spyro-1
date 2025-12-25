@@ -607,19 +607,176 @@ void CheckWallCollision(void) {
   if (func_8004AE38(&vec1, &vec2) == 0)
     return;
 
-  magnitude = VecMagnitude(&D_80077368, 0);
-  angle = Atan2(D_80077368.z, magnitude, 0);
+  magnitude = VecMagnitude(&g_CollisionNormal, 0);
+  angle = Atan2(g_CollisionNormal.z, magnitude, 0);
 
-  angle = (angle << 24) >> 24;
+  angle = SEXT8(angle);
 
   if (angle < 0x17)
     return;
 
   g_Spyro.m_againstWall = 1;
-  VecCopy(&g_Spyro.m_wallAgainstSpyro, &D_80077368);
+  VecCopy(&g_Spyro.m_wallAgainstSpyro, &g_CollisionNormal);
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003E318);
+/**
+ * @brief Performs floor collision detection when Spyro is on a slope.
+ *
+ * This function casts rays from positions around Spyro to detect the floor
+ * surface, calculates the floor angle from the collision normal, and updates
+ * related state including the collision triangle for moving platform tracking.
+ *
+ * The function performs up to three collision checks:
+ *
+ * 1. **Primary check**: Casts a ray from a point forward of Spyro (rotated by
+ *    his rotation matrix) down toward a point behind (world-space rotation).
+ *    This detects the floor surface regardless of Spyro's facing direction.
+ *
+ * 2. **Reverse verification check**: If the primary check finds a walkable
+ *    slope (angle < 0x21), performs a reverse check with offset vectors to
+ *    verify the surface is truly walkable. If this fails, sets m_onEdge = 1
+ *    to trigger edge behavior (e.g., teetering animation).
+ *
+ * 3. **Fallback axis-aligned check**: If m_airTime is non-zero and
+ *    m_floorIdleTime is zero, performs a simpler vertical collision check
+ *    without rotation transforms (useful when Spyro is stationary on a slope).
+ *
+ * Slope angle thresholds:
+ * - < 0x17 (23): Gentle slope, m_onSlope = 0 (normal walking)
+ * - 0x17-0x20: Moderate slope, m_onSlope = 1 (may slide)
+ * - >= 0x21 (33): Steep slope, not considered walkable
+ */
+void UpdateSlopeFloorCollision(void) {
+  Vector3D vec1, vec2;
+  int magnitude;
+  int angle;
+
+  // Increment air time counter (reset to 0 when grounded)
+  g_Spyro.m_airTime++;
+
+  // Initialize floor position to default "pointing up" vector
+  VecNull(&g_Spyro.m_floorPositonOnSlope);
+  g_Spyro.m_floorPositonOnSlope.z = 0x1000;
+  g_Spyro.m_slopeAngle = 0;
+  g_Spyro.m_onEdge = 0;
+
+  // Early exit if surface checks are disabled (e.g., during cutscenes)
+  if (g_Spyro.m_ControlFlags & CTRL_SKIP_SURFACE_CHECK) {
+    return;
+  }
+
+  // === PRIMARY COLLISION CHECK ===
+  // Cast ray from slightly above Spyro's feet to below ground level
+  // vec1: Start point (player-relative, rotated by body matrix)
+  // vec2: End point (world-space rotation via GTE)
+  vec1.x = 0;
+  vec2.x = 0;
+  vec1.y = 0;
+  vec2.y = 0;
+  vec1.z = -0x104; // 260 units below origin
+  vec2.z = -0x1C4; // 452 units below origin
+
+  // Rotate start point by Spyro's body rotation matrix
+  VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec1, &vec1);
+  VecAdd(&vec1, &vec1, &g_Spyro.m_Position);
+
+  // Rotate end point using GTE world-space rotation
+  func_800170C0(&vec2, &vec2);
+  VecAdd(&vec2, &vec2, &g_Spyro.m_Position);
+
+  // Cast the ray and check for collision
+  if (func_8004AE38(&vec1, &vec2) != 0) {
+    // Collision found - extract floor normal from g_CollisionNormal
+    VecCopy(&g_Spyro.m_floorPositonOnSlope, &g_CollisionNormal);
+
+    // Calculate slope angle from floor normal
+    // magnitude = horizontal component, z = vertical component
+    magnitude = VecMagnitude(&g_CollisionNormal, 0);
+    angle = Atan2(g_CollisionNormal.z, magnitude, 0);
+
+    // Sign-extend angle to 8-bit signed value
+    angle = SEXT8(angle);
+    g_Spyro.m_slopeAngle = angle;
+
+    // Clamp negative angles (invalid floor normal) to max slope
+    if (angle < 0) {
+      g_Spyro.m_slopeAngle = 0x400;
+    }
+
+    // Store collision triangle for moving platform tracking
+    g_Spyro.m_CollisionTriangleIndex = g_CollisionTriangleIndex;
+    ColTriUnpack(g_CollisionTriangleIndex,
+                 g_Spyro.m_collisionTriangleUnpacked.points);
+
+    // Check if slope is walkable (< 33 degrees)
+    if (g_Spyro.m_slopeAngle < 0x21) {
+      g_Spyro.m_onSlope = (g_Spyro.m_slopeAngle < 0x17) ^ 1;
+      g_Spyro.m_airTime = 0;
+
+      // === REVERSE VERIFICATION CHECK ===
+      // Cast ray with offset to detect edges/cliffs behind Spyro
+      vec1.x = 0x104; // Offset forward
+      vec1.y = 0;
+      vec1.z = -0x104;
+      vec2.x = 0x1C4; // Larger offset forward
+      vec2.y = 0;
+      vec2.z = -0x1C4;
+
+      VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec1, &vec1);
+      VecAdd(&vec1, &vec1, &g_Spyro.m_Position);
+
+      func_800170C0(&vec2, &vec2);
+      VecAdd(&vec2, &vec2, &g_Spyro.m_Position);
+
+      // If reverse check fails, Spyro is on an edge
+      if (func_8004AE38(&vec1, &vec2) == 0) {
+        g_Spyro.m_onEdge = 1;
+      }
+    }
+  } else {
+    // No collision found - clear triangle index
+    g_Spyro.m_CollisionTriangleIndex = -1;
+  }
+
+  // === FALLBACK VERTICAL CHECK ===
+  // When airborne and not idle, try a simple vertical raycast
+  // This catches cases where the rotated ray missed but floor exists
+  if (g_Spyro.m_airTime != 0 && g_Spyro.m_floorIdleTime == 0) {
+    // Axis-aligned vertical ray (no rotation)
+    vec1.z = -0x104;
+    vec1.x = 0;
+    vec1.y = 0;
+    vec2.x = 0;
+    vec2.y = 0;
+    vec2.z = -0x1C4;
+
+    // Add position directly (no rotation transform)
+    VecAdd(&vec1, &vec1, &g_Spyro.m_Position);
+    VecAdd(&vec2, &vec2, &g_Spyro.m_Position);
+
+    if (func_8004AE38(&vec1, &vec2) != 0) {
+      // Collision found - recalculate slope from this hit
+      VecCopy(&g_Spyro.m_floorPositonOnSlope, &g_CollisionNormal);
+      magnitude = VecMagnitude(&g_Spyro.m_floorPositonOnSlope, 0);
+      angle = Atan2(g_Spyro.m_floorPositonOnSlope.z, magnitude, 0);
+
+      // Sign-extend to 8-bit signed
+      angle = SEXT8(angle);
+      g_Spyro.m_slopeAngle = angle;
+
+      // Clamp negative angles to max slope
+      if (angle < 0) {
+        g_Spyro.m_slopeAngle = 0x400;
+      }
+
+      // If walkable, mark as grounded and set slope flag
+      if (g_Spyro.m_slopeAngle < 0x21) {
+        g_Spyro.m_airTime = 0;
+        g_Spyro.m_onSlope = (g_Spyro.m_slopeAngle < 0x17) ^ 1;
+      }
+    }
+  }
+}
 
 /// @brief Capture the movement on a moving platform
 void func_8003E628(void) {
@@ -678,8 +835,8 @@ void AdjustAirCollision(void) {
   func_800170C0(&vec2, &vec2);
   VecAdd(&vec2, &g_Spyro.m_Position, &vec2);
 
-  if (func_8004AE38(&vec3, &vec1) != 0 && D_80077368.z > 0) {
-    VecSub(&vec2, &D_80076B80, &vec2);
+  if (func_8004AE38(&vec3, &vec1) != 0 && g_CollisionNormal.z > 0) {
+    VecSub(&vec2, &g_CollisionPoint, &vec2);
 
     if (ABS(vec2.x) < 8) {
       vec2.x = 0;

@@ -113,8 +113,8 @@ glabel func_80034480
 /* 24E08 80034608 00010624 */   addiu     $a2, $zero, 0x100
 /* 24E0C 8003460C 0A004010 */  beqz       $v0, .L80034638
 /* 24E10 80034610 06000224 */   addiu     $v0, $zero, 0x6
-/* 24E14 80034614 0780053C */  lui        $a1, %hi(D_80076B80)
-/* 24E18 80034618 806BA524 */  addiu      $a1, $a1, %lo(D_80076B80)
+/* 24E14 80034614 0780053C */  lui        $a1, %hi(g_CollisionPoint)
+/* 24E18 80034618 806BA524 */  addiu      $a1, $a1, %lo(g_CollisionPoint)
 /* 24E1C 8003461C C05D000C */  jal        VecCopy
 /* 24E20 80034620 21206002 */   addu      $a0, $s3, $zero
 /* 24E24 80034624 01003126 */  addiu      $s1, $s1, 0x1
