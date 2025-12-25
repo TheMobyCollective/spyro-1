@@ -177,7 +177,7 @@
 - [ ] func_80039AA8
 - [ ] func_80039E94
 - [ ] func_8003A16C
-- [ ] func_8003A420
+- [x] MoveMobyAlongPath
 - [x] func_8003A720
 - [x] func_8003A79C
 - [x] unused_MobyInterpolateVelocity

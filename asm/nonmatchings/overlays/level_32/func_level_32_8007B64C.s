@@ -8847,7 +8847,7 @@ glabel func_level_32_8007B64C
 /* 2CB4C08 80082E40 1800AAAF */  sw         $t2, 0x18($sp)
 /* 2CB4C0C 80082E44 1C00A0AF */  sw         $zero, 0x1C($sp)
 /* 2CB4C10 80082E48 2800258E */  lw         $a1, 0x28($s1)
-/* 2CB4C14 80082E4C 08E9000C */  jal        func_8003A420
+/* 2CB4C14 80082E4C 08E9000C */  jal        MoveMobyAlongPath
 /* 2CB4C18 80082E50 96000724 */   addiu     $a3, $zero, 0x96
 /* 2CB4C1C 80082E54 00010324 */  addiu      $v1, $zero, 0x100
 /* 2CB4C20 80082E58 5F004314 */  bne        $v0, $v1, .Llevel_32_80082FD8
@@ -11620,7 +11620,7 @@ glabel func_level_32_8007B64C
 /* 2CB74B0 800856E8 1000A0AF */  sw         $zero, 0x10($sp)
 /* 2CB74B4 800856EC 1C00A2AF */  sw         $v0, 0x1C($sp)
 /* 2CB74B8 800856F0 0000058E */  lw         $a1, 0x0($s0)
-/* 2CB74BC 800856F4 08E9000C */  jal        func_8003A420
+/* 2CB74BC 800856F4 08E9000C */  jal        MoveMobyAlongPath
 /* 2CB74C0 800856F8 40000724 */   addiu     $a3, $zero, 0x40
 /* 2CB74C4 800856FC 00010324 */  addiu      $v1, $zero, 0x100
 /* 2CB74C8 80085700 17004314 */  bne        $v0, $v1, .Llevel_32_80085760

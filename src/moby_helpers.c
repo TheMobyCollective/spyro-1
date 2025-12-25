@@ -563,7 +563,153 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039E94);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A16C);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A420);
+/**
+ * @brief Moves a moby along a 3D path with rotation toward waypoints.
+ *
+ * This function handles path-following movement for mobys, computing both
+ * horizontal (yaw) and vertical (pitch) rotation toward the current waypoint.
+ * The moby's rotation.z is updated directly as it turns toward each waypoint.
+ *
+ * Algorithm:
+ * 1. Calculate direction vector from moby to current waypoint
+ * 2. Compute pitch angle from horizontal distance and Z difference
+ * 3. If close to waypoint (< threshold), maintain current heading
+ * 4. Otherwise, compute yaw angle difference and clamp by turnRate
+ * 5. If angle difference exceeds angleLimit, stop movement (speed = 0)
+ * 6. Build rotation matrix and create velocity vector
+ * 7. If pVelocity provided, apply exponential smoothing (0.75 decay factor)
+ * 8. Perform collision check if bounds != 0 via func_8004E3C8
+ * 9. Find floor below new position via func_8004D5EC (1024 unit probe)
+ * 10. Commit position, update shadow and collision chain
+ * 11. If within threshold of waypoint, advance to next node (wrapping to 0)
+ *
+ * The velocity smoothing uses: vel = vel + frame_vel; vel -= vel/4
+ * This creates an exponential moving average for smoother movement.
+ *
+ * @param pMoby The moby to move along the path
+ * @param pPath Path data containing waypoint nodes
+ * @param threshold Distance to consider a waypoint reached
+ * @param maxSpeed Maximum movement speed per frame
+ * @param bounds Collision bounds radius (0 to skip collision checks)
+ * @param turnRate Maximum angle change per frame (8-bit angle units)
+ * @param angleLimit If angle to waypoint exceeds this, movement stops
+ * @param pVelocity Optional velocity accumulator for smoothing (NULL to skip)
+ * @return 0 if still following path, (newNodeIndex + 0x100) when waypoint
+ * reached
+ */
+int MoveMobyAlongPath(Moby *pMoby, PathData *pPath, int threshold, int maxSpeed,
+                      int bounds, int turnRate, int angleLimit,
+                      Vector3D *pVelocity) {
+  Vector3D8 rotation;
+  Vector3D vec;
+  MATRIX matrix;
+  int angleDiff;
+  int currentAngle;
+  int absAngle;
+  int dist;
+  int floorZ;
+  int result;
+
+  // Calculate direction vector from moby to current waypoint
+  VecSub(&vec, &pPath->m_Nodes[pPath->m_CurrentNode].m_Position,
+         &pMoby->m_Position);
+
+  // Calculate pitch angle (elevation) toward waypoint
+  rotation.x = 0;
+  rotation.y = Atan2(VecMagnitude(&vec, 0), vec.z, 0);
+
+  if (VecMagnitude(&vec, 0) < threshold) {
+    // Close to waypoint - maintain current heading
+    rotation.z = pMoby->m_Rotation.z;
+  } else {
+    // Calculate yaw angle toward waypoint and turn toward it
+    angleDiff = Atan2(vec.x, vec.y, 0);
+    currentAngle = pMoby->m_Rotation.z;
+    // Normalize angle difference to signed 8-bit range (-128 to 127)
+    angleDiff = (angleDiff - currentAngle) & 0xFF;
+    if (angleDiff > 128) {
+      angleDiff -= 256;
+    }
+
+    absAngle = ABS(angleDiff);
+
+    // Stop movement if facing too far from waypoint
+    if (angleLimit < absAngle) {
+      maxSpeed = 0;
+    }
+
+    // Clamp turn rate
+    if (angleDiff < -turnRate) {
+      angleDiff = -turnRate;
+    }
+    if (angleDiff > turnRate) {
+      angleDiff = turnRate;
+    }
+
+    rotation.z = currentAngle + angleDiff;
+    pMoby->m_Rotation.z = rotation.z;
+  }
+
+  // Limit speed to remaining distance
+  dist = VecMagnitude(&vec, 1);
+  if (dist < maxSpeed) {
+    maxSpeed = dist;
+  }
+
+  // Create velocity vector from speed and rotation
+  RotVec8ToMatrix(&rotation, &matrix, nullptr);
+  vec.x = maxSpeed;
+  vec.y = 0;
+  vec.z = 0;
+  VecRotateByMatrix(&matrix, &vec, &vec);
+
+  if (pVelocity != nullptr) {
+    // Smooth velocity using exponential moving average (decay factor 0.75)
+    VecAdd(pVelocity, pVelocity, &vec);
+    VecCopy(&vec, pVelocity);
+    VecShiftRight(&vec, 2);
+    VecSub(pVelocity, pVelocity, &vec);
+    VecAdd(&vec, &pMoby->m_Position, pVelocity);
+  } else {
+    VecAdd(&vec, &pMoby->m_Position, &vec);
+  }
+
+  // Perform moby-to-moby collision check
+  if (bounds != 0) {
+    func_8004E3C8(&vec, bounds, 0, 0, pMoby, 0);
+  }
+
+  // Find floor below new position (probe 1024 units down)
+  vec.z += 1024;
+  // Cast ray downward to find floor height
+  floorZ = func_8004D5EC(&vec, 1024);
+  dist = floorZ;
+  if (dist != 0) {
+    vec.z = dist;
+  } else {
+    vec.z -= 1024;
+  }
+
+  // Commit position and update moby state
+  VecCopy(&pMoby->m_Position, &vec);
+  func_800533D0(pMoby);    // Update shadow
+  func_800529E4(pMoby, 2); // Update collision chain
+
+  // Check if waypoint reached
+  result = 0;
+  VecSub(&vec, &pPath->m_Nodes[pPath->m_CurrentNode].m_Position,
+         &pMoby->m_Position);
+  if (VecMagnitude(&vec, 1) < threshold) {
+    pMoby->m_Substate = 0;
+    pPath->m_CurrentNode++;
+    if ((pPath->m_CurrentNode & 0xFF) == pPath->m_NodeCount) {
+      pPath->m_CurrentNode = 0;
+    }
+    result = pPath->m_CurrentNode + 256;
+  }
+
+  return result;
+}
 
 void func_8003A720(Moby *pMoby) {
   pMoby->m_RenderRadius = 16;
