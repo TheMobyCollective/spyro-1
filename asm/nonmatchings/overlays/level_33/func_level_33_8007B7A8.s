@@ -9699,7 +9699,7 @@ glabel func_level_33_8007B7A8
 /* 2F64150 80083B88 1800A9AF */  sw         $t1, 0x18($sp)
 /* 2F64154 80083B8C 1C00A0AF */  sw         $zero, 0x1C($sp)
 /* 2F64158 80083B90 0C00258E */  lw         $a1, 0xC($s1)
-/* 2F6415C 80083B94 08E9000C */  jal        func_8003A420
+/* 2F6415C 80083B94 08E9000C */  jal        MoveMobyAlongPath
 /* 2F64160 80083B98 80000724 */   addiu     $a3, $zero, 0x80
 /* 2F64164 80083B9C 00010324 */  addiu      $v1, $zero, 0x100
 /* 2F64168 80083BA0 39004314 */  bne        $v0, $v1, .Llevel_33_80083C88

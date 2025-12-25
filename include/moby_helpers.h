@@ -24,6 +24,23 @@ int func_800381BC(int p1, int p2);
 /// @brief Plays a sound from a Moby
 void func_8003851C(Moby *pMoby, int pSoundIndex, u_char *pChannel);
 
+/**
+ * @brief Moves a moby along a 3D path with rotation toward waypoints
+ * @param pMoby The moby to move along the path
+ * @param pPath Path data containing waypoint nodes
+ * @param threshold Distance to consider a waypoint reached
+ * @param maxSpeed Maximum movement speed per frame
+ * @param bounds Collision bounds radius (0 to skip collision checks)
+ * @param turnRate Maximum angle change per frame (8-bit angle units)
+ * @param angleLimit If angle to waypoint exceeds this, movement stops
+ * @param pVelocity Optional velocity accumulator for smoothing (NULL to skip)
+ * @return 0 if still following path, (newNodeIndex + 0x100) when waypoint
+ * reached
+ */
+int MoveMobyAlongPath(Moby *pMoby, PathData *pPath, int threshold, int maxSpeed,
+                      int bounds, int turnRate, int angleLimit,
+                      Vector3D *pVelocity);
+
 /// @brief Initialize a Moby
 void func_8003A720(Moby *pMoby);
 
