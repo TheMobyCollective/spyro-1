@@ -64,6 +64,9 @@ __asm__(".include \"macro.inc\"\n");
 #ifndef INCLUDE_ASM
 #define INCLUDE_ASM(FOLDER, NAME)
 #endif
+#ifndef INCLUDE_ASM_REORDER_HACK
+#define INCLUDE_ASM_REORDER_HACK(FOLDER, NAME)
+#endif
 #ifndef INCLUDE_RODATA
 #define INCLUDE_RODATA(FOLDER, NAME)
 #endif
