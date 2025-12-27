@@ -45,5 +45,5 @@ void SpecularUpdate(int deltaTime) {
   // no reason
   setXYZ(&D_800770C8.m_specularLightDirection,
          COSINE_8(D_800770C8.m_specularTime) * 1983 >> 11,
-         SINE_8(D_800770C8.m_specularTime) * 6345 >> 12, -1024);
+         FIXED_MUL(SINE_8(D_800770C8.m_specularTime), 6345), -1024);
 }

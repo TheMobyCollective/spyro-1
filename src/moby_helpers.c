@@ -320,8 +320,8 @@ int func_80038C4C(Vector3D *point, Vector3D *rect) {
 
   VecSub(&diff, point, rect);
 
-  diff2.x = (diff.x * COSINE_8(z) >> 0xc) - (diff.y * SINE_8(z) >> 0xc);
-  diff2.y = (diff.x * SINE_8(z) >> 0xc) + (diff.y * COSINE_8(z) >> 0xc);
+  diff2.x = FIXED_MUL(diff.x, COSINE_8(z)) - FIXED_MUL(diff.y, SINE_8(z));
+  diff2.y = FIXED_MUL(diff.x, SINE_8(z)) + FIXED_MUL(diff.y, COSINE_8(z));
 
   diff2.x = ABS(diff2.x);
   diff2.y = ABS(diff2.y);
