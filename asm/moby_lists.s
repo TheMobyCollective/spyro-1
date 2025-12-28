@@ -18,8 +18,8 @@ glabel func_80051FEC
 /* 427FC 80051FFC 08002120 */  addi       $at, $at, 0x8 /* handwritten instruction */
 /* 42800 80052000 FDFF2214 */  bne        $at, $v0, .L80051FF8
 /* 42804 80052004 FCFF20AC */   sw        $zero, -0x4($at)
-/* 42808 80052008 0780013C */  lui        $at, %hi(D_80075828)
-/* 4280C 8005200C 28582124 */  addiu      $at, $at, %lo(D_80075828)
+/* 42808 80052008 0780013C */  lui        $at, %hi(g_LevelMobys)
+/* 4280C 8005200C 28582124 */  addiu      $at, $at, %lo(g_LevelMobys)
 /* 42810 80052010 0000218C */  lw         $at, 0x0($at)
 /* 42814 80052014 07800A3C */  lui        $t2, %hi(D_80077868)
 /* 42818 80052018 68784A25 */  addiu      $t2, $t2, %lo(D_80077868)
@@ -98,8 +98,8 @@ glabel func_80051FEC
 /* 4292C 8005212C FFFF0320 */  addi       $v1, $zero, -0x1 /* handwritten instruction */
 /* 42930 80052130 C3FF6214 */  bne        $v1, $v0, .L80052040
 /* 42934 80052134 00000000 */   nop
-/* 42938 80052138 0780013C */  lui        $at, %hi(D_80075828)
-/* 4293C 8005213C 28582124 */  addiu      $at, $at, %lo(D_80075828)
+/* 42938 80052138 0780013C */  lui        $at, %hi(g_LevelMobys)
+/* 4293C 8005213C 28582124 */  addiu      $at, $at, %lo(g_LevelMobys)
 /* 42940 80052140 0000218C */  lw         $at, 0x0($at)
 /* 42944 80052144 0780023C */  lui        $v0, %hi(g_MobyPods)
 /* 42948 80052148 F8574224 */  addiu      $v0, $v0, %lo(g_MobyPods)
@@ -140,8 +140,8 @@ glabel func_80051FEC
 
 /* Handwritten function */
 glabel func_800521C0
-/* 429C0 800521C0 0780013C */  lui        $at, %hi(D_80075828)
-/* 429C4 800521C4 28582124 */  addiu      $at, $at, %lo(D_80075828)
+/* 429C0 800521C0 0780013C */  lui        $at, %hi(g_LevelMobys)
+/* 429C4 800521C4 28582124 */  addiu      $at, $at, %lo(g_LevelMobys)
 /* 429C8 800521C8 0000218C */  lw         $at, 0x0($at)
 /* 429CC 800521CC 0780023C */  lui        $v0, %hi(D_8006FCF4)
 /* 429D0 800521D0 F4FC4224 */  addiu      $v0, $v0, %lo(D_8006FCF4)

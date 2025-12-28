@@ -75,18 +75,18 @@ glabel func_level_21_8007B898
 /* 1B2FF2C 8007B964 00000000 */  nop
 /* 1B2FF30 8007B968 53008314 */  bne        $a0, $v1, .Llevel_21_8007BAB8
 /* 1B2FF34 8007B96C 00105224 */   addiu     $s2, $v0, 0x1000
-/* 1B2FF38 8007B970 0780023C */  lui        $v0, %hi(D_80075898)
-/* 1B2FF3C 8007B974 9858428C */  lw         $v0, %lo(D_80075898)($v0)
+/* 1B2FF38 8007B970 0780023C */  lui        $v0, %hi(g_Sparx)
+/* 1B2FF3C 8007B974 9858428C */  lw         $v0, %lo(g_Sparx)($v0)
 /* 1B2FF40 8007B978 00000000 */  nop
 /* 1B2FF44 8007B97C 17004010 */  beqz       $v0, .Llevel_21_8007B9DC
 /* 1B2FF48 8007B980 00000000 */   nop
 /* 1B2FF4C 8007B984 500040A0 */  sb         $zero, 0x50($v0)
-/* 1B2FF50 8007B988 0780023C */  lui        $v0, %hi(D_80075898)
-/* 1B2FF54 8007B98C 9858428C */  lw         $v0, %lo(D_80075898)($v0)
+/* 1B2FF50 8007B988 0780023C */  lui        $v0, %hi(g_Sparx)
+/* 1B2FF54 8007B98C 9858428C */  lw         $v0, %lo(g_Sparx)($v0)
 /* 1B2FF58 8007B990 00000000 */  nop
 /* 1B2FF5C 8007B994 510040A0 */  sb         $zero, 0x51($v0)
-/* 1B2FF60 8007B998 0780023C */  lui        $v0, %hi(D_80075898)
-/* 1B2FF64 8007B99C 9858428C */  lw         $v0, %lo(D_80075898)($v0)
+/* 1B2FF60 8007B998 0780023C */  lui        $v0, %hi(g_Sparx)
+/* 1B2FF64 8007B99C 9858428C */  lw         $v0, %lo(g_Sparx)($v0)
 /* 1B2FF68 8007B9A0 00000000 */  nop
 /* 1B2FF6C 8007B9A4 0000428C */  lw         $v0, 0x0($v0)
 /* 1B2FF70 8007B9A8 00000000 */  nop
@@ -96,8 +96,8 @@ glabel func_level_21_8007B898
 /* 1B2FF80 8007B9B8 00000000 */   nop
 /* 1B2FF84 8007B9BC D862010C */  jal        func_80058B60
 /* 1B2FF88 8007B9C0 00000000 */   nop
-/* 1B2FF8C 8007B9C4 0780023C */  lui        $v0, %hi(D_80075898)
-/* 1B2FF90 8007B9C8 9858428C */  lw         $v0, %lo(D_80075898)($v0)
+/* 1B2FF8C 8007B9C4 0780023C */  lui        $v0, %hi(g_Sparx)
+/* 1B2FF90 8007B9C8 9858428C */  lw         $v0, %lo(g_Sparx)($v0)
 /* 1B2FF94 8007B9CC 00000000 */  nop
 /* 1B2FF98 8007B9D0 0000428C */  lw         $v0, 0x0($v0)
 /* 1B2FF9C 8007B9D4 00000000 */  nop
@@ -105,8 +105,8 @@ glabel func_level_21_8007B898
 .Llevel_21_8007B9DC:
 /* 1B2FFA4 8007B9DC 0880023C */  lui        $v0, %hi(g_SpyroFlame + 0xA0)
 /* 1B2FFA8 8007B9E0 6887428C */  lw         $v0, %lo(g_SpyroFlame + 0xA0)($v0)
-/* 1B2FFAC 8007B9E4 0780013C */  lui        $at, %hi(D_800758A4)
-/* 1B2FFB0 8007B9E8 A45822AC */  sw         $v0, %lo(D_800758A4)($at)
+/* 1B2FFAC 8007B9E4 0780013C */  lui        $at, %hi(g_SavedFairyKissTimer)
+/* 1B2FFB0 8007B9E8 A45822AC */  sw         $v0, %lo(g_SavedFairyKissTimer)($at)
 /* 1B2FFB4 8007B9EC 092B010C */  jal        func_8004AC24
 /* 1B2FFB8 8007B9F0 01000424 */   addiu     $a0, $zero, 0x1
 /* 1B2FFBC 8007B9F4 0780113C */  lui        $s1, %hi(D_800777E8 + 0x18)
@@ -2113,8 +2113,8 @@ glabel func_level_21_8007B898
 /* 1B31DC4 8007D7FC D85720AC */  sw         $zero, %lo(g_Gamestate)($at)
 /* 1B31DC8 8007D800 0780013C */  lui        $at, %hi(g_StateSwitch)
 /* 1B31DCC 8007D804 9C5722AC */  sw         $v0, %lo(g_StateSwitch)($at)
-/* 1B31DD0 8007D808 0780013C */  lui        $at, %hi(D_8007570C)
-/* 1B31DD4 8007D80C 0C5720AC */  sw         $zero, %lo(D_8007570C)($at)
+/* 1B31DD0 8007D808 0780013C */  lui        $at, %hi(g_ScreenBorderEnabled)
+/* 1B31DD4 8007D80C 0C5720AC */  sw         $zero, %lo(g_ScreenBorderEnabled)($at)
 /* 1B31DD8 8007D810 1F63010C */  jal        SpecularReset
 /* 1B31DDC 8007D814 00000000 */   nop
 .Llevel_21_8007D818:

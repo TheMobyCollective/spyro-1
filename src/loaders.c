@@ -376,19 +376,19 @@ void LoadCutscene(void) {
     }
 
     // Set the Moby pointer to the empty space after the cutscene data
-    D_80075828 = (Moby *)((char *)D_800785D8.m_LevelLayout +
-                          D_800785D8.m_LevelLayoutSize);
+    g_LevelMobys = (Moby *)((char *)D_800785D8.m_LevelLayout +
+                            D_800785D8.m_LevelLayoutSize);
 
     for (j = 0; j < g_CutsceneLayout->m_MobyCount; ++j) {
-      func_8003A720(&D_80075828[j]);
+      func_8003A720(&g_LevelMobys[j]);
 
       // Set the class and render radius, the class is sequential in cutscenes
-      D_80075828[j].m_Class = j + 1;
-      D_80075828[j].m_RenderRadius = 32;
+      g_LevelMobys[j].m_Class = j + 1;
+      g_LevelMobys[j].m_RenderRadius = 32;
     }
 
     // Terminate the moby list
-    D_80075828[g_CutsceneLayout->m_MobyCount].m_State = 0xFF;
+    g_LevelMobys[g_CutsceneLayout->m_MobyCount].m_State = 0xFF;
     g_LoadStage = 10;
   }
 }
@@ -1113,7 +1113,7 @@ void LoadLevel(int pArg) {
               int rotZ;
 
               rotZ = g_Spyro.m_bodyRotation.z;
-              pathData = D_80075828[g_Portals[i]->m_PathMoby].m_Props;
+              pathData = g_LevelMobys[g_Portals[i]->m_PathMoby].m_Props;
 
               func_8003EA68(15); // Set Spyro's state to glide
               g_Spyro.m_walkingState = 9;

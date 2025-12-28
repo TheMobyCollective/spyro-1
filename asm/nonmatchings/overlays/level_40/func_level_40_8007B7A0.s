@@ -6,8 +6,8 @@ glabel func_level_40_8007B7A0
 /* 358CD6C 8007B7A4 1000BFAF */  sw         $ra, 0x10($sp)
 /* 358CD70 8007B7A8 0BB4000C */  jal        func_8002D02C
 /* 358CD74 8007B7AC 00000000 */   nop
-/* 358CD78 8007B7B0 0780033C */  lui        $v1, %hi(D_80075898)
-/* 358CD7C 8007B7B4 9858638C */  lw         $v1, %lo(D_80075898)($v1)
+/* 358CD78 8007B7B0 0780033C */  lui        $v1, %hi(g_Sparx)
+/* 358CD7C 8007B7B4 9858638C */  lw         $v1, %lo(g_Sparx)($v1)
 /* 358CD80 8007B7B8 0880013C */  lui        $at, %hi(g_Spyro + 0x1B4)
 /* 358CD84 8007B7BC 0C8C20AC */  sw         $zero, %lo(g_Spyro + 0x1B4)($at)
 /* 358CD88 8007B7C0 0880013C */  lui        $at, %hi(g_Spyro + 0x11)

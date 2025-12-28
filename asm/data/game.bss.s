@@ -446,7 +446,7 @@ dlabel g_Cyclorama
 dlabel g_Spyro
 /* Total size from 80078A58 to 80078D00 */ .space 0x2A8
 
-dlabel D_80078D00
+dlabel g_FairyCutscene
 /* Total size from 80078D00 to 80078D78 */ .space 0x78
 
 dlabel g_TitlescreenState

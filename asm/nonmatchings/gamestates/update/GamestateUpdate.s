@@ -232,8 +232,8 @@ glabel GamestateUpdate
 /* 24398 80033B98 00000000 */  nop
 /* 2439C 80033B9C 24004014 */  bnez       $v0, .L80033C30
 /* 243A0 80033BA0 00000000 */   nop
-/* 243A4 80033BA4 0780023C */  lui        $v0, %hi(D_8007570C)
-/* 243A8 80033BA8 0C57428C */  lw         $v0, %lo(D_8007570C)($v0)
+/* 243A4 80033BA4 0780023C */  lui        $v0, %hi(g_ScreenBorderEnabled)
+/* 243A8 80033BA8 0C57428C */  lw         $v0, %lo(g_ScreenBorderEnabled)($v0)
 /* 243AC 80033BAC 00000000 */  nop
 /* 243B0 80033BB0 1F004014 */  bnez       $v0, .L80033C30
 /* 243B4 80033BB4 00000000 */   nop

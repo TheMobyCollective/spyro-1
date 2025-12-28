@@ -67,8 +67,8 @@ glabel func_8001CFDC
 /* D8C8 8001D0C8 04006324 */  addiu      $v1, $v1, 0x4
 .L8001D0CC:
 /* D8CC 8001D0CC 000060AC */  sw         $zero, 0x0($v1)
-/* D8D0 8001D0D0 0780053C */  lui        $a1, %hi(D_80075828)
-/* D8D4 8001D0D4 2858A58C */  lw         $a1, %lo(D_80075828)($a1)
+/* D8D0 8001D0D0 0780053C */  lui        $a1, %hi(g_LevelMobys)
+/* D8D4 8001D0D4 2858A58C */  lw         $a1, %lo(g_LevelMobys)($a1)
 /* D8D8 8001D0D8 0780063C */  lui        $a2, %hi(D_8006FCF4 + 0x2400)
 /* D8DC 8001D0DC F420C624 */  addiu      $a2, $a2, %lo(D_8006FCF4 + 0x2400)
 /* D8E0 8001D0E0 4800A490 */  lbu        $a0, 0x48($a1)
@@ -146,8 +146,8 @@ glabel func_8001CFDC
 /* D9F0 8001D1F0 000043AC */  sw         $v1, 0x0($v0)
 /* D9F4 8001D1F4 04004224 */  addiu      $v0, $v0, 0x4
 /* D9F8 8001D1F8 000040AC */  sw         $zero, 0x0($v0)
-/* D9FC 8001D1FC 0780053C */  lui        $a1, %hi(D_80075828)
-/* DA00 8001D200 2858A58C */  lw         $a1, %lo(D_80075828)($a1)
+/* D9FC 8001D1FC 0780053C */  lui        $a1, %hi(g_LevelMobys)
+/* DA00 8001D200 2858A58C */  lw         $a1, %lo(g_LevelMobys)($a1)
 /* DA04 8001D204 F8234624 */  addiu      $a2, $v0, 0x23F8
 /* DA08 8001D208 4800A490 */  lbu        $a0, 0x48($a1)
 /* DA0C 8001D20C FF000224 */  addiu      $v0, $zero, 0xFF
@@ -341,8 +341,8 @@ glabel func_8001CFDC
 /* DCD0 8001D4D0 F25C010C */  jal        func_800573C8
 /* DCD4 8001D4D4 00000000 */   nop
 .L8001D4D8:
-/* DCD8 8001D4D8 0780023C */  lui        $v0, %hi(D_8007570C)
-/* DCDC 8001D4DC 0C57428C */  lw         $v0, %lo(D_8007570C)($v0)
+/* DCD8 8001D4D8 0780023C */  lui        $v0, %hi(g_ScreenBorderEnabled)
+/* DCDC 8001D4DC 0C57428C */  lw         $v0, %lo(g_ScreenBorderEnabled)($v0)
 /* DCE0 8001D4E0 00000000 */  nop
 /* DCE4 8001D4E4 06004014 */  bnez       $v0, .L8001D500
 /* DCE8 8001D4E8 00000000 */   nop
@@ -417,8 +417,8 @@ glabel func_8001CFDC
 /* DDE8 8001D5E8 00000000 */   nop
 /* DDEC 8001D5EC F25C010C */  jal        func_800573C8
 /* DDF0 8001D5F0 00000000 */   nop
-/* DDF4 8001D5F4 0780023C */  lui        $v0, %hi(D_8007570C)
-/* DDF8 8001D5F8 0C57428C */  lw         $v0, %lo(D_8007570C)($v0)
+/* DDF4 8001D5F4 0780023C */  lui        $v0, %hi(g_ScreenBorderEnabled)
+/* DDF8 8001D5F8 0C57428C */  lw         $v0, %lo(g_ScreenBorderEnabled)($v0)
 /* DDFC 8001D5FC 00000000 */  nop
 /* DE00 8001D600 06004014 */  bnez       $v0, .L8001D61C
 /* DE04 8001D604 00000000 */   nop

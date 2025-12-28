@@ -91,8 +91,8 @@ glabel func_8002C924
 /* 1D26C 8002CA6C 0780013C */  lui        $at, %hi(g_Hud + 0x24)
 /* 1D270 8002CA70 CC7F25AC */  sw         $a1, %lo(g_Hud + 0x24)($at)
 /* 1D274 8002CA74 0000628C */  lw         $v0, 0x0($v1)
-/* 1D278 8002CA78 0780013C */  lui        $at, %hi(D_8007570C)
-/* 1D27C 8002CA7C 0C5724AC */  sw         $a0, %lo(D_8007570C)($at)
+/* 1D278 8002CA78 0780013C */  lui        $at, %hi(g_ScreenBorderEnabled)
+/* 1D27C 8002CA7C 0C5724AC */  sw         $a0, %lo(g_ScreenBorderEnabled)($at)
 /* 1D280 8002CA80 0780013C */  lui        $at, %hi(g_StateSwitch)
 /* 1D284 8002CA84 9C5724AC */  sw         $a0, %lo(g_StateSwitch)($at)
 /* 1D288 8002CA88 01004224 */  addiu      $v0, $v0, 0x1
@@ -123,8 +123,8 @@ glabel func_8002C924
 /* 1D2EC 8002CAEC 21104300 */  addu       $v0, $v0, $v1
 /* 1D2F0 8002CAF0 80100200 */  sll        $v0, $v0, 2
 /* 1D2F4 8002CAF4 23104300 */  subu       $v0, $v0, $v1
-/* 1D2F8 8002CAF8 0780033C */  lui        $v1, %hi(D_80075828)
-/* 1D2FC 8002CAFC 2858638C */  lw         $v1, %lo(D_80075828)($v1)
+/* 1D2F8 8002CAF8 0780033C */  lui        $v1, %hi(g_LevelMobys)
+/* 1D2FC 8002CAFC 2858638C */  lw         $v1, %lo(g_LevelMobys)($v1)
 /* 1D300 8002CB00 C0100200 */  sll        $v0, $v0, 3
 /* 1D304 8002CB04 21104300 */  addu       $v0, $v0, $v1
 /* 1D308 8002CB08 01000324 */  addiu      $v1, $zero, 0x1

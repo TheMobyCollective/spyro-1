@@ -1,6 +1,8 @@
 #ifndef __GAMESTATE_INIT_H
 #define __GAMESTATE_INIT_H
 
+#include "moby.h"
+
 /// @brief Return home, sets gamestate to 1
 void func_8002C664(void);
 
@@ -9,5 +11,14 @@ void func_8002C7BC(void);
 
 /// @brief Initializes and starts the credits sequence
 void InitCreditsSequence(int pLoadSharedModels);
+
+/**
+ * @brief Initializes fairy cutscene when Spyro talks to a fairy
+ * @param pMoby The fairy moby that triggered the cutscene
+ */
+void InitFairyCutscene(Moby *pMoby);
+
+/// @brief Exits fairy cutscene and returns to gameplay
+void func_8002D02C(void);
 
 #endif // !__GAMESTATE_INIT_H

@@ -596,8 +596,8 @@ glabel func_level_32_80089454
 /* 2CBB980 80089BB8 6000B127 */   addiu     $s1, $sp, 0x60
 /* 2CBB984 80089BBC 21202002 */  addu       $a0, $s1, $zero
 /* 2CBB988 80089BC0 1D004392 */  lbu        $v1, 0x1D($s2)
-/* 2CBB98C 80089BC4 0780053C */  lui        $a1, %hi(D_80075828)
-/* 2CBB990 80089BC8 2858A58C */  lw         $a1, %lo(D_80075828)($a1)
+/* 2CBB98C 80089BC4 0780053C */  lui        $a1, %hi(g_LevelMobys)
+/* 2CBB990 80089BC8 2858A58C */  lw         $a1, %lo(g_LevelMobys)($a1)
 /* 2CBB994 80089BCC 40100300 */  sll        $v0, $v1, 1
 /* 2CBB998 80089BD0 21104300 */  addu       $v0, $v0, $v1
 /* 2CBB99C 80089BD4 80100200 */  sll        $v0, $v0, 2

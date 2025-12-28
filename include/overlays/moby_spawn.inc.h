@@ -22,7 +22,7 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
   moby->m_Class = pClass;
 
   if (pParent) {
-    idx = pParent - D_80075828;
+    idx = pParent - g_LevelMobys;
 
     if (idx > 0xFF) {
       idx = 0;

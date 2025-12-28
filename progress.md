@@ -112,7 +112,7 @@
 - [x] func_8002C91C
 - [ ] func_8002C924
 - [x] func_8002CB6C
-- [ ] func_8002CCC8
+- [x] InitFairyCutscene
 - [x] func_8002D02C
 - [x] func_8002D170
 - [x] InitCreditsSequence

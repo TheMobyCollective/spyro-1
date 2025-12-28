@@ -8,6 +8,7 @@
 #include "cutscene.h"
 #include "cyclorama.h"
 #include "dragon.h"
+#include "fairy.h"
 #include "gamestates/draw.h"
 #include "graphics.h"
 #include "hud.h"
@@ -36,8 +37,6 @@ extern int D_800757C8; // OptionsSubmenuIsOpen
 extern int D_800756D4;
 extern int D_80075744; // The index of the current page of the inventory screen
 extern int D_800757CC; // Transition progress between inventory pages.
-
-extern int D_800758A4; // Stores the fairy kiss timer temporarily
 
 extern SphericalCoordsOffset D_8006C8BC;
 
@@ -253,14 +252,14 @@ void func_8002CB6C(void) {
   g_Gamestate = GS_Playing;
 
   // Turn off the screen border
-  D_8007570C = 0;
+  g_ScreenBorderEnabled = 0;
 
   moby_idx = ((RescuedDragonMobyProps *)(g_DragonCutscene.m_RescuedDragonMoby)
                   ->m_Props)
                  ->m_DragonPadLink;
 
   if (moby_idx != -1) {
-    moby = &D_80075828[moby_idx];
+    moby = &g_LevelMobys[moby_idx];
     moby->m_AnimationState.m_Animation = 0;
     moby->m_State = 1;
   }
@@ -276,7 +275,7 @@ void func_8002CB6C(void) {
   g_Camera.unk_0xC0 = 0;
   g_Camera.m_SphericalPreset = &D_8006C8BC;
 
-  g_SpyroFlame.m_FairyKissTimer = D_800758A4;
+  g_SpyroFlame.m_FairyKissTimer = g_SavedFairyKissTimer;
 
   g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
 
@@ -303,15 +302,145 @@ void func_8002CB6C(void) {
   func_800567F4(g_CdMusic.m_CurrentTrack, 8);
 }
 
-/// @brief Talk to a fairy
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002CCC8);
+/**
+ * @brief Initializes fairy cutscene when Spyro talks to a fairy.
+ *
+ * Sets up camera waypoints for the cutscene animation sequence. The camera
+ * transitions through multiple positions: starting at current camera position,
+ * moving to fairy's position, panning to Sparx, then settling at a viewing
+ * angle for the save menu UI.
+ *
+ * Also determines which side of the screen to display the fairy menu based on
+ * the camera's approach angle relative to the fairy's spawn position.
+ *
+ * @param pMoby The fairy moby that triggered the cutscene
+ */
+void InitFairyCutscene(Moby *pMoby) {
+  Vector3D vec;
+  void *pProps;
+  void *pSpyroBodyAnimation;
+  void *pSpyroPosition;
+  Moby *pLevelMoby;
+  int angle;
+  int zPos;
+  int fairyAngle;
+
+  pProps = pMoby->m_Props;
+
+  g_Gamestate = GS_Fairy;
+
+  g_ScreenBorderEnabled = 1;
+  g_StateSwitch = 1;
+
+  g_FairyCutscene.m_State = 0;
+  g_FairyCutscene.m_AnimationTimer = 0;
+  g_FairyCutscene.m_MenuDialoguePage = 0;
+
+  // Default to SAVE option if memory card present, otherwise CONTINUE
+  if (g_FairyCutscene.m_HasMemoryCard != 0) {
+    g_FairyCutscene.m_MenuSelectedOption = 0;
+  } else {
+    g_FairyCutscene.m_MenuSelectedOption = 2;
+  }
+
+  g_FairyCutscene.m_CutsceneFairy = pMoby;
+  g_SavedFairyKissTimer = g_SpyroFlame.m_FairyKissTimer;
+  PlaySound(g_Spu.m_SoundTable->menuSound, nullptr, 0x10, nullptr);
+  func_8004AC24(1); // Reset Spyro, keeping position
+
+  pSpyroBodyAnimation = &g_Spyro.m_bodyAnimation;
+
+  // Set Spyro to idle animation
+  g_Spyro.m_bodyAnimation = 1;
+  g_Spyro.m_nextBodyAnimation = 1;
+  g_Spyro.m_bodyAnimationFrame = 0;
+  g_Spyro.m_nextBodyAnimationFrame = 1;
+  g_Spyro.m_bodyFrameProgress = 0;
+
+  g_FairyCutscene.m_unused_SavedSpyroRotZ =
+      g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+  // Get the level moby at fairy's spawn index (from props)
+  pLevelMoby = (Moby *)((u_int)(((int *)pProps)[1] * sizeof(Moby)) +
+                        (u_int)g_LevelMobys);
+
+  // Calculate angle from Spyro to fairy's level spawn position
+  g_FairyCutscene.m_AngleToSpawn =
+      Atan2(pLevelMoby->m_Position.x - g_Spyro.m_Position.x,
+            pLevelMoby->m_Position.y - g_Spyro.m_Position.y, 1);
+
+  // Calculate angle and distance from Spyro to fairy's current position
+  g_FairyCutscene.m_AngleFromSpyro =
+      Atan2(pMoby->m_Position.x - g_Spyro.m_Position.x,
+            pMoby->m_Position.y - g_Spyro.m_Position.y, 1);
+
+  pSpyroPosition = &g_Spyro.m_Position;
+
+  VecSub(&vec, &pMoby->m_Position, (Vector3D *)pSpyroPosition);
+
+  g_FairyCutscene.m_DistanceFromSpyro = VecMagnitude(&vec, 0);
+
+  zPos = pMoby->m_Position.z;
+  fairyAngle = g_FairyCutscene.m_AngleToSpawn;
+
+  // Camera waypoint 1: Start at fairy's height, looking toward spawn
+  g_FairyCutscene.m_CameraInitDistance = 0x480;
+  g_FairyCutscene.m_CameraInitZ = zPos;
+  g_FairyCutscene.m_CameraInitAngle = fairyAngle;
+
+  g_FairyCutscene.m_CameraTargetZ = g_Spyro.m_Position.z + 0x170;
+
+  // Camera waypoint 2: Pan to Sparx if present
+  if (g_Sparx != nullptr) {
+    g_FairyCutscene.m_CameraTargetAngle =
+        Atan2(g_Sparx->m_Position.x - g_Spyro.m_Position.x,
+              g_Sparx->m_Position.y - g_Spyro.m_Position.y, 1);
+
+    VecSub(&vec, &g_Sparx->m_Position, (Vector3D *)pSpyroPosition);
+    g_FairyCutscene.m_CameraTargetDistance = VecMagnitude(&vec, 0);
+
+    // Camera waypoint 3: End position 180 degrees from spawn
+    g_FairyCutscene.m_CameraEndDistance = 0x600;
+    g_FairyCutscene.m_CameraEndAngle =
+        (g_FairyCutscene.m_AngleToSpawn + 0x800) & 0xFFF;
+  }
+
+  // Record current camera position as animation start point
+  g_FairyCutscene.m_CameraStartAngle =
+      Atan2(g_Camera.m_Position.x - g_Spyro.m_Position.x,
+            g_Camera.m_Position.y - g_Spyro.m_Position.y, 1);
+
+  VecSub(&vec, &g_Camera.m_Position, (Vector3D *)pSpyroPosition);
+
+  g_FairyCutscene.m_CameraStartDistance = VecMagnitude(&vec, 0);
+
+  // Default menu to right side of screen (offset 0xB0)
+  g_FairyCutscene.m_MenuOffsetX = 0xB0;
+
+  // View angle ~45 degrees from spawn direction
+  angle = (g_FairyCutscene.m_AngleToSpawn + 0x30B) & 0xFFF;
+
+  g_FairyCutscene.m_CameraStartZ = g_Camera.m_Position.z;
+  g_FairyCutscene.m_CameraViewAngle = angle;
+
+  // If camera approach angle is >90 degrees from view angle, flip to other side
+  if (func_80017928(g_FairyCutscene.m_CameraStartAngle, angle) > 0x400) {
+    g_FairyCutscene.m_MenuOffsetX = 0;
+    g_FairyCutscene.m_CameraViewAngle =
+        (g_FairyCutscene.m_AngleToSpawn - 0x30B) & 0xFFF;
+  }
+
+  // Final viewing position for save menu
+  g_FairyCutscene.m_CameraViewDistance = 0x4C9;
+  g_FairyCutscene.m_CameraViewZ = g_Spyro.m_Position.z + 0x56B;
+}
 
 /// @brief Exit fairy
 void func_8002D02C(void) {
   g_Gamestate = GS_Playing;
 
   // Turn off the screen border
-  D_8007570C = 0;
+  g_ScreenBorderEnabled = 0;
 
   SpecularReset();
   VecNull(&g_Spyro.m_HeadLookTarget);
@@ -329,7 +458,7 @@ void func_8002D02C(void) {
   g_Camera.m_SphericalPreset = &D_8006C8BC;
 
   //?? some sort of counter
-  g_SpyroFlame.m_FairyKissTimer = D_800758A4;
+  g_SpyroFlame.m_FairyKissTimer = g_SavedFairyKissTimer;
 
   g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
 
