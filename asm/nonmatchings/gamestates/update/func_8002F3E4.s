@@ -51,13 +51,13 @@ glabel func_8002F3E4
 /* 1FC58 8002F458 08004000 */  jr         $v0
 /* 1FC5C 8002F45C 00000000 */   nop
 .L8002F460:
-/* 1FC60 8002F460 0780023C */  lui        $v0, %hi(D_8007572C)
-/* 1FC64 8002F464 2C57428C */  lw         $v0, %lo(D_8007572C)($v0)
-/* 1FC68 8002F468 0780033C */  lui        $v1, %hi(D_80075734)
-/* 1FC6C 8002F46C 3457638C */  lw         $v1, %lo(D_80075734)($v1)
+/* 1FC60 8002F460 0780023C */  lui        $v0, %hi(g_GameTick)
+/* 1FC64 8002F464 2C57428C */  lw         $v0, %lo(g_GameTick)($v0)
+/* 1FC68 8002F468 0780033C */  lui        $v1, %hi(g_UpdateMoby)
+/* 1FC6C 8002F46C 3457638C */  lw         $v1, %lo(g_UpdateMoby)($v1)
 /* 1FC70 8002F470 01004224 */  addiu      $v0, $v0, 0x1
-/* 1FC74 8002F474 0780013C */  lui        $at, %hi(D_8007572C)
-/* 1FC78 8002F478 2C5722AC */  sw         $v0, %lo(D_8007572C)($at)
+/* 1FC74 8002F474 0780013C */  lui        $at, %hi(g_GameTick)
+/* 1FC78 8002F478 2C5722AC */  sw         $v0, %lo(g_GameTick)($at)
 /* 1FC7C 8002F47C 09F86000 */  jalr       $v1
 /* 1FC80 8002F480 00000000 */   nop
 /* 1FC84 8002F484 8028010C */  jal        func_8004A200
@@ -2162,8 +2162,8 @@ glabel func_8002F3E4
 .L800313F8:
 /* 21BF8 800313F8 0780043C */  lui        $a0, %hi(g_DeltaTime)
 /* 21BFC 800313FC CC56848C */  lw         $a0, %lo(g_DeltaTime)($a0)
-/* 21C00 80031400 0780023C */  lui        $v0, %hi(D_800756BC)
-/* 21C04 80031404 BC56428C */  lw         $v0, %lo(D_800756BC)($v0)
+/* 21C00 80031400 0780023C */  lui        $v0, %hi(g_UpdateParticle)
+/* 21C04 80031404 BC56428C */  lw         $v0, %lo(g_UpdateParticle)($v0)
 /* 21C08 80031408 00000000 */  nop
 /* 21C0C 8003140C 09F84000 */  jalr       $v0
 /* 21C10 80031410 00000000 */   nop

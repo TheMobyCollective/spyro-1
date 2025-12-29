@@ -799,7 +799,7 @@ void GamestateDraw(void) {
     } else if (g_Gamestate == GS_Balloonist) {
       func_8001E24C();
     } else if (g_Gamestate == GS_TitleScreen) {
-      if (g_TitlescreenState.m_0x00 == 3) {
+      if (g_TitlescreenState.m_Mode == TSM_Demo) {
         func_8001E6B8();
       } else {
         func_titlescreen_8007CEE4();
@@ -823,7 +823,7 @@ void GamestateDraw(void) {
 
     func_800521C0(); // Queue render mobys
 
-    if (!D_80075690) {
+    if (!g_IsFlightLevel) {
       func_80019300(); // Draw collectables
     }
 

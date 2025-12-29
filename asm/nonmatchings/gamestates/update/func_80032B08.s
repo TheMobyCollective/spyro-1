@@ -43,8 +43,8 @@ glabel func_80032B08
 /* 2339C 80032B9C 02000224 */   addiu     $v0, $zero, 0x2
 /* 233A0 80032BA0 0780023C */  lui        $v0, %hi(g_LevelId)
 /* 233A4 80032BA4 6C59428C */  lw         $v0, %lo(g_LevelId)($v0)
-/* 233A8 80032BA8 0780013C */  lui        $at, %hi(D_80075690)
-/* 233AC 80032BAC 905620AC */  sw         $zero, %lo(D_80075690)($at)
+/* 233A8 80032BA8 0780013C */  lui        $at, %hi(g_IsFlightLevel)
+/* 233AC 80032BAC 905620AC */  sw         $zero, %lo(g_IsFlightLevel)($at)
 /* 233B0 80032BB0 0780013C */  lui        $at, %hi(g_LoadStage)
 /* 233B4 80032BB4 645830AC */  sw         $s0, %lo(g_LoadStage)($at)
 /* 233B8 80032BB8 0780013C */  lui        $at, %hi(g_PortalLevelId)
@@ -65,8 +65,8 @@ glabel func_80032B08
 /* 233F0 80032BF0 0780013C */  lui        $at, %hi(D_8006EE7C)
 /* 233F4 80032BF4 21082200 */  addu       $at, $at, $v0
 /* 233F8 80032BF8 7CEE228C */  lw         $v0, %lo(D_8006EE7C)($at)
-/* 233FC 80032BFC 0780013C */  lui        $at, %hi(D_80075690)
-/* 23400 80032C00 905620AC */  sw         $zero, %lo(D_80075690)($at)
+/* 233FC 80032BFC 0780013C */  lui        $at, %hi(g_IsFlightLevel)
+/* 23400 80032C00 905620AC */  sw         $zero, %lo(g_IsFlightLevel)($at)
 /* 23404 80032C04 0780013C */  lui        $at, %hi(g_LoadStage)
 /* 23408 80032C08 645830AC */  sw         $s0, %lo(g_LoadStage)($at)
 /* 2340C 80032C0C 0780013C */  lui        $at, %hi(g_PortalLevelId)

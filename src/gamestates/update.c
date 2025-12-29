@@ -3,9 +3,11 @@
 #include "common.h"
 #include "cutscene.h"
 #include "gamepad.h"
+#include "gamestates/draw.h"
 #include "gamestates/init.h"
 #include "graphics.h"
 #include "loaders.h"
+#include "overlay_pointers.h"
 #include "specular_and_metal.h"
 #include "spyro.h"
 #include "titlescreen.h"
@@ -22,7 +24,7 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002DA74);
 /// @brief Gamestate 1
 void func_8002DF9C(void) {
   UpdateSpyroEnterReturnHome(); // Spyro update
-  func_80037BD4(); // Camera update
+  func_80037BD4();              // Camera update
 
   func_8002DA74();
 
@@ -113,7 +115,7 @@ void func_80032A20(void) {
 // Memory card used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
 void func_80032AB0(void) {
   if (g_Pad.m_Down & PAD_TRIANGLE) {
-    g_TitlescreenState.m_0x00 = 1;
+    g_TitlescreenState.m_Mode = TSM_Menu;
     g_TitlescreenState.m_0x10 = 0;
     g_TitlescreenState.m_0x04 = 0;
     MemCardSync(0, (void *)&g_TitlescreenState.m_CardCompletedFunc,
@@ -245,5 +247,131 @@ void func_800333DC(void) {
 /// @brief Update demo mode
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800334D4);
 
-/// @brief Gamestate update function
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", GamestateUpdate);
+/**
+ * @brief Main game loop update dispatcher, handles all gamestate logic.
+ *
+ * Called every frame from main(). Updates audio systems, then dispatches to
+ * the appropriate gamestate handler. For GS_Playing: updates mobys, Spyro,
+ * particles, HUD, camera, fade, and handles pause/inventory input.
+ */
+void GamestateUpdate(void) {
+  g_StateSwitch = 0;
+
+  // Update active SPU voices (3D audio, volume fades, pitch ramping)
+  func_8005637C();
+  CDMusicUpdate();
+
+  // Dispatch to appropriate gamestate handler
+  if (g_Gamestate != GS_Playing) {
+    if (g_Gamestate == GS_LevelTransition) {
+      func_8002DF9C(); // Level transition update
+    } else if (g_Gamestate == GS_PauseMenu) {
+      func_8002E12C(); // Pause menu update
+    } else if (g_Gamestate == GS_InventoryMenu) {
+      func_8002EB2C(); // Inventory/atlas menu update
+    } else if (g_Gamestate == GS_Respawn) {
+      func_8002EDF0(); // Respawn spiral animation
+    } else if (g_Gamestate == GS_GameOver) {
+      func_8002EDF0(); // Game over spiral animation
+    } else if (g_Gamestate == GS_OldDragon) {
+      func_8002F3C4(); // Unused prototype dragon dialogue stub
+    } else if (g_Gamestate == GS_FlightResults) {
+      g_FlightResultsUpdate(); // Flight level results (overlay)
+    } else if (g_Gamestate == GS_Dragon) {
+      func_8002F3E4(); // Dragon rescue cutscene update
+    } else if (g_Gamestate == GS_EntranceAnimation) {
+      func_8002E000(); // Level entrance camera sweep
+    } else if (g_Gamestate == GS_ExitLevel) {
+      func_8002E084(); // Return home portal sequence
+    } else if (g_Gamestate == GS_Fairy) {
+      func_800314B4(); // Fairy save system update
+    } else if (g_Gamestate == GS_Balloonist) {
+      func_800324D8(); // Balloonist ride update
+    } else if (g_Gamestate == GS_TitleScreen) {
+      if (g_TitlescreenState.m_Mode != TSM_Demo) {
+        func_titlescreen_8007ABAC(); // Titlescreen menu (overlay)
+      } else {
+        func_80032B08(); // Demo mode playback
+      }
+    } else if (g_Gamestate == GS_Cutscene) {
+      GamestateCutsceneUpdate();
+    } else if (g_Gamestate == GS_Credits) {
+      if (g_CreditsStage > 98) {
+        func_800333DC(); // Credits cleanup/level load
+      } else {
+        func_credits_8007AA50(); // Credits update (overlay)
+      }
+    }
+
+    SpuUpdate();
+
+    return;
+  }
+
+  // GS_Playing: Normal gameplay update
+  g_GameTick++;
+
+  // Handle demo mode input playback; exit early if demo ends
+  if (g_DemoMode && func_800334D4()) {
+    return;
+  }
+
+  func_8002A6FC(g_DeltaTime); // Unknown - possibly collision or world update
+  g_UpdateMoby();             // Level-specific moby (enemy/object) update
+
+  // Skip Spyro update for cutscene gamestates that handle their own Spyro
+  if ((u_int)(g_Gamestate - GS_Fairy) <= 1) {
+    return;
+  }
+  if (g_Gamestate == GS_FlightResults) {
+    return;
+  }
+  if (g_Gamestate == GS_LevelTransition) {
+    return;
+  }
+
+  func_8004A200(); // Main Spyro update (physics, state machine, animation)
+
+  // Skip remaining updates during respawn/death states
+  if ((u_int)(g_Gamestate - GS_Respawn) <= 1) {
+    return;
+  }
+  if (g_Gamestate == GS_FlightResults) {
+    return;
+  }
+  if (g_Gamestate == GS_LevelTransition) {
+    return;
+  }
+
+  g_UpdateParticle(g_DeltaTime); // Level-specific particle update
+
+  if (g_IsFlightLevel == 0) {
+    HudTick(); // Skip HUD in flight levels (they have their own UI)
+  }
+
+  func_80058BD8(); // Build metal texture matrix from camera rotation
+  func_80037BD4(); // Main camera update
+
+  // Screen fade timer (for smooth transitions)
+  if (g_Fade != 0) {
+    g_Fade -= g_DeltaTime;
+
+    if (g_Fade < 0) {
+      g_Fade = 0;
+    }
+  }
+
+  // Pause/inventory input check (only when alive and in normal play)
+  if (g_Gamestate == GS_Playing && g_ScreenBorderEnabled == 0 &&
+      g_Spyro.m_health >= 0 && g_Camera.m_State != 0x8000000E) {
+    if (g_Pad.m_Type < 2U) {
+      func_8002C420(1); // No controller - force pause
+    } else if (g_Pad.m_Down & PAD_START) {
+      func_8002C420(1); // START - open pause menu
+    } else if (g_Pad.m_Down & PAD_SELECT) {
+      func_8002C714(1); // SELECT - open inventory
+    }
+  }
+
+  SpuUpdate();
+}

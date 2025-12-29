@@ -7270,8 +7270,8 @@ glabel func_level_22_8007E240
 /* 1E0B960 80084398 CF220208 */  j          .Llevel_22_80088B3C
 /* 1E0B964 8008439C 0C0040AE */   sw        $zero, 0xC($s2)
 .Llevel_22_800843A0:
-/* 1E0B968 800843A0 0780023C */  lui        $v0, %hi(D_8007572C)
-/* 1E0B96C 800843A4 2C57428C */  lw         $v0, %lo(D_8007572C)($v0)
+/* 1E0B968 800843A0 0780023C */  lui        $v0, %hi(g_GameTick)
+/* 1E0B96C 800843A4 2C57428C */  lw         $v0, %lo(g_GameTick)($v0)
 /* 1E0B970 800843A8 00000000 */  nop
 /* 1E0B974 800843AC 01004230 */  andi       $v0, $v0, 0x1
 /* 1E0B978 800843B0 E2114010 */  beqz       $v0, .Llevel_22_80088B3C

@@ -531,8 +531,8 @@ glabel func_level_22_8007B898
 /* 1E03614 8007C04C 206E22A4 */  sh         $v0, %lo(g_Camera + 0x50)($at)
 /* 1E03618 8007C050 0780043C */  lui        $a0, %hi(g_DeltaTime)
 /* 1E0361C 8007C054 CC56848C */  lw         $a0, %lo(g_DeltaTime)($a0)
-/* 1E03620 8007C058 0780023C */  lui        $v0, %hi(D_800756BC)
-/* 1E03624 8007C05C BC56428C */  lw         $v0, %lo(D_800756BC)($v0)
+/* 1E03620 8007C058 0780023C */  lui        $v0, %hi(g_UpdateParticle)
+/* 1E03624 8007C05C BC56428C */  lw         $v0, %lo(g_UpdateParticle)($v0)
 /* 1E03628 8007C060 00000000 */  nop
 /* 1E0362C 8007C064 09F84000 */  jalr       $v0
 /* 1E03630 8007C068 00000000 */   nop

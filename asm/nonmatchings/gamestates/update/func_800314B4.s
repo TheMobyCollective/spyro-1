@@ -479,8 +479,8 @@ glabel func_800314B4
 /* 22380 80031B80 00000000 */   nop
 /* 22384 80031B84 0780043C */  lui        $a0, %hi(g_DeltaTime)
 /* 22388 80031B88 CC56848C */  lw         $a0, %lo(g_DeltaTime)($a0)
-/* 2238C 80031B8C 0780023C */  lui        $v0, %hi(D_800756BC)
-/* 22390 80031B90 BC56428C */  lw         $v0, %lo(D_800756BC)($v0)
+/* 2238C 80031B8C 0780023C */  lui        $v0, %hi(g_UpdateParticle)
+/* 22390 80031B90 BC56428C */  lw         $v0, %lo(g_UpdateParticle)($v0)
 /* 22394 80031B94 00000000 */  nop
 /* 22398 80031B98 09F84000 */  jalr       $v0
 /* 2239C 80031B9C 00000000 */   nop
@@ -632,13 +632,13 @@ glabel func_800314B4
 /* 225D8 80031DD8 00000000 */   nop
 /* 225DC 80031DDC 0780043C */  lui        $a0, %hi(g_DeltaTime)
 /* 225E0 80031DE0 CC56848C */  lw         $a0, %lo(g_DeltaTime)($a0)
-/* 225E4 80031DE4 0780023C */  lui        $v0, %hi(D_8007572C)
-/* 225E8 80031DE8 2C57428C */  lw         $v0, %lo(D_8007572C)($v0)
-/* 225EC 80031DEC 0780033C */  lui        $v1, %hi(D_800756BC)
-/* 225F0 80031DF0 BC56638C */  lw         $v1, %lo(D_800756BC)($v1)
+/* 225E4 80031DE4 0780023C */  lui        $v0, %hi(g_GameTick)
+/* 225E8 80031DE8 2C57428C */  lw         $v0, %lo(g_GameTick)($v0)
+/* 225EC 80031DEC 0780033C */  lui        $v1, %hi(g_UpdateParticle)
+/* 225F0 80031DF0 BC56638C */  lw         $v1, %lo(g_UpdateParticle)($v1)
 /* 225F4 80031DF4 01004224 */  addiu      $v0, $v0, 0x1
-/* 225F8 80031DF8 0780013C */  lui        $at, %hi(D_8007572C)
-/* 225FC 80031DFC 2C5722AC */  sw         $v0, %lo(D_8007572C)($at)
+/* 225F8 80031DF8 0780013C */  lui        $at, %hi(g_GameTick)
+/* 225FC 80031DFC 2C5722AC */  sw         $v0, %lo(g_GameTick)($at)
 /* 22600 80031E00 09F86000 */  jalr       $v1
 /* 22604 80031E04 00000000 */   nop
 /* 22608 80031E08 0800238E */  lw         $v1, 0x8($s1)

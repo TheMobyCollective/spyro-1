@@ -531,8 +531,8 @@ glabel func_level_50_8007BA18
 /* 43DC794 8007C1CC 206E22A4 */  sh         $v0, %lo(g_Camera + 0x50)($at)
 /* 43DC798 8007C1D0 0780043C */  lui        $a0, %hi(g_DeltaTime)
 /* 43DC79C 8007C1D4 CC56848C */  lw         $a0, %lo(g_DeltaTime)($a0)
-/* 43DC7A0 8007C1D8 0780023C */  lui        $v0, %hi(D_800756BC)
-/* 43DC7A4 8007C1DC BC56428C */  lw         $v0, %lo(D_800756BC)($v0)
+/* 43DC7A0 8007C1D8 0780023C */  lui        $v0, %hi(g_UpdateParticle)
+/* 43DC7A4 8007C1DC BC56428C */  lw         $v0, %lo(g_UpdateParticle)($v0)
 /* 43DC7A8 8007C1E0 00000000 */  nop
 /* 43DC7AC 8007C1E4 09F84000 */  jalr       $v0
 /* 43DC7B0 8007C1E8 00000000 */   nop

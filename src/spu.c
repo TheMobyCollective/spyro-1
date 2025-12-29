@@ -387,7 +387,7 @@ void KillOrphans(void) {
 
 // Updates SPU voices, but first calls the orphaned sounds check
 void SpuUpdate(void) {
-  if (D_8007572C % 64 == 0) {
+  if (g_GameTick % 64 == 0) {
     KillOrphans(); // Check for orphaned sounds
   }
 

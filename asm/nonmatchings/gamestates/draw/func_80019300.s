@@ -2,8 +2,8 @@
 .set noreorder /* don't insert nops after branches */
 
 glabel func_80019300
-/* 9B00 80019300 0780023C */  lui        $v0, %hi(D_80075690)
-/* 9B04 80019304 9056428C */  lw         $v0, %lo(D_80075690)($v0)
+/* 9B00 80019300 0780023C */  lui        $v0, %hi(g_IsFlightLevel)
+/* 9B04 80019304 9056428C */  lw         $v0, %lo(g_IsFlightLevel)($v0)
 /* 9B08 80019308 A8FFBD27 */  addiu      $sp, $sp, -0x58
 /* 9B0C 8001930C 5000BFAF */  sw         $ra, 0x50($sp)
 /* 9B10 80019310 4C00B3AF */  sw         $s3, 0x4C($sp)

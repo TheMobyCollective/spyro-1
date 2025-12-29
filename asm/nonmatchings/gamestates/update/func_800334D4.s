@@ -23,8 +23,8 @@ glabel func_800334D4
 /* 23D1C 8003351C 0780013C */  lui        $at, %hi(D_8006EE8C)
 /* 23D20 80033520 21082200 */  addu       $at, $at, $v0
 /* 23D24 80033524 8CEE228C */  lw         $v0, %lo(D_8006EE8C)($at)
-/* 23D28 80033528 0780033C */  lui        $v1, %hi(D_8007572C)
-/* 23D2C 8003352C 2C57638C */  lw         $v1, %lo(D_8007572C)($v1)
+/* 23D28 80033528 0780033C */  lui        $v1, %hi(g_GameTick)
+/* 23D2C 8003352C 2C57638C */  lw         $v1, %lo(g_GameTick)($v1)
 /* 23D30 80033530 F8FF4224 */  addiu      $v0, $v0, -0x8
 /* 23D34 80033534 2A106200 */  slt        $v0, $v1, $v0
 /* 23D38 80033538 12004010 */  beqz       $v0, .L80033584
@@ -111,8 +111,8 @@ glabel func_800334D4
 /* 23E6C 8003366C 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
 /* 23E70 80033670 0780013C */  lui        $at, %hi(g_CutsceneIdx)
 /* 23E74 80033674 6C5620AC */  sw         $zero, %lo(g_CutsceneIdx)($at)
-/* 23E78 80033678 0780013C */  lui        $at, %hi(D_80075690)
-/* 23E7C 8003367C 905620AC */  sw         $zero, %lo(D_80075690)($at)
+/* 23E78 80033678 0780013C */  lui        $at, %hi(g_IsFlightLevel)
+/* 23E7C 8003367C 905620AC */  sw         $zero, %lo(g_IsFlightLevel)($at)
 /* 23E80 80033680 0780013C */  lui        $at, %hi(D_80075784)
 /* 23E84 80033684 845720AC */  sw         $zero, %lo(D_80075784)($at)
 /* 23E88 80033688 4059000C */  jal        CDLoadSync
@@ -140,8 +140,8 @@ glabel func_800334D4
 /* 23ED8 800336D8 00000000 */   nop
 /* 23EDC 800336DC 0780023C */  lui        $v0, %hi(D_800757B8)
 /* 23EE0 800336E0 B857428C */  lw         $v0, %lo(D_800757B8)($v0)
-/* 23EE4 800336E4 0780033C */  lui        $v1, %hi(D_8007572C)
-/* 23EE8 800336E8 2C57638C */  lw         $v1, %lo(D_8007572C)($v1)
+/* 23EE4 800336E4 0780033C */  lui        $v1, %hi(g_GameTick)
+/* 23EE8 800336E8 2C57638C */  lw         $v1, %lo(g_GameTick)($v1)
 /* 23EEC 800336EC 80100200 */  sll        $v0, $v0, 2
 /* 23EF0 800336F0 0780013C */  lui        $at, %hi(D_8006EE8C)
 /* 23EF4 800336F4 21082200 */  addu       $at, $at, $v0

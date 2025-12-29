@@ -22,8 +22,8 @@ glabel func_8001364C
 /* 3E90 80013690 40000224 */  addiu      $v0, $zero, 0x40
 /* 3E94 80013694 0780013C */  lui        $at, %hi(D_800758C8)
 /* 3E98 80013698 C85820AC */  sw         $zero, %lo(D_800758C8)($at)
-/* 3E9C 8001369C 0780013C */  lui        $at, %hi(D_8007572C)
-/* 3EA0 800136A0 2C5720AC */  sw         $zero, %lo(D_8007572C)($at)
+/* 3E9C 8001369C 0780013C */  lui        $at, %hi(g_GameTick)
+/* 3EA0 800136A0 2C5720AC */  sw         $zero, %lo(g_GameTick)($at)
 /* 3EA4 800136A4 0780013C */  lui        $at, %hi(D_80075814)
 /* 3EA8 800136A8 145820AC */  sw         $zero, %lo(D_80075814)($at)
 /* 3EAC 800136AC 0780013C */  lui        $at, %hi(D_80075684)
@@ -54,8 +54,8 @@ glabel func_8001364C
 /* 3F00 80013700 78738424 */  addiu      $a0, $a0, %lo(g_Pad)
 /* 3F04 80013704 A94D010C */  jal        PadReset
 /* 3F08 80013708 00000000 */   nop
-/* 3F0C 8001370C 0780023C */  lui        $v0, %hi(D_80075690)
-/* 3F10 80013710 9056428C */  lw         $v0, %lo(D_80075690)($v0)
+/* 3F0C 8001370C 0780023C */  lui        $v0, %hi(g_IsFlightLevel)
+/* 3F10 80013710 9056428C */  lw         $v0, %lo(g_IsFlightLevel)($v0)
 /* 3F14 80013714 00000000 */  nop
 /* 3F18 80013718 05004014 */  bnez       $v0, .L80013730
 /* 3F1C 8001371C 00000000 */   nop
@@ -186,8 +186,8 @@ glabel func_8001364C
 /* 40F8 800138F8 01000224 */   addiu     $v0, $zero, 0x1
 /* 40FC 800138FC 0780033C */  lui        $v1, %hi(D_800778E0)
 /* 4100 80013900 E078638C */  lw         $v1, %lo(D_800778E0)($v1)
-/* 4104 80013904 0780013C */  lui        $at, %hi(D_80075690)
-/* 4108 80013908 905622AC */  sw         $v0, %lo(D_80075690)($at)
+/* 4104 80013904 0780013C */  lui        $at, %hi(g_IsFlightLevel)
+/* 4108 80013908 905622AC */  sw         $v0, %lo(g_IsFlightLevel)($at)
 /* 410C 8001390C 0880013C */  lui        $at, %hi(g_Spyro + 0x24C)
 /* 4110 80013910 A48C22AC */  sw         $v0, %lo(g_Spyro + 0x24C)($at)
 /* 4114 80013914 0780013C */  lui        $at, %hi(D_800758C0)
@@ -227,8 +227,8 @@ glabel func_8001364C
 .L8001399C:
 /* 419C 8001399C 0780023C */  lui        $v0, %hi(D_800756D0)
 /* 41A0 800139A0 D056428C */  lw         $v0, %lo(D_800756D0)($v0)
-/* 41A4 800139A4 0780013C */  lui        $at, %hi(D_80075690)
-/* 41A8 800139A8 905620AC */  sw         $zero, %lo(D_80075690)($at)
+/* 41A4 800139A4 0780013C */  lui        $at, %hi(g_IsFlightLevel)
+/* 41A8 800139A8 905620AC */  sw         $zero, %lo(g_IsFlightLevel)($at)
 /* 41AC 800139AC 0880013C */  lui        $at, %hi(g_Spyro + 0x24C)
 /* 41B0 800139B0 A48C20AC */  sw         $zero, %lo(g_Spyro + 0x24C)($at)
 /* 41B4 800139B4 23004010 */  beqz       $v0, .L80013A44
@@ -956,8 +956,8 @@ glabel func_8001364C
 /* 4C4C 8001444C 002062AC */   sw        $v0, 0x2000($v1)
 /* 4C50 80014450 0F00A012 */  beqz       $s5, .L80014490
 /* 4C54 80014454 00000000 */   nop
-/* 4C58 80014458 0780023C */  lui        $v0, %hi(D_80075690)
-/* 4C5C 8001445C 9056428C */  lw         $v0, %lo(D_80075690)($v0)
+/* 4C58 80014458 0780023C */  lui        $v0, %hi(g_IsFlightLevel)
+/* 4C5C 8001445C 9056428C */  lw         $v0, %lo(g_IsFlightLevel)($v0)
 /* 4C60 80014460 00000000 */  nop
 /* 4C64 80014464 0A004014 */  bnez       $v0, .L80014490
 /* 4C68 80014468 78000424 */   addiu     $a0, $zero, 0x78

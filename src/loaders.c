@@ -209,7 +209,7 @@ void func_800144C8(void) {
   func_8001364C(1);
 
   // set default state (32 if flight level, 0 otherwise)
-  if (D_80075690) {
+  if (g_IsFlightLevel) {
     func_8003FDC8(32);
   } else {
     func_8003FDC8(0);
@@ -1075,7 +1075,7 @@ void LoadLevel(int pArg) {
 
     if (D_800756D0) { // Has level transition
 
-      if (D_80075690) { // Is flying level
+      if (g_IsFlightLevel) { // Is flying level
 
         g_Spyro.m_walkingState = 10;
 
@@ -1229,7 +1229,7 @@ void LoadLevel(int pArg) {
       }
 
     } else {            // no level transition
-      if (D_80075690) { // flight level
+      if (g_IsFlightLevel) { // flight level
         g_Spyro.m_walkingState = 0;
       } else {
 

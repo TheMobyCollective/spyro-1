@@ -1176,8 +1176,8 @@ glabel func_8001A40C
 /* BCB0 8001B4B0 1057528E */  lw         $s2, %lo(g_HudMobys)($s2)
 /* BCB4 8001B4B4 09001524 */  addiu      $s5, $zero, 0x9
 .L8001B4B8:
-/* BCB8 8001B4B8 0780023C */  lui        $v0, %hi(D_80075690)
-/* BCBC 8001B4BC 9056428C */  lw         $v0, %lo(D_80075690)($v0)
+/* BCB8 8001B4B8 0780023C */  lui        $v0, %hi(g_IsFlightLevel)
+/* BCBC 8001B4BC 9056428C */  lw         $v0, %lo(g_IsFlightLevel)($v0)
 /* BCC0 8001B4C0 00000000 */  nop
 /* BCC4 8001B4C4 15004010 */  beqz       $v0, .L8001B51C
 /* BCC8 8001B4C8 21280002 */   addu      $a1, $s0, $zero
@@ -2273,8 +2273,8 @@ glabel func_8001A40C
 /* CD4C 8001C54C F42020AC */  sw         $zero, %lo(D_8006FCF4 + 0x2400)($at)
 /* CD50 8001C550 08006214 */  bne        $v1, $v0, .L8001C574
 /* CD54 8001C554 00000000 */   nop
-/* CD58 8001C558 0780023C */  lui        $v0, %hi(D_80075690)
-/* CD5C 8001C55C 9056428C */  lw         $v0, %lo(D_80075690)($v0)
+/* CD58 8001C558 0780023C */  lui        $v0, %hi(g_IsFlightLevel)
+/* CD5C 8001C55C 9056428C */  lw         $v0, %lo(g_IsFlightLevel)($v0)
 /* CD60 8001C560 00000000 */  nop
 /* CD64 8001C564 03004014 */  bnez       $v0, .L8001C574
 /* CD68 8001C568 00000000 */   nop

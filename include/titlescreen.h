@@ -3,8 +3,15 @@
 
 #include <sys/types.h>
 
+typedef enum {
+  TSM_Init = 0,    // Default/uninitialized
+  TSM_Menu = 1,    // Interactive menu
+  TSM_Loading = 2, // Demo loading transition
+  TSM_Demo = 3     // Active demo playback
+} TitlescreenMode;
+
 extern struct {
-  int m_0x00; // State
+  int m_Mode;
   int m_0x04;
   int m_0x08;
   int m_0x0C;

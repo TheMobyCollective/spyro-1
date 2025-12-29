@@ -9570,8 +9570,8 @@ glabel func_level_34_8007AF28
 /* 31FDF60 80083998 9A0E0208 */  j          .Llevel_34_80083A68
 /* 31FDF64 8008399C 00000000 */   nop
 .Llevel_34_800839A0:
-/* 31FDF68 800839A0 0780023C */  lui        $v0, %hi(D_8007572C)
-/* 31FDF6C 800839A4 2C57428C */  lw         $v0, %lo(D_8007572C)($v0)
+/* 31FDF68 800839A0 0780023C */  lui        $v0, %hi(g_GameTick)
+/* 31FDF6C 800839A4 2C57428C */  lw         $v0, %lo(g_GameTick)($v0)
 /* 31FDF70 800839A8 00000000 */  nop
 /* 31FDF74 800839AC 01004230 */  andi       $v0, $v0, 0x1
 /* 31FDF78 800839B0 0F004010 */  beqz       $v0, .Llevel_34_800839F0

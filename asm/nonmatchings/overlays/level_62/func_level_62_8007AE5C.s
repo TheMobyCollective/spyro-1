@@ -4686,8 +4686,8 @@ glabel func_level_62_8007AE5C
 /* 56CDF44 8007F17C 00000000 */  nop
 /* 56CDF48 8007F180 03110200 */  sra        $v0, $v0, 4
 /* 56CDF4C 8007F184 4600A2A2 */  sb         $v0, 0x46($s5)
-/* 56CDF50 8007F188 0780023C */  lui        $v0, %hi(D_8007572C)
-/* 56CDF54 8007F18C 2C57428C */  lw         $v0, %lo(D_8007572C)($v0)
+/* 56CDF50 8007F188 0780023C */  lui        $v0, %hi(g_GameTick)
+/* 56CDF54 8007F18C 2C57428C */  lw         $v0, %lo(g_GameTick)($v0)
 /* 56CDF58 8007F190 00000000 */  nop
 /* 56CDF5C 8007F194 01004230 */  andi       $v0, $v0, 0x1
 /* 56CDF60 8007F198 C80F4010 */  beqz       $v0, .Llevel_62_800830BC

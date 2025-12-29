@@ -57,7 +57,7 @@ void func_8002C420(int pEnteringFromGameplay) {
   D_800757C8 = 0;             // OptionsMenuIsOpen
   D_8007568C = 0;             // Pause menu no button ticks
 
-  if (D_80075690) { // If Spyro is in a flight level...
+  if (g_IsFlightLevel) { // If Spyro is in a flight level...
     if (pEnteringFromGameplay) {
       D_800758B8 = 0; // Pause menu text rotation ticks
     }
@@ -670,7 +670,7 @@ void EndCutscenePlayback(void) {
 
     // reset/init this thing
     Memset(&g_TitlescreenState, 0, sizeof(g_TitlescreenState));
-    g_TitlescreenState.m_0x00 = 3;
+    g_TitlescreenState.m_Mode = TSM_Demo;
     g_TitlescreenState.m_0x04 = 0;
     g_TitlescreenState.m_0x1C = 1;
 

@@ -42,7 +42,7 @@
 - [x] GamestateCutsceneUpdate
 - [x] func_800333DC
 - [ ] func_800334D4
-- [ ] GamestateUpdate
+- [x] GamestateUpdate
 - [x] func_8005B6F8
 - [x] func_8005B7D8
 - [x] SpuInitialize

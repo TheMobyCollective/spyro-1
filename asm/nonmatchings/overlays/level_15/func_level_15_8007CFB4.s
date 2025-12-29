@@ -5304,8 +5304,8 @@ glabel func_level_15_8007CFB4
 /* 16AF33C 80081D74 21206002 */  addu       $a0, $s3, $zero
 /* 16AF340 80081D78 794A010C */  jal        func_800529E4
 /* 16AF344 80081D7C 04000524 */   addiu     $a1, $zero, 0x4
-/* 16AF348 80081D80 0780023C */  lui        $v0, %hi(D_8007572C)
-/* 16AF34C 80081D84 2C57428C */  lw         $v0, %lo(D_8007572C)($v0)
+/* 16AF348 80081D80 0780023C */  lui        $v0, %hi(g_GameTick)
+/* 16AF34C 80081D84 2C57428C */  lw         $v0, %lo(g_GameTick)($v0)
 /* 16AF350 80081D88 00000000 */  nop
 /* 16AF354 80081D8C 03004230 */  andi       $v0, $v0, 0x3
 /* 16AF358 80081D90 0D004014 */  bnez       $v0, .Llevel_15_80081DC8
