@@ -306,9 +306,9 @@ void func_8003D52C(int pUnknown) {
   sinY = Sin(-g_Spyro.m_Physics.m_SpeedAngle.m_RotY & 0xfff);
 
   // There's writes to stack here haha
-  tempVec.x = (((pUnknown * sinY) / cosY) * cosX >> 0xc);
+  tempVec.x = FIXED_MUL((pUnknown * sinY) / cosY, cosX);
   tempVec.z = ((pUnknown * cosX) / cosY);
-  tempVec.y = (pUnknown * sinX >> 0xc);
+  tempVec.y = FIXED_MUL(pUnknown, sinX);
 
   g_Spyro.m_Physics.m_SpeedAngle.m_RotX =
       (g_Spyro.m_Physics.m_SpeedAngle.m_RotX + tempVec.x) & 0xfff;
