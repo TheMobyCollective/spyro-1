@@ -1596,8 +1596,8 @@ glabel func_level_11_8007B0D0
 /* B85628 8007C860 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
 /* B8562C 8007C864 0780013C */  lui        $at, %hi(D_8007576C)
 /* B85630 8007C868 6C5723AC */  sw         $v1, %lo(D_8007576C)($at)
-/* B85634 8007C86C 0780013C */  lui        $at, %hi(D_800756D0)
-/* B85638 8007C870 D05620AC */  sw         $zero, %lo(D_800756D0)($at)
+/* B85634 8007C86C 0780013C */  lui        $at, %hi(g_HasLevelTransition)
+/* B85638 8007C870 D05620AC */  sw         $zero, %lo(g_HasLevelTransition)($at)
 /* B8563C 8007C874 0780013C */  lui        $at, %hi(g_PortalLevelId)
 /* B85640 8007C878 AC5820AC */  sw         $zero, %lo(g_PortalLevelId)($at)
 /* B85644 8007C87C 00110200 */  sll        $v0, $v0, 4
@@ -1623,8 +1623,8 @@ glabel func_level_11_8007B0D0
 /* B85694 8007C8CC 565A000C */  jal        Memcpy
 /* B85698 8007C8D0 58000624 */   addiu     $a2, $zero, 0x58
 /* B8569C 8007C8D4 1F80023C */  lui        $v0, (0x801FFFFF >> 16)
-/* B856A0 8007C8D8 0880033C */  lui        $v1, %hi(D_800785D8 + 0x10)
-/* B856A4 8007C8DC E885638C */  lw         $v1, %lo(D_800785D8 + 0x10)($v1)
+/* B856A0 8007C8D8 0880033C */  lui        $v1, %hi(g_Buffers + 0x10)
+/* B856A4 8007C8DC E885638C */  lw         $v1, %lo(g_Buffers + 0x10)($v1)
 /* B856A8 8007C8E0 FFFF4234 */  ori        $v0, $v0, (0x801FFFFF & 0xFFFF)
 /* B856AC 8007C8E4 0780013C */  lui        $at, %hi(D_800777E8 + 0x68)
 /* B856B0 8007C8E8 507830AC */  sw         $s0, %lo(D_800777E8 + 0x68)($at)

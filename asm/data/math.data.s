@@ -2754,12 +2754,12 @@ dlabel g_CutscenePitchTable
 /* 5F678 8006EE78 00080000 */ .word 0x00000800
 .size g_CutscenePitchTable, . - g_CutscenePitchTable
 
-dlabel D_8006EE7C
+dlabel g_DemoLevelIds
 /* 5F67C 8006EE7C 0B000000 */ .word 0x0000000B
 /* 5F680 8006EE80 18000000 */ .word 0x00000018
 /* 5F684 8006EE84 37000000 */ .word 0x00000037
 /* 5F688 8006EE88 21000000 */ .word 0x00000021
-.size D_8006EE7C, . - D_8006EE7C
+.size g_DemoLevelIds, . - g_DemoLevelIds
 
 dlabel D_8006EE8C
 /* 5F68C 8006EE8C 5C030000 */ .word 0x0000035C

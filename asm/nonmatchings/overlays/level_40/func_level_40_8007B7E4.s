@@ -1596,8 +1596,8 @@ glabel func_level_40_8007B7E4
 /* 358E53C 8007CF74 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
 /* 358E540 8007CF78 0780013C */  lui        $at, %hi(D_8007576C)
 /* 358E544 8007CF7C 6C5723AC */  sw         $v1, %lo(D_8007576C)($at)
-/* 358E548 8007CF80 0780013C */  lui        $at, %hi(D_800756D0)
-/* 358E54C 8007CF84 D05620AC */  sw         $zero, %lo(D_800756D0)($at)
+/* 358E548 8007CF80 0780013C */  lui        $at, %hi(g_HasLevelTransition)
+/* 358E54C 8007CF84 D05620AC */  sw         $zero, %lo(g_HasLevelTransition)($at)
 /* 358E550 8007CF88 0780013C */  lui        $at, %hi(g_PortalLevelId)
 /* 358E554 8007CF8C AC5820AC */  sw         $zero, %lo(g_PortalLevelId)($at)
 /* 358E558 8007CF90 00110200 */  sll        $v0, $v0, 4
@@ -1623,8 +1623,8 @@ glabel func_level_40_8007B7E4
 /* 358E5A8 8007CFE0 565A000C */  jal        Memcpy
 /* 358E5AC 8007CFE4 58000624 */   addiu     $a2, $zero, 0x58
 /* 358E5B0 8007CFE8 1F80023C */  lui        $v0, (0x801FFFFF >> 16)
-/* 358E5B4 8007CFEC 0880033C */  lui        $v1, %hi(D_800785D8 + 0x10)
-/* 358E5B8 8007CFF0 E885638C */  lw         $v1, %lo(D_800785D8 + 0x10)($v1)
+/* 358E5B4 8007CFEC 0880033C */  lui        $v1, %hi(g_Buffers + 0x10)
+/* 358E5B8 8007CFF0 E885638C */  lw         $v1, %lo(g_Buffers + 0x10)($v1)
 /* 358E5BC 8007CFF4 FFFF4234 */  ori        $v0, $v0, (0x801FFFFF & 0xFFFF)
 /* 358E5C0 8007CFF8 0780013C */  lui        $at, %hi(D_800777E8 + 0x68)
 /* 358E5C4 8007CFFC 507830AC */  sw         $s0, %lo(D_800777E8 + 0x68)($at)

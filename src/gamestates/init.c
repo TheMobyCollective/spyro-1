@@ -96,7 +96,7 @@ void func_8002C534(int pResumeMusic) {
 
   // Restores the VRAM that it overwrote for the background
   setRECT(&rect, 512, 0, 256, 225);
-  LoadImage(&rect, (u_long *)((int)D_800785D8.m_HudOTStart - 115200));
+  LoadImage(&rect, (u_long *)((int)g_Buffers.m_HudOTStart - 115200));
   DrawSync(0);
 
   g_Gamestate = GS_Playing;
@@ -147,7 +147,7 @@ void func_8002C664(void) {
 
   g_Gamestate = GS_LevelTransition;
 
-  D_800756D0 = 1;
+  g_HasLevelTransition = 1;
   D_800756B0 = 1;
 
   g_StateSwitch = 1;
@@ -186,7 +186,7 @@ void func_8002C7BC(void) {
 
   // Restores the VRAM that it overwrote for the background
   setRECT(&rect, 512, 0, 256, 225);
-  LoadImage(&rect, (u_long *)((int)D_800785D8.m_HudOTStart - 115200));
+  LoadImage(&rect, (u_long *)((int)g_Buffers.m_HudOTStart - 115200));
   DrawSync(0);
 
   g_Gamestate = GS_Playing;
@@ -487,7 +487,7 @@ void func_8002D170(void) {
 
   D_80075754 = 10; // sound volume
 
-  g_TitlescreenState.m_0x4C = (char *)D_800785D8.m_LowerPolyBuffer - 0x2000;
+  g_TitlescreenState.m_0x4C = (char *)g_Buffers.m_LowerPolyBuffer - 0x2000;
 
   g_Spu.unk_0x320 = 0x3FFF;
   D_80075748 = 10; // music volume
@@ -671,8 +671,8 @@ void EndCutscenePlayback(void) {
     // reset/init this thing
     Memset(&g_TitlescreenState, 0, sizeof(g_TitlescreenState));
     g_TitlescreenState.m_Mode = TSM_Demo;
-    g_TitlescreenState.m_0x04 = 0;
-    g_TitlescreenState.m_0x1C = 1;
+    g_TitlescreenState.m_State = TSS_Setup;
+    g_TitlescreenState.m_DemoType = TSD_Level;
 
     // reset more stuff (also resets gems/dragons/lives/etc)
     func_8001277C();

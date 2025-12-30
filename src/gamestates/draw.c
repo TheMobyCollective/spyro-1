@@ -146,7 +146,7 @@ void func_8001D718(void) {
   unsigned char textLen;
 
   // Dunno what this is about
-  if (D_800756FC == D_800785D8.m_HudOTStart) {
+  if (D_800756FC == g_Buffers.m_HudOTStart) {
     // Reduces the polygon space available from 0x1C000 to 0x1BA00
     D_800756FC = (char *)D_800757B0 + 0x1BA00;
 
@@ -564,7 +564,8 @@ void func_8001E24C(void) {
 
 /// @brief Gamestate 13
 void func_8001E6B8() {
-  if (g_TitlescreenState.m_0x04 == 2 && g_TitlescreenState.m_0x08 > 139) {
+  if (g_TitlescreenState.m_State == TSS_Active &&
+      g_TitlescreenState.m_Tick > 139) {
     int a, i;
     Moby *curMoby;
 
@@ -580,12 +581,12 @@ void func_8001E6B8() {
 
     curMoby = g_HudMobys;
 
-    if (g_TitlescreenState.m_0x1C == 0) {
+    if (g_TitlescreenState.m_DemoType == TSD_Cutscene) {
       position.x = 92;
       func_800181AC("IN THE WORLD OF DRAGONS...", &position, &spacing, 0x10,
                     0xB);
       a = 184;
-    } else if (g_TitlescreenState.m_0x1C == 1) {
+    } else if (g_TitlescreenState.m_DemoType == TSD_Level) {
 
       // Have we visited Artisans before?
       if (g_VisitedFlags.m_Levels[0]) {
@@ -607,19 +608,19 @@ void func_8001E6B8() {
     }
 
     // Hide letters based on the number of ticks ran
-    if (a > g_TitlescreenState.m_0x08) {
-      g_HudMobys += (a - g_TitlescreenState.m_0x08) >> 1;
+    if (a > g_TitlescreenState.m_Tick) {
+      g_HudMobys += (a - g_TitlescreenState.m_Tick) >> 1;
     }
 
     i = 0;
     while ((int)(--curMoby) >= (int)g_HudMobys) {
-      int l = g_TitlescreenState.m_0x08 - 140 - i;
+      int l = g_TitlescreenState.m_Tick - 140 - i;
 
       if (l < 56) {
         curMoby->m_Rotation.z = l * 8 + 64;
       } else {
         curMoby->m_Rotation.z =
-            COSINE_8(((g_TitlescreenState.m_0x08 * 4) + (i * 12)) & 0xFF) >> 7;
+            COSINE_8(((g_TitlescreenState.m_Tick * 4) + (i * 12)) & 0xFF) >> 7;
       }
 
       i++;
@@ -634,7 +635,7 @@ void func_8001E6B8() {
   Memset(g_SonyImage.m_Buf, 0, 0x900);
   func_80022A2C(); // Renders the shaded mobys
 
-  if (g_TitlescreenState.m_0x04 == 2) {
+  if (g_TitlescreenState.m_State == TSS_Active) {
     // Draw Spyro
     func_80023AC4();
 

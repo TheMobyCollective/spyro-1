@@ -1808,8 +1808,8 @@ glabel func_8002F3E4
 /* 216B4 80030EB4 3870428C */  lw         $v0, %lo(g_DragonCutscene + 0x8)($v0)
 /* 216B8 80030EB8 C972010C */  jal        SpuSetTransferStartAddr
 /* 216BC 80030EBC 23208200 */   subu      $a0, $a0, $v0
-/* 216C0 80030EC0 0880023C */  lui        $v0, %hi(D_800785D8 + 0x8)
-/* 216C4 80030EC4 E085428C */  lw         $v0, %lo(D_800785D8 + 0x8)($v0)
+/* 216C0 80030EC0 0880023C */  lui        $v0, %hi(g_Buffers + 0x8)
+/* 216C4 80030EC4 E085428C */  lw         $v0, %lo(g_Buffers + 0x8)($v0)
 /* 216C8 80030EC8 0780043C */  lui        $a0, %hi(g_DragonCutscene + 0x4)
 /* 216CC 80030ECC 3470848C */  lw         $a0, %lo(g_DragonCutscene + 0x4)($a0)
 /* 216D0 80030ED0 0780053C */  lui        $a1, %hi(g_DragonCutscene + 0x8)

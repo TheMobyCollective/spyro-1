@@ -236,7 +236,7 @@ void CheatProcessLevelWarp(void) {
         // Set level transition flags
         g_Gamestate = GS_LevelTransition; // Set gamestate to loading
         g_LoadStage = 1;                  // Set load stage to 1
-        D_800756D0 = 0;                   // Set no level transition
+        g_HasLevelTransition = 0;         // Set no level transition
         D_800756B0 = 0;                   // Set no transition text
         g_StateSwitch = 1; // Set skip draw routine due to gamestate switch
 
