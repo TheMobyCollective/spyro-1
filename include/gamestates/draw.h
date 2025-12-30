@@ -4,7 +4,7 @@
 /// @brief Gamestate draw function
 void GamestateDraw(void);
 
-extern int D_8007570C; // Is the screen border enabled
-extern int D_800756C0; // Border size
+extern int g_ScreenBorderEnabled; // Is the screen border enabled
+extern int D_800756C0;            // Border size
 
 #endif // !__GAMESTATE_DRAW_H

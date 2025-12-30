@@ -595,8 +595,8 @@ glabel func_level_31_8008AF54
 /* 2A0A478 8008B6B0 6000B127 */   addiu     $s1, $sp, 0x60
 /* 2A0A47C 8008B6B4 21202002 */  addu       $a0, $s1, $zero
 /* 2A0A480 8008B6B8 1D004392 */  lbu        $v1, 0x1D($s2)
-/* 2A0A484 8008B6BC 0780053C */  lui        $a1, %hi(D_80075828)
-/* 2A0A488 8008B6C0 2858A58C */  lw         $a1, %lo(D_80075828)($a1)
+/* 2A0A484 8008B6BC 0780053C */  lui        $a1, %hi(g_LevelMobys)
+/* 2A0A488 8008B6C0 2858A58C */  lw         $a1, %lo(g_LevelMobys)($a1)
 /* 2A0A48C 8008B6C4 40100300 */  sll        $v0, $v1, 1
 /* 2A0A490 8008B6C8 21104300 */  addu       $v0, $v0, $v1
 /* 2A0A494 8008B6CC 80100200 */  sll        $v0, $v0, 2

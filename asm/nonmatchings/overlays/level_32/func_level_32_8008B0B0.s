@@ -401,8 +401,8 @@ glabel func_level_32_8008B0B0
 /* 2CBD288 8008B4C0 18004426 */  addiu      $a0, $s2, 0x18
 /* 2CBD28C 8008B4C4 FF5E000C */  jal        func_80017BFC
 /* 2CBD290 8008B4C8 21280002 */   addu      $a1, $s0, $zero
-/* 2CBD294 8008B4CC 0780043C */  lui        $a0, %hi(D_80075828)
-/* 2CBD298 8008B4D0 2858848C */  lw         $a0, %lo(D_80075828)($a0)
+/* 2CBD294 8008B4CC 0780043C */  lui        $a0, %hi(g_LevelMobys)
+/* 2CBD298 8008B4D0 2858848C */  lw         $a0, %lo(g_LevelMobys)($a0)
 /* 2CBD29C 8008B4D4 1F0040A2 */  sb         $zero, 0x1F($s2)
 /* 2CBD2A0 8008B4D8 23208402 */  subu       $a0, $s4, $a0
 /* 2CBD2A4 8008B4DC 40190400 */  sll        $v1, $a0, 5

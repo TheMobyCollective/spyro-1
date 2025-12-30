@@ -247,8 +247,8 @@ glabel func_8002F3E4
 .L8002F754:
 /* 1FF54 8002F754 0880023C */  lui        $v0, %hi(g_SpyroFlame + 0xA0)
 /* 1FF58 8002F758 6887428C */  lw         $v0, %lo(g_SpyroFlame + 0xA0)($v0)
-/* 1FF5C 8002F75C 0780013C */  lui        $at, %hi(D_800758A4)
-/* 1FF60 8002F760 A45822AC */  sw         $v0, %lo(D_800758A4)($at)
+/* 1FF5C 8002F75C 0780013C */  lui        $at, %hi(g_SavedFairyKissTimer)
+/* 1FF60 8002F760 A45822AC */  sw         $v0, %lo(g_SavedFairyKissTimer)($at)
 /* 1FF64 8002F764 092B010C */  jal        func_8004AC24
 /* 1FF68 8002F768 01000424 */   addiu     $a0, $zero, 0x1
 /* 1FF6C 8002F76C 0780033C */  lui        $v1, %hi(D_80075824)
@@ -2175,8 +2175,8 @@ glabel func_8002F3E4
 /* 21C28 80031428 DC52000C */  jal        LoadDragonCutscene
 /* 21C2C 8003142C 00000000 */   nop
 .L80031430:
-/* 21C30 80031430 0780113C */  lui        $s1, %hi(D_80075828)
-/* 21C34 80031434 2858318E */  lw         $s1, %lo(D_80075828)($s1)
+/* 21C30 80031430 0780113C */  lui        $s1, %hi(g_LevelMobys)
+/* 21C34 80031434 2858318E */  lw         $s1, %lo(g_LevelMobys)($s1)
 /* 21C38 80031438 00000000 */  nop
 /* 21C3C 8003143C 48002492 */  lbu        $a0, 0x48($s1)
 /* 21C40 80031440 FF000224 */  addiu      $v0, $zero, 0xFF

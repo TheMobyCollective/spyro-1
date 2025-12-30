@@ -203,7 +203,7 @@ inline static int SavedMobyIsDead(int mobyIndex) {
 int func_80038494(Moby *pMoby) {
   // Since load layout sets m_DropMoby to 0xff if the moby is dead
   // the check for it is a bit odd
-  return SavedMobyIsDead(pMoby - D_80075828) && pMoby->m_DropMoby == 0xff;
+  return SavedMobyIsDead(pMoby - g_LevelMobys) && pMoby->m_DropMoby == 0xff;
 }
 
 void func_8003851C(Moby *pMoby, int pSoundIndex, u_char *pChannel) {
@@ -921,7 +921,7 @@ int func_8003B0DC(int pPod) {
 
     mobyId = *pod;
 
-    if ((u_char)D_80075828[mobyId & 0x7FFF].m_State <= 127)
+    if ((u_char)g_LevelMobys[mobyId & 0x7FFF].m_State <= 127)
       return 1;
 
     pod++;
@@ -948,7 +948,7 @@ int func_8003B160(int pPod, u_int pState) {
 
     mobyId = *pod;
 
-    if ((u_char)D_80075828[mobyId & 0x7FFF].m_State != pState)
+    if ((u_char)g_LevelMobys[mobyId & 0x7FFF].m_State != pState)
       return 0;
 
     pod++;
@@ -973,8 +973,8 @@ void func_8003B1E8(Moby *pMoby, u_int pState) {
   pod = g_MobyPods[pMoby->m_Pod];
 
   do {
-    if ((u_char)D_80075828[*pod & 0x7FFF].m_State <= 127)
-      D_80075828[*pod & 0x7FFF].m_State = pState;
+    if ((u_char)g_LevelMobys[*pod & 0x7FFF].m_State <= 127)
+      g_LevelMobys[*pod & 0x7FFF].m_State = pState;
 
     // If the top bit is set (so negative), we're done
   } while ((*((short *)pod++)) >= 0);
@@ -992,7 +992,7 @@ void func_8003B294(Moby *pMoby, int pPodIdx, uint pFlag, int pWithinOctDist,
 
   pod_list = g_MobyPods[pPodIdx];
   while (1) {
-    check_moby = &D_80075828[*pod_list & 0x7FFF];
+    check_moby = &g_LevelMobys[*pod_list & 0x7FFF];
     if (check_moby->m_State < 0x80 &&
         ABS2(pMoby->m_Position.x - check_moby->m_Position.x) < pWithinXYDist &&
         ABS2(pMoby->m_Position.y - check_moby->m_Position.y) < pWithinXYDist &&
@@ -1027,9 +1027,9 @@ void func_8003B47C(Moby *pMoby, u_int pState, u_int pRequiredNotState) {
   pod = g_MobyPods[pMoby->m_Pod];
 
   do {
-    if ((u_char)D_80075828[*pod & 0x7FFF].m_State <= 127 &&
-        (u_char)D_80075828[*pod & 0x7FFF].m_State != pRequiredNotState)
-      D_80075828[*pod & 0x7FFF].m_State = pState;
+    if ((u_char)g_LevelMobys[*pod & 0x7FFF].m_State <= 127 &&
+        (u_char)g_LevelMobys[*pod & 0x7FFF].m_State != pRequiredNotState)
+      g_LevelMobys[*pod & 0x7FFF].m_State = pState;
 
     // If the top bit is set (so negative), we're done
   } while ((*((short *)pod++)) >= 0);
@@ -1052,9 +1052,9 @@ void func_8003B538(Moby *pMoby, u_int pState, u_int pRequiredState) {
 
   do {
     // SKELETON: Ditto
-    if ((u_char)D_80075828[*pod & 0x7FFF].m_State <= 127 &&
-        (u_char)D_80075828[*pod & 0x7FFF].m_State == pRequiredState)
-      D_80075828[*pod & 0x7FFF].m_State = pState;
+    if ((u_char)g_LevelMobys[*pod & 0x7FFF].m_State <= 127 &&
+        (u_char)g_LevelMobys[*pod & 0x7FFF].m_State == pRequiredState)
+      g_LevelMobys[*pod & 0x7FFF].m_State = pState;
 
     // If the top bit is set (so negative), we're done
   } while ((*((short *)pod++)) >= 0);
@@ -1071,8 +1071,8 @@ void func_8003B5F4(int pPodId, int pDamageFlags) {
   pod = g_MobyPods[pPodId];
 
   do {
-    if ((u_char)D_80075828[*pod & 0x7FFF].m_State <= 127)
-      D_80075828[*pod & 0x7FFF].m_DamageFlags |= pDamageFlags;
+    if ((u_char)g_LevelMobys[*pod & 0x7FFF].m_State <= 127)
+      g_LevelMobys[*pod & 0x7FFF].m_DamageFlags |= pDamageFlags;
 
     // If the top bit is set (so negative), we're done
   } while ((*((short *)pod++)) >= 0);
@@ -1089,8 +1089,8 @@ void func_8003B688(int pPodId) {
   pod = g_MobyPods[pPodId];
 
   do {
-    if ((u_char)D_80075828[*pod & 0x7FFF].m_State <= 127)
-      func_80052568(&D_80075828[*pod & 0x7FFF]);
+    if ((u_char)g_LevelMobys[*pod & 0x7FFF].m_State <= 127)
+      func_80052568(&g_LevelMobys[*pod & 0x7FFF]);
 
     // If the top bit is set (so negative), we're done
   } while ((*((short *)pod++)) >= 0);
@@ -1110,8 +1110,8 @@ void func_8003B728(Moby *pMoby, u_int pSubstate) {
   pod = g_MobyPods[pMoby->m_Pod];
 
   do {
-    if ((u_char)D_80075828[*pod & 0x7FFF].m_State <= 127)
-      D_80075828[*pod & 0x7FFF].m_Substate = pSubstate;
+    if ((u_char)g_LevelMobys[*pod & 0x7FFF].m_State <= 127)
+      g_LevelMobys[*pod & 0x7FFF].m_Substate = pSubstate;
 
     // If the top bit is set (so negative), we're done
   } while ((*((short *)pod++)) >= 0);
@@ -1122,9 +1122,9 @@ void func_8003B728(Moby *pMoby, u_int pSubstate) {
 // Marks a moby as killed
 void func_8003B7C0(Moby *pMoby) {
   // Make sure the Moby is a static one
-  if (pMoby >= D_80075828 && pMoby < D_80075890) {
+  if (pMoby >= g_LevelMobys && pMoby < D_80075890) {
     // Get the index by subtracting the base moby pointer
-    int mobyIndex = pMoby - D_80075828;
+    int mobyIndex = pMoby - g_LevelMobys;
 
     // Seperate variables, won't match otherwise
     int killArrayIndex = mobyIndex >> 5; // / 32

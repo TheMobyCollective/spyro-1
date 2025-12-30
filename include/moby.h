@@ -321,7 +321,7 @@ typedef enum {
 typedef struct {
   u_char m_NodeCount;
   u_char m_CurrentNode;
-  char unk_0x2[4]; // No clue, padding? Usually 0
+  char unk_0x2[4];  // No clue, padding? Usually 0
   short m_Reversed; // Path traversal: -1 = normal, 1 = reversed
   struct {
     Vector3D m_Position;
@@ -361,6 +361,8 @@ typedef struct {
   int unk_0x0c;
   int unk_0x10;
 } MobySparxProps;
+
+extern Moby *g_Sparx;
 
 typedef struct {
   int unk_0x0;
@@ -435,7 +437,7 @@ extern int g_MobyPodCount;   // The number of pods in the current level
 
 extern Moby *D_80075758; // Pointer to the key Moby for this level
 
-extern Moby *D_80075828; // The Mobys in the current level
+extern Moby *g_LevelMobys; // The Mobys in the current level
 
 extern Moby *D_80075890; // Pointer to the first dynamic Moby, used for
                          // delimiting static and dynamic Mobys

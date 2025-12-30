@@ -124,7 +124,7 @@ dlabel g_CreditsStage
 dlabel D_80075708
 /* 65EE0 80075708 */ .space 0x04
 
-dlabel D_8007570C
+dlabel g_ScreenBorderEnabled
 /* 65EE4 8007570C */ .space 0x04
 
 dlabel g_HudMobys
@@ -336,7 +336,7 @@ dlabel g_WorldOT
 dlabel D_80075824
 /* 65FFC 80075824 */ .space 0x04
 
-dlabel D_80075828
+dlabel g_LevelMobys
 /* 66000 80075828 */ .space 0x04
 
 dlabel D_8007582C
@@ -417,7 +417,7 @@ dlabel D_80075890
 dlabel D_80075894
 /* 6606C 80075894 */ .space 0x04
 
-dlabel D_80075898
+dlabel g_Sparx
 /* 66070 80075898 */ .space 0x04
 
 dlabel D_8007589C
@@ -426,7 +426,7 @@ dlabel D_8007589C
 dlabel D_800758A0
 /* 66078 800758A0 */ .space 0x04
 
-dlabel D_800758A4
+dlabel g_SavedFairyKissTimer
 /* 6607C 800758A4 */ .space 0x04
 
 dlabel D_800758A8

@@ -341,8 +341,8 @@ glabel func_level_34_80084830
 /* 31FF19C 80084BD4 00000000 */   nop
 /* 31FF1A0 80084BD8 1D002392 */  lbu        $v1, 0x1D($s1)
 /* 31FF1A4 80084BDC 6800A48F */  lw         $a0, 0x68($sp)
-/* 31FF1A8 80084BE0 0780053C */  lui        $a1, %hi(D_80075828)
-/* 31FF1AC 80084BE4 2858A58C */  lw         $a1, %lo(D_80075828)($a1)
+/* 31FF1A8 80084BE0 0780053C */  lui        $a1, %hi(g_LevelMobys)
+/* 31FF1AC 80084BE4 2858A58C */  lw         $a1, %lo(g_LevelMobys)($a1)
 /* 31FF1B0 80084BE8 40100300 */  sll        $v0, $v1, 1
 /* 31FF1B4 80084BEC 21104300 */  addu       $v0, $v0, $v1
 /* 31FF1B8 80084BF0 80100200 */  sll        $v0, $v0, 2

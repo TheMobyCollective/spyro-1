@@ -24,16 +24,16 @@ glabel func_level_40_8007B664
 /* 358CC78 8007B6B0 0000638C */  lw         $v1, 0x0($v1)
 /* 358CC7C 8007B6B4 0780113C */  lui        $s1, %hi(g_Camera + 0x28)
 /* 358CC80 8007B6B8 F86D3126 */  addiu      $s1, $s1, %lo(g_Camera + 0x28)
-/* 358CC84 8007B6BC 0780013C */  lui        $at, %hi(D_8007570C)
-/* 358CC88 8007B6C0 0C5722AC */  sw         $v0, %lo(D_8007570C)($at)
+/* 358CC84 8007B6BC 0780013C */  lui        $at, %hi(g_ScreenBorderEnabled)
+/* 358CC88 8007B6C0 0C5722AC */  sw         $v0, %lo(g_ScreenBorderEnabled)($at)
 /* 358CC8C 8007B6C4 0780013C */  lui        $at, %hi(g_StateSwitch)
 /* 358CC90 8007B6C8 9C5722AC */  sw         $v0, %lo(g_StateSwitch)($at)
 /* 358CC94 8007B6CC 40100300 */  sll        $v0, $v1, 1
 /* 358CC98 8007B6D0 21104300 */  addu       $v0, $v0, $v1
 /* 358CC9C 8007B6D4 80100200 */  sll        $v0, $v0, 2
 /* 358CCA0 8007B6D8 23104300 */  subu       $v0, $v0, $v1
-/* 358CCA4 8007B6DC 0780033C */  lui        $v1, %hi(D_80075828)
-/* 358CCA8 8007B6E0 2858638C */  lw         $v1, %lo(D_80075828)($v1)
+/* 358CCA4 8007B6DC 0780033C */  lui        $v1, %hi(g_LevelMobys)
+/* 358CCA8 8007B6E0 2858638C */  lw         $v1, %lo(g_LevelMobys)($v1)
 /* 358CCAC 8007B6E4 C0100200 */  sll        $v0, $v0, 3
 /* 358CCB0 8007B6E8 21186200 */  addu       $v1, $v1, $v0
 /* 358CCB4 8007B6EC 0780013C */  lui        $at, %hi(D_800777E8 + 0x68)

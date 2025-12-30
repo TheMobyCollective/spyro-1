@@ -32,8 +32,8 @@ glabel func_8003B854
 /* 2C0BC 8003B8BC 605822AC */  sw         $v0, %lo(g_GemTotal)($at)
 /* 2C0C0 8003B8C0 000083AC */  sw         $v1, 0x0($a0)
 .L8003B8C4:
-/* 2C0C4 8003B8C4 0780033C */  lui        $v1, %hi(D_80075828)
-/* 2C0C8 8003B8C8 2858638C */  lw         $v1, %lo(D_80075828)($v1)
+/* 2C0C4 8003B8C4 0780033C */  lui        $v1, %hi(g_LevelMobys)
+/* 2C0C8 8003B8C8 2858638C */  lw         $v1, %lo(g_LevelMobys)($v1)
 /* 2C0CC 8003B8CC 00000000 */  nop
 /* 2C0D0 8003B8D0 2B102302 */  sltu       $v0, $s1, $v1
 /* 2C0D4 8003B8D4 21004014 */  bnez       $v0, .L8003B95C

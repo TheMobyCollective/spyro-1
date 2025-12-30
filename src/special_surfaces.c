@@ -108,18 +108,18 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
         return;
       }
 
-      D_80075828[pathMoby].m_State = 1;
-      D_80075828[pathMoby].m_UpdateDistance = 0xFF;
+      g_LevelMobys[pathMoby].m_State = 1;
+      g_LevelMobys[pathMoby].m_UpdateDistance = 0xFF;
 
-      pathData = D_80075828[pathMoby].m_Props;
+      pathData = g_LevelMobys[pathMoby].m_Props;
 
       if (sidedness < 0) {
-        D_80075828[pathMoby].m_Substate = 1;
+        g_LevelMobys[pathMoby].m_Substate = 1;
         pathData->unk_0x4.x = -(*pportal)->unk_0x8.x >> 1;
         pathData->unk_0x4.y = -(*pportal)->unk_0x8.y >> 1;
         pathData->unk_0x4.z = -(*pportal)->unk_0x8.z >> 1;
       } else {
-        D_80075828[pathMoby].m_Substate = 0;
+        g_LevelMobys[pathMoby].m_Substate = 0;
         pathData->unk_0x4.x = (*pportal)->unk_0x8.x >> 1;
         pathData->unk_0x4.y = (*pportal)->unk_0x8.y >> 1;
         pathData->unk_0x4.z = (*pportal)->unk_0x8.z >> 1;

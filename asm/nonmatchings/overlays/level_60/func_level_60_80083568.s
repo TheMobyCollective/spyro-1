@@ -16,8 +16,8 @@ glabel func_level_60_80083568
 /* 51EBB5C 80083594 21984000 */  addu       $s3, $v0, $zero
 /* 51EBB60 80083598 1400A012 */  beqz       $s5, .Llevel_60_800835EC
 /* 51EBB64 8008359C 360070A6 */   sh        $s0, 0x36($s3)
-/* 51EBB68 800835A0 0780043C */  lui        $a0, %hi(D_80075828)
-/* 51EBB6C 800835A4 2858848C */  lw         $a0, %lo(D_80075828)($a0)
+/* 51EBB68 800835A0 0780043C */  lui        $a0, %hi(g_LevelMobys)
+/* 51EBB6C 800835A4 2858848C */  lw         $a0, %lo(g_LevelMobys)($a0)
 /* 51EBB70 800835A8 00000000 */  nop
 /* 51EBB74 800835AC 2320A402 */  subu       $a0, $s5, $a0
 /* 51EBB78 800835B0 40190400 */  sll        $v1, $a0, 5

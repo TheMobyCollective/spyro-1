@@ -59,8 +59,8 @@ glabel func_8003ABC0
 .L8003AC8C:
 /* 2B48C 8003AC8C 24000216 */  bne        $s0, $v0, .L8003AD20
 /* 2B490 8003AC90 0E000224 */   addiu     $v0, $zero, 0xE
-/* 2B494 8003AC94 0780023C */  lui        $v0, %hi(D_80075898)
-/* 2B498 8003AC98 9858428C */  lw         $v0, %lo(D_80075898)($v0)
+/* 2B494 8003AC94 0780023C */  lui        $v0, %hi(g_Sparx)
+/* 2B498 8003AC98 9858428C */  lw         $v0, %lo(g_Sparx)($v0)
 /* 2B49C 8003AC9C 00000000 */  nop
 /* 2B4A0 8003ACA0 08004014 */  bnez       $v0, .L8003ACC4
 /* 2B4A4 8003ACA4 10000424 */   addiu     $a0, $zero, 0x10
@@ -92,8 +92,8 @@ glabel func_8003ABC0
 /* 2B504 8003AD04 21300000 */   addu      $a2, $zero, $zero
 /* 2B508 8003AD08 01000224 */  addiu      $v0, $zero, 0x1
 /* 2B50C 8003AD0C 000002AE */  sw         $v0, 0x0($s0)
-/* 2B510 8003AD10 0780013C */  lui        $at, %hi(D_80075898)
-/* 2B514 8003AD14 985832AC */  sw         $s2, %lo(D_80075898)($at)
+/* 2B510 8003AD10 0780013C */  lui        $at, %hi(g_Sparx)
+/* 2B514 8003AD14 985832AC */  sw         $s2, %lo(g_Sparx)($at)
 /* 2B518 8003AD18 2BEC0008 */  j          .L8003B0AC
 /* 2B51C 8003AD1C 21104002 */   addu      $v0, $s2, $zero
 .L8003AD20:
