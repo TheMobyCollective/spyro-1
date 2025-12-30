@@ -215,8 +215,9 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
   case 234: {
     func_8003A720(moby); // Reset the Moby first
     VecCopy(&moby->m_Position, &g_Spyro.unk_0x17c);
-    moby->m_Rotation.z =
-        Atan2(g_Spyro.m_KnockbackDirection.x, g_Spyro.m_KnockbackDirection.y, 0) + 64;
+    moby->m_Rotation.z = Atan2(g_Spyro.m_KnockbackDirection.x,
+                               g_Spyro.m_KnockbackDirection.y, 0) +
+                         64;
     func_800526A8(moby); // Update collision
     break;
   }
@@ -262,8 +263,8 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     angle2 = rand() & 0xFFF;
     angle1 = rand() & 0x7FF;
 
-    fragmentProps->unk_0x00 = (Cos(angle1) >> 5) * Cos(angle2) >> 12;
-    fragmentProps->unk_0x02 = (Cos(angle1) >> 5) * Sin(angle2) >> 12;
+    fragmentProps->unk_0x00 = FIXED_MUL(Cos(angle1) >> 5, Cos(angle2));
+    fragmentProps->unk_0x02 = FIXED_MUL(Cos(angle1) >> 5, Sin(angle2));
     fragmentProps->unk_0x04 = Sin(angle1) >> 5;
 
     // Charge damage
