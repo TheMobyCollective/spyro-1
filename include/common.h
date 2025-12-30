@@ -36,9 +36,6 @@
 
 #define CLAMP(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
 
-// Sign-extend an 8-bit value to 32-bit (via arithmetic right shift)
-#define SEXT8(x) (((x) << 24) >> 24)
-
 typedef enum {
   GS_Playing = 0,
   GS_LevelTransition = 1,
