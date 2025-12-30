@@ -263,9 +263,9 @@ void Initialize(void) {
   SetGeomScreen(341);      // Set the FOV
 
   // Set the copy buffer to the titlescreen terminator
-  D_800785D8.m_CopyBuf = func_titlescreen_8007DDE8;
+  g_Buffers.m_CopyBuf = func_titlescreen_8007DDE8;
   // Ditto for the disc
-  D_800785D8.m_DiscCopyBuf = func_titlescreen_8007DDE8;
+  g_Buffers.m_DiscCopyBuf = func_titlescreen_8007DDE8;
 
   frameCountStart = VSync(-1); // Get the frame count
 
@@ -277,14 +277,14 @@ void Initialize(void) {
 
   // Clear the copy buffer for the images
   // to be decompressed into
-  Memset(D_800785D8.m_CopyBuf, 0, image_size);
+  Memset(g_Buffers.m_CopyBuf, 0, image_size);
 
   for (i = 0; i < 8; ++i) {
     // Decompress the image
-    func_80017F24(D_8006FCF4, D_800785D8.m_CopyBuf,
+    func_80017F24(D_8006FCF4, g_Buffers.m_CopyBuf,
                   i * blend_step - blend_start);
     setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
-    LoadImage(&frameRect, D_800785D8.m_CopyBuf);
+    LoadImage(&frameRect, g_Buffers.m_CopyBuf);
     DrawSync(0);
     VSync(0);
     PutDispEnv(&g_DB[1].m_DispEnv);
@@ -327,13 +327,13 @@ void Initialize(void) {
 
   // Clear the copy buffer for the images
   // to be decompressed into again
-  Memset(D_800785D8.m_CopyBuf, 0, image_size);
+  Memset(g_Buffers.m_CopyBuf, 0, image_size);
 
   for (j = 0; j < 8; ++j) {
     // Decompress the image
-    func_80017F24(D_8006FCF4, D_800785D8.m_CopyBuf, -(j + 1) * blend_step);
+    func_80017F24(D_8006FCF4, g_Buffers.m_CopyBuf, -(j + 1) * blend_step);
     setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
-    LoadImage(&frameRect, D_800785D8.m_CopyBuf);
+    LoadImage(&frameRect, g_Buffers.m_CopyBuf);
     DrawSync(0);
     VSync(0);
     PutDispEnv(&g_DB[1].m_DispEnv);
@@ -399,7 +399,7 @@ void Initialize(void) {
   LoadImage(&frameRect, (u_long *)levelVram);
   DrawSync(0);
 
-  D_800785D8.m_SharedAnimations = (char *)0x80200000 - _stacksize;
+  g_Buffers.m_SharedAnimations = (char *)0x80200000 - _stacksize;
 
   func_8005B7D8();         // Load shared models from WAD.WAD
   StartCutscenePlayback(); // Initialize the gamestate to cutscene

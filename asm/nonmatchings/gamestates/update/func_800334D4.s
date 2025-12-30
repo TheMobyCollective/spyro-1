@@ -11,13 +11,13 @@ glabel func_800334D4
 /* 23CEC 800334EC 02000224 */  addiu      $v0, $zero, 0x2
 /* 23CF0 800334F0 D5006210 */  beq        $v1, $v0, .L80033848
 /* 23CF4 800334F4 21100000 */   addu      $v0, $zero, $zero
-/* 23CF8 800334F8 0780023C */  lui        $v0, %hi(D_80075884)
-/* 23CFC 800334FC 8458428C */  lw         $v0, %lo(D_80075884)($v0)
+/* 23CF8 800334F8 0780023C */  lui        $v0, %hi(g_DemoFadeTimer)
+/* 23CFC 800334FC 8458428C */  lw         $v0, %lo(g_DemoFadeTimer)($v0)
 /* 23D00 80033500 00000000 */  nop
 /* 23D04 80033504 24004014 */  bnez       $v0, .L80033598
 /* 23D08 80033508 01004224 */   addiu     $v0, $v0, 0x1
-/* 23D0C 8003350C 0780023C */  lui        $v0, %hi(D_800757B8)
-/* 23D10 80033510 B857428C */  lw         $v0, %lo(D_800757B8)($v0)
+/* 23D0C 8003350C 0780023C */  lui        $v0, %hi(g_DemoIndex)
+/* 23D10 80033510 B857428C */  lw         $v0, %lo(g_DemoIndex)($v0)
 /* 23D14 80033514 00000000 */  nop
 /* 23D18 80033518 80100200 */  sll        $v0, $v0, 2
 /* 23D1C 8003351C 0780013C */  lui        $at, %hi(D_8006EE8C)
@@ -49,19 +49,19 @@ glabel func_800334D4
 .L80033584:
 /* 23D84 80033584 01000224 */  addiu      $v0, $zero, 0x1
 .L80033588:
-/* 23D88 80033588 0780013C */  lui        $at, %hi(D_80075884)
-/* 23D8C 8003358C 845822AC */  sw         $v0, %lo(D_80075884)($at)
+/* 23D88 80033588 0780013C */  lui        $at, %hi(g_DemoFadeTimer)
+/* 23D8C 8003358C 845822AC */  sw         $v0, %lo(g_DemoFadeTimer)($at)
 /* 23D90 80033590 6BCD0008 */  j          .L800335AC
 /* 23D94 80033594 00000000 */   nop
 .L80033598:
-/* 23D98 80033598 0780013C */  lui        $at, %hi(D_80075884)
-/* 23D9C 8003359C 845822AC */  sw         $v0, %lo(D_80075884)($at)
+/* 23D98 80033598 0780013C */  lui        $at, %hi(g_DemoFadeTimer)
+/* 23D9C 8003359C 845822AC */  sw         $v0, %lo(g_DemoFadeTimer)($at)
 /* 23DA0 800335A0 40100200 */  sll        $v0, $v0, 1
 /* 23DA4 800335A4 0780013C */  lui        $at, %hi(g_Fade)
 /* 23DA8 800335A8 185922AC */  sw         $v0, %lo(g_Fade)($at)
 .L800335AC:
-/* 23DAC 800335AC 0780033C */  lui        $v1, %hi(D_80075884)
-/* 23DB0 800335B0 8458638C */  lw         $v1, %lo(D_80075884)($v1)
+/* 23DAC 800335AC 0780033C */  lui        $v1, %hi(g_DemoFadeTimer)
+/* 23DB0 800335B0 8458638C */  lw         $v1, %lo(g_DemoFadeTimer)($v1)
 /* 23DB4 800335B4 10000224 */  addiu      $v0, $zero, 0x10
 /* 23DB8 800335B8 A3006214 */  bne        $v1, $v0, .L80033848
 /* 23DBC 800335BC 21100000 */   addu      $v0, $zero, $zero
@@ -92,10 +92,10 @@ glabel func_800334D4
 /* 23E20 80033620 A013A58C */  lw         $a1, %lo(g_OverlaySpacePointer)($a1)
 /* 23E24 80033624 0880023C */  lui        $v0, %hi(func_titlescreen_8007DDE8)
 /* 23E28 80033628 E8DD4224 */  addiu      $v0, $v0, %lo(func_titlescreen_8007DDE8)
-/* 23E2C 8003362C 0880013C */  lui        $at, %hi(D_800785D8)
-/* 23E30 80033630 D88522AC */  sw         $v0, %lo(D_800785D8)($at)
-/* 23E34 80033634 0880013C */  lui        $at, %hi(D_800785D8 + 0x4)
-/* 23E38 80033638 DC8522AC */  sw         $v0, %lo(D_800785D8 + 0x4)($at)
+/* 23E2C 8003362C 0880013C */  lui        $at, %hi(g_Buffers)
+/* 23E30 80033630 D88522AC */  sw         $v0, %lo(g_Buffers)($at)
+/* 23E34 80033634 0880013C */  lui        $at, %hi(g_Buffers + 0x4)
+/* 23E38 80033638 DC8522AC */  sw         $v0, %lo(g_Buffers + 0x4)($at)
 /* 23E3C 8003363C 58020224 */  addiu      $v0, $zero, 0x258
 /* 23E40 80033640 0780013C */  lui        $at, %hi(D_80075904)
 /* 23E44 80033644 045920AC */  sw         $zero, %lo(D_80075904)($at)
@@ -138,8 +138,8 @@ glabel func_800334D4
 /* 23ED0 800336D0 185922AC */  sw         $v0, %lo(g_Fade)($at)
 /* 23ED4 800336D4 5CB4000C */  jal        func_8002D170
 /* 23ED8 800336D8 00000000 */   nop
-/* 23EDC 800336DC 0780023C */  lui        $v0, %hi(D_800757B8)
-/* 23EE0 800336E0 B857428C */  lw         $v0, %lo(D_800757B8)($v0)
+/* 23EDC 800336DC 0780023C */  lui        $v0, %hi(g_DemoIndex)
+/* 23EE0 800336E0 B857428C */  lw         $v0, %lo(g_DemoIndex)($v0)
 /* 23EE4 800336E4 0780033C */  lui        $v1, %hi(g_GameTick)
 /* 23EE8 800336E8 2C57638C */  lw         $v1, %lo(g_GameTick)($v1)
 /* 23EEC 800336EC 80100200 */  sll        $v0, $v0, 2
@@ -215,21 +215,21 @@ glabel func_800334D4
 /* 23FFC 800337FC D8A6E78C */  lw         $a3, %lo(g_WadHeader + 0x8)($a3)
 /* 24000 80033800 58020224 */  addiu      $v0, $zero, 0x258
 /* 24004 80033804 1000A2AF */  sw         $v0, 0x10($sp)
-/* 24008 80033808 0880023C */  lui        $v0, %hi(D_800785D8 + 0x10)
-/* 2400C 8003380C E885428C */  lw         $v0, %lo(D_800785D8 + 0x10)($v0)
+/* 24008 80033808 0880023C */  lui        $v0, %hi(g_Buffers + 0x10)
+/* 2400C 8003380C E885428C */  lw         $v0, %lo(g_Buffers + 0x10)($v0)
 /* 24010 80033810 FCFF053C */  lui        $a1, (0xFFFC0000 >> 16)
 /* 24014 80033814 0880013C */  lui        $at, %hi(g_TitlescreenState + 0x10)
 /* 24018 80033818 888D30AC */  sw         $s0, %lo(g_TitlescreenState + 0x10)($at)
 /* 2401C 8003381C A659000C */  jal        CDLoadAsync
 /* 24020 80033820 21284500 */   addu      $a1, $v0, $a1
-/* 24024 80033824 0780033C */  lui        $v1, %hi(D_800757B8)
-/* 24028 80033828 B857638C */  lw         $v1, %lo(D_800757B8)($v1)
+/* 24024 80033824 0780033C */  lui        $v1, %hi(g_DemoIndex)
+/* 24028 80033828 B857638C */  lw         $v1, %lo(g_DemoIndex)($v1)
 /* 2402C 8003382C 0780013C */  lui        $at, %hi(g_StateSwitch)
 /* 24030 80033830 9C5730AC */  sw         $s0, %lo(g_StateSwitch)($at)
 /* 24034 80033834 01006324 */  addiu      $v1, $v1, 0x1
 /* 24038 80033838 03006330 */  andi       $v1, $v1, 0x3
-/* 2403C 8003383C 0780013C */  lui        $at, %hi(D_800757B8)
-/* 24040 80033840 B85723AC */  sw         $v1, %lo(D_800757B8)($at)
+/* 2403C 8003383C 0780013C */  lui        $at, %hi(g_DemoIndex)
+/* 24040 80033840 B85723AC */  sw         $v1, %lo(g_DemoIndex)($at)
 /* 24044 80033844 01000224 */  addiu      $v0, $zero, 0x1
 .L80033848:
 /* 24048 80033848 2C00BF8F */  lw         $ra, 0x2C($sp)

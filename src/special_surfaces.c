@@ -79,7 +79,7 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
         return;
       }
 
-      D_800756D0 = 1;               // Has level transition I believe?
+      g_HasLevelTransition = 1;     // Has level transition I believe?
       D_8007576C = surfaceFlags[1]; // Portal
 
       if (g_LevelId != ((g_LevelId / 10) * 10)) {

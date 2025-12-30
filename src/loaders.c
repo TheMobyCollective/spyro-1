@@ -67,7 +67,7 @@ void PatchInSpyroAnimations(void *data) {
   // This got added after July, it sets all level animations to null
   for (j = 0; j < 46 /*?*/; ++j) {
     if ((u_int)SPYRO_MODEL->m_Animations[j] <
-            (u_int)D_800785D8.m_SharedAnimations ||
+            (u_int)g_Buffers.m_SharedAnimations ||
         (int)SPYRO_MODEL->m_Animations[j] == -1) {
       SPYRO_MODEL->m_Animations[j] = nullptr;
     }
@@ -199,9 +199,9 @@ void func_800144C8(void) {
   func_80056B28(0);
 
   // Reload layout from disc
-  CDLoadSync(g_CdState.m_WadSector, D_800785D8.m_LevelLayout,
-             D_800785D8.m_LevelLayoutSize,
-             D_800785D8.m_LevelLayoutOffset +
+  CDLoadSync(g_CdState.m_WadSector, g_Buffers.m_LevelLayout,
+             g_Buffers.m_LevelLayoutSize,
+             g_Buffers.m_LevelLayoutOffset +
                  g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
              600);
 
@@ -236,7 +236,7 @@ void LoadCutscene(void) {
   if (g_LoadStage == 0) {
 
     // Load the level header from disc
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf, 2048,
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_CopyBuf, 2048,
                 g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset, 600);
 
     g_LoadStage = 1;
@@ -244,10 +244,10 @@ void LoadCutscene(void) {
   } else if (g_LoadStage == 1) {
 
     // Copy the level header to the global struct
-    Memcpy(&g_LevelHeader, D_800785D8.m_CopyBuf, sizeof(g_LevelHeader));
+    Memcpy(&g_LevelHeader, g_Buffers.m_CopyBuf, sizeof(g_LevelHeader));
 
     // Load the VRAM for the cutscene from disc
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf,
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_CopyBuf,
                 D_8006EE5C[g_CutsceneIdx],
                 g_LevelHeader.m_VramSramOffset +
                     g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
@@ -260,14 +260,14 @@ void LoadCutscene(void) {
     // Load the cutscene VRAM from the buffer into VRAM
     // The shift for is dividing by 1024, because every line is 1024 bytes
     setRECT(&r, 512, 0, 512, D_8006EE5C[g_CutsceneIdx] >> 10);
-    LoadImage(&r, D_800785D8.m_CopyBuf);
+    LoadImage(&r, g_Buffers.m_CopyBuf);
 
     g_LoadStage = 3;
 
   } else if (g_LoadStage == 3) {
 
     // Load SRAM from disc, which is placed after VRAM
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_CopyBuf,
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_CopyBuf,
                 g_LevelHeader.m_VramSramSize - 0x80000,
                 g_LevelHeader.m_VramSramOffset +
                     g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset +
@@ -282,14 +282,14 @@ void LoadCutscene(void) {
 
     // This size isn't accurate, it should be
     // g_LevelHeader.m_VramSramSize - 0x80000
-    SpuWrite(D_800785D8.m_CopyBuf, 0x80000 - 0x1010);
+    SpuWrite(g_Buffers.m_CopyBuf, 0x80000 - 0x1010);
 
     // Wait for the transfer to finish, synchronously sadly
     while (!SpuIsTransferCompleted(SPU_TRANSFER_PEEK))
       ;
 
     // Load the scene data from disc
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf,
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_DiscCopyBuf,
                 g_LevelHeader.m_SceneSize,
                 g_LevelHeader.m_SceneOffset +
                     g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
@@ -300,7 +300,7 @@ void LoadCutscene(void) {
   } else if (g_LoadStage == 5) {
 
     // Initialize the scene data
-    D_800785D8.m_ModelData = (void *)func_80012D58(D_800785D8.m_DiscCopyBuf, 1);
+    g_Buffers.m_ModelData = (void *)func_80012D58(g_Buffers.m_DiscCopyBuf, 1);
 
     // Switch to the new skybox
     g_Cyclorama = g_NewCyclorama;
@@ -316,7 +316,7 @@ void LoadCutscene(void) {
       g_LoadStage = 8;
     }
 
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_ModelData, dataSize,
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_ModelData, dataSize,
                 g_LevelHeader.m_ModelDataOffset +
                     g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
                 600);
@@ -327,14 +327,13 @@ void LoadCutscene(void) {
 
   } else if (g_LoadStage == 7) {
 
-    CDLoadAsync(g_CdState.m_WadSector,
-                (char *)D_800785D8.m_ModelData + g_LevelHeader.m_ModelDataSize -
-                    0x60000,
-                0x60000,
-                g_LevelHeader.m_ModelDataOffset +
-                    g_LevelHeader.m_ModelDataSize - 0x60000 +
-                    g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
-                600);
+    CDLoadAsync(
+        g_CdState.m_WadSector,
+        (char *)g_Buffers.m_ModelData + g_LevelHeader.m_ModelDataSize - 0x60000,
+        0x60000,
+        g_LevelHeader.m_ModelDataOffset + g_LevelHeader.m_ModelDataSize -
+            0x60000 + g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
+        600);
 
     g_LoadStage = 8;
 
@@ -343,19 +342,19 @@ void LoadCutscene(void) {
     // Go over the models and patch the pointers
     for (i = 0; g_LevelHeader.m_ModelOffsets[i] > 0; ++i) {
       g_Models[1 + i] =
-          PatchMobyModelPointers((Model *)((char *)D_800785D8.m_ModelData +
+          PatchMobyModelPointers((Model *)((char *)g_Buffers.m_ModelData +
                                            (g_LevelHeader.m_ModelOffsets[i] -
                                             g_LevelHeader.m_ModelDataOffset)));
     }
 
-    D_800785D8.m_LevelLayout =
-        (char *)D_800785D8.m_ModelData + g_LevelHeader.m_ModelDataSize;
-    D_800785D8.m_LevelLayoutSize = g_LevelHeader.m_LayoutSize;
-    D_800785D8.m_LevelLayoutOffset = g_LevelHeader.m_LayoutOffset;
+    g_Buffers.m_LevelLayout =
+        (char *)g_Buffers.m_ModelData + g_LevelHeader.m_ModelDataSize;
+    g_Buffers.m_LevelLayoutSize = g_LevelHeader.m_LayoutSize;
+    g_Buffers.m_LevelLayoutOffset = g_LevelHeader.m_LayoutOffset;
 
     // Load the level layout from disc
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_LevelLayout,
-                D_800785D8.m_LevelLayoutSize,
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_LevelLayout,
+                g_Buffers.m_LevelLayoutSize,
                 g_LevelHeader.m_LayoutOffset +
                     g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
                 600);
@@ -365,19 +364,19 @@ void LoadCutscene(void) {
   } else if (g_LoadStage == 9) {
 
     // The layout is actually the cutscene data
-    g_CutsceneLayout = D_800785D8.m_LevelLayout;
+    g_CutsceneLayout = g_Buffers.m_LevelLayout;
 
     // While in WAD it's an offset, now we turn it into a pointer
     PATCH_POINTER(g_CutsceneLayout->m_CameraData, g_CutsceneLayout);
 
     // Ditto for the Moby data
     for (j = 0; j < g_CutsceneLayout->m_MobyCount; ++j) {
-      PATCH_POINTER(g_CutsceneLayout->m_MobyData[j], D_800785D8.m_LevelLayout);
+      PATCH_POINTER(g_CutsceneLayout->m_MobyData[j], g_Buffers.m_LevelLayout);
     }
 
     // Set the Moby pointer to the empty space after the cutscene data
-    g_LevelMobys = (Moby *)((char *)D_800785D8.m_LevelLayout +
-                            D_800785D8.m_LevelLayoutSize);
+    g_LevelMobys =
+        (Moby *)((char *)g_Buffers.m_LevelLayout + g_Buffers.m_LevelLayoutSize);
 
     for (j = 0; j < g_CutsceneLayout->m_MobyCount; ++j) {
       func_8003A720(&g_LevelMobys[j]);
@@ -423,7 +422,7 @@ void LoadDragonCutscene(void) {
 
     // Compute space of the original model buffer
     // (up to Moby class 250, the Crystal Dragon, which is always the last one)
-    modelSpaceLeft = (int)g_Models[250] - (int)D_800785D8.m_ModelData;
+    modelSpaceLeft = (int)g_Models[250] - (int)g_Buffers.m_ModelData;
 
     // Full read if it fits
     if (g_LevelHeader.m_Dragons[g_DragonCutscene.m_CutsceneIdx].m_Length <=
@@ -442,7 +441,7 @@ void LoadDragonCutscene(void) {
 
     // Load the entire dragon cutscene data from disc
     CDLoadAsync(
-        g_CdState.m_WadSector, D_800785D8.m_ModelData,
+        g_CdState.m_WadSector, g_Buffers.m_ModelData,
         g_DragonCutscene.m_LoadLength,
         g_LevelHeader.m_Dragons[g_DragonCutscene.m_CutsceneIdx].m_Offset +
             g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
@@ -454,7 +453,7 @@ void LoadDragonCutscene(void) {
   case 1: // Copy header, initialize models if no overflow, else start overflow
           // process
 
-    Memcpy(&g_DragonCutscene.m_Header, D_800785D8.m_ModelData,
+    Memcpy(&g_DragonCutscene.m_Header, g_Buffers.m_ModelData,
            sizeof(g_DragonCutscene.m_Header));
 
     // If there is no overflow, everything is already loaded
@@ -462,7 +461,7 @@ void LoadDragonCutscene(void) {
 
       // Set camera data pointer and node count
       g_DragonCutscene.unk_0x48 =
-          (char *)D_800785D8.m_ModelData +
+          (char *)g_Buffers.m_ModelData +
           g_DragonCutscene.m_Header.m_CameraData.m_Offset;
 
       g_DragonCutscene.unk_0x4C =
@@ -470,11 +469,11 @@ void LoadDragonCutscene(void) {
 
       // Patch Dragon & Spyro models into temporary classes 510 and 511
       g_Models[510] = PatchMobyModelPointers(
-          (Model *)((char *)D_800785D8.m_ModelData +
+          (Model *)((char *)g_Buffers.m_ModelData +
                     g_DragonCutscene.m_Header.m_DragonModel.m_Offset));
 
       g_Models[511] = PatchMobyModelPointers(
-          (Model *)((char *)D_800785D8.m_ModelData +
+          (Model *)((char *)g_Buffers.m_ModelData +
                     g_DragonCutscene.m_Header.m_SpyroModel.m_Offset));
 
       g_DragonCutscene.m_BlocksRead = 0;
@@ -484,7 +483,7 @@ void LoadDragonCutscene(void) {
       // First load SPU data into SPU RAM, synchronously...
       SpuSetTransferStartAddr(0x80000 -
                               g_DragonCutscene.m_Header.m_SpuData.m_Length);
-      SpuWrite((void *)((int)D_800785D8.m_ModelData +
+      SpuWrite((void *)((int)g_Buffers.m_ModelData +
                         g_DragonCutscene.m_Header.m_SpuData.m_Offset),
                g_DragonCutscene.m_Header.m_SpuData.m_Length);
 
@@ -492,8 +491,8 @@ void LoadDragonCutscene(void) {
         ;
 
       // Shift already-loaded data to the front of buffer
-      Memcpy(D_800785D8.m_ModelData,
-             (char *)D_800785D8.m_ModelData +
+      Memcpy(g_Buffers.m_ModelData,
+             (char *)g_Buffers.m_ModelData +
                  g_DragonCutscene.m_Header.m_DragonModel.m_Offset,
              g_DragonCutscene.m_LoadLength -
                  g_DragonCutscene.m_Header.m_DragonModel.m_Offset);
@@ -501,7 +500,7 @@ void LoadDragonCutscene(void) {
       // Load remaining part of dragon data
       CDLoadAsync(
           g_CdState.m_WadSector,
-          (char *)D_800785D8.m_ModelData + g_DragonCutscene.m_LoadLength -
+          (char *)g_Buffers.m_ModelData + g_DragonCutscene.m_LoadLength -
               g_DragonCutscene.m_Header.m_DragonModel.m_Offset,
           g_LevelHeader.m_Dragons[g_DragonCutscene.m_CutsceneIdx].m_Length -
               g_DragonCutscene.m_LoadLength,
@@ -558,7 +557,7 @@ void LoadDragonCutscene(void) {
                               (g_DragonCutscene.m_BlocksRead * 0x8000));
 
       // Write new SPU data block into SPU RAM
-      SpuWrite((char *)D_800785D8.m_ModelData +
+      SpuWrite((char *)g_Buffers.m_ModelData +
                    g_DragonCutscene.m_Header.m_SpuData.m_Offset +
                    g_DragonCutscene.m_BlocksRead * 0x8000,
                lenToRead);
@@ -568,7 +567,7 @@ void LoadDragonCutscene(void) {
         ;
 
       // Copy the SPU data block back into main memory
-      Memcpy((char *)D_800785D8.m_ModelData +
+      Memcpy((char *)g_Buffers.m_ModelData +
                  g_DragonCutscene.m_Header.m_SpuData.m_Offset +
                  g_DragonCutscene.m_BlocksRead * 0x8000,
              buf, lenToRead);
@@ -586,10 +585,10 @@ void LoadDragonCutscene(void) {
     // If there is an overflow, all data is now loaded, so set up pointers
 
     // What in the fuck?! Needed for matching
-    // D_800785D8.m_ModelData + g_DragonCutscene.m_Header.m_CameraData.m_Offset
+    // g_Buffers.m_ModelData + g_DragonCutscene.m_Header.m_CameraData.m_Offset
     // - g_DragonCutscene.m_Header.m_DragonModel.m_Offset Would be equivalent
     g_DragonCutscene.unk_0x48 =
-        (((char *)D_800785D8.m_ModelData -
+        (((char *)g_Buffers.m_ModelData -
           g_DragonCutscene.m_Header.m_DragonModel.m_Offset) +
          g_DragonCutscene.m_Header.m_CameraData.m_Offset +
          g_DragonCutscene.m_Header.m_DragonModel.m_Offset) -
@@ -598,9 +597,9 @@ void LoadDragonCutscene(void) {
     g_DragonCutscene.unk_0x4C =
         g_DragonCutscene.m_Header.m_CameraData.m_Length / 24;
 
-    g_Models[510] = PatchMobyModelPointers((Model *)D_800785D8.m_ModelData);
+    g_Models[510] = PatchMobyModelPointers((Model *)g_Buffers.m_ModelData);
     g_Models[511] = PatchMobyModelPointers(
-        (Model *)((char *)D_800785D8.m_ModelData +
+        (Model *)((char *)g_Buffers.m_ModelData +
                   g_DragonCutscene.m_Header.m_SpyroModel.m_Offset -
                   g_DragonCutscene.m_Header.m_DragonModel.m_Offset));
     g_DragonCutscene.m_Stage++;
@@ -623,7 +622,7 @@ void LoadDragonCutscene(void) {
       if (0x100000 - g_LevelHeader.m_VramSramSize < x) {
         x = g_DragonCutscene.m_LoadLength - 0x100000;
 
-        CDLoadAsync(g_CdState.m_WadSector, (char *)D_800785D8.m_ModelData,
+        CDLoadAsync(g_CdState.m_WadSector, (char *)g_Buffers.m_ModelData,
                     g_LevelHeader.m_VramSramSize + x,
                     g_LevelHeader.m_VramSramOffset +
                         g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset -
@@ -644,7 +643,7 @@ void LoadDragonCutscene(void) {
 
     if (g_DragonCutscene.m_HasOverflow == 1) {
       SpuSetTransferStartAddr(0x81010 - g_DragonCutscene.m_LoadLength);
-      SpuWrite((char *)D_800785D8.m_ModelData,
+      SpuWrite((char *)g_Buffers.m_ModelData,
                g_LevelHeader.m_VramSramSize - 0x100000 +
                    g_DragonCutscene.m_LoadLength);
       while (!SpuIsTransferCompleted(0))
@@ -652,7 +651,7 @@ void LoadDragonCutscene(void) {
     }
 
     // Load the original model data back in from disc
-    CDLoadAsync(g_CdState.m_WadSector, (char *)D_800785D8.m_ModelData,
+    CDLoadAsync(g_CdState.m_WadSector, (char *)g_Buffers.m_ModelData,
                 g_LevelHeader.m_ModelDataSize,
                 g_LevelHeader.m_ModelDataOffset +
                     g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
@@ -663,12 +662,12 @@ void LoadDragonCutscene(void) {
   case 5: // Patch the model pointers back in and finish
 
     PatchInSpyroAnimations(
-        (char *)D_800785D8.m_ModelData +
+        (char *)g_Buffers.m_ModelData +
         (g_LevelHeader.m_ModelOffsets[0] - g_LevelHeader.m_ModelDataOffset));
 
     for (i = 0; i < 512; ++i) {
       if (((int)g_Models[i] & 0xffffff) <
-          ((int)D_800785D8.m_SharedAnimations & 0xffffff)) {
+          ((int)g_Buffers.m_SharedAnimations & 0xffffff)) {
         g_Models[i] = nullptr;
       }
     }
@@ -679,7 +678,7 @@ void LoadDragonCutscene(void) {
       }
 
       g_Models[g_LevelHeader.m_ModelIndices[i]] =
-          PatchMobyModelPointers((Model *)((char *)D_800785D8.m_ModelData +
+          PatchMobyModelPointers((Model *)((char *)g_Buffers.m_ModelData +
                                            (g_LevelHeader.m_ModelOffsets[i] -
                                             g_LevelHeader.m_ModelDataOffset)));
     }
@@ -739,7 +738,7 @@ void LoadLevel(int pArg) {
       pointerOffsetOld = &portalCycloramaComponent[5];
 
       cycloramaSize = portalCycloramaComponent[5] + 1024;
-      dest = (int *)((char *)D_800785D8.m_LowerPolyBuffer - cycloramaSize);
+      dest = (int *)((char *)g_Buffers.m_LowerPolyBuffer - cycloramaSize);
       Memcpy(dest, portalCycloramaComponent, cycloramaSize);
 
       dest += 5; // Skip over the extra bytes
@@ -761,7 +760,7 @@ void LoadLevel(int pArg) {
       pointerOffsetOld = portalCycloramaComponent;
 
       cycloramaSize = *portalCycloramaComponent + 1024;
-      dest = (int *)((char *)D_800785D8.m_LowerPolyBuffer - cycloramaSize);
+      dest = (int *)((char *)g_Buffers.m_LowerPolyBuffer - cycloramaSize);
       Memcpy(dest, portalCycloramaComponent, cycloramaSize);
 
       pointerOffsetNew = dest++;
@@ -778,7 +777,7 @@ void LoadLevel(int pArg) {
     }
 
     // Copy the Sound Table over too, to preserve it during the Level Transition
-    dest = (int *)((char *)D_800785D8.m_LowerPolyBuffer - cycloramaSize -
+    dest = (int *)((char *)g_Buffers.m_LowerPolyBuffer - cycloramaSize -
                    g_Spu.m_SoundTableSize);
     Memcpy(dest, g_Spu.m_SoundTable, g_Spu.m_SoundTableSize);
     SetNewSoundTable((char *)dest,
@@ -825,7 +824,7 @@ void LoadLevel(int pArg) {
 
   case 3: // Load the level header from Disc
 
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf, 0x800,
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_DiscCopyBuf, 0x800,
                 g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset, 600);
 
     g_LoadStage++;
@@ -833,10 +832,10 @@ void LoadLevel(int pArg) {
 
   case 4: // Place header and start loading VRAM
 
-    Memcpy(&g_LevelHeader, D_800785D8.m_DiscCopyBuf, sizeof(g_LevelHeader));
+    Memcpy(&g_LevelHeader, g_Buffers.m_DiscCopyBuf, sizeof(g_LevelHeader));
 
     // Load the 512x512 VRAM image
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf, 512 * 512 * 2,
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_DiscCopyBuf, 512 * 512 * 2,
                 g_LevelHeader.m_VramSramOffset +
                     g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
                 600);
@@ -853,7 +852,7 @@ void LoadLevel(int pArg) {
 
     setRECT(&rc, 512, D_8007576C * 256, 512, 256);
 
-    LoadImage(&rc, (void *)((char *)D_800785D8.m_DiscCopyBuf +
+    LoadImage(&rc, (void *)((char *)g_Buffers.m_DiscCopyBuf +
                             D_8007576C * (512 * 256 * 2)));
 
     D_8007576C++;
@@ -863,7 +862,7 @@ void LoadLevel(int pArg) {
       g_LoadStage++;
 
       // Load the entirety of SPU data
-      CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf,
+      CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_DiscCopyBuf,
                   g_LevelHeader.m_VramSramSize - (512 * 512 * 2),
                   g_LevelHeader.m_VramSramOffset +
                       g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset +
@@ -879,7 +878,7 @@ void LoadLevel(int pArg) {
     SpuSetTransferStartAddr(0x1010);
 
     // Size is wrong, should be g_LevelHeader.m_VramSramSize - 0x80000
-    SpuWrite(D_800785D8.m_DiscCopyBuf, 0x80000 - 0x1010);
+    SpuWrite(g_Buffers.m_DiscCopyBuf, 0x80000 - 0x1010);
 
     g_LoadStage++;
     break;
@@ -894,7 +893,7 @@ void LoadLevel(int pArg) {
 
   case 8: // Load scene data from Disc
 
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_DiscCopyBuf,
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_DiscCopyBuf,
                 g_LevelHeader.m_SceneSize,
                 g_LevelHeader.m_SceneOffset +
                     g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
@@ -905,8 +904,8 @@ void LoadLevel(int pArg) {
 
   case 9: // Initialize scene data
 
-    D_800785D8.m_ModelData = (void *)func_80012D58(D_800785D8.m_DiscCopyBuf,
-                                                   0); // process scene data
+    g_Buffers.m_ModelData = (void *)func_80012D58(g_Buffers.m_DiscCopyBuf,
+                                                  0); // process scene data
 
     if (g_Cyclorama.m_SectorCount != 0 && g_Gamestate != GS_GameOver &&
         g_Gamestate != GS_Balloonist) {
@@ -940,7 +939,7 @@ void LoadLevel(int pArg) {
     }
 
     // Load model data
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_ModelData,
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_ModelData,
                 g_LevelHeader.m_ModelDataSize,
                 g_LevelHeader.m_ModelDataOffset +
                     g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
@@ -953,7 +952,7 @@ void LoadLevel(int pArg) {
 
 #define MODEL_OFFSET(idx)                                                      \
   (g_LevelHeader.m_ModelOffsets[idx] - g_LevelHeader.m_ModelDataOffset +       \
-   (char *)D_800785D8.m_ModelData)
+   (char *)g_Buffers.m_ModelData)
 
     if (pArg) {
       // Patch in Spyro's Level animations
@@ -963,7 +962,7 @@ void LoadLevel(int pArg) {
     // Clear stale Moby model pointers
     for (i = 0; i < MODEL_COUNT; ++i) {
       if (((int)g_Models[i] & 0xffffff) <
-          ((int)D_800785D8.m_SharedAnimations & 0xffffff)) {
+          ((int)g_Buffers.m_SharedAnimations & 0xffffff)) {
         g_Models[i] = nullptr;
       }
     }
@@ -980,15 +979,15 @@ void LoadLevel(int pArg) {
 
 #undef MODEL_OFFSET
 
-    D_800785D8.m_LevelLayout =
-        (char *)D_800785D8.m_ModelData + g_LevelHeader.m_ModelDataSize;
-    D_800785D8.m_LevelLayoutSize = g_LevelHeader.m_LayoutSize;
-    D_800785D8.m_LevelLayoutOffset = g_LevelHeader.m_LayoutOffset;
+    g_Buffers.m_LevelLayout =
+        (char *)g_Buffers.m_ModelData + g_LevelHeader.m_ModelDataSize;
+    g_Buffers.m_LevelLayoutSize = g_LevelHeader.m_LayoutSize;
+    g_Buffers.m_LevelLayoutOffset = g_LevelHeader.m_LayoutOffset;
 
 #if 0
     // There used to be a printf here that said:
     printf("Level %d:  Memory Available: %ld\n", g_LevelId,
-           ((int)D_800785D8.m_LowerPolyBuffer - (int)D_800785D8.m_LevelLayout) -
+           ((int)g_Buffers.m_LowerPolyBuffer - (int)g_Buffers.m_LevelLayout) -
                g_LevelHeader.m_LayoutSize);
 
     // Which was originally placed in the final load stage (in tabloid)
@@ -1000,9 +999,9 @@ void LoadLevel(int pArg) {
 
   case 11: // Load level layout data
 
-    CDLoadAsync(g_CdState.m_WadSector, D_800785D8.m_LevelLayout,
-                D_800785D8.m_LevelLayoutSize,
-                D_800785D8.m_LevelLayoutOffset +
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_LevelLayout,
+                g_Buffers.m_LevelLayoutSize,
+                g_Buffers.m_LevelLayoutOffset +
                     g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
                 600);
 
@@ -1010,7 +1009,7 @@ void LoadLevel(int pArg) {
     break;
 
   case 12: // Wait for camera to center on Spyro during level transition
-    if (!D_800756D0) { // No transition, just increment
+    if (!g_HasLevelTransition) { // No transition, just increment
       g_LoadStage++;
       break;
     }
@@ -1073,7 +1072,7 @@ void LoadLevel(int pArg) {
 
     func_8001364C(pArg); // Initialize the Level Layout
 
-    if (D_800756D0) { // Has level transition
+    if (g_HasLevelTransition) { // Has level transition
 
       if (g_IsFlightLevel) { // Is flying level
 
@@ -1228,7 +1227,7 @@ void LoadLevel(int pArg) {
         }
       }
 
-    } else {            // no level transition
+    } else {                 // no level transition
       if (g_IsFlightLevel) { // flight level
         g_Spyro.m_walkingState = 0;
       } else {
@@ -1240,8 +1239,8 @@ void LoadLevel(int pArg) {
     }
 
     g_Cyclorama = g_NewCyclorama;
-    D_800756D0 = 0;      // Has level transition
-    g_PortalLevelId = 0; // Portal level id
+    g_HasLevelTransition = 0; // Has level transition
+    g_PortalLevelId = 0;      // Portal level id
 
     // SKELETON:
     // This is weird..

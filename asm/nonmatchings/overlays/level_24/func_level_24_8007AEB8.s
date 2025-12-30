@@ -517,8 +517,8 @@ glabel func_level_24_8007AEB8
 /* 237D9E0 8007B418 0780053C */  lui        $a1, %hi(g_LevelId)
 /* 237D9E4 8007B41C 6C59A58C */  lw         $a1, %lo(g_LevelId)($a1)
 /* 237D9E8 8007B420 01000924 */  addiu      $t1, $zero, 0x1
-/* 237D9EC 8007B424 0780013C */  lui        $at, %hi(D_800756D0)
-/* 237D9F0 8007B428 D05629AC */  sw         $t1, %lo(D_800756D0)($at)
+/* 237D9EC 8007B424 0780013C */  lui        $at, %hi(g_HasLevelTransition)
+/* 237D9F0 8007B428 D05629AC */  sw         $t1, %lo(g_HasLevelTransition)($at)
 /* 237D9F4 8007B42C 0780013C */  lui        $at, %hi(D_800756B0)
 /* 237D9F8 8007B430 B05629AC */  sw         $t1, %lo(D_800756B0)($at)
 /* 237D9FC 8007B434 1800A600 */  mult       $a1, $a2

@@ -945,8 +945,8 @@ glabel func_level_44_8007B770
 /* 40258A4 8007BADC 0780013C */  lui        $at, %hi(D_8007576C)
 /* 40258A8 8007BAE0 6C5729AC */  sw         $t1, %lo(D_8007576C)($at)
 /* 40258AC 8007BAE4 01000924 */  addiu      $t1, $zero, 0x1
-/* 40258B0 8007BAE8 0780013C */  lui        $at, %hi(D_800756D0)
-/* 40258B4 8007BAEC D05629AC */  sw         $t1, %lo(D_800756D0)($at)
+/* 40258B0 8007BAE8 0780013C */  lui        $at, %hi(g_HasLevelTransition)
+/* 40258B4 8007BAEC D05629AC */  sw         $t1, %lo(g_HasLevelTransition)($at)
 /* 40258B8 8007BAF0 0780013C */  lui        $at, %hi(D_800756B0)
 /* 40258BC 8007BAF4 B05629AC */  sw         $t1, %lo(D_800756B0)($at)
 /* 40258C0 8007BAF8 18004400 */  mult       $v0, $a0

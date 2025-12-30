@@ -82,7 +82,7 @@ dlabel D_800756C8
 dlabel g_DeltaTime
 /* 65EA4 800756CC */ .space 0x04
 
-dlabel D_800756D0
+dlabel g_HasLevelTransition
 /* 65EA8 800756D0 */ .space 0x04
 
 dlabel D_800756D4
@@ -251,7 +251,7 @@ dlabel D_800757B0
 dlabel g_MobyPodCount
 /* 65F8C 800757B4 */ .space 0x04
 
-dlabel D_800757B8
+dlabel g_DemoIndex
 /* 65F90 800757B8 */ .space 0x04
 
 dlabel g_CreditsDataPtr
@@ -402,7 +402,7 @@ dlabel D_8007587C
 dlabel g_LevelCheatActive
 /* 66058 80075880 */ .space 0x04
 
-dlabel D_80075884
+dlabel g_DemoFadeTimer
 /* 6605C 80075884 */ .space 0x04
 
 dlabel g_CurDB

@@ -604,8 +604,8 @@ glabel func_level_42_8007AFBC
 /* 3A6EAFC 8007B534 0780053C */  lui        $a1, %hi(g_LevelId)
 /* 3A6EB00 8007B538 6C59A58C */  lw         $a1, %lo(g_LevelId)($a1)
 /* 3A6EB04 8007B53C 01000924 */  addiu      $t1, $zero, 0x1
-/* 3A6EB08 8007B540 0780013C */  lui        $at, %hi(D_800756D0)
-/* 3A6EB0C 8007B544 D05629AC */  sw         $t1, %lo(D_800756D0)($at)
+/* 3A6EB08 8007B540 0780013C */  lui        $at, %hi(g_HasLevelTransition)
+/* 3A6EB0C 8007B544 D05629AC */  sw         $t1, %lo(g_HasLevelTransition)($at)
 /* 3A6EB10 8007B548 0780013C */  lui        $at, %hi(D_800756B0)
 /* 3A6EB14 8007B54C B05629AC */  sw         $t1, %lo(D_800756B0)($at)
 /* 3A6EB18 8007B550 1800A600 */  mult       $a1, $a2
