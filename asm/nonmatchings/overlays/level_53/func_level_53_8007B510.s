@@ -6186,7 +6186,7 @@ glabel func_level_53_8007B510
 /* 4B665C8 80080800 1800A2AF */  sw         $v0, 0x18($sp)
 /* 4B665CC 80080804 1C00A0AF */  sw         $zero, 0x1C($sp)
 /* 4B665D0 80080808 2800258E */  lw         $a1, 0x28($s1)
-/* 4B665D4 8008080C 08E9000C */  jal        func_8003A420
+/* 4B665D4 8008080C 08E9000C */  jal        MoveMobyAlongPath
 /* 4B665D8 80080810 96000724 */   addiu     $a3, $zero, 0x96
 /* 4B665DC 80080814 00010324 */  addiu      $v1, $zero, 0x100
 /* 4B665E0 80080818 5F004314 */  bne        $v0, $v1, .Llevel_53_80080998
