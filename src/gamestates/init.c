@@ -320,7 +320,6 @@ void InitFairyCutscene(Moby *pMoby) {
   void *pProps;
   void *pSpyroBodyAnimation;
   void *pSpyroPosition;
-  Moby *pLevelMoby;
   int angle;
   int zPos;
   int fairyAngle;
@@ -360,14 +359,10 @@ void InitFairyCutscene(Moby *pMoby) {
   g_FairyCutscene.m_unused_SavedSpyroRotZ =
       g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
 
-  // Get the level moby at fairy's spawn index (from props)
-  pLevelMoby = (Moby *)((u_int)(((int *)pProps)[1] * sizeof(Moby)) +
-                        (u_int)g_LevelMobys);
-
-  // Calculate angle from Spyro to fairy's level spawn position
-  g_FairyCutscene.m_AngleToSpawn =
-      Atan2(pLevelMoby->m_Position.x - g_Spyro.m_Position.x,
-            pLevelMoby->m_Position.y - g_Spyro.m_Position.y, 1);
+  // Calculate angle from Spyro to dragon pad's position
+  g_FairyCutscene.m_AngleToDragonPad = Atan2(
+      g_LevelMobys[((int *)pProps)[1]].m_Position.x - g_Spyro.m_Position.x,
+      g_LevelMobys[((int *)pProps)[1]].m_Position.y - g_Spyro.m_Position.y, 1);
 
   // Calculate angle and distance from Spyro to fairy's current position
   g_FairyCutscene.m_AngleFromSpyro =
@@ -381,7 +376,7 @@ void InitFairyCutscene(Moby *pMoby) {
   g_FairyCutscene.m_DistanceFromSpyro = VecMagnitude(&vec, 0);
 
   zPos = pMoby->m_Position.z;
-  fairyAngle = g_FairyCutscene.m_AngleToSpawn;
+  fairyAngle = g_FairyCutscene.m_AngleToDragonPad;
 
   // Camera waypoint 1: Start at fairy's height, looking toward spawn
   g_FairyCutscene.m_CameraInitDistance = 0x480;
@@ -402,7 +397,7 @@ void InitFairyCutscene(Moby *pMoby) {
     // Camera waypoint 3: End position 180 degrees from spawn
     g_FairyCutscene.m_CameraEndDistance = 0x600;
     g_FairyCutscene.m_CameraEndAngle =
-        (g_FairyCutscene.m_AngleToSpawn + 0x800) & 0xFFF;
+        (g_FairyCutscene.m_AngleToDragonPad + 0x800) & 0xFFF;
   }
 
   // Record current camera position as animation start point
@@ -418,7 +413,7 @@ void InitFairyCutscene(Moby *pMoby) {
   g_FairyCutscene.m_MenuOffsetX = 0xB0;
 
   // View angle ~45 degrees from spawn direction
-  angle = (g_FairyCutscene.m_AngleToSpawn + 0x30B) & 0xFFF;
+  angle = (g_FairyCutscene.m_AngleToDragonPad + 0x30B) & 0xFFF;
 
   g_FairyCutscene.m_CameraStartZ = g_Camera.m_Position.z;
   g_FairyCutscene.m_CameraViewAngle = angle;
@@ -427,7 +422,7 @@ void InitFairyCutscene(Moby *pMoby) {
   if (func_80017928(g_FairyCutscene.m_CameraStartAngle, angle) > 0x400) {
     g_FairyCutscene.m_MenuOffsetX = 0;
     g_FairyCutscene.m_CameraViewAngle =
-        (g_FairyCutscene.m_AngleToSpawn - 0x30B) & 0xFFF;
+        (g_FairyCutscene.m_AngleToDragonPad - 0x30B) & 0xFFF;
   }
 
   // Final viewing position for save menu

@@ -92,8 +92,8 @@ extern struct {
   /** @brief Spyro's Z rotation saved on init (unused - never restored) */
   int m_unused_SavedSpyroRotZ;
 
-  /** @brief Angle from Spyro to fairy's level spawn position */
-  int m_AngleToSpawn;
+  /** @brief Angle from Spyro to the dragon pad */
+  int m_AngleToDragonPad;
 
   /** @brief Pointer to the fairy moby that triggered the cutscene */
   Moby *m_CutsceneFairy;
