@@ -12,14 +12,14 @@
 #define NAME_OVERLAY_FUNCTION_LEVEL(func, level) CAT3(func, _level_, level)
 
 extern Moby *(*g_SpawnMoby)(int pClass, Moby *pParent); // g_MobySpawn
-extern void (*D_80075734)();                            // g_MobyUpdate
+extern void (*g_UpdateMoby)();
 
-extern void (*D_800757C0)(); // g_UpdateGameState7
+extern void (*g_FlightResultsUpdate)();
 extern void (*D_8007567C)(); // g_DrawGameState7
 
 extern void (*D_800758E4)(int pAmount, int pClass, void *spawnParam,
                           void *extraParam); // g_ParticleSpawn
-extern void (*D_800756BC)();                 // g_ParticleUpdate
+extern void (*g_UpdateParticle)();
 
 extern void (*D_800757A0)(); // g_BalloonistTriggerCode (called inside the
                              // overlay for fuck knows why!)

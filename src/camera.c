@@ -591,7 +591,7 @@ void func_80037BD4(void) {
 
       // Process the unused screenshake effect
       g_Camera.m_Position.z +=
-          ((D_800756DC * D_8007590C * ((D_8007572C & 2) - 1)) / D_80075848) >>
+          ((D_800756DC * D_8007590C * ((g_GameTick & 2) - 1)) / D_80075848) >>
           6;
     } else {
       //

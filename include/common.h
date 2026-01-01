@@ -76,7 +76,7 @@ extern int D_800756C4;  // Deltatime inside overlays
 
 extern int D_800758C8; // Number of ticks since in the level
 
-extern int D_8007572C; // Number of ticks (also since in the level)
+extern int g_GameTick; // Game frame counter (reset on level load)
 
 extern int D_8007576C; // For loading, the VRAM part we're loading
 

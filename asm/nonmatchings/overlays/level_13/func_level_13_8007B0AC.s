@@ -531,8 +531,8 @@ glabel func_level_13_8007B0AC
 /* 118F628 8007B860 206E22A4 */  sh         $v0, %lo(g_Camera + 0x50)($at)
 /* 118F62C 8007B864 0780043C */  lui        $a0, %hi(g_DeltaTime)
 /* 118F630 8007B868 CC56848C */  lw         $a0, %lo(g_DeltaTime)($a0)
-/* 118F634 8007B86C 0780023C */  lui        $v0, %hi(D_800756BC)
-/* 118F638 8007B870 BC56428C */  lw         $v0, %lo(D_800756BC)($v0)
+/* 118F634 8007B86C 0780023C */  lui        $v0, %hi(g_UpdateParticle)
+/* 118F638 8007B870 BC56428C */  lw         $v0, %lo(g_UpdateParticle)($v0)
 /* 118F63C 8007B874 00000000 */  nop
 /* 118F640 8007B878 09F84000 */  jalr       $v0
 /* 118F644 8007B87C 00000000 */   nop
@@ -1596,8 +1596,8 @@ glabel func_level_13_8007B0AC
 /* 1190604 8007C83C 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
 /* 1190608 8007C840 0780013C */  lui        $at, %hi(D_8007576C)
 /* 119060C 8007C844 6C5723AC */  sw         $v1, %lo(D_8007576C)($at)
-/* 1190610 8007C848 0780013C */  lui        $at, %hi(D_800756D0)
-/* 1190614 8007C84C D05620AC */  sw         $zero, %lo(D_800756D0)($at)
+/* 1190610 8007C848 0780013C */  lui        $at, %hi(g_HasLevelTransition)
+/* 1190614 8007C84C D05620AC */  sw         $zero, %lo(g_HasLevelTransition)($at)
 /* 1190618 8007C850 0780013C */  lui        $at, %hi(g_PortalLevelId)
 /* 119061C 8007C854 AC5820AC */  sw         $zero, %lo(g_PortalLevelId)($at)
 /* 1190620 8007C858 00110200 */  sll        $v0, $v0, 4
@@ -1623,8 +1623,8 @@ glabel func_level_13_8007B0AC
 /* 1190670 8007C8A8 565A000C */  jal        Memcpy
 /* 1190674 8007C8AC 58000624 */   addiu     $a2, $zero, 0x58
 /* 1190678 8007C8B0 1F80023C */  lui        $v0, (0x801FFFFF >> 16)
-/* 119067C 8007C8B4 0880033C */  lui        $v1, %hi(D_800785D8 + 0x10)
-/* 1190680 8007C8B8 E885638C */  lw         $v1, %lo(D_800785D8 + 0x10)($v1)
+/* 119067C 8007C8B4 0880033C */  lui        $v1, %hi(g_Buffers + 0x10)
+/* 1190680 8007C8B8 E885638C */  lw         $v1, %lo(g_Buffers + 0x10)($v1)
 /* 1190684 8007C8BC FFFF4234 */  ori        $v0, $v0, (0x801FFFFF & 0xFFFF)
 /* 1190688 8007C8C0 0780013C */  lui        $at, %hi(D_800777E8 + 0x68)
 /* 119068C 8007C8C4 507830AC */  sw         $s0, %lo(D_800777E8 + 0x68)($at)

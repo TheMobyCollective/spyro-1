@@ -786,8 +786,8 @@ glabel func_level_53_8007B510
 /* 4B61638 8007B870 0780013C */  lui        $at, %hi(D_8007576C)
 /* 4B6163C 8007B874 6C572BAC */  sw         $t3, %lo(D_8007576C)($at)
 /* 4B61640 8007B878 01000B24 */  addiu      $t3, $zero, 0x1
-/* 4B61644 8007B87C 0780013C */  lui        $at, %hi(D_800756D0)
-/* 4B61648 8007B880 D0562BAC */  sw         $t3, %lo(D_800756D0)($at)
+/* 4B61644 8007B87C 0780013C */  lui        $at, %hi(g_HasLevelTransition)
+/* 4B61648 8007B880 D0562BAC */  sw         $t3, %lo(g_HasLevelTransition)($at)
 /* 4B6164C 8007B884 0780013C */  lui        $at, %hi(D_800756B0)
 /* 4B61650 8007B888 B0562BAC */  sw         $t3, %lo(D_800756B0)($at)
 /* 4B61654 8007B88C 18004400 */  mult       $v0, $a0
@@ -7810,8 +7810,8 @@ glabel func_level_53_8007B510
 /* 4B67D6C 80081FA4 04000524 */   addiu     $a1, $zero, 0x4
 /* 4B67D70 80081FA8 16004014 */  bnez       $v0, .Llevel_53_80082004
 /* 4B67D74 80081FAC 00000000 */   nop
-/* 4B67D78 80081FB0 0780023C */  lui        $v0, %hi(D_8007572C)
-/* 4B67D7C 80081FB4 2C57428C */  lw         $v0, %lo(D_8007572C)($v0)
+/* 4B67D78 80081FB0 0780023C */  lui        $v0, %hi(g_GameTick)
+/* 4B67D7C 80081FB4 2C57428C */  lw         $v0, %lo(g_GameTick)($v0)
 /* 4B67D80 80081FB8 00000000 */  nop
 /* 4B67D84 80081FBC 01004230 */  andi       $v0, $v0, 0x1
 /* 4B67D88 80081FC0 04004010 */  beqz       $v0, .Llevel_53_80081FD4

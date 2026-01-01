@@ -14,7 +14,7 @@ extern struct {
   void *m_SharedAnimations;
   int m_LevelLayoutOffset; // Bwahaha
   int m_LevelLayoutSize;
-} D_800785D8;
+} g_Buffers;
 
 extern void *D_80075780; // Something skybox related
 

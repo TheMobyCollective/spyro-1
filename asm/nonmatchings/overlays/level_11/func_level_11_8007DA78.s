@@ -526,8 +526,8 @@ glabel func_level_11_8007DA78
 /* B86DD4 8007E00C 0780053C */  lui        $a1, %hi(g_LevelId)
 /* B86DD8 8007E010 6C59A58C */  lw         $a1, %lo(g_LevelId)($a1)
 /* B86DDC 8007E014 01000924 */  addiu      $t1, $zero, 0x1
-/* B86DE0 8007E018 0780013C */  lui        $at, %hi(D_800756D0)
-/* B86DE4 8007E01C D05629AC */  sw         $t1, %lo(D_800756D0)($at)
+/* B86DE0 8007E018 0780013C */  lui        $at, %hi(g_HasLevelTransition)
+/* B86DE4 8007E01C D05629AC */  sw         $t1, %lo(g_HasLevelTransition)($at)
 /* B86DE8 8007E020 0780013C */  lui        $at, %hi(D_800756B0)
 /* B86DEC 8007E024 B05629AC */  sw         $t1, %lo(D_800756B0)($at)
 /* B86DF0 8007E028 1800A600 */  mult       $a1, $a2

@@ -159,8 +159,8 @@ glabel func_level_45_8007B68C
 /* 42574C4 8007B6FC 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* 42574C8 8007B700 0C80010C */  jal        PutDispEnv
 /* 42574CC 8007B704 5C008424 */   addiu     $a0, $a0, 0x5C
-/* 42574D0 8007B708 0880103C */  lui        $s0, %hi(D_800785D8 + 0x18)
-/* 42574D4 8007B70C F0851026 */  addiu      $s0, $s0, %lo(D_800785D8 + 0x18)
+/* 42574D0 8007B708 0880103C */  lui        $s0, %hi(g_Buffers + 0x18)
+/* 42574D4 8007B70C F0851026 */  addiu      $s0, $s0, %lo(g_Buffers + 0x18)
 /* 42574D8 8007B710 0780043C */  lui        $a0, %hi(g_CurDB)
 /* 42574DC 8007B714 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* 42574E0 8007B718 767F010C */  jal        PutDrawEnv
@@ -259,10 +259,10 @@ glabel func_level_45_8007B68C
 /* 4257644 8007B87C 00C08434 */  ori        $a0, $a0, (0x1C000 & 0xFFFF)
 /* 4257648 8007B880 FEFF053C */  lui        $a1, (0xFFFE3E00 >> 16)
 /* 425764C 8007B884 003EA534 */  ori        $a1, $a1, (0xFFFE3E00 & 0xFFFF)
-/* 4257650 8007B888 0880033C */  lui        $v1, %hi(D_800785D8 + 0x10)
-/* 4257654 8007B88C E885638C */  lw         $v1, %lo(D_800785D8 + 0x10)($v1)
-/* 4257658 8007B890 0880023C */  lui        $v0, %hi(D_800785D8 + 0x18)
-/* 425765C 8007B894 F085428C */  lw         $v0, %lo(D_800785D8 + 0x18)($v0)
+/* 4257650 8007B888 0880033C */  lui        $v1, %hi(g_Buffers + 0x10)
+/* 4257654 8007B88C E885638C */  lw         $v1, %lo(g_Buffers + 0x10)($v1)
+/* 4257658 8007B890 0880023C */  lui        $v0, %hi(g_Buffers + 0x18)
+/* 425765C 8007B894 F085428C */  lw         $v0, %lo(g_Buffers + 0x18)($v0)
 /* 4257660 8007B898 0780013C */  lui        $at, %hi(D_800758B0)
 /* 4257664 8007B89C B05820AC */  sw         $zero, %lo(D_800758B0)($at)
 /* 4257668 8007B8A0 0780013C */  lui        $at, %hi(D_800757B0)

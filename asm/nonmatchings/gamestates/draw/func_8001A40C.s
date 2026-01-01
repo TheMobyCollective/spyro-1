@@ -95,8 +95,8 @@ glabel func_8001A40C
 /* AC88 8001A488 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* AC8C 8001A48C 0C80010C */  jal        PutDispEnv
 /* AC90 8001A490 5C008424 */   addiu     $a0, $a0, 0x5C
-/* AC94 8001A494 0880103C */  lui        $s0, %hi(D_800785D8 + 0x18)
-/* AC98 8001A498 F0851026 */  addiu      $s0, $s0, %lo(D_800785D8 + 0x18)
+/* AC94 8001A494 0880103C */  lui        $s0, %hi(g_Buffers + 0x18)
+/* AC98 8001A498 F0851026 */  addiu      $s0, $s0, %lo(g_Buffers + 0x18)
 /* AC9C 8001A49C 0780043C */  lui        $a0, %hi(g_CurDB)
 /* ACA0 8001A4A0 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* ACA4 8001A4A4 767F010C */  jal        PutDrawEnv
@@ -195,10 +195,10 @@ glabel func_8001A40C
 /* AE08 8001A608 00C08434 */  ori        $a0, $a0, (0x1C000 & 0xFFFF)
 /* AE0C 8001A60C FEFF053C */  lui        $a1, (0xFFFE3E00 >> 16)
 /* AE10 8001A610 003EA534 */  ori        $a1, $a1, (0xFFFE3E00 & 0xFFFF)
-/* AE14 8001A614 0880033C */  lui        $v1, %hi(D_800785D8 + 0x10)
-/* AE18 8001A618 E885638C */  lw         $v1, %lo(D_800785D8 + 0x10)($v1)
-/* AE1C 8001A61C 0880023C */  lui        $v0, %hi(D_800785D8 + 0x18)
-/* AE20 8001A620 F085428C */  lw         $v0, %lo(D_800785D8 + 0x18)($v0)
+/* AE14 8001A614 0880033C */  lui        $v1, %hi(g_Buffers + 0x10)
+/* AE18 8001A618 E885638C */  lw         $v1, %lo(g_Buffers + 0x10)($v1)
+/* AE1C 8001A61C 0880023C */  lui        $v0, %hi(g_Buffers + 0x18)
+/* AE20 8001A620 F085428C */  lw         $v0, %lo(g_Buffers + 0x18)($v0)
 /* AE24 8001A624 0780013C */  lui        $at, %hi(D_800758B0)
 /* AE28 8001A628 B05820AC */  sw         $zero, %lo(D_800758B0)($at)
 /* AE2C 8001A62C 0780013C */  lui        $at, %hi(D_800757B0)
@@ -1176,8 +1176,8 @@ glabel func_8001A40C
 /* BCB0 8001B4B0 1057528E */  lw         $s2, %lo(g_HudMobys)($s2)
 /* BCB4 8001B4B4 09001524 */  addiu      $s5, $zero, 0x9
 .L8001B4B8:
-/* BCB8 8001B4B8 0780023C */  lui        $v0, %hi(D_80075690)
-/* BCBC 8001B4BC 9056428C */  lw         $v0, %lo(D_80075690)($v0)
+/* BCB8 8001B4B8 0780023C */  lui        $v0, %hi(g_IsFlightLevel)
+/* BCBC 8001B4BC 9056428C */  lw         $v0, %lo(g_IsFlightLevel)($v0)
 /* BCC0 8001B4C0 00000000 */  nop
 /* BCC4 8001B4C4 15004010 */  beqz       $v0, .L8001B51C
 /* BCC8 8001B4C8 21280002 */   addu      $a1, $s0, $zero
@@ -2273,8 +2273,8 @@ glabel func_8001A40C
 /* CD4C 8001C54C F42020AC */  sw         $zero, %lo(D_8006FCF4 + 0x2400)($at)
 /* CD50 8001C550 08006214 */  bne        $v1, $v0, .L8001C574
 /* CD54 8001C554 00000000 */   nop
-/* CD58 8001C558 0780023C */  lui        $v0, %hi(D_80075690)
-/* CD5C 8001C55C 9056428C */  lw         $v0, %lo(D_80075690)($v0)
+/* CD58 8001C558 0780023C */  lui        $v0, %hi(g_IsFlightLevel)
+/* CD5C 8001C55C 9056428C */  lw         $v0, %lo(g_IsFlightLevel)($v0)
 /* CD60 8001C560 00000000 */  nop
 /* CD64 8001C564 03004014 */  bnez       $v0, .L8001C574
 /* CD68 8001C568 00000000 */   nop

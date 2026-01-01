@@ -911,8 +911,8 @@ glabel func_8003EA68
 /* 2FE34 8003F634 06000224 */  addiu      $v0, $zero, 0x6
 /* 2FE38 8003F638 0E006214 */  bne        $v1, $v0, .L8003F674
 /* 2FE3C 8003F63C 00000000 */   nop
-/* 2FE40 8003F640 0780023C */  lui        $v0, %hi(D_80075690)
-/* 2FE44 8003F644 9056428C */  lw         $v0, %lo(D_80075690)($v0)
+/* 2FE40 8003F640 0780023C */  lui        $v0, %hi(g_IsFlightLevel)
+/* 2FE44 8003F644 9056428C */  lw         $v0, %lo(g_IsFlightLevel)($v0)
 /* 2FE48 8003F648 00000000 */  nop
 /* 2FE4C 8003F64C 09004014 */  bnez       $v0, .L8003F674
 /* 2FE50 8003F650 00000000 */   nop

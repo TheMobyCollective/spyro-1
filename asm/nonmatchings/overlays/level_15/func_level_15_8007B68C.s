@@ -158,8 +158,8 @@ glabel func_level_15_8007B68C
 /* 16A8CC4 8007B6FC 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* 16A8CC8 8007B700 0C80010C */  jal        PutDispEnv
 /* 16A8CCC 8007B704 5C008424 */   addiu     $a0, $a0, 0x5C
-/* 16A8CD0 8007B708 0880103C */  lui        $s0, %hi(D_800785D8 + 0x18)
-/* 16A8CD4 8007B70C F0851026 */  addiu      $s0, $s0, %lo(D_800785D8 + 0x18)
+/* 16A8CD0 8007B708 0880103C */  lui        $s0, %hi(g_Buffers + 0x18)
+/* 16A8CD4 8007B70C F0851026 */  addiu      $s0, $s0, %lo(g_Buffers + 0x18)
 /* 16A8CD8 8007B710 0780043C */  lui        $a0, %hi(g_CurDB)
 /* 16A8CDC 8007B714 8858848C */  lw         $a0, %lo(g_CurDB)($a0)
 /* 16A8CE0 8007B718 767F010C */  jal        PutDrawEnv
@@ -258,10 +258,10 @@ glabel func_level_15_8007B68C
 /* 16A8E44 8007B87C 00C08434 */  ori        $a0, $a0, (0x1C000 & 0xFFFF)
 /* 16A8E48 8007B880 FEFF053C */  lui        $a1, (0xFFFE3E00 >> 16)
 /* 16A8E4C 8007B884 003EA534 */  ori        $a1, $a1, (0xFFFE3E00 & 0xFFFF)
-/* 16A8E50 8007B888 0880033C */  lui        $v1, %hi(D_800785D8 + 0x10)
-/* 16A8E54 8007B88C E885638C */  lw         $v1, %lo(D_800785D8 + 0x10)($v1)
-/* 16A8E58 8007B890 0880023C */  lui        $v0, %hi(D_800785D8 + 0x18)
-/* 16A8E5C 8007B894 F085428C */  lw         $v0, %lo(D_800785D8 + 0x18)($v0)
+/* 16A8E50 8007B888 0880033C */  lui        $v1, %hi(g_Buffers + 0x10)
+/* 16A8E54 8007B88C E885638C */  lw         $v1, %lo(g_Buffers + 0x10)($v1)
+/* 16A8E58 8007B890 0880023C */  lui        $v0, %hi(g_Buffers + 0x18)
+/* 16A8E5C 8007B894 F085428C */  lw         $v0, %lo(g_Buffers + 0x18)($v0)
 /* 16A8E60 8007B898 0780013C */  lui        $at, %hi(D_800758B0)
 /* 16A8E64 8007B89C B05820AC */  sw         $zero, %lo(D_800758B0)($at)
 /* 16A8E68 8007B8A0 0780013C */  lui        $at, %hi(D_800757B0)

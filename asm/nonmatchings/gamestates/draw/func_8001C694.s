@@ -4,8 +4,8 @@
 glabel func_8001C694
 /* CE94 8001C694 D0FFBD27 */  addiu      $sp, $sp, -0x30
 /* CE98 8001C698 0100033C */  lui        $v1, (0x1C000 >> 16)
-/* CE9C 8001C69C 0880023C */  lui        $v0, %hi(D_800785D8 + 0x10)
-/* CEA0 8001C6A0 E885428C */  lw         $v0, %lo(D_800785D8 + 0x10)($v0)
+/* CE9C 8001C69C 0880023C */  lui        $v0, %hi(g_Buffers + 0x10)
+/* CEA0 8001C6A0 E885428C */  lw         $v0, %lo(g_Buffers + 0x10)($v0)
 /* CEA4 8001C6A4 0780043C */  lui        $a0, %hi(D_800758B8)
 /* CEA8 8001C6A8 B858848C */  lw         $a0, %lo(D_800758B8)($a0)
 /* CEAC 8001C6AC 00C06334 */  ori        $v1, $v1, (0x1C000 & 0xFFFF)

@@ -34,7 +34,7 @@ dlabel g_PreviousLevelIndex
 dlabel D_8007568C
 /* 65E64 8007568C */ .space 0x04
 
-dlabel D_80075690
+dlabel g_IsFlightLevel
 /* 65E68 80075690 */ .space 0x04
 
 dlabel D_80075694
@@ -67,7 +67,7 @@ dlabel D_800756B4
 dlabel D_800756B8
 /* 65E90 800756B8 */ .space 0x04
 
-dlabel D_800756BC
+dlabel g_UpdateParticle
 /* 65E94 800756BC */ .space 0x04
 
 dlabel D_800756C0
@@ -82,7 +82,7 @@ dlabel D_800756C8
 dlabel g_DeltaTime
 /* 65EA4 800756CC */ .space 0x04
 
-dlabel D_800756D0
+dlabel g_HasLevelTransition
 /* 65EA8 800756D0 */ .space 0x04
 
 dlabel D_800756D4
@@ -149,13 +149,13 @@ dlabel D_80075724
 dlabel D_80075728
 /* 65F00 80075728 */ .space 0x04
 
-dlabel D_8007572C
+dlabel g_GameTick
 /* 65F04 8007572C */ .space 0x04
 
 dlabel D_80075730
 /* 65F08 80075730 */ .space 0x04
 
-dlabel D_80075734
+dlabel g_UpdateMoby
 /* 65F0C 80075734 */ .space 0x04
 
 dlabel D_80075738
@@ -251,13 +251,13 @@ dlabel D_800757B0
 dlabel g_MobyPodCount
 /* 65F8C 800757B4 */ .space 0x04
 
-dlabel D_800757B8
+dlabel g_DemoIndex
 /* 65F90 800757B8 */ .space 0x04
 
 dlabel g_CreditsDataPtr
 /* 65F94 800757BC */ .space 0x04
 
-dlabel D_800757C0
+dlabel g_FlightResultsUpdate
 /* 65F98 800757C0 */ .space 0x04
 
 dlabel D_800757C4
@@ -402,7 +402,7 @@ dlabel D_8007587C
 dlabel g_LevelCheatActive
 /* 66058 80075880 */ .space 0x04
 
-dlabel D_80075884
+dlabel g_DemoFadeTimer
 /* 6605C 80075884 */ .space 0x04
 
 dlabel g_CurDB

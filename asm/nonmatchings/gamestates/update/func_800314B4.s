@@ -479,8 +479,8 @@ glabel func_800314B4
 /* 22380 80031B80 00000000 */   nop
 /* 22384 80031B84 0780043C */  lui        $a0, %hi(g_DeltaTime)
 /* 22388 80031B88 CC56848C */  lw         $a0, %lo(g_DeltaTime)($a0)
-/* 2238C 80031B8C 0780023C */  lui        $v0, %hi(D_800756BC)
-/* 22390 80031B90 BC56428C */  lw         $v0, %lo(D_800756BC)($v0)
+/* 2238C 80031B8C 0780023C */  lui        $v0, %hi(g_UpdateParticle)
+/* 22390 80031B90 BC56428C */  lw         $v0, %lo(g_UpdateParticle)($v0)
 /* 22394 80031B94 00000000 */  nop
 /* 22398 80031B98 09F84000 */  jalr       $v0
 /* 2239C 80031B9C 00000000 */   nop
@@ -632,13 +632,13 @@ glabel func_800314B4
 /* 225D8 80031DD8 00000000 */   nop
 /* 225DC 80031DDC 0780043C */  lui        $a0, %hi(g_DeltaTime)
 /* 225E0 80031DE0 CC56848C */  lw         $a0, %lo(g_DeltaTime)($a0)
-/* 225E4 80031DE4 0780023C */  lui        $v0, %hi(D_8007572C)
-/* 225E8 80031DE8 2C57428C */  lw         $v0, %lo(D_8007572C)($v0)
-/* 225EC 80031DEC 0780033C */  lui        $v1, %hi(D_800756BC)
-/* 225F0 80031DF0 BC56638C */  lw         $v1, %lo(D_800756BC)($v1)
+/* 225E4 80031DE4 0780023C */  lui        $v0, %hi(g_GameTick)
+/* 225E8 80031DE8 2C57428C */  lw         $v0, %lo(g_GameTick)($v0)
+/* 225EC 80031DEC 0780033C */  lui        $v1, %hi(g_UpdateParticle)
+/* 225F0 80031DF0 BC56638C */  lw         $v1, %lo(g_UpdateParticle)($v1)
 /* 225F4 80031DF4 01004224 */  addiu      $v0, $v0, 0x1
-/* 225F8 80031DF8 0780013C */  lui        $at, %hi(D_8007572C)
-/* 225FC 80031DFC 2C5722AC */  sw         $v0, %lo(D_8007572C)($at)
+/* 225F8 80031DF8 0780013C */  lui        $at, %hi(g_GameTick)
+/* 225FC 80031DFC 2C5722AC */  sw         $v0, %lo(g_GameTick)($at)
 /* 22600 80031E00 09F86000 */  jalr       $v1
 /* 22604 80031E04 00000000 */   nop
 /* 22608 80031E08 0800238E */  lw         $v1, 0x8($s1)
@@ -858,8 +858,8 @@ glabel func_800314B4
 /* 2293C 8003213C 21380000 */  addu       $a3, $zero, $zero
 /* 22940 80032140 0880043C */  lui        $a0, %hi(g_FairyCutscene + 0x18)
 /* 22944 80032144 188D848C */  lw         $a0, %lo(g_FairyCutscene + 0x18)($a0)
-/* 22948 80032148 0880063C */  lui        $a2, %hi(D_800785D8 + 0x18)
-/* 2294C 8003214C F085C68C */  lw         $a2, %lo(D_800785D8 + 0x18)($a2)
+/* 22948 80032148 0880063C */  lui        $a2, %hi(g_Buffers + 0x18)
+/* 2294C 8003214C F085C68C */  lw         $a2, %lo(g_Buffers + 0x18)($a2)
 /* 22950 80032150 80000224 */  addiu      $v0, $zero, 0x80
 /* 22954 80032154 1000A2AF */  sw         $v0, 0x10($sp)
 /* 22958 80032158 8A9B010C */  jal        MemCardReadFile
@@ -893,8 +893,8 @@ glabel func_800314B4
 /* 229B8 800321B8 00000000 */  nop
 /* 229BC 800321BC 21004014 */  bnez       $v0, .L80032244
 /* 229C0 800321C0 05000324 */   addiu     $v1, $zero, 0x5
-/* 229C4 800321C4 0880023C */  lui        $v0, %hi(D_800785D8 + 0x18)
-/* 229C8 800321C8 F085428C */  lw         $v0, %lo(D_800785D8 + 0x18)($v0)
+/* 229C4 800321C4 0880023C */  lui        $v0, %hi(g_Buffers + 0x18)
+/* 229C8 800321C8 F085428C */  lw         $v0, %lo(g_Buffers + 0x18)($v0)
 /* 229CC 800321CC 00000000 */  nop
 /* 229D0 800321D0 7EFA4394 */  lhu        $v1, -0x582($v0)
 /* 229D4 800321D4 0880023C */  lui        $v0, %hi(g_FairyCutscene + 0x20)
@@ -902,8 +902,8 @@ glabel func_800314B4
 /* 229DC 800321DC 00000000 */  nop
 /* 229E0 800321E0 4F004314 */  bne        $v0, $v1, .L80032320
 /* 229E4 800321E4 04000224 */   addiu     $v0, $zero, 0x4
-/* 229E8 800321E8 0880103C */  lui        $s0, %hi(D_800785D8 + 0x18)
-/* 229EC 800321EC F0851026 */  addiu      $s0, $s0, %lo(D_800785D8 + 0x18)
+/* 229E8 800321E8 0880103C */  lui        $s0, %hi(g_Buffers + 0x18)
+/* 229EC 800321EC F0851026 */  addiu      $s0, $s0, %lo(g_Buffers + 0x18)
 /* 229F0 800321F0 0000048E */  lw         $a0, 0x0($s0)
 /* 229F4 800321F4 1966010C */  jal        SaveCreate
 /* 229F8 800321F8 00FA8424 */   addiu     $a0, $a0, -0x600
@@ -946,8 +946,8 @@ glabel func_800314B4
 /* 22A84 80032284 B80DA524 */  addiu      $a1, $a1, %lo(D_80010DB8)
 /* 22A88 80032288 0880043C */  lui        $a0, %hi(g_FairyCutscene + 0x18)
 /* 22A8C 8003228C 188D848C */  lw         $a0, %lo(g_FairyCutscene + 0x18)($a0)
-/* 22A90 80032290 0880063C */  lui        $a2, %hi(D_800785D8 + 0x18)
-/* 22A94 80032294 F085C68C */  lw         $a2, %lo(D_800785D8 + 0x18)($a2)
+/* 22A90 80032290 0880063C */  lui        $a2, %hi(g_Buffers + 0x18)
+/* 22A94 80032294 F085C68C */  lw         $a2, %lo(g_Buffers + 0x18)($a2)
 /* 22A98 80032298 00060224 */  addiu      $v0, $zero, 0x600
 /* 22A9C 8003229C 1000A2AF */  sw         $v0, 0x10($sp)
 /* 22AA0 800322A0 0880023C */  lui        $v0, %hi(g_FairyCutscene + 0x1C)
@@ -971,12 +971,12 @@ glabel func_800314B4
 /* 22AE4 800322E4 00000000 */  nop
 /* 22AE8 800322E8 0D004014 */  bnez       $v0, .L80032320
 /* 22AEC 800322EC 05000224 */   addiu     $v0, $zero, 0x5
-/* 22AF0 800322F0 0880043C */  lui        $a0, %hi(D_800785D8 + 0x18)
-/* 22AF4 800322F4 F085848C */  lw         $a0, %lo(D_800785D8 + 0x18)($a0)
+/* 22AF0 800322F0 0880043C */  lui        $a0, %hi(g_Buffers + 0x18)
+/* 22AF4 800322F4 F085848C */  lw         $a0, %lo(g_Buffers + 0x18)($a0)
 /* 22AF8 800322F8 5B65010C */  jal        SaveChecksum
 /* 22AFC 800322FC 00FA8424 */   addiu     $a0, $a0, -0x600
-/* 22B00 80032300 0880033C */  lui        $v1, %hi(D_800785D8 + 0x18)
-/* 22B04 80032304 F085638C */  lw         $v1, %lo(D_800785D8 + 0x18)($v1)
+/* 22B00 80032300 0880033C */  lui        $v1, %hi(g_Buffers + 0x18)
+/* 22B04 80032304 F085638C */  lw         $v1, %lo(g_Buffers + 0x18)($v1)
 /* 22B08 80032308 00000000 */  nop
 /* 22B0C 8003230C 8CFF638C */  lw         $v1, -0x74($v1)
 /* 22B10 80032310 00000000 */  nop

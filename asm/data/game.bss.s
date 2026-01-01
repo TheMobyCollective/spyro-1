@@ -392,7 +392,7 @@ dlabel D_80078560
 dlabel g_Environment
 /* Total size from 800785A8 to 800785D8 */ .space 0x30
 
-dlabel D_800785D8
+dlabel g_Buffers
 /* Total size from 800785D8 to 80078608 */ .space 0x30
 
 dlabel g_FlightObjectiveActiveSlots

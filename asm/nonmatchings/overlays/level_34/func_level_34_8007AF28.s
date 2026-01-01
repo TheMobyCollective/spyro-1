@@ -559,8 +559,8 @@ glabel func_level_34_8007AF28
 /* 31F5A84 8007B4BC 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
 /* 31F5A88 8007B4C0 0780013C */  lui        $at, %hi(D_8007576C)
 /* 31F5A8C 8007B4C4 6C5722AC */  sw         $v0, %lo(D_8007576C)($at)
-/* 31F5A90 8007B4C8 0780013C */  lui        $at, %hi(D_800756D0)
-/* 31F5A94 8007B4CC D0563EAC */  sw         $fp, %lo(D_800756D0)($at)
+/* 31F5A90 8007B4C8 0780013C */  lui        $at, %hi(g_HasLevelTransition)
+/* 31F5A94 8007B4CC D0563EAC */  sw         $fp, %lo(g_HasLevelTransition)($at)
 /* 31F5A98 8007B4D0 0780013C */  lui        $at, %hi(D_800756B0)
 /* 31F5A9C 8007B4D4 B0563EAC */  sw         $fp, %lo(D_800756B0)($at)
 /* 31F5AA0 8007B4D8 0780013C */  lui        $at, %hi(D_800756AC)
@@ -9570,8 +9570,8 @@ glabel func_level_34_8007AF28
 /* 31FDF60 80083998 9A0E0208 */  j          .Llevel_34_80083A68
 /* 31FDF64 8008399C 00000000 */   nop
 .Llevel_34_800839A0:
-/* 31FDF68 800839A0 0780023C */  lui        $v0, %hi(D_8007572C)
-/* 31FDF6C 800839A4 2C57428C */  lw         $v0, %lo(D_8007572C)($v0)
+/* 31FDF68 800839A0 0780023C */  lui        $v0, %hi(g_GameTick)
+/* 31FDF6C 800839A4 2C57428C */  lw         $v0, %lo(g_GameTick)($v0)
 /* 31FDF70 800839A8 00000000 */  nop
 /* 31FDF74 800839AC 01004230 */  andi       $v0, $v0, 0x1
 /* 31FDF78 800839B0 0F004010 */  beqz       $v0, .Llevel_34_800839F0
