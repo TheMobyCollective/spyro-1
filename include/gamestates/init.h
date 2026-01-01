@@ -12,6 +12,17 @@ void func_8002C7BC(void);
 /// @brief Initializes and starts the credits sequence
 void InitCreditsSequence(int pLoadSharedModels);
 
+/// @brief Opens the pause menu
+/// @param pEnteringFromGameplay
+void func_8002C420(int pEnteringFromGameplay);
+
+/// @brief Opens the inventory menu
+/// @param pEnteringFromGameplay
+void func_8002C714(int pEnteringFromGameplay);
+
+/// @brief Empty, proto dragon dialogue update calls this for some reason
+void func_8002C91C(void);
+
 /**
  * @brief Initializes fairy cutscene when Spyro talks to a fairy
  * @param pMoby The fairy moby that triggered the cutscene

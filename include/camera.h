@@ -98,6 +98,6 @@ void func_80037714(LevelFlyInParameters *param);
 void func_80037A20(void);
 
 /// @brief Camera update function
-void func_80037BD4(void);
+void CameraUpdate(void);
 
 #endif // !__CAMERA_H

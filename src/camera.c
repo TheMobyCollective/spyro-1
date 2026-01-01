@@ -542,7 +542,7 @@ void func_80037A20(void) {
 }
 
 /// @brief Camera update function
-void func_80037BD4(void) {
+void CameraUpdate(void) {
 
   if (g_Spyro.m_State == 0x1B) {
     D_8007592C = 1;

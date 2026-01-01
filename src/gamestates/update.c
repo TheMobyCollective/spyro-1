@@ -24,7 +24,7 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002DA74);
 /// @brief Gamestate 1
 void func_8002DF9C(void) {
   UpdateSpyroEnterReturnHome(); // Spyro update
-  func_80037BD4();              // Camera update
+  CameraUpdate();               // Camera update
 
   func_8002DA74();
 
@@ -36,7 +36,7 @@ void func_8002DF9C(void) {
 /// @brief Gamestate 9
 void func_8002E000(void) {
   func_8004A200(); // Spyro update
-  func_80037BD4(); // Camera update
+  CameraUpdate();  // Camera update
 
   g_Camera.m_Rotation.y &= 0xFFF;
 
@@ -55,7 +55,7 @@ extern int D_800758B8; // Pause menu text rotation ticks
 /// @brief Gamestate 10
 void func_8002E084(void) {
   UpdateSpyroReturnHome();
-  func_80037BD4(); // Camera update
+  CameraUpdate(); // Camera update
 
   D_8007568C++;
 
@@ -74,25 +74,30 @@ void func_8002E084(void) {
 }
 
 /// @brief Gamestate 2
+void func_8002E12C(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002E12C);
 
 /// @brief Gamestate 3
+void func_8002EB2C(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002EB2C);
 
 /// @brief Gamestate 4 & 5
+void func_8002EDF0(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002EDF0);
 
 /// @brief Gamestate 6 (Empty, used to be the dragon dialogue)
-void func_8002C91C(void); // TODO: Move to init.h
 void func_8002F3C4(void) { func_8002C91C(); }
 
 /// @brief Gamestate 8 Dragon cutscene
+void func_8002F3E4(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002F3E4);
 
 /// @brief Gamestate 11 (Fairy)
+void func_800314B4(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800314B4);
 
 /// @brief Gamestate 12 (Balloonist)
+void func_800324D8(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800324D8);
 
 // Memory card used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
@@ -245,6 +250,7 @@ void func_800333DC(void) {
 }
 
 /// @brief Update demo mode
+int func_800334D4(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800334D4);
 
 /**
@@ -312,45 +318,42 @@ void GamestateUpdate(void) {
   g_GameTick++;
 
   // Handle demo mode input playback; exit early if demo ends
-  if (g_DemoMode && func_800334D4()) {
-    return;
+  if (g_DemoMode) {
+    if (func_800334D4()) {
+      return;
+    }
   }
 
-  func_8002A6FC(g_DeltaTime); // Unknown - possibly collision or world update
-  g_UpdateMoby();             // Level-specific moby (enemy/object) update
+  // Update environment animations
+  func_8002A6FC(g_DeltaTime);
+
+  // Level-specific Moby (enemy/object) update
+  g_UpdateMoby();
 
   // Skip Spyro update for cutscene gamestates that handle their own Spyro
-  if ((u_int)(g_Gamestate - GS_Fairy) <= 1) {
-    return;
-  }
-  if (g_Gamestate == GS_FlightResults) {
-    return;
-  }
-  if (g_Gamestate == GS_LevelTransition) {
+  if (g_Gamestate == GS_Fairy || g_Gamestate == GS_Balloonist ||
+      g_Gamestate == GS_FlightResults || g_Gamestate == GS_LevelTransition) {
     return;
   }
 
   func_8004A200(); // Main Spyro update (physics, state machine, animation)
 
   // Skip remaining updates during respawn/death states
-  if ((u_int)(g_Gamestate - GS_Respawn) <= 1) {
-    return;
-  }
-  if (g_Gamestate == GS_FlightResults) {
-    return;
-  }
-  if (g_Gamestate == GS_LevelTransition) {
+  if (g_Gamestate == GS_Respawn || g_Gamestate == GS_GameOver ||
+      g_Gamestate == GS_FlightResults || g_Gamestate == GS_LevelTransition) {
     return;
   }
 
-  g_UpdateParticle(g_DeltaTime); // Level-specific particle update
+  // Level-specific particle update
+  g_UpdateParticle(g_DeltaTime);
 
-  if (g_IsFlightLevel == 0) {
-    HudTick(); // Skip HUD in flight levels (they have their own UI)
+  // Skip HUD in flight levels (they have their own UI)
+  if (!g_IsFlightLevel) {
+    HudTick();
   }
 
-  func_80058BD8(); // Build metal texture matrix from camera rotation
-  func_80037BD4(); // Main camera update
+  MetalBuildMatrix(); // Build metal texture matrix from camera rotation
+  CameraUpdate();     // Main camera update
 
   // Screen fade timer (for smooth transitions)
   if (g_Fade != 0) {
@@ -364,7 +367,8 @@ void GamestateUpdate(void) {
   // Pause/inventory input check (only when alive and in normal play)
   if (g_Gamestate == GS_Playing && g_ScreenBorderEnabled == 0 &&
       g_Spyro.m_health >= 0 && g_Camera.m_State != 0x8000000E) {
-    if (g_Pad.m_Type < 2U) {
+    if ((u_int)g_Pad.m_Type == CONTROLLER_TYPE_DISCONNECTED ||
+        (u_int)g_Pad.m_Type == CONTROLLER_TYPE_INVALID) {
       func_8002C420(1); // No controller - force pause
     } else if (g_Pad.m_Down & PAD_START) {
       func_8002C420(1); // START - open pause menu

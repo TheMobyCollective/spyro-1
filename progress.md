@@ -73,7 +73,7 @@
 - [x] func_80037714
 - [x] func_800377A8
 - [x] func_80037A20
-- [x] func_80037BD4
+- [x] CameraUpdate
 - [x] CDLoadTime
 - [x] func_80016490
 - [x] CDLoadSync
@@ -265,6 +265,6 @@
 - [x] SaveCreate
 - [x] ApplySpecialSurfaceEffects
 - [x] func_80057380
-- [x] func_80058BD8
+- [x] MetalBuildMatrix
 - [x] SpecularReset
 - [x] SpecularUpdate

@@ -62,7 +62,7 @@ glabel func_8002F3E4
 /* 1FC80 8002F480 00000000 */   nop
 /* 1FC84 8002F484 8028010C */  jal        func_8004A200
 /* 1FC88 8002F488 00000000 */   nop
-/* 1FC8C 8002F48C F5DE000C */  jal        func_80037BD4
+/* 1FC8C 8002F48C F5DE000C */  jal        CameraUpdate
 /* 1FC90 8002F490 00000000 */   nop
 /* 1FC94 8002F494 0780043C */  lui        $a0, %hi(g_DragonCutscene + 0x3C)
 /* 1FC98 8002F498 6C70848C */  lw         $a0, %lo(g_DragonCutscene + 0x3C)($a0)

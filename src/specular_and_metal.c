@@ -5,7 +5,7 @@
 
 // Creates a scaled version of the camera matrix and inverts the z axis
 // Used for getting the texture coordinates for the metal texture
-void func_80058BD8(void) {
+void MetalBuildMatrix(void) {
   Vector3D
       temp; // Vector rotated by the camera matrix to build the metal matrix
 

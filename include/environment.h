@@ -33,6 +33,7 @@ typedef struct {
   TerrainCollision *m_TerrainCollision;
 } Environment;
 
+void func_8002A6FC(int pDeltaTime);
 void func_8002B9CC(void);
 
 extern Environment g_Environment;

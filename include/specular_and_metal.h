@@ -28,4 +28,6 @@ void SpecularReset(void);
 /// @brief Updates the specular light direction
 void SpecularUpdate(int deltaTime);
 
+void MetalBuildMatrix(void);
+
 #endif // !__SPECULAR_AND_METAL_H

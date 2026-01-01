@@ -35,4 +35,6 @@ extern struct {
   int m_0x58;
 } g_TitlescreenState; // 0x5C in size
 
+void func_titlescreen_8007ABAC(void);
+
 #endif
