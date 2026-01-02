@@ -266,6 +266,10 @@ typedef struct {
 // static_assert(sizeof(Spyro) == 0x2a4, "Incorrect Spyro size");
 
 extern Spyro g_Spyro;
+
+/** @brief Spyro visibility flag. 0 = visible, 1 = hidden */
+extern int g_IsSpyroHidden;
+
 extern int D_8007592C;        // Is spyro in look mode
 extern u_char D_8006C588[48]; // Maps Spyro's state to camera states
 
@@ -310,7 +314,11 @@ typedef struct {
   int unk_8c;
   int unk_90;
   int unk_94;
-  int unk_98;
+
+  /** @brief Flame breath active flag. 1 = active, 0 = inactive */
+  u_char m_IsFlameActive;
+
+  u_char unk_99[3];
   int unk_9c;
   int m_FairyKissTimer;
   int unk_a4;

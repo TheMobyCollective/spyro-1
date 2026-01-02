@@ -17,6 +17,7 @@
 #include "overlay_pointers.h"
 #include "renderers.h"
 #include "sony_image.h"
+#include "spyro.h"
 #include "strings.h"
 #include "titlescreen.h"
 #include "variables.h"
@@ -100,9 +101,38 @@ void func_80019300(void);
 /// @brief Creates the collectable icons and counters
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80019300);
 
+/**
+ * @brief Renders Mobys, Spyro, shadows, flame, and particles.
+ *
+ * Main rendering pipeline for dynamic scene objects during gameplay.
+ *
+ * @note Matched 100% - Waiting for previous functions to be implemented.
+ */
+#ifdef NON_MATCHING
+void func_80019698(void) {
+  func_8001F158();              // Initialize Moby renderer, perform culling
+  Memset(D_8006FCF4, 0, 0x900); // Clear Moby queue buffer
+  func_8001F798();              // Render regular Mobys
+  func_800208FC();              // Initialize specular Moby renderer
+  func_80020F34();              // Render specular Mobys
+  func_80022A2C();              // Render shaded Mobys with lighting
+  func_80059F8C();              // Render Moby shadows
+
+  if (g_IsSpyroHidden == 0) {
+    func_80023AC4(); // Render Spyro's model
+    func_80059A48(); // Render Spyro's shadow
+  }
+
+  if (g_SpyroFlame.m_IsFlameActive != 0) {
+    func_80058D64(); // Render Spyro's flame
+  }
+
+  func_80058BA8(); // Render and update particles
+}
+#else
 void func_80019698(void);
-/// @brief Creates Mobys, shadows, Spyro, flame and glows and sparkles
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80019698);
+#endif
 
 void func_8001973C(void);
 /// @brief Creates the level transition text

@@ -24,8 +24,8 @@ glabel func_8001364C
 /* 3E98 80013698 C85820AC */  sw         $zero, %lo(D_800758C8)($at)
 /* 3E9C 8001369C 0780013C */  lui        $at, %hi(g_GameTick)
 /* 3EA0 800136A0 2C5720AC */  sw         $zero, %lo(g_GameTick)($at)
-/* 3EA4 800136A4 0780013C */  lui        $at, %hi(D_80075814)
-/* 3EA8 800136A8 145820AC */  sw         $zero, %lo(D_80075814)($at)
+/* 3EA4 800136A4 0780013C */  lui        $at, %hi(g_IsSpyroHidden)
+/* 3EA8 800136A8 145820AC */  sw         $zero, %lo(g_IsSpyroHidden)($at)
 /* 3EAC 800136AC 0780013C */  lui        $at, %hi(D_80075684)
 /* 3EB0 800136B0 845620AC */  sw         $zero, %lo(D_80075684)($at)
 /* 3EB4 800136B4 03006214 */  bne        $v1, $v0, .L800136C4
