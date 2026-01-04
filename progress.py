@@ -85,11 +85,14 @@ def extract_function_names(content):
     for line in content.split('\n'):
         match_checked = re.match(r'- \[x\] (\w+)', line)
         match_unchecked = re.match(r'- \[ \] (\w+)', line)
+        match_partial = re.match(r'- \[-\] (\w+)', line)  # Matched but not yet enabled
 
         if match_checked:
             checked_funcs.append(match_checked.group(1))
         elif match_unchecked:
             unchecked_funcs.append(match_unchecked.group(1))
+        elif match_partial:
+            unchecked_funcs.append(match_partial.group(1))
 
     return checked_funcs, unchecked_funcs
 

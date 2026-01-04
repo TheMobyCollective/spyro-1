@@ -21,8 +21,8 @@ glabel func_80019698
 /* 9ED8 800196D8 00000000 */   nop
 /* 9EDC 800196DC E367010C */  jal        func_80059F8C
 /* 9EE0 800196E0 00000000 */   nop
-/* 9EE4 800196E4 0780023C */  lui        $v0, %hi(D_80075814)
-/* 9EE8 800196E8 1458428C */  lw         $v0, %lo(D_80075814)($v0)
+/* 9EE4 800196E4 0780023C */  lui        $v0, %hi(g_IsSpyroHidden)
+/* 9EE8 800196E8 1458428C */  lw         $v0, %lo(g_IsSpyroHidden)($v0)
 /* 9EEC 800196EC 00000000 */  nop
 /* 9EF0 800196F0 05004014 */  bnez       $v0, .L80019708
 /* 9EF4 800196F4 00000000 */   nop

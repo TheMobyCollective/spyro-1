@@ -321,7 +321,7 @@ dlabel D_8007580C
 dlabel g_EggTotal
 /* 65FE8 80075810 */ .space 0x04
 
-dlabel D_80075814
+dlabel g_IsSpyroHidden
 /* 65FEC 80075814 */ .space 0x04
 
 dlabel D_80075818

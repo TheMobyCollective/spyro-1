@@ -271,8 +271,8 @@ glabel func_level_13_80087E20
 /* 119BE84 800880BC 96034004 */  bltz       $v0, .Llevel_13_80088F18
 /* 119BE88 800880C0 00000000 */   nop
 .Llevel_13_800880C4:
-/* 119BE8C 800880C4 0780023C */  lui        $v0, %hi(D_80075814)
-/* 119BE90 800880C8 1458428C */  lw         $v0, %lo(D_80075814)($v0)
+/* 119BE8C 800880C4 0780023C */  lui        $v0, %hi(g_IsSpyroHidden)
+/* 119BE90 800880C8 1458428C */  lw         $v0, %lo(g_IsSpyroHidden)($v0)
 /* 119BE94 800880CC 00000000 */  nop
 /* 119BE98 800880D0 91034014 */  bnez       $v0, .Llevel_13_80088F18
 /* 119BE9C 800880D4 00000000 */   nop

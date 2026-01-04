@@ -5144,8 +5144,8 @@ glabel func_level_63_8007AD64
 /* 59165E8 8007F820 490043A0 */  sb         $v1, 0x49($v0)
 /* 59165EC 8007F824 DC0089AE */  sw         $t1, 0xDC($s4)
 .Llevel_63_8007F828:
-/* 59165F0 8007F828 0780023C */  lui        $v0, %hi(D_80075814)
-/* 59165F4 8007F82C 1458428C */  lw         $v0, %lo(D_80075814)($v0)
+/* 59165F0 8007F828 0780023C */  lui        $v0, %hi(g_IsSpyroHidden)
+/* 59165F4 8007F82C 1458428C */  lw         $v0, %lo(g_IsSpyroHidden)($v0)
 /* 59165F8 8007F830 00000000 */  nop
 /* 59165FC 8007F834 20004014 */  bnez       $v0, .Llevel_63_8007F8B8
 /* 5916600 8007F838 00000000 */   nop
@@ -5178,8 +5178,8 @@ glabel func_level_63_8007AD64
 /* 591666C 8007F8A4 668A4290 */  lbu        $v0, %lo(g_Spyro + 0xE)($v0)
 /* 5916670 8007F8A8 00000000 */  nop
 /* 5916674 8007F8AC 460002A2 */  sb         $v0, 0x46($s0)
-/* 5916678 8007F8B0 0780013C */  lui        $at, %hi(D_80075814)
-/* 591667C 8007F8B4 14583EAC */  sw         $fp, %lo(D_80075814)($at)
+/* 5916678 8007F8B0 0780013C */  lui        $at, %hi(g_IsSpyroHidden)
+/* 591667C 8007F8B4 14583EAC */  sw         $fp, %lo(g_IsSpyroHidden)($at)
 .Llevel_63_8007F8B8:
 /* 5916680 8007F8B8 0780023C */  lui        $v0, %hi(D_80075794)
 /* 5916684 8007F8BC 9457428C */  lw         $v0, %lo(D_80075794)($v0)
@@ -5249,8 +5249,8 @@ glabel func_level_63_8007AD64
 /* 591677C 8007F9B4 9C573EAC */  sw         $fp, %lo(g_StateSwitch)($at)
 /* 5916780 8007F9B8 0780013C */  lui        $at, %hi(g_ScreenBorderEnabled)
 /* 5916784 8007F9BC 0C5720AC */  sw         $zero, %lo(g_ScreenBorderEnabled)($at)
-/* 5916788 8007F9C0 0780013C */  lui        $at, %hi(D_80075814)
-/* 591678C 8007F9C4 145820AC */  sw         $zero, %lo(D_80075814)($at)
+/* 5916788 8007F9C0 0780013C */  lui        $at, %hi(g_IsSpyroHidden)
+/* 591678C 8007F9C4 145820AC */  sw         $zero, %lo(g_IsSpyroHidden)($at)
 /* 5916790 8007F9C8 C3000208 */  j          .Llevel_63_8008030C
 /* 5916794 8007F9CC 000060AC */   sw        $zero, 0x0($v1)
 .L8007F9D0_:

@@ -514,8 +514,8 @@ glabel func_level_34_80084830
 /* 31FF434 80084E6C 1E044004 */  bltz       $v0, .Llevel_34_80085EE8
 /* 31FF438 80084E70 00000000 */   nop
 .Llevel_34_80084E74:
-/* 31FF43C 80084E74 0780023C */  lui        $v0, %hi(D_80075814)
-/* 31FF440 80084E78 1458428C */  lw         $v0, %lo(D_80075814)($v0)
+/* 31FF43C 80084E74 0780023C */  lui        $v0, %hi(g_IsSpyroHidden)
+/* 31FF440 80084E78 1458428C */  lw         $v0, %lo(g_IsSpyroHidden)($v0)
 /* 31FF444 80084E7C 00000000 */  nop
 /* 31FF448 80084E80 19044014 */  bnez       $v0, .Llevel_34_80085EE8
 /* 31FF44C 80084E84 00000000 */   nop
