@@ -24,7 +24,8 @@
 void func_8002B9CC() {
   int occlusionGroup;
 
-  Memset16(D_8006FCF4, 0, 0x1c00); // Reset the buffer used for edge filling
+  Memset16(g_SonyImage.m_Buf, 0,
+           sizeof(g_SonyImage.m_Buf)); // Reset the buffer used for edge filling
 
   if (g_Camera.m_OcclusionGroup < g_Environment.m_OcclusionGroupCount) {
     g_Environment.m_CullingDistance = 0x28000;
