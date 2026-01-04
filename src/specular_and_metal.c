@@ -47,3 +47,4 @@ void SpecularUpdate(int deltaTime) {
          COSINE_8(D_800770C8.m_specularTime) * 1983 >> 11,
          FIXED_MUL(SINE_8(D_800770C8.m_specularTime), 6345), -1024);
 }
+

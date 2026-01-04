@@ -103,3 +103,4 @@ extern struct {
 extern int g_SavedFairyKissTimer;
 
 #endif
+

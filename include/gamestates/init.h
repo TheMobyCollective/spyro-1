@@ -33,3 +33,4 @@ void InitFairyCutscene(Moby *pMoby);
 void func_8002D02C(void);
 
 #endif // !__GAMESTATE_INIT_H
+

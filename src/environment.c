@@ -41,3 +41,4 @@ void func_8002B9CC() {
 
   func_800258F0(occlusionGroup);
 }
+

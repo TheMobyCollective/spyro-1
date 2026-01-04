@@ -54,11 +54,11 @@ extern struct {
   int m_MusicFadeTarget;
   int m_NextSoundOverrideFlags;
 
-  int unk_0x2d8; // No XREFs
-  int unk_0x2dc; // No XREFs
+  int unk_0x2d8;              // No XREFs
+  int unk_0x2dc;              // No XREFs
   SpuVolume m_VolumeOverride; // Used when m_NextSoundOverrideFlags & 1
-  int unk_0x2e4; // No XREFs
-  int unk_0x2e8; // No XREFs
+  int unk_0x2e4;              // No XREFs
+  int unk_0x2e8;              // No XREFs
 
   u_short m_PitchOverride; // Overrides the pitch of the next sound
   u_char unk_0x2ee[46];    // No XREFs

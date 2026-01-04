@@ -574,3 +574,4 @@ void GamestateUpdate(void) {
 
   SpuUpdate();
 }
+

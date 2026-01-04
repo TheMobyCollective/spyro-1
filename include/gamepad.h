@@ -95,7 +95,7 @@ extern Gamepad g_Pad;       // Current gamepad state
 extern Gamepad g_PadBackup; // Backup gamepad state for cutscenes/portals
 
 extern u_char g_PadSwapFlag; // Tracks whether gamepad has been swapped (0 or 1)
-extern u_char g_PadMutex; // Controller update mutex
+extern u_char g_PadMutex;    // Controller update mutex
 
 extern int g_ActEnabled;   // Is vibration enabled in settings
 extern int g_ActAvailable; // Is vibration available

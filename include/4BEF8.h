@@ -7,3 +7,4 @@ void AllocateBuffers(int pReducedSpace);
 void func_8005B7D8(void);
 
 #endif //__4BEF8_H
+

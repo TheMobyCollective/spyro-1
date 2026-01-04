@@ -1558,3 +1558,4 @@ void RegisterFlightMobyCollectibleType(int index) {
     }
   }
 }
+

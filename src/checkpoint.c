@@ -40,3 +40,4 @@ void CheckpointSave(Moby *checkpoint, u_int checkpointRotation) {
   // SKELETON: Either value is completely unused aside from here
   g_Checkpoint.m_Unused2 = g_Checkpoint.m_Unused1;
 }
+

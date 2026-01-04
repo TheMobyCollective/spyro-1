@@ -1081,3 +1081,4 @@ void func_8005A470(void) {
 
   g_Buffers.m_DiscCopyBuf = g_Buffers.m_CopyBuf;
 }
+

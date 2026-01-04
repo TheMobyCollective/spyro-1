@@ -8,5 +8,5 @@ INCLUDE_ASM("asm/nonmatchings/overlays/titlescreen", func_titlescreen_8007CD38);
 
 INCLUDE_ASM("asm/nonmatchings/overlays/titlescreen", func_titlescreen_8007CEE4);
 
-void func_titlescreen_8007DDE8(void) {
-}
+void func_titlescreen_8007DDE8(void) {}
+

@@ -455,3 +455,4 @@ void GenerateGemCollectMobys(int pGemValue, Moby *pGemPos) {
     vec.z -= 16;
   }
 }
+

@@ -613,3 +613,4 @@ void CameraUpdate(void) {
     func_80053708(&g_PadBackup, &g_Pad);
   }
 }
+

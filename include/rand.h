@@ -12,3 +12,4 @@ int RandRange(int pMin, int pMax);
 int RandRangeSigned(int pMin, int pMax);
 
 #endif // !__RAND_H
+

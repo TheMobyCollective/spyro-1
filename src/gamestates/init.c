@@ -691,3 +691,4 @@ void EndCutscenePlayback(void) {
     g_StateSwitch = 1;
   }
 }
+

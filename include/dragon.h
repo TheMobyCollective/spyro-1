@@ -29,7 +29,8 @@ extern struct {
 
   // These are all used by the gamestate
   int unk_0x50;
-  int m_SoundVoice; // SPU voice channel for cutscene audio (0-23, or 0x7F if none)
+  int m_SoundVoice; // SPU voice channel for cutscene audio (0-23, or 0x7F if
+                    // none)
   int unk_0x58;
   int unk_0x5C;
   int unk_0x60;

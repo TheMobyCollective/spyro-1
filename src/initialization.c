@@ -412,3 +412,4 @@ void Initialize(void) {
   g_UnprocessedFrames = 0;
   g_Environment.m_LodDistance = 0x8000;
 }
+

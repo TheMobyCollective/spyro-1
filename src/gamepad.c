@@ -499,3 +499,4 @@ void PadVSync(void) {
   // Increment the missed frame counter
   g_UnprocessedFrames += 1;
 }
+

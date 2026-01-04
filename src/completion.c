@@ -35,3 +35,4 @@ int CalculateCompletion(void) {
 
   return completion;
 }
+

@@ -59,3 +59,4 @@ extern int g_DemoIndex;
 extern int g_DemoFadeTimer;
 
 #endif
+

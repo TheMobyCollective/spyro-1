@@ -1425,3 +1425,4 @@ void UpdateSpyroReturnHome(void) {
 }
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004AC24);
+
