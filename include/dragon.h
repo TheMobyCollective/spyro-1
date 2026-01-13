@@ -21,9 +21,9 @@ extern struct {
   int m_BlocksRead;  // Spu transfer stage
   int m_HasOverflow;
   int m_LoadLength;
-  int unk_0x3C; // Cutscene ticks
+  int m_CutsceneTicks; // Cutscene ticks
   int unk_0x40;
-  int unk_0x44;   //
+  int m_Fade;     //
   void *unk_0x48; // Camera data
   int unk_0x4C;   // Camera length
 

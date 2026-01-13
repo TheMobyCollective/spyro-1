@@ -1334,8 +1334,8 @@ glabel func_level_45_8007B68C
 /* 425866C 8007C8A4 0780033C */  lui        $v1, %hi(D_8006FCF4 + 0x2400)
 /* 4258670 8007C8A8 F4206324 */  addiu      $v1, $v1, %lo(D_8006FCF4 + 0x2400)
 /* 4258674 8007C8AC 21880000 */  addu       $s1, $zero, $zero
-/* 4258678 8007C8B0 0780043C */  lui        $a0, %hi(D_80077FEC)
-/* 425867C 8007C8B4 EC7F8424 */  addiu      $a0, $a0, %lo(D_80077FEC)
+/* 4258678 8007C8B0 0780043C */  lui        $a0, %hi(g_Hud + 0x44)
+/* 425867C 8007C8B4 EC7F8424 */  addiu      $a0, $a0, %lo(g_Hud + 0x44)
 .Llevel_45_8007C8B8:
 /* 4258680 8007C8B8 000064AC */  sw         $a0, 0x0($v1)
 /* 4258684 8007C8BC 04006324 */  addiu      $v1, $v1, 0x4

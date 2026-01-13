@@ -49,9 +49,6 @@ void func_8002E000(void) {
   }
 }
 
-extern int D_8007568C; // Pause menu no button ticks
-extern int D_800758B8; // Pause menu text rotation ticks
-
 /// @brief Gamestate 10
 void func_8002E084(void) {
   UpdateSpyroReturnHome();

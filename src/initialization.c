@@ -281,7 +281,7 @@ void Initialize(void) {
 
   for (i = 0; i < 8; ++i) {
     // Decompress the image
-    func_80017F24(D_8006FCF4, g_Buffers.m_CopyBuf,
+    func_80017F24(&g_SonyImage, g_Buffers.m_CopyBuf,
                   i * blend_step - blend_start);
     setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
     LoadImage(&frameRect, g_Buffers.m_CopyBuf);
@@ -331,7 +331,7 @@ void Initialize(void) {
 
   for (j = 0; j < 8; ++j) {
     // Decompress the image
-    func_80017F24(D_8006FCF4, g_Buffers.m_CopyBuf, -(j + 1) * blend_step);
+    func_80017F24(&g_SonyImage, g_Buffers.m_CopyBuf, -(j + 1) * blend_step);
     setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
     LoadImage(&frameRect, g_Buffers.m_CopyBuf);
     DrawSync(0);
@@ -412,4 +412,3 @@ void Initialize(void) {
   g_UnprocessedFrames = 0;
   g_Environment.m_LodDistance = 0x8000;
 }
-

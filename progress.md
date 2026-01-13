@@ -16,9 +16,9 @@
 - [ ] func_8001973C
 - [ ] func_8001A050
 - [ ] func_8001A40C
-- [ ] func_8001C694
-- [ ] func_8001CA38
-- [ ] func_8001CFDC
+- [x] func_8001C694
+- [x] func_8001CA38
+- [x] func_8001CFDC
 - [x] func_8001D718
 - [x] func_8001E24C
 - [x] func_8001E6B8

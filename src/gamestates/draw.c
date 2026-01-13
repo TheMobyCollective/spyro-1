@@ -5,11 +5,15 @@
 #include "common.h"
 #include "cutscene.h"
 #include "cyclorama.h"
+#include "dragon.h"
 #include "environment.h"
 #include "fairy.h"
+#include "game_over.h"
 #include "gamepad.h"
 #include "graphics.h"
+#include "hud.h"
 #include "images.h"
+#include "loaders.h"
 #include "math.h"
 #include "memory.h"
 #include "moby.h"
@@ -46,6 +50,10 @@ extern char D_80075620[1]; // "RETRY"
 extern char D_80075628[1]; // "ABORT"
 extern char D_80075630[1]; // "SLOT 1"
 extern char D_80075638[1]; // "SLOT 2"
+
+extern char D_8006F304[1]; // "GAMEOVER"
+// extern char D_80010B9C[1]; // "PRESS START"
+extern ulong D_8006F310[1]; //...?
 
 /// @brief Create text Mobys, no capitalization
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80017FE4);
@@ -116,17 +124,488 @@ void func_8001A40C(void);
 /// @brief Gamestate 2 & 3
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001A40C);
 
-void func_8001C694(void);
 /// @brief Gamestate 10
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001C694);
+void func_8001C694(void) {
+  DB *db;
+  RECT rc;
+  int i;
+  POLY_FT4 *f4;
+  LINE_F2 *l2;
+  int color;
 
-void func_8001CA38(void);
+  D_800758B0 = 0;
+  D_800757B0 = g_Buffers.m_LowerPolyBuffer;
+  D_80075780 = g_Buffers.m_LowerPolyBuffer + 0x1C000;
+  switch (D_800758B8) {
+  case 0:
+    db = &g_DB[0];
+
+    if (db == g_CurDB) {
+      db = &g_DB[1];
+    }
+
+    PutDrawEnv(&db->m_DrawEnv);
+    setRECT(&rc, D_8007568C + 0x200, 0xE0, 0x20 - D_8007568C, 1);
+    LoadImage(&rc, D_8006F310);
+    DrawSync(0);
+
+    for (i = 0; i < 4; ++i) {
+      // build the POLY_FT4
+      f4 = D_800757B0;
+      f4->tag = 0x9000000;
+      f4->code = 0x2C;
+      setRGB0(f4, 0x4C, 0x80, 0x40);
+      setXY4(f4, i << 7, 8, f4->x0 + 0x80, f4->y0, f4->x0, f4->y0 + 0xDF,
+             f4->x0 + 0x80, f4->y0 + 0xDF);
+      setUV4(f4, 0, 0, f4->u0 + 0x80, f4->v0, f4->u0, f4->v0 - 0x21,
+             f4->u0 + 0x80, f4->v0 - 0x21);
+      f4->clut = 0x3820;
+      f4->tpage = i + 0x88;
+
+      // add to OT
+      func_800168A0(f4, 0x3FF);
+      D_800757B0 = f4 + 1;
+    }
+
+    // build LINE_FT2
+    l2 = (LINE_F2 *)(f4 + 1);
+    l2->tag = 0x3000000;
+    l2->code = 0x40;
+    setXY2(l2, 0, 0xE7, 0x200, 0xE7);
+    setRGB0(l2, 0, 0, 0);
+
+    // add to OT
+    func_800168A0(l2, 0x3FF);
+    D_800757B0 = l2 + 1;
+    break;
+  case 1:
+    D_800757D4 = 0; // lerp color target
+    D_8007575C = (0x20 - D_8007568C) * 0x80;
+    color = ColorLerp(*(int *)&g_Cyclorama.m_BackgroundColor, 0, D_8007575C);
+
+    if (g_CurDB == g_DB) {
+      setRGB0(&g_DB[1].m_DrawEnv, ((Color *)&color)->r, ((Color *)&color)->g,
+              ((Color *)&color)->b);
+      PutDrawEnv(&g_DB[1].m_DrawEnv);
+    } else {
+      setRGB0(&g_DB[0].m_DrawEnv, ((Color *)&color)->r, ((Color *)&color)->g,
+              ((Color *)&color)->b);
+      PutDrawEnv(&g_DB[0].m_DrawEnv);
+    }
+
+    func_8004F000();
+    break;
+  }
+
+  Memset(g_SonyImage.u.m_Draw.m_Moby, 0, sizeof(g_SonyImage.u.m_Draw.m_Moby));
+  func_80023AC4();
+  DrawOTag(func_80016784(0x800));
+
+  DrawSync(0);
+  if (D_80075784) {
+    VSync(0);
+  }
+
+  D_80075950.pre = VSync(-1);
+
+  while (D_80075950.pre - D_80075950.post < 2) {
+    VSync(0);
+    D_80075950.pre = VSync(-1);
+  }
+
+  D_80075950.post = VSync(-1);
+  PutDispEnv(&g_CurDB->m_DispEnv);
+}
+
 /// @brief Gamestate 4 & 5
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001CA38);
+void func_8001CA38(void) {
+  RECT rc;
+  int y;
+  if (D_80075940 == 0) {
+    if (g_GameOverTicks == 0) {
+      func_800521C0(); // Queue render mobys
+      func_80019698(); // Creates Mobys, shadows, Spyro, flame and glows and
+                       // sparkles
+      func_800573C8(); // particles
+      func_80050BD0();
+      func_8002B9CC(); // Create the environment
+      DrawSync(0);
+      VSync(0);
+      PutDispEnv(&g_CurDB->m_DispEnv);
+      PutDrawEnv(&g_CurDB->m_DrawEnv);
+      DrawOTag(func_80016784(0x800));
+      DrawSync(0);
+      VSync(0);
 
-void func_8001CFDC(void);
+      rc.x = 0;
+      rc.y = y = g_CurDB != g_DB ? 0xF8 : 0x8;
+      rc.w = 0x200;
+      rc.h = 0xE0;
+      MoveImage(&rc, 0, 0x100 - y);
+      DrawSync(0);
+      g_DB[0].m_DrawEnv.isbg = '\0';
+      g_DB[1].m_DrawEnv.isbg = '\0';
+    } else if (g_GameOverTicks <= 15) {
+      if (g_GameOverTicks == 1) {
+        func_800190D4(2, 0x10, 0x10, 0x10);
+      } else {
+        func_800190D4(2, 0x20, 0x20, 0x20);
+      }
+      DrawSync(0);
+      VSync(0);
+      PutDispEnv(&g_CurDB->m_DispEnv);
+      PutDrawEnv(&g_CurDB->m_DrawEnv);
+      DrawOTag(func_80016784(0x800));
+      if (g_GameOverTicks == 15) {
+        g_DB[0].m_DrawEnv.isbg = '\x01';
+        g_DB[1].m_DrawEnv.isbg = '\x01';
+        setRGB0(&g_DB[0].m_DrawEnv, 0, 0, 0);
+        setRGB0(&g_DB[1].m_DrawEnv, 0, 0, 0);
+        DrawSync(0);
+        VSync(0);
+        setRECT(&rc, 0, 0, 0x200, 0x1E0);
+        ClearImage(&rc, '\0', '\0', '\0');
+      }
+    }
+  } else if (D_80075940 == 1) {
+    if (g_GameOverTicks >= 60) {
+      int i;
+      Moby *curMoby;
+      Vector3D position;
+      Vector3D spacing;
+      for (i = 0; i < 8; ++i) {
+        int tickOff = g_GameOverTicks - 60 - g_GameOverLetterDisplayTicks[i];
+        if (tickOff >= 0) {
+          --g_HudMobys;
+          Memset(g_HudMobys, 0, sizeof(Moby));
+          if (tickOff < 24)
+            g_HudMobys->m_Position.z = g_GameOverTextZ[tickOff];
+          else
+            g_HudMobys->m_Position.z = 0x400;
+          g_HudMobys->m_Class =
+              (D_8006F304[i] & 0xFF) - 'A' + MOBYCLASS_LETTER_A;
+          g_HudMobys->m_Position.x = g_GameOverTextXY[i].x;
+          g_HudMobys->m_Position.y = g_GameOverTextXY[i].y;
+          g_HudMobys->m_Rotation.z = g_GameOverTextRot[i];
+          g_HudMobys->m_DepthOffset = '\x04';
+          g_HudMobys->m_SpecularMetalType = '\v';
+          g_HudMobys->m_RenderRadius = ' ';
+        }
+      }
+
+      if (g_LoadStage > 10 && g_GameOverTicks > 420) {
+        setXYZ(&spacing, 0x10, 1, 0x1400);
+        setXYZ(&position, 0xAE, 0xD0, 0x1100);
+        func_800181AC("PRESS START", &position, &spacing, 0x12, 0xB);
+        curMoby = g_HudMobys;
+        for (i = 0; i < 10; ++i) {
+          (*curMoby++).m_Rotation.z =
+              COSINE_8((g_GameOverTicks * 4 + i * 12) & 0xFF) * 3 >> 9;
+        }
+      }
+
+      g_SonyImage.m_ShadedMobys[0] = nullptr;
+      func_80018880();
+      Memset(&g_SonyImage.u.m_Draw.m_Moby, 0,
+             sizeof(g_SonyImage.u.m_Draw.m_Moby));
+      func_80022A2C();
+      if (g_GameOverTicks > 180) {
+        func_80023AC4();
+      }
+    }
+    g_Camera.m_Rotation.y = g_GameOverSkyboxRotY;
+    g_Camera.m_Rotation.z = g_GameOverSkyboxRotZ;
+    CameraUpdateMatrices();
+    func_8004EBA8(-1, &g_Camera.m_ViewMatrix, &g_Camera.m_ProjectionMatrix);
+    g_Camera.m_Rotation.y = g_GameOverRotY;
+    g_Camera.m_Rotation.z = g_GameOverRotZ;
+    if (g_GameOverTicks < 32) {
+      int fade = (31 - g_GameOverTicks) * 8;
+      func_800190D4(2, fade, fade, fade);
+    }
+    DrawSync(0);
+    VSync(0);
+    PutDispEnv(&g_CurDB->m_DispEnv);
+    PutDrawEnv(&g_CurDB->m_DrawEnv);
+    DrawOTag(func_80016784(0x800));
+  } else {
+    if (g_GameOverTicks == 0) {
+      rc.x = 0;
+      rc.y = y = g_CurDB != g_DB ? 0xF8 : 0x8;
+      rc.w = 0x200;
+      rc.h = 0xE0;
+      MoveImage(&rc, 0, 0x100 - y);
+      DrawSync(0);
+      g_DB[0].m_DrawEnv.isbg = '\0';
+      g_DB[1].m_DrawEnv.isbg = '\0';
+    } else if (g_GameOverTicks <= 15) {
+      if (g_GameOverTicks == 1) {
+        func_800190D4(2, 0x10, 0x10, 0x10);
+      } else {
+        func_800190D4(2, 0x20, 0x20, 0x20);
+      }
+      DrawSync(0);
+      VSync(0);
+      PutDispEnv(&g_CurDB->m_DispEnv);
+      PutDrawEnv(&g_CurDB->m_DrawEnv);
+      DrawOTag(func_80016784(0x800));
+      if (g_GameOverTicks == 15) {
+        g_DB[0].m_DrawEnv.isbg = '\x01';
+        g_DB[1].m_DrawEnv.isbg = '\x01';
+        setRGB0(&g_DB[0].m_DrawEnv, 0, 0, 0);
+        setRGB0(&g_DB[1].m_DrawEnv, 0, 0, 0);
+        DrawSync(0);
+        VSync(0);
+        setRECT(&rc, 0, 0, 0x200, 0x1E0);
+        ClearImage(&rc, '\0', '\0', '\0');
+      }
+    }
+  }
+}
+
+extern struct {
+  int unk_0x0;
+  char unk_0x4[12];
+  SHORTMATRIX mat_0x10;
+  int unk_0x24;
+  Vector3D8 vec_0x28;
+} D_80076248;
+
+extern short D_8006F3C0[24]; //???
+
 /// @brief Gamestate 8
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001CFDC);
+void func_8001CFDC(void) {
+  char _[16];
+
+  if (D_80076248.unk_0x0 != 0) {
+    RotVec8ToMatrix(&D_80076248.vec_0x28, (MATRIX *)&D_80076248.mat_0x10,
+                    (MATRIX *)&g_Camera.m_ProjectionMatrix);
+    func_80058864();
+  }
+
+  if (g_DragonCutscene.m_State == 0) {
+    func_800521C0(); // Queue render mobys
+    func_80019698(); // Creates Mobys, shadows, Spyro, flame and glows and
+                     // sparkles
+    func_8002B9CC(); // Create the environment
+    func_80050BD0(); //
+    func_800573C8(); // particles
+
+    if (g_DragonCutscene.m_Fade) {
+      // fade in/out
+      func_800190D4(1, g_DragonCutscene.m_Fade, g_DragonCutscene.m_Fade,
+                    g_DragonCutscene.m_Fade);
+    }
+
+    if (g_ScreenBorderEnabled || D_800756C0) {
+      func_80018F30(); // create border
+    }
+  } else if (g_DragonCutscene.m_State < 4) {
+    {
+      Moby **mobyBuf = g_SonyImage.u.m_Draw.m_Moby;
+      if (g_DragonCutscene.m_RescuedDragonMoby->m_State < 0x80)
+        *mobyBuf++ = g_DragonCutscene.m_RescuedDragonMoby;
+      if (g_DragonCutscene.m_State == 3)
+        *mobyBuf++ = g_DragonCutscene.m_CutsceneSpyro;
+      *mobyBuf = nullptr;
+    }
+
+    // copy over the still-visible dragon fragments
+    {
+      Moby **mobyBuf = g_SonyImage.m_ShadedMobys;
+      Moby *lvlMoby;
+      for (lvlMoby = g_LevelMobys; lvlMoby->m_State != 0xFF; ++lvlMoby) {
+        if (lvlMoby->m_Class == MOBYCLASS_CRYSTAL_DRAGON_FRAGMENT &&
+            lvlMoby->m_State < 0x80)
+          *mobyBuf++ = lvlMoby;
+      }
+      *mobyBuf = nullptr;
+    }
+
+    func_80018728(); // Create "Rescued ..." text
+    func_80018880(); // Copy HUD mobys to shaded mobys
+    func_8001F158(); // Prepare Moby draw
+    Memset(g_SonyImage.u.m_Draw.m_Moby, 0, sizeof(g_SonyImage.u.m_Draw.m_Moby));
+    func_8001F798(); // Draw mobys
+    func_80022A2C(); // Render shaded mobys
+    func_80059F8C(); // Render moby shadows
+    func_80023AC4(); // Render Spyro model
+    func_80059A48(); // Render Spyro shadow
+    func_8002B9CC(); // Create environment
+    func_80050BD0();
+    func_800573C8(); // Render particles
+
+    if (g_DragonCutscene.m_Fade) {
+      // fade in/out
+      func_800190D4(1, g_DragonCutscene.m_Fade, g_DragonCutscene.m_Fade,
+                    g_DragonCutscene.m_Fade);
+    }
+
+    if (g_ScreenBorderEnabled || D_800756C0) {
+      func_80018F30(); // Create border
+    }
+  } else if (g_DragonCutscene.m_State == 4) {
+    {
+      Moby **mobyBuf = g_SonyImage.u.m_Draw.m_Moby;
+      *mobyBuf++ = g_DragonCutscene.m_CutsceneSpyro;
+      *mobyBuf++ = g_DragonCutscene.m_CutsceneDragon;
+      *mobyBuf = nullptr;
+    }
+
+    {
+      Moby **mobyBuf = g_SonyImage.m_ShadedMobys;
+      Moby *lvlMoby;
+      for (lvlMoby = g_LevelMobys; lvlMoby->m_State != 0xFF; ++lvlMoby) {
+        if (lvlMoby->m_Class == MOBYCLASS_CRYSTAL_DRAGON_FRAGMENT &&
+            lvlMoby->m_State < 0x80)
+          *mobyBuf++ = lvlMoby;
+      }
+      *mobyBuf = nullptr;
+    }
+
+    if (g_DragonCutscene.m_CutsceneTicks < 60) {
+      func_80018728(); // Create "Rescued ..." text
+      func_80018880(); // Copy HUD mobys to shaded mobys
+    }
+
+    func_8001F158(); // Prepare Moby draw
+    Memset(g_SonyImage.u.m_Draw.m_Moby, 0, sizeof(g_SonyImage.u.m_Draw.m_Moby));
+    func_8001F798(); // Draw mobys
+    func_80022A2C(); // Render shaded mobys
+    func_80059F8C(); // Render moby shadows
+    func_80059A48(); // Render Spyro shadow
+    func_8002B9CC(); // Create environment
+    func_80050BD0();
+    func_800573C8(); // Render particles
+
+    if (g_ScreenBorderEnabled || D_800756C0) {
+      func_80018F30(); // Create border
+    }
+  } else if (g_DragonCutscene.m_State == 5) {
+    {
+      Moby **mobyBuf = g_SonyImage.u.m_Draw.m_Moby;
+      *mobyBuf++ = g_DragonCutscene.m_CutsceneSpyro;
+      *mobyBuf = nullptr;
+    }
+
+    // copy over the hud dragon/counts
+    {
+      Moby **mobyBuf = g_SonyImage.m_ShadedMobys;
+      int i;
+      for (i = 0; i < 3; ++i) {
+        *mobyBuf++ = g_Hud.m_Mobys + 5 + i;
+      }
+      *mobyBuf = nullptr;
+    }
+
+    func_8001F158(); // Prepare Moby draw
+    if (g_SonyImage.u.m_Draw.unk_0x1600 != 0) {
+      int value = D_8006F3C0[g_DragonCutscene.m_CutsceneTicks];
+      g_SonyImage.u.m_Draw.unk_0x161C.x =
+          FIXED_MUL(g_SonyImage.u.m_Draw.unk_0x161C.x, value);
+      g_SonyImage.u.m_Draw.unk_0x161C.y =
+          FIXED_MUL(g_SonyImage.u.m_Draw.unk_0x161C.y, value);
+      g_SonyImage.u.m_Draw.unk_0x161C.z =
+          FIXED_MUL(g_SonyImage.u.m_Draw.unk_0x161C.z, value);
+      if (g_DragonCutscene.m_CutsceneTicks > 8) {
+        value = Cos((g_DragonCutscene.m_CutsceneTicks - 8) * 42);
+        g_SonyImage.u.m_Draw.unk_0x1622.x =
+            FIXED_MUL(g_SonyImage.u.m_Draw.unk_0x1622.x, value);
+        g_SonyImage.u.m_Draw.unk_0x1622.y =
+            FIXED_MUL(g_SonyImage.u.m_Draw.unk_0x1622.y, value);
+        g_SonyImage.u.m_Draw.unk_0x1622.z =
+            FIXED_MUL(g_SonyImage.u.m_Draw.unk_0x1622.z, value);
+      }
+    }
+
+    Memset(g_SonyImage.u.m_Draw.m_Moby, 0, sizeof(g_SonyImage.u.m_Draw.m_Moby));
+    func_8001F798(); // Draw mobys
+    func_80022A2C(); // Render shaded mobys
+    func_80023AC4(); // Render Spyro model
+    func_80059A48(); // Render Spyro shadow
+    func_8002B9CC(); // Create environment
+    func_80050BD0();
+    func_800573C8(); // Render particles
+
+    if (g_ScreenBorderEnabled || D_800756C0) {
+      func_80018F30(); // Create border
+    }
+  } else if (g_DragonCutscene.m_State == 6) {
+    int i;
+    Moby **mobyBuf = g_SonyImage.m_ShadedMobys;
+    for (i = 0; i < 3; ++i) {
+      *mobyBuf++ = g_Hud.m_Mobys + 5 + i;
+    }
+    *mobyBuf = nullptr;
+
+    Memset(g_SonyImage.u.m_Draw.m_Moby, 0, sizeof(g_SonyImage.u.m_Draw.m_Moby));
+    func_80022A2C(); // Render shaded mobys
+    func_80023AC4(); // Render Spyro model
+    func_80059A48(); // Render Spyro shadow
+    func_8002B9CC(); // Create environment
+    func_80050BD0();
+    func_800573C8(); // Render particles
+
+    if (g_ScreenBorderEnabled || D_800756C0) {
+      func_80018F30(); // Create border
+    }
+  } else if (g_DragonCutscene.m_State == 7) {
+    int i;
+    if (g_DragonCutscene.m_CutsceneTicks < 16) {
+      Moby **mobyBuf = g_SonyImage.m_ShadedMobys;
+      for (i = 0; i < 3; ++i) {
+        *mobyBuf++ = g_Hud.m_Mobys + 5 + i;
+      }
+      *mobyBuf = nullptr;
+
+      Memset(g_SonyImage.u.m_Draw.m_Moby, 0,
+             sizeof(g_SonyImage.u.m_Draw.m_Moby));
+      func_80022A2C(); // Render shaded mobys
+    } else {
+      func_800521C0();
+      func_8001F158(); // Prepare Moby draw
+      Memset(g_SonyImage.u.m_Draw.m_Moby, 0,
+             sizeof(g_SonyImage.u.m_Draw.m_Moby));
+      func_8001F798(); // Draw mobys
+      func_800208FC(); // Init shiny moby renderer
+      func_80020F34();
+      func_80022A2C(); // Render shaded mobys
+      func_80059F8C(); // Render moby shadows
+    }
+    func_80023AC4(); // Render Spyro model
+    func_80059A48(); // Render Spyro shadow
+    func_8002B9CC(); // Create environment
+    func_80050BD0();
+    func_800573C8(); // Render particles
+
+    if (g_ScreenBorderEnabled || D_800756C0) {
+      func_80018F30(); // Create border
+    }
+
+    if (g_DragonCutscene.m_Fade) {
+      // fade in/out
+      func_800190D4(1, g_DragonCutscene.m_Fade, g_DragonCutscene.m_Fade,
+                    g_DragonCutscene.m_Fade);
+    }
+  }
+
+  DrawSync(0);
+  if (D_80075784) {
+    VSync(0);
+  }
+
+  D_80075950.pre = VSync(-1);
+
+  while (D_80075950.pre - D_80075950.post < 2) {
+    VSync(0);
+    D_80075950.pre = VSync(-1);
+  }
+
+  D_80075950.post = VSync(-1);
+  PutDispEnv(&g_CurDB->m_DispEnv);
+  PutDrawEnv(&g_CurDB->m_DrawEnv);
+  DrawOTag(func_80016784(0x800));
+}
 
 typedef struct {
   short x, x2;
@@ -457,10 +936,10 @@ void func_8001E24C(void) {
   if (D_800777E8.m_State >= 4) {
 
     if (D_800777E8.m_State < 6) {
-      Moby **mobyQueue = (void *)g_SonyImage.m_Buf;
+      Moby **mobyQueue = g_SonyImage.u.m_Draw.m_Moby;
 
       *(mobyQueue++) = D_800777E8.m_BalloonMoby;
-      *(mobyQueue++) = (void *)0;
+      *(mobyQueue++) = nullptr;
 
       if (D_800777E8.m_Homeworld < 5) {
         // Minus one is due to the homeworlds starting at 10
@@ -499,7 +978,8 @@ void func_8001E24C(void) {
       }
 
       func_8001F158(); // Prepare Moby draw
-      Memset(g_SonyImage.m_Buf, 0, 0x900);
+      Memset(g_SonyImage.u.m_Draw.m_Moby, 0,
+             sizeof(g_SonyImage.u.m_Draw.m_Moby));
       func_8001F798(); // Draw Mobys
 
       g_SonyImage.m_ShadedMobys[0] = nullptr;
@@ -632,7 +1112,7 @@ void func_8001E6B8() {
 
   g_SonyImage.m_ShadedMobys[0] = nullptr;
   func_80018880(); // Copies the HUD Mobys to the Shaded Mobys list
-  Memset(g_SonyImage.m_Buf, 0, 0x900);
+  Memset(g_SonyImage.u.m_Draw.m_Moby, 0, sizeof(g_SonyImage.u.m_Draw.m_Moby));
   func_80022A2C(); // Renders the shaded mobys
 
   if (g_TitlescreenState.m_State == TSS_Active) {
@@ -663,9 +1143,9 @@ void func_8001E9C8(void) {
 
   func_800521C0();
   func_8001F158();
-  Memset(g_SonyImage.m_Buf, 0, 0x900);
+  Memset(g_SonyImage.u.m_Draw.m_Moby, 0, sizeof(g_SonyImage.u.m_Draw.m_Moby));
   func_8001F798();
-  Memset(g_SonyImage.m_Buf, 0, 0x1C00);
+  Memset(&g_SonyImage.u.m_Draw, 0, sizeof(g_SonyImage.u.m_Draw));
 
   g_Environment.m_CullingDistance = 0x14000;
 
@@ -731,7 +1211,7 @@ void func_8001EB80(void) {
   g_SonyImage.m_ShadedMobys[0] = (void *)0;
 
   func_80018880(); // Copies the HUD Mobys to the Shaded Mobys list
-  Memset(g_SonyImage.m_Buf, 0, 0x900);
+  Memset(g_SonyImage.u.m_Draw.m_Moby, 0, sizeof(g_SonyImage.u.m_Draw.m_Moby));
   func_80022A2C(); // Renders the shaded mobys
   DrawSync(0);
 

@@ -3089,11 +3089,8 @@ dlabel D_8006F296
 /* 5FAB0 8006F2B0 40ED5000 */ .word 0x0050ED40
 .size D_8006F296, . - D_8006F296
 
-dlabel D_8006F2B4
+dlabel g_GameOverTextXY
 /* 5FAB4 8006F2B4 */ .short 0x22CE
-.size D_8006F2B4, . - D_8006F2B4
-
-dlabel D_8006F2B6
 /* 5FAB6 8006F2B6 */ .short 0x0900
 /* 5FAB8 8006F2B8 */ .short 0x23C2
 /* 5FABA 8006F2BA */ .short 0x0A3E
@@ -3109,9 +3106,9 @@ dlabel D_8006F2B6
 /* 5FACE 8006F2CE */ .short 0x0A3E
 /* 5FAD0 8006F2D0 */ .short 0x2D32
 /* 5FAD2 8006F2D2 */ .short 0x0900
-.size D_8006F2B6, . - D_8006F2B6
+.size g_GameOverTextXY, . - g_GameOverTextXY
 
-dlabel D_8006F2D4
+dlabel g_GameOverTextZ
 /* 5FAD4 8006F2D4 */ .short 0x0C00
 /* 5FAD6 8006F2D6 */ .short 0x0B80
 /* 5FAD8 8006F2D8 */ .short 0x0B00
@@ -3136,7 +3133,7 @@ dlabel D_8006F2D4
 /* 5FAFE 8006F2FE */ .short 0x041E
 /* 5FB00 8006F300 */ .short 0x0428
 /* 5FB02 8006F302 */ .short 0x0414
-.size D_8006F2D4, . - D_8006F2D4
+.size g_GameOverTextZ, . - g_GameOverTextZ
 
 dlabel D_8006F304
 /* 5FB04 8006F304 */ .byte 0x47

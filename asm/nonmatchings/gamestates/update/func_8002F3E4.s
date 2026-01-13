@@ -1883,8 +1883,8 @@ glabel func_8002F3E4
 /* 217CC 80030FCC 21880000 */  addu       $s1, $zero, $zero
 /* 217D0 80030FD0 0780143C */  lui        $s4, %hi(g_HudOpeningOffsets)
 /* 217D4 80030FD4 7CE79426 */  addiu      $s4, $s4, %lo(g_HudOpeningOffsets)
-/* 217D8 80030FD8 0880103C */  lui        $s0, %hi(D_800781B4)
-/* 217DC 80030FDC B4811026 */  addiu      $s0, $s0, %lo(D_800781B4)
+/* 217D8 80030FD8 0880103C */  lui        $s0, %hi(g_Hud + 0x20C)
+/* 217DC 80030FDC B4811026 */  addiu      $s0, $s0, %lo(g_Hud + 0x20C)
 /* 217E0 80030FE0 21980000 */  addu       $s3, $zero, $zero
 /* 217E4 80030FE4 C9F2000C */  jal        func_8003CB24
 /* 217E8 80030FE8 21900000 */   addu      $s2, $zero, $zero
@@ -1893,8 +1893,8 @@ glabel func_8002F3E4
 /* 217F4 80030FF4 A327010C */  jal        func_80049E8C
 /* 217F8 80030FF8 00000000 */   nop
 .L80030FFC:
-/* 217FC 80030FFC 0880043C */  lui        $a0, %hi(D_800781B0)
-/* 21800 80031000 B0818424 */  addiu      $a0, $a0, %lo(D_800781B0)
+/* 217FC 80030FFC 0880043C */  lui        $a0, %hi(g_Hud + 0x208)
+/* 21800 80031000 B0818424 */  addiu      $a0, $a0, %lo(g_Hud + 0x208)
 /* 21804 80031004 21206402 */  addu       $a0, $s3, $a0
 /* 21808 80031008 0780053C */  lui        $a1, %hi(D_8006F3F0)
 /* 2180C 8003100C F0F3A524 */  addiu      $a1, $a1, %lo(D_8006F3F0)
@@ -2091,13 +2091,13 @@ glabel func_8002F3E4
 /* 21AE8 800312E8 22004010 */  beqz       $v0, .L80031374
 /* 21AEC 800312EC 00000000 */   nop
 /* 21AF0 800312F0 21980000 */  addu       $s3, $zero, $zero
-/* 21AF4 800312F4 0880103C */  lui        $s0, %hi(D_800781B4)
-/* 21AF8 800312F8 B4811026 */  addiu      $s0, $s0, %lo(D_800781B4)
+/* 21AF4 800312F4 0880103C */  lui        $s0, %hi(g_Hud + 0x20C)
+/* 21AF8 800312F8 B4811026 */  addiu      $s0, $s0, %lo(g_Hud + 0x20C)
 /* 21AFC 800312FC 21900000 */  addu       $s2, $zero, $zero
 /* 21B00 80031300 21880000 */  addu       $s1, $zero, $zero
 .L80031304:
-/* 21B04 80031304 0880043C */  lui        $a0, %hi(D_800781B0)
-/* 21B08 80031308 B0818424 */  addiu      $a0, $a0, %lo(D_800781B0)
+/* 21B04 80031304 0880043C */  lui        $a0, %hi(g_Hud + 0x208)
+/* 21B08 80031308 B0818424 */  addiu      $a0, $a0, %lo(g_Hud + 0x208)
 /* 21B0C 8003130C 21204402 */  addu       $a0, $s2, $a0
 /* 21B10 80031310 0780053C */  lui        $a1, %hi(D_8006F3F0)
 /* 21B14 80031314 F0F3A524 */  addiu      $a1, $a1, %lo(D_8006F3F0)

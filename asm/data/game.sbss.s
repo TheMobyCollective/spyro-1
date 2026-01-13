@@ -549,7 +549,7 @@ dlabel D_80075934
 dlabel D_80075938
 /* 66110 80075938 */ .space 0x04
 
-dlabel D_8007593C
+dlabel g_GameOverTicks
 /* 66114 8007593C */ .space 0x04
 
 dlabel D_80075940
