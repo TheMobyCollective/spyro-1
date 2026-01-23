@@ -11,6 +11,7 @@
 #include "fairy.h"
 #include "gamestates/draw.h"
 #include "graphics.h"
+#include "game_over.h"
 #include "hud.h"
 #include "initialization.h"
 #include "loaders.h"
@@ -22,9 +23,6 @@
 #include "spyro.h"
 #include "titlescreen.h"
 #include "variables.h"
-
-extern int D_8007568C; // Pause menu no button ticks
-extern int D_800758B8; // Pause menu text rotation ticks
 
 extern int D_80075720; // Selected menu item index
 extern int D_800757C8; // OptionsSubmenuIsOpen
@@ -203,9 +201,6 @@ void func_8002C7BC(void) {
   func_800567F4(g_CdMusic.m_CurrentTrack, 8);
 }
 
-extern int D_8007593C;
-extern int D_80075940;
-
 /// @brief Die, lose a life and respawn or game over
 void func_8002C85C(void) {
   int newState;
@@ -219,7 +214,7 @@ void func_8002C85C(void) {
   g_Gamestate = newState;
 
   D_80075940 = 0;
-  D_8007593C = 0;
+  g_GameOverTicks = 0;
 }
 
 /// @brief Sets gamestate 0, resets background color, and resets the specular

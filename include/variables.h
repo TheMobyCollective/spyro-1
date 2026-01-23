@@ -40,4 +40,7 @@ extern int D_80075748; // Music volume
 
 extern short D_80075788; // Idle animation timer
 
+extern int D_8007568C; // Pause menu no button ticks
+extern int D_800758B8; // Pause menu text rotation ticks
+
 #endif

@@ -112,7 +112,7 @@ dlabel D_800752C8
 .align 2
 .size D_800752C8, . - D_800752C8
 
-dlabel D_800752D0
+dlabel g_GameOverTextRot
 /* 65AD0 800752D0 */ .byte 0x6B
 /* 65AD1 800752D1 */ .byte 0x60
 /* 65AD2 800752D2 */ .byte 0x55
@@ -121,25 +121,25 @@ dlabel D_800752D0
 /* 65AD5 800752D5 */ .byte 0x2B
 /* 65AD6 800752D6 */ .byte 0x20
 /* 65AD7 800752D7 */ .byte 0x15
-.size D_800752D0, . - D_800752D0
+.size g_GameOverTextRot, . - g_GameOverTextRot
 
-dlabel D_800752D8
+dlabel g_GameOverRotY
 /* 65AD8 800752D8 */ .short 0x00B0
-.size D_800752D8, . - D_800752D8
+.size g_GameOverRotY, . - g_GameOverRotY
 
-dlabel D_800752DA
+dlabel g_GameOverRotZ
 /* 65ADA 800752DA */ .short 0x0400
-.size D_800752DA, . - D_800752DA
+.size g_GameOverRotZ, . - g_GameOverRotZ
 
-dlabel D_800752DC
-/* 65ADC 800752DC */ .short 0x0F50
-.size D_800752DC, . - D_800752DC
+dlabel g_GameOverSkyboxRotY
+/* 65ADC g_GameOverSkyboxRotY */ .short 0x0F50
+.size g_GameOverSkyboxRotY, . - g_GameOverSkyboxRotY
 
-dlabel D_800752DE
+dlabel g_GameOverSkyboxRotZ
 /* 65ADE 800752DE */ .short 0x0884
-.size D_800752DE, . - D_800752DE
+.size g_GameOverSkyboxRotZ, . - g_GameOverSkyboxRotZ
 
-dlabel D_800752E0
+dlabel g_GameOverLetterDisplayTicks
 /* 65AE0 800752E0 */ .byte 0x00
 /* 65AE1 800752E1 */ .byte 0x08
 /* 65AE2 800752E2 */ .byte 0x10
@@ -148,4 +148,4 @@ dlabel D_800752E0
 /* 65AE5 800752E5 */ .byte 0x50
 /* 65AE6 800752E6 */ .byte 0x58
 /* 65AE7 800752E7 */ .byte 0x60
-.size D_800752E0, . - D_800752E0
+.size g_GameOverLetterDisplayTicks, . - g_GameOverLetterDisplayTicks

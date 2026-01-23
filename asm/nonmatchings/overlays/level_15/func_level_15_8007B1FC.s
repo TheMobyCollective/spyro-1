@@ -45,8 +45,8 @@ glabel func_level_15_8007B1FC
 /* 16A885C 8007B294 CC5720AC */  sw         $zero, %lo(D_800757CC)($at)
 /* 16A8860 8007B298 21200000 */  addu       $a0, $zero, $zero
 .Llevel_15_8007B29C:
-/* 16A8864 8007B29C 0880033C */  lui        $v1, %hi(D_80078032)
-/* 16A8868 8007B2A0 32806324 */  addiu      $v1, $v1, %lo(D_80078032)
+/* 16A8864 8007B29C 0880033C */  lui        $v1, %hi(g_Hud + 0x8A)
+/* 16A8868 8007B2A0 32806324 */  addiu      $v1, $v1, %lo(g_Hud + 0x8A)
 .Llevel_15_8007B2A4:
 /* 16A886C 8007B2A4 00006290 */  lbu        $v0, 0x0($v1)
 /* 16A8870 8007B2A8 01008424 */  addiu      $a0, $a0, 0x1
