@@ -9,7 +9,7 @@
 
 extern int _stacksize;
 
-/// @brief: Set up the polygon buffers
+/// @brief Set up the polygon buffers
 void AllocateBuffers(int pReducedSpace) {
   // Tried being smart with this, doesn't natch
   g_Buffers.m_ParticleSpaceStart =
@@ -76,4 +76,3 @@ void func_8005B7D8(void) {
 
   AllocateBuffers(0);
 }
-

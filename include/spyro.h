@@ -362,10 +362,10 @@ typedef struct {
 
 extern SpyroFlame g_SpyroFlame;
 
-/// @brief: Resets Spyro
+/// @brief Resets Spyro
 void func_8004AC24(int pKeepPosition);
 
-/// @brief: Forces state to and resets animation
+/// @brief Forces state to and resets animation
 void func_8003FDC8(int pNewState);
 
 void UpdateSpyroEnterReturnHome(void);

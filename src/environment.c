@@ -5,22 +5,22 @@
 #include "renderers.h"
 #include "sony_image.h"
 
-// /// @brief: Update environment animations
+// /// @brief Update environment animations
 // func_8002A6FC
 
-// /// @brief: Change environment animation's flags
+// /// @brief Change environment animation's flags
 // func_8002B390
 
-// /// @brief: Get environment animation's current frame
+// /// @brief Get environment animation's current frame
 // func_8002B3F4
 
-// /// @brief: Set environment animation's current frame
+// /// @brief Set environment animation's current frame
 // func_8002B444
 
-// /// @brief: Initialize environment animations
+// /// @brief Initialize environment animations
 // func_8002B4AC
 
-/// @brief: Create the environment
+/// @brief Create the environment
 void func_8002B9CC() {
   int occlusionGroup;
 

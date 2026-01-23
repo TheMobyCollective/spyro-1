@@ -224,8 +224,8 @@ glabel func_level_15_8007B68C
 /* 16A8DC4 8007B7FC E2FF4014 */  bnez       $v0, .Llevel_15_8007B788
 /* 16A8DC8 8007B800 08000624 */   addiu     $a2, $zero, 0x8
 /* 16A8DCC 8007B804 1000A427 */  addiu      $a0, $sp, 0x10
-/* 16A8DD0 8007B808 0780053C */  lui        $a1, %hi(D_8006F310)
-/* 16A8DD4 8007B80C 10F3A524 */  addiu      $a1, $a1, %lo(D_8006F310)
+/* 16A8DD0 8007B808 0780053C */  lui        $a1, %hi(g_GrayscalePalette)
+/* 16A8DD4 8007B80C 10F3A524 */  addiu      $a1, $a1, %lo(g_GrayscalePalette)
 /* 16A8DD8 8007B810 00020224 */  addiu      $v0, $zero, 0x200
 /* 16A8DDC 8007B814 1000A2A7 */  sh         $v0, 0x10($sp)
 /* 16A8DE0 8007B818 E0000224 */  addiu      $v0, $zero, 0xE0

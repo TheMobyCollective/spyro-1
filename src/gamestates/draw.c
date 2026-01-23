@@ -54,7 +54,7 @@ extern char D_80075638[1]; // "SLOT 2"
 
 extern char D_8006F304[1]; // "GAMEOVER"
 // extern char D_80010B9C[1]; // "PRESS START"
-extern ulong D_8006F310[1]; //...?
+extern u_short g_GrayscalePalette[32]; // 32 colors
 
 /// @brief Create text Mobys, no capitalization
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80017FE4);
@@ -75,6 +75,7 @@ void func_8001860C(int pX1, int pX2, int pY1, int pY2);
 /// @brief Creates a shaded box
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001860C);
 
+void func_80018728(void);
 /// @brief Creates rescued dragon text
 INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018728);
 
@@ -165,7 +166,8 @@ void func_8001C694(void) {
 
   D_800758B0 = 0;
   D_800757B0 = g_Buffers.m_LowerPolyBuffer;
-  D_80075780 = g_Buffers.m_LowerPolyBuffer + 0x1C000;
+  D_80075780 = (char *)g_Buffers.m_LowerPolyBuffer + 0x1C000;
+
   switch (D_800758B8) {
   case 0:
     db = &g_DB[0];
@@ -175,33 +177,40 @@ void func_8001C694(void) {
     }
 
     PutDrawEnv(&db->m_DrawEnv);
-    setRECT(&rc, D_8007568C + 0x200, 0xE0, 0x20 - D_8007568C, 1);
-    LoadImage(&rc, D_8006F310);
+    setRECT(&rc, 512 + D_8007568C, 224, 32 - D_8007568C, 1);
+    LoadImage(&rc, (u_long *)g_GrayscalePalette);
     DrawSync(0);
 
     for (i = 0; i < 4; ++i) {
       // build the POLY_FT4
       f4 = D_800757B0;
+
+      // setPolyFT4(f4); (Doesn't match, because they zero out the addr field)
       f4->tag = 0x9000000;
       f4->code = 0x2C;
+
       setRGB0(f4, 0x4C, 0x80, 0x40);
       setXY4(f4, i << 7, 8, f4->x0 + 0x80, f4->y0, f4->x0, f4->y0 + 0xDF,
              f4->x0 + 0x80, f4->y0 + 0xDF);
       setUV4(f4, 0, 0, f4->u0 + 0x80, f4->v0, f4->u0, f4->v0 - 0x21,
              f4->u0 + 0x80, f4->v0 - 0x21);
-      f4->clut = 0x3820;
-      f4->tpage = i + 0x88;
+
+      f4->clut = getClut(512, 224);
+      f4->tpage = getTPage(1, 0, 512, 0) + i;
 
       // add to OT
       func_800168A0(f4, 0x3FF);
       D_800757B0 = f4 + 1;
     }
 
-    // build LINE_FT2
+    // build LINE_F2
     l2 = (LINE_F2 *)(f4 + 1);
+
+    // setLineF2(l2); (Doesn't match, because they zero out the addr field)
     l2->tag = 0x3000000;
     l2->code = 0x40;
-    setXY2(l2, 0, 0xE7, 0x200, 0xE7);
+
+    setXY2(l2, 0, 231, 512, 231);
     setRGB0(l2, 0, 0, 0);
 
     // add to OT
@@ -268,18 +277,18 @@ void func_8001CA38(void) {
       VSync(0);
 
       rc.x = 0;
-      rc.y = y = g_CurDB != g_DB ? 0xF8 : 0x8;
-      rc.w = 0x200;
-      rc.h = 0xE0;
-      MoveImage(&rc, 0, 0x100 - y);
+      rc.y = y = g_CurDB != g_DB ? (256 - 8) : 8;
+      rc.w = 512;
+      rc.h = 224;
+      MoveImage(&rc, 0, 256 - y);
       DrawSync(0);
-      g_DB[0].m_DrawEnv.isbg = '\0';
-      g_DB[1].m_DrawEnv.isbg = '\0';
+      g_DB[0].m_DrawEnv.isbg = 0;
+      g_DB[1].m_DrawEnv.isbg = 0;
     } else if (g_GameOverTicks <= 15) {
       if (g_GameOverTicks == 1) {
-        func_800190D4(2, 0x10, 0x10, 0x10);
+        func_800190D4(2, 16, 16, 16);
       } else {
-        func_800190D4(2, 0x20, 0x20, 0x20);
+        func_800190D4(2, 32, 32, 32);
       }
       DrawSync(0);
       VSync(0);
@@ -287,14 +296,14 @@ void func_8001CA38(void) {
       PutDrawEnv(&g_CurDB->m_DrawEnv);
       DrawOTag(func_80016784(0x800));
       if (g_GameOverTicks == 15) {
-        g_DB[0].m_DrawEnv.isbg = '\x01';
-        g_DB[1].m_DrawEnv.isbg = '\x01';
+        g_DB[0].m_DrawEnv.isbg = 1;
+        g_DB[1].m_DrawEnv.isbg = 1;
         setRGB0(&g_DB[0].m_DrawEnv, 0, 0, 0);
         setRGB0(&g_DB[1].m_DrawEnv, 0, 0, 0);
         DrawSync(0);
         VSync(0);
-        setRECT(&rc, 0, 0, 0x200, 0x1E0);
-        ClearImage(&rc, '\0', '\0', '\0');
+        setRECT(&rc, 0, 0, 512, 480);
+        ClearImage(&rc, 0, 0, 0);
       }
     }
   } else if (D_80075940 == 1) {
@@ -324,9 +333,9 @@ void func_8001CA38(void) {
       }
 
       if (g_LoadStage > 10 && g_GameOverTicks > 420) {
-        setXYZ(&spacing, 0x10, 1, 0x1400);
-        setXYZ(&position, 0xAE, 0xD0, 0x1100);
-        func_800181AC("PRESS START", &position, &spacing, 0x12, 0xB);
+        setXYZ(&spacing, 16, 1, 0x1400);
+        setXYZ(&position, 174, 208, 0x1100);
+        func_800181AC("PRESS START", &position, &spacing, 18, 11);
         curMoby = g_HudMobys;
         for (i = 0; i < 10; ++i) {
           (*curMoby++).m_Rotation.z =
@@ -361,18 +370,18 @@ void func_8001CA38(void) {
   } else {
     if (g_GameOverTicks == 0) {
       rc.x = 0;
-      rc.y = y = g_CurDB != g_DB ? 0xF8 : 0x8;
-      rc.w = 0x200;
-      rc.h = 0xE0;
-      MoveImage(&rc, 0, 0x100 - y);
+      rc.y = y = g_CurDB != g_DB ? (256 - 8) : 8;
+      rc.w = 512;
+      rc.h = 224;
+      MoveImage(&rc, 0, 256 - y);
       DrawSync(0);
-      g_DB[0].m_DrawEnv.isbg = '\0';
-      g_DB[1].m_DrawEnv.isbg = '\0';
+      g_DB[0].m_DrawEnv.isbg = 0;
+      g_DB[1].m_DrawEnv.isbg = 0;
     } else if (g_GameOverTicks <= 15) {
       if (g_GameOverTicks == 1) {
-        func_800190D4(2, 0x10, 0x10, 0x10);
+        func_800190D4(2, 16, 16, 16);
       } else {
-        func_800190D4(2, 0x20, 0x20, 0x20);
+        func_800190D4(2, 32, 32, 32);
       }
       DrawSync(0);
       VSync(0);
@@ -380,14 +389,14 @@ void func_8001CA38(void) {
       PutDrawEnv(&g_CurDB->m_DrawEnv);
       DrawOTag(func_80016784(0x800));
       if (g_GameOverTicks == 15) {
-        g_DB[0].m_DrawEnv.isbg = '\x01';
-        g_DB[1].m_DrawEnv.isbg = '\x01';
+        g_DB[0].m_DrawEnv.isbg = 1;
+        g_DB[1].m_DrawEnv.isbg = 1;
         setRGB0(&g_DB[0].m_DrawEnv, 0, 0, 0);
         setRGB0(&g_DB[1].m_DrawEnv, 0, 0, 0);
         DrawSync(0);
         VSync(0);
-        setRECT(&rc, 0, 0, 0x200, 0x1E0);
-        ClearImage(&rc, '\0', '\0', '\0');
+        setRECT(&rc, 0, 0, 512, 480);
+        ClearImage(&rc, 0, 0, 0);
       }
     }
   }
@@ -642,7 +651,7 @@ typedef struct {
   short y, y2;
 } FAIRYRECT;
 
-extern FAIRYRECT D_8006F350[8];
+extern FAIRYRECT g_FairyDialogueBoxSizes[8];
 
 /// @brief Gamestate 11
 void func_8001D718(void) {
@@ -664,12 +673,13 @@ void func_8001D718(void) {
   }
 
   if (g_FairyCutscene.m_State == 1) {
-    func_8001860C(g_FairyCutscene.m_MenuOffsetX +
-                      D_8006F350[g_FairyCutscene.m_MenuDialoguePage].x,
-                  g_FairyCutscene.m_MenuOffsetX +
-                      D_8006F350[g_FairyCutscene.m_MenuDialoguePage].x2,
-                  D_8006F350[g_FairyCutscene.m_MenuDialoguePage].y,
-                  D_8006F350[g_FairyCutscene.m_MenuDialoguePage].y2);
+    func_8001860C(
+        g_FairyCutscene.m_MenuOffsetX +
+            g_FairyDialogueBoxSizes[g_FairyCutscene.m_MenuDialoguePage].x,
+        g_FairyCutscene.m_MenuOffsetX +
+            g_FairyDialogueBoxSizes[g_FairyCutscene.m_MenuDialoguePage].x2,
+        g_FairyDialogueBoxSizes[g_FairyCutscene.m_MenuDialoguePage].y,
+        g_FairyDialogueBoxSizes[g_FairyCutscene.m_MenuDialoguePage].y2);
 
     spacing.x = 16;
     spacing.y = 1; // ... Why?

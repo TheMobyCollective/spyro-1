@@ -3150,7 +3150,7 @@ dlabel D_8006F304
 /* 5FB0F 8006F30F */ .byte 0x00
 .size D_8006F304, . - D_8006F304
 
-dlabel D_8006F310
+dlabel g_GrayscalePalette
 /* 5FB10 8006F310 20002104 */ .word 0x04210020
 /* 5FB14 8006F314 4208630C */ .word 0x0C630842
 /* 5FB18 8006F318 8410A514 */ .word 0x14A51084
@@ -3167,21 +3167,12 @@ dlabel D_8006F310
 /* 5FB44 8006F344 5A6B7B6F */ .word 0x6F7B6B5A
 /* 5FB48 8006F348 9C73BD77 */ .word 0x77BD739C
 /* 5FB4C 8006F34C DE7BFF7F */ .word 0x7FFF7BDE
-.size D_8006F310, . - D_8006F310
+.size g_GrayscalePalette, . - g_GrayscalePalette
 
-dlabel D_8006F350
+dlabel g_FairyDialogueBoxSizes
 /* 5FB50 8006F350 */ .short 0x0028
-.size D_8006F350, . - D_8006F350
-
-dlabel D_8006F352
 /* 5FB52 8006F352 */ .short 0x0128
-.size D_8006F352, . - D_8006F352
-
-dlabel D_8006F354
 /* 5FB54 8006F354 */ .short 0x0024
-.size D_8006F354, . - D_8006F354
-
-dlabel D_8006F356
 /* 5FB56 8006F356 */ .short 0x007E
 /* 5FB58 8006F358 */ .short 0x001E
 /* 5FB5A 8006F35A */ .short 0x0132
@@ -3211,7 +3202,7 @@ dlabel D_8006F356
 /* 5FB8A 8006F38A */ .short 0x0128
 /* 5FB8C 8006F38C */ .short 0x0024
 /* 5FB8E 8006F38E */ .short 0x007E
-.size D_8006F356, . - D_8006F356
+.size g_FairyDialogueBoxSizes, . - g_FairyDialogueBoxSizes
 
 dlabel D_8006F390
 /* 5FB90 8006F390 */ .byte 0x01

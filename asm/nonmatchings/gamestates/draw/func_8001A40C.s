@@ -161,8 +161,8 @@ glabel func_8001A40C
 /* AD88 8001A588 E2FF4014 */  bnez       $v0, .L8001A514
 /* AD8C 8001A58C 08000624 */   addiu     $a2, $zero, 0x8
 /* AD90 8001A590 1800A427 */  addiu      $a0, $sp, 0x18
-/* AD94 8001A594 0780053C */  lui        $a1, %hi(D_8006F310)
-/* AD98 8001A598 10F3A524 */  addiu      $a1, $a1, %lo(D_8006F310)
+/* AD94 8001A594 0780053C */  lui        $a1, %hi(g_GrayscalePalette)
+/* AD98 8001A598 10F3A524 */  addiu      $a1, $a1, %lo(g_GrayscalePalette)
 /* AD9C 8001A59C 00020224 */  addiu      $v0, $zero, 0x200
 /* ADA0 8001A5A0 1800A2A7 */  sh         $v0, 0x18($sp)
 /* ADA4 8001A5A4 E0000224 */  addiu      $v0, $zero, 0xE0

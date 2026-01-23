@@ -251,7 +251,7 @@ int func_8003891C(Vector3D *pVec1, Vector3D *pVec2, int p3, int p4, int *pOut) {
   return 0;
 }
 
-/// @brief: Finds the path node closest to the moby
+/// @brief Finds the path node closest to the moby
 int func_80038A40(Moby *pMoby, PathData *pPathData, int *pNodeIndexOut) {
   int closestNodeDistance = 0xffffff;
   int closestNodeIndex;
@@ -273,7 +273,7 @@ int func_80038A40(Moby *pMoby, PathData *pPathData, int *pNodeIndexOut) {
   return closestNodeDistance;
 }
 
-/// @brief: Finds the path node closest to Spyro
+/// @brief Finds the path node closest to Spyro
 int func_80038AFC(PathData *pPathData, int *pNodeIndexOut) {
   int closestNodeDistance = 0xffffff;
   int closestNodeIndex;
@@ -295,7 +295,7 @@ int func_80038AFC(PathData *pPathData, int *pNodeIndexOut) {
   return closestNodeDistance;
 }
 
-/// @brief: Find the path node furthest away from Spyro
+/// @brief Find the path node furthest away from Spyro
 int func_80038BB0(PathData *pPathData, int *pNodeIndexOut) {
   int furthestNodeDistance = 0;
   int furthestNodeIndex;
@@ -312,7 +312,7 @@ int func_80038BB0(PathData *pPathData, int *pNodeIndexOut) {
   return furthestNodeIndex;
 }
 
-/// @brief: Checks if a point is within a rectangle
+/// @brief Checks if a point is within a rectangle
 int func_80038C4C(Vector3D *point, Vector3D *rect) {
   // The stack usage here is insane
   Vector3D diff2;
@@ -333,7 +333,7 @@ int func_80038C4C(Vector3D *point, Vector3D *rect) {
   return 0;
 }
 
-/// @brief: Returns the dot product of two vectors (doesn't use the GTE)
+/// @brief Returns the dot product of two vectors (doesn't use the GTE)
 int func_80038D54(Vector3D *param_1, Vector3D *param_2) {
   Vector3D unused; // Needed to match stack usage
   int sum = param_2->x * param_1->x + param_2->y * param_1->y +
@@ -812,7 +812,7 @@ void unused_VecInterpolateCurve(Vector3D *pDest, u_char *pParam, int pIndex,
   VecShiftRight(pDest, 10);
 }
 
-///// @brief: Advanced flame heat effect with external heat tracking and RGB
+///// @brief Advanced flame heat effect with external heat tracking and RGB
 /// specular color output
 /// @param pMoby The moby to apply the flame heat effect to
 /// @param heat Current heat value (caller-managed, typically 0-80+)
@@ -846,7 +846,7 @@ int ApplyFlameHeatExternal(Moby *pMoby, int heat) {
   return heat;
 }
 
-/// @brief: Apply flame heat
+/// @brief Apply flame heat
 void ApplyFlameHeat(Moby *pMoby) {
   // Are we being flamed?
   if (pMoby->m_DamageFlags & 0x10000) {
@@ -1558,4 +1558,3 @@ void RegisterFlightMobyCollectibleType(int index) {
     }
   }
 }
-
