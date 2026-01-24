@@ -5144,8 +5144,8 @@ glabel func_level_63_8007AD64
 /* 59165E8 8007F820 490043A0 */  sb         $v1, 0x49($v0)
 /* 59165EC 8007F824 DC0089AE */  sw         $t1, 0xDC($s4)
 .Llevel_63_8007F828:
-/* 59165F0 8007F828 0780023C */  lui        $v0, %hi(D_80075814)
-/* 59165F4 8007F82C 1458428C */  lw         $v0, %lo(D_80075814)($v0)
+/* 59165F0 8007F828 0780023C */  lui        $v0, %hi(g_IsSpyroHidden)
+/* 59165F4 8007F82C 1458428C */  lw         $v0, %lo(g_IsSpyroHidden)($v0)
 /* 59165F8 8007F830 00000000 */  nop
 /* 59165FC 8007F834 20004014 */  bnez       $v0, .Llevel_63_8007F8B8
 /* 5916600 8007F838 00000000 */   nop
@@ -5178,8 +5178,8 @@ glabel func_level_63_8007AD64
 /* 591666C 8007F8A4 668A4290 */  lbu        $v0, %lo(g_Spyro + 0xE)($v0)
 /* 5916670 8007F8A8 00000000 */  nop
 /* 5916674 8007F8AC 460002A2 */  sb         $v0, 0x46($s0)
-/* 5916678 8007F8B0 0780013C */  lui        $at, %hi(D_80075814)
-/* 591667C 8007F8B4 14583EAC */  sw         $fp, %lo(D_80075814)($at)
+/* 5916678 8007F8B0 0780013C */  lui        $at, %hi(g_IsSpyroHidden)
+/* 591667C 8007F8B4 14583EAC */  sw         $fp, %lo(g_IsSpyroHidden)($at)
 .Llevel_63_8007F8B8:
 /* 5916680 8007F8B8 0780023C */  lui        $v0, %hi(D_80075794)
 /* 5916684 8007F8BC 9457428C */  lw         $v0, %lo(D_80075794)($v0)
@@ -5249,8 +5249,8 @@ glabel func_level_63_8007AD64
 /* 591677C 8007F9B4 9C573EAC */  sw         $fp, %lo(g_StateSwitch)($at)
 /* 5916780 8007F9B8 0780013C */  lui        $at, %hi(g_ScreenBorderEnabled)
 /* 5916784 8007F9BC 0C5720AC */  sw         $zero, %lo(g_ScreenBorderEnabled)($at)
-/* 5916788 8007F9C0 0780013C */  lui        $at, %hi(D_80075814)
-/* 591678C 8007F9C4 145820AC */  sw         $zero, %lo(D_80075814)($at)
+/* 5916788 8007F9C0 0780013C */  lui        $at, %hi(g_IsSpyroHidden)
+/* 591678C 8007F9C4 145820AC */  sw         $zero, %lo(g_IsSpyroHidden)($at)
 /* 5916790 8007F9C8 C3000208 */  j          .Llevel_63_8008030C
 /* 5916794 8007F9CC 000060AC */   sw        $zero, 0x0($v1)
 .L8007F9D0_:
@@ -5805,8 +5805,8 @@ glabel func_level_63_8007AD64
 /* 5916F7C 800801B4 00000000 */  nop
 /* 5916F80 800801B8 1A004014 */  bnez       $v0, .Llevel_63_80080224
 /* 5916F84 800801BC 21900000 */   addu      $s2, $zero, $zero
-/* 5916F88 800801C0 0780023C */  lui        $v0, %hi(D_80075684)
-/* 5916F8C 800801C4 8456428C */  lw         $v0, %lo(D_80075684)($v0)
+/* 5916F88 800801C0 0780023C */  lui        $v0, %hi(g_TracerCount)
+/* 5916F8C 800801C4 8456428C */  lw         $v0, %lo(g_TracerCount)($v0)
 /* 5916F90 800801C8 00000000 */  nop
 /* 5916F94 800801CC 03004228 */  slti       $v0, $v0, 0x3
 /* 5916F98 800801D0 14004010 */  beqz       $v0, .Llevel_63_80080224
@@ -5869,23 +5869,23 @@ glabel func_level_63_8007AD64
 /* 591706C 800802A4 3A0A4014 */  bnez       $v0, .Llevel_63_80082B90
 /* 5917070 800802A8 00000000 */   nop
 .Llevel_63_800802AC:
-/* 5917074 800802AC 0780053C */  lui        $a1, %hi(D_80075684)
-/* 5917078 800802B0 8456A58C */  lw         $a1, %lo(D_80075684)($a1)
+/* 5917074 800802AC 0780053C */  lui        $a1, %hi(g_TracerCount)
+/* 5917078 800802B0 8456A58C */  lw         $a1, %lo(g_TracerCount)($a1)
 /* 591707C 800802B4 00000000 */  nop
 /* 5917080 800802B8 0300A228 */  slti       $v0, $a1, 0x3
 /* 5917084 800802BC 0C004010 */  beqz       $v0, .Llevel_63_800802F0
 /* 5917088 800802C0 80200500 */   sll       $a0, $a1, 2
 /* 591708C 800802C4 0A002286 */  lh         $v0, 0xA($s1)
-/* 5917090 800802C8 0780013C */  lui        $at, %hi(D_800772C8)
+/* 5917090 800802C8 0780013C */  lui        $at, %hi(g_TracerPointCount)
 /* 5917094 800802CC 21082400 */  addu       $at, $at, $a0
-/* 5917098 800802D0 C87222AC */  sw         $v0, %lo(D_800772C8)($at)
+/* 5917098 800802D0 C87222AC */  sw         $v0, %lo(g_TracerPointCount)($at)
 /* 591709C 800802D4 0000238E */  lw         $v1, 0x0($s1)
 /* 59170A0 800802D8 0100A224 */  addiu      $v0, $a1, 0x1
-/* 59170A4 800802DC 0780013C */  lui        $at, %hi(D_80075684)
-/* 59170A8 800802E0 845622AC */  sw         $v0, %lo(D_80075684)($at)
-/* 59170AC 800802E4 0880013C */  lui        $at, %hi(D_80078658)
+/* 59170A4 800802DC 0780013C */  lui        $at, %hi(g_TracerCount)
+/* 59170A8 800802E0 845622AC */  sw         $v0, %lo(g_TracerCount)($at)
+/* 59170AC 800802E4 0880013C */  lui        $at, %hi(g_TracerLists)
 /* 59170B0 800802E8 21082400 */  addu       $at, $at, $a0
-/* 59170B4 800802EC 588623AC */  sw         $v1, %lo(D_80078658)($at)
+/* 59170B4 800802EC 588623AC */  sw         $v1, %lo(g_TracerLists)($at)
 .Llevel_63_800802F0:
 /* 59170B8 800802F0 48006292 */  lbu        $v0, 0x48($s3)
 /* 59170BC 800802F4 00000000 */  nop

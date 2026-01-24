@@ -610,7 +610,7 @@ void CheckWallCollision(void) {
   magnitude = VecMagnitude(&g_CollisionNormal, 0);
   angle = Atan2(g_CollisionNormal.z, magnitude, 0);
 
-  angle = (char)angle;
+  angle = (signed char)angle;
 
   if (angle < 0x17)
     return;
@@ -695,7 +695,7 @@ void UpdateSlopeFloorCollision(void) {
     angle = Atan2(g_CollisionNormal.z, magnitude, 0);
 
     // Sign-extend angle to 8-bit signed value
-    angle = (char)angle;
+    angle = (signed char)angle;
     g_Spyro.m_slopeAngle = angle;
 
     // Clamp negative angles (invalid floor normal) to max slope
@@ -761,7 +761,7 @@ void UpdateSlopeFloorCollision(void) {
       angle = Atan2(g_Spyro.m_floorPositonOnSlope.z, magnitude, 0);
 
       // Sign-extend to 8-bit signed
-      angle = (char)angle;
+      angle = (signed char)angle;
       g_Spyro.m_slopeAngle = angle;
 
       // Clamp negative angles to max slope

@@ -140,7 +140,7 @@ void func_8002C664(void) {
   g_NextLevelId = (g_LevelId / 10) * 10;
 
   g_LoadStage = 0;
-  D_800756AC = 0;
+  g_LevelTransTicks = 0;
   g_Camera.unk_0xC0 = 0x80000012;
   D_8007576C = -1;
   g_PortalLevelId = g_LevelId;
@@ -148,7 +148,7 @@ void func_8002C664(void) {
   g_Gamestate = GS_LevelTransition;
 
   g_HasLevelTransition = 1;
-  D_800756B0 = 1;
+  g_LevelTransHudActive = 1;
 
   g_StateSwitch = 1;
 }

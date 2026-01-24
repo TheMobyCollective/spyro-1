@@ -103,8 +103,8 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
       if (pathMoby < 0) {
         g_LoadStage = 0;
         g_Gamestate = GS_LevelTransition;
-        D_800756B0 = 1;
-        D_800756AC = 0;
+        g_LevelTransHudActive = 1;
+        g_LevelTransTicks = 0;
         return;
       }
 

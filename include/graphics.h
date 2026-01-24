@@ -7,6 +7,8 @@
 
 #include <libgpu.h>
 
+#include "vector.h"
+
 typedef struct {
   // The GPU contexts
   DRAWENV m_DrawEnv;
@@ -39,6 +41,16 @@ extern void *g_WorldOT; // World OT
 /// @param size The size of the world order table
 /// @return A pointer to the final order table's first entry
 void *func_80016784(int size);
+
+typedef struct {
+  Vector3D WorldPos;
+  Vector3D ScreenPos;
+  int Age;
+} TracerPoint;
+
+extern int g_TracerCount;
+extern int g_TracerPointCount[4];
+extern TracerPoint* g_TracerLists[4];
 
 // static_assert(sizeof(g_DB[0]) == 0x84);
 

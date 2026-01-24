@@ -1,31 +1,31 @@
-- [ ] func_80017FE4
-- [ ] func_800181AC
-- [ ] func_8001844C
-- [ ] func_80018534
-- [ ] func_8001860C
-- [ ] func_80018728
-- [ ] func_80018878
-- [ ] func_80018880
-- [ ] func_80018908
-- [ ] func_800189F0
-- [ ] func_80018F30
-- [ ] func_800190D4
-- [ ] func_8001919C
-- [ ] func_80019300
-- [ ] func_80019698
-- [ ] func_8001973C
-- [ ] func_8001A050
-- [ ] func_8001A40C
-- [ ] func_8001C694
-- [ ] func_8001CA38
-- [ ] func_8001CFDC
+- [x] func_80017FE4
+- [x] func_800181AC
+- [x] func_8001844C
+- [x] func_80018534
+- [x] func_8001860C
+- [x] func_80018728
+- [x] func_80018878
+- [x] func_80018880
+- [x] func_80018908
+- [x] func_800189F0
+- [x] func_80018F30
+- [x] func_800190D4
+- [x] func_8001919C
+- [x] func_80019300
+- [x] func_80019698
+- [x] func_8001973C
+- [x] func_8001A050
+- [x] func_8001A40C
+- [x] func_8001C694
+- [x] func_8001CA38
+- [x] func_8001CFDC
 - [x] func_8001D718
 - [x] func_8001E24C
 - [x] func_8001E6B8
 - [x] func_8001E9C8
 - [x] func_8001EB80
 - [x] GamestateDraw
-- [ ] func_8002DA74
+- [x] func_8002DA74
 - [x] func_8002DF9C
 - [x] func_8002E000
 - [x] func_8002E084

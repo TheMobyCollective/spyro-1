@@ -25,7 +25,7 @@ dlabel D_8007567C
 dlabel g_CutsceneLayout
 /* 65E58 80075680 */ .space 0x04
 
-dlabel D_80075684
+dlabel g_TracerCount
 /* 65E5C 80075684 */ .space 0x04
 
 dlabel g_PreviousLevelIndex
@@ -55,10 +55,10 @@ dlabel D_800756A4
 dlabel D_800756A8
 /* 65E80 800756A8 */ .space 0x04
 
-dlabel D_800756AC
+dlabel g_LevelTransTicks
 /* 65E84 800756AC */ .space 0x04
 
-dlabel D_800756B0
+dlabel g_LevelTransHudActive
 /* 65E88 800756B0 */ .space 0x04
 
 dlabel D_800756B4
@@ -76,7 +76,7 @@ dlabel D_800756C0
 dlabel D_800756C4
 /* 65E9C 800756C4 */ .space 0x04
 
-dlabel D_800756C8
+dlabel g_NGemsSinceLevelEntry
 /* 65EA0 800756C8 */ .space 0x04
 
 dlabel g_DeltaTime
@@ -136,7 +136,7 @@ dlabel g_DemoMode
 dlabel g_SurfaceBelowFlags
 /* 65EF0 80075718 */ .space 0x04
 
-dlabel D_8007571C
+dlabel g_LevelTransGems
 /* 65EF4 8007571C */ .space 0x04
 
 /* The index of the selected item in the main pause menu, the options screen, and the post-flight menu */
@@ -164,7 +164,7 @@ dlabel D_80075738
 dlabel D_8007573C
 /* 65F14 8007573C */ .space 0x04
 
-dlabel D_80075740
+dlabel g_LevelTransChestDuration
 /* 65F18 80075740 */ .space 0x04
 
 dlabel D_80075744
@@ -321,7 +321,7 @@ dlabel D_8007580C
 dlabel g_EggTotal
 /* 65FE8 80075810 */ .space 0x04
 
-dlabel D_80075814
+dlabel g_IsSpyroHidden
 /* 65FEC 80075814 */ .space 0x04
 
 dlabel D_80075818

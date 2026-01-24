@@ -3090,10 +3090,8 @@ dlabel D_8006F296
 .size D_8006F296, . - D_8006F296
 
 dlabel D_8006F2B4
+dlabel g_GameOverTextXY
 /* 5FAB4 8006F2B4 */ .short 0x22CE
-.size D_8006F2B4, . - D_8006F2B4
-
-dlabel D_8006F2B6
 /* 5FAB6 8006F2B6 */ .short 0x0900
 /* 5FAB8 8006F2B8 */ .short 0x23C2
 /* 5FABA 8006F2BA */ .short 0x0A3E
@@ -3109,9 +3107,10 @@ dlabel D_8006F2B6
 /* 5FACE 8006F2CE */ .short 0x0A3E
 /* 5FAD0 8006F2D0 */ .short 0x2D32
 /* 5FAD2 8006F2D2 */ .short 0x0900
-.size D_8006F2B6, . - D_8006F2B6
+.size D_8006F2B4, . - D_8006F2B4
 
 dlabel D_8006F2D4
+dlabel g_GameOverTextZ
 /* 5FAD4 8006F2D4 */ .short 0x0C00
 /* 5FAD6 8006F2D6 */ .short 0x0B80
 /* 5FAD8 8006F2D8 */ .short 0x0B00
@@ -3139,18 +3138,8 @@ dlabel D_8006F2D4
 .size D_8006F2D4, . - D_8006F2D4
 
 dlabel D_8006F304
-/* 5FB04 8006F304 */ .byte 0x47
-/* 5FB05 8006F305 */ .byte 0x41
-/* 5FB06 8006F306 */ .byte 0x4D
-/* 5FB07 8006F307 */ .byte 0x45
-/* 5FB08 8006F308 */ .byte 0x4F
-/* 5FB09 8006F309 */ .byte 0x56
-/* 5FB0A 8006F30A */ .byte 0x45
-/* 5FB0B 8006F30B */ .byte 0x52
-/* 5FB0C 8006F30C */ .byte 0x00
-/* 5FB0D 8006F30D */ .byte 0x00
-/* 5FB0E 8006F30E */ .byte 0x00
-/* 5FB0F 8006F30F */ .byte 0x00
+/* 5FB04 8006F304 */ .asciz "GAMEOVER"
+.align 2
 .size D_8006F304, . - D_8006F304
 
 dlabel D_8006F310
@@ -3317,6 +3306,7 @@ dlabel D_8006F3F0
 .size D_8006F3F0, . - D_8006F3F0
 
 dlabel D_8006F414
+dlabel g_TargetDragonCounts
 /* 5FC14 8006F414 */ .byte 0x04
 /* 5FC15 8006F415 */ .byte 0x04
 /* 5FC16 8006F416 */ .byte 0x03
@@ -3396,6 +3386,7 @@ dlabel g_TargetGemCounts
 .size D_8006F438, . - D_8006F438
 
 dlabel D_8006F480
+dlabel g_TargetEggCounts
 /* 5FC80 8006F480 */ .byte 0x00
 /* 5FC81 8006F481 */ .byte 0x01
 /* 5FC82 8006F482 */ .byte 0x00

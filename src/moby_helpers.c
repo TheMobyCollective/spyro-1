@@ -171,7 +171,7 @@ int func_8003838C(Moby *pMoby) {
   pMoby->m_Position.z += 1500;
   func_8004D5EC(&pMoby->m_Position, 4096);
   pMoby->m_Position.z -= 1500;
-  return (char)Atan2Fast(g_CollisionNormal.z,
+  return (signed char)Atan2Fast(g_CollisionNormal.z,
                          VecMagnitude(&g_CollisionNormal, 0)) < 24;
 }
 
@@ -1144,8 +1144,8 @@ void CollectItem(Moby *pMoby) {
 
   // Update recently collected items, presumably for the little animation when
   // you leave a level
-  g_RecentGemsCollected[D_800756C8 & 0x1F] = pMoby->m_Class;
-  D_800756C8 += 1;
+  g_RecentGemsCollected[g_NGemsSinceLevelEntry & 0x1F] = pMoby->m_Class;
+  g_NGemsSinceLevelEntry += 1;
 
   // If this was a key, mark it as collected
   if (pMoby == D_80075758) {

@@ -15,13 +15,15 @@ extern int g_GemTotal;    // gGemTotal
 extern int g_EggTotal;    // gEggTotal
 
 extern int D_8007587C; // Gems we collected before entering the level
-extern int D_800756C8; // Gems we've collected in this level since entering
+extern int g_NGemsSinceLevelEntry; // Gems we've collected in this level since entering
 
 extern int g_LevelDragonCount[TOTAL_LEVEL_COUNT];    // Level dragon counts
 extern int g_LevelGemCount[TOTAL_LEVEL_COUNT];       // Level gem counts
 extern int g_LevelEggCount[LEVEL_PER_HOMEWORLD * 3]; // Level egg counts
 
+extern u_char g_TargetDragonCounts[TOTAL_LEVEL_COUNT]; // Target dragon counts
 extern short g_TargetGemCounts[TOTAL_LEVEL_COUNT]; // Target gem counts
+extern u_char g_TargetEggCounts[LEVEL_PER_HOMEWORLD * 3]; // Target egg counts
 
 extern int g_FlightCourseRecords[HOMEWORLD_COUNT];   // Course records
 extern u_char g_FlightCollected[HOMEWORLD_COUNT][5]; // Flight collected

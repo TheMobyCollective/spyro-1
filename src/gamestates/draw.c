@@ -5,11 +5,14 @@
 #include "common.h"
 #include "cutscene.h"
 #include "cyclorama.h"
+#include "dragon.h"
 #include "environment.h"
 #include "fairy.h"
 #include "gamepad.h"
 #include "graphics.h"
+#include "hud.h"
 #include "images.h"
+#include "loaders.h"
 #include "math.h"
 #include "memory.h"
 #include "moby.h"
@@ -17,6 +20,8 @@
 #include "overlay_pointers.h"
 #include "renderers.h"
 #include "sony_image.h"
+#include "specular_and_metal.h"
+#include "spyro.h"
 #include "strings.h"
 #include "titlescreen.h"
 #include "variables.h"
@@ -32,101 +37,1943 @@ struct {
   int pre;
 } D_80075950;
 
-// TODO: Remove once func_8001973C is implemented
-extern char D_80010ACC[1]; // "RETURNING HOME..."
-extern char D_80010AE0[1]; // "CONFRONTING %s..."
-extern char D_80010AF4[1]; // "ENTERING %s..."
-extern char D_80010B04[1]; // "TREASURE FOUND"
-extern char D_80010B14[1]; // "TOTAL TREASURE"
-
-extern char D_80010B6C[1]; // "CONTINUE"
-
-// TODO: Remove once the whole file is implemented
-extern char D_80075620[1]; // "RETRY"
-extern char D_80075628[1]; // "ABORT"
-extern char D_80075630[1]; // "SLOT 1"
-extern char D_80075638[1]; // "SLOT 2"
-
 /// @brief Create text Mobys, no capitalization
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80017FE4);
+Moby *func_80017FE4(char *pText, Vector3D *pPosition, int pSpaceWidth, int pShadeIndex) {
+  while (*pText != '\0') {
+    if (*pText != ' ') {
+      g_HudMobys -= 1;
+      Memset(g_HudMobys, 0, sizeof(Moby));
+      VecCopy(&g_HudMobys->m_Position, pPosition);
 
-Moby *func_800181AC(char *pText, Vector3D *pPosition, Vector3D *pTextSpacing,
-                    int pSpaceWidth, int pShadeIndex);
+      if (*pText >= '0' && *pText <= '9') {
+        g_HudMobys->m_Class = MOBYCLASS_NUMBER_0 + *pText - '0';
+      } else if (*pText >= 'A' && *pText <= 'Z') {
+        g_HudMobys->m_Class = MOBYCLASS_LETTER_A + *pText - 'A';
+      } else if(*pText == '/') {
+        g_HudMobys->m_Class = MOBYCLASS_SLASH;
+      } else if(*pText == '?') {
+        g_HudMobys->m_Class = MOBYCLASS_QUESTION_MARK;
+      } else if(*pText == '%') {
+        g_HudMobys->m_Class = MOBYCLASS_PERCENT;
+      } else if(*pText == '^') {
+        g_HudMobys->m_Class = MOBYCLASS_CARET;
+      } else if(*pText == '+') {
+        g_HudMobys->m_Class = MOBYCLASS_PLUS;
+      } else {
+        g_HudMobys->m_Class = MOBYCLASS_PERIOD;
+      }
+      g_HudMobys->m_DepthOffset = 0x7F;
+      g_HudMobys->m_SpecularMetalType = pShadeIndex;
+      g_HudMobys->m_RenderRadius = 0xFF;
+    }
+    pText++;
+    pPosition->x += pSpaceWidth;
+  }
+  return g_HudMobys;
+}
+
 
 /// @brief Create text Mobys
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_800181AC);
+Moby *func_800181AC(char *pText, Vector3D *pPosition, Vector3D *pTextSpacing, int pSpaceWidth, int pShadeIndex) {
+  int isCapital;
+  int spaceSize;
+
+  isCapital = 1;
+  while (*pText != '\0') {
+    if (*pText != ' ') {
+      g_HudMobys -= 1;
+      Memset(g_HudMobys, 0, sizeof(Moby));
+      VecCopy(&g_HudMobys->m_Position, pPosition);
+      if (*pText == '!' || *pText == '?') {
+        isCapital = 1;
+      }
+      if (!isCapital) {
+        g_HudMobys->m_Position.y += pTextSpacing->y;
+        g_HudMobys->m_Position.z = pTextSpacing->z;
+      }
+      if (*pText >= '0' && *pText <= '9') {
+        g_HudMobys->m_Class = MOBYCLASS_NUMBER_0 + *pText - '0';
+      } else if (*pText >= 'A' && *pText <= 'Z') {
+        g_HudMobys->m_Class = MOBYCLASS_LETTER_A + *pText - 'A';
+      } else if(*pText == '!') {
+        g_HudMobys->m_Class  = MOBYCLASS_EXCLAMATION_MARK;
+      } else if(*pText == ',') {
+        g_HudMobys->m_Class  = MOBYCLASS_LETTER_APOSTROPHE;
+      } else if(*pText == '?') {
+        g_HudMobys->m_Class  = MOBYCLASS_QUESTION_MARK;
+      } else if(*pText == '.') {
+        g_HudMobys->m_Class  = MOBYCLASS_PERIOD;
+      } else {
+        g_HudMobys->m_Class  = MOBYCLASS_LETTER_APOSTROPHE;
+        g_HudMobys->m_Position.y  -= pTextSpacing->x * 2 / 3;
+      }
+      g_HudMobys->m_DepthOffset = 0x7F;
+      g_HudMobys->m_SpecularMetalType = pShadeIndex;
+      g_HudMobys->m_RenderRadius = 0xFF;
+      if (isCapital) {
+        pPosition->x += pSpaceWidth;
+      } else {
+        pPosition->x += pTextSpacing->x;
+      }
+      if (*pText >= '0' && *pText <= '9') {
+        isCapital = 1;
+      } else { 
+        isCapital = 0;
+      }
+    } else {
+      spaceSize = pTextSpacing->x * 3;
+      isCapital = 1;
+      if (spaceSize < 0) {
+        spaceSize += 3;
+      }
+      pPosition->x += spaceSize>>2;
+    }
+    pText++;
+  }
+  return g_HudMobys;
+}
 
 /// @brief Creates shaded line
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001844C);
+void func_8001844C(int pX0, int pY0, int pX1, int pY1) {
+  u_char intensity;
+  LINE_G2 *line;
+  
+  line = D_800757B0;
+  line->tag = 0x04000000;
+  setcode(line, 0x50);
+  setXY2(line, pX0, pY0, pX1, pY1);
+  intensity = 128 - (u_char)func_80017908(Atan2Fast(pX0 - 256, pY0 - 120), D_800770C8.m_specularTime);
+  setRGB0(line, intensity + 96,  intensity + 96, intensity);
+  intensity = 128 - (u_char)func_80017908(Atan2Fast(pX1 - 256, pY1 - 120), D_800770C8.m_specularTime);
+  setRGB1(line, intensity + 96,  intensity + 96, intensity);
+  // Link Prim
+  func_800168DC(line);
+  D_800757B0 = line + 1;
+}
+
 
 /// @brief Creates an arrow
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018534);
+void func_80018534(Vector3D* pPosition, int pTimer, int pRotate) {
+  if ((pTimer & 31) < 16) {
+    g_HudMobys--;
+    Memset(g_HudMobys, 0, sizeof(Moby));
+    g_HudMobys->m_Class = MOBYCLASS_NUMBER_1;
+    VecCopy(&g_HudMobys->m_Position, pPosition);
+    if (pRotate < 2) {
+      g_HudMobys->m_Rotation.x = 64;
+      g_HudMobys->m_Rotation.z = pRotate * 128;
+    }
+    g_HudMobys->m_DepthOffset = 127;
+    g_HudMobys->m_SpecularMetalType = 11;
+    g_HudMobys->m_RenderRadius = 0xFF;
+  }
+}
 
-void func_8001860C(int pX1, int pX2, int pY1, int pY2);
 /// @brief Creates a shaded box
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001860C);
+void func_8001860C(int pX0, int pX1, int pY0, int pY1) {
+  DR_MODE* drm;
+  POLY_F4* f4;
+  drm = D_800757B0;
+  SetDrawMode(drm, 1, 0, getTPage(0, 2, 0, 0), 0);
+  func_800168DC(drm);
+  f4 = (POLY_F4*)(drm + 1);
+  f4->tag = (sizeof(POLY_F4) / 4 - 1) << 24;
+  // Set transparency bit of POLY_F4 code
+  setcode(f4, 0x28 | 0x2);
+  f4->x0 = pX0;
+  f4->x1 = pX1;
+  f4->x2 = pX0;
+  f4->x3 = pX1;
+  f4->y0 = pY0;
+  f4->y1 = pY0;
+  f4->y2 = pY1;
+  f4->y3 = pY1;
+  setRGB0(f4, 112, 112, 112);
+  func_800168DC(f4);
+  D_800757B0 = f4 + 1;
+  func_8001844C(pX0, pY0, pX1, pY0);
+  func_8001844C(pX1, pY0, pX1, pY1);
+  func_8001844C(pX1, pY1, pX0, pY1);
+  func_8001844C(pX0, pY1, pX0, pY0);
+}
+
 
 /// @brief Creates rescued dragon text
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018728);
+void func_80018728(void) {
+  char* name;
+  int length;
+  Moby* mobys;
+  Vector3D pos;
+  int i;
+
+  // TODO: Dragon Moby props struct
+  // TODO: resolve compiler warning re: const discard
+  name = g_DragonNames[((int*)g_DragonCutscene.m_RescuedDragonMoby->m_Props)[14]];
+  length = strlen(name) - 1;
+  mobys = g_HudMobys;
+  pos.x = 176 - length * 13;
+  pos.y = 200;
+  pos.z = 4096;
+  func_80017FE4("RESCUED", &pos, 20, 2);
+  pos.x = 336 - length * 13;
+  pos.y = 200;
+  pos.z = 3072;
+  func_80017FE4(name, &pos, 26, 2);
+  mobys--;
+  for (i = 0; (int)g_HudMobys <= (int)mobys; i++) {
+    mobys->m_Rotation.z = D_8006CC78[(g_DragonCutscene.unk_0x50 * 2 + i * 12) & 0xFF] >> 7;
+    mobys--;
+  }
+}
+
 
 // Unused, boy I wonder.. probably the old dragon cutscenes
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018878);
+void func_80018878(void) {}
 
-void func_80018880(void);
 /// @brief Copies the HUD mobys to the shaded mobys
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018880);
+void func_80018880(void) {
+  Moby** currentMoby = g_SonyImage.m_ShadedMobys;
 
-void func_80018908(void);
+  // Find the first empty slot in the array
+  while (*currentMoby) {
+    currentMoby++;
+  }
+
+  // Append remaining HUD mobys to the shaded moby array
+  while (g_HudMobys != D_800756FC) {
+    *currentMoby = g_HudMobys;
+    g_HudMobys++;
+    currentMoby++;
+  }
+
+  // Null-terminate the array
+  *currentMoby = 0;
+}
+
+
 /// @brief Creates the demo mode text
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018908);
+void func_80018908(void) {
+  Vector3D position; 
+  Vector3D spacing;
+  Moby* mobys;
+  int i;
 
-void func_800189F0(void);
+  mobys = g_HudMobys;
+  spacing.x = 16;
+  spacing.y = 1;
+  spacing.z = 5120;
+  position.x = 199;
+  position.y = 200;
+  position.z = 4352;
+  func_800181AC("DEMO MODE", &position, &spacing, 18, 2);
+  mobys--;
+  for (i = 0; (int)g_HudMobys <= (int)mobys; i++) {
+    mobys->m_Rotation.z = D_8006CC78[(D_800758C8 * 4 + i * 12) & 0xFF] >> 7;
+    mobys--;
+  }
+
+  func_80018880();
+}
+
+
+
 /// @brief Creates tracers, C function, god knows why
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_800189F0);
+void func_800189F0(void) {
 
-void func_80018F30(void);
+  int i, j;
+  int temp;
+
+  int x0, x1, y0, y1, x2, x3, y2, y3;
+  int r1, g1, b1, r2, g2, b2;
+
+  int point_count;
+  TracerPoint* tracer_ptr;
+  Vector3D delta;
+
+  int width;
+  int magnitude;
+
+  uint ot_z;
+  int intensity;
+  int prev_intensity;
+
+
+  point_count = 0;
+
+  for (i = 0; i < g_TracerCount; i++) {
+    tracer_ptr = g_TracerLists[i];
+
+    // world to screen
+    for (j = 0; j < g_TracerPointCount[i]; j++) {
+      func_80017B48(&tracer_ptr[j].ScreenPos, &tracer_ptr[j].WorldPos, 1);
+    }
+
+    // build tracer prims
+    for (j = 0; j < g_TracerPointCount[i] - 1; j++) {
+      
+      width = 70000;
+      if (j == g_TracerPointCount[i] - 2) {
+        width = 0;
+      }
+      if (j < 3) {
+        width = j * 20000;
+      }
+      if (g_LevelId == 63) {
+        width = width >> 2;
+      }
+
+      if (tracer_ptr[j].Age <= 80) {
+        point_count++;
+        
+        // delta = current - next
+        VecSub(&delta, &tracer_ptr[j].ScreenPos, &tracer_ptr[j+1].ScreenPos);
+
+        // rotate 90 degrees
+        temp = -delta.x;
+        delta.x = delta.y;
+        delta.y = temp;
+
+        magnitude = delta.x * delta.x + delta.y * delta.y;
+        magnitude = func_80017A38(magnitude);
+
+        if (magnitude == 0 || tracer_ptr[j].ScreenPos.z == 0) {
+          delta.x = 0;
+          delta.y = 0;
+        } else {
+          delta.x = (delta.x * width) / (tracer_ptr[j].ScreenPos.z * magnitude);
+          delta.y = (delta.y * width) / (tracer_ptr[j].ScreenPos.z * magnitude);
+        }
+
+        // quad coords
+        x0 = tracer_ptr[j].ScreenPos.x + delta.x;
+        x1 = tracer_ptr[j].ScreenPos.x - delta.x;
+        y0 = tracer_ptr[j].ScreenPos.y + delta.y;
+        y1 = tracer_ptr[j].ScreenPos.y - delta.y;
+
+        if (point_count > 1) {
+          ot_z = tracer_ptr[j].ScreenPos.z >> 7;
+          if (ot_z < 2000) {
+            DR_MODE* drm;
+            POLY_G4* g4;
+            
+            intensity = tracer_ptr[j].Age;
+            prev_intensity = tracer_ptr[j-1].Age;
+
+            r1 = 150 - 2 * intensity;
+            g1 = 150 - 4 * intensity;
+            b1 = 150 - 10 * intensity;
+
+            r2 = 150 - 2 * prev_intensity;
+            g2 = 150 - 4 * prev_intensity;
+            b2 = 150 - 10 * prev_intensity;
+
+            // clamp
+            if (r1 < 0) r1 = 0;
+            if (g1 < 0) g1 = 0;
+            if (b1 < 0) b1 = 0;
+            if (r2 < 0) r2 = 0;
+            if (g2 < 0) g2 = 0;
+            if (b2 < 0) b2 = 0;
+
+            if (g_LevelId == 63) {
+              temp = r1; r1 = g1; g1 = temp;
+              temp = r2; r2 = g2; g2 = temp;
+            }
+            drm = D_800757B0;
+            SetDrawMode(drm, 1, 0, getTPage(0, 1, 0, 0), 0);
+            func_800168A0(drm, ot_z);
+            g4 = (POLY_G4*)(drm + 1);
+            g4->tag = 0x08000000;
+            // set G4 code with semi-transparency bit
+            setcode(g4, 0x38 | 0x2);
+            g4->x0 = x0;
+            g4->x1 = x1;
+            g4->x2 = x2;
+            g4->x3 = x3;
+            g4->y0 = y0;
+            g4->y1 = y1;
+            g4->y2 = y2;
+            g4->y3 = y3;
+            setRGB0(g4, r1, g1, b1);
+            setRGB1(g4, r1, g1, b1);
+            setRGB2(g4, r2, g2, b2);
+            setRGB3(g4, r2, g2, b2);
+
+            func_800168A0(g4, ot_z);
+            D_800757B0 = g4 + 1;
+          }
+        }
+        x2 = x0;
+        x3 = x1;
+        y2 = y0;
+        y3 = y1;
+      }
+    }
+  }
+  g_TracerCount = 0;
+}
+
+
 /// @brief Creates the border
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80018F30);
+void func_80018F30(void) {
+  POLY_F4* bar;
+
+  if (g_ScreenBorderEnabled != 0) {
+    if (D_800756C0 <= 21) {
+      D_800756C0 += g_DeltaTime;
+    }
+    if (D_800756C0 >= 23) {
+      D_800756C0 = 22;
+    }
+  } else {
+    if (D_800756C0 > 0) {
+      D_800756C0 -= g_DeltaTime;
+    }
+    if (D_800756C0 < 0) {
+      D_800756C0 = 0;
+    }
+  }
+  bar = D_800757B0;
+  bar->tag = 0x05000000;
+  bar->code = 0x28;
+  bar->x0 = 0;
+  bar->x1 = 512;
+  bar->x2 = 0;
+  bar->x3 = 512;
+  bar->y0 = 0;
+  bar->y1 = 0;
+  bar->y2 = D_800756C0;
+  bar->y3 = D_800756C0;
+  setRGB0(bar, 0, 0, 0);
+  func_800168DC(bar);
+  D_800757B0 = ++bar;
+  bar->tag = 0x05000000;
+  bar->code = 0x28;
+  bar->y2 = 240;
+  bar->y3 = 240;
+  bar->x0 = 0;
+  bar->x1 = 512;
+  bar->x2 = 0;
+  bar->x3 = 512;
+  bar->y0 = 240 - D_800756C0;
+  bar->y1 = 240 - D_800756C0;
+  setRGB0(bar, 0, 0, 0);
+  func_800168DC(bar);
+  D_800757B0 = bar + 1;
+}
+
 
 /// @brief Creates fade in/out
 // Not u_char, because the input is not AND'd
-void func_800190D4(int pMode, int pR, int pG, int pB);
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_800190D4);
+void func_800190D4(int pMode, int pR, int pG, int pB) {
+  DR_MODE* drm;
+  POLY_F4* f4;
+
+  drm = D_800757B0;
+  f4 = (POLY_F4*)(drm + 1);
+  SetDrawMode(drm, 1, 0, pMode << 5, 0);
+  func_800168DC(drm);
+
+  f4->tag = 0x05000000;
+  // set semi-transparency bit
+  setcode(f4, 0x28 | 0x2);
+  f4->y0 = 8;
+  f4->y1 = 8;
+  f4->x0 = 0;
+  f4->x1 = 512;
+  f4->x2 = 0;
+  f4->y2 = 232;
+  f4->x3 = 512;
+  f4->y3 = 232;
+  setRGB0(f4, pR, pG, pB);
+  func_800168DC(f4);
+  D_800757B0 = f4 + 1;
+}
 
 /// @brief Creates a 2D sprite
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001919C);
+void func_8001919C(RECT* pDest, Tiledef* pUV, ColorInt* pColor) {
+  
+  POLY_FT4* ft4;  
+  ft4 = D_800757B0;
+  ft4->tag = 0x09000000;
+  setcode(ft4, 0x2C);
+  
+  if (pColor == 0)
+    setRGB0(ft4, 0x80, 0x80, 0x80);
+  else
+    setRGB0(ft4, pColor->r, pColor->g, pColor->b);
+  
+  setXYWH(ft4, pDest->x, pDest->y, pDest->w, pDest->h); 
+  // ft4 is being read as ints
+  *(int*)&ft4->u0 = pUV->uv0.all;
+  *(int*)&ft4->u1 = pUV->uv1.all;
+  
+  ft4->u1 = ft4->u0 + pDest->w;
+  ft4->u2 = ft4->u0;
+  ft4->u3 = ft4->u1;
+  ft4->v2 = ft4->v0 + pDest->h;
+  ft4->v3 = ft4->v0 + pDest->h;
+  func_800168DC(ft4);
+  D_800757B0 = ft4 + 1;
+}
 
-void func_80019300(void);
 /// @brief Creates the collectable icons and counters
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80019300);
+void func_80019300(void) {
+  int i;
+  char* text;
+  Moby* mobys;
+  Moby** shaded_mobys;
+  
+  
+  if (g_IsFlightLevel == 0) {
+    shaded_mobys = g_SonyImage.m_ShadedMobys;
+    while (*shaded_mobys != nullptr)
+      shaded_mobys++;
+    if (g_Hud.m_GemDisplayState != 0) {
+      for (i = g_Hud.m_GemDisplayState == 4 ? 4 : 0; i < 5; i++) {
+        *shaded_mobys++ = &g_Hud.m_Mobys[i];
+      }
+      if (g_Hud.m_GemDisplayState == 4) {
+        char text[16];
+        Vector3D vec;
+        sprintf(text, "%d/%d", g_Hud.m_GemCount, g_Hud.m_GemCount);
+        mobys = g_HudMobys;
+        vec.x = 90;
+        vec.y = 36;
+        vec.z = 2880;
+        func_80017FE4(text, &vec, 28, 11);
+        mobys--;
+        for (i = 0; (int)g_HudMobys <= (int)mobys; i++) {
+          mobys->m_Rotation.z = COSINE_8(g_Hud.m_GemSteadyTicks * 4 + (i * 12) & 0xFF) >> 7;
+          *shaded_mobys++ = mobys;
+          mobys--;
+        }
+      }
+    }
+    if (g_Hud.m_DragonDisplayState != 0) {
+      for (i = 0; i < 3; i++) {
+        *shaded_mobys++ = &g_Hud.m_Mobys[5 + i];
+      }
+    }
+    if (g_Hud.m_LifeDisplayState != 0) {
+      for (i = 0; i < 3; i++) {
+        *shaded_mobys++ = &g_Hud.m_Mobys[8 + i];
+      }
+    }
+    if (g_Hud.m_KeyDisplayState != 0 && g_Hud.m_KeyFlag == 1) {
+      *shaded_mobys++ = &g_Hud.m_Mobys[11];
+    }
+    *shaded_mobys = nullptr;
+  }
+  if (g_Hud.m_LifeDisplayState != 0) {
+    ColorInt col;
+    for (i = 0; i < g_Hud.m_LifeOrbCount; i++) {
+      col.r = (COSINE_8((D_800770C8.m_specularTime - i * 256 / 20) & 0xff) >> 7) + 128;
+      col.g = col.r;
+      col.b = col.r;
 
-void func_80019698(void);
+      func_8001919C(&g_Hud.m_SpriteRect[12 + i], &g_Hud.m_OrbSprite, &col);
+    }
+  }
+  if (g_Hud.m_EggDisplayState != 0) {
+    for (i = 0; i < g_Hud.m_EggCount; i++) {
+      func_8001919C(&g_Hud.m_SpriteRect[i], &g_Hud.m_EggSprites[(g_Hud.unk_0x40 + i ) % 9], 0);
+    }
+  }
+}
+
+
 /// @brief Creates Mobys, shadows, Spyro, flame and glows and sparkles
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_80019698);
+void func_80019698(void) {
+  func_8001F158();              // Initialize Moby renderer, perform culling
+  Memset(D_8006FCF4, 0, 0x900); // Clear Moby queue buffer
+  func_8001F798();              // Render regular Mobys
+  func_800208FC();              // Initialize specular Moby renderer
+  func_80020F34();              // Render specular Mobys
+  func_80022A2C();              // Render shaded Mobys with lighting
+  func_80059F8C();              // Render Moby shadows
 
-void func_8001973C(void);
+  if (g_IsSpyroHidden == 0) {
+    func_80023AC4(); // Render Spyro's model
+    func_80059A48(); // Render Spyro's shadow
+  }
+
+  if (g_SpyroFlame.m_IsFlameActive != 0) {
+    func_80058D64(); // Render Spyro's flame
+  }
+
+  func_80058BA8(); // Render and update particles
+}
+
+
 /// @brief Creates the level transition text
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001973C);
+void func_8001973C(void) {
 
-void func_8001A050(void);
+  int levelIndex;
+  Moby* mobys;
+  Vector3D vec1;
+  Vector3D vec2;
+  char textbuffer[32];
+  int i;
+  
+  levelIndex = (g_NextLevelId / 10 - 1) * 6 + (g_NextLevelId % 10);
+  if (g_NextLevelId % 10 == 0) {
+    sprintf(textbuffer, "RETURNING HOME...");
+  } else if ((g_NextLevelId < 60 && g_NextLevelId % 10 == 4) || (g_NextLevelId == 63)) {
+    sprintf(textbuffer, "CONFRONTING %s...", g_LevelNames[levelIndex]);
+  } else {
+    sprintf(textbuffer, "ENTERING %s...", g_LevelNames[levelIndex]);
+  }
+  
+  vec1.x = 256 - (strlen(textbuffer) - 1) * 8;
+  
+  if (g_LevelTransTicks < 32) {
+    vec1.y = SINE_8(g_LevelTransTicks * 2) >> 7;
+  } else if (g_LevelTransTicks >= 385) {
+    vec1.y = SINE_8((416 - g_LevelTransTicks) * 2) >> 7;
+  } else {
+    vec1.y = 32;
+  }
+  vec1.z = 4352;
+  vec2.x = 16;
+  vec2.y = 1;
+  vec2.z = 5120;
+  mobys = g_HudMobys;
+  func_800181AC(textbuffer, &vec1, &vec2, 18, 2);
+  mobys--;
+  for (i = 0; (int)g_HudMobys <= (int)mobys; i++) {
+    mobys->m_Rotation.z = COSINE_8(g_LevelTransTicks * 2 + i * 12 & 0xFF) >> 7;
+    mobys--;
+  }
+  
+  if (g_LevelTransTicks >= 64) {
+    int center_offset, displayed_counter, tally_duration, tally_countdown;
+    center_offset = 40;
+    for (i = g_GemTotal; i >= 10; i = i / 10) {
+      center_offset -= 10;
+    }
+    vec1.x = center_offset + 40;
+    vec1.z = 4352;
+    if (g_LevelTransTicks < 96) {
+      int a = g_LevelTransTicks - 64;
+      vec1.y = 272 - (SINE_8(a * 2) >> 6);
+    } else if (g_LevelTransTicks < g_LevelTransChestDuration) {
+      vec1.y = 208;
+    } else if (g_LevelTransTicks < g_LevelTransChestDuration + 32) {
+      int a = g_LevelTransTicks - 32;
+      vec1.y = 272 - (SINE_8((g_LevelTransChestDuration - a) * 2) >> 6);
+    } else if (g_LevelTransTicks <= 223) {
+      vec1.y = 272;
+    } else if (g_LevelTransTicks < 0x100) {
+      int a = g_LevelTransTicks - 224;
+      vec1.y = 272 - (SINE_8(a * 2) >> 6);
+    } else if (g_LevelTransTicks <= 383) {
+      vec1.y = 208;
+    } else if (g_LevelTransTicks < 416) {
+      vec1.y = 272 - (SINE_8((416 - g_LevelTransTicks) * 2) >> 6);
+    } else {
+      vec1.y = 272;
+    }
+    if (g_LevelTransTicks < 224) {
+      sprintf(textbuffer, "TREASURE FOUND");
+    } else {
+      sprintf(textbuffer, "TOTAL TREASURE");
+      vec1.x -= 16;
+    }
+    mobys = g_HudMobys;
+    func_800181AC(textbuffer, &vec1, &vec2, 18, 2);
+    mobys--;
+    for (i = 0; (int)g_HudMobys <= (int)mobys; i++) {
+      mobys->m_Rotation.z = COSINE_8(g_LevelTransTicks * 2 + i * 12 & 0xFF) >> 7;
+      mobys--;
+    }
+    if (g_LevelTransTicks < 128) {
+      displayed_counter = g_LevelGemCount[g_PreviousLevelIndex] - D_8007587C;
+    } else if (g_LevelTransTicks < 224) {
+      tally_duration = (g_NGemsSinceLevelEntry + 1) * 2;
+      if (tally_duration > 64) {
+        tally_duration = 64;
+      }
+      tally_countdown = 128 + tally_duration - g_LevelTransTicks;
+      if (tally_countdown < 0) {
+        tally_countdown = 0;
+      }
+      if (tally_duration < tally_countdown) {
+        tally_countdown = tally_duration;
+      }
+      displayed_counter = ((g_LevelGemCount[g_PreviousLevelIndex] - D_8007587C) * tally_countdown) / tally_duration;
+    } else if (g_LevelTransTicks < 272) {
+      displayed_counter = g_GemTotal - (g_LevelGemCount[g_PreviousLevelIndex] - D_8007587C);
+    } else {
+      tally_duration = (g_NGemsSinceLevelEntry + 1) * 2;
+      if (tally_duration > 64) {
+        tally_duration = 64;
+      }
+      tally_countdown = 272 + tally_duration - g_LevelTransTicks;
+      if (tally_countdown < 0) {
+        tally_countdown = 0;
+      }
+      if (tally_duration < tally_countdown) {
+        tally_countdown = tally_duration;
+      }
+      displayed_counter = g_GemTotal - (((g_LevelGemCount[g_PreviousLevelIndex] - D_8007587C) * tally_countdown) / tally_duration);
+    }
+    vec1.x = 376 + center_offset;
+    vec1.z = 3968;
+    sprintf(textbuffer, "%d", displayed_counter);
+    mobys = g_HudMobys;
+    func_80017FE4(textbuffer, &vec1, 20, 2);
+    mobys--;
+    for (i = 0; (int)g_HudMobys <= (int)mobys; i++) {
+      mobys->m_Rotation.z = COSINE_8(g_LevelTransTicks * 2 + i * 12 & 0xFF) >> 7;
+      mobys--;
+    }
+    for (i = 0 ; i < 32; i++) {
+      if (g_LevelTransGems[i]._08 != 0) {
+        g_HudMobys--;
+        Memset(g_HudMobys, 0, sizeof(Moby));
+        g_HudMobys->m_Class = g_RecentGemsCollected[i];
+        g_HudMobys->m_Position.x = 320 + center_offset + g_LevelTransGems[i].xOffset;
+        g_HudMobys->m_Position.y = 198 - g_LevelTransGems[i].yOffset;
+        g_HudMobys->m_Position.z = 0x1000;
+        g_HudMobys->m_Rotation.x = g_LevelTransGems[i].rot.x;
+        g_HudMobys->m_Rotation.y = g_LevelTransGems[i].rot.y;
+        g_HudMobys->m_Rotation.z = g_LevelTransGems[i].rot.z;
+        g_HudMobys->m_DepthOffset = 0x7F;
+        g_HudMobys->m_SpecularMetalType = g_HudMobys->m_Class - 0x52;
+        g_HudMobys->m_RenderRadius = 0xFF;
+      }
+    }
+    g_HudMobys--;
+    Memset(g_HudMobys, 0, sizeof(Moby));
+    g_HudMobys->m_Class = 473;
+    g_HudMobys->m_Position.x = 320 + center_offset;
+    if (g_LevelTransTicks < 224) {
+      g_HudMobys->m_Position.y = vec1.y + 8;
+      g_HudMobys->m_Position.z = 0x800;
+      g_HudMobys->m_Rotation.x = 6;
+      g_HudMobys->m_Rotation.z = 0xB0;
+    } else {
+      g_HudMobys->m_Position.y = vec1.y + 12;
+      g_HudMobys->m_Position.z = 0x600;
+      g_HudMobys->m_Rotation.x = 6;
+      g_HudMobys->m_Rotation.z = 0xB0;
+    }
+
+    g_HudMobys->m_DepthOffset = 0x7F;
+    g_HudMobys->m_SpecularMetalType = 11;
+    g_HudMobys->m_RenderRadius = 0xFF;
+  }
+  g_SonyImage.m_ShadedMobys[0] = 0;
+  func_80018880();
+  func_80022A2C();
+}
+
+
 /// @brief Gamestate 1
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001A050);
+void func_8001A050(void) {
+  MATRIX A;
+  MATRIX B;
 
-void func_8001A40C(void);
+  g_DB[0].m_DrawEnv.r0 = g_Cyclorama.m_BackgroundColor.r;
+  g_DB[0].m_DrawEnv.g0 = g_Cyclorama.m_BackgroundColor.g;
+  g_DB[0].m_DrawEnv.b0 = g_Cyclorama.m_BackgroundColor.b;
+  g_DB[1].m_DrawEnv.r0 = g_Cyclorama.m_BackgroundColor.r;
+  g_DB[1].m_DrawEnv.g0 = g_Cyclorama.m_BackgroundColor.g;
+  g_DB[1].m_DrawEnv.b0 = g_Cyclorama.m_BackgroundColor.b;
+  Memset(D_8006FCF4, 0, 0x900);
+  if (g_LevelTransHudActive != 0) {
+    func_8001973C();
+  }
+  func_80023AC4();
+  if (g_Cyclorama.m_SectorCount != 0) {
+    D_80075910 -= 2;
+    if (D_80075910 < 0) {
+      D_80075910 = 0;
+    }
+    if (D_80075910 != 0) {
+      Memset(&A, 0, 0x20);
+      SetTransMatrix(&A);
+      A.m[0][0] = 4096;
+      A.m[1][1] = Cos(g_Camera.m_Rotation.y - D_80075910);
+      A.m[2][1] = Sin(g_Camera.m_Rotation.y - D_80075910);
+      A.m[1][2] = -Sin(g_Camera.m_Rotation.y - D_80075910);
+      A.m[2][2] = Cos(g_Camera.m_Rotation.y - D_80075910);
+      Memset(&B, 0, 0x20);
+      B.m[0][0] = Cos(g_Camera.m_Rotation.z);
+      B.m[2][0] = -Sin(g_Camera.m_Rotation.z);
+      B.m[1][1] = 4096;
+      B.m[0][2] = Sin(g_Camera.m_Rotation.z);
+      B.m[2][2] = Cos(g_Camera.m_Rotation.z);
+      MulMatrix(&A, (MATRIX* ) &B);
+      Memset(&B, 0, 0x20);
+      B.m[0][0]= Cos(g_Camera.m_Rotation.x);
+      B.m[1][0] = -Sin(g_Camera.m_Rotation.x);
+      B.m[0][1] = Sin(g_Camera.m_Rotation.x);
+      B.m[1][1] = Cos(g_Camera.m_Rotation.x);
+      B.m[2][2] = 4096;
+      MulMatrix(&A, (MATRIX* ) &B);
+      Memcpy(&B, &A, 0x14);
+      B.m[1][0] = (A.m[1][0] * 320) / 512;
+      B.m[1][1] = (A.m[1][1] * 320) / 512;
+      B.m[1][2] = (A.m[1][2] * 320) / 512;
+      func_8004EBA8(-1, (SHORTMATRIX*)&A, (SHORTMATRIX*)&B);
+    } else {
+      func_8004EBA8(-1, &g_Camera.m_ViewMatrix, &g_Camera.m_ProjectionMatrix);
+    }
+  }
+  DrawSync(0);
+
+  if (D_80075784) {
+    VSync(0);
+  }
+
+  D_80075950.pre = VSync(-1);
+
+  while (D_80075950.pre - D_80075950.post < 2) {
+    VSync(0);
+    D_80075950.pre = VSync(-1);
+  }
+
+  D_80075950.post = VSync(-1);
+
+  PutDispEnv(&g_CurDB->m_DispEnv);
+  PutDrawEnv(&g_CurDB->m_DrawEnv);
+  DrawOTag(func_80016784(0x800));
+}
+
+extern unsigned long D_8006F310[16]; // Pause menu CLUT?
+extern int D_80075720; // Selected menu item index
+extern int D_80075744; // The index of the current page of the inventory screen
+extern int D_800757C8; // OptionsSubmenuIsOpen
+extern int D_800757CC; // Transition progress between inventory pages.
+extern int D_800758B8; // Pause menu text rotation ticks
+extern int D_8007568C; // Pause menu no button ticks
 /// @brief Gamestate 2 & 3
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001A40C);
+void func_8001A40C(void) {
 
-void func_8001C694(void);
+  int i;
+  DR_MODE* drm;
+  POLY_F4* f4;
+  POLY_FT4* ft4;
+  LINE_F2* l2;
+
+  RECT rcStore;
+  char szBuf[32];
+  Vector3D position;
+  Vector3D quitMenuSpacing;
+  Vector3D optionMenuSpacing;
+  Vector3D vec4;
+  RECT rc1;
+  RECT rc2;
+  Vector3D levelNameSpacing;
+  
+  int worldNameLen;
+  int volumeBarCt;
+  Moby* curMoby;
+  Moby* endMoby;
+  u_char mobyCount;
+  int level_y;
+  int world_lt_3_offset;
+  int levelGemCount;
+  u_char act_avail;
+
+  if (D_800758B8 == 0) {
+    func_800521C0();
+    func_80019698();
+    func_800573C8();
+    func_80050BD0();
+    func_8002B9CC();
+    DrawSync(0);
+    VSync(0);
+    PutDispEnv(&g_CurDB->m_DispEnv);
+    PutDrawEnv(&g_CurDB->m_DrawEnv);
+    DrawOTag(func_80016784(0x800));
+    DrawSync(0);
+    VSync(0);
+    PutDispEnv(&g_CurDB->m_DispEnv);
+    setRECT(&rcStore, 512, 0, 256, 225);
+    StoreImage(&rcStore, g_Buffers.m_HudOTStart - 0x1c200);
+
+    for(i = 0; i < 4; ++i) {
+      setRECT(&rcStore, i * 128, g_CurDB != g_DB ? 248 : 8, 128, 224);
+      StoreImage(&rcStore, g_Buffers.m_LowerPolyBuffer);
+      DrawSync(0);
+      func_80017E98(g_Buffers.m_LowerPolyBuffer, 0x7000);
+      setRECT(&rcStore, 512 + i * 64, 0, 64, 224);
+      LoadImage(&rcStore, g_Buffers.m_LowerPolyBuffer);
+    }
+
+    setRECT(&rcStore, 512, 224, 32, 1);
+    LoadImage(&rcStore, D_8006F310);
+    DrawSync(0);
+    D_80075950.post = VSync(-1);
+  } else {
+    if (g_CurDB == &g_DB[0]) {
+      PutDrawEnv(&g_DB[1].m_DrawEnv);
+    } else {
+      PutDrawEnv(&g_DB[0].m_DrawEnv);
+    }
+    
+    D_800758B0 = 0;
+    D_800757B0 = g_Buffers.m_LowerPolyBuffer;
+    D_80075780 = g_Buffers.m_LowerPolyBuffer + 0x1c000;
+    g_HudMobys = D_800756FC = g_Buffers.m_HudOTStart - 0x1c200;
+    
+    for(i = 0; i < 4; i++) {
+      ft4 = D_800757B0;
+      ft4->tag = 0x9000000;
+      ft4->code = 0x2C;
+      setRGB0(ft4, 0x4C, 0x80, 0x40);
+      setXY4(ft4, i * 128, 8,
+        ft4->x0 + 128, ft4->y0,
+        ft4->x0, ft4->y0 + 224 - 1,
+        ft4->x0 + 128, ft4->y0 + 224 - 1);
+      setUV4(ft4, 0, 0,
+        ft4->u0 + 128, ft4->v0,
+        ft4->u0, ft4->v0 + 224 - 1,
+        ft4->u0 + 128, ft4->v0 + 224 - 1);
+      ft4->clut = getClut(512, 224);
+      ft4->tpage = i + 0x88;
+      func_800168DC(ft4);
+      D_800757B0 = ft4 + 1;
+    }
+
+    l2 = D_800757B0;
+    l2->tag = 0x3000000;
+    l2->code = 0x40;
+    setXY2(l2, 0, 231, 512, 231);
+    setRGB0(l2, 0, 0, 0);
+    func_800168DC(l2);
+    D_800757B0 = l2 + 1;
+
+    if(g_Gamestate == 2) {
+      
+
+      //pause menu
+      drm = D_800757B0;
+      
+      SetDrawMode(drm, 1, 0, getTPage(0, 2, 0, 0), nullptr);
+      func_800168DC(drm);
+      f4 = (POLY_F4*)(drm + 1);
+      f4->tag = 0x05000000;
+      f4->code = 0x2A; //polyF4 + semiTrans
+      setRGB0(f4, 64, 64, 64);
+      f4->y0 = 67;
+      f4->y1 = 67;
+      if(D_800757C8 == 1) {
+        act_avail = (g_ActAvailable != 0);
+        f4->x0 = 84;
+        f4->x1 = 428;
+        f4->y2 = 182 + act_avail * 16;
+        f4->y3 = 182 + act_avail * 16;
+      } else {
+        act_avail = 1;
+        f4->x0 = 140;
+        f4->x1 = 372;
+        f4->y2 = 176;
+        f4->y3 = 176;
+      }
+      f4->x2 = f4->x0;
+      f4->x3 = f4->x1;
+      func_800168DC(f4);
+      D_800757B0 = f4 + 1;
+      
+      func_8001844C(224, 97, 288, 97);
+      if(D_800757C8 == 1) {
+        func_8001844C(84, 67, 428, 67);
+        func_8001844C(428, 67, 428, 182 + act_avail * 16);
+        func_8001844C(428, 182 + act_avail * 16, 84, 182 + act_avail * 16);
+        func_8001844C(84, 182 + act_avail * 16, 84, 67);
+      } else {
+        func_8001844C(140, 67, 372, 67);
+        func_8001844C(372, 67, 372, 158 + act_avail * 18);
+        func_8001844C(372, 158 + act_avail * 18, 140, 158 + act_avail * 18);
+        func_8001844C(140,  158 + act_avail * 18, 140, 67);
+      }
+      setXYZ(&position, 186, 82, 3072);
+      func_80017FE4("PAUSED", &position, 28, 11); //PAUSED
+
+      if(D_800757C8 == 2) {
+        //quit menu
+        setXYZ(&quitMenuSpacing, 16, 1, 0x1400);
+        setXYZ(&position, 183, 119, 0x1100);
+        func_800181AC("QUIT GAME?", &position, &quitMenuSpacing, 18, 11);
+
+        setXYZ(&position, 192, 148, 0x1100);
+        func_800181AC("YES", &position, &quitMenuSpacing, 18, 11);
+        if (D_80075720 == 0) {
+          curMoby = g_HudMobys;
+          mobyCount = 3;
+        }
+        
+        setXYZ(&position, 296, 148, 0x1100);
+        func_800181AC("NO", &position, &quitMenuSpacing, 18, 11);
+        if (D_80075720 == 1) {
+          curMoby = g_HudMobys;
+          mobyCount = 2;
+        }
+
+        for(i = 0; i < mobyCount; ++i) {
+          (*curMoby++).m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+        }
+      } else if(D_800757C8 == 1) {
+        //options menu
+        setXYZ(&optionMenuSpacing, 15, 1, 0x1600);
+        setXYZ(&position, 107, 108, 0x1400);
+        func_800181AC("SOUND EFFECTS", &position, &optionMenuSpacing, 16, 11);
+        if(D_80075720 == 0) {
+          curMoby = g_HudMobys;
+          mobyCount = 11;
+        }
+
+        setXYZ(&position, 121, 124, 0x1400);
+        func_800181AC("MUSIC VOLUME", &position, &optionMenuSpacing, 16, 11);
+        if(D_80075720 == 1) {
+          curMoby = g_HudMobys;
+          mobyCount = 11;
+        }
+
+        setXYZ(&position, 107, 140, 0x1400);
+        func_800181AC("SPEAKER SETUP", &position, &optionMenuSpacing, 16, 11);
+        if(D_80075720 == 2) {
+          curMoby = g_HudMobys;
+          mobyCount = 12;
+        }
+
+        if(g_ActAvailable) {
+          setXYZ(&position, 163, 156, 0x1400);
+          func_800181AC("VIBRATION", &position, &optionMenuSpacing, 16, 11);
+          if(D_80075720 == 3) {
+            curMoby = g_HudMobys;
+            mobyCount = 9;
+          }
+        }
+
+        setXYZ(&position, 208, act_avail * 16 + 156, 0x1100);
+        func_800181AC("CAMERA", &position, &optionMenuSpacing, 16, 11);
+        if(D_80075720 == 4) {
+          curMoby = g_HudMobys;
+          mobyCount = 6;
+        }
+
+        setXYZ(&position, 238, act_avail * 16 + 172, 0x1100);
+        func_800181AC("DONE", &position, &optionMenuSpacing, 16, 11);
+        if(D_80075720 == 5) {
+          curMoby = g_HudMobys;
+          mobyCount = 4;
+        }
+
+        for(i = 0; i < mobyCount; ++i) {
+          (*curMoby++).m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+        }
+
+        //sound volume bars
+        if(D_80075754 == 0) {
+          setXYZ(&position, 322, 108, 0x1400);
+          func_800181AC("OFF", &position, &optionMenuSpacing, 16, 11);
+          if(D_80075720 == 0)
+          {
+            curMoby = g_HudMobys;
+            for(i = 0; i < 3; ++i) {
+              (*curMoby++).m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+            }
+          }
+        } else {
+          for(i = 0; i < D_80075754; ++i) {
+            --g_HudMobys;
+            Memset(g_HudMobys, 0, sizeof(Moby));
+            g_HudMobys->m_Class = MOBYCLASS_LETTER_I; //nice...
+            g_HudMobys->m_Position.x = 320 + i * 10;
+            g_HudMobys->m_Position.y = 109;
+            g_HudMobys->m_Position.z = 0x1400;
+            if(D_80075720 == 0) {
+              g_HudMobys->m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+            } else {
+              g_HudMobys->m_Rotation.z = 0;
+            }
+            g_HudMobys->m_DepthOffset = 127;
+            g_HudMobys->m_SpecularMetalType = 11;
+            g_HudMobys->m_RenderRadius = 0xFF;
+          }
+        }
+
+        //music volume bars
+        if(D_80075748 == 0) {
+          setXYZ(&position, 322, 124, 0x1400);
+          func_800181AC("OFF", &position, &optionMenuSpacing, 16, 11);
+          if(D_80075720 == 1)
+          {
+            curMoby = g_HudMobys;
+            for(i = 0; i < 3; ++i) {
+              (*curMoby++).m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+            }
+          }
+        } else {
+          for(i = 0; i < D_80075748; ++i) {
+            --g_HudMobys;
+            Memset(g_HudMobys, 0, sizeof(Moby));
+            g_HudMobys->m_Class = MOBYCLASS_LETTER_I; //nice...
+            g_HudMobys->m_Position.x = 320 + i * 10;
+            g_HudMobys->m_Position.y = 125;
+            g_HudMobys->m_Position.z = 0x1400;
+            if(D_80075720 == 1) {
+              g_HudMobys->m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+            } else {
+              g_HudMobys->m_Rotation.z = 0;
+            }
+            g_HudMobys->m_DepthOffset = 127;
+            g_HudMobys->m_SpecularMetalType = 11;
+            g_HudMobys->m_RenderRadius = 0xFF;
+          }
+        }
+        
+        //audio type
+        setXYZ(&position, 322, 140, 0x1400);
+        if(g_Spu.m_AudioMono != 0) {
+          func_800181AC("MONO", &position, &optionMenuSpacing, 16, 11);
+          volumeBarCt = 4;
+        } else {
+          func_800181AC("STEREO", &position, &optionMenuSpacing, 16, 11);
+          volumeBarCt = 6;
+        }
+        if(D_80075720 == 2) {
+          curMoby = g_HudMobys;
+          for(i = 0; i < volumeBarCt; ++i) {
+            (*curMoby++).m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+          }
+        }
+
+        if (g_ActAvailable) {
+          setXYZ(&position, 322, 156, 0x1400);
+          if(g_ActEnabled != 0) {
+            func_800181AC("ON", &position, &optionMenuSpacing, 16, 11);
+            volumeBarCt = 2;
+          } else {
+            func_800181AC("OFF", &position, &optionMenuSpacing, 16, 11);
+            volumeBarCt = 3;
+          }
+
+          if(D_80075720 == 3) {
+            curMoby = g_HudMobys;
+            for(i = 0; i < volumeBarCt; ++i) {
+              (*curMoby++).m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+            }
+          }
+        }
+
+        setXYZ(&position, 322, act_avail * 16 + 156, 0x1400);
+        if(D_80075914 == 2) {
+          func_800181AC("ACTIVE", &position, &optionMenuSpacing, 16, 11);
+          volumeBarCt = 6;
+        } else {
+          func_800181AC("PASSIVE", &position, &optionMenuSpacing, 16, 11);
+          volumeBarCt = 7;
+        }
+        if(D_80075720 == 4) {
+          curMoby = g_HudMobys;
+          for(i = 0; i < volumeBarCt; ++i) {
+            (*curMoby++).m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+          }
+        }
+      } else {
+        setXYZ(&vec4, 16, 1, 0x1400);
+        setXYZ(&position, 199, 110, 0x1100);
+        func_800181AC("CONTINUE", &position, &vec4, 18, 11);
+        if(D_80075720 == 0) {
+          curMoby = g_HudMobys;
+          mobyCount = 8;
+        }
+
+        setXYZ(&position, 207, 128, 0x1100);
+        func_800181AC("OPTIONS", &position, &vec4, 18, 11);
+        if(D_80075720 == 1) {
+          curMoby = g_HudMobys;
+          mobyCount = 7;
+        }
+
+        setXYZ(&position, 191, 146, 0x1100);
+        func_800181AC("INVENTORY", &position, &vec4, 18, 11);
+        if(D_80075720 == 2) {
+          curMoby = g_HudMobys;
+          mobyCount = 9;
+        }
+
+        if (g_IsFlightLevel != 0) {
+          //flight level
+          setXYZ(&position, 231, 164, 0x1100);
+          func_800181AC("QUIT", &position, &vec4, 18, 11);
+          if(D_80075720 == 3) {
+            curMoby = g_HudMobys;
+            mobyCount = 4;
+          }
+        } else {
+          //not flight level
+          if(g_LevelId != (g_LevelId / 10) * 10) {
+            setXYZ(&position, 183, 164, 0x1100);
+            func_800181AC("EXIT LEVEL", &position, &vec4, 18, 11);
+            if(D_80075720 == 3) {
+              curMoby = g_HudMobys;
+              mobyCount = 9;
+            }
+          } else {
+            setXYZ(&position, 191, 164, 0x1100);
+            func_800181AC("QUIT GAME", &position, &vec4, 18, 11);
+            if(D_80075720 == 3) {
+              curMoby = g_HudMobys;
+              mobyCount = 8;
+            }
+          }
+        }
+
+        for(i = 0; i < mobyCount; ++i) {
+          (*curMoby++).m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+        }
+      }
+    } else if(g_Gamestate == 3) {
+      int temp;
+      //inventory menu      
+      int completion = CalculateCompletion();
+      setXYZ(&position, 440, 44, 0x900);
+      if (completion > 9) {
+        position.x = 406;
+      }
+      if (completion > 99) {
+        position.x -= 34;
+      }
+
+      //completion pct (top right)
+      sprintf(szBuf, "%d", completion);
+      func_80017FE4(szBuf, &position, 34, 2);
+      position.x = 478;
+      szBuf[0] = '%';
+      szBuf[1] = '\0';
+      func_80017FE4(szBuf, &position, 34, 2);
+
+      //gem total (top left)
+      setXYZ(&position, 90, 36, 0xB40);
+      sprintf(szBuf, "%d", g_GemTotal);
+      func_80017FE4(szBuf, &position, 27, 2);
+
+      //dragon total (top center)
+      setXYZ(&position, 333, 36, 0xB40);
+      if(g_DragonTotal > 9)
+        position.x = 306;
+      sprintf(szBuf, "%d", g_DragonTotal);
+      func_80017FE4(szBuf, &position, 27, 2);
+
+      //gem chest icon (top left)
+      --g_HudMobys;
+      Memset(g_HudMobys, 0, sizeof(Moby));
+      g_HudMobys->m_Class = MOBYCLASS_HUD_GEM_CHEST;
+      setXYZ(&g_HudMobys->m_Position, 46, 46, 0xC00);
+      g_HudMobys->m_Rotation.y = COSINE_8(g_Hud.unk_0x3c) >> 9;
+      g_HudMobys->m_Rotation.z = g_Hud.unk_0x3c;
+      g_HudMobys->m_DepthOffset = 127;
+      g_HudMobys->m_SpecularMetalType = 11;
+      g_HudMobys->m_RenderRadius = 0xFF;
+
+      //dragon icon (top center)
+      --g_HudMobys;
+      Memset(g_HudMobys, 0, sizeof(Moby));
+      g_HudMobys->m_Class = MOBYCLASS_HUD_DRAGON;
+      g_HudMobys->m_Position.x = 300;
+      if(g_DragonTotal > 9)
+        g_HudMobys->m_Position.x = 273;
+      g_HudMobys->m_Position.y = 46;
+      g_HudMobys->m_Position.z = 0x780;
+      g_HudMobys->m_Rotation.z = COSINE_8((D_800758B8 * 8) & 0xFF) >> 8;
+      g_HudMobys->m_DepthOffset = 127;
+      g_HudMobys->m_SpecularMetalType = 11;
+      g_HudMobys->m_RenderRadius = 0xFF;
+
+      //egg sprites (top)
+      if(g_EggTotal > 0) {
+        
+        for(i = 0; i < 12; ++i) {
+          setRECT(&rc1, i * 27 + 24, 50, 24, 16);
+          if(i >= g_EggTotal) {
+            setXYZ(&position, 36 + i * 27, 58, 0x1800);
+            func_80017FE4("X", &position, 0, 2);
+            setXYZ(&position, 32, 32, 32);
+            func_8001919C(&rc1, &g_Hud.m_EggSprites[0], (ColorInt*)&position);
+          } else {
+            func_8001919C(&rc1, &g_Hud.m_EggSprites[(g_Hud.unk_0x40 + i) % 9], nullptr);
+          }
+        }
+      }
+      func_8001844C(64, 69, 448, 69);
+      drm = D_800757B0;
+      SetDrawMode(drm, 1, 0, getTPage(0, 2, 0, 0), nullptr);
+      func_800168DC(drm);
+
+      f4 = (POLY_F4*)(drm + 1);
+      f4->tag = 0x05000000;
+      setcode(f4, 0x28 | 0x2); //polyF4 + semiTrans
+      setRGB0(f4, 96, 96, 96);
+      setXY4(f4, 64, 70, 448, 70, 64, 71, 448, 71);
+      func_800168DC(f4);
+      D_800757B0 = f4 + 1;
+      
+      func_8001844C(64, 71, 448, 71);
+      if(D_80075744 >= 1 && g_VisitedFlags[D_80075744 * 6 - 6]) {
+        setXYZ(&position, 40, 72, 0x1100);
+        func_80018534(&position, D_800758B8 * 2, 1);
+      }
+      if(D_80075744 <= 4 && g_VisitedFlags[D_80075744 * 6 + 6]) {
+        setXYZ(&position, 471, 72, 0x1100);
+        func_80018534(&position, D_800758B8 * 2, 0);
+      }
+
+      //world name title (above table)
+      if (D_80075744 < 3) {
+        world_lt_3_offset = 8;
+      } else {
+        world_lt_3_offset = 0;
+      }
+      
+
+      worldNameLen = (10 * (strlen(g_HomeworldNames[D_80075744]) - 1) - 158);
+      setXYZ(&position, D_800757CC - worldNameLen, 92, 3584);
+      setXYZ(&levelNameSpacing, 20, 2, 0x1000);
+      // TODO: resolve compiler warning re: const discard
+      func_800181AC(g_HomeworldNames[D_80075744], &position, &levelNameSpacing, 23, 2);
+      endMoby = g_HudMobys;
+      for(i = 0; i < g_HomeworldNamesLength[D_80075744]; ++i) {
+        endMoby->m_Rotation.z = COSINE_8(D_800758B8 * 8 + i * 12 & 0xFF) * 3 >> 9;
+        endMoby++;
+      }
+
+      //gem chest (above table)
+       
+      --g_HudMobys;
+      Memset(g_HudMobys, 0, sizeof(Moby));
+      g_HudMobys->m_Class = MOBYCLASS_HUD_GEM_CHEST;
+      temp = world_lt_3_offset + 346;
+      setXYZ(&g_HudMobys->m_Position, D_800757CC + temp, 108, 0xC00);
+      g_HudMobys->m_Rotation.y = COSINE_8(g_Hud.unk_0x3c) >> 9;
+      g_HudMobys->m_Rotation.z = g_Hud.unk_0x3c;
+      g_HudMobys->m_DepthOffset = 127;
+      g_HudMobys->m_SpecularMetalType = 11;
+      g_HudMobys->m_RenderRadius = 0xFF;
+
+      //dragon icon (above table)
+      --g_HudMobys;
+      Memset(g_HudMobys, 0, sizeof(Moby));
+      g_HudMobys->m_Class = MOBYCLASS_HUD_DRAGON;
+      i = 0;
+      setXYZ(&g_HudMobys->m_Position, D_800757CC + 465, 110, 0x780);
+      g_HudMobys->m_Rotation.z = COSINE_8((D_800758B8 * 8) & 0xFF) >> 8;
+      g_HudMobys->m_DepthOffset = 127;
+      g_HudMobys->m_SpecularMetalType = 11;
+      g_HudMobys->m_RenderRadius = 0xFF;
+      level_y = 123;
+      for(i = 0; i < 6; ++i) {
+        if(g_VisitedFlags[D_80075744 * 6 + i]) {
+          //shaded background
+          drm = D_800757B0;
+          SetDrawMode(drm, 1, 0, getTPage(0, 2, 0, 0), nullptr);
+          func_800168DC(drm);
+          f4 = (POLY_F4*)(drm + 1);
+          f4->tag = 0x05000000;
+          f4->code = 0x2A; //polyF4 + semiTrans
+          setRGB0(f4, 40, 40, 40);
+          setXY4(f4, 
+               D_800757CC, level_y - 10, 
+               D_800757CC + 511, level_y - 10, 
+               D_800757CC, level_y + 9,
+               D_800757CC + 511, level_y + 9);
+          func_800168DC(f4);
+          D_800757B0 = f4 + 1;
+
+          //3 border lines between level stats
+          func_8001844C(D_800757CC + 112, level_y - 11, 
+                  D_800757CC + 208, level_y - 11);
+          func_8001844C(D_800757CC + 314 + world_lt_3_offset, level_y - 11, 
+                  D_800757CC + 378 + world_lt_3_offset, level_y - 11);
+          func_8001844C(D_800757CC + 430, level_y - 11, 
+                  D_800757CC + 494, level_y - 11);
+
+          endMoby = g_HudMobys;
+
+          //level stats - level name
+          setXYZ(&position, D_800757CC + 36, level_y, 0x1100);
+          setXYZ(&levelNameSpacing, 16, 1, 0x1400);
+          // TODO: resolve compiler warning re: const discard
+          func_800181AC(g_LevelNames[D_80075744 * 6 + i], &position, &levelNameSpacing, 18, 2);
+
+          //level stats - gem count
+          
+          position.x = 0x113 + D_800757CC + world_lt_3_offset ;
+          
+          if(g_LevelGemCount[D_80075744 * 6 + i] < 1000)
+            position.x += 18;
+          if(g_LevelGemCount[D_80075744 * 6 + i] < 100)
+            position.x += 18;
+          if(g_LevelGemCount[D_80075744 * 6 + i] < 10)
+            position.x += 18;
+          sprintf(szBuf, "%d", g_LevelGemCount[D_80075744 * 6 + i]);
+          func_80017FE4(szBuf, &position, 18, 2);
+          position.x = D_800757CC + 346 + world_lt_3_offset;
+          position.z = 0x1800;
+          func_80017FE4("/", &position, 18, 2);
+          position.x = D_800757CC + 363 + world_lt_3_offset;
+          position.z = 0x1100;
+          sprintf(szBuf, "%d", g_TargetGemCounts[D_80075744 * 6 + i]);
+          func_80017FE4(szBuf, &position, 18, 2);
+
+          //level stats - dragon count
+          if (g_TargetDragonCounts[D_80075744 * 6 + i] != 0)
+          {
+            position.x = D_800757CC + 445;
+            
+            sprintf(szBuf, "%d", g_LevelDragonCount[D_80075744 * 6 + i]);
+            func_80017FE4(szBuf, &position, 18, 2);
+            position.x = D_800757CC + 462;
+            position.z = 0x1800;
+            func_80017FE4("/", &position, 18, 2);
+            position.x = D_800757CC + 479;
+            position.z = 0x1100;
+            sprintf(szBuf, "%d", g_TargetDragonCounts[D_80075744 * 6 + i]);
+            func_80017FE4(szBuf, &position, 18, 2);
+          } else {
+            //use the "/" to make "-" i guess
+            position.x = D_800757CC + 462;
+            position.z = 0x1800;
+            func_80017FE4("/", &position, 18, 2);
+            g_HudMobys->m_Rotation.x = 41;
+          }
+          
+          //make the current level title wiggle
+          if(D_80075744 * 6 + i == g_LevelIndex) {
+            int j;
+            endMoby--;
+            for(j = 0; (int)endMoby >= (int)g_HudMobys;++j) {
+              endMoby->m_Rotation.z = (COSINE_8((D_800758B8 * 8 + j * 12) & 0xFF)*3) >> 9;
+              endMoby--;
+            }
+          }
+          
+          if (g_EggTotal > 0 && D_80075744 < 3) {
+            int j;
+            for(j = 0; j < g_TargetEggCounts[D_80075744 * 6 + i]; j++) {
+              rc2.x = D_800757CC + 232 + j * 24 + ((g_TargetEggCounts[D_80075744 * 6 + i] == 1) ? 24 : 0);
+              rc2.y = level_y - 8;
+              rc2.w = 24;
+              rc2.h = 16;
+              if(j >= g_LevelEggCount[D_80075744 * 6 + i]) {
+                setXYZ(&position, rc2.x + 12, level_y, 0x1800);
+                func_80017FE4("X", &position, 0, 2);
+                setXYZ(&position, 32, 32, 32);
+                func_8001919C(&rc2, &g_Hud.m_EggSprites[0], (ColorInt*)&position);
+              } else {
+                func_8001919C(&rc2, &g_Hud.m_EggSprites[(g_Hud.unk_0x40 + i) % 9], nullptr);
+              }
+            }
+          }
+          level_y += 19; 
+        }
+      }
+      func_8001844C(D_800757CC + 112, level_y - 11, 
+              D_800757CC + 208, level_y - 11);
+      func_8001844C(D_800757CC + 320, level_y - 11, 
+              D_800757CC + 384, level_y - 11);
+      func_8001844C(D_800757CC + 430, level_y - 11, 
+              D_800757CC + 494, level_y - 11);
+    }
+    
+    g_SonyImage.m_ShadedMobys[0] = nullptr;
+    if(g_Gamestate == 2 && !g_IsFlightLevel) {
+      func_80019300(); //create collectables
+    }
+
+    func_80018880();
+    Memset(&g_SonyImage, 0, 0x900);
+    func_80022A2C();
+    
+    DrawOTag(func_80016784(0));
+
+    DrawSync(0);
+    if (D_80075784) {
+      VSync(0);
+    }
+  
+    D_80075950.pre = VSync(-1);
+  
+    while (D_80075950.pre - D_80075950.post < 2) {
+      VSync(0);
+      D_80075950.pre = VSync(-1);
+    }
+  
+    D_80075950.post = VSync(-1);
+    PutDispEnv(&g_CurDB->m_DispEnv);
+  }
+
+  ++D_800758B8;
+}
+
 /// @brief Gamestate 10
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001C694);
+void func_8001C694(void) {
 
-void func_8001CA38(void);
+  RECT rc;
+  POLY_FT4* ft4;
+  LINE_F2* l2;
+  Color rgb;
+  int i;
+  
+  D_800758B0 = 0;
+  D_800757B0 = g_Buffers.m_LowerPolyBuffer;
+  D_80075780 = g_Buffers.m_LowerPolyBuffer + 0x1C000;
+  switch (D_800758B8) {
+  case 0:
+    if (g_CurDB == &g_DB[0]) {
+      PutDrawEnv(&g_DB[1].m_DrawEnv);
+    } else {
+      PutDrawEnv(&g_DB[0].m_DrawEnv);
+    }
+
+    rc.x = D_8007568C + 512;
+    rc.y = 224;
+    rc.w = 32 - D_8007568C;
+    rc.h = 1;
+    LoadImage(&rc, D_8006F310);
+    DrawSync(0);
+    for (i = 0; i < 4; i++) {
+      ft4 = D_800757B0;
+      ft4->tag = 0x09000000;
+      setcode(ft4, 0x2c);
+      setRGB0(ft4, 0x4c, 0x80, 0x40);
+      ft4->x0 = i * 128;
+      ft4->y0 = 8;
+      ft4->x1 = ft4->x0 + 128;
+      ft4->y1 = ft4->y0;
+      ft4->x2 = ft4->x0;
+      ft4->y2 = ft4->y0 + 223;
+      ft4->x3 = ft4->x0 + 128;
+      ft4->y3 = ft4->y0 + 223;
+      ft4->u0 = 0;
+      ft4->v0 = 0;
+      ft4->u1 = ft4->u0 + 128;
+      ft4->v1 = ft4->v0;
+      ft4->u2 = ft4->u0;
+      ft4->v2 = ft4->v0 + 224 - 1;
+      ft4->u3 = ft4->u0 + 128;
+      ft4->v3 = ft4->v0 + 224 - 1;
+      ft4->clut = getClut(512, 224);
+      ft4->tpage = i + 0x88;
+      func_800168A0(ft4, 1023);
+      D_800757B0 = ft4 + 1;
+    }
+    l2 = D_800757B0;
+    l2->tag = 0x03000000;
+    l2->code = 0x40;
+    l2->x0 = 0;
+    l2->y0 = 231;
+    l2->x1 = 512;
+    l2->y1 = 231;
+    l2->r0 = 0;
+    l2->g0 = 0;
+    l2->b0 = 0;
+    func_800168A0(l2, 1023);
+    D_800757B0 = l2 + 1;
+    break;
+  case 1:
+    D_800757D4 = 0;
+    D_8007575C = (0x20 - D_8007568C) * 128;
+    *(int*)&rgb = ColorLerp(*(int*)&g_Cyclorama.m_BackgroundColor, 0, D_8007575C);
+    if (g_CurDB == g_DB) {
+      g_DB[1].m_DrawEnv.r0 = rgb.r;
+      g_DB[1].m_DrawEnv.g0 = rgb.g;
+      g_DB[1].m_DrawEnv.b0 = rgb.b;
+      PutDrawEnv(&g_DB[1].m_DrawEnv);
+    } else {
+      g_DB[0].m_DrawEnv.r0 = rgb.r;
+      g_DB[0].m_DrawEnv.g0 = rgb.g;
+      g_DB[0].m_DrawEnv.b0 = rgb.b;
+      PutDrawEnv(&g_DB[0].m_DrawEnv);
+    }
+    func_8004F000();
+    break;
+  }
+  Memset(D_8006FCF4, 0, 0x900);
+  func_80023AC4();
+  DrawOTag(func_80016784(0x800));
+  DrawSync(0);
+  if (D_80075784 != 0) {
+    VSync(0);
+  }
+  D_80075950.pre = VSync(-1);
+  while (D_80075950.pre - D_80075950.post < 2) {
+    VSync(0);
+    D_80075950.pre = VSync(-1);
+  }
+  D_80075950.post = VSync(-1);
+  PutDispEnv(&g_CurDB->m_DispEnv);
+}
+
+
+// TODO: Move Game Over related externs
+extern int D_8007593C;
+extern int D_80075940;
+extern struct {
+    short x, y;
+} g_GameOverTextXY[8]; //8006F2B4
+extern short g_GameOverTextZ[24]; //8006F2D4
+extern char g_GameOverTextRot[8]; //800752D0
+extern u_char g_GameOverLetterDisplayTicks[8]; //800752E0
+
+extern short g_GameOverSkyboxRotY; //800752DC
+extern short g_GameOverSkyboxRotZ; //800752DE
+extern short g_GameOverRotY; //800752D8
+extern short g_GameOverRotZ; //800752DA
+extern char D_8006F304[1]; // GAMEOVER
 /// @brief Gamestate 4 & 5
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001CA38);
+void func_8001CA38(void) {
+  RECT rc;
 
-void func_8001CFDC(void);
+  if (D_80075940 == 0) {
+    if(D_8007593C == 0) {
+      func_800521C0();
+      func_80019698();
+      func_800573C8();
+      func_80050BD0();
+      func_8002B9CC();
+      DrawSync(0);
+      VSync(0);
+      PutDispEnv(&g_CurDB->m_DispEnv);
+      PutDrawEnv(&g_CurDB->m_DrawEnv);
+      DrawOTag(func_80016784(0x800));
+      DrawSync(0);
+      VSync(0);
+
+      rc.x = 0;
+      rc.y = g_CurDB != g_DB ? 248 : 8;
+      rc.w = 512;
+      rc.h = 224;
+      MoveImage(&rc, 0, 256 - rc.y);
+      DrawSync(0);
+      g_DB[0].m_DrawEnv.isbg = 0;
+      g_DB[1].m_DrawEnv.isbg = 0;
+    } else if(D_8007593C <= 15) {
+      if(D_8007593C == 1) {
+        func_800190D4(2, 0x10, 0x10, 0x10);
+      } else  {
+        func_800190D4(2, 0x20, 0x20, 0x20);
+      }
+      DrawSync(0);
+      VSync(0);
+      PutDispEnv(&g_CurDB->m_DispEnv);
+      PutDrawEnv(&g_CurDB->m_DrawEnv);
+      DrawOTag(func_80016784(0x800));
+      if (D_8007593C == 15) {
+        g_DB[0].m_DrawEnv.isbg = 1;
+        g_DB[1].m_DrawEnv.isbg = 1;
+        setRGB0(&g_DB[0].m_DrawEnv, 0, 0, 0);
+        setRGB0(&g_DB[1].m_DrawEnv, 0, 0, 0);
+        DrawSync(0);
+        VSync(0);
+        setRECT(&rc, 0, 0, 512, 480);
+        ClearImage(&rc, 0, 0, 0);
+      }
+    }
+  } else if(D_80075940 == 1) {
+    if(D_8007593C >= 60) {
+      int i;
+      Moby* curMoby;
+      Vector3D position;
+      Vector3D spacing;
+      for(i = 0; i < 8; ++i) {
+        int tickOff = D_8007593C - 60 - g_GameOverLetterDisplayTicks[i];
+        if (tickOff >= 0) {
+          --g_HudMobys;
+          Memset(g_HudMobys, 0, sizeof(Moby));
+          if(tickOff < 24)
+            g_HudMobys->m_Position.z = g_GameOverTextZ[tickOff];
+          else 
+            g_HudMobys->m_Position.z = 1024;
+          g_HudMobys->m_Class = MOBYCLASS_LETTER_A + D_8006F304[i] - 'A';
+          g_HudMobys->m_Position.x = g_GameOverTextXY[i].x;
+          g_HudMobys->m_Position.y = g_GameOverTextXY[i].y;
+          g_HudMobys->m_Rotation.z = g_GameOverTextRot[i];
+          g_HudMobys->m_DepthOffset = 4;
+          g_HudMobys->m_SpecularMetalType = 11;
+          g_HudMobys->m_RenderRadius = 32;
+        }
+      }
+
+      if(g_LoadStage > 10 && D_8007593C > 420) {
+        setXYZ(&spacing, 16, 1, 0x1400);
+        setXYZ(&position, 174, 208, 0x1100);
+        func_800181AC("PRESS START", &position, &spacing, 18, 11);
+        curMoby = g_HudMobys;
+        for (i = 0; i < 10; ++i) {
+          (*curMoby++).m_Rotation.z = COSINE_8((D_8007593C * 4 + i * 12) & 0xFF) * 3 >> 9;
+        }
+      }
+
+      g_SonyImage.m_ShadedMobys[0] = nullptr;
+      func_80018880();
+      Memset(g_SonyImage.m_Buf.m_Buf, 0, 0x900);
+      func_80022A2C();
+      if(D_8007593C > 180) {
+        func_80023AC4();
+      }
+    }
+    g_Camera.m_Rotation.y = g_GameOverSkyboxRotY;
+    g_Camera.m_Rotation.z = g_GameOverSkyboxRotZ;
+    CameraUpdateMatrices();
+    func_8004EBA8(-1, &g_Camera.m_ViewMatrix, &g_Camera.m_ProjectionMatrix);
+    g_Camera.m_Rotation.y = g_GameOverRotY;
+    g_Camera.m_Rotation.z = g_GameOverRotZ;
+    if (D_8007593C < 32) {
+      int temp = (31 - D_8007593C) * 8;
+      func_800190D4(2, temp, temp, temp);
+    }
+    DrawSync(0);
+    VSync(0);
+    PutDispEnv(&g_CurDB->m_DispEnv);
+    PutDrawEnv(&g_CurDB->m_DrawEnv);
+    DrawOTag(func_80016784(0x800));
+  } else {
+    if(D_8007593C == 0) {
+      rc.x = 0;
+      rc.y = g_CurDB != g_DB ? 248 : 8;
+      rc.w = 512;
+      rc.h = 224;
+      MoveImage(&rc, 0, 256 - rc.y);
+      DrawSync(0);
+      g_DB[0].m_DrawEnv.isbg = 0;
+      g_DB[1].m_DrawEnv.isbg = 0;
+    } else if(D_8007593C <= 15) {
+      if(D_8007593C == 1) {
+        func_800190D4(2, 0x10, 0x10, 0x10);
+      } else {
+        func_800190D4(2, 0x20, 0x20, 0x20);
+      }
+      DrawSync(0);
+      VSync(0);
+      PutDispEnv(&g_CurDB->m_DispEnv);
+      PutDrawEnv(&g_CurDB->m_DrawEnv);
+      DrawOTag(func_80016784(0x800));
+      if (D_8007593C == 15) {
+        g_DB[0].m_DrawEnv.isbg = 1;
+        g_DB[1].m_DrawEnv.isbg = 1;
+        setRGB0(&g_DB[0].m_DrawEnv, 0, 0, 0);
+        setRGB0(&g_DB[1].m_DrawEnv, 0, 0, 0);
+        DrawSync(0);
+        VSync(0);
+        setRECT(&rc, 0, 0, 512, 480);
+        ClearImage(&rc, 0, 0, 0);
+      }
+    }
+  }
+}
+
+// TODO: Move externs
+extern struct {
+    int unk_0x0;
+    Vector3D vec_0x04;;
+    SHORTMATRIX mat_0x10;
+    int unk_0x24;
+    Vector3D8 vec_0x28;
+} D_80076248;
+extern short D_8006F3C0[24];
+
 /// @brief Gamestate 8
-INCLUDE_ASM("asm/nonmatchings/gamestates/draw", func_8001CFDC);
+void func_8001CFDC(void) {
+  char pad[16];
+  
+  if (D_80076248.unk_0x0 != 0) {
+    RotVec8ToMatrix(&D_80076248.vec_0x28, (MATRIX*)&D_80076248.mat_0x10, (MATRIX*)&g_Camera.m_ProjectionMatrix);
+    func_80058864();
+  }
+
+  if(g_DragonCutscene.m_State == 0) {
+    func_800521C0();  // Queue render mobys
+    func_80019698();  // Creates Mobys, shadows, Spyro, flame and glows and sparkles
+    func_8002B9CC();  // Create the environment
+    func_80050BD0();  //
+    func_800573C8();  // particles
+    if (g_DragonCutscene.unk_0x44 != 0) {
+      //fade in/out
+      func_800190D4(1, g_DragonCutscene.unk_0x44, g_DragonCutscene.unk_0x44, g_DragonCutscene.unk_0x44);
+    }
+    if ((g_ScreenBorderEnabled != 0) || (D_800756C0 != 0)) {
+      func_80018F30();
+    }
+  } else if(g_DragonCutscene.m_State < 4) {
+    Moby* lvlMoby;
+    Moby** out = g_SonyImage.m_Buf.m_Dragon.m_Moby;
+    Moby** out2;
+    if (g_DragonCutscene.m_RescuedDragonMoby->m_State < 0x80)
+      *out++ = g_DragonCutscene.m_RescuedDragonMoby;
+    if(g_DragonCutscene.m_State == 3)
+      *out++ = g_DragonCutscene.m_CutsceneSpyro;;
+    *out = nullptr;
+
+    out2 = g_SonyImage.m_ShadedMobys;
+    for(lvlMoby = g_LevelMobys; lvlMoby->m_State != 0xFF; ++ lvlMoby)
+    {
+      if(lvlMoby->m_Class == 251 && lvlMoby->m_State < 0x80)
+        *out2++ = lvlMoby;
+    }
+    *out2 = nullptr;
+    func_80018728(); //create rescue dragon txt
+    func_80018880();
+    func_8001F158();
+    Memset(g_SonyImage.m_Buf.m_Dragon.m_Moby,0,0x900);
+    func_8001F798();
+    func_80022A2C();
+    func_80059F8C();
+    func_80023AC4();
+    func_80059A48();
+    func_8002B9CC();
+    func_80050BD0();
+    func_800573C8();
+    if (g_DragonCutscene.unk_0x44 != 0) {
+      //fade in/out
+      func_800190D4(1, g_DragonCutscene.unk_0x44, g_DragonCutscene.unk_0x44, g_DragonCutscene.unk_0x44);
+    }
+    if ((g_ScreenBorderEnabled != 0) || (D_800756C0 != 0)) {
+      func_80018F30();
+    }
+  } else if(g_DragonCutscene.m_State == 4) {
+    Moby* lvlMoby;
+    Moby** out = g_SonyImage.m_Buf.m_Dragon.m_Moby;
+    Moby** out2;
+    *out++ = g_DragonCutscene.m_CutsceneSpyro;
+    *out++ = g_DragonCutscene.m_CutsceneDragon;
+    *out = nullptr;
+
+    out2 = g_SonyImage.m_ShadedMobys;
+    for(lvlMoby = g_LevelMobys; lvlMoby->m_State != 0xFF; ++lvlMoby) {
+      if(lvlMoby->m_Class == MOBYCLASS_CRYSTAL_DRAGON_FRAGMENT && lvlMoby->m_State < 0x80)
+        *out2++ = lvlMoby;
+    }
+    *out2 = nullptr;
+
+    if(g_DragonCutscene.unk_0x3C < 0x3C) {
+      func_80018728(); //create rescued dragon txt
+      func_80018880();
+    }
+    func_8001F158();
+    Memset(g_SonyImage.m_Buf.m_Dragon.m_Moby,0,0x900);
+    func_8001F798();
+    func_80022A2C();
+    func_80059F8C();
+    func_80059A48();
+    func_8002B9CC();
+    func_80050BD0();
+    func_800573C8();
+    if ((g_ScreenBorderEnabled != 0) || (D_800756C0 != 0)) {
+      func_80018F30();
+    }
+  } else if(g_DragonCutscene.m_State == 5) {
+    int i;
+    int j;
+    Moby** out = g_SonyImage.m_Buf.m_Dragon.m_Moby;
+    Moby** out2;
+    *out++ = g_DragonCutscene.m_CutsceneSpyro;;
+    *out = nullptr;
+
+    out2 = g_SonyImage.m_ShadedMobys;
+    for(i = 0; i < 3; ++i) {
+      *out2++ = &g_Hud.m_Mobys[5 + i];
+    }
+    *out2 = nullptr;
+    func_8001F158();
+    if(g_SonyImage.m_Buf.m_Dragon.unk_0x1600 != 0) {
+      int x = D_8006F3C0[g_DragonCutscene.unk_0x3C];
+      g_SonyImage.m_Buf.m_Dragon.unk_0x161C.x = FIXED_MUL(g_SonyImage.m_Buf.m_Dragon.unk_0x161C.x, x);
+      g_SonyImage.m_Buf.m_Dragon.unk_0x161C.y = FIXED_MUL(g_SonyImage.m_Buf.m_Dragon.unk_0x161C.y, x);
+      g_SonyImage.m_Buf.m_Dragon.unk_0x161C.z = FIXED_MUL(g_SonyImage.m_Buf.m_Dragon.unk_0x161C.z, x);
+      if (g_DragonCutscene.unk_0x3C > 8) {
+        x = Cos((g_DragonCutscene.unk_0x3C - 8) * 42);
+        g_SonyImage.m_Buf.m_Dragon.unk_0x1622.x = FIXED_MUL(g_SonyImage.m_Buf.m_Dragon.unk_0x1622.x, x);
+        g_SonyImage.m_Buf.m_Dragon.unk_0x1622.y = FIXED_MUL(g_SonyImage.m_Buf.m_Dragon.unk_0x1622.y, x);
+        g_SonyImage.m_Buf.m_Dragon.unk_0x1622.z = FIXED_MUL(g_SonyImage.m_Buf.m_Dragon.unk_0x1622.z, x);
+      }
+    }
+    Memset(g_SonyImage.m_Buf.m_Dragon.m_Moby,0,0x900);
+    func_8001F798();
+    func_80022A2C();
+    func_80023AC4();
+    func_80059A48();
+    func_8002B9CC();
+    func_80050BD0();
+    func_800573C8();
+    if ((g_ScreenBorderEnabled != 0) || (D_800756C0 != 0)) {
+      func_80018F30();
+    }
+  } else if(g_DragonCutscene.m_State == 6) {
+    int i, j;
+    Moby** out = g_SonyImage.m_ShadedMobys;
+    for(i = 0; i < 3; ++i) {
+      *out++ = &g_Hud.m_Mobys[5 + i];
+    }
+    *out = 0;
+    Memset(g_SonyImage.m_Buf.m_Dragon.m_Moby,0,0x900);
+    func_80022A2C();
+    func_80023AC4();
+    func_80059A48();
+    func_8002B9CC();
+    func_80050BD0();
+    func_800573C8();
+    if ((g_ScreenBorderEnabled != 0) || (D_800756C0 != 0)) {
+      func_80018F30();
+    }
+  } else if(g_DragonCutscene.m_State == 7) { 
+    int i;
+    Moby** out;
+    if(g_DragonCutscene.unk_0x3C < 0x10) {
+      out = g_SonyImage.m_ShadedMobys;
+      for(i = 0; i < 3; ++i) {
+        *out++ = &g_Hud.m_Mobys[5 + i];
+      }
+      *out = 0;
+      Memset(g_SonyImage.m_Buf.m_Dragon.m_Moby,0,0x900);
+      func_80022A2C();
+    } else {
+      func_800521C0();
+      func_8001F158();
+      Memset(D_8006FCF4, 0, 0x900);
+      func_8001F798();
+      func_800208FC();
+      func_80020F34();
+      func_80022A2C();
+      func_80059F8C();
+    }
+    func_80023AC4();
+    func_80059A48();
+    func_8002B9CC();
+    func_80050BD0();
+    func_800573C8();
+    if ((g_ScreenBorderEnabled != 0) || (D_800756C0 != 0)) {
+      func_80018F30();
+    }
+    if (g_DragonCutscene.unk_0x44 != 0) {
+      // fade in/out
+      func_800190D4(1, g_DragonCutscene.unk_0x44, g_DragonCutscene.unk_0x44, g_DragonCutscene.unk_0x44);
+    }
+  }
+
+  DrawSync(0);
+  if (D_80075784) {
+    VSync(0);
+  }
+    
+  D_80075950.pre = VSync(-1);
+    
+  while (D_80075950.pre - D_80075950.post < 2) {
+    VSync(0);
+    D_80075950.pre = VSync(-1);
+  }
+    
+  D_80075950.post = VSync(-1);
+  PutDispEnv(&g_CurDB->m_DispEnv);
+  PutDrawEnv(&g_CurDB->m_DrawEnv);
+  DrawOTag(func_80016784(0x800));
+}
 
 typedef struct {
   short x, x2;
@@ -196,8 +2043,7 @@ void func_8001D718(void) {
       }
 
       position.x = g_FairyCutscene.m_MenuOffsetX + 76;
-      // TODO: func_800181AC("CONTINUE", &position, &spacing, 18, 11);
-      func_800181AC(D_80010B6C, &position, &spacing, 18, 11);
+      func_800181AC("CONTINUE", &position, &spacing, 18, 11);
 
       if (g_FairyCutscene.m_MenuSelectedOption == 2) {
         curMoby = g_HudMobys;
@@ -343,8 +2189,7 @@ void func_8001D718(void) {
       position.y += 40;
 
       position.x = g_FairyCutscene.m_MenuOffsetX + 135;
-      // TODO: func_800181AC("RETRY", &position, &spacing, 18, 11);
-      func_800181AC(D_80075620, &position, &spacing, 18, 11);
+      func_800181AC("RETRY", &position, &spacing, 18, 11);
       position.y += 19;
 
       // Selected
@@ -354,8 +2199,7 @@ void func_8001D718(void) {
       }
 
       position.x = g_FairyCutscene.m_MenuOffsetX + 135;
-      // TODO: func_800181AC("ABORT", &position, &spacing, 18, 11);
-      func_800181AC(D_80075628, &position, &spacing, 18, 11);
+      func_800181AC("ABORT", &position, &spacing, 18, 11);
 
       // Selected
       if (g_FairyCutscene.m_MenuSelectedOption == 1) {
@@ -400,12 +2244,10 @@ void func_8001D718(void) {
 
       if (g_FairyCutscene.m_MemoryCardSlot == 0) {
         position.x = g_FairyCutscene.m_MenuOffsetX + 48;
-        // TODO: func_800181AC("SLOT 1", &position, &spacing, 14, 11);
-        func_800181AC(D_80075630, &position, &spacing, 14, 11);
+        func_800181AC("SLOT 1", &position, &spacing, 14, 11);
       } else {
         position.x = 230; // SKELETON: Not adding the x offset now?
-        // TODO: func_800181AC("SLOT 2", &position, &spacing, 14, 11);
-        func_800181AC(D_80075638, &position, &spacing, 14, 11);
+        func_800181AC("SLOT 2", &position, &spacing, 14, 11);
       }
     }
   }
@@ -457,7 +2299,7 @@ void func_8001E24C(void) {
   if (D_800777E8.m_State >= 4) {
 
     if (D_800777E8.m_State < 6) {
-      Moby **mobyQueue = (void *)g_SonyImage.m_Buf;
+      Moby **mobyQueue = (void *)g_SonyImage.m_Buf.m_Buf;
 
       *(mobyQueue++) = D_800777E8.m_BalloonMoby;
       *(mobyQueue++) = (void *)0;
@@ -499,7 +2341,7 @@ void func_8001E24C(void) {
       }
 
       func_8001F158(); // Prepare Moby draw
-      Memset(g_SonyImage.m_Buf, 0, 0x900);
+      Memset(g_SonyImage.m_Buf.m_Buf, 0, 0x900);
       func_8001F798(); // Draw Mobys
 
       g_SonyImage.m_ShadedMobys[0] = nullptr;
@@ -563,7 +2405,7 @@ void func_8001E24C(void) {
 }
 
 /// @brief Gamestate 13
-void func_8001E6B8() {
+void func_8001E6B8(void) {
   if (g_TitlescreenState.m_State == TSS_Active &&
       g_TitlescreenState.m_Tick > 139) {
     int a, i;
@@ -589,7 +2431,7 @@ void func_8001E6B8() {
     } else if (g_TitlescreenState.m_DemoType == TSD_Level) {
 
       // Have we visited Artisans before?
-      if (g_VisitedFlags.m_Levels[0]) {
+      if (g_VisitedFlags[0]) {
         position.x = 80;
         func_800181AC("THE ADVENTURE CONTINUES...", &position, &spacing, 0x10,
                       0xB);
@@ -632,7 +2474,7 @@ void func_8001E6B8() {
 
   g_SonyImage.m_ShadedMobys[0] = nullptr;
   func_80018880(); // Copies the HUD Mobys to the Shaded Mobys list
-  Memset(g_SonyImage.m_Buf, 0, 0x900);
+  Memset(g_SonyImage.m_Buf.m_Buf, 0, 0x900);
   func_80022A2C(); // Renders the shaded mobys
 
   if (g_TitlescreenState.m_State == TSS_Active) {
@@ -663,9 +2505,9 @@ void func_8001E9C8(void) {
 
   func_800521C0();
   func_8001F158();
-  Memset(g_SonyImage.m_Buf, 0, 0x900);
+  Memset(g_SonyImage.m_Buf.m_Buf, 0, 0x900);
   func_8001F798();
-  Memset(g_SonyImage.m_Buf, 0, 0x1C00);
+  Memset(g_SonyImage.m_Buf.m_Buf, 0, 0x1C00);
 
   g_Environment.m_CullingDistance = 0x14000;
 
@@ -717,7 +2559,7 @@ void func_8001EB80(void) {
   setRGB0(&g_DB[0].m_DrawEnv, 0, 0, 0);
   setRGB0(&g_DB[1].m_DrawEnv, 0, 0, 0);
 
-  func_800181AC(D_80010ACC, &position, &spacing, 18, 11); // "RETURNING HOME..."
+  func_800181AC("RETURNING HOME...", &position, &spacing, 18, 11);
 
   rotOff = 0;
 
@@ -731,7 +2573,7 @@ void func_8001EB80(void) {
   g_SonyImage.m_ShadedMobys[0] = (void *)0;
 
   func_80018880(); // Copies the HUD Mobys to the Shaded Mobys list
-  Memset(g_SonyImage.m_Buf, 0, 0x900);
+  Memset(g_SonyImage.m_Buf.m_Buf, 0, 0x900);
   func_80022A2C(); // Renders the shaded mobys
   DrawSync(0);
 
@@ -868,3 +2710,4 @@ void GamestateDraw(void) {
     DrawOTag(func_80016784(0x800));
   }
 }
+

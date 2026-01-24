@@ -7,9 +7,11 @@
 #include "gamestates/init.h"
 #include "graphics.h"
 #include "loaders.h"
+#include "math.h"
 #include "overlay_pointers.h"
 #include "specular_and_metal.h"
 #include "spyro.h"
+#include "sony_image.h"
 #include "titlescreen.h"
 #include "variables.h"
 
@@ -17,9 +19,81 @@
 
 extern int _stacksize;
 
+
 /// @brief Updates level transition gems and text
-void func_8002DA74(void);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002DA74);
+void func_8002DA74(void) {
+  int i;
+
+  g_LevelTransGems = (TransGem *)g_SonyImage.unk_0x2800;
+  if (g_LevelTransTicks == 0) {
+    g_LevelTransChestDuration = g_NGemsSinceLevelEntry * 2 + 140;
+    if (g_LevelTransChestDuration > 192) {
+      g_LevelTransChestDuration = 192;
+    }
+    for (i = 0; i < 64; i++) {
+      g_LevelTransGems[i]._08 = 0;
+    }
+  }
+
+  g_LevelTransTicks += g_DeltaTime;
+
+  if (g_LevelTransTicks > 416) {
+    g_LevelTransHudActive = 0;
+  } else if (g_LevelTransTicks >= 128) {
+    for (i = 0; i < 32; i++) {
+
+      if (i < g_NGemsSinceLevelEntry && (i * 2 + 128) <= g_LevelTransTicks) {
+        if (g_LevelTransTicks < 256) {
+          if (g_LevelTransGems[i]._08 == 0) {
+            g_LevelTransGems[i]._08 = 1;
+            g_LevelTransGems[i].age = g_LevelTransTicks - 128 - i * 2 - g_DeltaTime;
+            g_LevelTransGems[i].targetX = (rand() & 255) - 128;
+            g_LevelTransGems[i].targetY = (rand() & 63) + 96;
+            g_LevelTransGems[i].rot.x = (rand() & 63) - 32;
+            g_LevelTransGems[i].rot.y = (rand() & 63) - 32;
+            g_LevelTransGems[i].rot.z = rand();
+            g_LevelTransGems[i]._0D = (rand() & 2) - 1;
+            g_LevelTransGems[i]._0E = (rand() & 2) - 1;
+            g_LevelTransGems[i]._0F = (rand() & 15) - 8;
+            if ((g_LevelTransTicks & 7) == 0) {
+              PlaySound(g_Spu.m_SoundTable->gemPickup, 0, 16, 0);
+            }
+          }
+        }
+        if (g_LevelTransGems[i]._08 != 0) {
+          g_LevelTransGems[i].age += g_DeltaTime;
+          g_LevelTransGems[i].rot.z += g_LevelTransGems[i]._0F;
+          if (g_LevelTransGems[i].age < 48) {
+            g_LevelTransGems[i].xOffset = FIXED_MUL(g_LevelTransGems[i].targetX,
+                                                    4096 - COSINE_8(g_LevelTransGems[i].age * 4 / 3));
+            g_LevelTransGems[i].yOffset = FIXED_MUL(g_LevelTransGems[i].targetY,
+                                                    SINE_8(g_LevelTransGems[i].age * 4 / 3));
+          } else if (g_LevelTransGems[i].age < 96) {
+            g_LevelTransGems[i].xOffset = g_LevelTransGems[i].targetX +
+                                          (FIXED_MUL(g_LevelTransGems[i].targetX,
+                                          SINE_8((g_LevelTransGems[i].age - 48) * 8 / 3)) >> 1);
+            g_LevelTransGems[i].yOffset = (g_LevelTransGems[i].targetY >> 1) +
+                                          (FIXED_MUL(g_LevelTransGems[i].targetY,
+                                          4096 + COSINE_8((g_LevelTransGems[i].age - 48) * 8 / 3)) >> 2);
+          } else if (g_LevelTransGems[i].age < 147) {
+            g_LevelTransGems[i].xOffset = g_LevelTransGems[i].targetX -
+                                          FIXED_MUL(g_LevelTransGems[i].targetX,
+                                          SINE_8((g_LevelTransGems[i].age - 96) * 4 / 3));
+            g_LevelTransGems[i].yOffset = FIXED_MUL(g_LevelTransGems[i].targetY,
+                                          COSINE_8((g_LevelTransGems[i].age - 96) * 4 / 3)) >> 1;
+          } else {
+            g_LevelTransGems[i]._08 = 0;
+            if (i == (i / 3) * 3) {
+              PlaySound(g_Spu.m_SoundTable->pickupDing, 0, 16, 0);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
 
 /// @brief Gamestate 1
 void func_8002DF9C(void) {
@@ -28,7 +102,7 @@ void func_8002DF9C(void) {
 
   func_8002DA74();
 
-  if (g_LoadStage < 11 || !D_800756B0) {
+  if (g_LoadStage < 11 || !g_LevelTransHudActive) {
     LoadLevel(1);
   }
 }

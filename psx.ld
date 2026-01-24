@@ -317,7 +317,7 @@ SECTIONS
         build/asm/data/game.sdata.o(.sdata);
         build/src/strings.o(.sdata);
         build/asm/data/initialization.sdata.o(.sdata);
-        build/asm/data/gamestates/draw.sdata.o(.sdata);
+        build/src/gamestates/draw.o(.sdata);
         . = ALIGN(., 4);
         main_SDATA_END = .;
         main_SDATA_SIZE = ABSOLUTE(main_SDATA_END - main_SDATA_START);

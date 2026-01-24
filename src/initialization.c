@@ -172,7 +172,7 @@ void func_80012604(void) {
       g_LevelEggCount[i] = 0;
     }
 
-    g_VisitedFlags.m_Levels[i] = 0;
+    g_VisitedFlags[i] = 0;
     g_LevelVortexExitFlags[i] = 0;
   }
 
@@ -201,7 +201,7 @@ void func_80012604(void) {
 
   // Reset in-level variables
   D_8007587C = 0;  // Gems collected before entering the level
-  D_800756C8 = 0;  // Gems collected in this level
+  g_NGemsSinceLevelEntry = 0;  // Gems collected in this level
   D_80075830 = 0;  // Key flag
   D_800758E8 = 0;  // Life orb count
   D_8007580C = -1; // Health before entering flight level

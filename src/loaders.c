@@ -1052,7 +1052,7 @@ void LoadLevel(int pArg) {
     // Set the Easter Egg timer depending on whether this level
     // has been visited before
 
-    if (!g_VisitedFlags.m_Levels[g_LevelIndex])
+    if (!g_VisitedFlags[g_LevelIndex])
       g_CdMusic.m_EasterEggTicks = 12 * 60 * 60; // 12 Minutes
     else
       g_CdMusic.m_EasterEggTicks = 8 * 60 * 60; // 8 Minutes
@@ -1060,14 +1060,14 @@ void LoadLevel(int pArg) {
     g_CdMusic.m_CurrentTrack =
         D_8006EF9C[g_LevelIndex]; // Set currently playing track
 
-    g_VisitedFlags.m_Levels[g_LevelIndex] = 1; // Mark this level as visited
+    g_VisitedFlags[g_LevelIndex] = 1; // Mark this level as visited
 
     Memset(&g_Checkpoint, 0, sizeof(CheckpointData)); // Clear checkpoint data
 
     D_8007587C = g_LevelGemCount[g_LevelIndex]; // prev gem count for this level
 
     D_80075830 = 0; // Key flag
-    D_800756C8 =
+    g_NGemsSinceLevelEntry =
         0; // Counter used for the collected gems shown in the transition
 
     func_8001364C(pArg); // Initialize the Level Layout

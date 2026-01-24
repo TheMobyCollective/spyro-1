@@ -775,8 +775,8 @@ glabel func_level_52_8007B4DC
 /* 493CE1C 8007B854 01000924 */  addiu      $t1, $zero, 0x1
 /* 493CE20 8007B858 0780013C */  lui        $at, %hi(g_HasLevelTransition)
 /* 493CE24 8007B85C D05629AC */  sw         $t1, %lo(g_HasLevelTransition)($at)
-/* 493CE28 8007B860 0780013C */  lui        $at, %hi(D_800756B0)
-/* 493CE2C 8007B864 B05629AC */  sw         $t1, %lo(D_800756B0)($at)
+/* 493CE28 8007B860 0780013C */  lui        $at, %hi(g_LevelTransHudActive)
+/* 493CE2C 8007B864 B05629AC */  sw         $t1, %lo(g_LevelTransHudActive)($at)
 /* 493CE30 8007B868 1800A600 */  mult       $a1, $a2
 /* 493CE34 8007B86C 0780013C */  lui        $at, %hi(g_Gamestate)
 /* 493CE38 8007B870 D85729AC */  sw         $t1, %lo(g_Gamestate)($at)
@@ -784,8 +784,8 @@ glabel func_level_52_8007B4DC
 /* 493CE40 8007B878 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
 /* 493CE44 8007B87C 0780013C */  lui        $at, %hi(D_8007576C)
 /* 493CE48 8007B880 6C5722AC */  sw         $v0, %lo(D_8007576C)($at)
-/* 493CE4C 8007B884 0780013C */  lui        $at, %hi(D_800756AC)
-/* 493CE50 8007B888 AC5620AC */  sw         $zero, %lo(D_800756AC)($at)
+/* 493CE4C 8007B884 0780013C */  lui        $at, %hi(g_LevelTransTicks)
+/* 493CE50 8007B888 AC5620AC */  sw         $zero, %lo(g_LevelTransTicks)($at)
 /* 493CE54 8007B88C 0780013C */  lui        $at, %hi(g_StateSwitch)
 /* 493CE58 8007B890 9C5729AC */  sw         $t1, %lo(g_StateSwitch)($at)
 /* 493CE5C 8007B894 0780013C */  lui        $at, %hi(g_Camera + 0xC0)

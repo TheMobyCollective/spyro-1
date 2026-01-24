@@ -14,22 +14,7 @@ dlabel g_Spu
 /* Total size from 80075F08 to 80076248 */ .space 0x340
 
 dlabel D_80076248
-/* 66190 80076248 */ .space 0x04
-
-dlabel D_8007624C
-/* 66194 8007624C */ .space 0x08
-
-dlabel D_80076254
-/* 6619C 80076254 */ .space 0x18
-
-dlabel D_8007626C
-/* 661B4 8007626C */ .space 0x06
-
-dlabel D_80076272
-/* 661BA 80076272 */ .space 0x01
-
-dlabel D_80076273
-/* 661BB 80076273 */ .space 0x05
+/* Total size from 80076248 to 80076278 0x2C + 0x4 bss padding*/ .space 0x30
 
 dlabel D_80076278
 /* 661C0 80076278 */ .space 0x100
@@ -94,7 +79,7 @@ dlabel g_Sparkles
 dlabel D_800771C8 /* Rendered world sectors flags */
 /* 67110 800771C8 */ .space 0x100
 
-dlabel D_800772C8 /* Storage for tracers */
+dlabel g_TracerPointCount /* Storage for tracers */
 /* 67210 800772C8 */ .space 0x10
 
 dlabel g_LevelDragonCount
@@ -227,163 +212,7 @@ dlabel D_80077EB4
 /* 67DFC 80077EB4 */ .space 0xF4
 
 dlabel g_Hud
-/* TODO - Total size from 80077FA8 to 8007850C -> .space 0x564 */
-/* 67EF0 80077FA8 */ .space 0x01
-/* 67EF1 80077FA9 */ .space 0x01
-/* 67EF2 80077FAA */ .space 0x01
-/* 67EF3 80077FAB */ .space 0x01
-/* 67EF4 80077FAC */ .space 0x01
-
-/* 67EF5 80077FAD */ .space 0x01
-/* 67EF6 80077FAE */ .space 0x01
-/* 67EF7 80077FAF */ .space 0x01
-/* 67EF8 80077FB0 */ .space 0x01
-/* 67EF9 80077FB1 */ .space 0x01
-
-/* 67EF9 80077FB2 padding */ .space 0x02
-
-/* 67EFC 80077FB4 */ .space 0x04
-/* 67F00 80077FB8 */ .space 0x04
-/* 67F04 80077FBC */ .space 0x04
-/* 67F08 80077FC0 */ .space 0x04
-/* 67F0C 80077FC4 */ .space 0x04
-
-/* 67F10 80077FC8 */ .space 0x04
-/* 67F14 80077FCC */ .space 0x04
-/* 67F18 80077FD0 */ .space 0x04
-/* 67F1C 80077FD4 */ .space 0x04
-/* 67F20 80077FD8 */ .space 0x04
-
-/* 67F24 80077FDC */ .space 0x04
-/* 67F28 80077FE0 */ .space 0x04
-/* 67F2C 80077FE4 */ .space 0x04
-/* 67F30 80077FE8 */ .space 0x04
-
-dlabel D_80077FEC
-/* 67F34 80077FEC */ .space 0x04
-
-dlabel D_80077FF0
-/* 67F38 80077FF0 */ .space 0x04
-
-dlabel D_80077FF4
-/* 67F3C 80077FF4 */ .space 0x04
-
-dlabel D_80077FF8
-/* 67F40 80077FF8 */ .space 0x04
-
-dlabel D_80077FFC
-/* 67F44 80077FFC */ .space 0x04
-
-dlabel D_80078000
-/* 67F48 80078000 */ .space 0x04
-
-dlabel D_80078004
-/* 67F4C 80078004 */ .space 0x04
-
-dlabel D_80078008
-/* 67F50 80078008 */ .space 0x04
-
-dlabel D_8007800C
-/* 67F54 8007800C */ .space 0x04
-
-dlabel D_80078010
-/* 67F58 80078010 */ .space 0x04
-
-dlabel D_80078014
-/* 67F5C 80078014 */ .space 0x04
-
-dlabel D_80078018
-/* 67F60 80078018 */ .space 0x04
-
-dlabel D_8007801C
-/* 67F64 8007801C */ .space 0x04
-
-dlabel D_80078020
-/* 67F68 80078020 */ .space 0x02
-
-dlabel D_80078022
-/* 67F6A 80078022 */ .space 0x10
-
-dlabel D_80078032
-/* 67F7A 80078032 */ .space 0x01
-
-dlabel D_80078033
-/* 67F7B 80078033 */ .space 0x02
-
-dlabel D_80078035
-/* 67F7D 80078035 */ .space 0x06
-
-dlabel D_8007803B
-/* 67F83 8007803B */ .space 0x01
-
-dlabel D_8007803C
-/* 67F84 8007803C */ .space 0x146
-
-dlabel D_80078182
-/* 680CA 80078182 */ .space 0x0F
-
-dlabel D_80078191
-/* 680D9 80078191 */ .space 0x01
-
-dlabel D_80078192
-/* 680DA 80078192 */ .space 0x12
-
-dlabel D_800781A4
-/* 680EC 800781A4 */ .space 0x0C
-
-dlabel D_800781B0
-/* 680F8 800781B0 */ .space 0x04
-
-dlabel D_800781B4
-/* 680FC 800781B4 */ .space 0xD6
-
-dlabel D_8007828A
-/* 681D2 8007828A */ .space 0x10
-
-dlabel D_8007829A
-/* 681E2 8007829A */ .space 0x03
-
-dlabel D_8007829D
-/* 681E5 8007829D */ .space 0xF5
-
-dlabel D_80078392
-/* 682DA 80078392 */ .space 0x10
-
-dlabel D_800783A2
-/* 682EA 800783A2 */ .space 0x12
-
-dlabel D_800783B4
-/* 682FC 800783B4 */ .space 0x36
-
-dlabel D_800783EA
-/* 68332 800783EA */ .space 0x0E
-
-dlabel D_800783F8
-/* 68340 800783F8 */ .space 0x01
-
-dlabel D_800783F9
-/* 68341 800783F9 */ .space 0x01
-
-dlabel D_800783FA
-/* 68342 800783FA */ .space 0x03
-
-dlabel D_800783FD
-/* 68345 800783FD */ .space 0x0F
-
-dlabel D_8007840C
-/* 68354 8007840C */ .space 0x02
-
-dlabel D_8007840E
-/* 68356 8007840E */ .space 0x02
-
-dlabel D_80078410
-/* 68358 80078410 */ .space 0x02
-
-dlabel D_80078412
-/* 6835A 80078412 */ .space 0xFA
-
-dlabel D_8007850C /* 2D sprites */
-/* Total size from 8007850C to 80078560 */ .space 0x54
+/* Total size from 80077FA8 to 80078560 including bss padding */ .space 0x5B8
 
 dlabel D_80078560
 /* Total size from 80078560 to 800785A8 */ .space 0x48
@@ -407,7 +236,7 @@ dlabel g_FlightObjectiveCounters
 dlabel g_Portals
 /* 68588 80078640 */ .space 0x18
 
-dlabel D_80078658
+dlabel g_TracerLists
 /* 685A0 80078658 */ .space 0x10
 
 dlabel D_80078668
@@ -465,10 +294,11 @@ dlabel D_80078DE0
 /* 68D28 80078DE0 */ .space 0x70
 
 dlabel g_PadBufferSecondController
-/* 68D98 80078E50 */ .space 0x22
+/* 68D98 80078E50 0x24 + 0x4 padding */ .space 0x28
 
 dlabel g_VisitedFlags
-/* Total size from 80078E72 to 80078E9C */ .space 0x2A
+/* D_80078E72 is a fake symbol /*
+/* Total size from 80078E728 to 80078E9C */ .space 0x24
 
 /**********************************************************/
 /**********************************************************/

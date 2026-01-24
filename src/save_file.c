@@ -62,7 +62,7 @@ int SaveLoad(SaveFile *pSaveFile) {
     }
   }
 
-  Memcpy(g_VisitedFlags.m_Levels, pSaveFile->m_LevelsVisited,
+  Memcpy(g_VisitedFlags, pSaveFile->m_LevelsVisited,
          sizeof(pSaveFile->m_LevelsVisited));
 
   Memcpy(g_LevelVortexExitFlags, pSaveFile->m_LevelsCompleted,
@@ -125,7 +125,7 @@ void SaveCreate(SaveFile *pSaveFile) {
     }
   }
 
-  Memcpy(pSaveFile->m_LevelsVisited, g_VisitedFlags.m_Levels,
+  Memcpy(pSaveFile->m_LevelsVisited, g_VisitedFlags,
          sizeof(pSaveFile->m_LevelsVisited));
 
   Memcpy(pSaveFile->m_LevelsCompleted, g_LevelVortexExitFlags,

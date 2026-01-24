@@ -237,7 +237,7 @@ void CheatProcessLevelWarp(void) {
         g_Gamestate = GS_LevelTransition; // Set gamestate to loading
         g_LoadStage = 1;                  // Set load stage to 1
         g_HasLevelTransition = 0;         // Set no level transition
-        D_800756B0 = 0;                   // Set no transition text
+        g_LevelTransHudActive = 0;                   // Set no transition text
         g_StateSwitch = 1; // Set skip draw routine due to gamestate switch
 
         g_Camera.unk_0xC0 = 0x80000012;
@@ -267,7 +267,7 @@ void CheatApplyEffect(int pCheatId) {
 
   case 3: // Unlock all levels cheat
     for (i = 0; i < 32; i++)
-      g_VisitedFlags.m_Levels[i] = 1;
+      g_VisitedFlags[i] = 1;
     for (i = 0; i < 6; i++)
       D_800758D0[i] = 2;
 

@@ -25,7 +25,7 @@ FIX_STR_ALIGN   = "./tools/fix_str_align.py"
 # Compilation Flags
 # -------------------------------
 LD_FLAGS  = -g -EL -T /tmp/psx.ld -g -Map build/psx.map --no-check-sections -nostdlib $(PSYQ_LIB)
-C_CLASSIC_FLAGS = -O2 -G8 -g3 -fverbose-asm -mips1 -mcpu=3000 -fgnu-linker -mno-abicalls -mgpopt -msoft-float -quiet
+C_CLASSIC_FLAGS = -O2 -G8 -g3 -fverbose-asm -mips1 -mcpu=3000 -fgnu-linker -mno-abicalls -mgpopt -msoft-float -quiet -funsigned-char
 C_MODERN_FLAGS = -Os -G 0 -g3 -fverbose-asm -march=mips1 -mabi=32 -mips1 -mno-llsc -mno-abicalls -mgpopt -msoft-float -fno-builtin -fno-builtin-function -fno-strict-aliasing -fno-exceptions -fschedule-insns -fno-pic -fno-stack-protector -ffreestanding -o-
 C_FLAGS   = $(if ${MODERN_COMPILER},$(C_MODERN_FLAGS),$(C_CLASSIC_FLAGS))
 AS_FLAGS  = -EL -Iinclude -Iasm -Iasm/renderers -march=r3000 -mtune=r3000 -no-pad-sections -G0 -ggdb -msoft-float

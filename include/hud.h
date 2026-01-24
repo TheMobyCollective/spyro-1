@@ -6,7 +6,7 @@
 #include <libgte.h>
 #include <libgpu.h>
 // clang-format on
-
+#include "common.h"
 #include "moby.h"
 
 // These are the target positions for the HUD mobys when they are fully
@@ -54,9 +54,10 @@ extern struct {
 
   // The HUD has 12 moby slots for the gem/dragon/life counts (and icons)
   Moby m_Mobys[12];
-
   // 12 slots for eggs, 20 slots for the life orb things
   RECT m_SpriteRect[32];
+  Tiledef m_OrbSprite;
+  Tiledef m_EggSprites[9];
 } g_Hud;
 
 typedef enum {

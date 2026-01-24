@@ -4251,8 +4251,8 @@ glabel func_level_60_8007D938
 /* 51E9C94 800816CC 00000000 */  nop
 /* 51E9C98 800816D0 41004014 */  bnez       $v0, .Llevel_60_800817D8
 /* 51E9C9C 800816D4 00000000 */   nop
-/* 51E9CA0 800816D8 0880023C */  lui        $v0, %hi(g_VisitedFlags + 0x26)
-/* 51E9CA4 800816DC 988E4290 */  lbu        $v0, %lo(g_VisitedFlags + 0x26)($v0)
+/* 51E9CA0 800816D8 0880023C */  lui        $v0, %hi(g_VisitedFlags + 0x20)
+/* 51E9CA4 800816DC 988E4290 */  lbu        $v0, %lo(g_VisitedFlags + 0x20)($v0)
 /* 51E9CA8 800816E0 00000000 */  nop
 /* 51E9CAC 800816E4 11004010 */  beqz       $v0, .Llevel_60_8008172C
 /* 51E9CB0 800816E8 21200000 */   addu      $a0, $zero, $zero
@@ -4273,8 +4273,8 @@ glabel func_level_60_8007D938
 /* 51E9CEC 80081724 11AD000C */  jal        func_8002B444
 /* 51E9CF0 80081728 21300000 */   addu      $a2, $zero, $zero
 .Llevel_60_8008172C:
-/* 51E9CF4 8008172C 0880023C */  lui        $v0, %hi(g_VisitedFlags + 0x27)
-/* 51E9CF8 80081730 998E4290 */  lbu        $v0, %lo(g_VisitedFlags + 0x27)($v0)
+/* 51E9CF4 8008172C 0880023C */  lui        $v0, %hi(g_VisitedFlags + 0x21)
+/* 51E9CF8 80081730 998E4290 */  lbu        $v0, %lo(g_VisitedFlags + 0x21)($v0)
 /* 51E9CFC 80081734 00000000 */  nop
 /* 51E9D00 80081738 11004010 */  beqz       $v0, .Llevel_60_80081780
 /* 51E9D04 8008173C 01000424 */   addiu     $a0, $zero, 0x1
@@ -4295,8 +4295,8 @@ glabel func_level_60_8007D938
 /* 51E9D40 80081778 11AD000C */  jal        func_8002B444
 /* 51E9D44 8008177C 21300000 */   addu      $a2, $zero, $zero
 .Llevel_60_80081780:
-/* 51E9D48 80081780 0880023C */  lui        $v0, %hi(g_VisitedFlags + 0x28)
-/* 51E9D4C 80081784 9A8E4290 */  lbu        $v0, %lo(g_VisitedFlags + 0x28)($v0)
+/* 51E9D48 80081780 0880023C */  lui        $v0, %hi(g_VisitedFlags + 0x22)
+/* 51E9D4C 80081784 9A8E4290 */  lbu        $v0, %lo(g_VisitedFlags + 0x22)($v0)
 /* 51E9D50 80081788 00000000 */  nop
 /* 51E9D54 8008178C 11004010 */  beqz       $v0, .Llevel_60_800817D4
 /* 51E9D58 80081790 02000424 */   addiu     $a0, $zero, 0x2
@@ -5837,10 +5837,10 @@ glabel func_level_60_8007D938
 /* 51EB3BC 80082DF4 F86D8424 */  addiu      $a0, $a0, %lo(g_Camera + 0x28)
 /* 51EB3C0 80082DF8 0780013C */  lui        $at, %hi(g_LoadStage)
 /* 51EB3C4 80082DFC 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
-/* 51EB3C8 80082E00 0780013C */  lui        $at, %hi(D_800756B0)
-/* 51EB3CC 80082E04 B05635AC */  sw         $s5, %lo(D_800756B0)($at)
-/* 51EB3D0 80082E08 0780013C */  lui        $at, %hi(D_800756AC)
-/* 51EB3D4 80082E0C AC5620AC */  sw         $zero, %lo(D_800756AC)($at)
+/* 51EB3C8 80082E00 0780013C */  lui        $at, %hi(g_LevelTransHudActive)
+/* 51EB3CC 80082E04 B05635AC */  sw         $s5, %lo(g_LevelTransHudActive)($at)
+/* 51EB3D0 80082E08 0780013C */  lui        $at, %hi(g_LevelTransTicks)
+/* 51EB3D4 80082E0C AC5620AC */  sw         $zero, %lo(g_LevelTransTicks)($at)
 /* 51EB3D8 80082E10 0780013C */  lui        $at, %hi(g_Gamestate)
 /* 51EB3DC 80082E14 D85735AC */  sw         $s5, %lo(g_Gamestate)($at)
 /* 51EB3E0 80082E18 0780013C */  lui        $at, %hi(g_StateSwitch)
@@ -5959,10 +5959,10 @@ glabel func_level_60_8007D938
 /* 51EB5A0 80082FD8 F86D8424 */  addiu      $a0, $a0, %lo(g_Camera + 0x28)
 /* 51EB5A4 80082FDC 0780013C */  lui        $at, %hi(g_LoadStage)
 /* 51EB5A8 80082FE0 645820AC */  sw         $zero, %lo(g_LoadStage)($at)
-/* 51EB5AC 80082FE4 0780013C */  lui        $at, %hi(D_800756B0)
-/* 51EB5B0 80082FE8 B05635AC */  sw         $s5, %lo(D_800756B0)($at)
-/* 51EB5B4 80082FEC 0780013C */  lui        $at, %hi(D_800756AC)
-/* 51EB5B8 80082FF0 AC5620AC */  sw         $zero, %lo(D_800756AC)($at)
+/* 51EB5AC 80082FE4 0780013C */  lui        $at, %hi(g_LevelTransHudActive)
+/* 51EB5B0 80082FE8 B05635AC */  sw         $s5, %lo(g_LevelTransHudActive)($at)
+/* 51EB5B4 80082FEC 0780013C */  lui        $at, %hi(g_LevelTransTicks)
+/* 51EB5B8 80082FF0 AC5620AC */  sw         $zero, %lo(g_LevelTransTicks)($at)
 /* 51EB5BC 80082FF4 0780013C */  lui        $at, %hi(g_Gamestate)
 /* 51EB5C0 80082FF8 D85735AC */  sw         $s5, %lo(g_Gamestate)($at)
 /* 51EB5C4 80082FFC 0780013C */  lui        $at, %hi(g_StateSwitch)

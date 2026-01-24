@@ -105,10 +105,29 @@ typedef struct {
   u_char r, g, b, s;
 } Color;
 
-extern struct {
-  unsigned char m_Homeworlds[HOMEWORLD_COUNT];
-  unsigned char m_Levels[TOTAL_LEVEL_COUNT];
-} g_VisitedFlags;
+typedef struct {
+    int r, g, b;
+} ColorInt;
+
+typedef struct {
+  union {
+    struct {
+      u_char u0, v0;
+      u_short clut;
+    } s;
+    int all;
+  } uv0;
+  union {
+    struct {
+      u_char u1, v1;
+      u_short tpage;
+    } s;
+    int all;
+  } uv1;
+} Tiledef;
+
+extern unsigned char // D_80078E72 is a fake symbol caused by D_80078E72[i - 6] access
+    g_VisitedFlags[TOTAL_LEVEL_COUNT];
 
 extern unsigned char
     g_LevelVortexExitFlags[TOTAL_LEVEL_COUNT]; // Level completion flags
