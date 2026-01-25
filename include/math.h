@@ -96,8 +96,14 @@ int func_800179F0(int pTargetAngle, int pAngle, int pSpeed, int pMinStep);
 /// This function is a lot faster than using square roots
 int OctDistance(Vector3D *pPos1, Vector3D *pPos2);
 
+/// @brief Squareroot approximation
+int func_80017A38(int pVal);
+
 /// @brief Projects a vector onto the screen
 void func_80017AA4(Vector3D *, Vector3D *);
+
+/// @brief Same as func_80017AA4, but with scaling
+void func_80017B48(Vector3D *, Vector3D *, int);
 
 /// @brief Unpacks a collision triangle
 void ColTriUnpack(int pIndex, Vector3D *pOut);

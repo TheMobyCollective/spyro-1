@@ -37,6 +37,15 @@ extern void *D_800756FC; // End of poly buffer
 extern void *g_HudOT;   // HUD OT
 extern void *g_WorldOT; // World OT
 
+/// @brief Adds a polygon to the world order table
+/// @param pPoly The polygon to add
+/// @param pOTIndex The OT index to add the polygon to
+void func_800168A0(void *pPoly, int pOTIndex);
+
+/// @brief Adds a polygon to the HUD order table
+/// @param pPoly The polygon to add
+void func_800168DC(void *pPoly);
+
 /// @brief Builds the final order table
 /// @param size The size of the world order table
 /// @return A pointer to the final order table's first entry
@@ -50,7 +59,7 @@ typedef struct {
 
 extern int g_TracerCount;
 extern int g_TracerPointCount[4];
-extern TracerPoint* g_TracerLists[4];
+extern TracerPoint *g_TracerLists[4];
 
 // static_assert(sizeof(g_DB[0]) == 0x84);
 
