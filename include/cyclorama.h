@@ -44,6 +44,7 @@ extern int D_80075910; // Transition skybox yaw
 extern int D_800758FC; // Portal rotation pitch
 extern int D_80075858; // Portal rotation yaw
 
+/// @brief Renders main Cyclorama and Portals
 void func_80050BD0(void);
 
 #endif

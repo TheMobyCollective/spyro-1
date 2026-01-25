@@ -297,7 +297,6 @@ dlabel g_PadBufferSecondController
 /* 68D98 80078E50 0x24 + 0x4 padding */ .space 0x28
 
 dlabel g_VisitedFlags
-/* D_80078E72 is a fake symbol /*
 /* Total size from 80078E728 to 80078E9C */ .space 0x24
 
 /**********************************************************/

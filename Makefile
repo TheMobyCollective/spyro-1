@@ -6,6 +6,7 @@
 NOCD_FLAG          = $(if ${NOCD},-DNOCD,-DNNOCD)
 DEBUG_FLAG          = $(if ${DEBUG},-DDEBUG,-DNDEBUG)
 MODERN_COMPILER_FLAG = $(if ${MODERN_COMPILER},-DMODERN_COMPILER,-D_HAS_MASPSX)
+NON_MATCHING_FLAG  = $(if ${NON_MATCHING},-DNON_MATCHING,)
 NEW_PSYQ_FLAG = $(if ${NEW_PSYQ},-D_NEW_PSYQ,)
 PSYQ_LIB = $(if ${NEW_PSYQ},-Lpsyq/lib --start-group -lapi -lc -lc2 -lcard -lcd -lcomb -lds -letc -lgpu -lgs -lgte -lgun -lhmd -lmath -lmcrd -lpad -lsio -lspu --end-group,)
 
@@ -139,7 +140,7 @@ MASPSX_COMMAND = $(if ${MODERN_COMPILER},,$(PYTHON) $(MASPSX) -G4 --aspsx-versio
 build/src/%.o: src/%.c
 	@echo "\e[0;36m[Compiling] $<\e[0m"
 		
-	@$(GCC) $(MODERN_COMPILER_FLAG) $(NEW_PSYQ_FLAG) $(DEBUG_FLAG) -Iinclude -Ipsyq/include -ffreestanding -MT $@ -MMD -MP -MF $@.d $< | \
+	@$(GCC) $(MODERN_COMPILER_FLAG) $(NEW_PSYQ_FLAG) $(DEBUG_FLAG) $(NON_MATCHING_FLAG) -Iinclude -Ipsyq/include -ffreestanding -MT $@ -MMD -MP -MF $@.d $< | \
 		$(CC) $(C_FLAGS) |\
 		$(MASPSX_COMMAND) \
 		$(PYTHON) $(REMOVE_SECTIONS) | \

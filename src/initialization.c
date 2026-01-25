@@ -200,11 +200,11 @@ void func_80012604(void) {
   g_EggTotal = 0;
 
   // Reset in-level variables
-  D_8007587C = 0;  // Gems collected before entering the level
-  g_NGemsSinceLevelEntry = 0;  // Gems collected in this level
-  D_80075830 = 0;  // Key flag
-  D_800758E8 = 0;  // Life orb count
-  D_8007580C = -1; // Health before entering flight level
+  D_8007587C = 0;             // Gems collected before entering the level
+  g_NGemsSinceLevelEntry = 0; // Gems collected in this level
+  D_80075830 = 0;             // Key flag
+  D_800758E8 = 0;             // Life orb count
+  D_8007580C = -1;            // Health before entering flight level
 
   D_80075838 = 0; // Unused var 1
   D_8007583C = 0; // Unused var 2
@@ -281,7 +281,7 @@ void Initialize(void) {
 
   for (i = 0; i < 8; ++i) {
     // Decompress the image
-    func_80017F24(D_8006FCF4, g_Buffers.m_CopyBuf,
+    func_80017F24(&g_SonyImage, g_Buffers.m_CopyBuf,
                   i * blend_step - blend_start);
     setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
     LoadImage(&frameRect, g_Buffers.m_CopyBuf);
@@ -331,7 +331,7 @@ void Initialize(void) {
 
   for (j = 0; j < 8; ++j) {
     // Decompress the image
-    func_80017F24(D_8006FCF4, g_Buffers.m_CopyBuf, -(j + 1) * blend_step);
+    func_80017F24(&g_SonyImage, g_Buffers.m_CopyBuf, -(j + 1) * blend_step);
     setRECT(&frameRect, 0, 0, rgb24_w, rgb24_h);
     LoadImage(&frameRect, g_Buffers.m_CopyBuf);
     DrawSync(0);
@@ -412,4 +412,3 @@ void Initialize(void) {
   g_UnprocessedFrames = 0;
   g_Environment.m_LodDistance = 0x8000;
 }
-

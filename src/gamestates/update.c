@@ -9,16 +9,15 @@
 #include "loaders.h"
 #include "math.h"
 #include "overlay_pointers.h"
+#include "sony_image.h"
 #include "specular_and_metal.h"
 #include "spyro.h"
-#include "sony_image.h"
 #include "titlescreen.h"
 #include "variables.h"
 
 #include <libmcrd.h>
 
 extern int _stacksize;
-
 
 /// @brief Updates level transition gems and text
 void func_8002DA74(void) {
@@ -46,7 +45,8 @@ void func_8002DA74(void) {
         if (g_LevelTransTicks < 256) {
           if (g_LevelTransGems[i]._08 == 0) {
             g_LevelTransGems[i]._08 = 1;
-            g_LevelTransGems[i].age = g_LevelTransTicks - 128 - i * 2 - g_DeltaTime;
+            g_LevelTransGems[i].age =
+                g_LevelTransTicks - 128 - i * 2 - g_DeltaTime;
             g_LevelTransGems[i].targetX = (rand() & 255) - 128;
             g_LevelTransGems[i].targetY = (rand() & 63) + 96;
             g_LevelTransGems[i].rot.x = (rand() & 63) - 32;
@@ -64,23 +64,33 @@ void func_8002DA74(void) {
           g_LevelTransGems[i].age += g_DeltaTime;
           g_LevelTransGems[i].rot.z += g_LevelTransGems[i]._0F;
           if (g_LevelTransGems[i].age < 48) {
-            g_LevelTransGems[i].xOffset = FIXED_MUL(g_LevelTransGems[i].targetX,
-                                                    4096 - COSINE_8(g_LevelTransGems[i].age * 4 / 3));
-            g_LevelTransGems[i].yOffset = FIXED_MUL(g_LevelTransGems[i].targetY,
-                                                    SINE_8(g_LevelTransGems[i].age * 4 / 3));
+            g_LevelTransGems[i].xOffset =
+                FIXED_MUL(g_LevelTransGems[i].targetX,
+                          4096 - COSINE_8(g_LevelTransGems[i].age * 4 / 3));
+            g_LevelTransGems[i].yOffset =
+                FIXED_MUL(g_LevelTransGems[i].targetY,
+                          SINE_8(g_LevelTransGems[i].age * 4 / 3));
           } else if (g_LevelTransGems[i].age < 96) {
-            g_LevelTransGems[i].xOffset = g_LevelTransGems[i].targetX +
-                                          (FIXED_MUL(g_LevelTransGems[i].targetX,
-                                          SINE_8((g_LevelTransGems[i].age - 48) * 8 / 3)) >> 1);
-            g_LevelTransGems[i].yOffset = (g_LevelTransGems[i].targetY >> 1) +
-                                          (FIXED_MUL(g_LevelTransGems[i].targetY,
-                                          4096 + COSINE_8((g_LevelTransGems[i].age - 48) * 8 / 3)) >> 2);
+            g_LevelTransGems[i].xOffset =
+                g_LevelTransGems[i].targetX +
+                (FIXED_MUL(g_LevelTransGems[i].targetX,
+                           SINE_8((g_LevelTransGems[i].age - 48) * 8 / 3)) >>
+                 1);
+            g_LevelTransGems[i].yOffset =
+                (g_LevelTransGems[i].targetY >> 1) +
+                (FIXED_MUL(
+                     g_LevelTransGems[i].targetY,
+                     4096 + COSINE_8((g_LevelTransGems[i].age - 48) * 8 / 3)) >>
+                 2);
           } else if (g_LevelTransGems[i].age < 147) {
-            g_LevelTransGems[i].xOffset = g_LevelTransGems[i].targetX -
-                                          FIXED_MUL(g_LevelTransGems[i].targetX,
-                                          SINE_8((g_LevelTransGems[i].age - 96) * 4 / 3));
-            g_LevelTransGems[i].yOffset = FIXED_MUL(g_LevelTransGems[i].targetY,
-                                          COSINE_8((g_LevelTransGems[i].age - 96) * 4 / 3)) >> 1;
+            g_LevelTransGems[i].xOffset =
+                g_LevelTransGems[i].targetX -
+                FIXED_MUL(g_LevelTransGems[i].targetX,
+                          SINE_8((g_LevelTransGems[i].age - 96) * 4 / 3));
+            g_LevelTransGems[i].yOffset =
+                FIXED_MUL(g_LevelTransGems[i].targetY,
+                          COSINE_8((g_LevelTransGems[i].age - 96) * 4 / 3)) >>
+                1;
           } else {
             g_LevelTransGems[i]._08 = 0;
             if (i == (i / 3) * 3) {
@@ -92,8 +102,6 @@ void func_8002DA74(void) {
     }
   }
 }
-
-
 
 /// @brief Gamestate 1
 void func_8002DF9C(void) {
@@ -648,4 +656,3 @@ void GamestateUpdate(void) {
 
   SpuUpdate();
 }
-

@@ -124,7 +124,7 @@ int func_80033F08(Vector3D *pVec);
 // Function for updating the spherical coordinates
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80033F08);
 
-/// @brief: Updates the spherical coordinates
+/// @brief Updates the spherical coordinates
 void ApplySphericalPreset(void) {
   SphericalCoordsOffset *src = g_Camera.m_SphericalPreset;
 
@@ -137,7 +137,7 @@ void ApplySphericalPreset(void) {
   g_Camera.m_LastSimulation.m_Offset.radius = src->m_Offset.radius;
 }
 
-/// @brief: Converts the camera's spherical coordinates to cartesian coordinates
+/// @brief Converts the camera's spherical coordinates to cartesian coordinates
 void func_80034204(Vector3D *pOut) {
   // I curse whoever didn't want to add an input parameter to this function
 
@@ -613,4 +613,3 @@ void CameraUpdate(void) {
     func_80053708(&g_PadBackup, &g_Pad);
   }
 }
-

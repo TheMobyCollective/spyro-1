@@ -106,7 +106,7 @@ typedef struct {
 } Color;
 
 typedef struct {
-    int r, g, b;
+  int r, g, b;
 } ColorInt;
 
 typedef struct {
@@ -126,8 +126,7 @@ typedef struct {
   } uv1;
 } Tiledef;
 
-extern unsigned char // D_80078E72 is a fake symbol caused by D_80078E72[i - 6] access
-    g_VisitedFlags[TOTAL_LEVEL_COUNT];
+extern unsigned char g_VisitedFlags[TOTAL_LEVEL_COUNT];
 
 extern unsigned char
     g_LevelVortexExitFlags[TOTAL_LEVEL_COUNT]; // Level completion flags
