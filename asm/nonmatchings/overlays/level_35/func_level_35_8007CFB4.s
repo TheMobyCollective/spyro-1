@@ -1987,14 +1987,14 @@ glabel func_level_35_8007CFB4
 /* 33E3A5C 8007EC94 00000000 */  nop
 /* 33E3A60 8007EC98 09F84000 */  jalr       $v0
 /* 33E3A64 8007EC9C 10000724 */   addiu     $a3, $zero, 0x10
-/* 33E3A68 8007ECA0 0780033C */  lui        $v1, %hi(D_8007582C)
-/* 33E3A6C 8007ECA4 2C58638C */  lw         $v1, %lo(D_8007582C)($v1)
+/* 33E3A68 8007ECA0 0780033C */  lui        $v1, %hi(g_SpyroLifeCount)
+/* 33E3A6C 8007ECA4 2C58638C */  lw         $v1, %lo(g_SpyroLifeCount)($v1)
 /* 33E3A70 8007ECA8 00000000 */  nop
 /* 33E3A74 8007ECAC 63006228 */  slti       $v0, $v1, 0x63
 /* 33E3A78 8007ECB0 03004010 */  beqz       $v0, .Llevel_35_8007ECC0
 /* 33E3A7C 8007ECB4 01006224 */   addiu     $v0, $v1, 0x1
-/* 33E3A80 8007ECB8 0780013C */  lui        $at, %hi(D_8007582C)
-/* 33E3A84 8007ECBC 2C5822AC */  sw         $v0, %lo(D_8007582C)($at)
+/* 33E3A80 8007ECB8 0780013C */  lui        $at, %hi(g_SpyroLifeCount)
+/* 33E3A84 8007ECBC 2C5822AC */  sw         $v0, %lo(g_SpyroLifeCount)($at)
 .Llevel_35_8007ECC0:
 /* 33E3A88 8007ECC0 21200000 */  addu       $a0, $zero, $zero
 /* 33E3A8C 8007ECC4 15EE000C */  jal        func_8003B854
@@ -2010,12 +2010,12 @@ glabel func_level_35_8007CFB4
 /* 33E3AB0 8007ECE8 00004490 */  lbu        $a0, 0x0($v0)
 /* 33E3AB4 8007ECEC 9E56010C */  jal        PlaySound
 /* 33E3AB8 8007ECF0 21380000 */   addu      $a3, $zero, $zero
-/* 33E3ABC 8007ECF4 0780023C */  lui        $v0, %hi(D_800758E8)
-/* 33E3AC0 8007ECF8 E858428C */  lw         $v0, %lo(D_800758E8)($v0)
+/* 33E3ABC 8007ECF4 0780023C */  lui        $v0, %hi(g_LifeOrbCount)
+/* 33E3AC0 8007ECF8 E858428C */  lw         $v0, %lo(g_LifeOrbCount)($v0)
 /* 33E3AC4 8007ECFC 00000000 */  nop
 /* 33E3AC8 8007ED00 01004224 */  addiu      $v0, $v0, 0x1
-/* 33E3ACC 8007ED04 0780013C */  lui        $at, %hi(D_800758E8)
-/* 33E3AD0 8007ED08 E85822AC */  sw         $v0, %lo(D_800758E8)($at)
+/* 33E3ACC 8007ED04 0780013C */  lui        $at, %hi(g_LifeOrbCount)
+/* 33E3AD0 8007ED08 E85822AC */  sw         $v0, %lo(g_LifeOrbCount)($at)
 /* 33E3AD4 8007ED0C AE070208 */  j          .Llevel_35_80081EB8
 /* 33E3AD8 8007ED10 21206002 */   addu      $a0, $s3, $zero
 .Llevel_35_8007ED14:

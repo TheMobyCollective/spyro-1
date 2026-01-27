@@ -204,8 +204,8 @@ void func_8002C7BC(void) {
 /// @brief Die, lose a life and respawn or game over
 void func_8002C85C(void) {
   int newState;
-  if (D_8007582C != 0) {
-    D_8007582C--;
+  if (g_SpyroLifeCount != 0) {
+    g_SpyroLifeCount--;
     newState = GS_Respawn;
   } else {
     newState = GS_GameOver;
@@ -482,7 +482,7 @@ void func_8002D170(void) {
 
   D_80075754 = 10; // sound volume
 
-  g_TitlescreenState.m_0x4C = (char *)g_Buffers.m_LowerPolyBuffer - 0x2000;
+  g_TitlescreenState.m_MemCardSave = (MemCardSaveFile *)(g_Buffers.m_LowerPolyBuffer - 0x2000);
 
   g_Spu.unk_0x320 = 0x3FFF;
   D_80075748 = 10; // music volume

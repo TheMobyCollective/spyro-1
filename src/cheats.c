@@ -277,7 +277,7 @@ void CheatApplyEffect(int pCheatId) {
     break;
 
   case 4: // 99 Lives cheat
-    D_8007582C = 99;
+    g_SpyroLifeCount = 99;
 
     // SKELETON: They forgot the confirmation sound???
     break;

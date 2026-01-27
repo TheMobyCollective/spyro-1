@@ -143,11 +143,11 @@ glabel func_8002EDF0
 /* 1F808 8002F008 0880013C */  lui        $at, %hi(g_Spyro + 0x1F)
 /* 1F80C 8002F00C 778A22A0 */  sb         $v0, %lo(g_Spyro + 0x1F)($at)
 /* 1F810 8002F010 04000224 */  addiu      $v0, $zero, 0x4
-/* 1F814 8002F014 0780013C */  lui        $at, %hi(D_8007582C)
-/* 1F818 8002F018 2C5822AC */  sw         $v0, %lo(D_8007582C)($at)
+/* 1F814 8002F014 0780013C */  lui        $at, %hi(g_SpyroLifeCount)
+/* 1F818 8002F018 2C5822AC */  sw         $v0, %lo(g_SpyroLifeCount)($at)
 /* 1F81C 8002F01C 03000224 */  addiu      $v0, $zero, 0x3
-/* 1F820 8002F020 0780013C */  lui        $at, %hi(D_800758E8)
-/* 1F824 8002F024 E85820AC */  sw         $zero, %lo(D_800758E8)($at)
+/* 1F820 8002F020 0780013C */  lui        $at, %hi(g_LifeOrbCount)
+/* 1F824 8002F024 E85820AC */  sw         $zero, %lo(g_LifeOrbCount)($at)
 /* 1F828 8002F028 0880013C */  lui        $at, %hi(g_Spyro + 0x164)
 /* 1F82C 8002F02C BC8B22AC */  sw         $v0, %lo(g_Spyro + 0x164)($at)
 /* 1F830 8002F030 0780013C */  lui        $at, %hi(g_HasLevelTransition)

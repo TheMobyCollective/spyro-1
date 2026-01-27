@@ -2645,8 +2645,7 @@ void func_8001EB80(void) {
   DrawOTag(func_80016784(0x800));
 }
 
-void func_titlescreen_8007CEE4(void); // Overlay functions
-void func_credits_8007BFD0(void);     // Overlay functions
+void func_credits_8007BFD0(void); // Overlay functions
 
 /// @brief Gamestate draw function
 void GamestateDraw(void) {
@@ -2699,7 +2698,7 @@ void GamestateDraw(void) {
       if (g_TitlescreenState.m_Mode == TSM_Demo) {
         func_8001E6B8();
       } else {
-        func_titlescreen_8007CEE4();
+        TitlescreenDraw();
       }
     } else if (g_Gamestate == GS_Cutscene) {
       func_8001E9C8();

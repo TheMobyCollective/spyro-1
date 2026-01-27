@@ -36,7 +36,7 @@
 - [ ] func_8002F3E4
 - [ ] func_800314B4
 - [ ] func_800324D8
-- [x] func_80032A20
+- [x] CheckMemcardsExist
 - [x] func_80032AB0
 - [x] GamestateCutsceneTransition
 - [x] GamestateCutsceneUpdate

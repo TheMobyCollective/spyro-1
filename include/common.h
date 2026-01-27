@@ -96,8 +96,8 @@ extern int D_80075830; // Key flag
 
 extern int g_SkipLowPolyWorld; // Skip low-poly model in world
 
-extern int D_8007582C; // Spyro's extra life count
-extern int D_800758E8; // Life orb count
+extern int g_SpyroLifeCount; // Spyro's extra life count
+extern int g_LifeOrbCount; // Life orb count
 
 extern int D_8007575C; // Skybox color lerp value
 

@@ -13,7 +13,7 @@ int SaveChecksum(u_char *saveFile) {
   int checksum = 0;
   int i;
 
-  for (i = 0; i < sizeof(SaveFile) - 4; i++) {
+  for (i = 0; i < sizeof(SaveFile) - 0x74 /*pad+checksum*/; i++) {
     checksum += saveFile[i];
   }
 
@@ -47,10 +47,10 @@ int SaveLoad(SaveFile *pSaveFile) {
   D_80075838 = pSaveFile->m_UnusedByte1;
   D_8007583C = pSaveFile->m_UnusedByte2;
 
-  D_8007582C = pSaveFile->m_ExtraLifeCount;
+  g_SpyroLifeCount = pSaveFile->m_ExtraLifeCount;
 
-  if (D_8007582C < 4) { // If we have less than 4 lives, set it to 4
-    D_8007582C = 4;
+  if (g_SpyroLifeCount < 4) { // If we have less than 4 lives, set it to 4
+    g_SpyroLifeCount = 4;
   }
 
   Memcpy(g_FlightCourseRecords, pSaveFile->m_Flight.m_CourseRecords,
@@ -100,8 +100,7 @@ void SaveCreate(SaveFile *pSaveFile) {
   int i, j;
   u_char *saveFilePtr;
 
-  // SKELETON: Larger than the size of the struct, oh well
-  Memset(pSaveFile, 0, 0x600);
+  Memset(pSaveFile, 0, sizeof(SaveFile));
 
   pSaveFile->m_LevelId = g_LevelId;
   pSaveFile->m_SoundVolume = D_80075754;
@@ -114,7 +113,7 @@ void SaveCreate(SaveFile *pSaveFile) {
 
   pSaveFile->m_UnusedByte1 = D_80075838;
   pSaveFile->m_UnusedByte2 = D_8007583C;
-  pSaveFile->m_ExtraLifeCount = D_8007582C;
+  pSaveFile->m_ExtraLifeCount = g_SpyroLifeCount;
 
   Memcpy(pSaveFile->m_Flight.m_CourseRecords, g_FlightCourseRecords,
          sizeof(pSaveFile->m_Flight.m_CourseRecords));

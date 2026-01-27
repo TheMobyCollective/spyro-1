@@ -193,18 +193,18 @@ void func_80012604(void) {
   }
 
   g_Spyro.m_health = 3; // Set Spyro's health to 3
-  D_8007582C = 4;       // Set Spyro's extra life count to 4
+  g_SpyroLifeCount = 4;       // Set Spyro's extra life count to 4
 
   g_GemTotal = 0;
   g_DragonTotal = 0;
   g_EggTotal = 0;
 
   // Reset in-level variables
-  D_8007587C = 0;             // Gems collected before entering the level
-  g_NGemsSinceLevelEntry = 0; // Gems collected in this level
-  D_80075830 = 0;             // Key flag
-  D_800758E8 = 0;             // Life orb count
-  D_8007580C = -1;            // Health before entering flight level
+  D_8007587C = 0;  // Gems collected before entering the level
+  g_NGemsSinceLevelEntry = 0;  // Gems collected in this level
+  D_80075830 = 0;  // Key flag
+  g_LifeOrbCount = 0;  // Life orb count
+  D_8007580C = -1; // Health before entering flight level
 
   D_80075838 = 0; // Unused var 1
   D_8007583C = 0; // Unused var 2
