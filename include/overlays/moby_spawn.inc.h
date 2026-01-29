@@ -5,16 +5,14 @@
 #include "moby_helpers.h"
 #include "overlay_pointers.h"
 #include "spyro.h"
-
+#include "variables.h"
 #include "rand.h"
 
 // We have to replace LEVEL with preprocessor LEVEL
 
 Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
   u_long idx;
-  Vector3D v; // Name from S2
-  Vector3D v2;
-  char pad[8];
+
 
   // Allocate a new moby
   Moby *moby = func_800524C4();
@@ -89,7 +87,26 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     butterflyProps->unk_0x14 = 1800;
     break;
   }
-
+#ifdef HAS_MOBY_17
+  case 17: {
+    Moby17Props *props;
+    Vector3D v;
+    func_8003A720(moby); // Reset the Moby first
+    moby->m_Rotation.z = pParent->m_Rotation.z;
+    moby->m_Position.x = pParent->m_Position.x + (COSINE_8(moby->m_Rotation.z) >> 4);
+    moby->m_Position.y = pParent->m_Position.y + (SINE_8(moby->m_Rotation.z) >> 4);
+    moby->m_Position.z = pParent->m_Position.z;
+    v.x = g_Spyro.m_Position.x - moby->m_Position.x;
+    v.y = g_Spyro.m_Position.y - moby->m_Position.y;
+    v.z = g_Spyro.m_Position.z - moby->m_Position.z;
+    VecScaleToLength(&v, VecMagnitude(&v, 1), 0xa0);
+    func_800526A8(moby); // Update collision
+    props = (Moby17Props *)moby->m_Props;
+    VecCopy(&props->unk_0x00, &v);
+    props->unk_0x0C = 0x50;
+    break;
+  }
+#endif
   case MOBYCLASS_DRAGON_EGG: { // Dragon Egg
     func_8003A720(moby);       // Reset the Moby first
 
@@ -104,13 +121,20 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
 
     break;
   }
-
+#ifdef HAS_MOBY_78
+case 78: { // Flight Train Barrel
+    func_8003A720(moby); // Reset the Moby first
+    func_800526A8(moby); // Update collision
+      break;
+  }
+#endif
   case MOBYCLASS_LIFE_STATUE:
   case MOBYCLASS_GEM_1:
   case MOBYCLASS_GEM_2:
   case MOBYCLASS_GEM_5:
   case MOBYCLASS_GEM_10:
   case MOBYCLASS_GEM_25: { // Collectables
+    Vector3D v; // Name from S2
     MobyCollectableProps *gemProps = (MobyCollectableProps *)moby->m_Props;
 
     func_8003A720(moby); // Reset the Moby first
@@ -223,30 +247,46 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
   }
 #endif
 
-  // Chest fragments
+#ifdef HAS_MOBY_194
+#define HAS_ANY_CHEST_FRAGMENTS
+  // Wooden chest fragments
   case 255:
   case 256:
   case 257:
+#endif
 
 #ifdef HAS_MOBY_329
+#define HAS_ANY_CHEST_FRAGMENTS
   // Spring chest fragments
   case 67:
   case 68:
   case 69:
 #endif
 
-#ifdef HAS_MOBY_401
-  // Safe fragments
-  case 309:
+#if defined(HAS_MOBY_195) || \
+    defined(HAS_MOBY_174) || \
+    defined(HAS_MOBY_401)
+#define HAS_ANY_CHEST_FRAGMENTS
+  case 309: // Metal, locked and armored chest fragments
   case 310:
   case 311:
 #endif
 
 #ifdef HAS_MOBY_421
+#define HAS_ANY_CHEST_FRAGMENTS
   case 423: // Extra life chest piece 1
   case 424: // Extra life chest piece 2
   case 425: // Extra life chest piece 3
 #endif
+
+#ifdef HAS_MOBY_299
+#define HAS_ANY_CHEST_FRAGMENTS
+  case 478: // Flight chest fragments
+  case 479:
+  case 480:
+#endif
+#ifdef HAS_ANY_CHEST_FRAGMENTS
+
   {
     MobyFragmentProps *fragmentProps = moby->m_Props;
 
@@ -292,8 +332,11 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     }
     break;
   }
-
+#endif
+#ifdef HAS_MOBY_250
   case 251: { // Dragon fragment
+    Vector3D v; // Name from S2
+    char pad[8];
     int randRes;
 
     MobyDragonFragmentProps *dragonFragmentProps =
@@ -318,19 +361,19 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     }
 
     randRes = rand() & 7;
-    v2.x = D_8006F3A0[randRes][0];
-    v2.y = 0;
-    v2.z = D_8006F3A0[randRes][1];
+    v.x = D_8006F3A0[randRes][0];
+    v.y = 0;
+    v.z = D_8006F3A0[randRes][1];
 
-    VecRotateByMatrix((MATRIX *)&pParent->m_RotationMatrix, &v2, &v2);
+    VecRotateByMatrix((MATRIX *)&pParent->m_RotationMatrix, &v, &v);
 
-    v2.x += -63 + (rand() & 127);
-    v2.y += -63 + (rand() & 127);
-    v2.z += -63 + (rand() & 127);
+    v.x += -63 + (rand() & 127);
+    v.y += -63 + (rand() & 127);
+    v.z += -63 + (rand() & 127);
 
-    VecAdd(&moby->m_Position, &pParent->m_Position, &v2);
+    VecAdd(&moby->m_Position, &pParent->m_Position, &v);
 
-    VecCopy(&dragonFragmentProps->trajectory, &v2);
+    VecCopy(&dragonFragmentProps->trajectory, &v);
 
     VecShiftRight(&dragonFragmentProps->trajectory, 2);
 
@@ -349,6 +392,147 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     dragonFragmentProps->m_Lifetime = (rand() & 3) + 16;
     break;
   }
+#endif
+#if defined(HAS_MOBY_407) || \
+    defined(HAS_MOBY_408) || \
+    defined(HAS_MOBY_308)
+  case 481: // Flight Train, Wagon and Plane Fragments
+  case 482:
+  case 483: {
+    MobyFragmentProps *props = moby->m_Props;
+    int angle1, angle2;
+
+    func_8003A720(moby);
+    moby->m_RenderRadius = 32;
+    VecCopy(&moby->m_Position, &pParent->m_Position);
+    func_800526A8(moby);
+
+    angle1 = rand() & 0xFFF;
+    angle2 = rand() & 0x7FF;
+
+    props->unk_0x00 = FIXED_MUL(Cos(angle2) >> 5, Cos(angle1 & 0xFFF));
+    props->unk_0x02 = FIXED_MUL(Cos(angle2) >> 5, Sin(angle1 & 0xFFF));
+    props->unk_0x04 = Sin(angle2) >> 5;
+
+    props->unk_0x00 += g_Spyro.m_Physics.m_Acceleration.x >> 6;
+    props->unk_0x02 += g_Spyro.m_Physics.m_Acceleration.y >> 6;
+    props->unk_0x04 += g_Spyro.m_Physics.m_Acceleration.z >> 6;
+
+    moby->m_Position.x += props->unk_0x00 * 4;
+    moby->m_Position.y += props->unk_0x02 * 4;
+    moby->m_Position.z += props->unk_0x04 * 4;
+
+    props->unk_0x06 = rand() & 0xF;
+    props->unk_0x08 = rand() & 0xF;
+    props->unk_0x0A = rand() & 0xF;
+    props->unk_0x10 = pParent->m_Position.z - 64;
+    props->unk_0x0C = 64 - (rand() & 0xF);
+    break;
+  }
+#endif
+
+#ifdef HAS_MOBY_78
+  case 359: // Flight Train Barrel Fragments
+  case 360:
+  case 361: {
+    MobyFragmentProps *props = (MobyFragmentProps *)moby->m_Props;
+
+    func_8003A720(moby); // Reset the Moby first
+
+    moby->m_RenderRadius = 32;
+
+    VecCopy(&moby->m_Position, &pParent->m_Position);
+    func_800526A8(moby); // Update collision
+
+    moby->m_Rotation.z = rand();
+
+    props->unk_0x00 = COSINE_8(moby->m_Rotation.z & 0xFF) >> 7;
+    props->unk_0x02 = SINE_8(moby->m_Rotation.z & 0xFF) >> 7;
+
+    if ((rand() & 1)) {
+      props->unk_0x04 = 90; 
+    } else {
+      props->unk_0x04 = -90;
+      moby->m_Rotation.x = 128;
+    }
+
+    moby->m_Position.x += props->unk_0x00 * 4;
+    moby->m_Position.y += props->unk_0x02 * 4;
+    moby->m_Position.z += props->unk_0x04 * 4;
+
+    if (props->unk_0x04 < 20) {
+      props->unk_0x04 = 20;
+    }
+
+    props->unk_0x06 = rand() & 0xF;
+    props->unk_0x08 = rand() & 0xF;
+    props->unk_0x0A = rand() & 0xF;
+
+    props->unk_0x10 = pParent->m_Position.z - 64;
+
+    props->unk_0x0C = 64 - (rand() & 0xF);
+    break;
+  }
+#endif
+#if defined(HAS_MOBY_407) || \
+    defined(HAS_MOBY_408)
+  case 362: { // Flight Train wheels
+    MobyFragmentProps *targetProps = (MobyFragmentProps *)moby->m_Props;
+    FlightTrainMobyData *parentProps = (FlightTrainMobyData*)pParent->m_Props;
+    int rnd;
+    Vector3D v;
+    func_8003A720(moby); // Reset
+    moby->m_RenderRadius = 32;
+    func_800526A8(moby); // Collision update
+
+    VecCopy((Vector3D *)&targetProps->unk_0x00, &parentProps->unk_0x8);
+
+    targetProps->unk_0x08 = 0;
+    targetProps->unk_0x0A = 0;
+    targetProps->unk_0x04 += 64;
+    targetProps->unk_0x10 = pParent->m_Position.z - 64;
+    targetProps->unk_0x0C = 64 - (rand() & 0xF);
+
+    switch (rand() & 3) {
+    case 0:
+      v.x = 512;
+      v.y = 512;
+      moby->m_Rotation.z = 64;
+      targetProps->unk_0x06 = 16;
+      break;
+
+    case 1:
+      v.x = 512;
+      v.y = -512;
+      moby->m_Rotation.z = 192;
+      targetProps->unk_0x06 = -16;
+      break;
+
+    case 2:
+      v.x = -512;
+      v.y = 512;
+      moby->m_Rotation.z = 64;
+      targetProps->unk_0x06 = 16;
+      break;
+
+    case 3:
+      v.x = -512;
+      v.y = -512;
+      moby->m_Rotation.z = 192;
+      targetProps->unk_0x06 = -16;
+      break;
+    }
+    moby->m_Rotation.z += pParent->m_Rotation.z;
+    v.z = 640;
+
+    VecRotateByMatrix((MATRIX *)&pParent->m_RotationMatrix, &v, &v);
+
+    VecAdd(&moby->m_Position, &v, &pParent->m_Position);
+
+    break;
+  }
+#endif
+
 
   case MOBYCLASS_NUMBER_0: // Text 0-9
   case MOBYCLASS_NUMBER_1:
@@ -377,7 +561,95 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     break;
   }
 
-  // Seemingly the start of level specific Mobys
+#ifdef HAS_MOBY_345
+  case 345: // Flight +1S moby?
+  case 346: // Flight +2S moby?
+  case 347: // Flight +3S moby?
+  {
+    if (g_FlightCourseRecords[g_Homeworld]) {
+      func_800529CC(moby); // Set shaded moby
+      func_80052568(moby);
+      moby = nullptr;
+    } else {
+      func_8003A720(moby); // Reset the Moby first
+      if (pParent != nullptr) {
+        VecCopy(&moby->m_Position, &pParent->m_Position);
+      }
+      moby->m_RenderRadius = 64;
+      func_800529CC(moby); // Set shaded moby
+      moby->m_SpecularMetalColor[0] = 0;
+      moby->m_SpecularMetalColor[1] = 0;
+      moby->m_SpecularMetalColor[2] = 0;
+      moby->m_SpecularMetalType = 2;
+    }
+    break;
+  }
+#endif
+#ifdef HAS_MOBY_353
+  case 374: { // Flight Gate Fragment
+    func_8003A720(moby); // Reset the Moby first
+    VecCopy(&moby->m_Position, &pParent->m_Position);
+    moby->m_Rotation = pParent->m_Rotation;
+    func_800526A8(moby); // Update collision
+    moby->m_Renderer.raw = 0xbf;
+    moby->m_SpecularMetalColor[0] = pParent->m_SpecularMetalColor[0];
+    moby->m_SpecularMetalColor[1] = pParent->m_SpecularMetalColor[1];
+    moby->m_SpecularMetalColor[2] = pParent->m_SpecularMetalColor[2];
+    moby->m_SpecularMetalType = pParent->m_SpecularMetalType;
+    moby->m_RenderRadius = pParent->m_RenderRadius;
+    break;
+  }
+#endif
+
+#ifdef HAS_MOBY_353
+  case 375: // Flight Gate Remaining Fragments
+  case 376:
+  case 377:
+  case 378:
+  case 379:
+  case 380:
+  case 381:
+  case 382:
+  case 383:
+  case 384:
+  case 385:
+  case 386: {
+    func_8003A720(moby); // Reset the Moby first
+    VecCopy(&moby->m_Position, &pParent->m_Position);
+    moby->m_Rotation = pParent->m_Rotation;
+    func_800526A8(moby); // Update collision
+    moby->m_Renderer.raw = 0xbf;
+    moby->m_SpecularMetalColor[0] = pParent->m_SpecularMetalColor[0];
+    moby->m_SpecularMetalColor[1] = pParent->m_SpecularMetalColor[1];
+    moby->m_SpecularMetalColor[2] = pParent->m_SpecularMetalColor[2];
+    moby->m_SpecularMetalType = pParent->m_SpecularMetalType;
+    break;
+  }
+#endif
+
+#ifdef HAS_MOBY_387
+  case 387:
+  case 388:
+  case 389:
+  case 393:
+  case 490: {
+    func_8003A720(moby); // Reset the Moby first
+    moby->m_RenderRadius = 0;
+    moby->m_Position.x = -100;
+    moby->m_Position.y = 30;
+    moby->m_Position.z = 4096;
+
+    func_800529CC(moby); // Set shaded moby
+    moby->m_DepthOffset = 32;
+    moby->m_SpecularMetalColor[0] = 0;
+    moby->m_SpecularMetalColor[1] = 0;
+    moby->m_SpecularMetalColor[2] = 0;
+    moby->m_SpecularMetalType = 0;
+    break;
+  }
+#endif
+
+// Seemingly the start of level specific Mobys
 #ifdef HAS_MOBY_398
   case 398: {            // ... Portal path Moby??
     func_8003A720(moby); // Reset the Moby first
@@ -426,6 +698,10 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
 #define HAS_ANY_DROWNING
   case 507:
   case 508:
+#endif
+#ifdef HAS_MOBY_400
+#define HAS_ANY_DROWNING
+  case 400:
 #endif
 #ifdef HAS_ANY_DROWNING
   {

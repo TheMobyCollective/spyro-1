@@ -583,7 +583,7 @@ void func_8005A470(void) {
     break;
   case 15:
     g_Buffers.m_CopyBuf = func_level_15_80084ED0; // g_CopyBufferPointer
-    g_SpawnMoby = func_level_15_8008249C;         // g_SpawnMoby
+    g_SpawnMoby = SpawnMoby_level_15;             // g_SpawnMoby
     g_UpdateMoby = func_level_15_8007CFB4;        // g_UpdateMoby
     D_800758E4 = func_level_15_80084128;          // g_SpawnParticle
     g_UpdateParticle = func_level_15_80083330;    // g_UpdateParticle
