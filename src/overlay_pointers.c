@@ -591,11 +591,11 @@ void func_8005A470(void) {
     // D_800758A8 = (int *)0x0;
     // D_8007574C = (int *)0x0;
     // D_800758D8 = (int *)0x0;
-    D_80075694 = func_level_15_8007AE08;            // g_UnkFunc1Flight
-    D_800757A8 = func_level_15_8007AEDC;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = func_level_15_8007B1FC; // g_UpdateGameState7
-    D_8007567C = func_level_15_8007B68C;            // g_DrawGameState7
-    D_800758C4 = func_level_15_8007B4B0;            // g_DrawTime
+    D_80075694 = Flight1_level_15;            // g_UnkFunc1Flight
+    D_800757A8 = Flight2_level_15;            // g_UnkFunc2Flight
+    g_FlightResultsUpdate = Flight3_level_15; // g_UpdateGameState7
+    D_8007567C = Flight5_level_15;            // g_DrawGameState7
+    D_800758C4 = Flight4_level_15;            // g_DrawTime
     break;
   case 20:
     g_Buffers.m_CopyBuf = func_level_20_8008CFA4; // g_CopyBufferPointer
@@ -687,11 +687,11 @@ void func_8005A470(void) {
     // D_800758A8 = (int *)0x0;
     // D_8007574C = (int *)0x0;
     // D_800758D8 = (int *)0x0;
-    D_80075694 = func_level_25_8007AE08;            // g_UnkFunc1Flight
-    D_800757A8 = func_level_25_8007AEDC;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = func_level_25_8007B1FC; // g_UpdateGameState7
-    D_8007567C = func_level_25_8007B68C;            // g_DrawGameState7
-    D_800758C4 = func_level_25_8007B4B0;            // g_DrawTime
+    D_80075694 = Flight1_level_25;            // g_UnkFunc1Flight
+    D_800757A8 = Flight2_level_25;            // g_UnkFunc2Flight
+    g_FlightResultsUpdate = Flight3_level_25; // g_UpdateGameState7
+    D_8007567C = Flight5_level_25;            // g_DrawGameState7
+    D_800758C4 = Flight4_level_25;            // g_DrawTime
     break;
   case 30:
     g_Buffers.m_CopyBuf = func_level_30_8008E608; // g_CopyBufferPointer
@@ -783,11 +783,11 @@ void func_8005A470(void) {
     // D_800758A8 = (int *)0x0;
     // D_8007574C = (int *)0x0;
     // D_800758D8 = (int *)0x0;
-    D_80075694 = func_level_35_8007AE08;            // g_UnkFunc1Flight
-    D_800757A8 = func_level_35_8007AEDC;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = func_level_35_8007B1FC; // g_UpdateGameState7
-    D_8007567C = func_level_35_8007B68C;            // g_DrawGameState7
-    D_800758C4 = func_level_35_8007B4B0;            // g_DrawTime
+    D_80075694 = Flight1_level_35;            // g_UnkFunc1Flight
+    D_800757A8 = Flight2_level_35;            // g_UnkFunc2Flight
+    g_FlightResultsUpdate = Flight3_level_35; // g_UpdateGameState7
+    D_8007567C = Flight5_level_35;            // g_DrawGameState7
+    D_800758C4 = Flight4_level_35;            // g_DrawTime
     break;
   case 40:
     g_Buffers.m_CopyBuf = func_level_40_8008AB70; // g_CopyBufferPointer
@@ -879,11 +879,11 @@ void func_8005A470(void) {
     // D_800758A8 = (int *)0x0;
     // D_8007574C = (int *)0x0;
     // D_800758D8 = (int *)0x0;
-    D_80075694 = func_level_45_8007AE08;            // g_UnkFunc1Flight
-    D_800757A8 = func_level_45_8007AEDC;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = func_level_45_8007B1FC; // g_UpdateGameState7
-    D_8007567C = func_level_45_8007B68C;            // g_DrawGameState7
-    D_800758C4 = func_level_45_8007B4B0;            // g_DrawTime
+    D_80075694 = Flight1_level_45;            // g_UnkFunc1Flight
+    D_800757A8 = Flight2_level_45;            // g_UnkFunc2Flight
+    g_FlightResultsUpdate = Flight3_level_45; // g_UpdateGameState7
+    D_8007567C = Flight5_level_45;            // g_DrawGameState7
+    D_800758C4 = Flight4_level_45;            // g_DrawTime
     break;
   case 50:
     g_Buffers.m_CopyBuf = func_level_50_8008BB38; // g_CopyBufferPointer
@@ -975,11 +975,11 @@ void func_8005A470(void) {
     // D_800758A8 = (int *)0x0;
     // D_8007574C = (int *)0x0;
     // D_800758D8 = (int *)0x0;
-    D_80075694 = func_level_55_8007AE08;            // g_UnkFunc1Flight
-    D_800757A8 = func_level_55_8007AEDC;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = func_level_55_8007B1FC; // g_UpdateGameState7
-    D_8007567C = func_level_55_8007B68C;            // g_DrawGameState7
-    D_800758C4 = func_level_55_8007B4B0;            // g_DrawTime
+    D_80075694 = Flight1_level_55;            // g_UnkFunc1Flight
+    D_800757A8 = Flight2_level_55;            // g_UnkFunc2Flight
+    g_FlightResultsUpdate = Flight3_level_55; // g_UpdateGameState7
+    D_8007567C = Flight5_level_55;            // g_DrawGameState7
+    D_800758C4 = Flight4_level_55;            // g_DrawTime
     break;
   case 60:
     g_Buffers.m_CopyBuf = func_level_60_80085CE0; // g_CopyBufferPointer

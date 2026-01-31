@@ -20,6 +20,9 @@ void func_8002C420(int pEnteringFromGameplay);
 /// @param pEnteringFromGameplay
 void func_8002C714(int pEnteringFromGameplay);
 
+/// @brief Exits level
+void func_8002C618(void);
+
 /// @brief Empty, proto dragon dialogue update calls this for some reason
 void func_8002C91C(void);
 

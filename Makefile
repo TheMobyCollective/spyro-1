@@ -137,6 +137,10 @@ non_matching: $(TARGET_OVERLAYS) $(TARGET_EXE)
 # Only use MASPSX for non-modern compilers
 MASPSX_COMMAND = $(if ${MODERN_COMPILER},,$(PYTHON) $(MASPSX) -G4 --aspsx-version 2.56 --expand-div |)
 
+# Overlay Specific Flags (-G0)
+build/src/overlays/%.o: C_FLAGS := $(subst -G8,-G0,$(C_FLAGS))
+
+
 build/src/%.o: src/%.c
 	@echo "\e[0;36m[Compiling] $<\e[0m"
 		

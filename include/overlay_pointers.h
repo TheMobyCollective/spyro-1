@@ -30,8 +30,8 @@ extern void (*D_800758D8)(); // g_BalloonistTalkCode
 
 extern void (*D_80075694)(); // g_UnkFunc1Flight (I think update flight stuff?)
 extern void (
-    *D_800757A8)(); // g_UnkFunc2Flight (Related to starting / stopping flight)
-extern void (*D_800758C4)(); // g_DrawTime
+    *D_800757A8)(int pUnk); // g_UnkFunc2Flight (Related to starting / stopping flight)
+extern int (*D_800758C4)(int pTimer, Vector3D* pPos, int pColor); // g_DrawTime
 
 // These don't all exist yet
 
@@ -48,11 +48,29 @@ extern void (*D_800758C4)(); // g_DrawTime
 #define o(level) \
     Moby *NAME_OVERLAY_FUNCTION_LEVEL(SpawnMoby, level)(int pClass, Moby *pParent);
 
+#define FOR_FLIGHTS(f)\
+    f(15) \
+    f(25) \
+    f(35) \
+    f(45) \
+    f(55)
+
+// Flight funcs are generically named for now, here and in overlay_pointers.c
+#define f(level) \
+    void NAME_OVERLAY_FUNCTION_LEVEL(Flight1, level)(void); \
+    void NAME_OVERLAY_FUNCTION_LEVEL(Flight2, level)(int pUnk); \
+    void NAME_OVERLAY_FUNCTION_LEVEL(Flight3, level)(void); \
+    int NAME_OVERLAY_FUNCTION_LEVEL(Flight4, level)(int pTimer, Vector3D* pPos, int pColor); \
+    void NAME_OVERLAY_FUNCTION_LEVEL(Flight5, level)(void);
+
 // clang-format on
 
+FOR_FLIGHTS(f)
 FOR_LEVELS(o)
 
 #undef o
 #undef FOR_LEVELS
+#undef f
+#undef FOR_FLIGHTS
 
 #endif
