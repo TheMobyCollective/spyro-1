@@ -13,11 +13,14 @@ extern struct {
   int m_DialogueId;
   int m_DialogueTopStr;
   int m_Homeworld;
-  int unk_0x18[8];
+  Vector3D unk_0x18;
+  Vector3D unk_0x2C;
+  int unk_0x30;
+  int unk_0x34;
   int unk_0x38;
   int unk_0x3c;
   int unk_0x40;
-  int unk_0x44[3];
+  Vector3D unk_0x44;
   int unk_0x50;
   int unk_0x54;
   int unk_0x58;

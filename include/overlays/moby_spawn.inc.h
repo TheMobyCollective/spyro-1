@@ -225,7 +225,7 @@ case 78: { // Flight Train Barrel
     sparxProps->unk_0x08 = 0;
     sparxProps->unk_0x06 = 0;
     sparxProps->unk_0x04 = 0;
-    sparxProps->unk_0x0c = 0;
+    sparxProps->glow = 0;
     sparxProps->unk_0x10 = 0;
 
     if (pParent) {

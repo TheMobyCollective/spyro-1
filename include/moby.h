@@ -2,6 +2,7 @@
 #define __MOBY_H
 
 #include "matrix.h"
+#include "graphics.h"
 #include "vector.h"
 #include <sys/types.h>
 
@@ -396,7 +397,7 @@ typedef struct {
   short unk_0x04;
   short unk_0x06;
   short unk_0x08;
-  int unk_0x0c;
+  Glow *glow;
   int unk_0x10;
 } MobySparxProps;
 
