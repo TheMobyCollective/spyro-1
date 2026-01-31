@@ -32,7 +32,7 @@ void func_80048D10(int);
 int func_8001796C(int, int);
 
 extern SphericalCoordsOffset D_8006C8BC;
-extern int D_8006EADC[9][2]; // BalloonArrivalJumpoffX;
+extern int D_8006EADC[9][2]; // BalloonArrivalJumpoffXY;
 
 
 
@@ -226,7 +226,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
             D_800777E8.m_DialogueId++;
           } else if (dialog < 3) {
             if ((D_800777E8.m_DialogueId < 3) && (D_800758D0[1] < 2)) {
-              (*D_800758A8)();  // OvlBalloonFunc2
+              (*D_800758A8)();
             } else if (D_800777E8.m_DialogueId == 14) {
               while (D_800777E8.m_DialogueId == 14) {
                 int random;
