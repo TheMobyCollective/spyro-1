@@ -2,6 +2,7 @@
 #define __RENDERERS_H
 
 #include "common.h"
+#include "graphics.h"
 #include "matrix.h"
 
 // Various renderers
@@ -32,7 +33,7 @@ void *func_80058AE8(void);
 
 /// @brief Frees a Glow particle
 /// @param pGlow The Glow particle to free
-void func_80058B60(void *pGlow);
+void func_80058B60(Glow *pGlow);
 
 /// @brief Free all Glow and Sparkle particles
 void func_80058B68(void);

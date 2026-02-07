@@ -2,7 +2,9 @@
 
 #define LEVEL 12
 
-#define HAS_MOBY_401
+#define HAS_MOBY_194
+#define HAS_MOBY_250
+#define HAS_MOBY_195
 #define HAS_MOBY_405
 #define HAS_MOBY_421
 

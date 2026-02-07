@@ -107,7 +107,7 @@ void HudReset(int pArg) {
   g_Hud.m_Mobys[4].m_Class = MOBYCLASS_HUD_GEM_CHEST;
   g_Hud.m_Mobys[7].m_Class = MOBYCLASS_HUD_DRAGON;
   g_Hud.m_Mobys[10].m_Class = MOBYCLASS_HUD_SPYRO_HEAD;
-  g_Hud.m_Mobys[11].m_Class = MOBYCLASS_HUD_KEY;
+  g_Hud.m_Mobys[11].m_Class = MOBYCLASS_KEY;
   g_Hud.m_Mobys[11].m_Rotation.z = 64;
 
   g_Hud.m_GemDisplayState = 1;

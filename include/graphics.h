@@ -1,6 +1,8 @@
 #ifndef __GRAPHICS_H
 #define __GRAPHICS_H
 
+#include "common.h"
+
 #include <sys/types.h>
 
 #include <libgte.h>
@@ -60,6 +62,18 @@ typedef struct {
 extern int g_TracerCount;
 extern int g_TracerPointCount[4];
 extern TracerPoint *g_TracerLists[4];
+
+typedef struct {
+  int unk_0x00;
+  int* unk_0x04;
+  Vector3D* MobyPos;
+  Color GlowColor;
+  int unk_0x010;
+  Vector3D PosOffset;
+  int unk_0x20;
+} Glow;
+
+extern Glow D_80078800[16];
 
 // static_assert(sizeof(g_DB[0]) == 0x84);
 

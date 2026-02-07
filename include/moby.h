@@ -2,6 +2,7 @@
 #define __MOBY_H
 
 #include "matrix.h"
+#include "graphics.h"
 #include "vector.h"
 #include <sys/types.h>
 
@@ -260,6 +261,8 @@ typedef enum {
   MOBYCLASS_EXCLAMATION_MARK = 75,
   MOBYCLASS_LETTER_APOSTROPHE = 76,
 
+  MOBYCLASS_FLIGHT_TRAIN_BARREL = 78,
+
   MOBYCLASS_GEM_1 = 83,
   MOBYCLASS_GEM_2 = 84,
   MOBYCLASS_GEM_5 = 85,
@@ -268,7 +271,11 @@ typedef enum {
 
   MOBYCLASS_SPARX = 120, // Gets spawned in load layout
 
-  MOBYCLASS_HUD_KEY = 173,
+  MOBYCLASS_KEY = 173, // Both Hud and level key
+  MOBYCLASS_LOCKED_CHEST = 174,
+
+  MOBYCLASS_WOODEN_CHEST = 194,
+  MOBYCLASS_METAL_CHEST = 195,
 
   MOBYCLASS_CRYSTAL_DRAGON = 250,
   MOBYCLASS_CRYSTAL_DRAGON_FRAGMENT = 251,
@@ -287,9 +294,25 @@ typedef enum {
   MOBYCLASS_PERCENT = 272,
   MOBYCLASS_SLASH = 277,
   MOBYCLASS_QUESTION_MARK = 278,
+
+  MOBYCLASS_FLIGHT_CHEST = 299,
+  
+  MOBYCLASS_FLIGHT_PLANE = 308,
+
   MOBYCLASS_PLUS = 317,
   MOBYCLASS_CARET = 321,
   MOBYCLASS_PERIOD = 327,
+
+  MOBYCLASS_SPRING_CHEST = 329,
+
+  MOBYCLASS_FLIGHT_GATE = 353,
+
+  MOBYCLASS_FLIGHT_TRAIN_WHEELS = 362,
+
+  MOBYCLASS_ARMORED_CHEST = 401,
+
+  MOBYCLASS_FLIGHT_TRAIN = 407,
+  MOBYCLASS_FLIGHT_WAGON = 408,
 
   MOBYCLASS_LETTER_A = 426,
   MOBYCLASS_LETTER_B,
@@ -337,6 +360,14 @@ typedef struct {
   } m_Nodes[1];
 } PathData;
 
+// WIP Flight Moby Class 407 408 Flight Train/Wagon
+typedef struct {
+  PathData *m_Path;
+  int unk_0x4;
+  Vector3D unk_0x8;
+  int unk_0x14;
+} FlightTrainMobyData;
+
 typedef struct {
   PathData *m_Path;
   Vector3D unk_0x4;
@@ -366,7 +397,7 @@ typedef struct {
   short unk_0x04;
   short unk_0x06;
   short unk_0x08;
-  int unk_0x0c;
+  Glow *glow;
   int unk_0x10;
 } MobySparxProps;
 
@@ -379,6 +410,12 @@ typedef struct {
   int unk_0x4;
   Vector3D unk_0x8;
 } MobyNumberProps;
+
+// WIP
+typedef struct {
+  Vector3D unk_0x00;
+  int unk_0x0C;
+} Moby17Props;
 
 typedef struct {
   short unk_0x00;

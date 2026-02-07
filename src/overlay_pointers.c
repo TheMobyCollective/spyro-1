@@ -507,10 +507,10 @@ void func_8005A470(void) {
     g_UpdateMoby = func_level_10_8007D9C8;        // g_UpdateMoby
     D_800758E4 = func_level_10_800873E0;          // g_SpawnParticle
     g_UpdateParticle = func_level_10_80086134;    // g_UpdateParticle
-    D_800757A0 = func_level_10_8007AEA0;          // g_BalloonistTriggerCode
-    D_800758A8 = func_level_10_8007AFDC;          // g_BalloonistCloseDialogue
-    D_8007574C = func_level_10_8007B020;          // g_BalloonistCameraCode
-    D_800758D8 = func_level_10_8007CFC0;          // g_BalloonistTalkCode
+    D_800757A0 = Balloonist1_level_10;          // g_BalloonistTriggerCode
+    D_800758A8 = Balloonist2_level_10;          // g_BalloonistCloseDialogue
+    D_8007574C = Balloonist3_level_10;          // g_BalloonistCameraCode
+    D_800758D8 = Balloonist4_level_10;          // g_BalloonistTalkCode
     // D_80075694 = (int *)0x0;
     // D_800757A8 = (int *)0x0;
     // g_FlightResultsUpdate = (int *)0x0;
@@ -523,10 +523,10 @@ void func_8005A470(void) {
     g_UpdateMoby = func_level_11_8007DA78;        // g_UpdateMoby
     D_800758E4 = func_level_11_800892C4;          // g_SpawnParticle
     g_UpdateParticle = func_level_11_80088098;    // g_UpdateParticle
-    D_800757A0 = func_level_11_8007AF50;          // g_BalloonistTriggerCode
-    D_800758A8 = func_level_11_8007B08C;          // g_BalloonistCloseDialogue
-    D_8007574C = func_level_11_8007B0D0;          // g_BalloonistCameraCode
-    D_800758D8 = func_level_11_8007D070;          // g_BalloonistTalkCode
+    D_800757A0 = Balloonist1_level_11;          // g_BalloonistTriggerCode
+    D_800758A8 = Balloonist2_level_11;          // g_BalloonistCloseDialogue
+    D_8007574C = Balloonist3_level_11;          // g_BalloonistCameraCode
+    D_800758D8 = Balloonist4_level_11;          // g_BalloonistTalkCode
     // D_80075694 = (int *)0x0;
     // D_800757A8 = (int *)0x0;
     // g_FlightResultsUpdate = (int *)0x0;
@@ -555,10 +555,10 @@ void func_8005A470(void) {
     g_UpdateMoby = func_level_13_8007DA54;        // g_UpdateMoby
     D_800758E4 = func_level_13_80088F68;          // g_SpawnParticle
     g_UpdateParticle = func_level_13_80087E20;    // g_UpdateParticle
-    D_800757A0 = func_level_13_8007AF2C;          // g_BalloonistTriggerCode
-    D_800758A8 = func_level_13_8007B068;          // g_BalloonistCloseDialogue
-    D_8007574C = func_level_13_8007B0AC;          // g_BalloonistCameraCode
-    D_800758D8 = func_level_13_8007D04C;          // g_BalloonistTalkCode
+    D_800757A0 = Balloonist1_level_13;          // g_BalloonistTriggerCode
+    D_800758A8 = Balloonist2_level_13;          // g_BalloonistCloseDialogue
+    D_8007574C = Balloonist3_level_13;          // g_BalloonistCameraCode
+    D_800758D8 = Balloonist4_level_13;          // g_BalloonistTalkCode
     // D_80075694 = (int *)0x0;
     // D_800757A8 = (int *)0x0;
     // g_FlightResultsUpdate = (int *)0x0;
@@ -583,7 +583,7 @@ void func_8005A470(void) {
     break;
   case 15:
     g_Buffers.m_CopyBuf = func_level_15_80084ED0; // g_CopyBufferPointer
-    g_SpawnMoby = func_level_15_8008249C;         // g_SpawnMoby
+    g_SpawnMoby = SpawnMoby_level_15;             // g_SpawnMoby
     g_UpdateMoby = func_level_15_8007CFB4;        // g_UpdateMoby
     D_800758E4 = func_level_15_80084128;          // g_SpawnParticle
     g_UpdateParticle = func_level_15_80083330;    // g_UpdateParticle
@@ -591,11 +591,11 @@ void func_8005A470(void) {
     // D_800758A8 = (int *)0x0;
     // D_8007574C = (int *)0x0;
     // D_800758D8 = (int *)0x0;
-    D_80075694 = func_level_15_8007AE08;            // g_UnkFunc1Flight
-    D_800757A8 = func_level_15_8007AEDC;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = func_level_15_8007B1FC; // g_UpdateGameState7
-    D_8007567C = func_level_15_8007B68C;            // g_DrawGameState7
-    D_800758C4 = func_level_15_8007B4B0;            // g_DrawTime
+    D_80075694 = Flight1_level_15;            // g_UnkFunc1Flight
+    D_800757A8 = Flight2_level_15;            // g_UnkFunc2Flight
+    g_FlightResultsUpdate = Flight3_level_15; // g_UpdateGameState7
+    D_8007567C = Flight5_level_15;            // g_DrawGameState7
+    D_800758C4 = Flight4_level_15;            // g_DrawTime
     break;
   case 20:
     g_Buffers.m_CopyBuf = func_level_20_8008CFA4; // g_CopyBufferPointer
@@ -603,10 +603,10 @@ void func_8005A470(void) {
     g_UpdateMoby = func_level_20_8007E3A0;        // g_UpdateMoby
     D_800758E4 = func_level_20_8008BFF0;          // g_SpawnParticle
     g_UpdateParticle = func_level_20_8008AE28;    // g_UpdateParticle
-    D_800757A0 = func_level_20_8007B878;          // g_BalloonistTriggerCode
-    D_800758A8 = func_level_20_8007B9B4;          // g_BalloonistCloseDialogue
-    D_8007574C = func_level_20_8007B9F8;          // g_BalloonistCameraCode
-    D_800758D8 = func_level_20_8007D998;          // g_BalloonistTalkCode
+    D_800757A0 = Balloonist1_level_20;          // g_BalloonistTriggerCode
+    D_800758A8 = Balloonist2_level_20;          // g_BalloonistCloseDialogue
+    D_8007574C = Balloonist3_level_20;          // g_BalloonistCameraCode
+    D_800758D8 = Balloonist4_level_20;          // g_BalloonistTalkCode
     // D_80075694 = (int *)0x0;
     // D_800757A8 = (int *)0x0;
     // g_FlightResultsUpdate = (int *)0x0;
@@ -619,10 +619,10 @@ void func_8005A470(void) {
     g_UpdateMoby = func_level_21_8007E240;        // g_UpdateMoby
     D_800758E4 = func_level_21_8008C540;          // g_SpawnParticle
     g_UpdateParticle = func_level_21_8008B1C0;    // g_UpdateParticle
-    D_800757A0 = func_level_21_8007B718;          // g_BalloonistTriggerCode
-    D_800758A8 = func_level_21_8007B854;          // g_BalloonistCloseDialogue
-    D_8007574C = func_level_21_8007B898;          // g_BalloonistCameraCode
-    D_800758D8 = func_level_21_8007D838;          // g_BalloonistTalkCode
+    D_800757A0 = Balloonist1_level_21;          // g_BalloonistTriggerCode
+    D_800758A8 = Balloonist2_level_21;          // g_BalloonistCloseDialogue
+    D_8007574C = Balloonist3_level_21;          // g_BalloonistCameraCode
+    D_800758D8 = Balloonist4_level_21;          // g_BalloonistTalkCode
     // D_80075694 = (int *)0x0;
     // D_800757A8 = (int *)0x0;
     // g_FlightResultsUpdate = (int *)0x0;
@@ -635,10 +635,10 @@ void func_8005A470(void) {
     g_UpdateMoby = func_level_22_8007E240;        // g_UpdateMoby
     D_800758E4 = func_level_22_8008A9A8;          // g_SpawnParticle
     g_UpdateParticle = func_level_22_80089714;    // g_UpdateParticle
-    D_800757A0 = func_level_22_8007B718;          // g_BalloonistTriggerCode
-    D_800758A8 = func_level_22_8007B854;          // g_BalloonistCloseDialogue
-    D_8007574C = func_level_22_8007B898;          // g_BalloonistCameraCode
-    D_800758D8 = func_level_22_8007D838;          // g_BalloonistTalkCode
+    D_800757A0 = Balloonist1_level_22;          // g_BalloonistTriggerCode
+    D_800758A8 = Balloonist2_level_22;          // g_BalloonistCloseDialogue
+    D_8007574C = Balloonist3_level_22;          // g_BalloonistCameraCode
+    D_800758D8 = Balloonist4_level_22;          // g_BalloonistTalkCode
     // D_80075694 = (int *)0x0;
     // D_800757A8 = (int *)0x0;
     // g_FlightResultsUpdate = (int *)0x0;
@@ -687,11 +687,11 @@ void func_8005A470(void) {
     // D_800758A8 = (int *)0x0;
     // D_8007574C = (int *)0x0;
     // D_800758D8 = (int *)0x0;
-    D_80075694 = func_level_25_8007AE08;            // g_UnkFunc1Flight
-    D_800757A8 = func_level_25_8007AEDC;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = func_level_25_8007B1FC; // g_UpdateGameState7
-    D_8007567C = func_level_25_8007B68C;            // g_DrawGameState7
-    D_800758C4 = func_level_25_8007B4B0;            // g_DrawTime
+    D_80075694 = Flight1_level_25;            // g_UnkFunc1Flight
+    D_800757A8 = Flight2_level_25;            // g_UnkFunc2Flight
+    g_FlightResultsUpdate = Flight3_level_25; // g_UpdateGameState7
+    D_8007567C = Flight5_level_25;            // g_DrawGameState7
+    D_800758C4 = Flight4_level_25;            // g_DrawTime
     break;
   case 30:
     g_Buffers.m_CopyBuf = func_level_30_8008E608; // g_CopyBufferPointer
@@ -699,10 +699,10 @@ void func_8005A470(void) {
     g_UpdateMoby = func_level_30_8007E398;        // g_UpdateMoby
     D_800758E4 = func_level_30_8008D2D0;          // g_SpawnParticle
     g_UpdateParticle = func_level_30_8008BE98;    // g_UpdateParticle
-    D_800757A0 = func_level_30_8007B870;          // g_BalloonistTriggerCode
-    D_800758A8 = func_level_30_8007B9AC;          // g_BalloonistCloseDialogue
-    D_8007574C = func_level_30_8007B9F0;          // g_BalloonistCameraCode
-    D_800758D8 = func_level_30_8007D990;          // g_BalloonistTalkCode
+    D_800757A0 = Balloonist1_level_30;          // g_BalloonistTriggerCode
+    D_800758A8 = Balloonist2_level_30;          // g_BalloonistCloseDialogue
+    D_8007574C = Balloonist3_level_30;          // g_BalloonistCameraCode
+    D_800758D8 = Balloonist4_level_30;          // g_BalloonistTalkCode
     // D_80075694 = (int *)0x0;
     // D_800757A8 = (int *)0x0;
     // g_FlightResultsUpdate = (int *)0x0;
@@ -783,11 +783,11 @@ void func_8005A470(void) {
     // D_800758A8 = (int *)0x0;
     // D_8007574C = (int *)0x0;
     // D_800758D8 = (int *)0x0;
-    D_80075694 = func_level_35_8007AE08;            // g_UnkFunc1Flight
-    D_800757A8 = func_level_35_8007AEDC;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = func_level_35_8007B1FC; // g_UpdateGameState7
-    D_8007567C = func_level_35_8007B68C;            // g_DrawGameState7
-    D_800758C4 = func_level_35_8007B4B0;            // g_DrawTime
+    D_80075694 = Flight1_level_35;            // g_UnkFunc1Flight
+    D_800757A8 = Flight2_level_35;            // g_UnkFunc2Flight
+    g_FlightResultsUpdate = Flight3_level_35; // g_UpdateGameState7
+    D_8007567C = Flight5_level_35;            // g_DrawGameState7
+    D_800758C4 = Flight4_level_35;            // g_DrawTime
     break;
   case 40:
     g_Buffers.m_CopyBuf = func_level_40_8008AB70; // g_CopyBufferPointer
@@ -795,10 +795,10 @@ void func_8005A470(void) {
     g_UpdateMoby = func_level_40_8007E18C;        // g_UpdateMoby
     D_800758E4 = func_level_40_80089AB8;          // g_SpawnParticle
     g_UpdateParticle = func_level_40_800888F8;    // g_UpdateParticle
-    D_800757A0 = func_level_40_8007B664;          // g_BalloonistTriggerCode
-    D_800758A8 = func_level_40_8007B7A0;          // g_BalloonistCloseDialogue
-    D_8007574C = func_level_40_8007B7E4;          // g_BalloonistCameraCode
-    D_800758D8 = func_level_40_8007D784;          // g_BalloonistTalkCode
+    D_800757A0 = Balloonist1_level_40;          // g_BalloonistTriggerCode
+    D_800758A8 = Balloonist2_level_40;          // g_BalloonistCloseDialogue
+    D_8007574C = Balloonist3_level_40;          // g_BalloonistCameraCode
+    D_800758D8 = Balloonist4_level_40;          // g_BalloonistTalkCode
     // D_80075694 = (int *)0x0;
     // D_800757A8 = (int *)0x0;
     // g_FlightResultsUpdate = (int *)0x0;
@@ -879,11 +879,11 @@ void func_8005A470(void) {
     // D_800758A8 = (int *)0x0;
     // D_8007574C = (int *)0x0;
     // D_800758D8 = (int *)0x0;
-    D_80075694 = func_level_45_8007AE08;            // g_UnkFunc1Flight
-    D_800757A8 = func_level_45_8007AEDC;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = func_level_45_8007B1FC; // g_UpdateGameState7
-    D_8007567C = func_level_45_8007B68C;            // g_DrawGameState7
-    D_800758C4 = func_level_45_8007B4B0;            // g_DrawTime
+    D_80075694 = Flight1_level_45;            // g_UnkFunc1Flight
+    D_800757A8 = Flight2_level_45;            // g_UnkFunc2Flight
+    g_FlightResultsUpdate = Flight3_level_45; // g_UpdateGameState7
+    D_8007567C = Flight5_level_45;            // g_DrawGameState7
+    D_800758C4 = Flight4_level_45;            // g_DrawTime
     break;
   case 50:
     g_Buffers.m_CopyBuf = func_level_50_8008BB38; // g_CopyBufferPointer
@@ -891,10 +891,10 @@ void func_8005A470(void) {
     g_UpdateMoby = func_level_50_8007E3C0;        // g_UpdateMoby
     D_800758E4 = func_level_50_8008AA24;          // g_SpawnParticle
     g_UpdateParticle = func_level_50_800897FC;    // g_UpdateParticle
-    D_800757A0 = func_level_50_8007B898;          // g_BalloonistTriggerCode
-    D_800758A8 = func_level_50_8007B9D4;          // g_BalloonistCloseDialogue
-    D_8007574C = func_level_50_8007BA18;          // g_BalloonistCameraCode
-    D_800758D8 = func_level_50_8007D9B8;          // g_BalloonistTalkCode
+    D_800757A0 = Balloonist1_level_50;;          // g_BalloonistTriggerCode
+    D_800758A8 = Balloonist2_level_50;;          // g_BalloonistCloseDialogue
+    D_8007574C = Balloonist3_level_50;;          // g_BalloonistCameraCode
+    D_800758D8 = Balloonist4_level_50;;          // g_BalloonistTalkCode
     // D_80075694 = (int *)0x0;
     // D_800757A8 = (int *)0x0;
     // g_FlightResultsUpdate = (int *)0x0;
@@ -975,11 +975,11 @@ void func_8005A470(void) {
     // D_800758A8 = (int *)0x0;
     // D_8007574C = (int *)0x0;
     // D_800758D8 = (int *)0x0;
-    D_80075694 = func_level_55_8007AE08;            // g_UnkFunc1Flight
-    D_800757A8 = func_level_55_8007AEDC;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = func_level_55_8007B1FC; // g_UpdateGameState7
-    D_8007567C = func_level_55_8007B68C;            // g_DrawGameState7
-    D_800758C4 = func_level_55_8007B4B0;            // g_DrawTime
+    D_80075694 = Flight1_level_55;            // g_UnkFunc1Flight
+    D_800757A8 = Flight2_level_55;            // g_UnkFunc2Flight
+    g_FlightResultsUpdate = Flight3_level_55; // g_UpdateGameState7
+    D_8007567C = Flight5_level_55;            // g_DrawGameState7
+    D_800758C4 = Flight4_level_55;            // g_DrawTime
     break;
   case 60:
     g_Buffers.m_CopyBuf = func_level_60_80085CE0; // g_CopyBufferPointer
@@ -987,10 +987,10 @@ void func_8005A470(void) {
     g_UpdateMoby = func_level_60_8007D938;        // g_UpdateMoby
     D_800758E4 = func_level_60_80084EA0;          // g_SpawnParticle
     g_UpdateParticle = func_level_60_80083ED8;    // g_UpdateParticle
-    D_800757A0 = func_level_60_8007AE10;          // g_BalloonistTriggerCode
-    D_800758A8 = func_level_60_8007AF4C;          // g_BalloonistCloseDialogue
-    D_8007574C = func_level_60_8007AF90;          // g_BalloonistCameraCode
-    D_800758D8 = func_level_60_8007CF30;          // g_BalloonistTalkCode
+    D_800757A0 = Balloonist1_level_60;;          // g_BalloonistTriggerCode
+    D_800758A8 = Balloonist2_level_60;;          // g_BalloonistCloseDialogue
+    D_8007574C = Balloonist3_level_60;;          // g_BalloonistCameraCode
+    D_800758D8 = Balloonist4_level_60;;          // g_BalloonistTalkCode
     // D_80075694 = (int *)0x0;
     // D_800757A8 = (int *)0x0;
     // g_FlightResultsUpdate = (int *)0x0;
