@@ -157,9 +157,18 @@ for date in date_range:
     total_funcs = funcs_matched + funcs_unmatched
     total_bytes = bytes_matched + bytes_unmatched
 
-    func_pct = (funcs_matched * 100) / total_funcs if total_funcs > 0 else 0
-    bytes_pct = (bytes_matched * 100) / total_bytes if total_bytes > 0 else 0
+    func_pct = (funcs_matched * 100 / total_funcs) if total_funcs > 0 else 0
+    bytes_pct = (bytes_matched * 100 / total_bytes) if total_bytes > 0 else 0
 
+    new_progress.append((date, func_pct, bytes_pct))
+
+# Ensure the final data point is included (date_range might not reach the exact last commit time)
+if progress and (not new_progress or new_progress[-1][0] < progress[-1][0]):
+    date, fm, fu, bm, bu = progress[-1]
+    total_funcs = fm + fu
+    total_bytes = bm + bu
+    func_pct = (fm * 100 / total_funcs) if total_funcs > 0 else 0
+    bytes_pct = (bm * 100 / total_bytes) if total_bytes > 0 else 0
     new_progress.append((date, func_pct, bytes_pct))
 
 progress_df = pd.DataFrame(new_progress, columns=['date', 'functions', 'bytes'])
@@ -181,14 +190,14 @@ ax.set_xlabel('Date')
 ax.set_ylabel('Decompilation Progress')
 
 # Get final statistics
-final_func_pct = progress_df['functions'].iloc[-1]
-final_bytes_pct = progress_df['bytes'].iloc[-1]
-
 final_funcs_matched = progress[-1][1]
 final_funcs_total = progress[-1][1] + progress[-1][2]
 
 final_bytes_matched = progress[-1][3]
 final_bytes_total = progress[-1][3] + progress[-1][4]
+
+final_func_pct = (final_funcs_matched * 100 / final_funcs_total) if final_funcs_total > 0 else 0
+final_bytes_pct = (final_bytes_matched * 100 / final_bytes_total) if final_bytes_total > 0 else 0
 
 plt.title(
     f'Main Executable Decompilation Progress\n'
