@@ -212,7 +212,6 @@ void func_80018728(void) {
   int i;
 
   // TODO: Dragon Moby props struct
-  // TODO: resolve compiler warning re: const discard
   name =
       g_DragonNames[((int *)g_DragonCutscene.m_RescuedDragonMoby->m_Props)[14]];
   length = strlen(name) - 1;
@@ -1360,7 +1359,6 @@ void func_8001A40C(void) {
       worldNameLen = (10 * (strlen(g_HomeworldNames[D_80075744]) - 1) - 158);
       setXYZ(&position, D_800757CC - worldNameLen, 92, 3584);
       setXYZ(&levelNameSpacing, 20, 2, 0x1000);
-      // TODO: resolve compiler warning re: const discard
       func_800181AC(g_HomeworldNames[D_80075744], &position, &levelNameSpacing,
                     23, 2);
       endMoby = g_HudMobys;
@@ -1422,7 +1420,6 @@ void func_8001A40C(void) {
           // level stats - level name
           setXYZ(&position, D_800757CC + 36, level_y, 0x1100);
           setXYZ(&levelNameSpacing, 16, 1, 0x1400);
-          // TODO: resolve compiler warning re: const discard
           func_800181AC(g_LevelNames[D_80075744 * 6 + i], &position,
                         &levelNameSpacing, 18, 2);
 
