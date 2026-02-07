@@ -1,8 +1,8 @@
 #ifndef __MOBY_H
 #define __MOBY_H
 
-#include "matrix.h"
 #include "graphics.h"
+#include "matrix.h"
 #include "vector.h"
 #include <sys/types.h>
 
@@ -296,7 +296,7 @@ typedef enum {
   MOBYCLASS_QUESTION_MARK = 278,
 
   MOBYCLASS_FLIGHT_CHEST = 299,
-  
+
   MOBYCLASS_FLIGHT_PLANE = 308,
 
   MOBYCLASS_PLUS = 317,
@@ -366,7 +366,7 @@ typedef struct {
   int unk_0x4;
   Vector3D unk_0x8;
   int unk_0x14;
-} FlightTrainMobyData;
+} MobyFlightTrainProps;
 
 typedef struct {
   PathData *m_Path;
@@ -374,7 +374,7 @@ typedef struct {
   int m_Sidedness;
   int unk_0x14;
   int unk_0x18; // Some kinda link? not sure
-} PortalPathMobyData;
+} MobyPortalPathProps;
 
 typedef struct {
   int unk_0x00;

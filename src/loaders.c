@@ -1108,7 +1108,7 @@ void LoadLevel(int pArg) {
           // we're exiting out of
           for (i = 0; i < g_PortalCount; i++) {
             if (g_Portals[i]->m_LevelId == g_PortalLevelId) {
-              PortalPathMobyData *pathData;
+              MobyPortalPathProps *pathData;
               int rotZ;
 
               rotZ = g_Spyro.m_bodyRotation.z;

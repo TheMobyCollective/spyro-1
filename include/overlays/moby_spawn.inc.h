@@ -4,15 +4,14 @@
 #include "math.h"
 #include "moby_helpers.h"
 #include "overlay_pointers.h"
+#include "rand.h"
 #include "spyro.h"
 #include "variables.h"
-#include "rand.h"
 
 // We have to replace LEVEL with preprocessor LEVEL
 
 Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
   u_long idx;
-
 
   // Allocate a new moby
   Moby *moby = func_800524C4();
@@ -93,8 +92,10 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     Vector3D v;
     func_8003A720(moby); // Reset the Moby first
     moby->m_Rotation.z = pParent->m_Rotation.z;
-    moby->m_Position.x = pParent->m_Position.x + (COSINE_8(moby->m_Rotation.z) >> 4);
-    moby->m_Position.y = pParent->m_Position.y + (SINE_8(moby->m_Rotation.z) >> 4);
+    moby->m_Position.x =
+        pParent->m_Position.x + (COSINE_8(moby->m_Rotation.z) >> 4);
+    moby->m_Position.y =
+        pParent->m_Position.y + (SINE_8(moby->m_Rotation.z) >> 4);
     moby->m_Position.z = pParent->m_Position.z;
     v.x = g_Spyro.m_Position.x - moby->m_Position.x;
     v.y = g_Spyro.m_Position.y - moby->m_Position.y;
@@ -122,10 +123,10 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     break;
   }
 #ifdef HAS_MOBY_78
-case 78: { // Flight Train Barrel
+  case 78: {             // Flight Train Barrel
     func_8003A720(moby); // Reset the Moby first
     func_800526A8(moby); // Update collision
-      break;
+    break;
   }
 #endif
   case MOBYCLASS_LIFE_STATUE:
@@ -134,7 +135,7 @@ case 78: { // Flight Train Barrel
   case MOBYCLASS_GEM_5:
   case MOBYCLASS_GEM_10:
   case MOBYCLASS_GEM_25: { // Collectables
-    Vector3D v; // Name from S2
+    Vector3D v;            // Name from S2
     MobyCollectableProps *gemProps = (MobyCollectableProps *)moby->m_Props;
 
     func_8003A720(moby); // Reset the Moby first
@@ -263,9 +264,7 @@ case 78: { // Flight Train Barrel
   case 69:
 #endif
 
-#if defined(HAS_MOBY_195) || \
-    defined(HAS_MOBY_174) || \
-    defined(HAS_MOBY_401)
+#if defined(HAS_MOBY_195) || defined(HAS_MOBY_174) || defined(HAS_MOBY_401)
 #define HAS_ANY_CHEST_FRAGMENTS
   case 309: // Metal, locked and armored chest fragments
   case 310:
@@ -334,7 +333,7 @@ case 78: { // Flight Train Barrel
   }
 #endif
 #ifdef HAS_MOBY_250
-  case 251: { // Dragon fragment
+  case 251: {   // Dragon fragment
     Vector3D v; // Name from S2
     char pad[8];
     int randRes;
@@ -393,9 +392,7 @@ case 78: { // Flight Train Barrel
     break;
   }
 #endif
-#if defined(HAS_MOBY_407) || \
-    defined(HAS_MOBY_408) || \
-    defined(HAS_MOBY_308)
+#if defined(HAS_MOBY_407) || defined(HAS_MOBY_408) || defined(HAS_MOBY_308)
   case 481: // Flight Train, Wagon and Plane Fragments
   case 482:
   case 483: {
@@ -450,7 +447,7 @@ case 78: { // Flight Train Barrel
     props->unk_0x02 = SINE_8(moby->m_Rotation.z & 0xFF) >> 7;
 
     if ((rand() & 1)) {
-      props->unk_0x04 = 90; 
+      props->unk_0x04 = 90;
     } else {
       props->unk_0x04 = -90;
       moby->m_Rotation.x = 128;
@@ -474,11 +471,11 @@ case 78: { // Flight Train Barrel
     break;
   }
 #endif
-#if defined(HAS_MOBY_407) || \
-    defined(HAS_MOBY_408)
+#if defined(HAS_MOBY_407) || defined(HAS_MOBY_408)
   case 362: { // Flight Train wheels
     MobyFragmentProps *targetProps = (MobyFragmentProps *)moby->m_Props;
-    FlightTrainMobyData *parentProps = (FlightTrainMobyData*)pParent->m_Props;
+    MobyFlightTrainProps *parentProps =
+        (MobyFlightTrainProps *)pParent->m_Props;
     int rnd;
     Vector3D v;
     func_8003A720(moby); // Reset
@@ -533,7 +530,6 @@ case 78: { // Flight Train Barrel
   }
 #endif
 
-
   case MOBYCLASS_NUMBER_0: // Text 0-9
   case MOBYCLASS_NUMBER_1:
   case MOBYCLASS_NUMBER_2:
@@ -586,7 +582,7 @@ case 78: { // Flight Train Barrel
   }
 #endif
 #ifdef HAS_MOBY_353
-  case 374: { // Flight Gate Fragment
+  case 374: {            // Flight Gate Fragment
     func_8003A720(moby); // Reset the Moby first
     VecCopy(&moby->m_Position, &pParent->m_Position);
     moby->m_Rotation = pParent->m_Rotation;
