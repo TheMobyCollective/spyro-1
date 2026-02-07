@@ -1,7 +1,7 @@
 #include "strings.h"
 
 /* Dragon names */
-const char *g_DragonNames[80] = {
+char *g_DragonNames[80] = {
     "SILVUS",  /* Index 0 (Unused) */
     "ARGUS",   /* Index 1 */
     "DELBIN",  /* Index 2 */
@@ -84,7 +84,7 @@ const char *g_DragonNames[80] = {
     "DRAGON X", /* Index 79 */
 };
 
-const char *g_HomeworldNames[7] = {
+char *g_HomeworldNames[7] = {
     "ARTISANS",       /**/
     "PEACE KEEPERS",  /**/
     "MAGIC CRAFTERS", /**/
@@ -95,7 +95,7 @@ const char *g_HomeworldNames[7] = {
 };
 
 // Length is in Mobys, so spaces aren't included
-const char g_HomeworldNamesLength[7] = {
+char g_HomeworldNamesLength[7] = {
     sizeof("ARTISANS") - 1,      /**/
     sizeof("PEACEKEEPERS") - 1,  /**/
     sizeof("MAGICCRAFTERS") - 1, /**/
@@ -106,7 +106,7 @@ const char g_HomeworldNamesLength[7] = {
 };
 
 // Level name table
-const char *g_LevelNames[37] = {
+char *g_LevelNames[37] = {
     /* Artisans */
     "HOME",         /**/
     "STONE HILL",   /**/
@@ -162,7 +162,7 @@ const char *g_LevelNames[37] = {
 /***********************************************/
 /* Balloonist stuff */
 /***********************************************/
-const char *g_BalloonistNames[6] = {
+char *g_BalloonistNames[6] = {
     "MARCO",   /* Artisans */
     "GOSNOLD", /* Peace Keepers */
     "TUCO",    /* Magic Crafters */
@@ -182,7 +182,7 @@ char g_BalloonistDialogueIndices[40] = {
 
 #undef IDX
 
-const char *g_BalloonistDialogue[] = {
+char *g_BalloonistDialogue[] = {
     // 0
     "IF YOU PROVE YOUR", "WORTH BY RESCUING", "10 DRAGONS...",
 
