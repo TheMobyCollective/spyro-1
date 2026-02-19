@@ -183,12 +183,15 @@ void func_800324D8(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800324D8);
 
 // Memory card used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
-void func_80032A20(void) {
-  int t = MemCardSync(1, (void *)&g_TitlescreenState.m_CardCompletedFunc,
+/// @brief Keep pinging alternating memcards if we're not otherwise using the
+/// memcard subsystem
+void CheckMemcardsExist(void) {
+  int t = MemCardSync(McSyncMode_Async,
+                      (void *)&g_TitlescreenState.m_CardCompletedFunc,
                       (void *)&g_TitlescreenState.m_CardResultData);
 
-  if (t) {
-    if (t == 1) {
+  if (t != McSyncRet_Active) {
+    if (t == McSyncRet_Finished) {
       g_TitlescreenState.m_CardStates[g_TitlescreenState.m_CardIdxChecking] =
           g_TitlescreenState.m_CardResultData;
       g_TitlescreenState.m_CardIdxChecking =
@@ -200,14 +203,19 @@ void func_80032A20(void) {
 }
 
 // Memory card used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
-void func_80032AB0(void) {
-  if (g_Pad.m_Down & PAD_TRIANGLE) {
-    g_TitlescreenState.m_Mode = TSM_Menu;
-    g_TitlescreenState.m_0x10 = 0;
-    g_TitlescreenState.m_State = TSS_Setup;
-    MemCardSync(0, (void *)&g_TitlescreenState.m_CardCompletedFunc,
-                (void *)&g_TitlescreenState.m_CardResultData);
-  }
+/// @brief If triangle is down, eat current async operation and reset mem card
+/// read sequence
+/// @returns 0 if triangle wasn't pushed or MemCardSync operation completed
+int func_80032AB0(void) {
+  if ((g_Pad.m_Down & PAD_TRIANGLE) == 0)
+    return;
+
+  g_TitlescreenState.m_Mode = TSM_Menu;
+  g_TitlescreenState.m_SubState = TS_SubState_LoadMemCards;
+  g_TitlescreenState.m_State = TSS_Setup;
+  return MemCardSync(McSyncMode_Sync,
+                     (void *)&g_TitlescreenState.m_CardCompletedFunc,
+                     (void *)&g_TitlescreenState.m_CardResultData);
 }
 
 /**
@@ -572,7 +580,7 @@ void GamestateUpdate(void) {
       func_800324D8(); // Balloonist ride update
     } else if (g_Gamestate == GS_TitleScreen) {
       if (g_TitlescreenState.m_Mode != TSM_Demo) {
-        func_titlescreen_8007ABAC(); // Titlescreen menu (overlay)
+        TitlescreenUpdate(); // Titlescreen menu (overlay)
       } else {
         GamestateCutsceneTransition();
       }

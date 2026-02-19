@@ -3,16 +3,19 @@
 .section .data
 
 /* Titlescreen tables */
-dlabel D_8006FA74
+dlabel g_TitlescreenAnimIn
 /* 60274 8006FA74 00081019 */ .word 0x19100800
 /* 60278 8006FA78 222C3641 */ .word 0x41362C22
 /* 6027C 8006FA7C 4C586572 */ .word 0x7265584C
 /* 60280 8006FA80 807B787E */ .word 0x7E787B80
-dlabel D_8006FA84
+.size g_TitlescreenAnimIn, . - g_TitlescreenAnimIn
+dlabel g_TitlescreenAnimOut
 /* 60284 8006FA84 7F7D7A76 */ .word 0x767A7D7F
 /* 60288 8006FA88 716B645C */ .word 0x5C646B71
 /* 6028C 8006FA8C 53493E32 */ .word 0x323E4953
 /* 60290 8006FA90 25170900 */ .word 0x00091725
+.size g_TitlescreenAnimOut, . - g_TitlescreenAnimOut
+dlabel g_TitlescreenSPUOffsets
 /* 60294 8006FA94 E0AB0300 */ .word 0x0003ABE0
 /* 60298 8006FA98 00BD0300 */ .word 0x0003BD00
 /* 6029C 8006FA9C 70C80300 */ .word 0x0003C870
@@ -23,10 +26,14 @@ dlabel D_8006FA84
 /* 602B0 8006FAB0 80420400 */ .word 0x00044280
 /* 602B4 8006FAB4 10530400 */ .word 0x00045310
 /* 602B8 8006FAB8 70560400 */ .word 0x00045670
+.size g_TitlescreenSPUOffsets, . - g_TitlescreenSPUOffsets
+dlabel g_TitlescreenSelColors
 /* 602BC 8006FABC 8080802C */ .word 0x2C808080
 /* 602C0 8006FAC0 F0F0002C */ .word 0x2C00F0F0
 /* 602C4 8006FAC4 C0C0C02C */ .word 0x2CC0C0C0
 /* 602C8 8006FAC8 4040402C */ .word 0x2C404040
+.size g_TitlescreenSelColors, . - g_TitlescreenSelColors
+dlabel g_TitlescreenSprites
 /* 602CC 8006FACC 9800E07F */ .word 0x7FE00098
 /* 602D0 8006FAD0 FF800000 */ .word 0x000080FF
 /* 602D4 8006FAD4 9A00A07F */ .word 0x7FA0009A
@@ -155,4 +162,4 @@ dlabel D_8006FA84
 /* 604C0 8006FCC0 FF0F00A0 */ .word 0xA0000FFF
 /* 604C4 8006FCC4 1D00A07C */ .word 0x7CA0001D
 /* 604C8 8006FCC8 FF0F00C0 */ .word 0xC0000FFF
-.size D_8006FA74, . - D_8006FA74
+.size g_TitlescreenSprites, . - g_TitlescreenSprites

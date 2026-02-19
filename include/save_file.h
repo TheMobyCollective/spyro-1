@@ -33,7 +33,27 @@ typedef struct {
   // In memory, this is padded to 1200, but in the save file it's 1152
   u_char m_GemCollectionMask[TOTAL_LEVEL_COUNT * 32];
   int m_Checksum;
+  char pad[0x70];
 } SaveFile;
+
+typedef struct {
+  char m_Magic[2];
+  u_char m_IconDisplayFlag;
+  u_char m_BlockNum;
+  u_char m_Title[0x40];
+  char reserved[0x1C];
+  u_short m_Clut[0x10];
+  u_char m_Icon[0x80][3];
+} SaveFileHeader;
+
+typedef struct {
+  SaveFileHeader m_Header;
+  SaveFile m_Saves[3];
+} MemCardSaveFile;
+
+int SaveChecksum(u_char *saveFile);
+int SaveLoad(SaveFile *pSaveFile);
+void SaveCreate(SaveFile *pSaveFile);
 
 // Wouldn't know where else to put these ones
 // They're unused, only initialized to 0

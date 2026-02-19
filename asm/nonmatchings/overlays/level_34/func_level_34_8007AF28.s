@@ -3208,14 +3208,14 @@ glabel func_level_34_8007AF28
 /* 31F81B4 8007DBEC 00000000 */  nop
 /* 31F81B8 8007DBF0 09F84000 */  jalr       $v0
 /* 31F81BC 8007DBF4 10000724 */   addiu     $a3, $zero, 0x10
-/* 31F81C0 8007DBF8 0780033C */  lui        $v1, %hi(D_8007582C)
-/* 31F81C4 8007DBFC 2C58638C */  lw         $v1, %lo(D_8007582C)($v1)
+/* 31F81C0 8007DBF8 0780033C */  lui        $v1, %hi(g_SpyroLifeCount)
+/* 31F81C4 8007DBFC 2C58638C */  lw         $v1, %lo(g_SpyroLifeCount)($v1)
 /* 31F81C8 8007DC00 00000000 */  nop
 /* 31F81CC 8007DC04 63006228 */  slti       $v0, $v1, 0x63
 /* 31F81D0 8007DC08 03004010 */  beqz       $v0, .Llevel_34_8007DC18
 /* 31F81D4 8007DC0C 01006224 */   addiu     $v0, $v1, 0x1
-/* 31F81D8 8007DC10 0780013C */  lui        $at, %hi(D_8007582C)
-/* 31F81DC 8007DC14 2C5822AC */  sw         $v0, %lo(D_8007582C)($at)
+/* 31F81D8 8007DC10 0780013C */  lui        $at, %hi(g_SpyroLifeCount)
+/* 31F81DC 8007DC14 2C5822AC */  sw         $v0, %lo(g_SpyroLifeCount)($at)
 .Llevel_34_8007DC18:
 /* 31F81E0 8007DC18 21200000 */  addu       $a0, $zero, $zero
 /* 31F81E4 8007DC1C 15EE000C */  jal        func_8003B854
@@ -3231,12 +3231,12 @@ glabel func_level_34_8007AF28
 /* 31F8208 8007DC40 00004490 */  lbu        $a0, 0x0($v0)
 /* 31F820C 8007DC44 9E56010C */  jal        PlaySound
 /* 31F8210 8007DC48 21380000 */   addu      $a3, $zero, $zero
-/* 31F8214 8007DC4C 0780023C */  lui        $v0, %hi(D_800758E8)
-/* 31F8218 8007DC50 E858428C */  lw         $v0, %lo(D_800758E8)($v0)
+/* 31F8214 8007DC4C 0780023C */  lui        $v0, %hi(g_LifeOrbCount)
+/* 31F8218 8007DC50 E858428C */  lw         $v0, %lo(g_LifeOrbCount)($v0)
 /* 31F821C 8007DC54 00000000 */  nop
 /* 31F8220 8007DC58 01004224 */  addiu      $v0, $v0, 0x1
-/* 31F8224 8007DC5C 0780013C */  lui        $at, %hi(D_800758E8)
-/* 31F8228 8007DC60 E85822AC */  sw         $v0, %lo(D_800758E8)($at)
+/* 31F8224 8007DC5C 0780013C */  lui        $at, %hi(g_LifeOrbCount)
+/* 31F8228 8007DC60 E85822AC */  sw         $v0, %lo(g_LifeOrbCount)($at)
 /* 31F822C 8007DC64 5A49010C */  jal        func_80052568
 /* 31F8230 8007DC68 21206002 */   addu      $a0, $s3, $zero
 /* 31F8234 8007DC6C 9A0E0208 */  j          .Llevel_34_80083A68

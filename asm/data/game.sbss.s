@@ -339,7 +339,7 @@ dlabel D_80075824
 dlabel g_LevelMobys
 /* 66000 80075828 */ .space 0x04
 
-dlabel D_8007582C
+dlabel g_SpyroLifeCount
 /* 66004 8007582C */ .space 0x04
 
 dlabel D_80075830
@@ -489,7 +489,7 @@ dlabel D_800758E0
 dlabel D_800758E4
 /* 660BC 800758E4 */ .space 0x04
 
-dlabel D_800758E8
+dlabel g_LifeOrbCount
 /* 660C0 800758E8 */ .space 0x04
 
 dlabel cheat_HomeworldSelected

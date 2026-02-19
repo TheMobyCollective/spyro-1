@@ -1723,12 +1723,12 @@ glabel func_80041670
 /* 336F0 80042EF0 F20F0108 */  j          .L80043FC8
 /* 336F4 80042EF4 00000000 */   nop
 .L80042EF8:
-/* 336F8 80042EF8 0780023C */  lui        $v0, %hi(D_8007582C)
-/* 336FC 80042EFC 2C58428C */  lw         $v0, %lo(D_8007582C)($v0)
+/* 336F8 80042EF8 0780023C */  lui        $v0, %hi(g_SpyroLifeCount)
+/* 336FC 80042EFC 2C58428C */  lw         $v0, %lo(g_SpyroLifeCount)($v0)
 /* 33700 80042F00 00000000 */  nop
 /* 33704 80042F04 01004224 */  addiu      $v0, $v0, 0x1
-/* 33708 80042F08 0780013C */  lui        $at, %hi(D_8007582C)
-/* 3370C 80042F0C 2C5822AC */  sw         $v0, %lo(D_8007582C)($at)
+/* 33708 80042F08 0780013C */  lui        $at, %hi(g_SpyroLifeCount)
+/* 3370C 80042F0C 2C5822AC */  sw         $v0, %lo(g_SpyroLifeCount)($at)
 /* 33710 80042F10 17B2000C */  jal        func_8002C85C
 /* 33714 80042F14 00000000 */   nop
 /* 33718 80042F18 F20F0108 */  j          .L80043FC8

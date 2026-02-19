@@ -110,11 +110,11 @@ void HudReset(int pArg) {
   g_Hud.m_Mobys[11].m_Class = MOBYCLASS_KEY;
   g_Hud.m_Mobys[11].m_Rotation.z = 64;
 
-  g_Hud.m_GemDisplayState = 1;
-  g_Hud.m_DragonDisplayState = 1;
-  g_Hud.m_LifeDisplayState = 1;
-  g_Hud.m_EggDisplayState = 1;
-  g_Hud.m_KeyDisplayState = 1;
+  g_Hud.m_GemDisplayState = HDS_Opening;
+  g_Hud.m_DragonDisplayState = HDS_Opening;
+  g_Hud.m_LifeDisplayState = HDS_Opening;
+  g_Hud.m_EggDisplayState = HDS_Opening;
+  g_Hud.m_KeyDisplayState = HDS_Opening;
   g_Hud.m_GemProgress = 0;
   g_Hud.m_DragonProgress = 0;
   g_Hud.m_LifeProgress = 0;
@@ -128,10 +128,10 @@ void HudReset(int pArg) {
 
   g_Hud.m_GemCount = g_LevelGemCount[g_LevelIndex];
   g_Hud.m_DragonCount = g_DragonTotal;
-  g_Hud.m_LifeCount = D_8007582C;
+  g_Hud.m_LifeCount = g_SpyroLifeCount;
   g_Hud.m_EggCount = g_EggTotal;
   g_Hud.m_KeyFlag = D_80075830;
-  g_Hud.m_LifeOrbCount = D_800758E8;
+  g_Hud.m_LifeOrbCount = g_LifeOrbCount;
 
   HudPrint(0, 4, g_Hud.m_GemCount, 1);
   HudPrint(5, 2, g_Hud.m_DragonCount, 1);
@@ -139,7 +139,7 @@ void HudReset(int pArg) {
   if (pArg) {
     g_Hud.D_80077FDC = 0;
 
-    for (i = 0; i < D_800758E8; ++i) {
+    for (i = 0; i < g_LifeOrbCount; ++i) {
       g_Hud.m_SpriteRect[12 + i].x =
           g_Hud.m_Mobys[10].m_Position.x + g_LifeOrbXYTarget[i].x - 29;
       g_Hud.m_SpriteRect[12 + i].y =
@@ -251,7 +251,7 @@ void HudTick(void) {
 
   g_Hud.m_Mobys[10].m_Rotation.z = g_Hud.unk_0x3c & 0xFF;
   if (g_Hud.m_LifeDisplayState == HDS_Hidden) {
-    if (g_Hud.m_LifeCount != D_8007582C || g_Hud.m_LifeOrbCount != D_800758E8) {
+    if (g_Hud.m_LifeCount != g_SpyroLifeCount || g_Hud.m_LifeOrbCount != g_LifeOrbCount) {
       g_Hud.m_LifeDisplayState = HDS_Opening;
       g_Hud.m_LifeProgress = 0;
     }
@@ -260,16 +260,16 @@ void HudTick(void) {
       g_Hud.m_LifeDisplayState = HDS_Open;
       g_Hud.m_LifeProgress = 0;
       g_Hud.m_LifeSteadyTicks = 0;
-      if (g_Hud.m_LifeCount == D_8007582C &&
-          g_Hud.m_LifeOrbCount == D_800758E8) {
+      if (g_Hud.m_LifeCount == g_SpyroLifeCount &&
+          g_Hud.m_LifeOrbCount == g_LifeOrbCount) {
         g_Hud.m_LifeSteadyTicks = -40;
       }
     } else {
       HudMoveMoby(8, 3, g_HudOpeningOffsets[g_Hud.m_LifeProgress++]);
     }
   } else if (g_Hud.m_LifeDisplayState == HDS_Open) {
-    if (g_Hud.m_LifeCount == D_8007582C && g_Hud.m_LifeProgress == 0) {
-      if (g_Hud.m_LifeOrbCount == D_800758E8) {
+    if (g_Hud.m_LifeCount == g_SpyroLifeCount && g_Hud.m_LifeProgress == 0) {
+      if (g_Hud.m_LifeOrbCount == g_LifeOrbCount) {
         g_Hud.m_LifeSteadyTicks += 1;
         if (g_Hud.m_LifeSteadyTicks == 20) {
           g_Hud.m_LifeDisplayState = HDS_Closing;
@@ -277,7 +277,7 @@ void HudTick(void) {
         }
       } else {
         g_Hud.m_LifeSteadyTicks = 0;
-        g_Hud.m_LifeOrbCount = D_800758E8;
+        g_Hud.m_LifeOrbCount = g_LifeOrbCount;
       }
     } else {
       g_Hud.m_LifeSteadyTicks = 0;
@@ -289,9 +289,9 @@ void HudTick(void) {
       }
     }
   } else if (g_Hud.m_LifeDisplayState == HDS_Closing) {
-    if (g_Hud.m_LifeCount != D_8007582C || g_Hud.m_LifeOrbCount != D_800758E8) {
+    if (g_Hud.m_LifeCount != g_SpyroLifeCount || g_Hud.m_LifeOrbCount != g_LifeOrbCount) {
       g_Hud.m_LifeDisplayState = HDS_Opening;
-      g_Hud.m_LifeOrbCount = D_800758E8;
+      g_Hud.m_LifeOrbCount = g_LifeOrbCount;
     } else if (g_Hud.m_LifeProgress == 0) {
       g_Hud.m_LifeDisplayState = HDS_Hidden;
     } else {
@@ -339,9 +339,7 @@ void HudTick(void) {
         }
       }
     } else if (g_Hud.m_EggSteadyTicks == 1) {
-      vec.x = g_Hud.m_EggCount * 324 - 2500;
-      vec.y = 1008;
-      vec.z = 4096;
+      setXYZ(&vec, g_Hud.m_EggCount * 324 - 2500, 1008, 4096);
       (*D_800758E4)(16, 77, &vec, nullptr);
     } else if (g_Hud.m_EggSteadyTicks > 8) {
       g_Hud.m_EggCount += 1;
@@ -420,11 +418,11 @@ void HudTick(void) {
   g_Hud.m_Mobys[11].m_Substate += 4;
   g_Hud.m_Mobys[11].m_Rotation.x = COSINE_8(g_Hud.m_Mobys[11].m_Substate) >> 7;
   g_Hud.m_Mobys[11].m_Rotation.y = SINE_8(g_Hud.m_Mobys[11].m_Substate) >> 7;
-  if (D_800758E8 > 19) {
-    D_8007582C++;
-    if (D_8007582C > 99)
-      D_8007582C = 99;
-    D_800758E8 -= 20;
+  if (g_LifeOrbCount > 19) {
+    g_SpyroLifeCount++;
+    if (g_SpyroLifeCount > 99)
+      g_SpyroLifeCount = 99;
+    g_LifeOrbCount -= 20;
   }
 }
 
@@ -455,4 +453,3 @@ void GenerateGemCollectMobys(int pGemValue, Moby *pGemPos) {
     vec.z -= 16;
   }
 }
-

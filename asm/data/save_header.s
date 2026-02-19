@@ -2,5 +2,5 @@
 
 .section .data, "wa"
 
-dlabel D_8006F494
+dlabel g_MemCardSaveHeader
 .incbin "assets/save_header.databin.bin"

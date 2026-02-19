@@ -2585,14 +2585,14 @@ glabel func_level_12_8007AE40
 /* EF885C 8007D294 00000000 */  nop
 /* EF8860 8007D298 09F84000 */  jalr       $v0
 /* EF8864 8007D29C 10000724 */   addiu     $a3, $zero, 0x10
-/* EF8868 8007D2A0 0780033C */  lui        $v1, %hi(D_8007582C)
-/* EF886C 8007D2A4 2C58638C */  lw         $v1, %lo(D_8007582C)($v1)
+/* EF8868 8007D2A0 0780033C */  lui        $v1, %hi(g_SpyroLifeCount)
+/* EF886C 8007D2A4 2C58638C */  lw         $v1, %lo(g_SpyroLifeCount)($v1)
 /* EF8870 8007D2A8 00000000 */  nop
 /* EF8874 8007D2AC 63006228 */  slti       $v0, $v1, 0x63
 /* EF8878 8007D2B0 03004010 */  beqz       $v0, .Llevel_12_8007D2C0
 /* EF887C 8007D2B4 01006224 */   addiu     $v0, $v1, 0x1
-/* EF8880 8007D2B8 0780013C */  lui        $at, %hi(D_8007582C)
-/* EF8884 8007D2BC 2C5822AC */  sw         $v0, %lo(D_8007582C)($at)
+/* EF8880 8007D2B8 0780013C */  lui        $at, %hi(g_SpyroLifeCount)
+/* EF8884 8007D2BC 2C5822AC */  sw         $v0, %lo(g_SpyroLifeCount)($at)
 .Llevel_12_8007D2C0:
 /* EF8888 8007D2C0 21200000 */  addu       $a0, $zero, $zero
 /* EF888C 8007D2C4 15EE000C */  jal        func_8003B854
@@ -2608,12 +2608,12 @@ glabel func_level_12_8007AE40
 /* EF88B0 8007D2E8 00004490 */  lbu        $a0, 0x0($v0)
 /* EF88B4 8007D2EC 9E56010C */  jal        PlaySound
 /* EF88B8 8007D2F0 21380000 */   addu      $a3, $zero, $zero
-/* EF88BC 8007D2F4 0780023C */  lui        $v0, %hi(D_800758E8)
-/* EF88C0 8007D2F8 E858428C */  lw         $v0, %lo(D_800758E8)($v0)
+/* EF88BC 8007D2F4 0780023C */  lui        $v0, %hi(g_LifeOrbCount)
+/* EF88C0 8007D2F8 E858428C */  lw         $v0, %lo(g_LifeOrbCount)($v0)
 /* EF88C4 8007D2FC 00000000 */  nop
 /* EF88C8 8007D300 01004224 */  addiu      $v0, $v0, 0x1
-/* EF88CC 8007D304 0780013C */  lui        $at, %hi(D_800758E8)
-/* EF88D0 8007D308 E85822AC */  sw         $v0, %lo(D_800758E8)($at)
+/* EF88CC 8007D304 0780013C */  lui        $at, %hi(g_LifeOrbCount)
+/* EF88D0 8007D308 E85822AC */  sw         $v0, %lo(g_LifeOrbCount)($at)
 /* EF88D4 8007D30C 5A49010C */  jal        func_80052568
 /* EF88D8 8007D310 21206002 */   addu      $a0, $s3, $zero
 /* EF88DC 8007D314 450A0208 */  j          .Llevel_12_80082914
