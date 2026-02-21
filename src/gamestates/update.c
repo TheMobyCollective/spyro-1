@@ -182,31 +182,49 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800314B4);
 void func_800324D8(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800324D8);
 
-// Memory card used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
+//
+// Memory card functions used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
+//
+
 /// @brief Keep pinging alternating memcards if we're not otherwise using the
-/// memcard subsystem
+/// memcard subsystem, and update the card states when we get a response
 void CheckMemcardsExist(void) {
-  int t = MemCardSync(McSyncMode_Async,
+  // Check if we're currently waiting for an async memcard
+  // operation to complete
+  switch (MemCardSync(McSyncMode_Async,
                       (void *)&g_TitlescreenState.m_CardCompletedFunc,
-                      (void *)&g_TitlescreenState.m_CardResultData);
+                      (void *)&g_TitlescreenState.m_CardResultData)) {
+  case McSyncRet_Active:
+    // Do nothing, we're still waiting for the async operation to complete
+    return;
 
-  if (t != McSyncRet_Active) {
-    if (t == McSyncRet_Finished) {
-      g_TitlescreenState.m_CardStates[g_TitlescreenState.m_CardIdxChecking] =
-          g_TitlescreenState.m_CardResultData;
-      g_TitlescreenState.m_CardIdxChecking =
-          1 - g_TitlescreenState.m_CardIdxChecking;
-    }
-
-    MemCardExist(g_TitlescreenState.m_CardIdxChecking << 4);
+  case McSyncRet_Finished:
+    // Async operation completed, update the card state for the card we just
+    // checked and then immediately start checking the other card
+    g_TitlescreenState.m_CardStates[g_TitlescreenState.m_CardIdxChecking] =
+        g_TitlescreenState.m_CardResultData;
+    g_TitlescreenState.m_CardIdxChecking =
+        1 - g_TitlescreenState.m_CardIdxChecking;
+    break;
   }
+
+  MemCardExist(g_TitlescreenState.m_CardIdxChecking << 4);
 }
 
-// Memory card used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
 /// @brief If triangle is down, eat current async operation and reset mem card
 /// read sequence
 /// @returns 0 if triangle wasn't pushed or MemCardSync operation completed
 int func_80032AB0(void) {
+  // TODO: There's UB here, since we don't return anything here
+  // And we use the return value of MemCardSync, which would always
+  // be 1 (McSyncRet_Finished) in this case.
+
+  // I'm not *entirely* convinced the UB is here
+  // Since it could also be that TitlescreenUpdate
+  // is where the UB is, using this function with the
+  // wrong signature.
+
+  // Due to the AND being performed on v0, this returns 0 if triangle isn't down
   if ((g_Pad.m_Down & PAD_TRIANGLE) == 0)
     return;
 
