@@ -146,40 +146,7 @@ dlabel D_80077868
 /* 677B0 80077868 */ .space 0x20
 
 dlabel g_Checkpoint
-/* 677D0 80077888 */ .space 0x04
-
-dlabel D_8007788C
-/* 677D4 8007788C */ .space 0x04
-
-dlabel D_80077890
-/* 677D8 80077890 */ .space 0x04
-
-dlabel D_80077894
-/* 677DC 80077894 */ .space 0x04
-
-dlabel D_80077898
-/* 677E0 80077898 */ .space 0x20
-
-dlabel D_800778B8
-/* 67800 800778B8 */ .space 0x20
-
-dlabel D_800778D8
-/* 67820 800778D8 */ .space 0x04
-
-dlabel D_800778DC
-/* 67824 800778DC */ .space 0x04
-
-dlabel D_800778E0
-/* 67828 800778E0 */ .space 0x04
-
-dlabel D_800778E4
-/* 6782C 800778E4 */ .space 0x04
-
-dlabel D_800778E8
-/* 67830 800778E8 */ .space 0x04
-
-dlabel D_800778EC
-/* 67834 800778EC */ .space 0x04
+/* Total size from 80077888 to 800778F0 */ .space 0x68
 
 dlabel g_CutsceneSoundDef
 /* 67838 800778F0 */ .space 0x18

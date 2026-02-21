@@ -352,21 +352,7 @@ void func_8003740C(void) {
     }
   } else {
     // Spyro hasn't gone through the portal yet
-    int t = g_Spyro.unk_0x244;
-
-#if 0
-    var_s0 = MIN(t, nodeDistance);
-#else
-
-    // TODO: This is fucked, they must've done something here
-    // I haven't been able to match it properly without the assembly move
-    __asm__ volatile("move %0, %1" : "=r"(var_s0) : "r"(nodeDistance));
-
-    if (var_s0 > t) {
-      var_s0 = t;
-    }
-
-#endif
+    var_s0 = MIN(g_Spyro.unk_0x244, nodeDistance);
   }
 
   // var_s0 (frame 1) = 0x60
@@ -376,6 +362,8 @@ void func_8003740C(void) {
   VecScaleToLength(&pointNodeDifference, nodeDistance, var_s0 * g_DeltaTime);
   VecAdd(&g_Camera.m_Position, &g_Camera.m_Position,
          &pointNodeDifference); // g_Camera.m_Position += pointNodeDifference
+
+  var_s0 = 0; // ????? Needed to match the MIN above
 
   g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
 
