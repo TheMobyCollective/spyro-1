@@ -20,6 +20,8 @@
 
 #define nullptr ((void *)0)
 
+#define OFFSET(type, field) ((u_int)&(((type *)0)->field))
+
 /* clang-format on */
 
 #define PATCH_POINTER(dest, base)                                              \
@@ -97,7 +99,7 @@ extern int D_80075830; // Key flag
 extern int g_SkipLowPolyWorld; // Skip low-poly model in world
 
 extern int g_SpyroLifeCount; // Spyro's extra life count
-extern int g_LifeOrbCount; // Life orb count
+extern int g_LifeOrbCount;   // Life orb count
 
 extern int D_8007575C; // Skybox color lerp value
 

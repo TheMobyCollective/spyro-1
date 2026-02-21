@@ -13,7 +13,9 @@ int SaveChecksum(u_char *saveFile) {
   int checksum = 0;
   int i;
 
-  for (i = 0; i < sizeof(SaveFile) - 0x74 /*pad+checksum*/; i++) {
+  // Checksum is just the sum of all bytes up to the checksum field
+  // This means the checksum field, and the padding after it, are not included
+  for (i = 0; i < OFFSET(SaveFile, m_Checksum); i++) {
     checksum += saveFile[i];
   }
 
