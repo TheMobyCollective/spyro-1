@@ -87,16 +87,33 @@ typedef enum {
 typedef enum {
   TS_Sprite_SpyroLogo = 0,  // Big old spyro logo on the "Press Start" screen
   TS_Sprite_MainBorder = 1, // Main left/right decorative border
-  TS_Sprite_Homeworld_Artisans = 2, // Save file select homeworld logos
-  //.. 7
+
+  // Save file select homeworld logos
+  TS_Sprite_Homeworld_Artisans = 2,
+  TS_Sprite_Homeworld_PeaceKeepers = 3,
+  TS_Sprite_Homeworld_MagicCrafters = 4,
+  TS_Sprite_Homeworld_BeastMakers = 5,
+  TS_Sprite_Homeworld_DreamWeavers = 6,
+  TS_Sprite_Homeworld_GnastysWorld = 7,
+
   TS_Sprite_EmptySave = 8,
   TS_Sprite_BlankSaveBox = 9,
   TS_Sprite_OverwriteGame = 10,
   TS_Sprite_PressStart = 11,
-  TS_Sprite_LoadGame = 12,
+  TS_Sprite_LoadGame = 12, // Unused
 
+  // Dragon count numbers
   TS_Sprite_DragonCt_Num0 = 13,
-  //..22
+  TS_Sprite_DragonCt_Num1 = 14,
+  TS_Sprite_DragonCt_Num2 = 15,
+  TS_Sprite_DragonCt_Num3 = 16,
+  TS_Sprite_DragonCt_Num4 = 17,
+  TS_Sprite_DragonCt_Num5 = 18,
+  TS_Sprite_DragonCt_Num6 = 19,
+  TS_Sprite_DragonCt_Num7 = 20,
+  TS_Sprite_DragonCt_Num8 = 21,
+  TS_Sprite_DragonCt_Num9 = 22,
+
   TS_Sprite_DragonCt_Logo = 23,
 
   TS_Sprite_AccessingMemCard = 24,

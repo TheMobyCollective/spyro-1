@@ -484,18 +484,14 @@ void func_800190D4(int pMode, int pR, int pG, int pB) {
   func_800168DC(drm);
 
   f4->tag = 0x05000000;
+
   // set semi-transparency bit
   setcode(f4, 0x28 | 0x2);
-  f4->y0 = 8;
-  f4->y1 = 8;
-  f4->x0 = 0;
-  f4->x1 = 512;
-  f4->x2 = 0;
-  f4->y2 = 232;
-  f4->x3 = 512;
-  f4->y3 = 232;
+  setXYWH(f4, 0, 8, 512, 240 - 16);
   setRGB0(f4, pR, pG, pB);
+
   func_800168DC(f4);
+
   D_800757B0 = f4 + 1;
 }
 
@@ -513,6 +509,7 @@ void func_8001919C(RECT *pDest, Tiledef *pUV, ColorInt *pColor) {
     setRGB0(ft4, pColor->r, pColor->g, pColor->b);
 
   setXYWH(ft4, pDest->x, pDest->y, pDest->w, pDest->h);
+
   // ft4 is being read as ints
   *(int *)&ft4->u0 = pUV->uv0.all;
   *(int *)&ft4->u1 = pUV->uv1.all;
@@ -535,12 +532,15 @@ void func_80019300(void) {
 
   if (g_IsFlightLevel == 0) {
     shaded_mobys = g_SonyImage.m_ShadedMobys;
+
     while (*shaded_mobys != nullptr)
       shaded_mobys++;
+
     if (g_Hud.m_GemDisplayState != 0) {
       for (i = g_Hud.m_GemDisplayState == 4 ? 4 : 0; i < 5; i++) {
         *shaded_mobys++ = &g_Hud.m_Mobys[i];
       }
+
       if (g_Hud.m_GemDisplayState == 4) {
         char text[16];
         Vector3D vec;
@@ -559,21 +559,26 @@ void func_80019300(void) {
         }
       }
     }
+
     if (g_Hud.m_DragonDisplayState != 0) {
       for (i = 0; i < 3; i++) {
         *shaded_mobys++ = &g_Hud.m_Mobys[5 + i];
       }
     }
+
     if (g_Hud.m_LifeDisplayState != 0) {
       for (i = 0; i < 3; i++) {
         *shaded_mobys++ = &g_Hud.m_Mobys[8 + i];
       }
     }
+
     if (g_Hud.m_KeyDisplayState != 0 && g_Hud.m_KeyFlag == 1) {
       *shaded_mobys++ = &g_Hud.m_Mobys[11];
     }
+
     *shaded_mobys = nullptr;
   }
+
   if (g_Hud.m_LifeDisplayState != 0) {
     ColorInt col;
     for (i = 0; i < g_Hud.m_LifeOrbCount; i++) {
@@ -586,6 +591,7 @@ void func_80019300(void) {
       func_8001919C(&g_Hud.m_SpriteRect[12 + i], &g_Hud.m_OrbSprite, &col);
     }
   }
+
   if (g_Hud.m_EggDisplayState != 0) {
     for (i = 0; i < g_Hud.m_EggCount; i++) {
       func_8001919C(&g_Hud.m_SpriteRect[i],

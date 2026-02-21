@@ -34,8 +34,7 @@ extern struct {
 
 extern void CrashDemoLaunch(void);
 
-// Unlikely to be right with the extra nulls on the end, but makes it work
-#define SAVE_FILE_NAME "BASCUS-94228SPYRO\0\0\0\0\0\0"
+static const char s_SaveFileName[20] = "BASCUS-94228SPYRO";
 
 #define SWAP_MENU_SELECTION                                                    \
   g_TitlescreenState.m_SubTick = 16;                                           \
@@ -307,7 +306,8 @@ void TitlescreenUpdate(void) {
 
       if (g_TitlescreenState.m_State == 0) {
         // Read save file from the selected card
-        MemCardReadFile(g_TitlescreenState.m_CardSelected << 4, SAVE_FILE_NAME,
+        MemCardReadFile(g_TitlescreenState.m_CardSelected << 4,
+                        (char *)s_SaveFileName,
                         (u_long *)g_TitlescreenState.m_MemCardSave, 0,
                         sizeof(MemCardSaveFile));
         g_TitlescreenState.m_State = 1;
@@ -649,8 +649,9 @@ void TitlescreenUpdate(void) {
         g_TitlescreenState.m_State = 1; // ok ...
       } else if (g_TitlescreenState.m_State == 1) {
         if (g_TitlescreenState.m_MemCardTries == 0) {
-          g_TitlescreenState.m_CardResultData = MemCardCreateFile(
-              g_TitlescreenState.m_CardSelected << 4, SAVE_FILE_NAME, 1);
+          g_TitlescreenState.m_CardResultData =
+              MemCardCreateFile(g_TitlescreenState.m_CardSelected << 4,
+                                (char *)s_SaveFileName, 1);
         }
         if (g_TitlescreenState.m_CardResultData == McErrNone) {
           char *mcs = (char *)g_TitlescreenState.m_MemCardSave;
@@ -670,7 +671,7 @@ void TitlescreenUpdate(void) {
             SaveCreate((SaveFile *)(mcs + i * sizeof(SaveFile)));
           }
           MemCardWriteFile(g_TitlescreenState.m_CardSelected << 4,
-                           SAVE_FILE_NAME,
+                           (char *)s_SaveFileName,
                            (u_long *)g_TitlescreenState.m_MemCardSave, 0,
                            sizeof(MemCardSaveFile));
 
@@ -696,7 +697,7 @@ void TitlescreenUpdate(void) {
         } else {
           // Save succeeded, let's re-read it off the card
           MemCardReadFile(g_TitlescreenState.m_CardSelected << 4,
-                          SAVE_FILE_NAME,
+                          (char *)s_SaveFileName,
                           (u_long *)g_TitlescreenState.m_MemCardSave, 0,
                           sizeof(MemCardSaveFile));
           g_TitlescreenState.m_State = 3;
@@ -1078,19 +1079,15 @@ void TitlescreenDrawSprite(int pX, int pY, int pSprite, int pColorId) {
   p = D_800757B0;
   p->tag = 0x09000000;
   ((u_long *)p)[1] = g_TitlescreenSelColors[pColorId];
+
   setXY4(p, pX, pY, g_TitlescreenSprites[pSprite].m_w + pX, pY, pX,
          g_TitlescreenSprites[pSprite].m_h + pY,
          g_TitlescreenSprites[pSprite].m_w + pX,
          g_TitlescreenSprites[pSprite].m_h + pY);
 
-  p->u0 = g_TitlescreenSprites[pSprite].m_u;
-  p->v0 = g_TitlescreenSprites[pSprite].m_v;
-  p->u1 = p->u0 + g_TitlescreenSprites[pSprite].m_w;
-  p->v1 = p->v0;
-  p->u2 = p->u0;
-  p->v2 = p->v0 + g_TitlescreenSprites[pSprite].m_h;
-  p->u3 = p->u1;
-  p->v3 = p->v2;
+  setUVWH2(p, g_TitlescreenSprites[pSprite].m_u,
+           g_TitlescreenSprites[pSprite].m_v, g_TitlescreenSprites[pSprite].m_w,
+           g_TitlescreenSprites[pSprite].m_h);
 
   p->tpage = g_TitlescreenSprites[pSprite].m_tpage;
   p->clut = g_TitlescreenSprites[pSprite].m_clut;
@@ -1409,23 +1406,30 @@ void TitlescreenDraw(void) {
   }
   }
 
-  g_DB[0].m_DrawEnv.r0 = g_Cyclorama.m_BackgroundColor.r;
-  g_DB[0].m_DrawEnv.g0 = g_Cyclorama.m_BackgroundColor.g;
-  g_DB[0].m_DrawEnv.b0 = g_Cyclorama.m_BackgroundColor.b;
-  g_DB[1].m_DrawEnv.r0 = g_Cyclorama.m_BackgroundColor.r;
-  g_DB[1].m_DrawEnv.g0 = g_Cyclorama.m_BackgroundColor.g;
-  g_DB[1].m_DrawEnv.b0 = g_Cyclorama.m_BackgroundColor.b;
+  setRGB0(&g_DB[0].m_DrawEnv, g_Cyclorama.m_BackgroundColor.r,
+          g_Cyclorama.m_BackgroundColor.g, g_Cyclorama.m_BackgroundColor.b);
+  setRGB0(&g_DB[1].m_DrawEnv, g_Cyclorama.m_BackgroundColor.r,
+          g_Cyclorama.m_BackgroundColor.g, g_Cyclorama.m_BackgroundColor.b);
+
+  // Draw the Mobys
   func_800521C0();
   func_8001F158();
   Memset(g_SonyImage.u.m_Draw.m_Moby, 0, sizeof(g_SonyImage.u.m_Draw.m_Moby));
   func_8001F798();
+
+  // Draw the Environment
   Memset(g_SonyImage.u.m_Buf, 0, sizeof(g_SonyImage.u.m_Buf));
   g_Environment.m_CullingDistance = 0x1c000;
   func_800258F0(-1);
+
+  // Draw the Cyclorama
   func_8004EBA8(-1, &g_Camera.m_ViewMatrix, &g_Camera.m_ProjectionMatrix);
+
+  // Overlay the fade
   if (g_Fade) {
     func_800190D4(2, g_Fade << 4, g_Fade << 4, g_Fade << 4);
   }
+
   DrawSync(0);
 
   VSync(0);
@@ -1444,4 +1448,5 @@ void TitlescreenDraw(void) {
   DrawOTag(func_80016784(0x800));
 }
 
+// Only exists to find the end of the overlay
 void func_titlescreen_8007DDE8(void) {}

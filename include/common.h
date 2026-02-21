@@ -20,9 +20,16 @@
 
 #define nullptr ((void *)0)
 
-#define OFFSET(type, field) ((u_int)&(((type *)0)->field))
-
 /* clang-format on */
+
+#define OFFSET(type, field) ((u_int) & (((type *)0)->field))
+
+// Different from setUVWH, that one calculates the UVs based on the input
+// this one reuses them (i.e. u3=u1, v3=v2)
+#define setUVWH2(p, _u0, _v0, _w, _h)                                          \
+  (p)->u0 = (_u0), (p)->v0 = (_v0), (p)->u1 = (p)->u0 + (_w),                  \
+  (p)->v1 = (p)->v0, (p)->u2 = (p)->u0, (p)->v2 = (p)->v0 + (_h),              \
+  (p)->u3 = (p)->u1, (p)->v3 = (p)->v2
 
 #define PATCH_POINTER(dest, base)                                              \
   dest = (void *)((u_int)(base) + (u_int)(dest));
