@@ -5,6 +5,7 @@
 #include <libmcrd.h>
 #include <libpad.h>
 
+#include "4BEF8.h"
 #include "buffers.h"
 #include "camera.h"
 #include "cd.h"
@@ -13,6 +14,7 @@
 #include "cutscene.h"
 #include "environment.h"
 #include "gamepad.h"
+#include "gamestates/init.h"
 #include "graphics.h"
 #include "images.h"
 #include "loaders.h"
@@ -193,18 +195,18 @@ void func_80012604(void) {
   }
 
   g_Spyro.m_health = 3; // Set Spyro's health to 3
-  g_SpyroLifeCount = 4;       // Set Spyro's extra life count to 4
+  g_SpyroLifeCount = 4; // Set Spyro's extra life count to 4
 
   g_GemTotal = 0;
   g_DragonTotal = 0;
   g_EggTotal = 0;
 
   // Reset in-level variables
-  D_8007587C = 0;  // Gems collected before entering the level
-  g_NGemsSinceLevelEntry = 0;  // Gems collected in this level
-  D_80075830 = 0;  // Key flag
-  g_LifeOrbCount = 0;  // Life orb count
-  D_8007580C = -1; // Health before entering flight level
+  D_8007587C = 0;             // Gems collected before entering the level
+  g_NGemsSinceLevelEntry = 0; // Gems collected in this level
+  D_80075830 = 0;             // Key flag
+  g_LifeOrbCount = 0;         // Life orb count
+  D_8007580C = -1;            // Health before entering flight level
 
   D_80075838 = 0; // Unused var 1
   D_8007583C = 0; // Unused var 2
@@ -225,10 +227,6 @@ void func_8001277C(void) {
 }
 
 void func_titlescreen_8007DDE8(void); // Titlescreen terminator
-
-void func_8005B7D8(void); // Load shared models from WAD.WAD (todo)
-
-void func_8002D170(void); // Gamestate init titlescreen
 
 // Init function
 void Initialize(void) {

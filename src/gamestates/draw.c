@@ -227,7 +227,7 @@ void func_80018728(void) {
   mobys--;
   for (i = 0; (int)g_HudMobys <= (int)mobys; i++) {
     mobys->m_Rotation.z =
-        D_8006CC78[(g_DragonCutscene.unk_0x50 * 2 + i * 12) & 0xFF] >> 7;
+        COSINE_8((g_DragonCutscene.unk_0x50 * 2 + i * 12) & 0xFF) >> 7;
     mobys--;
   }
 }
@@ -272,7 +272,7 @@ void func_80018908(void) {
   func_800181AC("DEMO MODE", &position, &spacing, 18, 2);
   mobys--;
   for (i = 0; (int)g_HudMobys <= (int)mobys; i++) {
-    mobys->m_Rotation.z = D_8006CC78[(D_800758C8 * 4 + i * 12) & 0xFF] >> 7;
+    mobys->m_Rotation.z = COSINE_8((D_800758C8 * 4 + i * 12) & 0xFF) >> 7;
     mobys--;
   }
 

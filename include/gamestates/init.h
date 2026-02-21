@@ -35,5 +35,7 @@ void InitFairyCutscene(Moby *pMoby);
 /// @brief Exits fairy cutscene and returns to gameplay
 void func_8002D02C(void);
 
-#endif // !__GAMESTATE_INIT_H
+/// @brief Start the titlescreen gamestate
+void func_8002D170(void);
 
+#endif // !__GAMESTATE_INIT_H
