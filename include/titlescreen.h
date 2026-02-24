@@ -213,6 +213,9 @@ extern int g_DemoIndex;
 /// @brief Demo fade-out timer (0-16, triggers transition at 16)
 extern int g_DemoFadeTimer;
 
+/// @brief Demo lengths in ticks, used to determine when to fade out demo
+extern int g_DemoLengths[4];
+
 extern u_char g_MemCardSaveHeader[512];
 
 extern u_char g_TitlescreenAnimIn[16];

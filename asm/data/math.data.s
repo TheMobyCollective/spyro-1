@@ -2754,12 +2754,12 @@ dlabel g_DemoLevelIds
 /* 5F688 8006EE88 21000000 */ .word 0x00000021
 .size g_DemoLevelIds, . - g_DemoLevelIds
 
-dlabel D_8006EE8C
+dlabel g_DemoLengths
 /* 5F68C 8006EE8C 5C030000 */ .word 0x0000035C
 /* 5F690 8006EE90 4C040000 */ .word 0x0000044C
 /* 5F694 8006EE94 98030000 */ .word 0x00000398
 /* 5F698 8006EE98 DE030000 */ .word 0x000003DE
-.size D_8006EE8C, . - D_8006EE8C
+.size g_DemoLengths, . - g_DemoLengths
 
 dlabel D_8006EE9C
 /* 5F69C 8006EE9C BE9E0200 */ .word 0x00029EBE

@@ -2730,7 +2730,7 @@ void GamestateDraw(void) {
     }
 
     // Is demo mode?
-    if (g_DemoMode) {
+    if (g_DemoMode != DEMO_MODE_NONE) {
       func_80018908(); // Draw demo mode text
     }
 

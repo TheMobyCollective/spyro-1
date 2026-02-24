@@ -1,7 +1,9 @@
 #include "buffers.h"
 #include "camera.h"
+#include "cd.h"
 #include "common.h"
 #include "cutscene.h"
+#include "dragon.h"
 #include "gamepad.h"
 #include "gamestates/draw.h"
 #include "gamestates/init.h"
@@ -14,6 +16,7 @@
 #include "spyro.h"
 #include "titlescreen.h"
 #include "variables.h"
+#include "wad.h"
 
 #include <libmcrd.h>
 
@@ -420,7 +423,7 @@ void GamestateCutsceneTransition(void) {
       if (g_TitlescreenState.m_Tick >= 384 && g_LoadStage == 13) {
         // Flyby complete and level fully loaded - start demo playback
         if (g_TitlescreenState.m_DemoType == TSD_DemoLevel) {
-          g_DemoMode = 1;
+          g_DemoMode = DEMO_MODE_PLAY;
           g_DemoFadeTimer = 0;
         }
         func_8004AC24(1); // Reset Spyro for actual gameplay
@@ -552,9 +555,122 @@ void func_800333DC(void) {
   }
 }
 
+// Titlescreen terminator
+extern void func_titlescreen_8007DDE8(void);
+
 /// @brief Update demo mode
-int func_800334D4(void);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800334D4);
+int func_800334D4(void) {
+  RECT r;
+  char _pad[8]; // Hmmmm..?
+
+  PadDemoUpdate();
+
+  // In record mode, no timer
+  if (g_DemoMode == DEMO_MODE_RECORD) {
+    return 0;
+  }
+
+  // If not already ending..
+  if (g_DemoFadeTimer == 0) {
+    // Check if demo should end:
+
+    // End demo if time limit reached
+    if (g_GameTick >= g_DemoLengths[g_DemoIndex] - 8) {
+      g_DemoFadeTimer = 1;
+    }
+    // End demo if player presses any button
+    else if (g_GameTick >= 16 && g_PadBuffer.status == 0) {
+      // Uh.. huh?
+      if (g_PadBuffer.inputs[0] != 0xFF || g_PadBuffer.inputs[1] != 0xFF) {
+        g_DemoFadeTimer = 1;
+      }
+    }
+
+  } else {
+    // Update fade out
+    g_DemoFadeTimer++;
+    g_Fade = g_DemoFadeTimer * 2;
+  }
+
+  // Clear everything and load the titlescreen back in
+  if (g_DemoFadeTimer == 16) {
+
+    func_80056B28(0);
+    SpuUpdate();
+
+    r.x = 0;
+    r.y = 0;
+    r.w = 0x200;
+    r.h = 0x1E0;
+    ClearImage(&r, 0, 0, 0);
+    DrawSync(0);
+
+    g_Buffers.m_CopyBuf = &func_titlescreen_8007DDE8;
+    g_Buffers.m_DiscCopyBuf = &func_titlescreen_8007DDE8;
+
+    D_80075904 = 0;
+    D_80075764 = 0;
+    D_800757D0 = 0;
+    D_8007584C = 0;
+    g_DemoMode = DEMO_MODE_NONE;
+    g_LoadStage = 0;
+    g_CutsceneIdx = 0;
+    g_IsFlightLevel = 0;
+    D_80075784 = 0;
+
+    // Load the Titlescreen overlay back in, synchronously..
+    CDLoadSync(g_CdState.m_WadSector, g_OverlaySpacePointer,
+               g_WadHeader.m_TitleScreenOverlay.m_Length,
+               g_WadHeader.m_TitleScreenOverlay.m_Offset, 0x258);
+
+    // Load the cutscene, synchronously..
+    while (g_LoadStage < 10) {
+      LoadCutscene();
+      CDMusicUpdate();
+    }
+
+    // Pointless, func_8002D170 immediately sets it to GS_TitleScreen
+    g_Gamestate = GS_Cutscene;
+    g_Fade = 15;
+
+    func_8002D170();
+
+    // Only play the sound effect if the demo finished playing
+    if (g_GameTick >= g_DemoLengths[g_DemoIndex]) {
+      g_CutsceneLayout->m_CurrentTick = 720;
+      g_Spu.m_SoundDefinitions = &g_CutsceneSoundDef;
+      g_Spu.m_SoundDefinitions->m_Addr =
+          0x262D0; // Hardcoded addresses... yippee
+      g_Spu.m_SoundDefinitions->m_LoopAddr = -1;
+      g_Spu.m_SoundDefinitions->unk_0x8 = 80;
+      g_Spu.m_SoundDefinitions->m_Pitch = g_CutscenePitchTable[0];
+      g_Spu.m_SoundDefinitions->m_PitchVariance = 0;
+      g_Spu.m_SoundDefinitions->m_PitchMultiplier = 0;
+      g_Spu.m_SoundDefinitions->m_VarianceType = 0;
+      g_Spu.m_NextSoundOverrideFlags = 1;
+      g_Spu.m_VolumeOverride.left = 0x3FFF;
+      g_Spu.m_VolumeOverride.right = 0x3FFF;
+      PlaySound(0, nullptr, 16, (u_char *)&g_DragonCutscene.m_SoundVoice);
+    } else {
+      g_CutsceneLayout->m_CurrentTick = 1168;
+    }
+
+    g_TitlescreenState.m_SubState = 1;
+
+    CDLoadAsync(g_CdState.m_WadSector,
+                (char *)g_Buffers.m_LowerPolyBuffer - 0x40000, 0x40000,
+                g_WadHeader.m_wad1.m_Offset, 600);
+
+    g_StateSwitch = 1;
+
+    // Move to the next demo
+    g_DemoIndex = (g_DemoIndex + 1) & 3;
+
+    return 1;
+  }
+
+  return 0;
+}
 
 /**
  * @brief Main game loop update dispatcher, handles all gamestate logic.

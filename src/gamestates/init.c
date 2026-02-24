@@ -9,9 +9,9 @@
 #include "cyclorama.h"
 #include "dragon.h"
 #include "fairy.h"
+#include "game_over.h"
 #include "gamestates/draw.h"
 #include "graphics.h"
-#include "game_over.h"
 #include "hud.h"
 #include "initialization.h"
 #include "loaders.h"
@@ -482,7 +482,8 @@ void func_8002D170(void) {
 
   D_80075754 = 10; // sound volume
 
-  g_TitlescreenState.m_MemCardSave = (MemCardSaveFile *)(g_Buffers.m_LowerPolyBuffer - 0x2000);
+  g_TitlescreenState.m_MemCardSave =
+      (MemCardSaveFile *)(g_Buffers.m_LowerPolyBuffer - 0x2000);
 
   g_Spu.unk_0x320 = 0x3FFF;
   D_80075748 = 10; // music volume
@@ -625,7 +626,7 @@ void StartCutscenePlayback(void) {
   g_Spu.m_VolumeOverride.right = 0x3FFF;
 
   // Start cutscene audio playback
-  PlaySound(0, 0, 0x10, (u_char *)&g_DragonCutscene.m_SoundVoice);
+  PlaySound(0, 0, 16, (u_char *)&g_DragonCutscene.m_SoundVoice);
 }
 
 /**

@@ -234,7 +234,7 @@ void PadVSync(void) {
   }
 
   // Check if we're in DEMO mode, if we are, just return
-  if (g_DemoMode)
+  if (g_DemoMode != DEMO_MODE_NONE)
     return;
 
   padState = PadGetState(0);
@@ -499,4 +499,3 @@ void PadVSync(void) {
   // Increment the missed frame counter
   g_UnprocessedFrames += 1;
 }
-

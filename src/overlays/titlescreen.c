@@ -87,7 +87,7 @@ void TitlescreenPlaySound(int pSoundId) {
   g_Spu.m_NextSoundOverrideFlags = 1;
   g_Spu.m_VolumeOverride.left = 0x3FFF;
   g_Spu.m_VolumeOverride.right = 0x3FFF;
-  PlaySound(0, nullptr, 0x10, (u_char *)&g_DragonCutscene.m_SoundVoice);
+  PlaySound(0, nullptr, 16, (u_char *)&g_DragonCutscene.m_SoundVoice);
 }
 
 void TitlescreenUpdate(void) {

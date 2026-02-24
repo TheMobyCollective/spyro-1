@@ -248,7 +248,7 @@ dlabel g_FairyCutscene
 dlabel g_TitlescreenState
 /* Total size from 80078D78 to 80078DD4 */ .space 0x5C
 
-dlabel D_80078DD4
+dlabel D_80078DD4 /* Probably padding */
 /* 68D1C 80078DD4 */ .space 0x04
     
 dlabel D_80078DD8
