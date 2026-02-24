@@ -29,7 +29,8 @@ extern u_char g_TargetEggCounts[LEVEL_PER_HOMEWORLD * 3]; // Target egg counts
 extern int g_FlightCourseRecords[HOMEWORLD_COUNT];   // Course records
 extern u_char g_FlightCollected[HOMEWORLD_COUNT][5]; // Flight collected
 
-extern u_char D_80077908[1200]; // Gem collection mask
+// extern u_char D_80077908[1200];
+extern u_int D_80077908[36][8]; // Gem collection mask
 
 extern u_char g_RecentGemsCollected[32];
 

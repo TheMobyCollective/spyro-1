@@ -172,7 +172,7 @@ int func_8003838C(Moby *pMoby) {
   func_8004D5EC(&pMoby->m_Position, 4096);
   pMoby->m_Position.z -= 1500;
   return (signed char)Atan2Fast(g_CollisionNormal.z,
-                         VecMagnitude(&g_CollisionNormal, 0)) < 24;
+                                VecMagnitude(&g_CollisionNormal, 0)) < 24;
 }
 
 int func_80038400(Moby *pMoby, int pDistFromFloor) {
@@ -1135,7 +1135,42 @@ void func_8003B7C0(Moby *pMoby) {
 }
 
 /// @brief Collects a collectable moby
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003B854);
+void func_8003B854(int pGemValue, Moby *pMoby) {
+  int mobyIndex, arrayIndex;
+
+  if (pGemValue != 0) {
+    if (pMoby->m_Position.z >= 0x300) {
+      GenerateGemCollectMobys(pGemValue, pMoby);
+    }
+
+    g_GemTotal += pGemValue;
+    g_LevelGemCount[g_LevelIndex] += pGemValue;
+  }
+
+  // Check if the moby is a dynamic moby
+  // If it's not, use the Moby's index into the Moby array
+  // If it IS, we have to use m_MobyIndex, which is the parent
+  // Moby's index, instead.
+  if (pMoby >= g_LevelMobys && pMoby < D_80075890) {
+    int t;
+    // Not entirely sure what this shuffle of variables is good for
+    mobyIndex = pMoby - g_LevelMobys;
+    t = mobyIndex;
+    arrayIndex = mobyIndex >> 5;
+    mobyIndex &= 31;
+    g_Checkpoint.m_KilledMobys[arrayIndex] |= 1 << mobyIndex;
+    mobyIndex = t;
+  } else {
+    mobyIndex = pMoby->m_MobyIndex;
+  }
+
+  // 2D array, 32 ints per level
+  arrayIndex = mobyIndex >> 5;
+  mobyIndex &= 31;
+  D_80077908[g_LevelIndex][arrayIndex] |= 1 << mobyIndex;
+
+  PlaySound(g_Spu.m_SoundTable->gemPickup, pMoby, 16, nullptr);
+}
 
 /// @brief Collect a gem moby, adds it to the collected gem array
 void CollectItem(Moby *pMoby) {
