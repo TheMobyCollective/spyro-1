@@ -12,10 +12,9 @@ typedef struct {
 } CutsceneCameraData;
 
 typedef struct {
-  u_char m_0x00;
-  u_char m_0x01;
-  u_char m_0x02;
-  u_char m_0x03;
+  // Packed position data for a moby at a specific frame
+  // 10:10:10 format (top 2 bits unused), where every value was divided by 256
+  int m_PackedPos[1];
 } CutsceneMobyData;
 
 typedef struct {
