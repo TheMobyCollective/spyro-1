@@ -117,7 +117,185 @@ void func_800562A4(Moby *pMoby, u_int pType) {
 }
 
 // Update sounds
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/spu", func_8005637C);
+int func_8005637C(void) {
+  SpuVoiceAttr voiceAttr;
+  Vector3D vecDiff;
+  unsigned char cameraAngle;
+  int distance;
+  int maxDistance;
+  int voicesToStop;
+  char angle;
+  int i;
+
+  voicesToStop = 0;
+
+  // Get camera rotation (scaled down by 16)
+  cameraAngle = g_Camera.m_Rotation.z >> 4;
+
+  for (i = 0; i < 24; i++) {
+    u_char keyStatus;
+
+    // Check if sound is marked for removal
+    if (g_Spu.m_ActiveSounds[i].m_Flags & 0x40) {
+      g_Spu.m_ActiveSounds[i].m_Flags = 0;
+      continue;
+    }
+
+    if (!(g_Spu.m_ActiveSounds[i].m_Flags & 0x1)) {
+      continue;
+    }
+
+    // Get SPU voice key status
+    keyStatus = SpuGetKeyStatus(1 << i);
+
+    // Handle sound state transitions
+    if ((g_Spu.m_ActiveSounds[i].m_Flags & 0x2)) {
+      // Sound was already playing
+      if (keyStatus == SPU_RESET) {
+
+        voicesToStop |= 1 << i;
+
+        // Sound finished playing
+        if (g_Spu.m_ActiveSounds[i].m_SoundRefPtr != nullptr) {
+          *g_Spu.m_ActiveSounds[i].m_SoundRefPtr = 0x7F;
+        }
+
+        // Mark sound slot as free
+        g_Spu.m_ActiveSounds[i].m_Flags = 0x40;
+        g_Spu.m_ActiveSounds[i].m_SoundRefPtr = nullptr;
+        g_Spu.m_ActiveSounds[i].m_Moby = nullptr;
+        g_Spu.m_ActiveSounds[i].m_SoundId = 0xFF;
+        continue;
+      }
+
+    } else {
+      // Sound is starting or transitioning
+      if (keyStatus == SPU_ON || keyStatus == SPU_RESET) {
+        // Mark as playing
+        g_Spu.m_ActiveSounds[i].m_Flags |= 0x2;
+      }
+    }
+
+    // Check if.. uhm.. yeah
+    if (!(g_Spu.m_ActiveSounds[i].m_Flags & 0x1)) {
+      continue;
+    }
+
+    // Sound processing flags, I guess?
+    switch (g_Spu.m_ActiveSounds[i].m_Flags & 0x1C) {
+    case 0x4:
+      // Static volume mode
+      voiceAttr.volume.right = 0x2000;
+      voiceAttr.volume.left = 0x2000;
+      break;
+
+    case 0x8: {
+      // 3D positional audio
+
+      // Get current voice volume
+      SpuGetVoiceVolume(i, &g_Spu.m_ActiveSounds[i].m_StereoVolume.left,
+                        &g_Spu.m_ActiveSounds[i].m_StereoVolume.right);
+
+      // Calculate max audible distance from sound definition
+      maxDistance = g_Spu.m_ActiveSounds[i].m_Moby->m_SoundDistance << 10;
+
+      if (maxDistance == 0) {
+        maxDistance = 0x4000;
+      }
+
+      // Calculate distance from camera to sound source
+      VecSub(&vecDiff, &g_Spu.m_ActiveSounds[i].m_Moby->m_Position,
+             &g_Camera.m_Position);
+      distance = VecMagnitude(&vecDiff, 1);
+
+      if (distance >= maxDistance) {
+        // Sound is too far, fade it out
+        voiceAttr.volume.right = g_Spu.m_ActiveSounds[i].m_StereoVolume.right =
+            g_Spu.m_ActiveSounds[i].m_StereoVolume.right >> 1;
+        voiceAttr.volume.left = g_Spu.m_ActiveSounds[i].m_StereoVolume.left =
+            g_Spu.m_ActiveSounds[i].m_StereoVolume.left >> 1;
+
+        // Stop sound if volume is too low
+        if (voiceAttr.volume.right < 0x40 && voiceAttr.volume.left < 0x40) {
+          voicesToStop |= 1 << i;
+
+          // Sound finished playing
+          if (g_Spu.m_ActiveSounds[i].m_SoundRefPtr != nullptr) {
+            *g_Spu.m_ActiveSounds[i].m_SoundRefPtr = 0x7F;
+          }
+
+          // Mark sound slot as free
+          g_Spu.m_ActiveSounds[i].m_Flags = 0x40;
+          g_Spu.m_ActiveSounds[i].m_SoundRefPtr = nullptr;
+          g_Spu.m_ActiveSounds[i].m_Moby = nullptr;
+          g_Spu.m_ActiveSounds[i].m_SoundId = 0xFF;
+          continue;
+        }
+
+        // Apply volume fade
+        g_Spu.m_ActiveSounds[i].m_StereoVolume.left =
+            (g_Spu.m_ActiveSounds[i].m_StereoVolume.left *
+             g_Spu.m_SoundVolume) >>
+            12;
+        g_Spu.m_ActiveSounds[i].m_StereoVolume.right =
+            (g_Spu.m_ActiveSounds[i].m_StereoVolume.right *
+             g_Spu.m_SoundVolume) >>
+            12;
+
+        SpuSetVoiceVolume(i, g_Spu.m_ActiveSounds[i].m_StereoVolume.left,
+                          g_Spu.m_ActiveSounds[i].m_StereoVolume.right);
+        continue;
+      } else {
+        // Sound is in range, calculate stereo positioning
+        angle = Atan2(g_Spu.m_ActiveSounds[i].m_Moby->m_Position.x -
+                          g_Camera.m_Position.x,
+                      g_Spu.m_ActiveSounds[i].m_Moby->m_Position.y -
+                          g_Camera.m_Position.y,
+                      0) -
+                cameraAngle;
+
+        func_80056C84(&voiceAttr.volume, distance, angle, maxDistance,
+                      &g_Spu.m_ActiveSounds[i].m_Volume);
+      }
+      break;
+    }
+
+    case 0x10:
+      // Use pre-calculated stereo volume
+      voiceAttr.volume.right = g_Spu.m_ActiveSounds[i].m_StereoVolume.right;
+      voiceAttr.volume.left = g_Spu.m_ActiveSounds[i].m_StereoVolume.left;
+      break;
+
+    default:
+      break;
+    }
+
+    // Apply master sound volume
+    voiceAttr.volume.left =
+        FIXED_MUL(voiceAttr.volume.left, g_Spu.m_SoundVolume);
+    voiceAttr.volume.right =
+        FIXED_MUL(voiceAttr.volume.right, g_Spu.m_SoundVolume);
+
+    // Set up voice attributes
+    voiceAttr.voice = 1 << i;
+    voiceAttr.mask = SPU_VOICE_VOLL | SPU_VOICE_VOLR;
+
+    // Apply pitch changes
+    g_Spu.m_ActiveSounds[i].m_Pitch = g_Spu.m_ActiveSounds[i].m_Pitch +
+                                      g_Spu.m_ActiveSounds[i].m_PitchIncrease;
+    g_Spu.m_ActiveSounds[i].m_PitchIncrease = 0;
+
+    // lol
+    voiceAttr.mask |= SPU_VOICE_PITCH;
+    voiceAttr.pitch = g_Spu.m_ActiveSounds[i].m_Pitch;
+
+    // Update SPU voice
+    SpuSetVoiceAttr(&voiceAttr);
+  }
+
+  g_Spu.m_StopVoice |= voicesToStop;
+  return 0;
+}
 
 // Set music state
 void func_800567F4(int pSong, int pFlags) {
@@ -401,4 +579,3 @@ void SpuUpdate(void) {
     g_Spu.m_StopVoice = 0;
   }
 }
-

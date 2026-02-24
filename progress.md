@@ -41,7 +41,7 @@
 - [x] GamestateCutsceneTransition
 - [x] GamestateCutsceneUpdate
 - [x] func_800333DC
-- [ ] func_800334D4
+- [x] func_800334D4
 - [x] GamestateUpdate
 - [x] func_8005B6F8
 - [x] func_8005B7D8
@@ -49,7 +49,7 @@
 - [ ] PlaySound
 - [x] StopSound
 - [x] func_800562A4
-- [ ] func_8005637C
+- [x] func_8005637C
 - [x] func_800567F4
 - [x] func_80056B28
 - [x] func_80056C84
@@ -196,7 +196,7 @@
 - [x] func_8003B688
 - [x] func_8003B728
 - [x] func_8003B7C0
-- [ ] func_8003B854
+- [x] func_8003B854
 - [x] CollectItem
 - [x] MoveMobyTowardTarget
 - [ ] func_8003BCCC
@@ -209,7 +209,7 @@
 - [x] RegisterFlightMobyCollectibleType
 - [x] func_80037E98
 - [x] CDMusicUpdate
-- [ ] func_8002BFE0
+- [x] func_8002BFE0
 - [x] func_8005A470
 - [x] func_8003CB24
 - [x] func_8003CBB8

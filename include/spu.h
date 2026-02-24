@@ -36,7 +36,7 @@ typedef struct {
   short unk_0x8;     // Named unusedVolume in my notes
   u_short m_Pitch;
   u_short m_PitchVariance;
-  short m_PitchMultiplier;
+  u_short m_PitchMultiplier;
 
   // 0: Positive and negative pitch variance
   // 1: Only positive pitch variance
@@ -91,7 +91,7 @@ void StopSound(u_int pVoice, u_int pType);
 void func_800562A4(Moby *pMoby, u_int pType);
 
 /// @brief Update sounds
-void func_8005637C(void);
+int func_8005637C(void);
 
 /// @brief Set music state
 void func_800567F4(int pSong, int pFlags);
