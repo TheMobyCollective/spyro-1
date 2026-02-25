@@ -46,10 +46,10 @@
 - [x] func_8005B6F8
 - [x] func_8005B7D8
 - [x] SpuInitialize
-- [ ] PlaySound
+- [x] PlaySound
 - [x] StopSound
 - [x] func_800562A4
-- [x] func_8005637C
+- [x] SoundsUpdate
 - [x] func_800567F4
 - [x] func_80056B28
 - [x] func_80056C84

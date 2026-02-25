@@ -683,7 +683,7 @@ void GamestateUpdate(void) {
   g_StateSwitch = 0;
 
   // Update active SPU voices (3D audio, volume fades, pitch ramping)
-  func_8005637C();
+  SoundsUpdate();
   CDMusicUpdate();
 
   // Dispatch to appropriate gamestate handler

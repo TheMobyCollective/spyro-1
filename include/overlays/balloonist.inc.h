@@ -247,7 +247,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
         g_Camera.m_Rotation.z = Atan2(vec.x, vec.y, 1);
       }
       (*g_UpdateParticle)(g_DeltaTime);
-      func_8005637C();
+      SoundsUpdate();
     } else {
       g_Camera.m_Position.x =
           D_800777E8.m_BalloonistMoby->m_Position.x +

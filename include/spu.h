@@ -82,7 +82,7 @@ extern struct {
 void SpuInitialize(void);
 
 /// @brief Plays a sound
-void PlaySound(u_int pSoundId, Moby *pMoby, u_int pFlags, u_char *pSoundRefOut);
+int PlaySound(u_int pSoundId, Moby *pMoby, u_int pFlags, u_char *pSoundRefOut);
 
 /// @brief Stops a sound
 void StopSound(u_int pVoice, u_int pType);
@@ -91,7 +91,7 @@ void StopSound(u_int pVoice, u_int pType);
 void func_800562A4(Moby *pMoby, u_int pType);
 
 /// @brief Update sounds
-int func_8005637C(void);
+int SoundsUpdate(void);
 
 /// @brief Set music state
 void func_800567F4(int pSong, int pFlags);

@@ -166,7 +166,7 @@ void TitlescreenUpdate(void) {
         while (g_CdState.m_IsReading != 0 || CdSync(1, 0) != CdlComplete ||
                (g_CdMusic.m_Flags & 0x40) == 0) {
           CDLoadTime();
-          func_8005637C(); // update sounds
+          SoundsUpdate(); // update sounds
           CDMusicUpdate();
         }
         CrashDemoLaunch();

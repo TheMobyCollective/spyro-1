@@ -60,7 +60,7 @@ void CDLoadSync(int sector, void *buf, int size, int offset, int maxTime) {
   while (g_CdState.m_IsReading || CdSync(1, nullptr) != CdlComplete ||
          (g_CdMusic.m_Flags & 0x40) == 0) {
     CDLoadTime();
-    func_8005637C();
+    SoundsUpdate();
     CDMusicUpdate();
   };
 
