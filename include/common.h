@@ -2,19 +2,9 @@
 #define __COMMON_H
 
 #include "include_asm.h"
+#include "level.h"
 
 #include <sys/types.h>
-
-// x0: Homeworld
-// x1: Level B
-// x2: Level C
-// x3: Level D
-// x4: Boss
-// x5: Flying
-
-#define HOMEWORLD_COUNT 6
-#define LEVEL_PER_HOMEWORLD 6
-#define TOTAL_LEVEL_COUNT (HOMEWORLD_COUNT * LEVEL_PER_HOMEWORLD) /* 36 */
 
 /* clang-format off */ 
 
@@ -93,13 +83,6 @@ extern int D_8007576C; // For loading, the VRAM part we're loading
 
 extern int g_Fade; // Fade
 
-extern int g_LevelId;     // Current level id
-extern int g_NextLevelId; // The level you're traveling to
-extern int g_Homeworld;   // Homeworld ID, used by Flight levels
-
-extern int g_LevelIndex;         // Current absolute level id
-extern int g_PreviousLevelIndex; // Last absolute level ID
-
 // Used to save which level you started the credits cheat on
 extern int D_80075818;
 
@@ -136,12 +119,5 @@ typedef struct {
     int all;
   } uv1;
 } Tiledef;
-
-extern unsigned char g_VisitedFlags[TOTAL_LEVEL_COUNT];
-
-extern unsigned char
-    g_LevelVortexExitFlags[TOTAL_LEVEL_COUNT]; // Level completion flags
-
-extern unsigned char D_800758D0[8]; // Unlocked homeworlds
 
 #endif

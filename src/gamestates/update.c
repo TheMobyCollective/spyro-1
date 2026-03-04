@@ -535,9 +535,9 @@ void func_800333DC(void) {
     } else {
       // Otherwise, check if we completed loot, if we did, return us to Artisans
       if (g_GemTotal == 14000) {
-        g_NextLevelId = 10; // Artisans
+        g_NextLevelId = LEVEL_ARTISANS_HOME; // Artisans
       } else {
-        g_NextLevelId = 60; // Gnorc Gnexus
+        g_NextLevelId = LEVEL_GNORC_GNEXUS; // Gnorc Gnexus
       }
     }
 

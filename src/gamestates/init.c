@@ -135,7 +135,7 @@ void func_8002C664(void) {
 
   // Set the level you're traveling to
   // to the homeworld of the current level
-  g_NextLevelId = (g_LevelId / 10) * 10;
+  g_NextLevelId = LEVEL_ASSOCIATED_HOMEWORLD_LEVELID(g_LevelId);
 
   g_LoadStage = 0;
   g_LevelTransTicks = 0;
@@ -674,7 +674,7 @@ void EndCutscenePlayback(void) {
     func_8001277C();
 
     // change to artisans home
-    g_LevelId = 10;
+    g_LevelId = LEVEL_ARTISANS_HOME;
     g_StateSwitch = 1;
   } else if (g_CutsceneIdx == 2) {
     // play credits 1

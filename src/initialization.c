@@ -219,7 +219,7 @@ void func_80012604(void) {
 
 void func_8001277C(void) {
   // Resets some stuff
-  g_LevelId = 10;   // Set the current level to Artisans
+  g_LevelId = LEVEL_ARTISANS_HOME; // Set the current level to Artisans
   g_ActEnabled = 1; // Enables the actuators
   D_80075914 = 82;  // Sets the camera to passive mode
 
