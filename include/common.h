@@ -31,10 +31,10 @@
   (p)->v1 = (p)->v0, (p)->u2 = (p)->u0, (p)->v2 = (p)->v0 + (_h),              \
   (p)->u3 = (p)->u1, (p)->v3 = (p)->v2
 
-#define PATCH_POINTER(dest, base)                                              \
-  dest = (void *)((u_int)(base) + (u_int)(dest));
+#define PATCH_POINTER(dest, base) dest = (void *)((u_int)(base) + (u_int)(dest))
+
 #define PATCH_POINTER2(dest, base)                                             \
-  dest = (void *)((u_int)(dest) + (u_int)(base));
+  dest = (void *)((u_int)(dest) + (u_int)(base))
 
 // This ABS macro makes GCC really shit the bed when it comes to optimizations!
 // Holy fuck!

@@ -11,6 +11,26 @@
 
 // r_particles:
 
+typedef struct {
+  union {
+    struct {
+      u_char u0, v0;
+      u_short clut;
+    } s;
+    int all;
+  } uv0;
+
+  union {
+    struct {
+      u_char u2, v2;
+      u_short tpage;
+    } s;
+    int all;
+  } uv2;
+} ParticleTexture;
+
+extern ParticleTexture *D_80076278[32];
+
 /// @brief Render particles
 void func_800573C8(void);
 

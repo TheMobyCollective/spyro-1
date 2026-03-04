@@ -22,10 +22,22 @@ extern Cyclorama g_NewCyclorama;
 extern int D_800757D4;
 
 typedef struct {
-  void *m_Skybox; // This one is difficult to type,
-                  // because it refers to the last (missing) point
-                  // in the cyclorama points array, which is being used
-                  // as strange storage
+  int copySectorCount;
+  void *copySectors;
+  int zero;
+  int zero2;
+  int copyBgColor;
+  int componentSize;
+  Color m_BackgroundColor;
+  uint m_SectorCount;
+  void *m_Sectors[1];
+} PortalDataSky;
+
+typedef struct {
+  PortalDataSky *m_Skybox; // This one is difficult to type,
+                           // because it refers to the last (missing) point
+                           // in the cyclorama points array, which is being used
+                           // as strange storage
 
   int m_PointCount;
   Vector3D unk_0x8;

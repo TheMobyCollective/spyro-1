@@ -136,7 +136,7 @@
 - [x] func_8001277C
 - [x] Initialize
 - [x] SetNewSoundTable
-- [ ] func_80012D58
+- [x] func_80012D58
 - [x] PatchInSpyroAnimations
 - [x] PatchMobyModelPointers
 - [ ] func_8001364C

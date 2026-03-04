@@ -7,11 +7,13 @@
 #include "cutscene.h"
 #include "cyclorama.h"
 #include "dragon.h"
+#include "environment.h"
 #include "graphics.h"
 #include "math.h"
 #include "memory.h"
 #include "moby_helpers.h"
 #include "music.h"
+#include "renderers.h"
 #include "save_file.h"
 #include "spu.h"
 #include "spyro.h"
@@ -43,14 +45,185 @@ void SetNewSoundTable(char *pData, int pPatchAddressesInTable) {
   }
 }
 
+#define READ_I32(x) *(int *)x, x += 4
+#define READ_COMPONENT_HEADER(x) componentStart = (char *)x
+#define COMPONENT_ADVANCE(x, y) x += y
+#define COMPONENT_START(x) READ_COMPONENT_HEADER(x), COMPONENT_ADVANCE(x, 4)
+#define COMPONENT_END(x) x = ((char *)componentStart + *(int *)componentStart)
+
+// TODO: Creates warnings, but I haven't been able to figure out a cleaner
+// solution that still matches
+#define PATCH_POINTER_RELATIVE_TO_COMPONENT(dest)                              \
+  PATCH_POINTER(*(int *)dest, componentStart + 4), dest += 4
+
 /// @brief Loads the level scene, as we used to call it
 /// @param pData The data to load
 /// @param pCutscene Whether it's scene data for a cutscene, which is missing
 /// collision and occlusion data
 /// @return The end of the scene data
-void *func_80012D58(void *pData, int pCutscene);
-/// @brief Loads the level scene, as we used to call it
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_80012D58);
+void *func_80012D58(char *pData, int pCutscene) {
+  char *componentStart;
+  int i;
+  int j;
+
+  COMPONENT_START(pData); // Texture data
+
+  g_Environment.m_TextureCount = READ_I32(pData);
+
+  g_Environment.m_LQTexturePointer = pData;
+
+  COMPONENT_ADVANCE(pData, 16 * g_Environment.m_TextureCount);
+
+  g_Environment.m_HQTexturePointer = pData;
+
+  COMPONENT_END(pData); //! Texture data
+
+  COMPONENT_START(pData); // Environment data
+
+  g_Environment.m_SectorCount = READ_I32(pData);
+  g_Environment.m_SectorPointer = (void **)pData;
+
+  // Fix up sector pointers from relative to absolute
+  for (i = 0; i < g_Environment.m_SectorCount; ++i) {
+    PATCH_POINTER_RELATIVE_TO_COMPONENT(pData);
+  }
+
+  COMPONENT_END(pData); //! Environment data
+
+  if (!pCutscene) {
+    READ_COMPONENT_HEADER(pData); // Occlusion data
+
+    // Check if there's more than 4 bytes of data
+    // In practice, when occlusion data is missing, the game uses 0
+    // HOWEVER, sometimes occlusion data IS missing, but it still
+    // generated this component, just with counts of 0. (Terrace Village)
+    if (*(int *)componentStart > 4) {
+      COMPONENT_ADVANCE(pData, 4); // Component size
+      COMPONENT_ADVANCE(pData, 4); // Size of the environment portion
+      g_Environment.m_OcclusionGroupCount = READ_I32(pData);
+      g_Environment.m_OcclusionGroups = (void *)pData;
+
+      // Fix up environment occlusion group pointers
+      for (i = 0; i < g_Environment.m_OcclusionGroupCount; ++i) {
+        PATCH_POINTER_RELATIVE_TO_COMPONENT(pData);
+      }
+
+      // Jump past the environment block to reach the cyclorama occlusion data
+      pData = *(int *)(componentStart + 4) + 4 + componentStart;
+      g_NewCyclorama.m_OcclusionGroupsCount = READ_I32(pData);
+      g_NewCyclorama.m_OcclusionGroups = pData;
+
+      // Fix up cyclorama occlusion group pointers
+      for (i = 0; i < g_NewCyclorama.m_OcclusionGroupsCount; i++) {
+        PATCH_POINTER(*(int *)pData,
+                      componentStart + *(int *)(componentStart + 4) + 4);
+        pData += 4;
+      }
+
+    } else {
+      g_Environment.m_OcclusionGroupCount = 0;
+      g_Environment.m_OcclusionGroups = nullptr;
+      g_NewCyclorama.m_OcclusionGroups = nullptr;
+    }
+
+    COMPONENT_END(pData); //! Occlusion data
+  }
+
+  if (!pCutscene) {
+    COMPONENT_START(pData); // Special surface data
+    g_Environment.m_SurfaceCount = READ_I32(pData);
+    g_Environment.m_SurfaceData = (SpecialSurface **)pData;
+
+    // Fix up special surface pointers
+    for (i = 0; i < g_Environment.m_SurfaceCount; ++i) {
+      PATCH_POINTER_RELATIVE_TO_COMPONENT(pData);
+    }
+    COMPONENT_END(pData); //! Special surface data
+  }
+
+  if (!pCutscene) {
+    COMPONENT_START(pData); // Collision data
+    g_Environment.m_TerrainCollision = (TerrainCollision *)pData;
+
+    // Fix up all internal TerrainCollision pointers
+    PATCH_POINTER(g_Environment.m_TerrainCollision->m_BlockTree, pData);
+    PATCH_POINTER(g_Environment.m_TerrainCollision->m_Blocks, pData);
+    PATCH_POINTER(g_Environment.m_TerrainCollision->m_Triangles, pData);
+    PATCH_POINTER(
+        g_Environment.m_TerrainCollision->m_TriangleOcclusionAssignment, pData);
+    PATCH_POINTER(g_Environment.m_TerrainCollision->m_Flags, pData);
+
+    COMPONENT_END(pData); //! Collision data
+  }
+
+  COMPONENT_START(pData); // Cyclorama
+
+  g_NewCyclorama.m_BackgroundColor.r = pData[0];
+  g_NewCyclorama.m_BackgroundColor.g = pData[1];
+  g_NewCyclorama.m_BackgroundColor.b = pData[2];
+  COMPONENT_ADVANCE(pData, 4);
+
+  g_NewCyclorama.m_SectorCount = READ_I32(pData);
+  g_NewCyclorama.m_Sectors = (void *)pData;
+
+  // Fix up cyclorama sector pointers
+  for (i = 0; i < g_NewCyclorama.m_SectorCount; ++i) {
+    PATCH_POINTER_RELATIVE_TO_COMPONENT(pData);
+  }
+
+  COMPONENT_END(pData); //! Cyclorama
+
+  if (pCutscene) // Exit early if we're in a cutscene
+    return (int *)pData;
+
+  g_PortalCount = READ_I32(pData);
+
+  for (i = 0; i < g_PortalCount; ++i) {
+    // This code is so weird
+    g_Portals[i] = (Portal *)pData;
+
+    pData = (char *)(&g_Portals[i]->m_Points[g_Portals[i]->m_PointCount - 1]);
+    g_Portals[i]->m_Skybox = (void *)pData;
+
+    // Yeah that size is just.. wrong
+    COMPONENT_ADVANCE(pData, sizeof(Cyclorama));
+
+    COMPONENT_START(pData); // Cyclorama inside of portal
+    g_Portals[i]->m_Skybox->copyBgColor = READ_I32(pData);
+    g_Portals[i]->m_Skybox->copySectorCount = READ_I32(pData);
+    g_Portals[i]->m_Skybox->copySectors = (void *)pData;
+
+    for (j = 0; j < g_Portals[i]->m_Skybox->copySectorCount; ++j) {
+      PATCH_POINTER_RELATIVE_TO_COMPONENT(pData);
+    }
+
+    COMPONENT_END(pData); //! Cyclorama inside of portal
+  }
+
+  COMPONENT_START(pData); // Particle textures
+
+  // The read is the particle count
+  for (i = READ_I32(pData); i > 0; i--) {
+    D_80076278[*(short *)pData] = (ParticleTexture *)pData;
+    pData = pData + *(short *)(pData + 2) + 4;
+  }
+
+  COMPONENT_END(pData); //! Particle textures
+
+  READ_COMPONENT_HEADER(pData); // Sound table
+
+  g_Spu.m_SoundTableSize = READ_I32(pData);
+  SetNewSoundTable(pData, 1);
+
+  // Necessary for match. Doesn't emit any assembly.
+  // Could there have been an alignment macro here?
+  // alternatively, use pData++, pData--;
+  pData = (char *)(((int)pData + 3) & ~3);
+
+  COMPONENT_END(pData); //! Sound table
+
+  return (int *)pData;
+}
 
 /// @brief Patches the pointers inside of Spyro's model
 // Has some cool code added after July
@@ -734,7 +907,7 @@ void LoadLevel(int pArg) {
 
       // The portal one has a bunch of duplicate values that aren't used by the
       // game as far as I could tell, so the component size is at + 0x14
-      portalCycloramaComponent = g_Portals[D_8007576C]->m_Skybox;
+      portalCycloramaComponent = (int *)g_Portals[D_8007576C]->m_Skybox;
       pointerOffsetOld = &portalCycloramaComponent[5];
 
       cycloramaSize = portalCycloramaComponent[5] + 1024;
