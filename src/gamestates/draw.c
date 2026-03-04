@@ -319,7 +319,7 @@ void func_800189F0(void) {
       if (j < 3) {
         width = j * 20000;
       }
-      if (g_LevelId == 63) {
+      if (g_LevelId == LEVEL_GNASTY_GNORC) {
         width = width >> 2;
       }
 
@@ -382,7 +382,7 @@ void func_800189F0(void) {
             if (b2 < 0)
               b2 = 0;
 
-            if (g_LevelId == 63) {
+            if (g_LevelId == LEVEL_GNASTY_GNORC) {
               temp = r1;
               r1 = g1;
               g1 = temp;
@@ -632,11 +632,11 @@ void func_8001973C(void) {
   char textbuffer[32];
   int i;
 
-  levelIndex = (g_NextLevelId / 10 - 1) * 6 + (g_NextLevelId % 10);
-  if (g_NextLevelId % 10 == 0) {
+  levelIndex = LEVEL_GET_INDEX(g_NextLevelId);
+  if (LEVEL_IS_HOMEWORLD(g_NextLevelId)) {
     sprintf(textbuffer, "RETURNING HOME...");
-  } else if ((g_NextLevelId < 60 && g_NextLevelId % 10 == 4) ||
-             (g_NextLevelId == 63)) {
+  } else if ((g_NextLevelId < LEVEL_GNORC_GNEXUS && LEVEL_IS_BOSS(g_NextLevelId)) ||
+             (g_NextLevelId == LEVEL_GNASTY_GNORC)) {
     sprintf(textbuffer, "CONFRONTING %s...", g_LevelNames[levelIndex]);
   } else {
     sprintf(textbuffer, "ENTERING %s...", g_LevelNames[levelIndex]);
@@ -1237,7 +1237,7 @@ void func_8001A40C(void) {
           }
         } else {
           // not flight level
-          if (g_LevelId != (g_LevelId / 10) * 10) {
+          if (!LEVEL_IS_HOMEWORLD(g_LevelId)) {
             setXYZ(&position, 183, 164, 0x1100);
             func_800181AC("EXIT LEVEL", &position, &vec4, 18, 11);
             if (D_80075720 == 3) {
@@ -2366,16 +2366,16 @@ void func_8001E24C(void) {
 
       if (D_800777E8.m_Homeworld < 5) {
         // Minus one is due to the homeworlds starting at 10
-        int homeworld = g_NextLevelId / 10;
+        int homeworld = LEVEL_ASSOCIATED_HOMEWORLD_NUMBER(g_NextLevelId);
         sprintf(buf, "ENTERING %s WORLD", g_HomeworldNames[homeworld - 1]);
       } else if (D_800777E8.m_Homeworld == 5) {
         // Exception for Gnasty's World so it doesn't display
         // GNASTY'S WORLD WORLD (like in July)
-        int homeworld = g_NextLevelId / 10;
+        int homeworld = LEVEL_ASSOCIATED_HOMEWORLD_NUMBER(g_NextLevelId);
         sprintf(buf, "ENTERING %s", g_HomeworldNames[homeworld - 1]);
       } else {
-        int homeworld = g_NextLevelId / 10;
-        int level = g_NextLevelId % 10;
+        int homeworld = LEVEL_ASSOCIATED_HOMEWORLD_NUMBER(g_NextLevelId);
+        int level = LEVEL_GET_NUMBER(g_NextLevelId);
         sprintf(buf, "ENTERING %s",
                 g_LevelNames[level + ((homeworld - 1) * 6)]);
       }

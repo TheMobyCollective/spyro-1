@@ -200,11 +200,11 @@ void CheatProcessLevelWarp(void) {
     if ((g_NextLevelId % 10) > 5) {
       g_NextLevelId = ((g_NextLevelId / 10) + 1) * 10;
     }
-    if (g_NextLevelId < 10 || g_NextLevelId > 64) {
-      g_NextLevelId = 10;
+    if (g_NextLevelId < LEVEL_ARTISANS_HOME || g_NextLevelId > LEVEL_GNASTYS_LOOT) {
+      g_NextLevelId = LEVEL_ARTISANS_HOME;
     }
-    cheat_HomeworldSelected = g_NextLevelId / 10;
-    level = g_NextLevelId % 10;
+    cheat_HomeworldSelected = LEVEL_ASSOCIATED_HOMEWORLD_NUMBER(g_NextLevelId);
+    level = LEVEL_GET_NUMBER(g_NextLevelId);
     break;
   }
 
@@ -218,7 +218,7 @@ void CheatProcessLevelWarp(void) {
       g_NextLevelId = cheat_HomeworldSelected * 10 + cheat_LevelSelected;
 
       // Check if level is valid
-      if (g_NextLevelId < 10 || g_NextLevelId >= 65 || level >= 6) {
+      if (g_NextLevelId < LEVEL_ARTISANS_HOME || g_NextLevelId > LEVEL_GNASTYS_LOOT || level >= 6) {
         // If it isn't, set the target level to the current level
         // to not break the game similar to Tuco
         g_NextLevelId = g_LevelId;

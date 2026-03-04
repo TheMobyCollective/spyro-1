@@ -74,7 +74,7 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
       // If the level ID is over 64, we set
       // traveling back to the current level and return
       // This used to be how the 'THE END' portal in June was disabled
-      if (g_NextLevelId > 64) {
+      if (g_NextLevelId > LEVEL_GNASTYS_LOOT) {
         g_NextLevelId = g_LevelId;
         return;
       }
@@ -82,7 +82,7 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
       g_HasLevelTransition = 1;     // Has level transition I believe?
       D_8007576C = surfaceFlags[1]; // Portal
 
-      if (g_LevelId != ((g_LevelId / 10) * 10)) {
+      if (!LEVEL_IS_HOMEWORLD(g_LevelId)) {
         g_PortalLevelId = g_LevelId;
       }
 

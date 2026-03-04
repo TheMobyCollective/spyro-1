@@ -807,9 +807,8 @@ void LoadLevel(int pArg) {
 
     g_PreviousLevelIndex = g_LevelIndex; // Last absolute level ID, used by the
                                          // transition I believe
-    g_Homeworld = (g_LevelId / 10) - 1;  // Homeworld ID, used by Flight levels
-    g_LevelIndex =
-        (g_Homeworld * 6) + (g_LevelId % 10); // Current absolute level ID
+    g_Homeworld = LEVEL_ASSOCIATED_HOMEWORLD_INDEX(g_LevelId);  // Homeworld ID, used by Flight levels
+    g_LevelIndex = LEVEL_GET_INDEX(g_LevelId); // Current absolute level ID
 
     if (pArg) {
       // Load the level's overlay from Disc

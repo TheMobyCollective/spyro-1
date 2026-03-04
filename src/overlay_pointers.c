@@ -389,7 +389,7 @@ void func_level_64_800840FC();
 
 void func_8005A470(void) {
   switch (g_LevelId) {
-  case 0:
+  case LEVEL_UNUSED_0:
     g_Buffers.m_CopyBuf = func_level_0_80082068; // g_CopyBufferPointer
     g_SpawnMoby = func_level_0_80080548;         // g_SpawnMoby
     g_UpdateMoby = func_level_0_8007D8E0;        // g_UpdateMoby
@@ -405,7 +405,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 1:
+  case LEVEL_UNUSED_1:
     g_Buffers.m_CopyBuf = func_level_1_8007BFF0; // g_CopyBufferPointer
     g_SpawnMoby = func_level_1_8007B070;         // g_SpawnMoby
     g_UpdateMoby = func_level_1_8007AC8C;        // g_UpdateMoby
@@ -421,7 +421,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 2:
+  case LEVEL_UNUSED_2:
     g_Buffers.m_CopyBuf = func_level_2_8007F490; // g_CopyBufferPointer
     g_SpawnMoby = func_level_2_8007D970;         // g_SpawnMoby
     g_UpdateMoby = func_level_2_8007AD08;        // g_UpdateMoby
@@ -437,7 +437,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 3:
+  case LEVEL_UNUSED_3:
     g_Buffers.m_CopyBuf = func_level_3_8007C7B0; // g_CopyBufferPointer
     g_SpawnMoby = func_level_3_8007B0AC;         // g_SpawnMoby
     g_UpdateMoby = func_level_3_8007ACC8;        // g_UpdateMoby
@@ -453,7 +453,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 4:
+  case LEVEL_UNUSED_4:
     g_Buffers.m_CopyBuf = func_level_4_8007C204; // g_CopyBufferPointer
     g_SpawnMoby = func_level_4_8007B08C;         // g_SpawnMoby
     g_UpdateMoby = func_level_4_8007ACA8;        // g_UpdateMoby
@@ -469,7 +469,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 7:
+  case LEVEL_UNUSED_7:
     g_Buffers.m_CopyBuf = func_level_7_8007F2F4; // g_CopyBufferPointer
     g_SpawnMoby = func_level_7_8007D970;         // g_SpawnMoby
     g_UpdateMoby = func_level_7_8007AD08;        // g_UpdateMoby
@@ -485,7 +485,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 9:
+  case LEVEL_UNUSED_9:
     g_Buffers.m_CopyBuf = func_level_9_8007C204; // g_CopyBufferPointer
     g_SpawnMoby = func_level_9_8007B08C;         // g_SpawnMoby
     g_UpdateMoby = func_level_9_8007ACA8;        // g_UpdateMoby
@@ -501,7 +501,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 10:
+  case LEVEL_ARTISANS_HOME:
     g_Buffers.m_CopyBuf = func_level_10_80088620; // g_CopyBufferPointer
     g_SpawnMoby = SpawnMoby_level_10;             // g_SpawnMoby
     g_UpdateMoby = func_level_10_8007D9C8;        // g_UpdateMoby
@@ -517,7 +517,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 11:
+  case LEVEL_STONE_HILL:
     g_Buffers.m_CopyBuf = func_level_11_8008A3B8; // g_CopyBufferPointer
     g_SpawnMoby = SpawnMoby_level_11;             // g_SpawnMoby
     g_UpdateMoby = func_level_11_8007DA78;        // g_UpdateMoby
@@ -533,7 +533,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 12:
+  case LEVEL_DARK_HOLLOW:
     g_Buffers.m_CopyBuf = func_level_12_80085594; // g_CopyBufferPointer
     g_SpawnMoby = SpawnMoby_level_12;             // g_SpawnMoby
     g_UpdateMoby = func_level_12_8007AE40;        // g_UpdateMoby
@@ -549,7 +549,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 13:
+  case LEVEL_TOWN_SQUARE:
     g_Buffers.m_CopyBuf = func_level_13_80089ECC; // g_CopyBufferPointer
     g_SpawnMoby = SpawnMoby_level_13;             // g_SpawnMoby
     g_UpdateMoby = func_level_13_8007DA54;        // g_UpdateMoby
@@ -565,7 +565,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 14:
+  case LEVEL_TOASTY:
     g_Buffers.m_CopyBuf = func_level_14_80084A10; // g_CopyBufferPointer
     g_SpawnMoby = SpawnMoby_level_14;             // g_SpawnMoby
     g_UpdateMoby = func_level_14_8007AF94;        // g_UpdateMoby
@@ -581,7 +581,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 15:
+  case LEVEL_SUNNY_FLIGHT:
     g_Buffers.m_CopyBuf = func_level_15_80084ED0; // g_CopyBufferPointer
     g_SpawnMoby = SpawnMoby_level_15;             // g_SpawnMoby
     g_UpdateMoby = func_level_15_8007CFB4;        // g_UpdateMoby
@@ -597,7 +597,7 @@ void func_8005A470(void) {
     D_8007567C = Flight5_level_15;            // g_DrawGameState7
     D_800758C4 = Flight4_level_15;            // g_DrawTime
     break;
-  case 20:
+  case LEVEL_PEACE_KEEPERS_HOME:
     g_Buffers.m_CopyBuf = func_level_20_8008CFA4; // g_CopyBufferPointer
     g_SpawnMoby = func_level_20_8008A258;         // g_SpawnMoby
     g_UpdateMoby = func_level_20_8007E3A0;        // g_UpdateMoby
@@ -613,7 +613,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 21:
+  case LEVEL_DRY_CANYON:
     g_Buffers.m_CopyBuf = func_level_21_8008D600; // g_CopyBufferPointer
     g_SpawnMoby = func_level_21_8008A4D0;         // g_SpawnMoby
     g_UpdateMoby = func_level_21_8007E240;        // g_UpdateMoby
@@ -629,7 +629,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 22:
+  case LEVEL_CLIFF_TOWN:
     g_Buffers.m_CopyBuf = func_level_22_8008BAF8; // g_CopyBufferPointer
     g_SpawnMoby = func_level_22_80088B88;         // g_SpawnMoby
     g_UpdateMoby = func_level_22_8007E240;        // g_UpdateMoby
@@ -645,7 +645,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 23:
+  case LEVEL_ICE_CAVERN:
     g_Buffers.m_CopyBuf = func_level_23_80086260; // g_CopyBufferPointer
     g_SpawnMoby = func_level_23_80083608;         // g_SpawnMoby
     g_UpdateMoby = func_level_23_8007B4C8;        // g_UpdateMoby
@@ -661,7 +661,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 24:
+  case LEVEL_DOCTOR_SHEMP:
     g_Buffers.m_CopyBuf = func_level_24_80087210; // g_CopyBufferPointer
     g_SpawnMoby = func_level_24_800845F0;         // g_SpawnMoby
     g_UpdateMoby = func_level_24_8007AEB8;        // g_UpdateMoby
@@ -677,7 +677,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 25:
+  case LEVEL_NIGHT_FLIGHT:
     g_Buffers.m_CopyBuf = func_level_25_80083BF0; // g_CopyBufferPointer
     g_SpawnMoby = func_level_25_800819BC;         // g_SpawnMoby
     g_UpdateMoby = func_level_25_8007CFB4;        // g_UpdateMoby
@@ -693,7 +693,7 @@ void func_8005A470(void) {
     D_8007567C = Flight5_level_25;            // g_DrawGameState7
     D_800758C4 = Flight4_level_25;            // g_DrawTime
     break;
-  case 30:
+  case LEVEL_MAGIC_CRAFTERS_HOME:
     g_Buffers.m_CopyBuf = func_level_30_8008E608; // g_CopyBufferPointer
     g_SpawnMoby = func_level_30_8008B2C0;         // g_SpawnMoby
     g_UpdateMoby = func_level_30_8007E398;        // g_UpdateMoby
@@ -709,7 +709,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 31:
+  case LEVEL_ALPINE_RIDGE:
     g_Buffers.m_CopyBuf = func_level_31_8008DEC0; // g_CopyBufferPointer
     g_SpawnMoby = func_level_31_8008A36C;         // g_SpawnMoby
     g_UpdateMoby = func_level_31_8007BB00;        // g_UpdateMoby
@@ -725,7 +725,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 32:
+  case LEVEL_HIGH_CAVES:
     g_Buffers.m_CopyBuf = func_level_32_8008C73C; // g_CopyBufferPointer
     g_SpawnMoby = func_level_32_8008883C;         // g_SpawnMoby
     g_UpdateMoby = func_level_32_8007B64C;        // g_UpdateMoby
@@ -741,7 +741,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 33:
+  case LEVEL_WIZARD_PEAK:
     g_Buffers.m_CopyBuf = func_level_33_8008A8A0; // g_CopyBufferPointer
     g_SpawnMoby = func_level_33_80086DD8;         // g_SpawnMoby
     g_UpdateMoby = func_level_33_8007B7A8;        // g_UpdateMoby
@@ -757,7 +757,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 34:
+  case LEVEL_BLOWHARD:
     g_Buffers.m_CopyBuf = func_level_34_8008749C; // g_CopyBufferPointer
     g_SpawnMoby = func_level_34_80083AB4;         // g_SpawnMoby
     g_UpdateMoby = func_level_34_8007AF28;        // g_UpdateMoby
@@ -773,7 +773,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 35:
+  case LEVEL_CRYSTAL_FLIGHT:
     g_Buffers.m_CopyBuf = func_level_35_80084390; // g_CopyBufferPointer
     g_SpawnMoby = func_level_35_80081F0C;         // g_SpawnMoby
     g_UpdateMoby = func_level_35_8007CFB4;        // g_UpdateMoby
@@ -789,7 +789,7 @@ void func_8005A470(void) {
     D_8007567C = Flight5_level_35;            // g_DrawGameState7
     D_800758C4 = Flight4_level_35;            // g_DrawTime
     break;
-  case 40:
+  case LEVEL_BEAST_MAKERS_HOME:
     g_Buffers.m_CopyBuf = func_level_40_8008AB70; // g_CopyBufferPointer
     g_SpawnMoby = func_level_40_80087EF0;         // g_SpawnMoby
     g_UpdateMoby = func_level_40_8007E18C;        // g_UpdateMoby
@@ -805,7 +805,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 41:
+  case LEVEL_TERRACE_VILLAGE:
     g_Buffers.m_CopyBuf = func_level_41_80087944; // g_CopyBufferPointer
     g_SpawnMoby = func_level_41_8008465C;         // g_SpawnMoby
     g_UpdateMoby = func_level_41_8007B5DC;        // g_UpdateMoby
@@ -821,7 +821,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 42:
+  case LEVEL_MISTY_BOG:
     g_Buffers.m_CopyBuf = func_level_42_80087130; // g_CopyBufferPointer
     g_SpawnMoby = func_level_42_80084718;         // g_SpawnMoby
     g_UpdateMoby = func_level_42_8007AFBC;        // g_UpdateMoby
@@ -837,7 +837,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 43:
+  case LEVEL_TREE_TOPS:
     g_Buffers.m_CopyBuf = func_level_43_80089848; // g_CopyBufferPointer
     g_SpawnMoby = func_level_43_80086B38;         // g_SpawnMoby
     g_UpdateMoby = func_level_43_8007B698;        // g_UpdateMoby
@@ -853,7 +853,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 44:
+  case LEVEL_METALHEAD:
     g_Buffers.m_CopyBuf = func_level_44_8008A69C; // g_CopyBufferPointer
     g_SpawnMoby = func_level_44_800874FC;         // g_SpawnMoby
     g_UpdateMoby = func_level_44_8007B770;        // g_UpdateMoby
@@ -869,7 +869,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 45:
+  case LEVEL_WILD_FLIGHT:
     g_Buffers.m_CopyBuf = func_level_45_80084844; // g_CopyBufferPointer
     g_SpawnMoby = func_level_45_8008223C;         // g_SpawnMoby
     g_UpdateMoby = func_level_45_8007CFB4;        // g_UpdateMoby
@@ -885,7 +885,7 @@ void func_8005A470(void) {
     D_8007567C = Flight5_level_45;            // g_DrawGameState7
     D_800758C4 = Flight4_level_45;            // g_DrawTime
     break;
-  case 50:
+  case LEVEL_DREAM_WEAVERS_HOME:
     g_Buffers.m_CopyBuf = func_level_50_8008BB38; // g_CopyBufferPointer
     g_SpawnMoby = func_level_50_80088E24;         // g_SpawnMoby
     g_UpdateMoby = func_level_50_8007E3C0;        // g_UpdateMoby
@@ -901,7 +901,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 51:
+  case LEVEL_DARK_PASSAGE:
     g_Buffers.m_CopyBuf = func_level_51_800880D4; // g_CopyBufferPointer
     g_SpawnMoby = func_level_51_80084B94;         // g_SpawnMoby
     g_UpdateMoby = func_level_51_8007B4F8;        // g_UpdateMoby
@@ -917,7 +917,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 52:
+  case LEVEL_LOFTY_CASTLE:
     g_Buffers.m_CopyBuf = func_level_52_8008771C; // g_CopyBufferPointer
     g_SpawnMoby = func_level_52_80084620;         // g_SpawnMoby
     g_UpdateMoby = func_level_52_8007B4DC;        // g_UpdateMoby
@@ -933,7 +933,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 53:
+  case LEVEL_HAUNTED_TOWERS:
     g_Buffers.m_CopyBuf = func_level_53_80089820; // g_CopyBufferPointer
     g_SpawnMoby = func_level_53_8008590C;         // g_SpawnMoby
     g_UpdateMoby = func_level_53_8007B510;        // g_UpdateMoby
@@ -949,7 +949,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 54:
+  case LEVEL_JACQUES:
     g_Buffers.m_CopyBuf = func_level_54_80086348; // g_CopyBufferPointer
     g_SpawnMoby = func_level_54_800836A8;         // g_SpawnMoby
     g_UpdateMoby = func_level_54_8007AF50;        // g_UpdateMoby
@@ -965,7 +965,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 55:
+  case LEVEL_ICY_FLIGHT:
     g_Buffers.m_CopyBuf = func_level_55_80084934; // g_CopyBufferPointer
     g_SpawnMoby = func_level_55_80082028;         // g_SpawnMoby
     g_UpdateMoby = func_level_55_8007CFB4;        // g_UpdateMoby
@@ -981,7 +981,7 @@ void func_8005A470(void) {
     D_8007567C = Flight5_level_55;            // g_DrawGameState7
     D_800758C4 = Flight4_level_55;            // g_DrawTime
     break;
-  case 60:
+  case LEVEL_GNORC_GNEXUS:
     g_Buffers.m_CopyBuf = func_level_60_80085CE0; // g_CopyBufferPointer
     g_SpawnMoby = func_level_60_80083568;         // g_SpawnMoby
     g_UpdateMoby = func_level_60_8007D938;        // g_UpdateMoby
@@ -997,7 +997,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 61:
+  case LEVEL_GNORC_COVE:
     g_Buffers.m_CopyBuf = func_level_61_80088668; // g_CopyBufferPointer
     g_SpawnMoby = func_level_61_80085664;         // g_SpawnMoby
     g_UpdateMoby = func_level_61_8007B528;        // g_UpdateMoby
@@ -1013,7 +1013,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 62:
+  case LEVEL_TWILIGHT_HARBOR:
     g_Buffers.m_CopyBuf = func_level_62_80086004; // g_CopyBufferPointer
     g_SpawnMoby = func_level_62_80083108;         // g_SpawnMoby
     g_UpdateMoby = func_level_62_8007AE5C;        // g_UpdateMoby
@@ -1029,7 +1029,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 63:
+  case LEVEL_GNASTY_GNORC:
     g_Buffers.m_CopyBuf = func_level_63_800854B4; // g_CopyBufferPointer
     g_SpawnMoby = func_level_63_80082F24;         // g_SpawnMoby
     g_UpdateMoby = func_level_63_8007AD64;        // g_UpdateMoby
@@ -1045,7 +1045,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 64:
+  case LEVEL_GNASTYS_LOOT:
     g_Buffers.m_CopyBuf = func_level_64_80086264; // g_CopyBufferPointer
     g_SpawnMoby = func_level_64_80083690;         // g_SpawnMoby
     g_UpdateMoby = func_level_64_8007AD4C;        // g_UpdateMoby
@@ -1061,7 +1061,7 @@ void func_8005A470(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 99:
+  case LEVEL_UNUSED_99:
     g_Buffers.m_CopyBuf = func_level_99_8007C654; // g_CopyBufferPointer
     g_SpawnMoby = func_level_99_8007B0C0;         // g_SpawnMoby
     g_UpdateMoby = func_level_99_8007ACDC;        // g_UpdateMoby

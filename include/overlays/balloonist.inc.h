@@ -341,7 +341,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
           if (g_LevelId <= g_NextLevelId) {
             g_NextLevelId = g_NextLevelId + 10;
           }
-          D_800777E8.m_Homeworld = g_NextLevelId / 10 - 1;
+          D_800777E8.m_Homeworld = LEVEL_ASSOCIATED_HOMEWORLD_INDEX(g_NextLevelId);
         }
       }
     } else if (D_800777E8.m_DialogueId == 31 || D_800777E8.m_DialogueId == 32) {
@@ -367,7 +367,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
           D_800777E8.unk_0x04 = 0;
           if (D_800777E8.m_DialogueId == 31) {
             g_NextLevelId = g_LevelId + 10;
-            D_800777E8.m_Homeworld = (g_LevelId + 10) / 10 - 1;
+            D_800777E8.m_Homeworld = LEVEL_ASSOCIATED_HOMEWORLD_INDEX(g_LevelId + 10);
           }
         }
       }
@@ -383,11 +383,11 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
         D_800777E8.unk_0x04 = 0;
       } else {
         if (D_800777E8.m_DialogueId == 33) {
-          g_NextLevelId = 11;
+          g_NextLevelId = LEVEL_STONE_HILL;
         } else if (D_800777E8.m_DialogueId == 34) {
-          g_NextLevelId = 21;
+          g_NextLevelId = LEVEL_DRY_CANYON;
         } else if (D_800777E8.m_DialogueId == 35) {
-          g_NextLevelId = 22;
+          g_NextLevelId = LEVEL_CLIFF_TOWN;
         }
         D_800777E8.m_Homeworld = D_800777E8.m_DialogueId - 27;
         D_800777E8.m_DialogueId = 32;
@@ -743,7 +743,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist4)(void) {
 
       hudmobyptr = g_HudMobys;
       sprintf(buffer, "%s THE BALLOONIST",
-              g_BalloonistNames[g_LevelId / 10 - 1]);
+              g_BalloonistNames[LEVEL_ASSOCIATED_HOMEWORLD_INDEX(g_LevelId)]);
       vec1.x = 0x108 - strlen(buffer) * 8;
       vec1.y = 0xcc;
       vec1.z = 0x1100;
@@ -831,7 +831,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist4)(void) {
         }
         someflag = 1;
         for (i = 0; i < 6; i++) {
-          if (g_LevelId / 10 - 1 != i && D_800758D0[i] == 2) {
+          if (LEVEL_ASSOCIATED_HOMEWORLD_INDEX(g_LevelId) != i && D_800758D0[i] == 2) {
             vec1.x = 0x110;
             hudmobyptr = g_HudMobys - 1;
             func_800181AC(g_HomeworldNames[i], &vec1, &vec2, 0x10, 0xb);
@@ -916,13 +916,12 @@ void NAME_OVERLAY_FUNCTION(Balloonist4)(void) {
           sprintf(buffer,
                   (char *)(char[]){'G', 'O', ' ', 'T', 'O', ' ', '%', 's',
                                    GARBAGE_FIX},
-                  g_HomeworldNames[g_LevelId / 10]);
+                  g_HomeworldNames[LEVEL_ASSOCIATED_HOMEWORLD_NUMBER(g_LevelId)]);
         } else {
           sprintf(buffer,
                   (char *)(char[]){'G', 'O', ' ', 'T', 'O', ' ', '%', 's',
                                    GARBAGE_FIX},
-                  g_HomeworldNames[7 + (g_NextLevelId / 10 - 1) * 6 +
-                                   g_NextLevelId % 10]);
+                  g_HomeworldNames[7 + LEVEL_GET_INDEX(g_NextLevelId)]);
         }
 #undef GARBAGE_FIX
 
