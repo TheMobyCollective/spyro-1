@@ -1296,7 +1296,77 @@ int MoveMobyTowardTarget(Moby *pMoby, Vector3D *pTarget, int pSpeed,
   return result;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BCCC);
+int func_8003BCCC(Moby *pMoby, int pForwardDist, int pMobyRadius,
+                  int pGroundRadius, int flags) {
+  MATRIX mat;
+  Vector3D pos;
+  int surfaceZ;
+
+  if (D_800756C4 == 3) {
+    pForwardDist += pForwardDist >> 1;
+  } else if (D_800756C4 == 4) {
+    pForwardDist *= 2;
+  }
+
+  RotVec8ToMatrix(&pMoby->m_Rotation, &mat, nullptr);
+
+  pos.x = pForwardDist;
+  pos.z = 0;
+  pos.y = 0;
+
+  // Transform the forward offset into world space using the Moby's rotation
+  VecRotateByMatrix(&mat, &pos, &pos);
+  VecAdd(&pos, &pos, &pMoby->m_Position);
+
+  // Optionally lift the test point up before collision checks
+  if (flags & 0x01) {
+    pos.z += 300 + pGroundRadius;
+  }
+
+  // Check for Moby collisions at the target position
+  if (pMobyRadius != 0) {
+    if (!(flags & 0x02)) {
+      // Abort move if something is in the way
+      if (func_8004E3C8(&pos, pMobyRadius, nullptr, 0, pMoby, 0) != 0) {
+        return 1;
+      }
+    } else {
+      // Register collision but don't stop
+      func_8004E3C8(&pos, pMobyRadius, nullptr, 0, pMoby, 3);
+    }
+  }
+
+  // Check for environment collision at the target position
+  if (pGroundRadius != 0 &&
+      func_8004BE4C(&pos, pGroundRadius, pGroundRadius) != 0) {
+    return 2;
+  }
+
+  // Undo the z lift now that collision checks are done
+  if (flags & 0x01) {
+    pos.z -= 300 + pGroundRadius;
+  }
+
+  // Find the surface directly below
+  if (flags & (0x4 | 0x10)) {
+    pos.z += 1024; // raise origin so the downward trace starts above ground
+    surfaceZ = func_8004D5EC(&pos, 1024 * 2);
+  }
+
+  // Reject the move if it would place the moby too far above or below the
+  // surface
+  if (flags & 0x10) {
+    int mobyZ = pMoby->m_Position.z;
+    if (ABS2(surfaceZ - mobyZ) > 200) {
+      return 2;
+    }
+  }
+
+  VecCopy(&pMoby->m_Position, &pos);
+  func_800533D0(pMoby);
+  func_800529E4(pMoby, 2);
+  return 0;
+}
 
 /// @brief Determines which quadrant Spyro is in relative to the moby
 /// @param pMoby The moby to check from
