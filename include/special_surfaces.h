@@ -3,6 +3,8 @@
 
 #include <sys/types.h>
 
+extern int D_800777C0[10]; // Zapped floors
+
 // TODO: Name arg1
 
 /// @brief Handles the effects of the special surfaces

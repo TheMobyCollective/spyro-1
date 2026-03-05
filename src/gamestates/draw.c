@@ -588,14 +588,15 @@ void func_80019300(void) {
       col.g = col.r;
       col.b = col.r;
 
-      func_8001919C(&g_Hud.m_SpriteRect[12 + i], &g_Hud.m_OrbSprite, &col);
+      func_8001919C(&g_Hud.m_SpriteRect[12 + i], &g_Hud.m_OrbAndEggSprite[0],
+                    &col);
     }
   }
 
   if (g_Hud.m_EggDisplayState != 0) {
     for (i = 0; i < g_Hud.m_EggCount; i++) {
       func_8001919C(&g_Hud.m_SpriteRect[i],
-                    &g_Hud.m_EggSprites[(g_Hud.unk_0x40 + i) % 9], 0);
+                    &g_Hud.m_OrbAndEggSprite[(g_Hud.unk_0x40 + i) % 9 + 1], 0);
     }
   }
 }
@@ -1325,10 +1326,12 @@ void func_8001A40C(void) {
             setXYZ(&position, 36 + i * 27, 58, 0x1800);
             func_80017FE4("X", &position, 0, 2);
             setXYZ(&position, 32, 32, 32);
-            func_8001919C(&rc1, &g_Hud.m_EggSprites[0], (ColorInt *)&position);
+            func_8001919C(&rc1, &g_Hud.m_OrbAndEggSprite[1],
+                          (ColorInt *)&position);
           } else {
-            func_8001919C(&rc1, &g_Hud.m_EggSprites[(g_Hud.unk_0x40 + i) % 9],
-                          nullptr);
+            func_8001919C(
+                &rc1, &g_Hud.m_OrbAndEggSprite[(g_Hud.unk_0x40 + i) % 9 + 1],
+                nullptr);
           }
         }
       }
@@ -1493,12 +1496,13 @@ void func_8001A40C(void) {
                 setXYZ(&position, rc2.x + 12, level_y, 0x1800);
                 func_80017FE4("X", &position, 0, 2);
                 setXYZ(&position, 32, 32, 32);
-                func_8001919C(&rc2, &g_Hud.m_EggSprites[0],
+                func_8001919C(&rc2, &g_Hud.m_OrbAndEggSprite[1],
                               (ColorInt *)&position);
               } else {
-                func_8001919C(&rc2,
-                              &g_Hud.m_EggSprites[(g_Hud.unk_0x40 + i) % 9],
-                              nullptr);
+                func_8001919C(
+                    &rc2,
+                    &g_Hud.m_OrbAndEggSprite[(g_Hud.unk_0x40 + i) % 9 + 1],
+                    nullptr);
               }
             }
           }

@@ -95,6 +95,7 @@ extern int g_Fade; // Fade
 
 extern int g_LevelId;     // Current level id
 extern int g_NextLevelId; // The level you're traveling to
+extern int D_800757E8;    // Previous level id
 extern int g_Homeworld;   // Homeworld ID, used by Flight levels
 
 extern int g_LevelIndex;         // Current absolute level id

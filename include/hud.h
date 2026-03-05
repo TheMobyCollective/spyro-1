@@ -56,8 +56,7 @@ extern struct {
   Moby m_Mobys[12];
   // 12 slots for eggs, 20 slots for the life orb things
   RECT m_SpriteRect[32];
-  Tiledef m_OrbSprite;
-  Tiledef m_EggSprites[9];
+  Tiledef m_OrbAndEggSprite[10];
 } g_Hud;
 
 typedef enum {

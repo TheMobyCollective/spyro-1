@@ -470,6 +470,13 @@ typedef struct {
 
 // static_assert(sizeof(Moby) == 0x58, "Incorrect Moby size");
 
+typedef struct {
+  Tiledef shadow;
+  int *shadow_list; // shadow queue?
+} MobyShadow;
+
+extern MobyShadow D_80075EF8;
+
 /// @brief Are any mobys in this pod still alive?
 int func_8003B0DC(int pPod);
 
@@ -484,8 +491,26 @@ extern Moby *D_80075758; // Pointer to the key Moby for this level
 
 extern Moby *g_LevelMobys; // The Mobys in the current level
 
-extern Moby *D_80075890; // Pointer to the first dynamic Moby, used for
-                         // delimiting static and dynamic Mobys
+/// @brief Pointer to space for the Moby collision chain
+extern void *D_80075778;
+
+/// @brief Moby allocation pointer
+extern Moby *D_8007573C;
+
+/// @brief Props allocation pointer
+extern void *D_80075930;
+
+/// @brief Start of the Mobys that are dynamically allocated
+extern Moby *D_80075890;
+
+/// @brief The current number of dynamically allocated Mobys
+extern int D_800756A4;
+
+/// @brief The maximum number of dynamically allocated Mobys
+extern int D_800756A8;
+
+/// @brief The end of dynamic Moby space (= start + max * (sizeof(Moby) + 24))
+extern void *D_800756E8;
 
 extern Moby *g_HudMobys; // HUD Mobys
 

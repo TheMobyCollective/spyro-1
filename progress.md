@@ -139,7 +139,7 @@
 - [x] func_80012D58
 - [x] PatchInSpyroAnimations
 - [x] PatchMobyModelPointers
-- [ ] func_8001364C
+- [x] func_8001364C
 - [x] func_800144C8
 - [x] LoadCutscene
 - [x] LoadDragonCutscene

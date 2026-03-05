@@ -22,6 +22,8 @@ typedef struct {
 // Specular and metal variables
 extern SpecularAndMetal D_800770C8;
 
+extern Tiledef D_800756F0; // Metal texture
+
 /// @brief Resets the specular light direction
 void SpecularReset(void);
 

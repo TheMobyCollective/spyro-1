@@ -3,6 +3,7 @@
 
 #include <sys/types.h>
 
+#include <common.h>
 #include <libgte.h>
 #include <matrix.h>
 #include <moby.h>
@@ -275,15 +276,20 @@ extern u_char D_8006C588[48]; // Maps Spyro's state to camera states
 
 extern int D_8007580C; // Health before entering flight level
 
+extern int D_800758C0; // Related to max height
+extern int D_80075678; // Absolute height limit used in Gnasty's Loot
+
+// Some kinda vector in SBSS, related to gliding
+extern int D_80075960;
+extern int D_800758A0;
+extern int D_80075700;
+
 typedef struct {
-  int unk_00;
-  int unk_04;
-  int unk_08;
-  int unk_0c;
-  int unk_10;
-  int unk_14;
-  int unk_18;
-  int unk_1c;
+  Vector3D m_Position;
+  Vector3D8 m_Rotation;
+  u_char pad1;
+  Tiledef m_FlameTexture;
+  Tiledef m_SuperFlameTexture;
   int unk_20;
   int unk_24;
   int unk_28;
@@ -361,6 +367,19 @@ typedef struct {
 } SpyroFlame;
 
 extern SpyroFlame g_SpyroFlame;
+
+typedef struct {
+  int unk_00;
+  int unk_04;
+  int unk_08;
+  int unk_0c;
+  Vector3D m_Position;
+  int unk_1c;
+  int unk_20;
+  int m_IsSpyroOverWater;
+} SpyroShadow;
+
+extern SpyroShadow D_8007AA10;
 
 /// @brief Resets Spyro
 void func_8004AC24(int pKeepPosition);

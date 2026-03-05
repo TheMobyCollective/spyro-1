@@ -16,7 +16,17 @@ extern short D_8006CC78[256];
 #define SINE_8(x) D_8006CBF8[(x)]
 #define COSINE_8(x) D_8006CC78[(x)]
 
-// @brief VRAM size per cutscene
+/// @brief Level entrance Z offset table
+extern int D_8006EDB4[42];
+
+// (Only from Beast Makers and Dream Weavers for some reason)
+/// @brief Game over respawn positions
+extern Vector3D D_8006F218[12];
+
+/// @brief Game over respawn z rotations
+extern u_char D_8006F2A8[12];
+
+/// @brief VRAM size per cutscene
 extern int D_8006EE5C[4];
 
 extern short D_8006F3A0[8][2]; // Dragon fragments offset

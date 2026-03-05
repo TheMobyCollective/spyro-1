@@ -27,6 +27,10 @@ typedef struct {
 
 extern SphericalCoordsOffset D_8006CA84; // Dunno
 
+// Set by loaders
+extern SphericalCoordsOffset D_80078668;
+extern SphericalCoordsOffset D_8006C934;
+
 typedef struct {
   SHORTMATRIX m_ProjectionMatrix; // Scaled for the aspect ratio
   SHORTMATRIX m_ViewMatrix; // Represents the camera's position and orientation

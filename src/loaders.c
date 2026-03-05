@@ -1,22 +1,30 @@
 #include "loaders.h"
+#include "42CC4.h"
 #include "buffers.h"
 #include "camera.h"
 #include "cd.h"
 #include "checkpoint.h"
+#include "collision.h"
 #include "common.h"
 #include "cutscene.h"
 #include "cyclorama.h"
 #include "dragon.h"
 #include "environment.h"
+#include "gamepad.h"
+#include "gamestates/draw.h"
 #include "graphics.h"
 #include "math.h"
 #include "memory.h"
 #include "moby_helpers.h"
 #include "music.h"
+#include "overlay_pointers.h"
 #include "renderers.h"
 #include "save_file.h"
+#include "special_surfaces.h"
+#include "specular_and_metal.h"
 #include "spu.h"
 #include "spyro.h"
+#include "titlescreen.h"
 #include "variables.h"
 #include "wad.h"
 
@@ -358,10 +366,417 @@ Model *PatchMobyModelPointers(Model *pModel) {
   return pModel;
 }
 
-void func_8001364C(int pAnimationsAndSparx); /* Weird param, always 1 iirc */
+// void func_8001364C(int pAnimationsAndSparx); /* Weird param, always 1 iirc */
 
 /// @brief Loads the level's layout
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_8001364C);
+// INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_8001364C);
+extern int D_80075698; // No read XREFs, only written here
+
+typedef struct {
+  Vector3D m_StartingPosition;
+  Vector3D8 m_StartingRotation;
+  Tiledef m_FlameTexture;
+  Tiledef m_ShadowTexture;
+  Tiledef m_UnusedTexture;
+  Tiledef m_OrbAndEggSprite[10];
+  Tiledef m_SuperFlameTexture;
+  Tiledef m_SpecularMetalTexture;
+} LevelLayoutHeader;
+
+void func_8001364C(int pAnimationsAndSparx) {
+  char *data;
+  int i;
+  int j;
+  Vector3D v;
+  char *layoutBase;
+  char *componentStart;
+  int index, bit;
+  uint pendingDrops;
+
+  func_80056B28(0); // stop all sounds
+  SpecularReset();
+
+  data = layoutBase = (char *)g_Buffers.m_LevelLayout;
+
+  D_800758C8 = 0;
+  g_GameTick = 0;
+  g_IsSpyroHidden = 0;
+  g_TracerCount = 0;
+
+  if (g_LevelId == 64) {
+    D_80075830 = 0;
+  }
+
+  D_80075698 = 0;
+
+  // Beast Makers Home and Misty Bog
+  if (g_LevelId == 40 || g_LevelId == 42) {
+    // The Environment renderer doesn't like it when it
+    // has to draw the LOD of a sector that doesn't have one,
+    // so it's disabled here explicitly.
+    g_SkipLowPolyWorld = 1;
+  } else {
+    g_SkipLowPolyWorld = 0;
+  }
+
+  PadReset(&g_Pad);
+
+  if (!g_IsFlightLevel) { // is not flight level
+    D_8007580C = g_Spyro.m_health;
+  }
+
+  if (g_Checkpoint.m_StoodOnCheckpoint) {
+    VecCopy(&g_Spyro.m_Position, &g_Checkpoint.m_StartingPosition);
+    g_Spyro.m_bodyRotation.z = g_Checkpoint.m_StartingRotation >> 4;
+  } else if (g_PortalLevelId == 0) {
+    setXYZ(&g_Checkpoint.m_StartingPosition,
+           ((LevelLayoutHeader *)data)->m_StartingPosition.x,
+           ((LevelLayoutHeader *)data)->m_StartingPosition.y,
+           ((LevelLayoutHeader *)data)->m_StartingPosition.z);
+
+    g_Checkpoint.m_StartingRotation =
+        ((LevelLayoutHeader *)data)->m_StartingRotation.z;
+
+    if (g_HasLevelTransition == 0 && g_Gamestate != 12) {
+      if (g_Gamestate == 5 && (g_LevelId >= 40 && g_LevelId < 60) &&
+          D_8006F218[D_800757E8 - 18].x != 0) {
+        VecCopy(&g_Spyro.m_Position, &D_8006F218[D_800757E8 - 18]);
+        g_Spyro.m_bodyRotation.z = D_8006F2A8[D_800757E8 - 18];
+      } else {
+        VecCopy(&g_Spyro.m_Position, &g_Checkpoint.m_StartingPosition);
+        g_Spyro.m_bodyRotation.z = g_Checkpoint.m_StartingRotation;
+      }
+    }
+  }
+
+  g_Spyro.m_health = D_8007580C;
+
+  if (g_Gamestate != 12) {
+    // reset spyro
+    func_8004AC24(0);
+    g_Spyro.m_noGamepadUpdateFrames = 12;
+  }
+
+  if (g_LevelId % 10 == 5) {
+    g_IsFlightLevel = 1; // is flight level
+    g_Spyro.m_flyingAbility = 1;
+    D_800758C0 = g_Checkpoint.m_StartingPosition.z;
+    g_Spyro.m_highestFlightPoint = g_Checkpoint.m_StartingPosition.z;
+
+    // change spyro state
+    func_8003EA68(32);
+
+    if (g_HasLevelTransition == 0) {
+      g_Spyro.m_walkingState = 0;
+      g_Spyro.m_bodyRotation.x = 0;
+      g_Spyro.m_bodyRotation.y = 0;
+      g_Spyro.m_Physics.m_SpeedAngle.m_RotY = 0;
+      g_Spyro.m_Physics.m_SpeedAngle.m_RotX = 0;
+      D_80075960 = 0;
+      D_800758A0 = 0;
+      D_80075700 = 0;
+      g_Spyro.m_Position.z = g_Spyro.m_Position.z + -1024;
+    }
+
+  } else {
+    g_IsFlightLevel = 0; // is not flight level
+    g_Spyro.m_flyingAbility = 0;
+
+    if (g_HasLevelTransition != 0) {
+      g_Checkpoint.m_StartingPosition.z += D_8006EDB4[g_LevelIndex];
+      g_Checkpoint.m_StartingPosition.x -=
+          ((u_short)COSINE_8(g_Checkpoint.m_StartingRotation) << 16) >> 18;
+      g_Checkpoint.m_StartingPosition.y -=
+          ((u_short)SINE_8(g_Checkpoint.m_StartingRotation) << 16) >> 18;
+    }
+  }
+
+  // Skip over the starting position and rotation
+  COMPONENT_ADVANCE(data, OFFSET(LevelLayoutHeader, m_FlameTexture));
+
+  if (g_LevelId == 64) {
+    D_800758C0 = 16000;
+    D_80075678 = 17976;
+  }
+
+  g_Fade = 0;
+
+  if (g_HasLevelTransition == 0 && g_Gamestate != 12) {
+    D_80078668 = D_8006C934;
+
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_State = 0;
+    g_Camera.unk_0xC0 = 0;
+    D_80078668.m_Coords.radius = 1536;
+    g_Camera.m_SphericalPreset = &D_80078668;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+    // reset some camera stuff
+    func_80034358();
+    g_Fade = 32; // fade
+  }
+
+  if (g_Gamestate != 12) {
+    g_Gamestate = 0;
+    g_StateSwitch = 1;
+    g_ScreenBorderEnabled = 0;
+    D_800756C0 = 0;
+  }
+
+  // Clear the Spyro's flame and set the texture
+  Memset(&g_SpyroFlame, 0, sizeof(g_SpyroFlame));
+
+  g_SpyroFlame.m_FlameTexture.uv0 = ((Tiledef *)data)->uv0;
+  g_SpyroFlame.m_FlameTexture.uv1 = ((Tiledef *)data)->uv1;
+  COMPONENT_ADVANCE(data, sizeof(Tiledef));
+
+  // Clear Spyro's shadow, and.. set the Moby shadow texture
+  Memset(&D_8007AA10, 0, sizeof(D_8007AA10));
+
+  D_80075EF8.shadow.uv0 = ((Tiledef *)data)->uv0;
+  D_80075EF8.shadow.uv1 = ((Tiledef *)data)->uv1;
+  COMPONENT_ADVANCE(data, sizeof(Tiledef));
+
+  // This skips over the unused sprite (((Tiledef *)data)[0])
+  // which isn't stored anywhere apparently
+  // Anyway.. Store the orb sprite
+  g_Hud.m_OrbAndEggSprite[0].uv0 = ((Tiledef *)data)[1].uv0;
+  g_Hud.m_OrbAndEggSprite[0].uv1 = ((Tiledef *)data)[1].uv1;
+
+  // And the egg rotation spries
+  for (i = 0; i < 9; i++) {
+    g_Hud.m_OrbAndEggSprite[1 + i].uv0 = ((Tiledef *)data)[2 + i].uv0;
+    g_Hud.m_OrbAndEggSprite[1 + i].uv1 = ((Tiledef *)data)[2 + i].uv1;
+  }
+
+  COMPONENT_ADVANCE(data, sizeof(Tiledef) *
+                              (1 /* Unused sprite */ + 1 /* Orb sprite */ +
+                               9 /* Egg rotation sprites */));
+
+  g_SpyroFlame.m_SuperFlameTexture.uv0 = ((Tiledef *)data)->uv0;
+  g_SpyroFlame.m_SuperFlameTexture.uv1 = ((Tiledef *)data)->uv1;
+  COMPONENT_ADVANCE(data, sizeof(Tiledef));
+
+  D_800756F0.uv0 = ((Tiledef *)data)->uv0;
+  D_800756F0.uv1 = ((Tiledef *)data)->uv1;
+  COMPONENT_ADVANCE(data, sizeof(Tiledef));
+
+  COMPONENT_START(data); // Texture animations
+  D_80078560.m_TextureAnimationCount = READ_I32(data);
+  D_80078560.m_TextureAnimations = data;
+  for (i = 0; i < D_80078560.m_TextureAnimationCount; i++) {
+    PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
+  }
+  COMPONENT_END(data); //! Texture animations
+
+  COMPONENT_START(data); // Scrolling textures
+  D_80078560.m_ScrollingTextureCount = READ_I32(data);
+  D_80078560.m_ScrollingTextures = data;
+  for (i = 0; i < D_80078560.m_ScrollingTextureCount; i++) {
+    PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
+  }
+  COMPONENT_END(data); //! Scrolling textures
+
+  COMPONENT_START(data); // High poly animations
+  D_80078560.m_HighPolyAnimationCount = READ_I32(data);
+  D_80078560.m_HighPolyAnimations = data;
+  for (i = 0; i < D_80078560.m_HighPolyAnimationCount; i++) {
+    PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
+  }
+  COMPONENT_END(data); //! High poly animations
+
+  COMPONENT_START(data); // Low poly animations
+  D_80078560.m_LowPolyAnimationCount = READ_I32(data);
+  D_80078560.m_LowPolyAnimations = data;
+  for (i = 0; i < D_80078560.m_LowPolyAnimationCount; i++) {
+    PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
+  }
+  COMPONENT_END(data); //! Low poly animations
+
+  COMPONENT_START(data); // Collision animations
+  D_80078560.m_CollisionAnimationCount = READ_I32(data);
+  D_80078560.m_CollisionAnimations = data;
+  for (i = 0; i < D_80078560.m_CollisionAnimationCount; i++) {
+    PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
+  }
+  COMPONENT_END(data); //! Collision animations
+
+  COMPONENT_START(data); // High color animations
+  D_80078560.m_HighColorAnimationCount = READ_I32(data);
+  D_80078560.m_HighColorAnimations = data;
+  for (i = 0; i < D_80078560.m_HighColorAnimationCount; i++) {
+    PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
+  }
+  COMPONENT_END(data); //! High color animations
+
+  COMPONENT_START(data); // Low color animations
+  D_80078560.m_LowColorAnimationCount = READ_I32(data);
+  D_80078560.m_LowColorAnimations = data;
+  for (i = 0; i < D_80078560.m_LowColorAnimationCount; i++) {
+    PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
+  }
+  COMPONENT_END(data); //! Low color animations
+
+  if (pAnimationsAndSparx) {
+    // Initialize environment animations
+    func_8002B4AC();
+  } else {
+    // Unset their counts
+    D_80078560.m_TextureAnimationCount = 0;
+    D_80078560.m_ScrollingTextureCount = 0;
+    D_80078560.m_CollisionAnimationCount = 0;
+    D_80078560.m_HighColorAnimationCount = 0;
+    D_80078560.m_LowColorAnimationCount = 0;
+  }
+
+  COMPONENT_START(data); // Level mobys
+  i = READ_I32(data);
+  g_LevelMobys = (Moby *)data;
+  COMPONENT_END(data); //! Level mobys
+
+  // Set the dynamic Moby pointers
+  D_80075890 = &g_LevelMobys[i];
+  D_8007573C = &g_LevelMobys[i];
+  g_LevelMobys[i].m_State = 0xFF;
+
+  // Set the dynamic Moby props pointers
+  D_800756A4 = 0;
+  D_800756E8 = data;
+  D_80075930 = data;
+  *(data - 1) = 0xFF; // Terminate the props
+
+  D_800756A8 =
+      ((u_int)D_800756E8 - (u_int)D_80075890) /
+      (sizeof(Moby) + 24 /* Every dynamic Moby gets 24 bytes of props space */);
+
+  data = data + *(int *)data; // Skip past the Moby props data
+
+  COMPONENT_START(data); // Moby pods
+  g_MobyPodCount = READ_I32(data);
+  g_MobyPods = (u_short **)data;
+  for (i = g_MobyPodCount - 1; i >= 0; i--) {
+    PATCH_POINTER2(g_MobyPods[i], componentStart);
+  }
+  COMPONENT_END(data); //! Moby pods
+
+  COMPONENT_START(data); // Moby collision chain
+  D_80075778 = data;
+  COMPONENT_END(data); //! Moby collision chain
+
+  COMPONENT_START(data); // Moby pointers
+  for (i = 0; i < *(int *)componentStart;) {
+    int *ptr = (int *)(layoutBase + *(int *)data);
+    i++;
+    PATCH_POINTER2(ptr[0], layoutBase); // Yep.. Relative to layoutBase
+    COMPONENT_ADVANCE(data, 4);
+  }
+
+  if (g_DemoMode) {
+    // Seed rand to make demos consistent
+    srand(1234);
+    g_Spyro.m_Position.x = D_8006EE9C[g_DemoIndex][0];
+    g_Spyro.m_Position.y = D_8006EE9C[g_DemoIndex][1];
+    g_Spyro.m_Position.z = D_8006EE9C[g_DemoIndex][2];
+    g_Spyro.m_bodyRotation.z = D_8006EE9C[g_DemoIndex][3];
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z << 4;
+    D_80075784 = 1; // Enable the extra demo mode vsync
+
+    if (g_DemoMode == DEMO_MODE_PLAY) {
+      // Set the pointer for playback, which is at the end of the layout data
+      D_8007585C = (int *)data;
+    } else {
+      // Set the pointer for recording (requires 8MB RAM)
+      D_8007585C = (int *)0x80600000;
+      Memset((void *)0x80600000, 0, 0x4000);
+    }
+  }
+
+  pendingDrops = 0;
+
+  // Iterate over all the level's Mobys
+  // Initialize the shadow, and
+  for (i = 0; g_LevelMobys[i].m_State != 0xff; i++) {
+
+    // Check non-shaded marker
+    if ((int)g_Models[g_LevelMobys[i].m_Class] < 0) {
+      func_800526A8(&g_LevelMobys[i]); // Initialize shaded Moby
+    } else {
+      func_800529CC(&g_LevelMobys[i]); // Initialize normal Moby
+    }
+
+    VecCopy(&v, &g_LevelMobys[i].m_Position);
+    v.z += 1024;                     // +1M
+    func_8004D5EC(&v, 1024 * 64);    // 64M
+    func_800533D0(&g_LevelMobys[i]); // Set shadow based on distance
+
+    if ((g_LevelMobys[i].m_DroppedFlag & 0x7f) < 0x20) {
+      index = i >> 5;
+      bit = i & 0x1f;
+      if (((g_Checkpoint.m_KilledMobysSaved[index] & (1 << bit)) == 0) ||
+          ((D_80077908[g_LevelIndex][index] & (1 << bit)) == 0))
+        pendingDrops |= 1 << (g_LevelMobys[i].m_DroppedFlag);
+    }
+  }
+
+  // Iterate over all the level's Mobys again
+  for (i = 0; g_LevelMobys[i].m_State != 0xff; i++) {
+    index = (i >> 5);
+    bit = (i & 0x1f);
+
+    if ((D_80077908[g_LevelIndex][index] & (1 << bit)) != 0) {
+      if ((g_Checkpoint.m_KilledMobysSaved[index] & (1 << bit)) == 0) {
+        if ((g_LevelMobys[i].m_DroppedFlag & 0x7F) == 0x7D) {
+          func_80052568(&g_LevelMobys[i]); // Free the Moby
+        } else {
+          g_LevelMobys[i].m_DropMoby = -1;
+        }
+      } else {
+        int btemp;
+        bit = (g_LevelMobys[i].m_DroppedFlag & 0x7F);
+
+        if (bit < 32) {
+          btemp = (pendingDrops & (1 << bit)) != 0;
+        } else {
+          btemp = bit == 0x7E;
+        }
+
+        if (btemp) {
+          g_LevelMobys[i].m_DropMoby = -1;
+        } else {
+          func_80052568(&g_LevelMobys[i]); // Free the Moby
+        }
+      }
+    }
+  }
+
+  // Make the killed bitmasks match
+  for (i = 0; i < 8; i++) {
+    g_Checkpoint.m_KilledMobys[i] = g_Checkpoint.m_KilledMobysSaved[i];
+  }
+
+  // Clear the zapped floors
+  for (i = 0; i < 10; i++) {
+    D_800777C0[i] = 0;
+  }
+
+  D_80075824 = g_Buffers.m_ParticleSpaceStart;
+  D_80075738 = g_Buffers.m_ParticleSpaceStart;
+
+  D_80075824[0].m_Type = -1;       // Make the first particle a terminator
+  *(int *)(&D_80075824[256]) = -1; // Terminate the last particle
+
+  // Mark all glows and sparkles as dead to initialize them
+  func_80058B68();
+
+  if (pAnimationsAndSparx && !g_IsFlightLevel) {
+    // Spawn Sparx
+    g_Sparx = g_SpawnMoby(120, 0);
+    HudReset(1);
+  }
+
+  // Start the level's music track
+  func_800567F4(g_CdMusic.m_CurrentTrack, 1);
+}
 
 /// @brief Reload the current level's layout
 void func_800144C8(void) {

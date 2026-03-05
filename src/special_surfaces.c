@@ -5,10 +5,10 @@
 #include "loaders.h"
 #include "moby.h"
 #include "overlay_pointers.h"
+#include "special_surfaces.h"
 #include "spyro.h"
 
-extern int D_80075728;    // TODO: spyro.h? not sure
-extern int D_800777C0[8]; // Zapped floors
+extern int D_80075728; // TODO: spyro.h? not sure
 
 // TODO: m_DamageFlags enum / definitions
 

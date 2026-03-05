@@ -17,8 +17,8 @@ typedef struct {
   // The difference between saved and not saved
   // is that when you die, the unsaved ones still spawn.
   // Saved when you stand on a checkpoint
-  int m_KilledMobysSaved[8];
-  int m_KilledMobys[8];
+  u_int m_KilledMobysSaved[8];
+  u_int m_KilledMobys[8];
 
   // When you start the level, it's the level's starting position,
   // when you stand on a checkpoint, the checkpoint's position is written here

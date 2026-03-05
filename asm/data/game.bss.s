@@ -122,10 +122,7 @@ dlabel D_800777AC
 /* 676F4 800777AC */ .space 0x14
 
 dlabel D_800777C0
-/* 67708 800777C0 */ .space 0x24
-
-dlabel D_800777E4
-/* 6772C 800777E4 */ .space 0x04
+/* 67708 800777C0 */ .space 0x28
 
 dlabel D_800777E8
 /* Total size from 800777E8 to 80077858 */ .space 0x70

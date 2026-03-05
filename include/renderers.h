@@ -31,6 +31,24 @@ typedef struct {
 
 extern ParticleTexture *D_80076278[32];
 
+typedef struct {
+  u_char m_Class; // Particle class, determines behavior
+  u_char m_Type;  // TODO: Document
+  u_char m_Life;  // Remaining life in ticks
+  u_char m_03;
+
+  // Depends on the type, and class
+  u_char m_Data[28];
+} Particle;
+
+// Particle array
+extern Particle *D_80075824;
+
+// Pointer used for particle allocation
+// It starts at the beginning of the array, and moves forward as particles are
+// allocated, then wraps around to the beginning when it reaches the end
+extern Particle *D_80075738;
+
 /// @brief Render particles
 void func_800573C8(void);
 
