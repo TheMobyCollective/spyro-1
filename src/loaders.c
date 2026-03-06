@@ -366,10 +366,6 @@ Model *PatchMobyModelPointers(Model *pModel) {
   return pModel;
 }
 
-// void func_8001364C(int pAnimationsAndSparx); /* Weird param, always 1 iirc */
-
-/// @brief Loads the level's layout
-// INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/loaders", func_8001364C);
 extern int D_80075698; // No read XREFs, only written here
 
 typedef struct {
