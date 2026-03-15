@@ -257,7 +257,7 @@
 - [ ] func_8004A200
 - [x] UpdateSpyroEnterReturnHome
 - [x] UpdateSpyroReturnHome
-- [ ] func_8004AC24
+- [x] func_8004AC24
 - [x] RandRange
 - [x] RandRangeSigned
 - [x] SaveChecksum

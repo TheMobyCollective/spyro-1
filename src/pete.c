@@ -1424,5 +1424,71 @@ void UpdateSpyroReturnHome(void) {
   func_80053708(&g_PadBackup, &g_Pad);
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004AC24);
+void func_8004AC24(int pKeepPosition) {
+  // Clean up any state specific side effects before wiping
+  switch (g_Spyro.m_State) {
+  case 11:
+  case 15:
+  case 32:
+  case 44:
+    // Stop all of spyro's sounds
+    func_800562A4((Moby *)&g_Spyro, 2);
+    break;
+  case 7:
+    // Disable the color filter
+    g_Spyro.m_colorFilter.m_interpolation = 0;
+    break;
+  }
 
+  if (pKeepPosition != 0) {
+    Vector3D posBackup;
+    Vector3D8 rotationBackup;
+    int healthBackup;
+
+    // Create backups of some values before wiping the entire spyro struct
+    VecCopy(&posBackup, &g_Spyro.m_Position);
+    rotationBackup.x = g_Spyro.m_bodyRotation.x;
+    rotationBackup.y = g_Spyro.m_bodyRotation.y;
+    rotationBackup.z = g_Spyro.m_bodyRotation.z;
+    healthBackup = g_Spyro.m_health;
+
+    Memset(&g_Spyro, 0, sizeof(g_Spyro));
+
+    VecCopy(&g_Spyro.m_Position, &posBackup);
+
+    g_Spyro.m_bodyRotation.x = rotationBackup.x;
+    g_Spyro.m_bodyRotation.y = rotationBackup.y;
+    g_Spyro.m_bodyRotation.z = rotationBackup.z;
+    g_Spyro.m_health = healthBackup;
+
+    g_Spyro.m_sortingDepth = 4;
+    g_Spyro.m_nextBodyAnimationFrame = 1;
+    g_Spyro.m_CollisionTriangleIndex = -1;
+
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotX = rotationBackup.x * 0x10;
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotY = rotationBackup.y * 0x10;
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = rotationBackup.z * 0x10;
+
+    func_8003EA68(0);
+
+    g_Spyro.m_touchingSurface = 0xFF;
+    g_Spyro.m_damageSoundChannel = 0x3F;
+    g_SpyroFlame.m_FairyKissTimer = 0;
+  } else {
+    // Leaves most things intact
+    g_Spyro.m_CollisionTriangleIndex = -1;
+    g_Spyro.m_touchingSurface = 0xFF;
+    *((int *)&g_Spyro.m_colorFilter) = 0;
+    g_Spyro.m_DamageFlags = 0;
+    g_Spyro.m_FloorDistance = 0;
+    g_Spyro.m_flyingAbility = 0;
+    g_Spyro.m_doingSupercharge = 0;
+    g_Spyro.unk_0x254 = 0;
+    g_Spyro.m_drowningOffset = 0;
+    g_SpyroFlame.m_FairyKissTimer = 0;
+
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotX = g_Spyro.m_bodyRotation.x * 0x10;
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotY = g_Spyro.m_bodyRotation.y * 0x10;
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z * 0x10;
+  }
+}
