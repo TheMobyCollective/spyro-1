@@ -38,8 +38,8 @@ glabel func_8004AE38
 /* 3B69C 8004AE9C 08022004 */  bltz       $at, .L8004B6C0
 /* 3B6A0 8004AEA0 00000220 */   addi      $v0, $zero, 0x0 /* handwritten instruction */
 /* 3B6A4 8004AEA4 801F013C */  lui        $at, (0x1F800004 >> 16)
-/* 3B6A8 8004AEA8 0780023C */  lui        $v0, %hi(D_80075778)
-/* 3B6AC 8004AEAC 78574224 */  addiu      $v0, $v0, %lo(D_80075778)
+/* 3B6A8 8004AEA8 0780023C */  lui        $v0, %hi(g_MobyCollisionChain)
+/* 3B6AC 8004AEAC 78574224 */  addiu      $v0, $v0, %lo(g_MobyCollisionChain)
 /* 3B6B0 8004AEB0 0000428C */  lw         $v0, 0x0($v0)
 /* 3B6B4 8004AEB4 00FC0320 */  addi       $v1, $zero, -0x400 /* handwritten instruction */
 /* 3B6B8 8004AEB8 00104220 */  addi       $v0, $v0, 0x1000 /* handwritten instruction */
@@ -1138,8 +1138,8 @@ glabel func_8004BE4C
 /* 3C6C8 8004BEC8 2208F602 */   sub       $at, $s7, $s6 /* handwritten instruction */
 /* 3C6CC 8004BECC 05032004 */  bltz       $at, .L8004CAE4
 /* 3C6D0 8004BED0 801F013C */   lui       $at, (0x1F800004 >> 16)
-/* 3C6D4 8004BED4 0780023C */  lui        $v0, %hi(D_80075778)
-/* 3C6D8 8004BED8 78574224 */  addiu      $v0, $v0, %lo(D_80075778)
+/* 3C6D4 8004BED4 0780023C */  lui        $v0, %hi(g_MobyCollisionChain)
+/* 3C6D8 8004BED8 78574224 */  addiu      $v0, $v0, %lo(g_MobyCollisionChain)
 /* 3C6DC 8004BEDC 0000428C */  lw         $v0, 0x0($v0)
 /* 3C6E0 8004BEE0 00FC0320 */  addi       $v1, $zero, -0x400 /* handwritten instruction */
 /* 3C6E4 8004BEE4 00104220 */  addi       $v0, $v0, 0x1000 /* handwritten instruction */
@@ -2732,8 +2732,8 @@ glabel func_8004D5EC
 .L8004D650:
 /* 3DE50 8004D650 801F013C */  lui        $at, (0x1F800004 >> 16)
 /* 3DE54 8004D654 200036AC */  sw         $s6, (0x1F800020 & 0xFFFF)($at)
-/* 3DE58 8004D658 0780023C */  lui        $v0, %hi(D_80075778)
-/* 3DE5C 8004D65C 78574224 */  addiu      $v0, $v0, %lo(D_80075778)
+/* 3DE58 8004D658 0780023C */  lui        $v0, %hi(g_MobyCollisionChain)
+/* 3DE5C 8004D65C 78574224 */  addiu      $v0, $v0, %lo(g_MobyCollisionChain)
 /* 3DE60 8004D660 0000428C */  lw         $v0, 0x0($v0)
 /* 3DE64 8004D664 00FC0320 */  addi       $v1, $zero, -0x400 /* handwritten instruction */
 /* 3DE68 8004D668 00104220 */  addi       $v0, $v0, 0x1000 /* handwritten instruction */
@@ -3674,8 +3674,8 @@ glabel func_8004E3C8
 /* 3EC30 8004E430 25083900 */  or         $at, $at, $t9
 /* 3EC34 8004E434 CC012004 */  bltz       $at, .L8004EB68
 /* 3EC38 8004E438 00000220 */   addi      $v0, $zero, 0x0 /* handwritten instruction */
-/* 3EC3C 8004E43C 0780013C */  lui        $at, %hi(D_80075778)
-/* 3EC40 8004E440 78572124 */  addiu      $at, $at, %lo(D_80075778)
+/* 3EC3C 8004E43C 0780013C */  lui        $at, %hi(g_MobyCollisionChain)
+/* 3EC40 8004E440 78572124 */  addiu      $at, $at, %lo(g_MobyCollisionChain)
 /* 3EC44 8004E444 0000218C */  lw         $at, 0x0($at)
 /* 3EC48 8004E448 421B1700 */  srl        $v1, $s7, 13
 /* 3EC4C 8004E44C 42231800 */  srl        $a0, $t8, 13

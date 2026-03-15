@@ -495,7 +495,7 @@ int SoundsUpdate(void) {
 }
 
 // Set music state
-void func_800567F4(int pSong, int pFlags) {
+void SetMusicState(int pSong, int pFlags) {
 
   // Uhhh, not sure why they made cdFlags 8 bytes long
   u_char cdFlags[8];
@@ -624,7 +624,7 @@ void func_800567F4(int pSong, int pFlags) {
 }
 
 // Stop all sounds, and stop music
-void func_80056B28(int pSkipVoices) {
+void KillSoundsAndMusic(int pSkipVoices) {
   int i;
 
   pSkipVoices ^= 0xFFFFFF;
@@ -666,7 +666,7 @@ void func_80056B28(int pSkipVoices) {
   g_Spu.m_PlayVoice = 0;
 
   // Stop music
-  func_800567F4(0, 4 /* Stop immediately */);
+  SetMusicState(0, 4 /* Stop immediately */);
 }
 
 // Stereo sound calculation

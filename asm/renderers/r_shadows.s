@@ -387,8 +387,8 @@ glabel func_80059F8C
 /* 4A7E4 80059FE4 0780183C */  lui        $t8, %hi(D_8006FCF4)
 /* 4A7E8 80059FE8 F4FC1827 */  addiu      $t8, $t8, %lo(D_8006FCF4)
 /* 4A7EC 80059FEC 00281823 */  addi       $t8, $t8, 0x2800 /* handwritten instruction */
-/* 4A7F0 80059FF0 0780193C */  lui        $t9, %hi(D_80075EF8)
-/* 4A7F4 80059FF4 F85E3927 */  addiu      $t9, $t9, %lo(D_80075EF8)
+/* 4A7F0 80059FF0 0780193C */  lui        $t9, %hi(g_MobyShadows)
+/* 4A7F4 80059FF4 F85E3927 */  addiu      $t9, $t9, %lo(g_MobyShadows)
 /* 4A7F8 80059FF8 0000228F */  lw         $v0, 0x0($t9)
 /* 4A7FC 80059FFC 0400238F */  lw         $v1, 0x4($t9)
 /* 4A800 8005A000 0800398F */  lw         $t9, 0x8($t9)

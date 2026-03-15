@@ -141,7 +141,7 @@ void TitlescreenUpdate(void) {
         RECT rc;
         g_CdMusic.m_CurrentTrack = 20;
         g_CdMusic.m_EasterEggTicks = 155520000;
-        func_800567F4(20, 0x1);
+        SetMusicState(20, 1);
         setRECT(&rc, 512, 256, 512, 256);
         LoadImage(&rc, g_Buffers.m_LowerPolyBuffer - 0x40000);
         g_TitlescreenState.m_SubState = 2;
@@ -160,7 +160,7 @@ void TitlescreenUpdate(void) {
     } else if (g_TitlescreenState.m_SubState == 3) {
       // Ready for button inputs or to time out to show the demo
       if ((g_Pad.m_Held & (PAD_L1 | PAD_TRIANGLE)) == (PAD_L1 | PAD_TRIANGLE)) {
-        func_80056B28(0); // stop all sounds
+        KillSoundsAndMusic(0); // stop all sounds
         TitlescreenPlaySound(9);
         SpuUpdate();
         while (g_CdState.m_IsReading != 0 || CdSync(1, 0) != CdlComplete ||

@@ -10,14 +10,14 @@
 
 /* Handwritten function */
 glabel func_800524C4
-/* 42CC4 800524C4 0780013C */  lui        $at, %hi(D_800756A4)
-/* 42CC8 800524C8 A4562124 */  addiu      $at, $at, %lo(D_800756A4)
+/* 42CC4 800524C4 0780013C */  lui        $at, %hi(g_DynMobyCount)
+/* 42CC8 800524C8 A4562124 */  addiu      $at, $at, %lo(g_DynMobyCount)
 /* 42CCC 800524CC 0000228C */  lw         $v0, 0x0($at)
 /* 42CD0 800524D0 00000000 */  nop
 /* 42CD4 800524D4 01004220 */  addi       $v0, $v0, 0x1 /* handwritten instruction */
 /* 42CD8 800524D8 000022AC */  sw         $v0, 0x0($at)
-/* 42CDC 800524DC 0780013C */  lui        $at, %hi(D_8007573C)
-/* 42CE0 800524E0 3C572124 */  addiu      $at, $at, %lo(D_8007573C)
+/* 42CDC 800524DC 0780013C */  lui        $at, %hi(g_MobyAllocPtr)
+/* 42CE0 800524E0 3C572124 */  addiu      $at, $at, %lo(g_MobyAllocPtr)
 /* 42CE4 800524E4 0000228C */  lw         $v0, 0x0($at)
 /* 42CE8 800524E8 FFFF0320 */  addi       $v1, $zero, -0x1 /* handwritten instruction */
 /* 42CEC 800524EC 48004480 */  lb         $a0, 0x48($v0)
@@ -34,8 +34,8 @@ glabel func_800524C4
 /* 42D14 80052514 A8FF6320 */  addi       $v1, $v1, -0x58 /* handwritten instruction */
 .L80052518:
 /* 42D18 80052518 000023AC */  sw         $v1, 0x0($at)
-/* 42D1C 8005251C 0780013C */  lui        $at, %hi(D_80075930)
-/* 42D20 80052520 30592124 */  addiu      $at, $at, %lo(D_80075930)
+/* 42D1C 8005251C 0780013C */  lui        $at, %hi(g_PropsAllocPtr)
+/* 42D20 80052520 30592124 */  addiu      $at, $at, %lo(g_PropsAllocPtr)
 /* 42D24 80052524 0000238C */  lw         $v1, 0x0($at)
 /* 42D28 80052528 FFFF0420 */  addi       $a0, $zero, -0x1 /* handwritten instruction */
 /* 42D2C 8005252C FFFF6580 */  lb         $a1, -0x1($v1)
@@ -60,8 +60,8 @@ glabel func_800524C4
 /* Handwritten function */
 glabel func_80052568
 /* 42D68 80052568 34008584 */  lh         $a1, 0x34($a0)
-/* 42D6C 8005256C 0780013C */  lui        $at, %hi(D_80075778)
-/* 42D70 80052570 78572124 */  addiu      $at, $at, %lo(D_80075778)
+/* 42D6C 8005256C 0780013C */  lui        $at, %hi(g_MobyCollisionChain)
+/* 42D70 80052570 78572124 */  addiu      $at, $at, %lo(g_MobyCollisionChain)
 /* 42D74 80052574 0C00A004 */  bltz       $a1, .L800525A8
 /* 42D78 80052578 0000218C */   lw        $at, 0x0($at)
 /* 42D7C 8005257C 80280500 */  sll        $a1, $a1, 2
@@ -77,8 +77,8 @@ glabel func_80052568
 /* 42DA0 800525A0 00000000 */  nop
 /* 42DA4 800525A4 0000A2AC */  sw         $v0, 0x0($a1)
 .L800525A8:
-/* 42DA8 800525A8 0780013C */  lui        $at, %hi(D_80075890)
-/* 42DAC 800525AC 90582124 */  addiu      $at, $at, %lo(D_80075890)
+/* 42DA8 800525A8 0780013C */  lui        $at, %hi(g_DynMobys)
+/* 42DAC 800525AC 90582124 */  addiu      $at, $at, %lo(g_DynMobys)
 /* 42DB0 800525B0 0000218C */  lw         $at, 0x0($at)
 /* 42DB4 800525B4 00000000 */  nop
 /* 42DB8 800525B8 22082400 */  sub        $at, $at, $a0 /* handwritten instruction */
@@ -87,8 +87,8 @@ glabel func_80052568
 /* 42DC4 800525C4 0800E003 */  jr         $ra
 /* 42DC8 800525C8 480082A0 */   sb        $v0, 0x48($a0)
 .L800525CC:
-/* 42DCC 800525CC 0780013C */  lui        $at, %hi(D_800756A4)
-/* 42DD0 800525D0 A4562124 */  addiu      $at, $at, %lo(D_800756A4)
+/* 42DCC 800525CC 0780013C */  lui        $at, %hi(g_DynMobyCount)
+/* 42DD0 800525D0 A4562124 */  addiu      $at, $at, %lo(g_DynMobyCount)
 /* 42DD4 800525D4 0000228C */  lw         $v0, 0x0($at)
 /* 42DD8 800525D8 00000000 */  nop
 /* 42DDC 800525DC FFFF4220 */  addi       $v0, $v0, -0x1 /* handwritten instruction */
@@ -110,8 +110,8 @@ glabel func_80052568
 /* 42E18 80052618 FFFF0320 */  addi       $v1, $zero, -0x1 /* handwritten instruction */
 .L8005261C:
 /* 42E1C 8005261C 480023A0 */  sb         $v1, 0x48($at)
-/* 42E20 80052620 0780023C */  lui        $v0, %hi(D_8007573C)
-/* 42E24 80052624 3C574224 */  addiu      $v0, $v0, %lo(D_8007573C)
+/* 42E20 80052620 0780023C */  lui        $v0, %hi(g_MobyAllocPtr)
+/* 42E24 80052624 3C574224 */  addiu      $v0, $v0, %lo(g_MobyAllocPtr)
 /* 42E28 80052628 0000438C */  lw         $v1, 0x0($v0)
 /* 42E2C 8005262C 00000000 */  nop
 /* 42E30 80052630 22186100 */  sub        $v1, $v1, $at /* handwritten instruction */
@@ -137,8 +137,8 @@ glabel func_80052568
 /* 42E78 80052678 FFFF0320 */  addi       $v1, $zero, -0x1 /* handwritten instruction */
 .L8005267C:
 /* 42E7C 8005267C FFFF23A0 */  sb         $v1, -0x1($at)
-/* 42E80 80052680 0780023C */  lui        $v0, %hi(D_80075930)
-/* 42E84 80052684 30594224 */  addiu      $v0, $v0, %lo(D_80075930)
+/* 42E80 80052680 0780023C */  lui        $v0, %hi(g_PropsAllocPtr)
+/* 42E84 80052684 30594224 */  addiu      $v0, $v0, %lo(g_PropsAllocPtr)
 /* 42E88 80052688 0000438C */  lw         $v1, 0x0($v0)
 /* 42E8C 8005268C 00000000 */  nop
 /* 42E90 80052690 22186100 */  sub        $v1, $v1, $at /* handwritten instruction */
@@ -179,8 +179,8 @@ glabel func_800526A8
 /* 42F08 80052708 340082A4 */   sh        $v0, 0x34($a0)
 /* 42F0C 8005270C 0C00828C */  lw         $v0, 0xC($a0)
 /* 42F10 80052710 1000838C */  lw         $v1, 0x10($a0)
-/* 42F14 80052714 0780053C */  lui        $a1, %hi(D_80075778)
-/* 42F18 80052718 7857A524 */  addiu      $a1, $a1, %lo(D_80075778)
+/* 42F14 80052714 0780053C */  lui        $a1, %hi(g_MobyCollisionChain)
+/* 42F18 80052718 7857A524 */  addiu      $a1, $a1, %lo(g_MobyCollisionChain)
 /* 42F1C 8005271C 0000A58C */  lw         $a1, 0x0($a1)
 /* 42F20 80052720 42130200 */  srl        $v0, $v0, 13
 /* 42F24 80052724 421B0300 */  srl        $v1, $v1, 13
@@ -412,8 +412,8 @@ glabel func_800529E4
 /* 4326C 80052A6C 00000000 */   nop
 /* 43270 80052A70 0C00818C */  lw         $at, 0xC($a0)
 /* 43274 80052A74 1000828C */  lw         $v0, 0x10($a0)
-/* 43278 80052A78 0780033C */  lui        $v1, %hi(D_80075778)
-/* 4327C 80052A7C 78576324 */  addiu      $v1, $v1, %lo(D_80075778)
+/* 43278 80052A78 0780033C */  lui        $v1, %hi(g_MobyCollisionChain)
+/* 4327C 80052A7C 78576324 */  addiu      $v1, $v1, %lo(g_MobyCollisionChain)
 /* 43280 80052A80 0000638C */  lw         $v1, 0x0($v1)
 /* 43284 80052A84 420B0100 */  srl        $at, $at, 13
 /* 43288 80052A88 42130200 */  srl        $v0, $v0, 13

@@ -9,11 +9,11 @@
 
 /* Handwritten function */
 glabel func_80053570
-/* 43D70 80053570 0780053C */  lui        $a1, %hi(D_80075824)
-/* 43D74 80053574 2458A524 */  addiu      $a1, $a1, %lo(D_80075824)
+/* 43D70 80053570 0780053C */  lui        $a1, %hi(g_Particles)
+/* 43D74 80053574 2458A524 */  addiu      $a1, $a1, %lo(g_Particles)
 /* 43D78 80053578 0000A58C */  lw         $a1, 0x0($a1)
-/* 43D7C 8005357C 0780013C */  lui        $at, %hi(D_80075738)
-/* 43D80 80053580 38572124 */  addiu      $at, $at, %lo(D_80075738)
+/* 43D7C 8005357C 0780013C */  lui        $at, %hi(g_ParticleAllocPtr)
+/* 43D80 80053580 38572124 */  addiu      $at, $at, %lo(g_ParticleAllocPtr)
 /* 43D84 80053584 0000228C */  lw         $v0, 0x0($at)
 /* 43D88 80053588 0020A520 */  addi       $a1, $a1, 0x2000 /* handwritten instruction */
 /* 43D8C 8005358C 0C004514 */  bne        $v0, $a1, .L800535C0
@@ -55,8 +55,8 @@ glabel func_80053570
 
 /* Handwritten function */
 glabel func_80053608
-/* 43E08 80053608 0780053C */  lui        $a1, %hi(D_80075824)
-/* 43E0C 8005360C 2458A524 */  addiu      $a1, $a1, %lo(D_80075824)
+/* 43E08 80053608 0780053C */  lui        $a1, %hi(g_Particles)
+/* 43E0C 8005360C 2458A524 */  addiu      $a1, $a1, %lo(g_Particles)
 /* 43E10 80053610 0000A58C */  lw         $a1, 0x0($a1)
 /* 43E14 80053614 20008120 */  addi       $at, $a0, 0x20 /* handwritten instruction */
 /* 43E18 80053618 0020A220 */  addi       $v0, $a1, 0x2000 /* handwritten instruction */
@@ -66,8 +66,8 @@ glabel func_80053608
 /* 43E28 80053628 0C004310 */  beq        $v0, $v1, .L8005365C
 /* 43E2C 8005362C 00000000 */   nop
 /* 43E30 80053630 FEFF0320 */  addi       $v1, $zero, -0x2 /* handwritten instruction */
-/* 43E34 80053634 0780013C */  lui        $at, %hi(D_80075738)
-/* 43E38 80053638 38572124 */  addiu      $at, $at, %lo(D_80075738)
+/* 43E34 80053634 0780013C */  lui        $at, %hi(g_ParticleAllocPtr)
+/* 43E38 80053638 38572124 */  addiu      $at, $at, %lo(g_ParticleAllocPtr)
 /* 43E3C 8005363C 0000228C */  lw         $v0, 0x0($at)
 /* 43E40 80053640 010083A0 */  sb         $v1, 0x1($a0)
 /* 43E44 80053644 22104400 */  sub        $v0, $v0, $a0 /* handwritten instruction */
@@ -88,8 +88,8 @@ glabel func_80053608
 /* 43E74 80053674 FBFF2514 */  bne        $at, $a1, .L80053664
 /* 43E78 80053678 E0FF2120 */   addi      $at, $at, -0x20 /* handwritten instruction */
 .L8005367C:
-/* 43E7C 8005367C 0780023C */  lui        $v0, %hi(D_80075738)
-/* 43E80 80053680 38574224 */  addiu      $v0, $v0, %lo(D_80075738)
+/* 43E7C 8005367C 0780023C */  lui        $v0, %hi(g_ParticleAllocPtr)
+/* 43E80 80053680 38574224 */  addiu      $v0, $v0, %lo(g_ParticleAllocPtr)
 /* 43E84 80053684 0000438C */  lw         $v1, 0x0($v0)
 /* 43E88 80053688 20002120 */  addi       $at, $at, 0x20 /* handwritten instruction */
 /* 43E8C 8005368C 22186100 */  sub        $v1, $v1, $at /* handwritten instruction */

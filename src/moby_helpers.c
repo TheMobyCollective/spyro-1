@@ -201,7 +201,7 @@ inline static int SavedMobyIsDead(int mobyIndex) {
 
 /// @brief Returns if a Moby has been killed
 int func_80038494(Moby *pMoby) {
-  // Since load layout sets m_DropMoby to 0xff if the moby is dead
+  // Since load scene sets m_DropMoby to 0xff if the moby is dead
   // the check for it is a bit odd
   return SavedMobyIsDead(pMoby - g_LevelMobys) && pMoby->m_DropMoby == 0xff;
 }
@@ -1122,7 +1122,7 @@ void func_8003B728(Moby *pMoby, u_int pSubstate) {
 // Marks a moby as killed
 void func_8003B7C0(Moby *pMoby) {
   // Make sure the Moby is a static one
-  if (pMoby >= g_LevelMobys && pMoby < D_80075890) {
+  if (pMoby >= g_LevelMobys && pMoby < g_DynMobys) {
     // Get the index by subtracting the base moby pointer
     int mobyIndex = pMoby - g_LevelMobys;
 
@@ -1151,7 +1151,7 @@ void func_8003B854(int pGemValue, Moby *pMoby) {
   // If it's not, use the Moby's index into the Moby array
   // If it IS, we have to use m_MobyIndex, which is the parent
   // Moby's index, instead.
-  if (pMoby >= g_LevelMobys && pMoby < D_80075890) {
+  if (pMoby >= g_LevelMobys && pMoby < g_DynMobys) {
     int t;
     // Not entirely sure what this shuffle of variables is good for
     mobyIndex = pMoby - g_LevelMobys;
@@ -1183,8 +1183,8 @@ void CollectItem(Moby *pMoby) {
   g_NGemsSinceLevelEntry += 1;
 
   // If this was a key, mark it as collected
-  if (pMoby == D_80075758) {
-    D_80075830 = 3;
+  if (pMoby == g_KeyMoby) {
+    g_KeyFlag = 3;
   }
 
   // Updates the moby's rotation matrix

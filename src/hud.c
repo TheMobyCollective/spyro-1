@@ -130,7 +130,7 @@ void HudReset(int pArg) {
   g_Hud.m_DragonCount = g_DragonTotal;
   g_Hud.m_LifeCount = g_SpyroLifeCount;
   g_Hud.m_EggCount = g_EggTotal;
-  g_Hud.m_KeyFlag = D_80075830;
+  g_Hud.m_KeyFlag = g_KeyFlag;
   g_Hud.m_LifeOrbCount = g_LifeOrbCount;
 
   HudPrint(0, 4, g_Hud.m_GemCount, 1);
@@ -251,7 +251,8 @@ void HudTick(void) {
 
   g_Hud.m_Mobys[10].m_Rotation.z = g_Hud.unk_0x3c & 0xFF;
   if (g_Hud.m_LifeDisplayState == HDS_Hidden) {
-    if (g_Hud.m_LifeCount != g_SpyroLifeCount || g_Hud.m_LifeOrbCount != g_LifeOrbCount) {
+    if (g_Hud.m_LifeCount != g_SpyroLifeCount ||
+        g_Hud.m_LifeOrbCount != g_LifeOrbCount) {
       g_Hud.m_LifeDisplayState = HDS_Opening;
       g_Hud.m_LifeProgress = 0;
     }
@@ -289,7 +290,8 @@ void HudTick(void) {
       }
     }
   } else if (g_Hud.m_LifeDisplayState == HDS_Closing) {
-    if (g_Hud.m_LifeCount != g_SpyroLifeCount || g_Hud.m_LifeOrbCount != g_LifeOrbCount) {
+    if (g_Hud.m_LifeCount != g_SpyroLifeCount ||
+        g_Hud.m_LifeOrbCount != g_LifeOrbCount) {
       g_Hud.m_LifeDisplayState = HDS_Opening;
       g_Hud.m_LifeOrbCount = g_LifeOrbCount;
     } else if (g_Hud.m_LifeProgress == 0) {
@@ -360,12 +362,12 @@ void HudTick(void) {
   }
   }
 
-  if (D_80075830 != 1)
-    g_Hud.m_KeyFlag = D_80075830;
+  if (g_KeyFlag != 1)
+    g_Hud.m_KeyFlag = g_KeyFlag;
 
   switch (g_Hud.m_KeyDisplayState) {
   case HDS_Hidden: {
-    if (g_Hud.m_KeyFlag != D_80075830) {
+    if (g_Hud.m_KeyFlag != g_KeyFlag) {
       g_Hud.m_KeyDisplayState = HDS_Opening;
       g_Hud.m_KeyProgress = 0;
     }
@@ -375,7 +377,7 @@ void HudTick(void) {
     if (g_Hud.m_KeyProgress == 13) {
       g_Hud.m_KeyDisplayState = HDS_Open;
       g_Hud.m_KeySteadyTicks = 0;
-      if (g_Hud.m_KeyFlag == D_80075830) {
+      if (g_Hud.m_KeyFlag == g_KeyFlag) {
         g_Hud.m_KeySteadyTicks = -40;
       }
     } else {
@@ -384,7 +386,7 @@ void HudTick(void) {
     break;
   }
   case HDS_Open: {
-    if (g_Hud.m_KeyFlag != D_80075830) {
+    if (g_Hud.m_KeyFlag != g_KeyFlag) {
       if (g_Hud.m_KeySteadyTicks == 0) {
         for (j = 0; j < 6; ++j) {
           (*D_800758E4)(1, 12, &g_Hud.m_Mobys[11].m_Props,
@@ -393,7 +395,7 @@ void HudTick(void) {
       } else if (g_Hud.m_KeySteadyTicks > 11) {
         g_Hud.m_Mobys[11].m_Substate = 64;
         g_Hud.m_KeySteadyTicks = 0;
-        g_Hud.m_KeyFlag = D_80075830;
+        g_Hud.m_KeyFlag = g_KeyFlag;
       }
     } else if (g_Hud.m_KeySteadyTicks == 20) {
       g_Hud.m_KeyDisplayState = HDS_Closing;
@@ -403,7 +405,7 @@ void HudTick(void) {
     break;
   }
   case HDS_Closing: {
-    if (g_Hud.m_KeyFlag != D_80075830) {
+    if (g_Hud.m_KeyFlag != g_KeyFlag) {
       g_Hud.m_KeyDisplayState = HDS_Opening;
       g_Hud.m_KeyProgress = 0;
     } else if (g_Hud.m_KeyProgress == 0) {

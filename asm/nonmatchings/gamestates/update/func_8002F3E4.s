@@ -251,8 +251,8 @@ glabel func_8002F3E4
 /* 1FF60 8002F760 A45822AC */  sw         $v0, %lo(g_SavedFairyKissTimer)($at)
 /* 1FF64 8002F764 092B010C */  jal        func_8004AC24
 /* 1FF68 8002F768 01000424 */   addiu     $a0, $zero, 0x1
-/* 1FF6C 8002F76C 0780033C */  lui        $v1, %hi(D_80075824)
-/* 1FF70 8002F770 2458638C */  lw         $v1, %lo(D_80075824)($v1)
+/* 1FF6C 8002F76C 0780033C */  lui        $v1, %hi(g_Particles)
+/* 1FF70 8002F770 2458638C */  lw         $v1, %lo(g_Particles)($v1)
 /* 1FF74 8002F774 01000224 */  addiu      $v0, $zero, 0x1
 /* 1FF78 8002F778 0880013C */  lui        $at, %hi(g_Spyro + 0x18)
 /* 1FF7C 8002F77C 708A22A0 */  sb         $v0, %lo(g_Spyro + 0x18)($at)
@@ -265,14 +265,14 @@ glabel func_8002F3E4
 /* 1FF98 8002F798 768A20A0 */  sb         $zero, %lo(g_Spyro + 0x1E)($at)
 /* 1FF9C 8002F79C 0880013C */  lui        $at, %hi(g_Spyro + 0x24)
 /* 1FFA0 8002F7A0 7C8A20A0 */  sb         $zero, %lo(g_Spyro + 0x24)($at)
-/* 1FFA4 8002F7A4 0780013C */  lui        $at, %hi(D_80075738)
-/* 1FFA8 8002F7A8 385723AC */  sw         $v1, %lo(D_80075738)($at)
+/* 1FFA4 8002F7A4 0780013C */  lui        $at, %hi(g_ParticleAllocPtr)
+/* 1FFA8 8002F7A8 385723AC */  sw         $v1, %lo(g_ParticleAllocPtr)($at)
 /* 1FFAC 8002F7AC 010062A0 */  sb         $v0, 0x1($v1)
 /* 1FFB0 8002F7B0 0780023C */  lui        $v0, %hi(g_DragonCutscene + 0x90)
 /* 1FFB4 8002F7B4 C070428C */  lw         $v0, %lo(g_DragonCutscene + 0x90)($v0)
 /* 1FFB8 8002F7B8 00000000 */  nop
 /* 1FFBC 8002F7BC 54004490 */  lbu        $a0, 0x54($v0)
-/* 1FFC0 8002F7C0 CA5A010C */  jal        func_80056B28
+/* 1FFC0 8002F7C0 CA5A010C */  jal        KillSoundsAndMusic
 /* 1FFC4 8002F7C4 04209200 */   sllv      $a0, $s2, $a0
 /* 1FFC8 8002F7C8 21280000 */  addu       $a1, $zero, $zero
 /* 1FFCC 8002F7CC 0780023C */  lui        $v0, %hi(g_Spu + 0x2CC)
@@ -2054,15 +2054,15 @@ glabel func_8002F3E4
 /* 21A5C 8003125C 00000000 */  nop
 /* 21A60 80031260 65006214 */  bne        $v1, $v0, .L800313F8
 /* 21A64 80031264 21280000 */   addu      $a1, $zero, $zero
-/* 21A68 80031268 0780033C */  lui        $v1, %hi(D_80075824)
-/* 21A6C 8003126C 2458638C */  lw         $v1, %lo(D_80075824)($v1)
+/* 21A68 80031268 0780033C */  lui        $v1, %hi(g_Particles)
+/* 21A6C 8003126C 2458638C */  lw         $v1, %lo(g_Particles)($v1)
 /* 21A70 80031270 07000224 */  addiu      $v0, $zero, 0x7
 /* 21A74 80031274 0780013C */  lui        $at, %hi(g_DragonCutscene + 0x28)
 /* 21A78 80031278 587022AC */  sw         $v0, %lo(g_DragonCutscene + 0x28)($at)
 /* 21A7C 8003127C FF000224 */  addiu      $v0, $zero, 0xFF
 /* 21A80 80031280 0000E0AC */  sw         $zero, 0x0($a3)
-/* 21A84 80031284 0780013C */  lui        $at, %hi(D_80075738)
-/* 21A88 80031288 385723AC */  sw         $v1, %lo(D_80075738)($at)
+/* 21A84 80031284 0780013C */  lui        $at, %hi(g_ParticleAllocPtr)
+/* 21A88 80031288 385723AC */  sw         $v1, %lo(g_ParticleAllocPtr)($at)
 /* 21A8C 8003128C 010062A0 */  sb         $v0, 0x1($v1)
 /* 21A90 80031290 0780023C */  lui        $v0, %hi(g_Spu + 0x2CC)
 /* 21A94 80031294 D461428C */  lw         $v0, %lo(g_Spu + 0x2CC)($v0)

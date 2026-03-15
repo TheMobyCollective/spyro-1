@@ -161,12 +161,12 @@ void PadDemoUpdate(void) {
     demoInput |= (g_Pad.m_Sticks.m_LeftY << 0x18);
 
     // Write the data and increment the pointer
-    *(D_8007585C++) = demoInput;
+    *(g_DemoDataPtr++) = demoInput;
   } else { // Always DEMO_MODE_PLAY since this function is only called during
            // demos
 
     // Reads the current demo recording data, increments the pointer
-    demoInput = *(D_8007585C++);
+    demoInput = *(g_DemoDataPtr++);
     g_Pad.m_Sticks.m_RightX = 127;
     g_Pad.m_Sticks.m_RightY = 127;
     g_Pad.m_Sticks.m_LeftX = (u_char)(demoInput >> 0x10);
@@ -225,7 +225,7 @@ void PadVSync(void) {
   int updatedInputs;
   int inputState;
 
-  D_800758C8 += 1; // Increment the level ticks
+  g_LevelTicks += 1; // Increment the level ticks
 
   // Is there a CD max time set?
   if (g_CDMaxReadTime) {

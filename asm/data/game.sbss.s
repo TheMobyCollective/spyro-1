@@ -49,10 +49,10 @@ dlabel D_8007569C
 dlabel D_800756A0
 /* 65E78 800756A0 */ .space 0x04
 
-dlabel D_800756A4
+dlabel g_DynMobyCount
 /* 65E7C 800756A4 */ .space 0x04
 
-dlabel D_800756A8
+dlabel g_DynMobyMax
 /* 65E80 800756A8 */ .space 0x04
 
 dlabel g_LevelTransTicks
@@ -100,7 +100,7 @@ dlabel g_CDMaxReadTime
 dlabel D_800756E4
 /* 65EBC 800756E4 */ .space 0x04
 
-dlabel D_800756E8
+dlabel g_DynMobySpaceEnd
 /* 65EC0 800756E8 */ .space 0x08
 
 dlabel D_800756F0
@@ -158,10 +158,10 @@ dlabel D_80075730
 dlabel g_UpdateMoby
 /* 65F0C 80075734 */ .space 0x04
 
-dlabel D_80075738
+dlabel g_ParticleAllocPtr
 /* 65F10 80075738 */ .space 0x04
 
-dlabel D_8007573C
+dlabel g_MobyAllocPtr
 /* 65F14 8007573C */ .space 0x04
 
 dlabel g_LevelTransChestDuration
@@ -182,7 +182,7 @@ dlabel g_DragonTotal
 dlabel D_80075754
 /* 65F2C 80075754 */ .space 0x04
 
-dlabel D_80075758
+dlabel g_KeyMoby
 /* 65F30 80075758 */ .space 0x04
 
 dlabel D_8007575C
@@ -203,7 +203,7 @@ dlabel D_8007576C
 dlabel D_80075774
 /* 65F4C 80075774 */ .space 0x04
 
-dlabel D_80075778
+dlabel g_MobyCollisionChain
 /* 65F50 80075778 */ .space 0x04
 
 dlabel D_8007577C
@@ -288,7 +288,7 @@ dlabel D_800757E0
 dlabel D_800757E4
 /* 65FBC 800757E4 */ .space 0x04
 
-dlabel D_800757E8
+dlabel g_PreviousLevelId
 /* 65FC0 800757E8 */ .space 0x04
 
 dlabel D_800757EC
@@ -333,7 +333,7 @@ dlabel g_HudOT
 dlabel g_WorldOT
 /* 65FF8 80075820 */ .space 0x04
 
-dlabel D_80075824
+dlabel g_Particles
 /* 65FFC 80075824 */ .space 0x04
 
 dlabel g_LevelMobys
@@ -342,7 +342,7 @@ dlabel g_LevelMobys
 dlabel g_SpyroLifeCount
 /* 66004 8007582C */ .space 0x04
 
-dlabel D_80075830
+dlabel g_KeyFlag
 /* 66008 80075830 */ .space 0x04
 
 dlabel D_80075834
@@ -375,7 +375,7 @@ dlabel D_80075854
 dlabel D_80075858
 /* 66030 80075858 */ .space 0x04
 
-dlabel D_8007585C
+dlabel g_DemoDataPtr
 /* 66034 8007585C */ .space 0x04
 
 dlabel g_GemTotal
@@ -411,7 +411,7 @@ dlabel g_CurDB
 dlabel g_CDReadTime
 /* 66064 8007588C */ .space 0x04
 
-dlabel D_80075890
+dlabel g_DynMobys
 /* 66068 80075890 */ .space 0x04
 
 dlabel D_80075894
@@ -453,7 +453,7 @@ dlabel D_800758C0
 dlabel D_800758C4
 /* 6609C 800758C4 */ .space 0x04
 
-dlabel D_800758C8
+dlabel g_LevelTicks
 /* 660A0 800758C8 */ .space 0x04
 
 dlabel g_SpawnMoby
@@ -540,7 +540,7 @@ dlabel cheat_InputCounter
 dlabel D_8007592C
 /* 66104 8007592C */ .space 0x04
 
-dlabel D_80075930
+dlabel g_PropsAllocPtr
 /* 66108 80075930 */ .space 0x04
 
 dlabel D_80075934

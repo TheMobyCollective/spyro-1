@@ -216,8 +216,8 @@ glabel func_800258F0
 /* 163BC 80025BBC 55002004 */  bltz       $at, .L80025D14
 /* 163C0 80025BC0 020E0100 */   srl       $at, $at, 24
 /* 163C4 80025BC4 18003DA2 */  sb         $sp, 0x18($s1)
-/* 163C8 80025BC8 0880023C */  lui        $v0, %hi(D_80078560)
-/* 163CC 80025BCC 60854224 */  addiu      $v0, $v0, %lo(D_80078560)
+/* 163C8 80025BC8 0880023C */  lui        $v0, %hi(g_EnvironmentAnimations)
+/* 163CC 80025BCC 60854224 */  addiu      $v0, $v0, %lo(g_EnvironmentAnimations)
 /* 163D0 80025BD0 1400428C */  lw         $v0, 0x14($v0)
 /* 163D4 80025BD4 80080100 */  sll        $at, $at, 2
 /* 163D8 80025BD8 20082200 */  add        $at, $at, $v0 /* handwritten instruction */
@@ -307,8 +307,8 @@ glabel func_800258F0
 /* 16518 80025D18 50002004 */  bltz       $at, .L80025E5C
 /* 1651C 80025D1C 020E0100 */   srl       $at, $at, 24
 /* 16520 80025D20 19003DA2 */  sb         $sp, 0x19($s1)
-/* 16524 80025D24 0880023C */  lui        $v0, %hi(D_80078560)
-/* 16528 80025D28 60854224 */  addiu      $v0, $v0, %lo(D_80078560)
+/* 16524 80025D24 0880023C */  lui        $v0, %hi(g_EnvironmentAnimations)
+/* 16528 80025D28 60854224 */  addiu      $v0, $v0, %lo(g_EnvironmentAnimations)
 /* 1652C 80025D2C 1C00428C */  lw         $v0, 0x1C($v0)
 /* 16530 80025D30 80080100 */  sll        $at, $at, 2
 /* 16534 80025D34 20082200 */  add        $at, $at, $v0 /* handwritten instruction */
@@ -393,8 +393,8 @@ glabel func_800258F0
 /* 16660 80025E60 5B002004 */  bltz       $at, .L80025FD0
 /* 16664 80025E64 020E0100 */   srl       $at, $at, 24
 /* 16668 80025E68 1A003DA2 */  sb         $sp, 0x1A($s1)
-/* 1666C 80025E6C 0880023C */  lui        $v0, %hi(D_80078560)
-/* 16670 80025E70 60854224 */  addiu      $v0, $v0, %lo(D_80078560)
+/* 1666C 80025E6C 0880023C */  lui        $v0, %hi(g_EnvironmentAnimations)
+/* 16670 80025E70 60854224 */  addiu      $v0, $v0, %lo(g_EnvironmentAnimations)
 /* 16674 80025E74 2400428C */  lw         $v0, 0x24($v0)
 /* 16678 80025E78 80080100 */  sll        $at, $at, 2
 /* 1667C 80025E7C 20082200 */  add        $at, $at, $v0 /* handwritten instruction */
@@ -489,8 +489,8 @@ glabel func_800258F0
 /* 167D0 80025FD0 8AFE8007 */  bltz       $gp, .L800259FC
 /* 167D4 80025FD4 020E1C00 */   srl       $at, $gp, 24
 /* 167D8 80025FD8 1B003DA2 */  sb         $sp, 0x1B($s1)
-/* 167DC 80025FDC 0880023C */  lui        $v0, %hi(D_80078560)
-/* 167E0 80025FE0 60854224 */  addiu      $v0, $v0, %lo(D_80078560)
+/* 167DC 80025FDC 0880023C */  lui        $v0, %hi(g_EnvironmentAnimations)
+/* 167E0 80025FE0 60854224 */  addiu      $v0, $v0, %lo(g_EnvironmentAnimations)
 /* 167E4 80025FE4 2C00428C */  lw         $v0, 0x2C($v0)
 /* 167E8 80025FE8 80080100 */  sll        $at, $at, 2
 /* 167EC 80025FEC 20082200 */  add        $at, $at, $v0 /* handwritten instruction */
@@ -5281,8 +5281,8 @@ glabel func_800258F0
 
 /* Handwritten function */
 glabel func_8002A6FC
-/* 1AEFC 8002A6FC 0880193C */  lui        $t9, %hi(D_80078560)
-/* 1AF00 8002A700 60853927 */  addiu      $t9, $t9, %lo(D_80078560)
+/* 1AEFC 8002A6FC 0880193C */  lui        $t9, %hi(g_EnvironmentAnimations)
+/* 1AF00 8002A700 60853927 */  addiu      $t9, $t9, %lo(g_EnvironmentAnimations)
 /* 1AF04 8002A704 00009820 */  addi       $t8, $a0, 0x0 /* handwritten instruction */
 /* 1AF08 8002A708 00002F8F */  lw         $t7, 0x0($t9)
 /* 1AF0C 8002A70C 04002E8F */  lw         $t6, 0x4($t9)
@@ -6138,8 +6138,8 @@ glabel func_8002B390
 /* 1BB90 8002B390 00008D20 */  addi       $t5, $a0, 0x0 /* handwritten instruction */
 /* 1BB94 8002B394 0000AE20 */  addi       $t6, $a1, 0x0 /* handwritten instruction */
 /* 1BB98 8002B398 0000CF20 */  addi       $t7, $a2, 0x0 /* handwritten instruction */
-/* 1BB9C 8002B39C 0880183C */  lui        $t8, %hi(D_80078560)
-/* 1BBA0 8002B3A0 60851827 */  addiu      $t8, $t8, %lo(D_80078560)
+/* 1BB9C 8002B39C 0880183C */  lui        $t8, %hi(g_EnvironmentAnimations)
+/* 1BBA0 8002B3A0 60851827 */  addiu      $t8, $t8, %lo(g_EnvironmentAnimations)
 /* 1BBA4 8002B3A4 48001923 */  addi       $t9, $t8, 0x48 /* handwritten instruction */
 .L8002B3A8:
 /* 1BBA8 8002B3A8 10001913 */  beq        $t8, $t9, .L8002B3EC
@@ -6168,8 +6168,8 @@ glabel func_8002B390
 /* Handwritten function */
 glabel func_8002B3F4
 /* 1BBF4 8002B3F4 006E0400 */  sll        $t5, $a0, 24
-/* 1BBF8 8002B3F8 0880183C */  lui        $t8, %hi(D_80078560)
-/* 1BBFC 8002B3FC 60851827 */  addiu      $t8, $t8, %lo(D_80078560)
+/* 1BBF8 8002B3F8 0880183C */  lui        $t8, %hi(g_EnvironmentAnimations)
+/* 1BBFC 8002B3FC 60851827 */  addiu      $t8, $t8, %lo(g_EnvironmentAnimations)
 /* 1BC00 8002B400 48001923 */  addi       $t9, $t8, 0x48 /* handwritten instruction */
 .L8002B404:
 /* 1BC04 8002B404 0D001913 */  beq        $t8, $t9, .L8002B43C
@@ -6197,8 +6197,8 @@ glabel func_8002B444
 /* 1BC44 8002B444 00008D20 */  addi       $t5, $a0, 0x0 /* handwritten instruction */
 /* 1BC48 8002B448 0000AE20 */  addi       $t6, $a1, 0x0 /* handwritten instruction */
 /* 1BC4C 8002B44C 0000CF20 */  addi       $t7, $a2, 0x0 /* handwritten instruction */
-/* 1BC50 8002B450 0880183C */  lui        $t8, %hi(D_80078560)
-/* 1BC54 8002B454 60851827 */  addiu      $t8, $t8, %lo(D_80078560)
+/* 1BC50 8002B450 0880183C */  lui        $t8, %hi(g_EnvironmentAnimations)
+/* 1BC54 8002B454 60851827 */  addiu      $t8, $t8, %lo(g_EnvironmentAnimations)
 /* 1BC58 8002B458 48001923 */  addi       $t9, $t8, 0x48 /* handwritten instruction */
 .L8002B45C:
 /* 1BC5C 8002B45C 11001913 */  beq        $t8, $t9, .L8002B4A4
@@ -6227,8 +6227,8 @@ glabel func_8002B444
 
 /* Handwritten function */
 glabel func_8002B4AC
-/* 1BCAC 8002B4AC 0880193C */  lui        $t9, %hi(D_80078560)
-/* 1BCB0 8002B4B0 60853927 */  addiu      $t9, $t9, %lo(D_80078560)
+/* 1BCAC 8002B4AC 0880193C */  lui        $t9, %hi(g_EnvironmentAnimations)
+/* 1BCB0 8002B4B0 60853927 */  addiu      $t9, $t9, %lo(g_EnvironmentAnimations)
 /* 1BCB4 8002B4B4 00002F8F */  lw         $t7, 0x0($t9)
 /* 1BCB8 8002B4B8 04002E8F */  lw         $t6, 0x4($t9)
 /* 1BCBC 8002B4BC 80780F00 */  sll        $t7, $t7, 2

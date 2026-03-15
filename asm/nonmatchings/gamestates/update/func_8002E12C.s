@@ -105,7 +105,7 @@ glabel func_8002E12C
 /* 1EA74 8002E274 C5BA0008 */  j          .L8002EB14
 /* 1EA78 8002E278 00000000 */   nop
 .L8002E27C:
-/* 1EA7C 8002E27C CA5A010C */  jal        func_80056B28
+/* 1EA7C 8002E27C CA5A010C */  jal        KillSoundsAndMusic
 /* 1EA80 8002E280 21200000 */   addu      $a0, $zero, $zero
 /* 1EA84 8002E284 21280000 */  addu       $a1, $zero, $zero
 /* 1EA88 8002E288 0780023C */  lui        $v0, %hi(g_Spu + 0x2CC)

@@ -2761,9 +2761,9 @@ dlabel g_DemoLengths
 /* 5F698 8006EE98 DE030000 */ .word 0x000003DE
 .size g_DemoLengths, . - g_DemoLengths
 
-dlabel D_8006EE9C
+dlabel g_DemoStartPositions
 /* 5F69C 8006EE9C BE9E0200 */ .word 0x00029EBE
-.size D_8006EE9C, . - D_8006EE9C
+.size g_DemoStartPositions, . - g_DemoStartPositions
 
 dlabel D_8006EEA0
 /* 5F6A0 8006EEA0 4F250200 */ .word 0x0002254F

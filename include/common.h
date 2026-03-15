@@ -85,7 +85,7 @@ extern int g_UnprocessedFrames;
 extern int g_DeltaTime; // global delta time
 extern int D_800756C4;  // Deltatime inside overlays
 
-extern int D_800758C8; // Number of ticks since in the level
+extern int g_LevelTicks; // Number of ticks since in the level
 
 extern int g_GameTick; // Game frame counter (reset on level load)
 
@@ -93,10 +93,10 @@ extern int D_8007576C; // For loading, the VRAM part we're loading
 
 extern int g_Fade; // Fade
 
-extern int g_LevelId;     // Current level id
-extern int g_NextLevelId; // The level you're traveling to
-extern int D_800757E8;    // Previous level id
-extern int g_Homeworld;   // Homeworld ID, used by Flight levels
+extern int g_LevelId;         // Current level id
+extern int g_NextLevelId;     // The level you're traveling to
+extern int g_PreviousLevelId; // Previous level id
+extern int g_Homeworld;       // Homeworld ID, used by Flight levels
 
 extern int g_LevelIndex;         // Current absolute level id
 extern int g_PreviousLevelIndex; // Last absolute level ID
@@ -104,7 +104,7 @@ extern int g_PreviousLevelIndex; // Last absolute level ID
 // Used to save which level you started the credits cheat on
 extern int D_80075818;
 
-extern int D_80075830; // Key flag
+extern int g_KeyFlag; // Key flag
 
 extern int g_SkipLowPolyWorld; // Skip low-poly model in world
 

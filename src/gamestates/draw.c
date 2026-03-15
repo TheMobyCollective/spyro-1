@@ -272,7 +272,7 @@ void func_80018908(void) {
   func_800181AC("DEMO MODE", &position, &spacing, 18, 2);
   mobys--;
   for (i = 0; (int)g_HudMobys <= (int)mobys; i++) {
-    mobys->m_Rotation.z = COSINE_8((D_800758C8 * 4 + i * 12) & 0xFF) >> 7;
+    mobys->m_Rotation.z = COSINE_8((g_LevelTicks * 4 + i * 12) & 0xFF) >> 7;
     mobys--;
   }
 

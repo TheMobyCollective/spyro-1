@@ -270,7 +270,7 @@ void GamestateCutsceneTransition(void) {
     // Not in demo mode - skip to common exit
   } else if (g_TitlescreenState.m_State == TSS_Setup) {
     // Initial setup - stop audio and prepare loading
-    func_80056B28(0); // Halts CD music and all SPU voices
+    KillSoundsAndMusic(0); // Halts CD music and all SPU voices
     SpuUpdate();
     g_TitlescreenState.m_State = TSS_Loading;
 
@@ -446,7 +446,7 @@ void GamestateCutsceneUpdate(void) {
   if (g_CutsceneIdx >= 2) {
     if (g_CutsceneLayout->m_CurrentTick == 0) {
       // Initial cutscene setup
-      func_80056B28(0); // Stop all sounds
+      KillSoundsAndMusic(0); // Stop all sounds
       SpuUpdate();
 
       // Clear screen
@@ -595,7 +595,7 @@ int func_800334D4(void) {
   // Clear everything and load the titlescreen back in
   if (g_DemoFadeTimer == 16) {
 
-    func_80056B28(0);
+    KillSoundsAndMusic(0);
     SpuUpdate();
 
     r.x = 0;

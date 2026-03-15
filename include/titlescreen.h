@@ -217,7 +217,7 @@ extern int g_DemoFadeTimer;
 extern int g_DemoLengths[4];
 
 /// @brief Demo start positions
-extern int D_8006EE9C[4][4];
+extern int g_DemoStartPositions[4][4];
 
 extern u_char g_MemCardSaveHeader[512];
 

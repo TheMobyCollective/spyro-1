@@ -42,12 +42,12 @@ typedef struct {
 } Particle;
 
 // Particle array
-extern Particle *D_80075824;
+extern Particle *g_Particles;
 
 // Pointer used for particle allocation
 // It starts at the beginning of the array, and moves forward as particles are
 // allocated, then wraps around to the beginning when it reaches the end
-extern Particle *D_80075738;
+extern Particle *g_ParticleAllocPtr;
 
 /// @brief Render particles
 void func_800573C8(void);

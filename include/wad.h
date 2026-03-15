@@ -40,12 +40,12 @@ extern struct {
 typedef struct {
   int m_VramSramOffset;
   int m_VramSramSize;
-  int m_SceneOffset;
-  int m_SceneSize;
+  int m_DataOffset;
+  int m_DataSize;
   int m_ModelDataOffset;
   int m_ModelDataSize;
-  int m_LayoutOffset;
-  int m_LayoutSize;
+  int m_SceneOffset;
+  int m_SceneSize;
   OffsetLength m_Dragons[6];
   int m_ModelOffsets[64];
   short m_ModelIndices[64];

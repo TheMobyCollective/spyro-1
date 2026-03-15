@@ -269,7 +269,7 @@ typedef enum {
   MOBYCLASS_GEM_10 = 86,
   MOBYCLASS_GEM_25 = 87,
 
-  MOBYCLASS_SPARX = 120, // Gets spawned in load layout
+  MOBYCLASS_SPARX = 120, // Gets spawned in load scene
 
   MOBYCLASS_KEY = 173, // Both Hud and level key
   MOBYCLASS_LOCKED_CHEST = 174,
@@ -475,7 +475,7 @@ typedef struct {
   int *shadow_list; // shadow queue?
 } MobyShadow;
 
-extern MobyShadow D_80075EF8;
+extern MobyShadow g_MobyShadows;
 
 /// @brief Are any mobys in this pod still alive?
 int func_8003B0DC(int pPod);
@@ -487,30 +487,30 @@ extern u_short **g_MobyPods; // Pointer to the Moby pods data, the last Moby
                              // in the list has the top bit set.
 extern int g_MobyPodCount;   // The number of pods in the current level
 
-extern Moby *D_80075758; // Pointer to the key Moby for this level
+extern Moby *g_KeyMoby; // Pointer to the key Moby for this level
 
 extern Moby *g_LevelMobys; // The Mobys in the current level
 
 /// @brief Pointer to space for the Moby collision chain
-extern void *D_80075778;
+extern void *g_MobyCollisionChain;
 
 /// @brief Moby allocation pointer
-extern Moby *D_8007573C;
+extern Moby *g_MobyAllocPtr;
 
 /// @brief Props allocation pointer
-extern void *D_80075930;
+extern void *g_PropsAllocPtr;
 
 /// @brief Start of the Mobys that are dynamically allocated
-extern Moby *D_80075890;
+extern Moby *g_DynMobys;
 
 /// @brief The current number of dynamically allocated Mobys
-extern int D_800756A4;
+extern int g_DynMobyCount;
 
 /// @brief The maximum number of dynamically allocated Mobys
-extern int D_800756A8;
+extern int g_DynMobyMax;
 
 /// @brief The end of dynamic Moby space (= start + max * (sizeof(Moby) + 24))
-extern void *D_800756E8;
+extern void *g_DynMobySpaceEnd;
 
 extern Moby *g_HudMobys; // HUD Mobys
 

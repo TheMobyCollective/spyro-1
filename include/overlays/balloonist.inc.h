@@ -334,7 +334,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
         if (D_800777E8.unk_0x08 == 0) {
           (*D_800758A8)();
         } else {
-          func_80056B28(0);
+          KillSoundsAndMusic(0);
           D_800777E8.m_State = 2;
           D_800777E8.unk_0x04 = 0;
           g_NextLevelId = D_800777E8.unk_0x08 * 10;
@@ -362,7 +362,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
             D_800777E8.m_DialogueTopStr = 1;
           }
         } else {
-          func_80056B28(0);
+          KillSoundsAndMusic(0);
           D_800777E8.m_State = 2;
           D_800777E8.unk_0x04 = 0;
           if (D_800777E8.m_DialogueId == 31) {

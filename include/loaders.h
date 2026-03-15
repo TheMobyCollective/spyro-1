@@ -38,12 +38,13 @@ extern int g_NGemsSinceLevelEntry; // Number of gems collected since level entry
 /// @param pPatchAddressesInTable Whether to patch the addresses in the table
 void SetNewSoundTable(char *pData, int pPatchAddressesInTable);
 
-/// @brief Loads the level scene, as we used to call it
+/// @brief Loads the level data
+/// (We used to refer to this as scene data)
 /// @param pData The data to load
-/// @param pCutscene Whether it's scene data for a cutscene, which is missing
+/// @param pCutscene Whether it's level data for a cutscene, which is missing
 /// collision and occlusion data
-/// @return The end of the scene data
-void *func_80012D58(char *pData, int pCutscene);
+/// @return The end of the level data
+void *LoadLevelData(char *pData, int pCutscene);
 
 /// @brief Patches the pointers inside of Spyro's model
 // Has some cool code added after July
@@ -52,10 +53,10 @@ void PatchInSpyroAnimations(void *data);
 /// @brief Patches the pointers inside of a Moby's model
 Model *PatchMobyModelPointers(Model *pModel);
 
-/// @brief Loads the level's layout
-void func_8001364C(int pAnimationsAndSparx);
+/// @brief Loads the level's scene
+void LoadLevelScene(int pAnimationsAndSparx);
 
-/// @brief Reload the current level's layout
+/// @brief Reload the current level's scene
 void func_800144C8(void);
 
 /// @brief Load a cutscene (titlescreen, intro, outro)

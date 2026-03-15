@@ -64,12 +64,13 @@ void SetNewSoundTable(char *pData, int pPatchAddressesInTable) {
 #define PATCH_POINTER_RELATIVE_TO_COMPONENT(dest)                              \
   PATCH_POINTER(*(int *)dest, componentStart + 4), dest += 4
 
-/// @brief Loads the level scene, as we used to call it
+/// @brief Loads the level data
+/// (We used to refer to this as scene data)
 /// @param pData The data to load
-/// @param pCutscene Whether it's scene data for a cutscene, which is missing
+/// @param pCutscene Whether it's level data for a cutscene, which is missing
 /// collision and occlusion data
-/// @return The end of the scene data
-void *func_80012D58(char *pData, int pCutscene) {
+/// @return The end of the level data
+void *LoadLevelData(char *pData, int pCutscene) {
   char *componentStart;
   int i;
   int j;
@@ -377,30 +378,31 @@ typedef struct {
   Tiledef m_OrbAndEggSprite[10];
   Tiledef m_SuperFlameTexture;
   Tiledef m_SpecularMetalTexture;
-} LevelLayoutHeader;
+} LevelSceneHeader;
 
-void func_8001364C(int pAnimationsAndSparx) {
+/// @brief Loads the level's scene
+void LoadLevelScene(int pAnimationsAndSparx) {
   char *data;
   int i;
   int j;
   Vector3D v;
-  char *layoutBase;
+  char *sceneBase;
   char *componentStart;
   int index, bit;
   uint pendingDrops;
 
-  func_80056B28(0); // stop all sounds
+  KillSoundsAndMusic(0); // stop all sounds
   SpecularReset();
 
-  data = layoutBase = (char *)g_Buffers.m_LevelLayout;
+  data = sceneBase = (char *)g_Buffers.m_LevelScene;
 
-  D_800758C8 = 0;
+  g_LevelTicks = 0;
   g_GameTick = 0;
   g_IsSpyroHidden = 0;
   g_TracerCount = 0;
 
   if (g_LevelId == 64) {
-    D_80075830 = 0;
+    g_KeyFlag = 0;
   }
 
   D_80075698 = 0;
@@ -426,18 +428,18 @@ void func_8001364C(int pAnimationsAndSparx) {
     g_Spyro.m_bodyRotation.z = g_Checkpoint.m_StartingRotation >> 4;
   } else if (g_PortalLevelId == 0) {
     setXYZ(&g_Checkpoint.m_StartingPosition,
-           ((LevelLayoutHeader *)data)->m_StartingPosition.x,
-           ((LevelLayoutHeader *)data)->m_StartingPosition.y,
-           ((LevelLayoutHeader *)data)->m_StartingPosition.z);
+           ((LevelSceneHeader *)data)->m_StartingPosition.x,
+           ((LevelSceneHeader *)data)->m_StartingPosition.y,
+           ((LevelSceneHeader *)data)->m_StartingPosition.z);
 
     g_Checkpoint.m_StartingRotation =
-        ((LevelLayoutHeader *)data)->m_StartingRotation.z;
+        ((LevelSceneHeader *)data)->m_StartingRotation.z;
 
     if (g_HasLevelTransition == 0 && g_Gamestate != 12) {
       if (g_Gamestate == 5 && (g_LevelId >= 40 && g_LevelId < 60) &&
-          D_8006F218[D_800757E8 - 18].x != 0) {
-        VecCopy(&g_Spyro.m_Position, &D_8006F218[D_800757E8 - 18]);
-        g_Spyro.m_bodyRotation.z = D_8006F2A8[D_800757E8 - 18];
+          D_8006F218[g_PreviousLevelId - 18].x != 0) {
+        VecCopy(&g_Spyro.m_Position, &D_8006F218[g_PreviousLevelId - 18]);
+        g_Spyro.m_bodyRotation.z = D_8006F2A8[g_PreviousLevelId - 18];
       } else {
         VecCopy(&g_Spyro.m_Position, &g_Checkpoint.m_StartingPosition);
         g_Spyro.m_bodyRotation.z = g_Checkpoint.m_StartingRotation;
@@ -488,7 +490,7 @@ void func_8001364C(int pAnimationsAndSparx) {
   }
 
   // Skip over the starting position and rotation
-  COMPONENT_ADVANCE(data, OFFSET(LevelLayoutHeader, m_FlameTexture));
+  COMPONENT_ADVANCE(data, OFFSET(LevelSceneHeader, m_FlameTexture));
 
   if (g_LevelId == 64) {
     D_800758C0 = 16000;
@@ -529,8 +531,8 @@ void func_8001364C(int pAnimationsAndSparx) {
   // Clear Spyro's shadow, and.. set the Moby shadow texture
   Memset(&D_8007AA10, 0, sizeof(D_8007AA10));
 
-  D_80075EF8.shadow.uv0 = ((Tiledef *)data)->uv0;
-  D_80075EF8.shadow.uv1 = ((Tiledef *)data)->uv1;
+  g_MobyShadows.shadow.uv0 = ((Tiledef *)data)->uv0;
+  g_MobyShadows.shadow.uv1 = ((Tiledef *)data)->uv1;
   COMPONENT_ADVANCE(data, sizeof(Tiledef));
 
   // This skips over the unused sprite (((Tiledef *)data)[0])
@@ -558,57 +560,57 @@ void func_8001364C(int pAnimationsAndSparx) {
   COMPONENT_ADVANCE(data, sizeof(Tiledef));
 
   COMPONENT_START(data); // Texture animations
-  D_80078560.m_TextureAnimationCount = READ_I32(data);
-  D_80078560.m_TextureAnimations = data;
-  for (i = 0; i < D_80078560.m_TextureAnimationCount; i++) {
+  g_EnvironmentAnimations.m_TextureAnimationCount = READ_I32(data);
+  g_EnvironmentAnimations.m_TextureAnimations = data;
+  for (i = 0; i < g_EnvironmentAnimations.m_TextureAnimationCount; i++) {
     PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
   }
   COMPONENT_END(data); //! Texture animations
 
   COMPONENT_START(data); // Scrolling textures
-  D_80078560.m_ScrollingTextureCount = READ_I32(data);
-  D_80078560.m_ScrollingTextures = data;
-  for (i = 0; i < D_80078560.m_ScrollingTextureCount; i++) {
+  g_EnvironmentAnimations.m_ScrollingTextureCount = READ_I32(data);
+  g_EnvironmentAnimations.m_ScrollingTextures = data;
+  for (i = 0; i < g_EnvironmentAnimations.m_ScrollingTextureCount; i++) {
     PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
   }
   COMPONENT_END(data); //! Scrolling textures
 
   COMPONENT_START(data); // High poly animations
-  D_80078560.m_HighPolyAnimationCount = READ_I32(data);
-  D_80078560.m_HighPolyAnimations = data;
-  for (i = 0; i < D_80078560.m_HighPolyAnimationCount; i++) {
+  g_EnvironmentAnimations.m_HighPolyAnimationCount = READ_I32(data);
+  g_EnvironmentAnimations.m_HighPolyAnimations = data;
+  for (i = 0; i < g_EnvironmentAnimations.m_HighPolyAnimationCount; i++) {
     PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
   }
   COMPONENT_END(data); //! High poly animations
 
   COMPONENT_START(data); // Low poly animations
-  D_80078560.m_LowPolyAnimationCount = READ_I32(data);
-  D_80078560.m_LowPolyAnimations = data;
-  for (i = 0; i < D_80078560.m_LowPolyAnimationCount; i++) {
+  g_EnvironmentAnimations.m_LowPolyAnimationCount = READ_I32(data);
+  g_EnvironmentAnimations.m_LowPolyAnimations = data;
+  for (i = 0; i < g_EnvironmentAnimations.m_LowPolyAnimationCount; i++) {
     PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
   }
   COMPONENT_END(data); //! Low poly animations
 
   COMPONENT_START(data); // Collision animations
-  D_80078560.m_CollisionAnimationCount = READ_I32(data);
-  D_80078560.m_CollisionAnimations = data;
-  for (i = 0; i < D_80078560.m_CollisionAnimationCount; i++) {
+  g_EnvironmentAnimations.m_CollisionAnimationCount = READ_I32(data);
+  g_EnvironmentAnimations.m_CollisionAnimations = data;
+  for (i = 0; i < g_EnvironmentAnimations.m_CollisionAnimationCount; i++) {
     PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
   }
   COMPONENT_END(data); //! Collision animations
 
   COMPONENT_START(data); // High color animations
-  D_80078560.m_HighColorAnimationCount = READ_I32(data);
-  D_80078560.m_HighColorAnimations = data;
-  for (i = 0; i < D_80078560.m_HighColorAnimationCount; i++) {
+  g_EnvironmentAnimations.m_HighColorAnimationCount = READ_I32(data);
+  g_EnvironmentAnimations.m_HighColorAnimations = data;
+  for (i = 0; i < g_EnvironmentAnimations.m_HighColorAnimationCount; i++) {
     PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
   }
   COMPONENT_END(data); //! High color animations
 
   COMPONENT_START(data); // Low color animations
-  D_80078560.m_LowColorAnimationCount = READ_I32(data);
-  D_80078560.m_LowColorAnimations = data;
-  for (i = 0; i < D_80078560.m_LowColorAnimationCount; i++) {
+  g_EnvironmentAnimations.m_LowColorAnimationCount = READ_I32(data);
+  g_EnvironmentAnimations.m_LowColorAnimations = data;
+  for (i = 0; i < g_EnvironmentAnimations.m_LowColorAnimationCount; i++) {
     PATCH_POINTER_RELATIVE_TO_COMPONENT(data);
   }
   COMPONENT_END(data); //! Low color animations
@@ -618,11 +620,11 @@ void func_8001364C(int pAnimationsAndSparx) {
     func_8002B4AC();
   } else {
     // Unset their counts
-    D_80078560.m_TextureAnimationCount = 0;
-    D_80078560.m_ScrollingTextureCount = 0;
-    D_80078560.m_CollisionAnimationCount = 0;
-    D_80078560.m_HighColorAnimationCount = 0;
-    D_80078560.m_LowColorAnimationCount = 0;
+    g_EnvironmentAnimations.m_TextureAnimationCount = 0;
+    g_EnvironmentAnimations.m_ScrollingTextureCount = 0;
+    g_EnvironmentAnimations.m_CollisionAnimationCount = 0;
+    g_EnvironmentAnimations.m_HighColorAnimationCount = 0;
+    g_EnvironmentAnimations.m_LowColorAnimationCount = 0;
   }
 
   COMPONENT_START(data); // Level mobys
@@ -631,18 +633,18 @@ void func_8001364C(int pAnimationsAndSparx) {
   COMPONENT_END(data); //! Level mobys
 
   // Set the dynamic Moby pointers
-  D_80075890 = &g_LevelMobys[i];
-  D_8007573C = &g_LevelMobys[i];
+  g_DynMobys = &g_LevelMobys[i];
+  g_MobyAllocPtr = &g_LevelMobys[i];
   g_LevelMobys[i].m_State = 0xFF;
 
   // Set the dynamic Moby props pointers
-  D_800756A4 = 0;
-  D_800756E8 = data;
-  D_80075930 = data;
+  g_DynMobyCount = 0;
+  g_DynMobySpaceEnd = data;
+  g_PropsAllocPtr = data;
   *(data - 1) = 0xFF; // Terminate the props
 
-  D_800756A8 =
-      ((u_int)D_800756E8 - (u_int)D_80075890) /
+  g_DynMobyMax =
+      ((u_int)g_DynMobySpaceEnd - (u_int)g_DynMobys) /
       (sizeof(Moby) + 24 /* Every dynamic Moby gets 24 bytes of props space */);
 
   data = data + *(int *)data; // Skip past the Moby props data
@@ -656,33 +658,33 @@ void func_8001364C(int pAnimationsAndSparx) {
   COMPONENT_END(data); //! Moby pods
 
   COMPONENT_START(data); // Moby collision chain
-  D_80075778 = data;
+  g_MobyCollisionChain = data;
   COMPONENT_END(data); //! Moby collision chain
 
   COMPONENT_START(data); // Moby pointers
   for (i = 0; i < *(int *)componentStart;) {
-    int *ptr = (int *)(layoutBase + *(int *)data);
+    int *ptr = (int *)(sceneBase + *(int *)data);
     i++;
-    PATCH_POINTER2(ptr[0], layoutBase); // Yep.. Relative to layoutBase
+    PATCH_POINTER2(ptr[0], sceneBase); // Yep.. Relative to sceneBase
     COMPONENT_ADVANCE(data, 4);
   }
 
   if (g_DemoMode) {
     // Seed rand to make demos consistent
     srand(1234);
-    g_Spyro.m_Position.x = D_8006EE9C[g_DemoIndex][0];
-    g_Spyro.m_Position.y = D_8006EE9C[g_DemoIndex][1];
-    g_Spyro.m_Position.z = D_8006EE9C[g_DemoIndex][2];
-    g_Spyro.m_bodyRotation.z = D_8006EE9C[g_DemoIndex][3];
+    g_Spyro.m_Position.x = g_DemoStartPositions[g_DemoIndex][0];
+    g_Spyro.m_Position.y = g_DemoStartPositions[g_DemoIndex][1];
+    g_Spyro.m_Position.z = g_DemoStartPositions[g_DemoIndex][2];
+    g_Spyro.m_bodyRotation.z = g_DemoStartPositions[g_DemoIndex][3];
     g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z << 4;
     D_80075784 = 1; // Enable the extra demo mode vsync
 
     if (g_DemoMode == DEMO_MODE_PLAY) {
-      // Set the pointer for playback, which is at the end of the layout data
-      D_8007585C = (int *)data;
+      // Set the pointer for playback, which is at the end of the scene data
+      g_DemoDataPtr = (int *)data;
     } else {
       // Set the pointer for recording (requires 8MB RAM)
-      D_8007585C = (int *)0x80600000;
+      g_DemoDataPtr = (int *)0x80600000;
       Memset((void *)0x80600000, 0, 0x4000);
     }
   }
@@ -695,9 +697,9 @@ void func_8001364C(int pAnimationsAndSparx) {
 
     // Check non-shaded marker
     if ((int)g_Models[g_LevelMobys[i].m_Class] < 0) {
-      func_800526A8(&g_LevelMobys[i]); // Initialize shaded Moby
+      func_800526A8(&g_LevelMobys[i]); // Initialize normal Moby
     } else {
-      func_800529CC(&g_LevelMobys[i]); // Initialize normal Moby
+      func_800529CC(&g_LevelMobys[i]); // Initialize shaded Moby
     }
 
     VecCopy(&v, &g_LevelMobys[i].m_Position);
@@ -755,11 +757,11 @@ void func_8001364C(int pAnimationsAndSparx) {
     D_800777C0[i] = 0;
   }
 
-  D_80075824 = g_Buffers.m_ParticleSpaceStart;
-  D_80075738 = g_Buffers.m_ParticleSpaceStart;
+  g_Particles = g_Buffers.m_ParticleSpaceStart;
+  g_ParticleAllocPtr = g_Buffers.m_ParticleSpaceStart;
 
-  D_80075824[0].m_Type = -1;       // Make the first particle a terminator
-  *(int *)(&D_80075824[256]) = -1; // Terminate the last particle
+  g_Particles[0].m_Type = -1;       // Make the first particle a terminator
+  *(int *)(&g_Particles[256]) = -1; // Terminate the last particle
 
   // Mark all glows and sparkles as dead to initialize them
   func_80058B68();
@@ -771,26 +773,26 @@ void func_8001364C(int pAnimationsAndSparx) {
   }
 
   // Start the level's music track
-  func_800567F4(g_CdMusic.m_CurrentTrack, 1);
+  SetMusicState(g_CdMusic.m_CurrentTrack, 1);
 }
 
-/// @brief Reload the current level's layout
+/// @brief Reload the current level's scene data
 void func_800144C8(void) {
   // Extremely likely to be an unused string buffer
   char _pad[32];
 
   // Stop sounds
-  func_80056B28(0);
+  KillSoundsAndMusic(0);
 
-  // Reload layout from disc
-  CDLoadSync(g_CdState.m_WadSector, g_Buffers.m_LevelLayout,
-             g_Buffers.m_LevelLayoutSize,
-             g_Buffers.m_LevelLayoutOffset +
+  // Reload scene from disc
+  CDLoadSync(g_CdState.m_WadSector, g_Buffers.m_LevelScene,
+             g_Buffers.m_LevelSceneSize,
+             g_Buffers.m_LevelSceneOffset +
                  g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
              600);
 
-  // Call load layout
-  func_8001364C(1);
+  // Call load scene
+  LoadLevelScene(1);
 
   // set default state (32 if flight level, 0 otherwise)
   if (g_IsFlightLevel) {
@@ -872,10 +874,10 @@ void LoadCutscene(void) {
     while (!SpuIsTransferCompleted(SPU_TRANSFER_PEEK))
       ;
 
-    // Load the scene data from disc
+    // Load the level data from disc
     CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_DiscCopyBuf,
-                g_LevelHeader.m_SceneSize,
-                g_LevelHeader.m_SceneOffset +
+                g_LevelHeader.m_DataSize,
+                g_LevelHeader.m_DataOffset +
                     g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
                 600);
 
@@ -883,8 +885,8 @@ void LoadCutscene(void) {
 
   } else if (g_LoadStage == 5) {
 
-    // Initialize the scene data
-    g_Buffers.m_ModelData = (void *)func_80012D58(g_Buffers.m_DiscCopyBuf, 1);
+    // Initialize the level data
+    g_Buffers.m_ModelData = LoadLevelData(g_Buffers.m_DiscCopyBuf, 1);
 
     // Switch to the new skybox
     g_Cyclorama = g_NewCyclorama;
@@ -931,15 +933,15 @@ void LoadCutscene(void) {
                                             g_LevelHeader.m_ModelDataOffset)));
     }
 
-    g_Buffers.m_LevelLayout =
+    g_Buffers.m_LevelScene =
         (char *)g_Buffers.m_ModelData + g_LevelHeader.m_ModelDataSize;
-    g_Buffers.m_LevelLayoutSize = g_LevelHeader.m_LayoutSize;
-    g_Buffers.m_LevelLayoutOffset = g_LevelHeader.m_LayoutOffset;
+    g_Buffers.m_LevelSceneSize = g_LevelHeader.m_SceneSize;
+    g_Buffers.m_LevelSceneOffset = g_LevelHeader.m_SceneOffset;
 
-    // Load the level layout from disc
-    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_LevelLayout,
-                g_Buffers.m_LevelLayoutSize,
-                g_LevelHeader.m_LayoutOffset +
+    // Load the level scene from disc
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_LevelScene,
+                g_Buffers.m_LevelSceneSize,
+                g_LevelHeader.m_SceneOffset +
                     g_WadHeader.m_CutsceneData[g_CutsceneIdx].m_Offset,
                 600);
 
@@ -947,20 +949,20 @@ void LoadCutscene(void) {
 
   } else if (g_LoadStage == 9) {
 
-    // The layout is actually the cutscene data
-    g_CutsceneLayout = g_Buffers.m_LevelLayout;
+    // The scene is actually the cutscene data
+    g_CutsceneLayout = g_Buffers.m_LevelScene;
 
     // While in WAD it's an offset, now we turn it into a pointer
     PATCH_POINTER(g_CutsceneLayout->m_CameraData, g_CutsceneLayout);
 
     // Ditto for the Moby data
     for (j = 0; j < g_CutsceneLayout->m_MobyCount; ++j) {
-      PATCH_POINTER(g_CutsceneLayout->m_MobyData[j], g_Buffers.m_LevelLayout);
+      PATCH_POINTER(g_CutsceneLayout->m_MobyData[j], g_Buffers.m_LevelScene);
     }
 
     // Set the Moby pointer to the empty space after the cutscene data
     g_LevelMobys =
-        (Moby *)((char *)g_Buffers.m_LevelLayout + g_Buffers.m_LevelLayoutSize);
+        (Moby *)((char *)g_Buffers.m_LevelScene + g_Buffers.m_LevelSceneSize);
 
     for (j = 0; j < g_CutsceneLayout->m_MobyCount; ++j) {
       func_8003A720(&g_LevelMobys[j]);
@@ -1282,7 +1284,7 @@ extern int D_80075870; // Unused [0]
 extern int D_80075874; // Unused [1]
 
 // Set up level overlay pointers
-extern void func_8005A470(void);
+extern void SetOverlayPointers(void);
 
 /// @brief Runs through load stages to load a level
 void LoadLevel(int pArg) {
@@ -1312,7 +1314,7 @@ void LoadLevel(int pArg) {
 
   case 0: // Copy the Cyclorama temporarily into free memory
 
-    func_80056B28(0); // stop all sounds/music
+    KillSoundsAndMusic(0); // stop all sounds/music
 
     if (D_8007576C >= 0) {
 
@@ -1375,7 +1377,7 @@ void LoadLevel(int pArg) {
   case 1: // Remove the Cyclorama immediately and start loading (leftover)
 
     // stop all sounds/music, let voices keep playing
-    func_80056B28(0);
+    KillSoundsAndMusic(0);
 
     g_Cyclorama.m_SectorCount = 0;
     g_Camera.m_OcclusionGroup = -1;
@@ -1387,7 +1389,7 @@ void LoadLevel(int pArg) {
 
     g_LevelId = g_NextLevelId; // Set the current level
 
-    func_8005A470(); // Set overlay pointers
+    SetOverlayPointers(); // Set overlay pointers
 
     g_PreviousLevelIndex = g_LevelIndex; // Last absolute level ID, used by the
                                          // transition I believe
@@ -1475,21 +1477,22 @@ void LoadLevel(int pArg) {
     g_LoadStage++;
     break;
 
-  case 8: // Load scene data from Disc
+  case 8: // Load level data from Disc
 
     CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_DiscCopyBuf,
-                g_LevelHeader.m_SceneSize,
-                g_LevelHeader.m_SceneOffset +
+                g_LevelHeader.m_DataSize,
+                g_LevelHeader.m_DataOffset +
                     g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
                 600);
 
     g_LoadStage++;
     break;
 
-  case 9: // Initialize scene data
+  case 9: // Initialize level data
 
-    g_Buffers.m_ModelData = (void *)func_80012D58(g_Buffers.m_DiscCopyBuf,
-                                                  0); // process scene data
+    // process level data, the return is a pointer to after the level data
+    // where we can then load the model data to
+    g_Buffers.m_ModelData = LoadLevelData(g_Buffers.m_DiscCopyBuf, 0);
 
     if (g_Cyclorama.m_SectorCount != 0 && g_Gamestate != GS_GameOver &&
         g_Gamestate != GS_Balloonist) {
@@ -1563,16 +1566,16 @@ void LoadLevel(int pArg) {
 
 #undef MODEL_OFFSET
 
-    g_Buffers.m_LevelLayout =
+    g_Buffers.m_LevelScene =
         (char *)g_Buffers.m_ModelData + g_LevelHeader.m_ModelDataSize;
-    g_Buffers.m_LevelLayoutSize = g_LevelHeader.m_LayoutSize;
-    g_Buffers.m_LevelLayoutOffset = g_LevelHeader.m_LayoutOffset;
+    g_Buffers.m_LevelSceneSize = g_LevelHeader.m_SceneSize;
+    g_Buffers.m_LevelSceneOffset = g_LevelHeader.m_SceneOffset;
 
 #if 0
     // There used to be a printf here that said:
     printf("Level %d:  Memory Available: %ld\n", g_LevelId,
            ((int)g_Buffers.m_LowerPolyBuffer - (int)g_Buffers.m_LevelLayout) -
-               g_LevelHeader.m_LayoutSize);
+               g_LevelHeader.m_SceneSize);
 
     // Which was originally placed in the final load stage (in tabloid)
     // but got moved here because it was probably more useful here
@@ -1581,11 +1584,11 @@ void LoadLevel(int pArg) {
     g_LoadStage++;
     break;
 
-  case 11: // Load level layout data
+  case 11: // Load level scene data
 
-    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_LevelLayout,
-                g_Buffers.m_LevelLayoutSize,
-                g_Buffers.m_LevelLayoutOffset +
+    CDLoadAsync(g_CdState.m_WadSector, g_Buffers.m_LevelScene,
+                g_Buffers.m_LevelSceneSize,
+                g_Buffers.m_LevelSceneOffset +
                     g_WadHeader.m_LevelEntry[g_LevelIndex].m_Data.m_Offset,
                 600);
 
@@ -1630,7 +1633,7 @@ void LoadLevel(int pArg) {
 
   // Final initialization
   // Set up Spyro's position and camera based on entry type
-  // Initialize the layout, which was copied from Disc earlier
+  // Initialize the scene, which was copied from Disc earlier
   case 13:
 
     // Set the Easter Egg timer depending on whether this level
@@ -1650,11 +1653,11 @@ void LoadLevel(int pArg) {
 
     D_8007587C = g_LevelGemCount[g_LevelIndex]; // prev gem count for this level
 
-    D_80075830 = 0; // Key flag
+    g_KeyFlag = 0; // Key flag
     g_NGemsSinceLevelEntry =
         0; // Counter used for the collected gems shown in the transition
 
-    func_8001364C(pArg); // Initialize the Level Layout
+    LoadLevelScene(pArg); // Initialize the Level scene
 
     if (g_HasLevelTransition) { // Has level transition
 

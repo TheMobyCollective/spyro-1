@@ -156,7 +156,7 @@ glabel func_credits_8007AA50
 /* 5C97A30 8007AC68 4059000C */  jal        CDLoadSync
 /* 5C97A34 8007AC6C 21386700 */   addu      $a3, $v1, $a3
 /* 5C97A38 8007AC70 0000048E */  lw         $a0, 0x0($s0)
-/* 5C97A3C 8007AC74 564B000C */  jal        func_80012D58
+/* 5C97A3C 8007AC74 564B000C */  jal        LoadLevelData
 /* 5C97A40 8007AC78 01000524 */   addiu     $a1, $zero, 0x1
 /* 5C97A44 8007AC7C 0000248E */  lw         $a0, 0x0($s1)
 /* 5C97A48 8007AC80 0880013C */  lui        $at, %hi(g_Buffers + 0x8)
@@ -1394,7 +1394,7 @@ glabel func_credits_8007AA50
 /* 5C98C58 8007BE90 23105000 */  subu       $v0, $v0, $s0
 /* 5C98C5C 8007BE94 0780013C */  lui        $at, %hi(D_800757EC)
 /* 5C98C60 8007BE98 EC5722AC */  sw         $v0, %lo(D_800757EC)($at)
-/* 5C98C64 8007BE9C 564B000C */  jal        func_80012D58
+/* 5C98C64 8007BE9C 564B000C */  jal        LoadLevelData
 /* 5C98C68 8007BEA0 01000524 */   addiu     $a1, $zero, 0x1
 /* 5C98C6C 8007BEA4 6666033C */  lui        $v1, (0x66666667 >> 16)
 /* 5C98C70 8007BEA8 0780043C */  lui        $a0, %hi(g_CreditsSequence)

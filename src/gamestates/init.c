@@ -45,7 +45,7 @@ extern SphericalCoordsOffset D_8006C8BC;
 void func_8002C420(int pEnteringFromGameplay) {
   if (pEnteringFromGameplay) {
     // Stop all sounds
-    func_80056B28(0);
+    KillSoundsAndMusic(0);
   }
 
   PlaySound(g_Spu.m_SoundTable->menuSound, nullptr, 0x10 /* 2D */, nullptr);
@@ -114,13 +114,13 @@ void func_8002C534(int pResumeMusic) {
 
   if (pResumeMusic) {
     // Resume the level music
-    func_800567F4(g_CdMusic.m_CurrentTrack, 8);
+    SetMusicState(g_CdMusic.m_CurrentTrack, 8);
   }
 }
 
 /// @brief Exits level
 void func_8002C618(void) {
-  func_80056B28(0);           // Stop all sounds
+  KillSoundsAndMusic(0);      // Stop all sounds
   g_Gamestate = GS_ExitLevel; // Set gamestate to exit level
   D_8007568C = 0;             // Pause menu no button ticks
   D_800758B8 = 0;             // Pause menu text rotation ticks
@@ -158,7 +158,7 @@ void func_8002C664(void) {
 void func_8002C714(int pEnteringFromGameplay) {
   if (pEnteringFromGameplay) {
     // Stop all sounds
-    func_80056B28(0);
+    KillSoundsAndMusic(0);
   }
 
   PlaySound(g_Spu.m_SoundTable->menuSound, nullptr, 0x10 /* 2D */, nullptr);
@@ -198,7 +198,7 @@ void func_8002C7BC(void) {
   g_Hud.m_KeyDisplayState = HDS_Hidden;
 
   // Resume the level music
-  func_800567F4(g_CdMusic.m_CurrentTrack, 8);
+  SetMusicState(g_CdMusic.m_CurrentTrack, 8);
 }
 
 /// @brief Die, lose a life and respawn or game over
@@ -294,7 +294,7 @@ void func_8002CB6C(void) {
   g_Hud.m_KeyDisplayState = HDS_Hidden;
 
   // Resume the music
-  func_800567F4(g_CdMusic.m_CurrentTrack, 8);
+  SetMusicState(g_CdMusic.m_CurrentTrack, 8);
 }
 
 /**
@@ -472,7 +472,7 @@ void func_8002D02C(void) {
   g_Hud.m_KeyDisplayState = HDS_Hidden;
 
   // Resume the music
-  func_800567F4(g_CdMusic.m_CurrentTrack, 8);
+  SetMusicState(g_CdMusic.m_CurrentTrack, 8);
 }
 
 /// @brief Start the titlescreen gamestate
@@ -533,7 +533,7 @@ void InitCreditsSequence(int pLoadSharedModels) {
   DrawSync(0);
 
   // Stop all 24 SPU voice channels, clear moby sound refs, and stop CD music
-  func_80056B28(0);
+  KillSoundsAndMusic(0);
   SpuUpdate();
 
   // Load shared Spyro models from PETE.WAD if requested (for 100% credits)
@@ -656,7 +656,7 @@ void EndCutscenePlayback(void) {
     DrawSync(0);
 
     // stop all sounds
-    func_80056B28(0);
+    KillSoundsAndMusic(0);
     SpuUpdate();
 
     // load shared models from wad.wad

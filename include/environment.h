@@ -55,7 +55,7 @@ typedef struct {
   void *m_CollisionAnimations;
 } EnvironmentAnimations;
 
-extern EnvironmentAnimations D_80078560;
+extern EnvironmentAnimations g_EnvironmentAnimations;
 
 typedef struct {
   void *m_SectorPointer; // TODO: Type

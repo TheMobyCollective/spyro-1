@@ -224,8 +224,8 @@ void CheatProcessLevelWarp(void) {
         g_NextLevelId = g_LevelId;
       } else {
         // Reset game state for level transition
-        func_80056B28(0); // Stop all sounds
-        SpecularReset();  // Reset specular table
+        KillSoundsAndMusic(0); // Stop all sounds
+        SpecularReset();       // Reset specular table
 
         g_PortalLevelId = 0; // Reset portal level id
         D_8007576C = -1;     // Reset loading part
@@ -237,7 +237,7 @@ void CheatProcessLevelWarp(void) {
         g_Gamestate = GS_LevelTransition; // Set gamestate to loading
         g_LoadStage = 1;                  // Set load stage to 1
         g_HasLevelTransition = 0;         // Set no level transition
-        g_LevelTransHudActive = 0;                   // Set no transition text
+        g_LevelTransHudActive = 0;        // Set no transition text
         g_StateSwitch = 1; // Set skip draw routine due to gamestate switch
 
         g_Camera.unk_0xC0 = 0x80000012;

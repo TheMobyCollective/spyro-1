@@ -197,8 +197,8 @@ glabel func_80050BD0
 /* 416B8 80050EB8 28044010 */  beqz       $v0, .L80051F5C
 /* 416BC 80050EBC 00000000 */   nop
 .L80050EC0:
-/* 416C0 80050EC0 0780023C */  lui        $v0, %hi(D_800758C8)
-/* 416C4 80050EC4 C858428C */  lw         $v0, %lo(D_800758C8)($v0)
+/* 416C0 80050EC0 0780023C */  lui        $v0, %hi(g_LevelTicks)
+/* 416C4 80050EC4 C858428C */  lw         $v0, %lo(g_LevelTicks)($v0)
 /* 416C8 80050EC8 01000C24 */  addiu      $t4, $zero, 0x1
 /* 416CC 80050ECC 1801ACAF */  sw         $t4, 0x118($sp)
 /* 416D0 80050ED0 1001ACAF */  sw         $t4, 0x110($sp)

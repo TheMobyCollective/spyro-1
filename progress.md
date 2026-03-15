@@ -50,8 +50,8 @@
 - [x] StopSound
 - [x] func_800562A4
 - [x] SoundsUpdate
-- [x] func_800567F4
-- [x] func_80056B28
+- [x] SetMusicState
+- [x] KillSoundsAndMusic
 - [x] func_80056C84
 - [x] IsMobyPlayingSound
 - [x] KillOrphans
@@ -136,10 +136,10 @@
 - [x] func_8001277C
 - [x] Initialize
 - [x] SetNewSoundTable
-- [x] func_80012D58
+- [x] LoadLevelData
 - [x] PatchInSpyroAnimations
 - [x] PatchMobyModelPointers
-- [x] func_8001364C
+- [x] LoadLevelScene
 - [x] func_800144C8
 - [x] LoadCutscene
 - [x] LoadDragonCutscene
@@ -210,7 +210,7 @@
 - [x] func_80037E98
 - [x] CDMusicUpdate
 - [x] func_8002BFE0
-- [x] func_8005A470
+- [x] SetOverlayPointers
 - [x] func_8003CB24
 - [x] func_8003CBB8
 - [x] func_8003CCE4

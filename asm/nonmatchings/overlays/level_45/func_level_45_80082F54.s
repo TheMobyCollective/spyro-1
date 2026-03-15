@@ -92,8 +92,8 @@ dlabel jtbl_level_45_8007AB68
 glabel func_level_45_80082F54
 /* 425ED1C 80082F54 A8FFBD27 */  addiu      $sp, $sp, -0x58
 /* 425ED20 80082F58 4000B2AF */  sw         $s2, 0x40($sp)
-/* 425ED24 80082F5C 0780123C */  lui        $s2, %hi(D_80075824)
-/* 425ED28 80082F60 2458528E */  lw         $s2, %lo(D_80075824)($s2)
+/* 425ED24 80082F5C 0780123C */  lui        $s2, %hi(g_Particles)
+/* 425ED28 80082F60 2458528E */  lw         $s2, %lo(g_Particles)($s2)
 /* 425ED2C 80082F64 4800B4AF */  sw         $s4, 0x48($sp)
 /* 425ED30 80082F68 5400BFAF */  sw         $ra, 0x54($sp)
 /* 425ED34 80082F6C 5000B6AF */  sw         $s6, 0x50($sp)

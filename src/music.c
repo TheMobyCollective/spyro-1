@@ -25,7 +25,7 @@ void CDMusicUpdate(void) {
       break;
     }
   } else if (g_CdMusic.m_Flags2 != 0) {
-    func_800567F4(g_CdMusic.m_CurrentTrack, g_CdMusic.m_Flags2);
+    SetMusicState(g_CdMusic.m_CurrentTrack, g_CdMusic.m_Flags2);
     g_CdMusic.m_Flags2 = 0;
   }
 
@@ -46,12 +46,12 @@ void CDMusicUpdate(void) {
           (u_int)g_CdMusic.m_MusicTable[g_CdMusic.m_CurrentTrack].end) {
 
         // Track ended, check if we're ready to place an easter egg track
-        if (D_800758C8 > (u_int)g_CdMusic.m_EasterEggTicks) {
+        if (g_LevelTicks > (u_int)g_CdMusic.m_EasterEggTicks) {
           // Select a random track from the current level's easter egg table
           g_CdMusic.m_CurrentTrack =
               D_8006EF9C[D_8006F05C[g_LevelIndex][rand() % 3]];
           g_CdMusic.m_EasterEggTicks =
-              D_800758C8 + (480 * 60); // Set new track in 8 minutes.
+              g_LevelTicks + (480 * 60); // Set new track in 8 minutes.
         }
 
         // Start playing the current track, which could be for looping or a new
@@ -141,4 +141,3 @@ void CDMusicUpdate(void) {
     }
   }
 }
-

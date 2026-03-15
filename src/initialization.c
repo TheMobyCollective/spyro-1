@@ -204,7 +204,7 @@ void func_80012604(void) {
   // Reset in-level variables
   D_8007587C = 0;             // Gems collected before entering the level
   g_NGemsSinceLevelEntry = 0; // Gems collected in this level
-  D_80075830 = 0;             // Key flag
+  g_KeyFlag = 0;              // Key flag
   g_LifeOrbCount = 0;         // Life orb count
   D_8007580C = -1;            // Health before entering flight level
 

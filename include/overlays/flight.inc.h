@@ -1,5 +1,5 @@
-#include "camera.h"
 #include "buffers.h"
+#include "camera.h"
 #include "gamepad.h"
 #include "graphics.h"
 #include "hud.h"
@@ -11,7 +11,6 @@
 #include "spyro.h"
 #include "variables.h"
 
-
 extern struct {
   int post;
   int pre;
@@ -22,17 +21,15 @@ extern int D_80075720; // Selected menu item index
 extern int D_80075744; // The index of the current page of the inventory screen
 extern int D_800757CC; // Transition progress between inventory pages.
 
-
-extern int D_8007569C; // Flight Results Screen state 
-extern int D_800758F4; // Flight Elapsed Time
-extern int D_80075900; // Flight Pause Menu Quit related?
-extern int D_80075908; // Flight Remaining Time
-extern int D_8006E920[6][5]; // Max Gems Per Flight Collectable
-extern u_char D_8006E998[12]; // Post Flight Treasure Chest Gem Classes
+extern int D_8007569C;                 // Flight Results Screen state
+extern int D_800758F4;                 // Flight Elapsed Time
+extern int D_80075900;                 // Flight Pause Menu Quit related?
+extern int D_80075908;                 // Flight Remaining Time
+extern int D_8006E920[6][5];           // Max Gems Per Flight Collectable
+extern u_char D_8006E998[12];          // Post Flight Treasure Chest Gem Classes
 extern u_short g_GrayscalePalette[32]; // 32 colors
 // look into defining
-extern char* D_8006E8C0[6][4];
-
+extern char *D_8006E8C0[6][4];
 
 void NAME_OVERLAY_FUNCTION(Flight1)(void) {
   if (g_Gamestate != GS_FlightResults) {
@@ -45,10 +42,9 @@ void NAME_OVERLAY_FUNCTION(Flight1)(void) {
     D_8007569C = 0;
     D_800758F4 *= 10;
     if (!g_FlightCourseRecords[g_Homeworld] &&
-      (g_FlightObjectiveCounters[0] +
-       g_FlightObjectiveCounters[1] +
-       g_FlightObjectiveCounters[2] +
-       g_FlightObjectiveCounters[3] == 32)) {
+        (g_FlightObjectiveCounters[0] + g_FlightObjectiveCounters[1] +
+             g_FlightObjectiveCounters[2] + g_FlightObjectiveCounters[3] ==
+         32)) {
       g_FlightCourseRecords[g_Homeworld] = D_800758F4;
     }
   }
@@ -66,8 +62,9 @@ void NAME_OVERLAY_FUNCTION(Flight2)(int pUnk) {
   g_Gamestate = GS_Playing;
   SpecularReset();
   for (i = 0; i < 4; i++) {
-    
-    if (g_FlightObjectiveCounters[i] == 8 && !g_FlightCollected[g_Homeworld][i]) {
+
+    if (g_FlightObjectiveCounters[i] == 8 &&
+        !g_FlightCollected[g_Homeworld][i]) {
       g_LevelGemCount[g_LevelIndex] += D_8006E920[g_Homeworld][i];
       g_GemTotal += D_8006E920[g_Homeworld][i];
       g_NGemsSinceLevelEntry += 12;
@@ -75,10 +72,8 @@ void NAME_OVERLAY_FUNCTION(Flight2)(int pUnk) {
     }
   }
 
-  if ((g_FlightObjectiveCounters[0] +
-     g_FlightObjectiveCounters[1] +
-     g_FlightObjectiveCounters[2] +
-     g_FlightObjectiveCounters[3]) == 32) {
+  if ((g_FlightObjectiveCounters[0] + g_FlightObjectiveCounters[1] +
+       g_FlightObjectiveCounters[2] + g_FlightObjectiveCounters[3]) == 32) {
     if (!g_FlightCollected[g_Homeworld][4]) {
       g_LevelGemCount[g_LevelIndex] += D_8006E920[g_Homeworld][4];
       g_GemTotal += D_8006E920[g_Homeworld][4];
@@ -86,9 +81,10 @@ void NAME_OVERLAY_FUNCTION(Flight2)(int pUnk) {
       g_FlightCollected[g_Homeworld][4] = 1;
     }
     // If no record was set, or we beat the record
-    if (!g_FlightCourseRecords[g_Homeworld] || D_800758F4 < g_FlightCourseRecords[g_Homeworld]) {
-      
-        g_FlightCourseRecords[g_Homeworld] = D_800758F4;
+    if (!g_FlightCourseRecords[g_Homeworld] ||
+        D_800758F4 < g_FlightCourseRecords[g_Homeworld]) {
+
+      g_FlightCourseRecords[g_Homeworld] = D_800758F4;
     }
   }
   // Set gem types to display during level transition chest anim
@@ -106,15 +102,15 @@ void NAME_OVERLAY_FUNCTION(Flight3)(void) {
   int i;
 
   if (D_8007568C == 0) {
-    func_80056B28(0);
+    KillSoundsAndMusic(0);
   }
   g_Hud.unk_0x3c -= 4;
   g_Hud.unk_0x3c &= 0xFF;
-  
+
   SpecularUpdate(3);
   D_8007568C++;
   D_800757CC++;
-   
+
   if (D_800757CC >= 5) {
     if (D_80075744 < 9) {
       D_80075744++;
@@ -132,20 +128,20 @@ void NAME_OVERLAY_FUNCTION(Flight3)(void) {
       PlaySound(g_Spu.m_SoundTable->menuCursor, 0, 0x10, 0);
     }
     if (g_Pad.m_Down & (PAD_CROSS | PAD_START)) {
-      if ((D_80075744 >= 100) || (
-        g_FlightObjectiveCounters[0] +
-        g_FlightObjectiveCounters[1] +
-        g_FlightObjectiveCounters[2] +
-        g_FlightObjectiveCounters[3] < 32 && !g_FlightCourseRecords[g_Homeworld])) {
+      if ((D_80075744 >= 100) ||
+          (g_FlightObjectiveCounters[0] + g_FlightObjectiveCounters[1] +
+                   g_FlightObjectiveCounters[2] + g_FlightObjectiveCounters[3] <
+               32 &&
+           !g_FlightCourseRecords[g_Homeworld])) {
         switch (D_80075720) {
-          case 0:
-            (*D_800757A8)(1);
-            func_800144C8();
-            break;
-          case 1:
-            (*D_800757A8)(0);
-            func_8002C618();
-            break;
+        case 0:
+          (*D_800757A8)(1);
+          func_800144C8();
+          break;
+        case 1:
+          (*D_800757A8)(0);
+          func_8002C618();
+          break;
         }
         PlaySound(g_Spu.m_SoundTable->menuCursor, 0, 0x10, 0);
       } else {
@@ -160,8 +156,7 @@ void NAME_OVERLAY_FUNCTION(Flight3)(void) {
   }
 }
 
-
-int NAME_OVERLAY_FUNCTION(Flight4)(int pTimer, Vector3D* pPos, int pColor) {
+int NAME_OVERLAY_FUNCTION(Flight4)(int pTimer, Vector3D *pPos, int pColor) {
   int centisecs;
   int mins;
   int secs;
@@ -201,24 +196,23 @@ int NAME_OVERLAY_FUNCTION(Flight4)(int pTimer, Vector3D* pPos, int pColor) {
 
 void NAME_OVERLAY_FUNCTION(Flight5)(void) {
 
-  
-  POLY_FT4* ft4;
-  LINE_F2* l2;
-  
+  POLY_FT4 *ft4;
+  LINE_F2 *l2;
+
   int i;
-  
+
   int isCompleted;
   int sfx_idx;
   int earnedGems;
   int mobyCount;
-  
-  Moby* mobys;
-  Moby** mobyBuf;
-  
+
+  Moby *mobys;
+  Moby **mobyBuf;
+
   RECT rcStore;
   char text[32];
   Vector3D vec;
-  
+
   if (D_800758B8 == 0) {
     func_800521C0();
     func_80019698();
@@ -244,7 +238,7 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
       LoadImage(&rcStore, g_Buffers.m_LowerPolyBuffer);
     }
     setRECT(&rcStore, 512, 224, 32, 1);
-    LoadImage(&rcStore, (u_long*)g_GrayscalePalette);
+    LoadImage(&rcStore, (u_long *)g_GrayscalePalette);
     DrawSync(0);
     D_80075950.post = VSync(-1);
   } else {
@@ -254,7 +248,7 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
     } else {
       PutDrawEnv(&g_DB[0].m_DrawEnv);
     }
-    
+
     D_800758B0 = 0;
     D_800757B0 = g_Buffers.m_LowerPolyBuffer;
     D_80075780 = g_Buffers.m_LowerPolyBuffer + 0x1C000;
@@ -282,11 +276,9 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
     D_800757B0 = l2 + 1;
     if (D_80075744 < 100) {
       earnedGems = 0;
-      if (g_FlightObjectiveCounters[0] +
-        g_FlightObjectiveCounters[1] +
-        g_FlightObjectiveCounters[2] +
-        g_FlightObjectiveCounters[3] == 32)
-      {
+      if (g_FlightObjectiveCounters[0] + g_FlightObjectiveCounters[1] +
+              g_FlightObjectiveCounters[2] + g_FlightObjectiveCounters[3] ==
+          32) {
         strcpy(text, "COMPLETED");
         isCompleted = 1;
       } else if (D_80075900 != 0) {
@@ -309,7 +301,7 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
       g_HudMobys->m_SpecularMetalType = 11;
       g_HudMobys->m_RenderRadius = 255;
       func_8001844C(60, 46, 452, 46);
-      
+
       setXYZ(&vec, 100, 60, 0x1100);
       func_80017FE4(D_8006E8C0[g_Homeworld][0], &vec, 18, 11);
       if (D_80075744 > 0) {
@@ -333,7 +325,8 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
         setXYZ(&vec, 480 - (strlen(text) * 18), 60, 0x1100);
         func_80017FE4(text, &vec, 18, 11);
         if (D_8007569C < 2) {
-          PlaySound(((char*)g_Spu.m_SoundTable)[sfx_idx], (Moby*)&g_Spyro.m_Position, 0x10, 0);
+          PlaySound(((char *)g_Spu.m_SoundTable)[sfx_idx],
+                    (Moby *)&g_Spyro.m_Position, 0x10, 0);
           D_8007569C = 2;
         }
       }
@@ -361,7 +354,8 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
         setXYZ(&vec, 480 - (strlen(text) * 18), 80, 0x1100);
         func_80017FE4(text, &vec, 18, 11);
         if (D_8007569C < 4) {
-          PlaySound(((char*)g_Spu.m_SoundTable)[sfx_idx], (Moby*)&g_Spyro.m_Position, 0x10, 0);
+          PlaySound(((char *)g_Spu.m_SoundTable)[sfx_idx],
+                    (Moby *)&g_Spyro.m_Position, 0x10, 0);
           D_8007569C = 4;
         }
       }
@@ -389,7 +383,8 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
         setXYZ(&vec, 480 - (strlen(text) * 18), 100, 0x1100);
         func_80017FE4(text, &vec, 18, 11);
         if (D_8007569C < 6) {
-          PlaySound(((char*)g_Spu.m_SoundTable)[sfx_idx], (Moby*)&g_Spyro.m_Position, 0x10, 0);
+          PlaySound(((char *)g_Spu.m_SoundTable)[sfx_idx],
+                    (Moby *)&g_Spyro.m_Position, 0x10, 0);
           D_8007569C = 6;
         }
       }
@@ -417,7 +412,8 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
         setXYZ(&vec, 480 - (strlen(text) * 18), 120, 0x1100);
         func_80017FE4(text, &vec, 18, 11);
         if (D_8007569C < 8) {
-          PlaySound(((char*)g_Spu.m_SoundTable)[sfx_idx], (Moby*)&g_Spyro.m_Position, 0x10, 0);
+          PlaySound(((char *)g_Spu.m_SoundTable)[sfx_idx],
+                    (Moby *)&g_Spyro.m_Position, 0x10, 0);
           D_8007569C = 8;
         }
       }
@@ -425,11 +421,9 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
       setXYZ(&vec, 100, 140, 0x1100);
       func_80017FE4("ALL IN ONE", &vec, 18, 11);
       if (D_80075744 >= 9) {
-        if (g_FlightObjectiveCounters[0] +
-          g_FlightObjectiveCounters[1] +
-          g_FlightObjectiveCounters[2] +
-          g_FlightObjectiveCounters[3] == 32)
-        {
+        if (g_FlightObjectiveCounters[0] + g_FlightObjectiveCounters[1] +
+                g_FlightObjectiveCounters[2] + g_FlightObjectiveCounters[3] ==
+            32) {
           if (g_FlightCollected[g_Homeworld][4]) {
             sprintf(text, "^");
           } else {
@@ -444,7 +438,8 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
         setXYZ(&vec, 480 - (strlen(text) * 18), 140, 0x1100);
         func_80017FE4(text, &vec, 18, 11);
         if (D_8007569C < 9) {
-          PlaySound(((char*)g_Spu.m_SoundTable)[sfx_idx], (Moby*)&g_Spyro.m_Position, 0x10, 0);
+          PlaySound(((char *)g_Spu.m_SoundTable)[sfx_idx],
+                    (Moby *)&g_Spyro.m_Position, 0x10, 0);
           D_8007569C = 9;
         }
       }
@@ -466,31 +461,26 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
           func_80017FE4("TRY AGAIN?", &vec, 18, 11);
           setXYZ(&vec, 348, 190, 0x1100);
           func_80017FE4("YES", &vec, 18,
-                  (D_80075720 == 0 &&
-                   D_8007568C % 16 < 6)
-                  * 2
-                  + 10);
+                        (D_80075720 == 0 && D_8007568C % 16 < 6) * 2 + 10);
           mobys = g_HudMobys;
           mobyCount = 3;
           setXYZ(&vec, 348, 210, 0x1100);
           func_80017FE4("NO", &vec, 18,
-                  (D_80075720 == 1 &&
-                   D_8007568C % 16 < 6)
-                  * 2
-                  + 10);
+                        (D_80075720 == 1 && D_8007568C % 16 < 6) * 2 + 10);
           if (D_80075720 != 0) {
             mobys = g_HudMobys;
             mobyCount = 2;
           }
           for (i = 0; i < mobyCount; i++) {
-            mobys->m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+            mobys->m_Rotation.z =
+                COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
             mobys++;
           }
         }
       }
       mobyBuf = g_SonyImage.m_ShadedMobys;
       for (i = 0; i < 4; ++i) {
-        *mobyBuf++ = g_Hud.m_Mobys +  i;
+        *mobyBuf++ = g_Hud.m_Mobys + i;
       }
       *mobyBuf = nullptr;
 
@@ -510,26 +500,23 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
         i = 8;
       } else {
         i = 11;
-      } 
-      if (g_FlightObjectiveCounters[0] +
-        g_FlightObjectiveCounters[1] +
-        g_FlightObjectiveCounters[2] +
-        g_FlightObjectiveCounters[3] == 32)
-      {
+      }
+      if (g_FlightObjectiveCounters[0] + g_FlightObjectiveCounters[1] +
+              g_FlightObjectiveCounters[2] + g_FlightObjectiveCounters[3] ==
+          32) {
         mobyCount = (*D_800758C4)(D_800758F4, &vec, i);
         mobys = g_HudMobys;
         for (i = 0; i < mobyCount; i++) {
-          mobys->m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+          mobys->m_Rotation.z =
+              COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
           mobys++;
         }
       } else {
         (*D_800758C4)(-1, &vec, 11);
       }
-      if (g_FlightObjectiveCounters[0] +
-        g_FlightObjectiveCounters[1] +
-        g_FlightObjectiveCounters[2] +
-        g_FlightObjectiveCounters[3] < 32)
-      {
+      if (g_FlightObjectiveCounters[0] + g_FlightObjectiveCounters[1] +
+              g_FlightObjectiveCounters[2] + g_FlightObjectiveCounters[3] <
+          32) {
         if (D_80075900 != 0) {
           strcpy(text, "QUIT");
         } else {
@@ -540,7 +527,8 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
         func_80017FE4(text, &vec, 24, 11);
         mobys = g_HudMobys;
         for (i = 0; i < mobyCount; i++) {
-          mobys->m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+          mobys->m_Rotation.z =
+              COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
           mobys++;
         }
 
@@ -551,53 +539,48 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
         mobys = g_HudMobys;
         mobyCount = 10;
         for (i = 0; i < mobyCount; i++) {
-          mobys->m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+          mobys->m_Rotation.z =
+              COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
           mobys++;
         }
       }
       func_8001844C(60, 171, 452, 171);
       setXYZ(&vec, 140, 190, 0x1100);
 
-      // account for different padding garbage of last string
-      #if LEVEL == 15
-        #define GARBAGE_FIX 0x00, 0x00, 0x00
-      #elif LEVEL == 25
-        #define GARBAGE_FIX 0x00, 0x2A, 0x2A
-      #elif LEVEL == 35
-        #define GARBAGE_FIX 0x00, 0x0D, 0x0A
-      #elif LEVEL == 45
-        #define GARBAGE_FIX 0x00, 0x74, 0x20
-      #elif LEVEL == 55
-        #define GARBAGE_FIX 0x00, 0x00, 0x00
-      #endif
+// account for different padding garbage of last string
+#if LEVEL == 15
+#define GARBAGE_FIX 0x00, 0x00, 0x00
+#elif LEVEL == 25
+#define GARBAGE_FIX 0x00, 0x2A, 0x2A
+#elif LEVEL == 35
+#define GARBAGE_FIX 0x00, 0x0D, 0x0A
+#elif LEVEL == 45
+#define GARBAGE_FIX 0x00, 0x74, 0x20
+#elif LEVEL == 55
+#define GARBAGE_FIX 0x00, 0x00, 0x00
+#endif
 
-      func_80017FE4(
-        (char*)(char[])
-        {'T','R','Y',' ','A','G','A','I','N', GARBAGE_FIX},
-        &vec, 18, 11);
+      func_80017FE4((char *)(char[]){'T', 'R', 'Y', ' ', 'A', 'G', 'A', 'I',
+                                     'N', GARBAGE_FIX},
+                    &vec, 18, 11);
 
-      #undef GARBAGE_FIX
+#undef GARBAGE_FIX
 
       setXYZ(&vec, 340, 190, 0x1100);
       func_80017FE4("YES", &vec, 18,
-                  (D_80075720 == 0 &&
-                   D_8007568C % 16 < 6)
-                  * 2
-                  + 10);
+                    (D_80075720 == 0 && D_8007568C % 16 < 6) * 2 + 10);
       setXYZ(&vec, 340, 210, 0x1100);
       mobyCount = 3;
       mobys = g_HudMobys;
       func_80017FE4("NO", &vec, 18,
-                  (D_80075720 == 1 &&
-                   D_8007568C % 16 < 6)
-                  * 2
-                  + 10);
+                    (D_80075720 == 1 && D_8007568C % 16 < 6) * 2 + 10);
       if (D_80075720 != 0) {
         mobys = g_HudMobys;
         mobyCount = 2;
       }
       for (i = 0; i < mobyCount; i++) {
-        mobys->m_Rotation.z = COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
+        mobys->m_Rotation.z =
+            COSINE_8((D_800758B8 * 8 + i * 12) & 0xFF) * 3 >> 9;
         mobys++;
       }
       g_SonyImage.m_ShadedMobys[0] = 0;

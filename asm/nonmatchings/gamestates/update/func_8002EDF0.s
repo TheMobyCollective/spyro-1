@@ -11,7 +11,7 @@ glabel func_8002EDF0
 /* 1F608 8002EE08 3C00B1AF */  sw         $s1, 0x3C($sp)
 /* 1F60C 8002EE0C 03004014 */  bnez       $v0, .L8002EE1C
 /* 1F610 8002EE10 3800B0AF */   sw        $s0, 0x38($sp)
-/* 1F614 8002EE14 CA5A010C */  jal        func_80056B28
+/* 1F614 8002EE14 CA5A010C */  jal        KillSoundsAndMusic
 /* 1F618 8002EE18 21200000 */   addu      $a0, $zero, $zero
 .L8002EE1C:
 /* 1F61C 8002EE1C 0780023C */  lui        $v0, %hi(g_GameOverTicks)
@@ -154,8 +154,8 @@ glabel func_8002EDF0
 /* 1F834 8002F034 D05620AC */  sw         $zero, %lo(g_HasLevelTransition)($at)
 /* 1F838 8002F038 0780013C */  lui        $at, %hi(g_PortalLevelId)
 /* 1F83C 8002F03C AC5820AC */  sw         $zero, %lo(g_PortalLevelId)($at)
-/* 1F840 8002F040 0780013C */  lui        $at, %hi(D_800757E8)
-/* 1F844 8002F044 E85723AC */  sw         $v1, %lo(D_800757E8)($at)
+/* 1F840 8002F040 0780013C */  lui        $at, %hi(g_PreviousLevelId)
+/* 1F844 8002F044 E85723AC */  sw         $v1, %lo(g_PreviousLevelId)($at)
 /* 1F848 8002F048 455A000C */  jal        Memset
 /* 1F84C 8002F04C 68000624 */   addiu     $a2, $zero, 0x68
 /* 1F850 8002F050 6666023C */  lui        $v0, (0x66666667 >> 16)
