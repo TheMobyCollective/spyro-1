@@ -110,7 +110,7 @@
 - [x] func_8002C8A4
 - [x] func_8002C914
 - [x] func_8002C91C
-- [ ] func_8002C924
+- [x] func_8002C924
 - [x] func_8002CB6C
 - [x] InitFairyCutscene
 - [x] func_8002D02C

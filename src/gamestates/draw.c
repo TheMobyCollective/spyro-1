@@ -1794,16 +1794,6 @@ void func_8001CA38(void) {
   }
 }
 
-// TODO: Move externs
-extern struct {
-  int unk_0x0;
-  Vector3D vec_0x04;
-  SHORTMATRIX mat_0x10;
-  int unk_0x24;
-  Vector3D8 vec_0x28;
-} D_80076248;
-extern short D_8006F3C0[24];
-
 /// @brief Gamestate 8
 void func_8001CFDC(void) {
   char _[16];

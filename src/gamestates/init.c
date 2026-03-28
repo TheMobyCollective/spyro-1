@@ -237,7 +237,73 @@ void func_8002C914(void){};
 void func_8002C91C(void){};
 
 /// @brief Rescue a dragon, increments the needed values and starts the cutscene
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestate_init", func_8002C924);
+void func_8002C924(Moby *pMoby) {
+  RescuedDragonMobyProps *props = pMoby->m_Props;
+
+  // For artisans, check if the Toasty conditions have been met
+  if (g_LevelId == 10 && props->m_CutsceneId == 1) {
+    if (((g_LevelVortexExitFlags[1] != 0) || (g_LevelVortexExitFlags[2] != 0) ||
+         (g_LevelVortexExitFlags[3] != 0) ||
+         (g_LevelVortexExitFlags[5] != 0))) {
+      // Replace the cutscene with the second one
+      props->m_CutsceneId = 2;
+    }
+  }
+
+  // Gnorc Gnexus, for the cutscene after defeating Gnasty
+  if (g_LevelId == 60) {
+    // Level 63, so if we've defeated Gnasty
+    // (Gnasty doesn't have an exit vortex, but in Prototypes it used to)
+    if (g_LevelVortexExitFlags[33] != 0) {
+      props->m_CutsceneId = 1;
+
+      props->m_Angle.x = 0x800;
+      props->m_Angle.y = 0xCC8;
+      props->m_Angle.z = 0x800;
+
+      props->m_CameraPosition.x = 0x134BF;
+      props->m_CameraPosition.y = 0x13CE9;
+      props->m_CameraPosition.z = 0x2561;
+
+      props->m_CameraRotation.x = 0xFFC;
+      props->m_CameraRotation.y = 0x6A;
+      props->m_CameraRotation.z = 0xBB;
+
+      props->m_NameIndex = 16;
+    }
+  }
+
+  g_Gamestate = GS_Dragon;
+  g_ScreenBorderEnabled = 1;
+  g_StateSwitch = 1;
+
+  g_Hud.m_DragonCount = g_DragonTotal;
+  g_LevelDragonCount[g_LevelIndex]++;
+  g_DragonTotal++;
+
+  g_DragonCutscene.m_State = 0;
+  g_DragonCutscene.m_Stage = 0;
+  g_DragonCutscene.m_CutsceneTicks = 0;
+  g_DragonCutscene.unk_0x50 = 0;
+  g_DragonCutscene.unk_0x5C = 0;
+  g_DragonCutscene.unk_0x58 = 0;
+
+  g_DragonCutscene.m_RescuedDragonMoby = pMoby;
+  g_DragonCutscene.m_CutsceneIdx = props->m_CutsceneId;
+
+  if (props->m_DragonPadLink != -1) {
+    g_LevelMobys[props->m_DragonPadLink].m_AnimationState.m_Animation = 1;
+  }
+
+  VecCopy(&D_80076248.vec_0x04, &pMoby->m_Position);
+
+  D_80076248.vec_0x04.z += 64;
+
+  // SKELETON: Pointer to a pointer where a pointer is expected, oopsie
+  PlaySound(g_Spu.m_SoundTable->rescueingSound,
+            (Moby *)&g_DragonCutscene.m_RescuedDragonMoby, 16,
+            &g_DragonCutscene.m_RescuedDragonMoby->m_SoundChannel);
+}
 
 /// @brief Exit dragon cutscene, back to gamestate 0
 void func_8002CB6C(void) {
