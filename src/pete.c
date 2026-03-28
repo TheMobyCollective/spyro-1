@@ -27,6 +27,8 @@ extern int D_8006BC60[9];      // Idle animation states table
 extern int D_80075970;         // Idle animation index
 extern short D_8006C5F0[][13]; // Turn rate lookup table
 
+extern Gamepad *D_800757E0;
+
 // Spyro g_Spyro;
 
 /// @brief Increments the body animation
@@ -286,8 +288,46 @@ void UpdateBodyAnimationState(void) {
   }
 }
 
+extern short D_8006C5D0[16];
+
 /// @brief Creates the target speed and angle based on the stick
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003D3B8);
+void func_8003D3B8(int speed) {
+  int sX, sY;
+
+  if ((D_800757E0->m_LeftStickMoved != 0) &&
+      (D_800757E0->m_Sticks.m_LeftX != 0x7F ||
+       D_800757E0->m_Sticks.m_LeftY != 0x7F)) {
+    g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ =
+        Atan2(0x7F - D_800757E0->m_Sticks.m_LeftY,
+              0x7F - D_800757E0->m_Sticks.m_LeftX, 1);
+    g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ =
+        (g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ + g_Camera.m_Rotation.z) &
+        0xFFF;
+    sY = 0x7F - D_800757E0->m_Sticks.m_LeftY;
+    sY = ABS(sY);
+    sX = 0x7F - D_800757E0->m_Sticks.m_LeftX;
+    sX = ABS(sX);
+    g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = speed * (sY + sX) >> 7;
+    if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > speed) {
+      g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = speed;
+    }
+  } else {
+    if (D_800757E0->m_Released & 0xF000) {
+      g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = speed;
+      g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ =
+          D_8006C5D0[(D_800757E0->m_Released >> 12) & 15];
+      g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ =
+          (g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ +
+           g_Camera.m_Rotation.z) &
+          0xFFF;
+    } else {
+      g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = 0;
+      g_Spyro.m_Physics.m_TurnMomentum = 0;
+      g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ =
+          g_Spyro.m_bodyRotation.z * 0x10;
+    }
+  }
+}
 
 /// @brief Updates the body rotation based on the true rotation
 void func_8003D52C(int pUnknown) {
