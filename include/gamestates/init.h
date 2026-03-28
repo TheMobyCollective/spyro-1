@@ -16,6 +16,10 @@ void InitCreditsSequence(int pLoadSharedModels);
 /// @param pEnteringFromGameplay
 void func_8002C420(int pEnteringFromGameplay);
 
+/// @brief Unpauses the game, and sets the gamestate to 0
+// The arg `pResumeMusic` is always set to 1 in every call of this function.
+void func_8002C534(int pResumeMusic);
+
 /// @brief Opens the inventory menu
 /// @param pEnteringFromGameplay
 void func_8002C714(int pEnteringFromGameplay);

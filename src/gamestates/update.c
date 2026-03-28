@@ -1,6 +1,7 @@
 #include "buffers.h"
 #include "camera.h"
 #include "cd.h"
+#include "cheats.h"
 #include "common.h"
 #include "cutscene.h"
 #include "dragon.h"
@@ -10,6 +11,7 @@
 #include "graphics.h"
 #include "loaders.h"
 #include "math.h"
+#include "music.h"
 #include "overlay_pointers.h"
 #include "sony_image.h"
 #include "specular_and_metal.h"
@@ -158,13 +160,356 @@ void func_8002E084(void) {
   }
 }
 
-/// @brief Gamestate 2
-void func_8002E12C(void);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002E12C);
+extern int D_80075720; // Selected menu item index
+extern int D_800757C8; // OptionsSubmenuIsOpen
+extern int D_80075900; // Flight Pause Menu Quit related?
+
+void func_titlescreen_8007DDE8(void); // Titlescreen terminator
+
+/// @brief Gamestate 2, the pause menu
+void func_8002E12C(void) {
+  int highestOptionIndex;
+
+  if (!g_IsFlightLevel) {
+    HudTick();
+  }
+
+  g_Hud.m_GemSteadyTicks = 0;
+  g_Hud.m_DragonSteadyTicks = 0;
+  g_Hud.m_LifeSteadyTicks = 0;
+  g_Hud.m_EggSteadyTicks = 0;
+  g_Hud.m_KeySteadyTicks = 0;
+
+  D_8007568C += 1; // Pause menu no button ticks
+
+  SpecularUpdate(3);
+
+  // Inactive for the first 5 frames to prevent accidental inputs
+  if (D_800758B8 < 5) {
+    return;
+  }
+
+  if ((g_Pad.m_Down & PAD_SELECT)) {
+    // Open the inventory screen
+    func_8002C714(0);
+    return;
+  }
+
+  // Quit Game
+  if (D_800757C8 == 2) {
+    if (g_Pad.m_Down & (PAD_LEFT | PAD_RIGHT)) {
+      // Yes or No, toggle between the two options
+      PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+      D_80075720 = 1 - D_80075720; // toggle selected option
+      return;
+    }
+
+    if (g_Pad.m_Down & (PAD_CROSS | PAD_TRIANGLE)) {
+      RECT fullscreen;
+
+      if ((D_80075720 == 1) || (g_Pad.m_Down & PAD_TRIANGLE)) {
+        // Move back to options screen
+        PlaySound(g_Spu.m_SoundTable->menuCursor, nullptr, 16, nullptr);
+        D_800757C8 = 0;
+        D_80075720 = 3;
+        return;
+      }
+
+      // Quit confirmed: kill audio, clear the framebuffer,
+      // and switch to the titlescreen
+      KillSoundsAndMusic(0);
+      PlaySound(g_Spu.m_SoundTable->menuCursor, nullptr, 16, nullptr);
+      SpuUpdate();
+
+      setRECT(&fullscreen, 0, 0, 512, 480);
+      ClearImage(&fullscreen, 0, 0, 0);
+      DrawSync(0);
+
+      g_Buffers.m_CopyBuf = func_titlescreen_8007DDE8;
+      g_Buffers.m_DiscCopyBuf = func_titlescreen_8007DDE8;
+      g_LoadStage = 0;
+      g_CutsceneIdx = 0;
+
+      CDLoadSync(g_CdState.m_WadSector, g_OverlaySpacePointer,
+                 g_WadHeader.m_TitleScreenOverlay.m_Length,
+                 g_WadHeader.m_TitleScreenOverlay.m_Offset, 600);
+
+      while (g_LoadStage < 0xA) {
+        LoadCutscene();
+        CDMusicUpdate();
+      }
+
+      // Kick off the titlescreen
+      StartCutscenePlayback();
+      func_8002D170();
+      g_StateSwitch = 1;
+    }
+    return;
+  }
+
+  if (D_800757C8 == 1) {
+    if (g_Pad.m_Down & PAD_DOWN) {
+      PlaySound(g_Spu.m_SoundTable->menuCursor, nullptr, 16, nullptr);
+      D_8007568C = 0;
+
+      D_80075720++;
+
+      if (D_80075720 >= 6) {
+        D_80075720 = 0;
+      } else if (D_80075720 == 3 && g_ActAvailable == 0) {
+        D_80075720++; // Skip vibration when unavailable
+      }
+
+    } else if (g_Pad.m_Down & PAD_UP) {
+      PlaySound(g_Spu.m_SoundTable->menuCursor, nullptr, 16, nullptr);
+      D_8007568C = 0;
+
+      D_80075720--;
+
+      if (D_80075720 < 0) {
+        D_80075720 = 5;
+      } else if (D_80075720 == 3 && g_ActAvailable == 0) {
+        D_80075720--; // Skip vibration when unavailable
+      }
+    }
+
+    // Triangle backs out
+    if (g_Pad.m_Down & PAD_TRIANGLE) {
+      PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+      D_800757C8 = 0;
+      D_80075720 = 0;
+      return;
+    }
+
+    switch (D_80075720) {
+    case 0: // Sound volume
+      if ((g_Pad.m_Down & PAD_LEFT) && D_80075754 > 0) {
+        PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+        D_80075754--;
+      } else if ((g_Pad.m_Down & PAD_RIGHT) && D_80075754 < 10) {
+        PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+        D_80075754++;
+      }
+
+      g_Spu.unk_0x320 = (D_80075754 * 0x3FFF) / 10;
+      g_Spu.m_SoundVolume = (g_Spu.unk_0x320 * 0x1000) / 0x3fff;
+      return;
+
+    case 1: // Music volume
+      if ((g_Pad.m_Down & PAD_LEFT) && D_80075748 > 0) {
+        PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+        D_80075748--;
+      } else if ((g_Pad.m_Down & PAD_RIGHT) && D_80075748 < 10) {
+        PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+        D_80075748++;
+      }
+
+      g_Spu.m_MusicVolume = D_80075748 << 11;
+      g_Spu.m_CommonAttr.cd.volume.left = g_Spu.m_MusicVolume;
+      g_Spu.m_CommonAttr.cd.volume.right = g_Spu.m_MusicVolume;
+      g_Spu.m_CommonAttr.mask = SPU_COMMON_CDVOLL | SPU_COMMON_CDVOLR;
+      SpuSetCommonAttr(&g_Spu.m_CommonAttr);
+      return;
+
+    case 2: // Stereo / Mono toggle
+      if (g_Pad.m_Down & (PAD_LEFT | PAD_RIGHT | PAD_CROSS)) {
+        PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+        g_Spu.m_AudioMono = 1 - g_Spu.m_AudioMono;
+        if (g_Spu.m_AudioMono) {
+          g_CdMusic.m_Aud.val3 = 63;
+          g_CdMusic.m_Aud.val2 = 63;
+          g_CdMusic.m_Aud.val1 = 63;
+          g_CdMusic.m_Aud.val0 = 63;
+        } else {
+          g_CdMusic.m_Aud.val2 = 127;
+          g_CdMusic.m_Aud.val0 = 127;
+          g_CdMusic.m_Aud.val3 = 0;
+          g_CdMusic.m_Aud.val1 = 0;
+        }
+        CdMix(&g_CdMusic.m_Aud);
+      }
+      return;
+
+    case 3: // Vibration toggle
+      if (g_ActAvailable) {
+        if (g_Pad.m_Down & (PAD_LEFT | PAD_RIGHT | PAD_CROSS)) {
+          PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+          g_ActEnabled = 1 - g_ActEnabled;
+          if (g_ActEnabled && D_80075764 < 10) {
+            D_80075764 = 10; // Turns on the shock vibration for some reason
+          }
+        }
+      } else {
+        D_80075720 = 4;
+      }
+      return;
+
+    case 4: // Active or passive camera
+      if (g_Pad.m_Down & (PAD_LEFT | PAD_RIGHT | PAD_CROSS)) {
+        PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+        if (D_80075914 == 2) {
+          D_80075914 = 0x52;
+        } else {
+          D_80075914 = 2;
+        }
+      }
+      return;
+
+    case 5: // Exit (handled above by Triangle/Cross check)
+      if (g_Pad.m_Down & PAD_CROSS) {
+        PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+        D_800757C8 = 0;
+        D_80075720 = 0;
+      }
+      return;
+    }
+
+    return;
+  }
+
+  // SKELETON: June leftover, there used to be a check that initialised
+  // this to 2 if we're in a homeworld, because quit game didn't exist yet.
+  highestOptionIndex = 3;
+
+  // Main pause screen
+  if (g_Pad.m_Down & PAD_DOWN) {
+    PlaySound(g_Spu.m_SoundTable->menuCursor, nullptr, 16, nullptr);
+    D_8007568C = 0;
+    D_80075720++;
+    if (D_80075720 > highestOptionIndex) {
+      D_80075720 = 0;
+    }
+  } else if (g_Pad.m_Down & PAD_UP) {
+    PlaySound(g_Spu.m_SoundTable->menuCursor, nullptr, 16, nullptr);
+    D_8007568C = 0;
+    D_80075720--;
+    if (D_80075720 < 0) {
+      D_80075720 = highestOptionIndex;
+    }
+  }
+
+  if ((g_Pad.m_Down & (PAD_START | PAD_CROSS))) {
+    switch (D_80075720) {
+    case 0: // Continue
+      PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+      func_8002C534(1);
+      return;
+
+    case 1: // Options
+      PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+      D_800757C8 = 1;
+      D_80075720 = 0;
+      return;
+
+    case 2: // Inventory
+      func_8002C714(0);
+      return;
+
+    case 3: // Quit
+      PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 16, nullptr);
+      if (g_LevelId % 10 == 0) {
+        // In a homeworld, open quit screen
+        D_80075720 = 1;
+        D_800757C8 = 2;
+        return;
+      }
+
+      // Exit level
+      VecNull(&g_Spyro.m_HeadLookTarget);
+      g_Spyro.unk_0x194 = 0;
+      if (g_IsFlightLevel) {
+        g_Gamestate = 7;
+        D_80075720 = 0;
+        D_8007568C = 0;
+        D_80075900 = 1;
+        g_UpdateMoby();
+        return;
+      }
+      func_8002C618();
+      return;
+    }
+  }
+}
+
+extern int D_800756D4;
+extern int D_80075744; // The index of the current page of the inventory screen
+extern int D_800757CC; // Transition progress between inventory pages.
 
 /// @brief Gamestate 3
-void func_8002EB2C(void);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002EB2C);
+void func_8002EB2C(void) {
+  g_Hud.unk_0x3c = (g_Hud.unk_0x3c - g_DeltaTime) & 0xFF; // HUD rotation
+  g_Hud.unk_0x40 = (g_Hud.unk_0x40 + 1) % 9;              // Egg frame
+
+  D_8007568C += g_DeltaTime;
+
+  SpecularUpdate(3);
+
+  // Inactive for the first 5 frames to prevent accidental inputs
+  if (D_800758B8 < 5) {
+    return;
+  }
+
+  // Warp code handling takes priority
+  if (g_LevelCheatActive) {
+    CheatProcessLevelWarp();
+    return;
+  }
+
+  // Process cheats
+  CheatsProcess();
+
+  // If we're not scrolling
+  if (D_800757CC == 0) {
+    // Left: Scroll to previous page if it exists and has been visited
+    if (D_80075744 > 0 && g_VisitedFlags[D_80075744 * 6 - 6]) {
+      if (g_Pad.m_Held & PAD_LEFT) {
+        PlaySound(g_Spu.m_SoundTable->inventorySwoosh, nullptr, 16, nullptr);
+
+        // Scroll rightwards (previous page slides in from left)
+        D_800756D4 = 0x40;
+      }
+    }
+
+    // Right: Scroll to next page if it exists and has been visited
+    if (D_80075744 <= 4 && g_VisitedFlags[D_80075744 * 6 + 6]) {
+      if (g_Pad.m_Held & PAD_RIGHT) {
+        PlaySound(g_Spu.m_SoundTable->inventorySwoosh, nullptr, 16, nullptr);
+
+        // Scroll leftwards (next page slides in from right)
+        D_800756D4 = -0x40;
+      }
+    }
+  }
+
+  // Advance scroll animation
+  if (D_800756D4 != 0) {
+    D_800757CC += D_800756D4;
+
+    if (D_800757CC == 0) {
+      D_800756D4 = 0;
+    } else if (D_800757CC == -0x1c0) {
+      D_800756D4 = -0x40;
+      D_800757CC = 0x1C0;
+      D_80075744 += 1;
+    } else if (D_800757CC == 0x1C0) {
+      D_800756D4 = 0x40;
+      D_800757CC = -0x1C0;
+      D_80075744 -= 1;
+    }
+  }
+
+  // Return to the game when you press start or triangle
+  if (g_Pad.m_Down & (PAD_START | PAD_TRIANGLE)) {
+    func_8002C420(0);
+    return;
+  }
+
+  // Return to the pause menu when you press start or triangle
+  // (Why are we checking g_LevelCheatActive exactly?)
+  if ((g_Pad.m_Down & (PAD_SELECT | PAD_CROSS)) && !g_LevelCheatActive) {
+    func_8002C7BC();
+  }
+}
 
 /// @brief Gamestate 4 & 5
 void func_8002EDF0(void);

@@ -29,8 +29,8 @@
 - [x] func_8002DF9C
 - [x] func_8002E000
 - [x] func_8002E084
-- [ ] func_8002E12C
-- [ ] func_8002EB2C
+- [x] func_8002E12C
+- [x] func_8002EB2C
 - [ ] func_8002EDF0
 - [x] func_8002F3C4
 - [ ] func_8002F3E4
