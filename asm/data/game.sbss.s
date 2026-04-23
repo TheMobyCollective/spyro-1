@@ -282,7 +282,7 @@ dlabel g_Gamestate
 dlabel g_CreditsTotalEntries
 /* 65FB4 800757DC */ .space 0x04
 
-dlabel D_800757E0
+dlabel g_ActivePad
 /* 65FB8 800757E0 */ .space 0x04
 
 dlabel D_800757E4

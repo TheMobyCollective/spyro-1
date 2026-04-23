@@ -27,8 +27,6 @@ extern int D_8006BC60[9];      // Idle animation states table
 extern int D_80075970;         // Idle animation index
 extern short D_8006C5F0[][13]; // Turn rate lookup table
 
-extern Gamepad *D_800757E0;
-
 // Spyro g_Spyro;
 
 /// @brief Increments the body animation
@@ -294,28 +292,28 @@ extern short D_8006C5D0[16];
 void func_8003D3B8(int speed) {
   int sX, sY;
 
-  if ((D_800757E0->m_LeftStickMoved != 0) &&
-      (D_800757E0->m_Sticks.m_LeftX != 0x7F ||
-       D_800757E0->m_Sticks.m_LeftY != 0x7F)) {
+  if ((g_ActivePad->m_LeftStickMoved != 0) &&
+      (g_ActivePad->m_Sticks.m_LeftX != 0x7F ||
+       g_ActivePad->m_Sticks.m_LeftY != 0x7F)) {
     g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ =
-        Atan2(0x7F - D_800757E0->m_Sticks.m_LeftY,
-              0x7F - D_800757E0->m_Sticks.m_LeftX, 1);
+        Atan2(0x7F - g_ActivePad->m_Sticks.m_LeftY,
+              0x7F - g_ActivePad->m_Sticks.m_LeftX, 1);
     g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ =
         (g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ + g_Camera.m_Rotation.z) &
         0xFFF;
-    sY = 0x7F - D_800757E0->m_Sticks.m_LeftY;
+    sY = 0x7F - g_ActivePad->m_Sticks.m_LeftY;
     sY = ABS(sY);
-    sX = 0x7F - D_800757E0->m_Sticks.m_LeftX;
+    sX = 0x7F - g_ActivePad->m_Sticks.m_LeftX;
     sX = ABS(sX);
     g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = speed * (sY + sX) >> 7;
     if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > speed) {
       g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = speed;
     }
   } else {
-    if (D_800757E0->m_Released & 0xF000) {
+    if (g_ActivePad->m_Released & 0xF000) {
       g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = speed;
       g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ =
-          D_8006C5D0[(D_800757E0->m_Released >> 12) & 15];
+          D_8006C5D0[(g_ActivePad->m_Released >> 12) & 15];
       g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ =
           (g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ +
            g_Camera.m_Rotation.z) &
@@ -425,7 +423,68 @@ void UpdateSpyroTurnMomentum(int pTableIndex) {
                 g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003D840);
+/**
+ * @brief Pre-processes analog stick input for Spyro's turning ("soft turn").
+ *
+ * When the left stick is held gently (magnitude < 0x60), interpolates
+ * m_TargetSpeedAngle toward m_SpeedAngle proportionally to stick magnitude,
+ * producing smooth micro-adjustments instead of a full turn. Larger stick
+ * deflections fall through to the normal momentum-based turn. Always
+ * delegates the actual rotation to UpdateSpyroTurnMomentum() afterward.
+ */
+void ApplySpyroSoftTurn(void) {
+  Vector3D stickVec;
+  int magnitude;
+  int diff;
+  int absDiff;
+
+  // Skip if the pad isn't reporting a moved stick, or if the stick is centered
+  // (upper word of m_Sticks packs LeftX/LeftY; 0x7F7F = both axes neutral)
+  if (g_ActivePad->m_LeftStickMoved != 0 &&
+      (*(int *)&g_ActivePad->m_Sticks & 0xFFFF0000) != 0x7F7F0000) {
+    // Build a 2D vector centered on the stick's neutral position (0x7F)
+    stickVec.x = g_ActivePad->m_Sticks.m_LeftX - 0x7F;
+    stickVec.y = g_ActivePad->m_Sticks.m_LeftY - 0x7F;
+    stickVec.z = 0;
+
+    magnitude = VecMagnitude(&stickVec, 0); // 2D magnitude of stick deflection
+
+    // Only the soft-turn tier — full deflection goes through the momentum
+    // system
+    if (magnitude < 0x60) {
+      // Signed angular delta in 12-bit space, wrapped to (-0x800, +0x7FF]
+      diff = (g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ -
+              g_Spyro.m_Physics.m_SpeedAngle.m_RotZ) &
+             0xFFF;
+
+      if (diff > 0x800) {
+        diff -= 0x1000;
+      }
+
+      absDiff = diff;
+
+      if (diff < 0) {
+        // No-op; nudges GCC 2.7.2 into using $v0 (not $v1) as the negu source
+        // so the emitted assembly matches the ROM at +0x00A4. (but why?)
+        diff++;
+        diff--;
+        absDiff = -absDiff;
+      }
+
+      // Big pending turn — flag the state machine so Spyro visibly reorients
+      if (absDiff > 0x100) {
+        g_Spyro.m_walkingState = 1;
+      }
+
+      // Pull target angle toward current by (magnitude / 512) of the delta
+      g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ =
+          (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ + ((magnitude * diff) >> 9)) &
+          0xFFF;
+    }
+  }
+
+  UpdateSpyroTurnMomentum(0); // Apply rotation using row 0 (walking turn rate)
+}
 
 /// @brief Makes the movement speed approach the target speed
 void func_8003D92C(int pAddSpeed, int pSubtractSpeed) {

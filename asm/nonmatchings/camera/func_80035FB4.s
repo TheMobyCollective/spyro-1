@@ -834,8 +834,8 @@ glabel func_80035FB4
 /* 273C4 80036BC4 05001424 */   addiu     $s4, $zero, 0x5
 /* 273C8 80036BC8 66D0000C */  jal        ApplySphericalPreset
 /* 273CC 80036BCC 00000000 */   nop
-/* 273D0 80036BD0 0780043C */  lui        $a0, %hi(D_800757E0)
-/* 273D4 80036BD4 E057848C */  lw         $a0, %lo(D_800757E0)($a0)
+/* 273D0 80036BD0 0780043C */  lui        $a0, %hi(g_ActivePad)
+/* 273D4 80036BD4 E057848C */  lw         $a0, %lo(g_ActivePad)($a0)
 /* 273D8 80036BD8 00000000 */  nop
 /* 273DC 80036BDC 0000838C */  lw         $v1, 0x0($a0)
 /* 273E0 80036BE0 03000224 */  addiu      $v0, $zero, 0x3
