@@ -91,8 +91,10 @@ typedef struct {
 
 // static_assert(sizeof(Gamepad) == 0xa4, "Gamepad is the wrong size");
 
-extern Gamepad g_Pad;       // Current gamepad state
-extern Gamepad g_PadBackup; // Backup gamepad state for cutscenes/portals
+extern Gamepad g_Pad;        // Current gamepad state
+extern Gamepad g_PadBackup;  // Backup gamepad state for cutscenes/portals
+extern Gamepad *g_ActivePad; // Active input pointer, selects a frame of
+                             // g_Pad.m_BufferedInputs[] for input consumers
 
 extern u_char g_PadSwapFlag; // Tracks whether gamepad has been swapped (0 or 1)
 extern u_char g_PadMutex;    // Controller update mutex

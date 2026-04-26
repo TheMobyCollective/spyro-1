@@ -218,7 +218,7 @@
 - [x] func_8003D3B8
 - [x] func_8003D52C
 - [x] UpdateSpyroTurnMomentum
-- [ ] func_8003D840
+- [x] ApplySpyroSoftTurn
 - [x] func_8003D92C
 - [x] func_8003D978
 - [x] RotateSpyroToNeutral
