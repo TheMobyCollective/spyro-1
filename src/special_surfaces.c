@@ -101,6 +101,10 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
       // Fallback when there's no path moby set
       // Links are set to -1 when they're not filled
       if (pathMoby < 0) {
+#if 0
+        // There used to be a printf here that said:
+        printf("No Path Moby\n");
+#endif
         g_LoadStage = 0;
         g_Gamestate = GS_LevelTransition;
         g_LevelTransHudActive = 1;

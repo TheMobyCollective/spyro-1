@@ -16,12 +16,10 @@ typedef struct {
   int m_Size;
   CdlLOC m_ReadLoc;
   void *m_OutBuf;
-  int m_0x10; // Unused space
-  int m_0x14;
-  int m_0x18;
-  int m_0x1c;
-  int m_0x20;
-  int m_0x24;
+
+  // Unused in Final, used in Prototypes and Demos (see CDGetFileSector)
+  CdlFILE m_FileInfo;
+
   volatile int m_IsReading;
 } CdState;
 

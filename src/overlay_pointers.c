@@ -3,6 +3,8 @@
 #include "common.h"
 #include "moby.h"
 
+#include <stdlib.h>
+
 extern void *main_BSS_END;
 
 // This is placed into sdata, but I think this is cleaner than having an
@@ -1085,6 +1087,13 @@ void SetOverlayPointers(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
+#if 0
+  default:
+    // There used to be a printf here that said:
+    printf("Invalid Level %d, file LOADERS.C\n", g_LevelId);
+    exit();
+    break;
+#endif
   }
 
   g_Buffers.m_DiscCopyBuf = g_Buffers.m_CopyBuf;

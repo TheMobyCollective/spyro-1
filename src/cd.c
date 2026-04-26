@@ -11,11 +11,10 @@ void CDLoadTime(void) {
 
   // Check if the disc read time is exceeded
   if (g_CDReadTime > g_CDMaxReadTime) {
-
-    /*
-      There used to be a printf here that said
-      "Load Time (%d) Exceeded on LoadStage %d\n" (g_CDMaxReadTime, g_LoadStage)
-    */
+#if 0
+    // There used to be a printf here that said:
+    printf("Load Time (%d) Exceeded on LoadStage %d\n", g_CDMaxReadTime, g_LoadStage);
+#endif
 
     // Reinitialize the CD subsystem
     CdInit();
@@ -35,6 +34,27 @@ void CDLoadTime(void) {
     CdRead(g_CdState.m_Size, g_CdState.m_OutBuf, CdlModeSpeed);
   }
 }
+
+#if 0
+// Matches 80015fc8 of June with Printf
+// Matches 8001d4c8 of Foil without Printf
+int CDGetFileSector(char *pFileName) {
+  CdlFILE *fileInfo;
+
+  fileInfo = CdSearchFile(&g_CdState.m_FileInfo, pFileName);
+
+#if 0
+  // There used to be a printf here that said:
+  if (!fileInfo) {
+    printf("Could Not Open File \"%s\"\n", pFileName);
+
+    // But it still moves on to CdPosToInt lol
+  }
+#endif
+
+  return CdPosToInt(&g_CdState.m_FileInfo.pos);
+}
+#endif
 
 void CDReadDone(u_char intr, u_char *result) {
   // If we managed to read the data, unset the reading flag
