@@ -439,9 +439,10 @@ void ApplySpyroSoftTurn(void) {
   int absDiff;
 
   // Skip if the pad isn't reporting a moved stick, or if the stick is centered
-  // (upper word of m_Sticks packs LeftX/LeftY; 0x7F7F = both axes neutral)
+  // (0x7F = neutral)
   if (g_ActivePad->m_LeftStickMoved != 0 &&
-      (*(int *)&g_ActivePad->m_Sticks & 0xFFFF0000) != 0x7F7F0000) {
+      (g_ActivePad->m_Sticks.m_LeftX != 0x7F ||
+       g_ActivePad->m_Sticks.m_LeftY != 0x7F)) {
     // Build a 2D vector centered on the stick's neutral position (0x7F)
     stickVec.x = g_ActivePad->m_Sticks.m_LeftX - 0x7F;
     stickVec.y = g_ActivePad->m_Sticks.m_LeftY - 0x7F;
@@ -452,7 +453,7 @@ void ApplySpyroSoftTurn(void) {
     // Only the soft-turn tier — full deflection goes through the momentum
     // system
     if (magnitude < 0x60) {
-      // Signed angular delta in 12-bit space, wrapped to (-0x800, +0x7FF]
+      // Signed angular delta in 12-bit space, wrapped to [-0x800, +0x7FF]
       diff = (g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ -
               g_Spyro.m_Physics.m_SpeedAngle.m_RotZ) &
              0xFFF;
@@ -461,18 +462,8 @@ void ApplySpyroSoftTurn(void) {
         diff -= 0x1000;
       }
 
-      absDiff = diff;
-
-      if (diff < 0) {
-        // No-op; nudges GCC 2.7.2 into using $v0 (not $v1) as the negu source
-        // so the emitted assembly matches the ROM at +0x00A4. (but why?)
-        diff++;
-        diff--;
-        absDiff = -absDiff;
-      }
-
       // Big pending turn — flag the state machine so Spyro visibly reorients
-      if (absDiff > 0x100) {
+      if (ABS2(diff) > 0x100) {
         g_Spyro.m_walkingState = 1;
       }
 
