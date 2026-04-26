@@ -28,6 +28,9 @@ extern int D_8006BC60[9];      // Idle animation states table
 extern int D_80075970;         // Idle animation index
 extern short D_8006C5F0[][13]; // Turn rate lookup table
 
+// Part of this file (gp_rel)
+Moby *D_80075804;
+
 // Spyro g_Spyro;
 
 /// @brief Increments the body animation
@@ -1014,8 +1017,8 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003FE40);
 //   0x2000 - Supercharge flag
 //   0x8000 - Knockback (applies m_KnockbackDirection to acceleration)
 //
-// Invulnerability mask: -0x1F2 (0xFFFFFE0E) clears bits 0,4,5,6,7,8
-// Charge immunity mask: -0x401 (0xFFFFFBFF) clears bit 10 (charge)
+// Invulnerability mask: 0xFFFFFE0E clears bits 0,4,5,6,7,8
+// Charge immunity mask: 0xFFFFFBFF clears bit 10 (charge)
 
 /// @brief Processes damage and action flags for Spyro
 /// @param pFlags The action/damage flags to process
@@ -1031,10 +1034,10 @@ int HandleSpyroDamage(int pFlags) {
 
   // When invulnerable, mask off most damage types
   if (g_Spyro.m_invulverabilityTimer != 0) {
-    pFlags &= -0x1F2; // Clear low damage bits
+    pFlags &= 0xFFFFFE0E; // Clear low damage bits
     if (g_Spyro.m_Physics.m_TrueVelocity.z > 0) {
       // Rising in air - also immune to charge damage
-      pFlags &= -0x401;
+      pFlags &= 0xFFFFFBFF;
     }
   }
 
@@ -1061,25 +1064,25 @@ int HandleSpyroDamage(int pFlags) {
                 &g_Spyro.m_damageSoundChannel);
       func_8003EA68(7); // State 7: Hurt (hazard)
     } else if (pFlags & 0x40) {
-      func_8003EA68(0x1B); // State 27
+      func_8003EA68(27); // State 27
     } else if (pFlags & 0x80) {
-      func_8003EA68(0x1C); // State 28
+      func_8003EA68(28); // State 28
     } else if (pFlags & 0x100) {
-      func_8003EA68(0x16); // State 22
+      func_8003EA68(22); // State 22
     } else if (pFlags & 0x400) {
       // Charge damage in normal damage path
-      func_8003EA68(0x1D); // State 29: Charge interrupted
+      func_8003EA68(29); // State 29: Charge interrupted
       // Instant death on certain floor types
       if (*g_Spyro.m_floorFlagsPointer != 0 && D_800756A0 == 0) {
         g_Spyro.m_health = -1;
       }
     } else {
-      func_8003EA68(0xE); // State 14: Default hurt state
+      func_8003EA68(14); // State 14: Default hurt state
     }
 
-    // Grant invulnerability frames (0x5A = 90 frames)
-    if (g_Spyro.m_invulverabilityTimer < 0x5A) {
-      g_Spyro.m_invulverabilityTimer = 0x5A;
+    // Grant invulnerability frames
+    if (g_Spyro.m_invulverabilityTimer < 90) {
+      g_Spyro.m_invulverabilityTimer = 90;
     }
     return 1;
   }
@@ -1094,17 +1097,17 @@ int HandleSpyroDamage(int pFlags) {
       if (D_800756A0 == 0) {
         g_Spyro.m_health--;
       }
-      if (g_Spyro.m_invulverabilityTimer < 0x5A) {
-        g_Spyro.m_invulverabilityTimer = 0x5A;
+      if (g_Spyro.m_invulverabilityTimer < 90) {
+        g_Spyro.m_invulverabilityTimer = 90;
       }
-      func_8003EA68(0x1D); // State 29: Charge interrupted
+      func_8003EA68(29); // State 29: Charge interrupted
     }
     result = 1;
   }
 
   // Knockback - applies external momentum (e.g. from cannons, wind)
   if (highFlags & 0x8000) {
-    func_8003EA68(0xC); // State 12: Knockback
+    func_8003EA68(12); // State 12: Knockback
     func_80017330(&g_Spyro.m_KnockbackDirection,
                   0x800); // Normalize to magnitude 0x800
     VecCopy(&g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_KnockbackDirection);
@@ -1113,17 +1116,17 @@ int HandleSpyroDamage(int pFlags) {
 
   // Electrified/frozen state toggle
   if (highFlags & 0x800) {
-    if (g_Spyro.m_State != 0x11) {
-      func_8003EA68(0x11); // State 17: Electrified/stuck
+    if (g_Spyro.m_State != 17) {
+      func_8003EA68(17); // State 17: Electrified/stuck
       result = 1;
     }
-  } else if (g_Spyro.m_State == 0x11) {
+  } else if (g_Spyro.m_State == 17) {
     // Release from electrified state
-    func_8003EA68(0xF); // State 15: Recovery
+    func_8003EA68(15); // State 15: Recovery
   }
 
   // Supercharge flag management (state 44 is immune)
-  if (g_Spyro.m_State != 0x2C) {
+  if (g_Spyro.m_State != 44) {
     if (highFlags & 0x2000) {
       g_Spyro.m_doingSupercharge = 1;
     } else {
@@ -1134,7 +1137,125 @@ int HandleSpyroDamage(int pFlags) {
   return result;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80041270);
+/// @brief VERY similar to HandleSpyroDamage. But doesn't take in any flags, and
+/// contains knockback/bonking logic.
+int func_80041270(void) {
+  int highFlags;
+  int mask = 0xFFFF;
+  int damaged = 0;
+
+  if (g_NextLevelId != g_LevelId) {
+    return 0;
+  }
+
+  if (g_Spyro.m_invulverabilityTimer) {
+    mask = 0xFE0E;
+  }
+
+  mask = mask & g_Spyro.m_DamageFlags;
+
+  switch (mask & 6) {
+  case 2: {
+    Vector3D diff;
+    int angleDiff;
+
+    VecSub(&diff, &D_80075804->m_Position, &g_Spyro.m_Position);
+    angleDiff =
+        (Atan2(diff.x, diff.y, 1) - g_Spyro.m_Physics.m_SpeedAngle.m_RotZ) &
+        0xFFF;
+
+    if (angleDiff >= 0x801) {
+      angleDiff -= 0x1000;
+    }
+    if (ABS2(angleDiff) < 0x200) {
+      func_8003EA68(12);
+      damaged = 1;
+    }
+    break;
+  }
+
+  case 4:
+    func_8003EA68(12);
+    damaged = 1;
+    break;
+
+  case 6:
+    if (!g_Spyro.m_invulverabilityTimer && g_Spyro.m_health >= 0) {
+      int nextState;
+
+      if (D_800756A0 == 0) {
+        g_Spyro.m_health -= 1;
+      }
+
+      g_Spyro.m_invulverabilityTimer = 90;
+
+      if (mask & 0x10) {
+        nextState = 25;
+        if (g_Spyro.m_health < 0) {
+          nextState = 31;
+        }
+      } else {
+        nextState = 7;
+
+        if (!(mask & 0x20)) {
+          if (mask & 0x40) {
+            nextState = 27;
+          } else if (mask & 0x80) {
+            nextState = 28;
+          } else if (mask & 0x100) {
+            nextState = 22;
+          } else if (mask & 0x400) {
+            nextState = 29;
+          } else {
+            nextState = 14;
+          }
+        }
+      }
+
+      func_8003EA68(nextState);
+      return 1;
+    }
+    break;
+  }
+
+  highFlags = mask & 0xfc00;
+
+  if ((highFlags & 0x8000)) {
+    func_8003EA68(0xC);
+    func_80017330(&g_Spyro.m_KnockbackDirection, 0x800);
+    VecCopy(&g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_KnockbackDirection);
+    damaged = 1;
+  }
+
+  if (highFlags & 0x800 && g_Spyro.m_State != 17) {
+    func_8003EA68(17);
+    damaged = 1;
+  }
+
+  if (highFlags & 0x400) {
+    if (g_Spyro.m_health >= 0) {
+      func_8003DFA4();
+
+      if (!D_800756A0) {
+        g_Spyro.m_health -= 1;
+      }
+
+      if (g_Spyro.m_invulverabilityTimer < 90) {
+        g_Spyro.m_invulverabilityTimer = 90;
+      }
+      func_8003EA68(29);
+      damaged = 1;
+    }
+  }
+
+  if (highFlags & 0x2000) {
+    g_Spyro.m_doingSupercharge = 1;
+  } else {
+    g_Spyro.m_doingSupercharge = 0;
+  }
+
+  return damaged;
+}
 
 /// @brief Cycles through animation states until finding a loaded idle animation
 /// Sets Spyro's state to the first available animation from the idle animation

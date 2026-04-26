@@ -238,7 +238,7 @@
 - [x] func_8003FDC8
 - [ ] func_8003FE40
 - [x] HandleSpyroDamage
-- [ ] func_80041270
+- [x] func_80041270
 - [x] CycleSpyroIdleAnimation
 - [ ] func_80041670
 - [ ] func_80043FE4
