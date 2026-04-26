@@ -1,4 +1,5 @@
 #include "camera.h"
+#include "collision.h"
 #include "common.h"
 #include "environment.h"
 #include "gamepad.h"
@@ -947,7 +948,44 @@ void AdjustAirCollision(void) {
   }
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003E90C);
+extern int D_8006C714[16];
+
+// @brief Pushback from collision used while falling, strange implementation
+void func_8003E90C(void) {
+  Vector3D vecA;
+  Vector3D vecB;
+  int i, v;
+  int result;
+
+  result = 0;
+  v = 0x20;
+
+  for (i = 0; i < 4; i++) {
+
+    vecA.x = vecB.x = COSINE_8(v) >> 4;
+    vecA.y = vecB.y = SINE_8(v) >> 4;
+
+    vecA.z = -292;
+    vecB.z = -420;
+
+    VecAdd(&vecA, &vecA, &g_Spyro.m_Position);
+    VecAdd(&vecB, &vecB, &g_Spyro.m_Position);
+
+    if (func_8004AE38(&vecA, &vecB) != 0) {
+      result |= 1 << i;
+    }
+
+    v += 0x40;
+  }
+
+  v = D_8006C714[result];
+  if (v >= 0) {
+    // I failed to find a better match than the << 1 >> 1
+    // I'm guessing they did some kind of shifting, or masking
+    g_Spyro.m_Physics.m_Acceleration.x += (COSINE_8(v) << 1 >> 1) >> 4;
+    g_Spyro.m_Physics.m_Acceleration.y += (SINE_8(v) << 1 >> 1) >> 4;
+  }
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003EA68);
 
