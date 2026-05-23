@@ -7,7 +7,7 @@ NOCD_FLAG          = $(if ${NOCD},-DNOCD,-DNNOCD)
 DEBUG_FLAG          = $(if ${DEBUG},-DDEBUG,-DNDEBUG)
 MODERN_COMPILER_FLAG = $(if ${MODERN_COMPILER},-DMODERN_COMPILER,-D_HAS_MASPSX)
 NON_MATCHING_FLAG  = $(if ${NON_MATCHING},-DNON_MATCHING,)
-NEW_PSYQ_FLAG = $(if ${NEW_PSYQ},-D_NEW_PSYQ,)
+NEW_PSYQ_FLAG = $(if ${NEW_PSYQ},-DNEW_PSYQ,)
 PSYQ_LIB = $(if ${NEW_PSYQ},-Lpsyq/lib --start-group -lapi -lc -lc2 -lcard -lcd -lcomb -lds -letc -lgpu -lgs -lgte -lgun -lhmd -lmath -lmcrd -lpad -lsio -lspu --end-group,)
 
 CC       = $(if ${MODERN_COMPILER}, "/usr/libexec/gcc-cross/mips-linux-gnu/14/cc1", "./tools/gcc2.7.2/cc1")

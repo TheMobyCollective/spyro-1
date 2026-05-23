@@ -3291,7 +3291,6 @@ dlabel D_8006F3F0
 /* 5FC10 8006F410 A0050000 */ .word 0x000005A0
 .size D_8006F3F0, . - D_8006F3F0
 
-dlabel D_8006F414
 dlabel g_TargetDragonCounts
 /* 5FC14 8006F414 */ .byte 0x04
 /* 5FC15 8006F415 */ .byte 0x04
@@ -3329,9 +3328,8 @@ dlabel g_TargetDragonCounts
 /* 5FC35 8006F435 */ .byte 0x00
 /* 5FC36 8006F436 */ .byte 0x00
 /* 5FC37 8006F437 */ .byte 0x00
-.size D_8006F414, . - D_8006F414
+.size g_TargetDragonCounts, . - g_TargetDragonCounts
 
-dlabel D_8006F438
 dlabel g_TargetGemCounts
 /* 5FC38 8006F438 */ .short 0x0064
 /* 5FC3A 8006F43A */ .short 0x00C8
@@ -3369,9 +3367,8 @@ dlabel g_TargetGemCounts
 /* 5FC7A 8006F47A */ .short 0x01F4
 /* 5FC7C 8006F47C */ .short 0x07D0
 /* 5FC7E 8006F47E */ .short 0x0000
-.size D_8006F438, . - D_8006F438
+.size g_TargetGemCounts, . - g_TargetGemCounts
 
-dlabel D_8006F480
 dlabel g_TargetEggCounts
 /* 5FC80 8006F480 */ .byte 0x00
 /* 5FC81 8006F481 */ .byte 0x01
@@ -3393,4 +3390,4 @@ dlabel g_TargetEggCounts
 /* 5FC91 8006F491 */ .byte 0x00
 /* 5FC92 8006F492 */ .byte 0x00
 /* 5FC93 8006F493 */ .byte 0x00
-.size D_8006F480, . - D_8006F480
+.size g_TargetEggCounts, . - g_TargetEggCounts

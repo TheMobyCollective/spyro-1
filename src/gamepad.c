@@ -258,7 +258,15 @@ void PadVSync(void) {
   }
 
   // For sticks
-  if (PadInfoMode(0, InfoModeCurExID, 0) != 0) {
+  if (
+#ifdef NEW_PSYQ
+      // Later versions of PSYQ have PadSetMainMode return 0 if the controller
+      // state isn't stable. Not checking for stable state causes
+      // a weird issue where dualshock controllers keep getting reinitialised,
+      // making analog not work properly
+      padState == PadStateStable &&
+#endif
+      PadInfoMode(0, InfoModeCurExID, 0) != 0) {
 
     // Do we have to set the mode?
     if (D_80075730) {

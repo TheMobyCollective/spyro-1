@@ -43,7 +43,7 @@ SECTIONS
         build/src/overlay_pointers.o(.rodata);
         build/src/overlay_pointers.o(.rodata.jtbl);
 
-        #ifndef _NEW_PSYQ
+        #ifndef NEW_PSYQ
 
         /* for old psyq */
         build/asm/data/psyq.rodata.o(.rodata*);
@@ -196,7 +196,7 @@ SECTIONS
         build/src/overlay_pointers.o(.text);
         build/src/4BEF8.o(.text);
 
-        #ifndef _NEW_PSYQ
+        #ifndef NEW_PSYQ
 
         /* for old psyq */
         build/asm/psyq.o(.text);
@@ -276,9 +276,9 @@ SECTIONS
 
         psyq_data = .;
 
-        #ifndef _NEW_PSYQ
-        /* for old psyq */
+        #ifndef NEW_PSYQ
 
+        /* for old psyq */
         build/asm/data/psyq.data.o(.data);
 
         #else
@@ -332,7 +332,7 @@ SECTIONS
         FILL(0x00000000);
         main_SBSS_START = .;
         
-        #ifndef _NEW_PSYQ
+        #ifndef NEW_PSYQ
 
         /* for old psyq */
         build/asm/data/psyq.sbss.o(.sbss);
@@ -368,7 +368,7 @@ SECTIONS
         build/src/special_surfaces.o(.bss);
         build/src/overlay_pointers.o(.bss);
 
-        #ifndef _NEW_PSYQ
+        #ifndef NEW_PSYQ
 
         /* for old psyq */
         build/asm/data/psyq.bss.o(.bss);
