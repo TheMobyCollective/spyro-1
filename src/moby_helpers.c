@@ -729,7 +729,81 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039AA8);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039E94);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A16C);
+int func_8003A16C(Moby *pMoby, PathData *pPath, int threshold, int maxMag,
+                  int radius, int clampRange, int arc, int *pHeading) {
+  Vector3D8 rot;
+  Vector3D dir;
+  MATRIX mtx;
+  int mag;
+  int heading;
+  int delta;
+  int absDelta;
+  int reached;
+
+  VecSub(&dir, &pPath->m_Nodes[pPath->m_CurrentNode].m_Position, &pMoby->m_Position);
+  rot.x = 0;
+  mag = VecMagnitude(&dir, 0);
+  rot.y = Atan2(mag, dir.z, 0);
+  if (VecMagnitude(&dir, 0) < threshold) {
+    rot.z = *pHeading;
+  } else {
+    heading = Atan2(dir.x, dir.y, 0);
+    delta = (heading - *pHeading) & 0xFF;
+    if (delta >= 0x81) {
+      delta = delta - 0x100;
+    }
+    absDelta = (delta >= 0) ? delta : -delta;
+    if (arc < absDelta) {
+      maxMag = 0;
+    }
+    if (delta < -clampRange) {
+      delta = -clampRange;
+    }
+    if (clampRange < delta) {
+      delta = clampRange;
+    }
+    heading = delta + *pHeading;
+    rot.z = heading;
+    *pHeading = heading & 0xFF;
+  }
+
+  mag = VecMagnitude(&dir, 1);
+  if (mag < maxMag) {
+    maxMag = mag;
+  }
+  RotVec8ToMatrix(&rot, &mtx, 0);
+  dir.x = maxMag;
+  dir.y = 0;
+  dir.z = 0;
+  VecRotateByMatrix(&mtx, &dir, &dir);
+  VecAdd(&dir, &pMoby->m_Position, &dir);
+
+  if (radius != 0) {
+    func_8004E3C8(&dir, radius, 0, 0, pMoby, 0);
+  }
+  dir.z = dir.z + 0x400;
+  mag = func_8004D5EC(&dir, 0x400);
+  if (mag != 0) {
+    dir.z = mag;
+  } else {
+    dir.z = dir.z - 0x400;
+  }
+  VecCopy(&pMoby->m_Position, &dir);
+  func_800533D0(pMoby);
+  func_800529E4(pMoby, 2);
+
+  reached = 0;
+  VecSub(&dir, &pPath->m_Nodes[pPath->m_CurrentNode].m_Position, &pMoby->m_Position);
+  if (VecMagnitude(&dir, 1) < threshold) {
+    pMoby->m_Substate = 0;
+    pPath->m_CurrentNode = pPath->m_CurrentNode + 1;
+    if (pPath->m_CurrentNode == pPath->m_NodeCount) {
+      pPath->m_CurrentNode = 0;
+    }
+    reached = pPath->m_CurrentNode + 0x100;
+  }
+  return reached;
+}
 
 /**
  * @brief Moves a moby along a 3D path with rotation toward waypoints.
