@@ -222,7 +222,7 @@
 - [x] func_8003D92C
 - [x] func_8003D978
 - [x] RotateSpyroToNeutral
-- [ ] func_8003DAE4
+- [x] func_8003DAE4
 - [x] RotateSpyroToAcceleration
 - [x] func_8003DF60
 - [x] func_8003DFA4
