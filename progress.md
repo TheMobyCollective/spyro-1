@@ -175,7 +175,7 @@
 - [x] func_80039688
 - [x] MoveMobyWithGravity
 - [ ] func_80039AA8
-- [ ] func_80039E94
+- [x] func_80039E94
 - [ ] func_8003A16C
 - [x] MoveMobyAlongPath
 - [x] func_8003A720
