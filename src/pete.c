@@ -5,11 +5,17 @@
 #include "gamepad.h"
 #include "math.h"
 #include "memory.h"
+#include "overlay_pointers.h"
 #include "special_surfaces.h"
 #include "spu.h"
 #include "spyro.h"
 #include "variables.h"
 #include "vector.h"
+
+// The PSY-Q headers used by this translation unit do not define NULL.
+#ifndef NULL
+#define NULL 0
+#endif
 
 extern struct {
   u_char m_StartFrame, m_EndFrame;
@@ -1643,7 +1649,169 @@ void func_80049F3C(void) {
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80049FAC);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004A200);
+extern int D_8006E9A4[TOTAL_LEVEL_COUNT]; // per-level surface-height threshold
+
+void func_8002C85C(void);
+void func_80048D10(int pDeltaTime);
+
+/// @brief Per-frame update for Spyro during the death / fall-out respawn flow
+// MATCHED (asm-differ score 0; full make all reproduces the retail PSX.EXE).
+// The key to the match: retail spills the body/head animation sound ids to two
+// adjacent stack words (0x30/0x34) and reloads the body id for the
+// body!=head compare, which only happens when the two ids live in a small
+// local ARRAY rather than scalars -- gcc keeps scalars in registers but always
+// stack-allocates an array. With `soundId[2]` the entire body is byte-exact.
+//
+// REVIEW NOTE: retail reserves 0x28 more stack than the live locals need
+// (soundId sits at 0x30, with reserved space below it at 0x10-0x2f and above
+// at 0x38-0x3f). The asm never indexes that space, so the original local
+// variable(s) occupying it were optimized to dead stack and cannot be
+// recovered from the disassembly. They are modelled below as `_reserved*`
+// purely to reproduce the 0x58 frame; rename if the real locals are found.
+void func_8004A200(void) {
+  int i;
+  int _reservedLo[8]; // dead retail stack below soundId (0x10-0x2f)
+  int soundId[2];     // [0] = body anim sound id, [1] = head anim sound id
+  int _reservedHi[2]; // dead retail stack above soundId (0x38-0x3f)
+  Vector3D8 *bodyRot;
+  MATRIX *rotMatrix;
+
+  if ((g_Spyro.m_ControlFlags & 0x2000) || g_Spyro.unk_0x194 != 0) {
+    if (g_Spyro.m_noGamepadUpdateFrames < 2) {
+      g_Spyro.m_noGamepadUpdateFrames = 2;
+    }
+  }
+
+  g_PadSwapFlag = 0;
+  if (g_Spyro.m_noGamepadUpdateFrames != 0) {
+    func_80053708(&g_Pad, &g_PadBackup);
+    g_Spyro.m_noGamepadUpdateFrames--;
+  }
+
+  UpdateSpyroPhysicsAndSurfaces();
+  if (g_Spyro.m_State == 0x1D) {
+    if (g_Spyro.m_drowningOffset <= 0) {
+      g_Spyro.m_drowningOffset = 1;
+    }
+  } else {
+    g_Spyro.m_drowningOffset = 0;
+  }
+
+  if (!(g_Spyro.m_ControlFlags & 0x100) && g_Spyro.unk_0x194 == 0) {
+    func_80041670();
+  }
+
+  for (i = 0; i < g_DeltaTime; i++) {
+    UpdateBodyAnimationState();
+    func_800499C0();
+    func_80049660();
+    func_80049F3C();
+    func_80049E8C();
+  }
+
+  bodyRot = &g_Spyro.m_bodyRotation;
+  rotMatrix = &g_Spyro.m_RotationMatrix;
+  bodyRot->x = g_Spyro.m_Physics.m_SpeedAngle.m_RotX >> 4;
+  g_Spyro.m_bodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
+  g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
+  RotVec8ToMatrix(bodyRot, rotMatrix, NULL);
+  RotVec8ToMatrix((Vector3D8 *)((u_char *)bodyRot + 4),
+                  &g_Spyro.m_headRotationMatrix, NULL);
+  MulMatrix0(rotMatrix, &g_Spyro.m_headRotationMatrix,
+             &g_Spyro.m_headRotationMatrix);
+  func_80049FAC(1);
+  func_80048D10(g_DeltaTime);
+
+  g_Spyro.m_DamageFlags = 0;
+  if (g_Spyro.m_health < 0) {
+    switch (g_Spyro.m_State) {
+    case 0x1D:
+      if (g_Spyro.m_drowningOffset == 0x240) {
+        if (g_IsFlightLevel) {
+          (*D_80075694)();
+          (*g_UpdateMoby)();
+        } else {
+          func_8002C85C();
+        }
+      }
+      break;
+    case 0x1E:
+      if (g_Spyro.m_idleTimer >= 0x65) {
+        func_8002C85C();
+      }
+      break;
+    case 0x1F:
+      if (g_Spyro.m_idleTimer >= 0x7D) {
+        func_8002C85C();
+      }
+      break;
+    }
+  } else if (g_Spyro.m_Position.z < 0x400 ||
+             (g_Spyro.m_State == 6 && g_Spyro.m_walkingState >= 0x79)) {
+    func_8002C85C();
+  } else {
+    if (g_Spyro.m_Position.z < D_8006E9A4[g_LevelIndex]) {
+      if (g_Spyro.m_State != 6 && g_Spyro.m_State != 0x10) {
+        func_8003EA68(6);
+      }
+    } else {
+      if (g_Spyro.m_Position.x >= 0x800 && g_Spyro.m_Position.y >= 0x800) {
+        goto sound;
+      }
+      if (g_Spyro.m_State != 6 && g_Spyro.m_State != 0x10) {
+        VecNull(&g_Spyro.m_Physics.m_TrueVelocity);
+        VecNull(&g_Spyro.m_Physics.m_Acceleration);
+        func_8003EA68(6);
+      }
+    }
+    if (g_Spyro.m_walkingState == 0) {
+      VecCopy(&D_8006EBCC.m_CameraPosition, &g_Camera.m_Position);
+      func_80037714(&D_8006EBCC);
+    }
+    g_Spyro.m_walkingState += g_DeltaTime;
+  }
+
+sound:
+  /* body animation sound trigger (re-read the anim header each access) */
+#define BODY_FRAME                                                             \
+  ((SpyroAnimationFrame *)SPYRO_MODEL                                          \
+       ->m_Animations[g_Spyro.m_bodyAnimation]                                 \
+       ->m_Frames)[g_Spyro.m_bodyAnimationFrame]
+#define HEAD_FRAME                                                             \
+  ((SpyroAnimationFrame *)SPYRO_MODEL                                          \
+       ->m_Animations[g_Spyro.m_headAnimation]                                 \
+       ->m_Frames)[g_Spyro.m_headAnimationFrame]
+  soundId[0] = ((u_char *)&BODY_FRAME)[3];
+  if (soundId[0] != 0xFF) {
+    if (g_Spyro.unk_0x264 != BODY_FRAME.m.m_Data) {
+      PlaySound(soundId[0], (Moby *)&g_Spyro.m_Position, 4,
+                &g_Spyro.m_damageSoundChannel);
+    }
+  }
+
+  /* head animation sound trigger */
+  g_Spyro.unk_0x264 = BODY_FRAME.m.m_Data;
+  {
+    soundId[1] = ((u_char *)&HEAD_FRAME)[3];
+    if (soundId[1] != 0xFF && soundId[0] != soundId[1]) {
+      if (g_Spyro.unk_0x268 != HEAD_FRAME.m.m_Data) {
+        PlaySound(soundId[1], (Moby *)&g_Spyro.m_Position, 4,
+                  &g_Spyro.m_damageSoundChannel);
+      }
+    }
+  }
+
+  {
+    int headData = HEAD_FRAME.m.m_Data;
+    g_Spyro.m_ControlFlags &= 0x7FFFFFFF;
+    g_Spyro.unk_0x268 = headData;
+  }
+  if (g_PadSwapFlag) {
+    func_80053708(&g_PadBackup, &g_Pad);
+  }
+#undef BODY_FRAME
+#undef HEAD_FRAME
+}
 
 /**
  * @brief Updates Spyro during gamestate 1 (return home portal sequence).
