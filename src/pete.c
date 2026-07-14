@@ -1300,9 +1300,142 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80043FE4);
 void func_80047B60(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80047B60);
 
+void func_8003DAE4(void);
+
 /// @brief Rotation updates for Spyro
-void func_8004888C(void);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8004888C);
+void func_8004888C(void) {
+  int _pad[2]; // Stack padding to match original 0x20 frame
+
+  switch (g_Spyro.m_State) {
+  case 6:
+    RotateSpyroToNeutral();
+    break;
+  case 1:
+    func_8003DAE4();
+    if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed != 0) {
+      if (g_Spyro.m_againstWall != 0) {
+        g_Spyro.m_bodyAnimationSpeed = 4;
+      } else {
+        g_Spyro.m_bodyAnimationSpeed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed >> 7;
+      }
+      if (g_Spyro.m_bodyAnimationSpeed <= 0) {
+        g_Spyro.m_bodyAnimationSpeed = 1;
+      }
+      if (g_Spyro.m_bodyAnimationSpeed >= 0x11) {
+        g_Spyro.m_bodyAnimationSpeed = 0x10;
+      }
+    } else {
+      // Reused across both assignments in the original (shared register)
+      int temp = 4;
+      g_Spyro.m_bodyAnimationSpeed = temp;
+      if (D_80075914 & 0x10) {
+        if (g_Camera.unk_0xC0 >= 0) {
+          temp = 0x80000000;
+          g_Camera.unk_0xC0 = temp;
+        }
+      }
+    }
+    break;
+  case 5:
+    func_8003DAE4();
+    if (g_Spyro.m_bodyTransitionType == 0) {
+      if (g_Spyro.m_walkingState == 0) {
+        if (g_Spyro.m_nextBodyAnimationFrame < 3) {
+          g_Spyro.m_bodyAnimationSpeed = 4;
+        } else if (g_Spyro.m_nextBodyAnimationFrame < 6) {
+          g_Spyro.m_bodyAnimationSpeed = 2;
+        } else {
+          g_Spyro.m_bodyAnimationSpeed = 0;
+        }
+      } else if (g_Spyro.m_nextBodyAnimationFrame < 8) {
+        g_Spyro.m_bodyAnimationSpeed = 2;
+      } else {
+        g_Spyro.m_bodyAnimationSpeed = 0;
+      }
+    }
+    break;
+  case 11:
+    func_8003DAE4();
+    if ((g_Spyro.m_walkingState & 1) && g_Spyro.m_touchingMoby != 0) {
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 0xA00;
+    }
+    break;
+  case 19:
+    func_8003DAE4();
+    g_Spyro.m_bodyAnimationSpeed =
+        (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >> 11) + 3;
+    if (g_Spyro.m_bodyAnimationSpeed < 4) {
+      g_Spyro.m_bodyAnimationSpeed = 4;
+    }
+    if (g_Spyro.m_bodyAnimationSpeed >= 0xD) {
+      g_Spyro.m_bodyAnimationSpeed = 0xC;
+    }
+    break;
+  case 20:
+    RotateSpyroToAcceleration();
+    break;
+  case 21:
+    func_8003DAE4();
+    g_Spyro.m_bodyAnimationSpeed =
+        ((g_Spyro.m_Physics.m_SpeedAngle.m_Speed - 0x640) >> 9) + 6;
+    if (g_Spyro.m_bodyAnimationSpeed < 6) {
+      g_Spyro.m_bodyAnimationSpeed = 6;
+    }
+    if (g_Spyro.m_bodyAnimationSpeed >= 0x11) {
+      g_Spyro.m_bodyAnimationSpeed = 0x10;
+    }
+    break;
+  case 44:
+    if (g_Spyro.m_airTime != 0) {
+      break;
+    }
+    /* fallthrough */
+  case 0:
+  case 2:
+  case 3:
+  case 4:
+  case 7:
+  case 8:
+  case 9:
+  case 10:
+  case 12:
+  case 13:
+  case 14:
+  case 16:
+  case 17:
+  case 18:
+  case 22:
+  case 25:
+  case 26:
+  case 27:
+  case 28:
+  case 29:
+  case 30:
+  case 31:
+  case 35:
+  case 36:
+  case 37:
+  case 38:
+  case 39:
+  case 40:
+  case 41:
+  case 42:
+  case 43:
+    func_8003DAE4();
+    break;
+  case 24:
+    RotateSpyroToAcceleration();
+    g_Spyro.m_Physics.m_gravity += 0xC;
+    if (g_Spyro.m_Physics.m_gravity >= 0xC1) {
+      g_Spyro.m_Physics.m_gravity = 0xC0;
+    }
+    break;
+  default:
+    break;
+  }
+
+  g_Spyro.m_idleTimer++;
+}
 
 /**
  * @brief Main per-frame update for Spyro's physics and surface interactions.
