@@ -28,6 +28,8 @@
 #include "variables.h"
 #include "wad.h"
 
+#include <rand.h> // for srand
+
 /// @brief Loads in a new sound table
 /// @param pData The data to load
 /// @param pPatchAddressesInTable Whether to patch the addresses in the table

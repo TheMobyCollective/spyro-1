@@ -30,7 +30,8 @@
 #include <libetc.h>
 #include <libgpu.h>
 #include <stdio.h>
-#include <strings.h>
+
+extern unsigned int strlen(char *);
 
 // HAS to be local to this file.
 struct {
@@ -620,7 +621,7 @@ void func_80019698(void) {
     func_80058D64(); // Render Spyro's flame
   }
 
-  func_80058BA8(); // Render and update particles
+  func_80058BA8(); // Render glows and sparkles
 }
 
 /// @brief Creates the level transition text
@@ -875,6 +876,8 @@ extern int D_800757C8; // OptionsSubmenuIsOpen
 extern int D_800757CC; // Transition progress between inventory pages.
 extern int D_800758B8; // Pause menu text rotation ticks
 extern int D_8007568C; // Pause menu no button ticks
+
+int CalculateCompletion(void);
 
 /// @brief Gamestate 2 & 3
 void func_8001A40C(void) {

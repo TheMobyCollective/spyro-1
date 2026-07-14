@@ -90,6 +90,9 @@ void TitlescreenPlaySound(int pSoundId) {
   PlaySound(0, nullptr, 16, (u_char *)&g_DragonCutscene.m_SoundVoice);
 }
 
+// Returns system time
+int func_80017FD4(void);
+
 void TitlescreenUpdate(void) {
   int old_state = g_TitlescreenState.m_Mode < 2 ? g_TitlescreenState.m_SubState
                                                 : g_TitlescreenState.m_State;

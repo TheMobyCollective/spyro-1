@@ -9,6 +9,8 @@
 #include "spyro.h"
 #include "variables.h"
 
+#include <rand.h>
+
 // Mixed sounds and music stuff
 
 // SPU Initialization

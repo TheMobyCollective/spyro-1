@@ -10,4 +10,9 @@ int ColorLerp(int pColor1, int pColor2, int pAmount);
 
 void func_80017F24(void *in, void *out, int valueOffset);
 
+/// @brief Converts the given BGR555 buffer to grey scale
+/// @param buf The buffer to convert, also the output buffer
+/// @param size The size of the buffer
+void func_80017E98(void *buf, int size);
+
 #endif

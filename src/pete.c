@@ -4,6 +4,7 @@
 #include "environment.h"
 #include "gamepad.h"
 #include "math.h"
+#include "memory.h"
 #include "special_surfaces.h"
 #include "spu.h"
 #include "spyro.h"
@@ -695,7 +696,7 @@ void CheckWallCollision(void) {
   VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec1, &vec1);
   VecAdd(&vec1, &vec1, &g_Spyro.m_Position);
 
-  func_800170C0(&vec2, &vec2);
+  VecRotateByLastMatrix(&vec2, &vec2);
   VecAdd(&vec2, &vec2, &g_Spyro.m_Position);
 
   if (func_8004AE38(&vec1, &vec2) == 0)
@@ -775,7 +776,7 @@ void UpdateSlopeFloorCollision(void) {
   VecAdd(&vec1, &vec1, &g_Spyro.m_Position);
 
   // Rotate end point using GTE world-space rotation
-  func_800170C0(&vec2, &vec2);
+  VecRotateByLastMatrix(&vec2, &vec2);
   VecAdd(&vec2, &vec2, &g_Spyro.m_Position);
 
   // Cast the ray and check for collision
@@ -819,7 +820,7 @@ void UpdateSlopeFloorCollision(void) {
       VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec1, &vec1);
       VecAdd(&vec1, &vec1, &g_Spyro.m_Position);
 
-      func_800170C0(&vec2, &vec2);
+      VecRotateByLastMatrix(&vec2, &vec2);
       VecAdd(&vec2, &vec2, &g_Spyro.m_Position);
 
       // If reverse check fails, Spyro is on an edge
@@ -923,10 +924,10 @@ void AdjustAirCollision(void) {
   VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec1, &vec1);
   VecAdd(&vec1, &g_Spyro.m_Position, &vec1);
 
-  func_800170C0(&vec3, &vec3);
+  VecRotateByLastMatrix(&vec3, &vec3);
   VecAdd(&vec3, &g_Spyro.m_Position, &vec3);
 
-  func_800170C0(&vec2, &vec2);
+  VecRotateByLastMatrix(&vec2, &vec2);
   VecAdd(&vec2, &g_Spyro.m_Position, &vec2);
 
   if (func_8004AE38(&vec3, &vec1) != 0 && g_CollisionNormal.z > 0) {
@@ -1411,11 +1412,11 @@ void func_800495D8(int pDeltaTime) {
 }
 
 /// @brief Update the head animation
-void func_80049660(void);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80049660);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80049880);
 
+void func_800499C0(void);
 /// @brief Update flame
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_800499C0);
 

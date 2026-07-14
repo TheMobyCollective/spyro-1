@@ -130,7 +130,7 @@ glabel func_800499C0
 /* 3A39C 80049B9C 68FE2626 */   addiu     $a2, $s1, -0x198
 /* 3A3A0 80049BA0 18000426 */  addiu      $a0, $s0, 0x18
 /* 3A3A4 80049BA4 2000B027 */  addiu      $s0, $sp, 0x20
-/* 3A3A8 80049BA8 305C000C */  jal        func_800170C0
+/* 3A3A8 80049BA8 305C000C */  jal        VecRotateByLastMatrix
 /* 3A3AC 80049BAC 21280002 */   addu      $a1, $s0, $zero
 /* 3A3B0 80049BB0 0880023C */  lui        $v0, %hi(g_SpyroFlame + 0x9C)
 /* 3A3B4 80049BB4 6487428C */  lw         $v0, %lo(g_SpyroFlame + 0x9C)($v0)
@@ -162,7 +162,7 @@ glabel func_800499C0
 /* 3A414 80049C14 38FE0626 */   addiu     $a2, $s0, -0x1C8
 /* 3A418 80049C18 18002426 */  addiu      $a0, $s1, 0x18
 /* 3A41C 80049C1C 2000B027 */  addiu      $s0, $sp, 0x20
-/* 3A420 80049C20 305C000C */  jal        func_800170C0
+/* 3A420 80049C20 305C000C */  jal        VecRotateByLastMatrix
 /* 3A424 80049C24 21280002 */   addu      $a1, $s0, $zero
 /* 3A428 80049C28 0880023C */  lui        $v0, %hi(g_SpyroFlame + 0x9C)
 /* 3A42C 80049C2C 6487428C */  lw         $v0, %lo(g_SpyroFlame + 0x9C)($v0)

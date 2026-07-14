@@ -2429,7 +2429,7 @@ glabel func_level_63_8007AD64
 /* 5913E2C 8007D064 9CFF0224 */  addiu      $v0, $zero, -0x64
 /* 5913E30 8007D068 8800A0AF */  sw         $zero, 0x88($sp)
 /* 5913E34 8007D06C 8C00A2AF */  sw         $v0, 0x8C($sp)
-/* 5913E38 8007D070 305C000C */  jal        func_800170C0
+/* 5913E38 8007D070 305C000C */  jal        VecRotateByLastMatrix
 /* 5913E3C 8007D074 9000A0AF */   sw        $zero, 0x90($sp)
 /* 5913E40 8007D078 21200002 */  addu       $a0, $s0, $zero
 /* 5913E44 8007D07C 21280002 */  addu       $a1, $s0, $zero

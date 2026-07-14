@@ -15,6 +15,7 @@
 #include "hud.h"
 #include "initialization.h"
 #include "loaders.h"
+#include "math.h"
 #include "memory.h"
 #include "music.h"
 #include "rand.h"

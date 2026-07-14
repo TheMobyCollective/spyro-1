@@ -1,3 +1,4 @@
+#include "4BEF8.h"
 #include "buffers.h"
 #include "camera.h"
 #include "cd.h"
@@ -5,10 +6,12 @@
 #include "common.h"
 #include "cutscene.h"
 #include "dragon.h"
+#include "environment.h"
 #include "gamepad.h"
 #include "gamestates/draw.h"
 #include "gamestates/init.h"
 #include "graphics.h"
+#include "initialization.h"
 #include "loaders.h"
 #include "math.h"
 #include "music.h"
@@ -21,6 +24,7 @@
 #include "wad.h"
 
 #include <libmcrd.h>
+#include <rand.h>
 
 extern int _stacksize;
 
@@ -572,9 +576,14 @@ int func_80032AB0(void) {
   // is where the UB is, using this function with the
   // wrong signature.
 
+#ifndef MODERN_COMPILER
   // Due to the AND being performed on v0, this returns 0 if triangle isn't down
   if ((g_Pad.m_Down & PAD_TRIANGLE) == 0)
     return;
+#else
+  if ((g_Pad.m_Down & PAD_TRIANGLE) == 0)
+    return 0;
+#endif
 
   g_TitlescreenState.m_Mode = TSM_Menu;
   g_TitlescreenState.m_SubState = TS_SubState_LoadMemCards;
@@ -1016,6 +1025,9 @@ int func_800334D4(void) {
 
   return 0;
 }
+
+// Credits update (overlay)
+void func_credits_8007AA50();
 
 /**
  * @brief Main game loop update dispatcher, handles all gamestate logic.

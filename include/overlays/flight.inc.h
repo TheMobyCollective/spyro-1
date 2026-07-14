@@ -1,15 +1,32 @@
 #include "buffers.h"
 #include "camera.h"
+#include "cyclorama.h"
+#include "environment.h"
 #include "gamepad.h"
+#include "gamestates/draw.h"
+#include "gamestates/init.h"
 #include "graphics.h"
 #include "hud.h"
+#include "images.h"
+#include "loaders.h"
 #include "math.h"
+#include "memory.h"
 #include "moby_helpers.h"
+#include "moby_lists.h"
 #include "overlay_pointers.h"
+#include "renderers.h"
 #include "sony_image.h"
+#include "specular_and_metal.h"
 #include "spu.h"
 #include "spyro.h"
 #include "variables.h"
+
+#include <libetc.h>
+#include <stdio.h>
+#include <sys/types.h>
+
+extern unsigned int strlen(char *);
+extern char *strcpy(char *, const char *);
 
 extern struct {
   int post;

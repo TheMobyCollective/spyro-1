@@ -5,10 +5,10 @@ WORKDIR /s1
 RUN apt update && \
     apt install -y \
     bchunk \
-    binutils-mips-linux-gnu \
+    binutils-mipsel-linux-gnu \
     build-essential \
-    cpp-mips-linux-gnu \
-    gcc-mips-linux-gnu \
+    cpp-mipsel-linux-gnu \
+    gcc-mipsel-linux-gnu \
     git \
     python3 \
     pip

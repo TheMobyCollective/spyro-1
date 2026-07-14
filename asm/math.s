@@ -531,7 +531,7 @@ glabel VecRotateByMatrix
 .size VecRotateByMatrix, . - VecRotateByMatrix
 
 /* Handwritten function */
-glabel func_800170C0
+glabel VecRotateByLastMatrix
 /* 78C0 800170C0 0000818C */  lw         $at, 0x0($a0)
 /* 78C4 800170C4 0400828C */  lw         $v0, 0x4($a0)
 /* 78C8 800170C8 0800838C */  lw         $v1, 0x8($a0)
@@ -552,7 +552,7 @@ glabel func_800170C0
 /* 7904 80017104 0400A2AC */  sw         $v0, 0x4($a1)
 /* 7908 80017108 0800E003 */  jr         $ra
 /* 790C 8001710C 0800A3AC */   sw        $v1, 0x8($a1)
-.size func_800170C0, . - func_800170C0
+.size VecRotateByLastMatrix, . - VecRotateByLastMatrix
 
 /* Handwritten function */
 glabel VecRotateByCam

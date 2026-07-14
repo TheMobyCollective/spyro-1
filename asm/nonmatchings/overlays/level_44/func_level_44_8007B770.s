@@ -8220,7 +8220,7 @@ glabel func_level_44_8007B770
 /* 402C3F8 80082630 9CFF0224 */  addiu      $v0, $zero, -0x64
 /* 402C3FC 80082634 2801A0AF */  sw         $zero, 0x128($sp)
 /* 402C400 80082638 2C01A2AF */  sw         $v0, 0x12C($sp)
-/* 402C404 8008263C 305C000C */  jal        func_800170C0
+/* 402C404 8008263C 305C000C */  jal        VecRotateByLastMatrix
 /* 402C408 80082640 3001A0AF */   sw        $zero, 0x130($sp)
 /* 402C40C 80082644 21200002 */  addu       $a0, $s0, $zero
 /* 402C410 80082648 21280002 */  addu       $a1, $s0, $zero

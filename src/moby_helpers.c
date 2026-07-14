@@ -1,10 +1,12 @@
-#include <strings.h>
+#include <rand.h>
+#include <string.h>
 #include <sys/types.h>
 
 #include "42CC4.h"
 #include "checkpoint.h"
 #include "collision.h"
 #include "common.h"
+#include "hud.h"
 #include "math.h"
 #include "moby_helpers.h"
 #include "overlay_pointers.h"
@@ -13,6 +15,8 @@
 #include "spyro.h"
 #include "strings.h"
 #include "variables.h"
+
+extern unsigned int strlen(char *);
 
 /// @brief Function that ticks a timer
 /// @param pTimer The timer to update
@@ -464,6 +468,9 @@ int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6) {
 }
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039398);
+
+int func_80039688(Moby *pMoby, int pZAngle, int pDistance, int pMobyRadius,
+                  int pMobySurfaceRadius, int pFlags);
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039688);
 
@@ -1453,7 +1460,7 @@ void func_8003C358(Moby *pMoby, int pIsLevelName) {
     }
   }
 
-  string_len = strlen(level_name);
+  string_len = strlen((char *)level_name);
 
   VecMult(&vec3, &vec2, string_len - 1);
 

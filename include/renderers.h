@@ -49,6 +49,9 @@ extern Particle *g_Particles;
 // allocated, then wraps around to the beginning when it reaches the end
 extern Particle *g_ParticleAllocPtr;
 
+/// @brief Renders the glows and sparkles (C FUNCTION, NOT RELOCATED YET)
+void func_80058BA8(void);
+
 /// @brief Render particles
 void func_800573C8(void);
 
@@ -111,6 +114,9 @@ void func_8001F798(void);
 
 /// @brief Initializes the shiny moby renderer, performs culling
 void func_800208FC(void);
+
+/// @brief Renders shiny mobys
+void func_80020F34(void);
 
 /// @brief Renders shaded mobys, no queueing needed
 void func_80022A2C(void);

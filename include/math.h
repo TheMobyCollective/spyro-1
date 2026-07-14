@@ -6,6 +6,8 @@
 #include <libgte.h>
 #include <vector.h>
 
+#include "matrix.h"
+
 #define FIXED_MUL(x, y) (((x) * (y)) >> 12)
 
 // This is horrible (since they intersect)
@@ -30,6 +32,9 @@ extern u_char D_8006F2A8[12];
 extern int D_8006EE5C[4];
 
 extern short D_8006F3A0[8][2]; // Dragon fragments offset
+
+/// @brief Transpose matrix
+void func_80016FD0(MATRIX *pOut, MATRIX *pIn);
 
 // TODO: When the we've used it in more places, check if maybe we have to
 // change the type to char
@@ -69,9 +74,14 @@ void RotVec8ToMatrix(Vector3D8 *pRotation, MATRIX *pOut, MATRIX *pIn);
 
 /// @brief Rotates a vector by a matrix
 /// @param pMatrix The matrix
-/// @param pVector The vector
+/// @param pVector The input vector
 /// @param pOut The output vector
 void VecRotateByMatrix(MATRIX *pMatrix, Vector3D *pVector, Vector3D *pOut);
+
+/// @brief Rotates a vector by a matrix that was previously set
+/// @param pIn The input vector
+/// @param pOut The output vector
+void VecRotateByLastMatrix(Vector3D *pIn, Vector3D *pOut);
 
 /// @brief Shift all vector elements left
 void VecShiftLeft(Vector3D *pVec, int pNumBits);
@@ -81,6 +91,8 @@ void VecShiftRight(Vector3D *pVec, int pNumBits);
 
 /// @brief Use the GTE to multiply each element by a fixed value
 void VecMult(Vector3D *pOut, Vector3D *pIn, int pVal);
+
+void func_800177F8(Vector3D *pOut, Vector3D *pIn, int pVal);
 
 /// @brief Subtracts two 12 bit angles
 /// @param pAngle1

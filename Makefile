@@ -10,11 +10,11 @@ NON_MATCHING_FLAG  = $(if ${NON_MATCHING},-DNON_MATCHING,)
 NEW_PSYQ_FLAG = $(if ${NEW_PSYQ},-DNEW_PSYQ,)
 PSYQ_LIB = $(if ${NEW_PSYQ},-Lpsyq/lib --start-group -lapi -lc -lc2 -lcard -lcd -lcomb -lds -letc -lgpu -lgs -lgte -lgun -lhmd -lmath -lmcrd -lpad -lsio -lspu --end-group,)
 
-CC       = $(if ${MODERN_COMPILER}, "/usr/libexec/gcc-cross/mips-linux-gnu/14/cc1", "./tools/gcc2.7.2/cc1")
-GCC      = mips-linux-gnu-cpp
-AS       = mips-linux-gnu-as
-LD       = mips-linux-gnu-ld
-OBJCOPY  = mips-linux-gnu-objcopy
+CC       = $(if ${MODERN_COMPILER}, "/usr/libexec/gcc-cross/mipsel-linux-gnu/14/cc1", "./tools/gcc2.7.2/cc1")
+GCC      = mipsel-linux-gnu-cpp
+AS       = mipsel-linux-gnu-as
+LD       = mipsel-linux-gnu-ld
+OBJCOPY  = mipsel-linux-gnu-objcopy
 PYTHON   = python3
 
 MASPSX          = "./tools/maspsx/maspsx.py"
@@ -27,7 +27,7 @@ FIX_STR_ALIGN   = "./tools/fix_str_align.py"
 # -------------------------------
 LD_FLAGS  = -g -EL -T /tmp/psx.ld -g -Map build/psx.map --no-check-sections -nostdlib $(PSYQ_LIB)
 C_CLASSIC_FLAGS = -O2 -G8 -g3 -fverbose-asm -mips1 -mcpu=3000 -fgnu-linker -mno-abicalls -mgpopt -msoft-float -quiet -funsigned-char
-C_MODERN_FLAGS = -Os -G 0 -g3 -fverbose-asm -march=mips1 -mabi=32 -mips1 -mno-llsc -mno-abicalls -mgpopt -msoft-float -fno-builtin -fno-builtin-function -fno-strict-aliasing -fno-exceptions -fschedule-insns -fno-pic -fno-stack-protector -ffreestanding -o-
+C_MODERN_FLAGS = -Os -G 0 -g3 -fverbose-asm -mips1 -march=r3000 -mabi=32 -mno-llsc -mno-abicalls -mgpopt -msoft-float -fno-builtin -fno-builtin-function -fno-strict-aliasing -fno-exceptions -fschedule-insns -fno-pic -fno-stack-protector -ffreestanding -Wno-error=int-conversion -o-
 C_FLAGS   = $(if ${MODERN_COMPILER},$(C_MODERN_FLAGS),$(C_CLASSIC_FLAGS))
 AS_FLAGS  = -EL -Iinclude -Iasm -Iasm/renderers -march=r3000 -mtune=r3000 -no-pad-sections -G0 -ggdb -msoft-float
 

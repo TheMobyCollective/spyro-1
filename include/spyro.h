@@ -399,4 +399,14 @@ void func_8003CCE4(void);
 /// @brief Changes Spyro's state
 void func_8003EA68(int pNewState);
 
+/// @brief Increments the body animation
+/// @param pDeltaTime The delta time
+void func_8003CB24(int pDeltaTime);
+
+/// @brief Update the head animation
+void func_80049660(void);
+
+/// @brief Update the tail animation
+void func_80049E8C(void);
+
 #endif // !__SPYRO_H

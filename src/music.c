@@ -2,6 +2,8 @@
 #include "common.h"
 #include "spu.h"
 
+#include <rand.h>
+
 // TODO: Figure out what m_Flags's bits are used for
 
 /// @brief Updates the CD music system

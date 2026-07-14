@@ -6540,7 +6540,7 @@ glabel func_level_43_8007B698
 /* 3D7F358 80080D90 9CFF0224 */  addiu      $v0, $zero, -0x64
 /* 3D7F35C 80080D94 E800A0AF */  sw         $zero, 0xE8($sp)
 /* 3D7F360 80080D98 EC00A2AF */  sw         $v0, 0xEC($sp)
-/* 3D7F364 80080D9C 305C000C */  jal        func_800170C0
+/* 3D7F364 80080D9C 305C000C */  jal        VecRotateByLastMatrix
 /* 3D7F368 80080DA0 F000A0AF */   sw        $zero, 0xF0($sp)
 /* 3D7F36C 80080DA4 21200002 */  addu       $a0, $s0, $zero
 /* 3D7F370 80080DA8 21280002 */  addu       $a1, $s0, $zero

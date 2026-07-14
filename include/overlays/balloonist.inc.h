@@ -19,11 +19,13 @@
 #include "specular_and_metal.h"
 #include "spu.h"
 #include "spyro.h"
+#include "strings.h"
 #include "variables.h"
 
 #include <rand.h>
 #include <stdio.h>
-#include <strings.h>
+
+extern unsigned int strlen(char *);
 
 extern int g_ScreenBorderEnabled; // Is the screen border enabled
 extern int D_800756C0;
