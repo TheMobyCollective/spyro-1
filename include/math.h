@@ -8,6 +8,7 @@
 
 #include "matrix.h"
 
+// Multiplies a number by a fixed point value (12 bits)
 #define FIXED_MUL(x, y) (((x) * (y)) >> 12)
 
 // This is horrible (since they intersect)

@@ -482,20 +482,22 @@ int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
     distance = distance << 1;
   }
 
-  newPos.x = pMoby->m_Position.x + (COSINE_8(pMoby->m_Rotation.z) * distance >> 12);
-  newPos.y = pMoby->m_Position.y + (SINE_8(pMoby->m_Rotation.z) * distance >> 12);
+  newPos.x =
+      pMoby->m_Position.x + FIXED_MUL(COSINE_8(pMoby->m_Rotation.z), distance);
+  newPos.y =
+      pMoby->m_Position.y + FIXED_MUL(SINE_8(pMoby->m_Rotation.z), distance);
   newPos.z = pMoby->m_Position.z;
 
   if (floorOffset != 0) {
-    if (flags & 2) {
+    if (flags & 0x2) {
       func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 3);
     } else if (func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 0) != 0) {
       return 1;
     }
   }
 
-  if (flags & 1) {
-    zBase = newPos.z + 0x12C;
+  if (flags & 0x1) {
+    zBase = newPos.z + 300;
     newPos.z = zBase + radius;
   }
   if (radius != 0 && func_8004BE4C(&newPos, radius, radius) != 0) {
@@ -504,28 +506,30 @@ int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
     }
     VecCopy(&newPos, &g_CollisionPoint);
   }
-  if (flags & 1) {
-    zBase = newPos.z - 0x12C;
+
+  if (flags & 0x1) {
+    zBase = newPos.z - 300;
     newPos.z = zBase - radius;
   }
 
-  if (flags & 0x54) {
-    newPos.z = newPos.z + 0x400;
-    floorZ = func_8004D5EC(&newPos, 0x1388);
+  if (flags & 0x4 || flags & 0x10 || flags & 0x40) {
+    newPos.z = newPos.z + 1024;
+    floorZ = func_8004D5EC(&newPos, 5000);
   }
 
   if (flags & 0x10) {
-    if (ABS2((floorZ + pMoby->m_FloorDistance) - pMoby->m_Position.z) >= 0x191) {
+    if (ABS2((floorZ + pMoby->m_FloorDistance) - pMoby->m_Position.z) >=
+        0x191) {
       return 2;
     }
   }
 
   if (flags & 0x40) {
     slope = Atan2(VecMagnitude(&g_CollisionNormal, 0), g_CollisionNormal.z, 0);
-    if (slope >= 0x81) {
-      slope = slope - 0x100;
+    if (slope > 128) {
+      slope = slope - 256;
     }
-    if (ABS(slope) < 0x17) {
+    if (ABS(slope) < 23) {
       return 2;
     }
   }
@@ -533,40 +537,35 @@ int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
   pMoby->m_Position.x = newPos.x;
   pMoby->m_Position.y = newPos.y;
 
-  if (flags & 4) {
+  if (flags & 0x4) {
     delta = (floorZ + pMoby->m_FloorDistance) - pMoby->m_Position.z;
     absDelta = ABS(delta);
-    if (absDelta >= 0x259) {
+    if (absDelta > 600) {
       if (delta > 0) {
-        pMoby->m_Position.z = pMoby->m_Position.z + 0xFA;
+        pMoby->m_Position.z = pMoby->m_Position.z + 250;
       } else {
-        pMoby->m_Position.z = pMoby->m_Position.z - 0xFA;
+        pMoby->m_Position.z = pMoby->m_Position.z - 250;
       }
     } else {
       pMoby->m_Position.z = floorZ + pMoby->m_FloorDistance;
     }
   }
 
-  if (flags & 0x54) {
+  if (flags & 0x4 || flags & 0x10 || flags & 0x40) {
     func_800533D0(pMoby);
   }
+
   func_800529E4(pMoby, 2);
   return 0;
 }
 
-int func_80039688(Moby *pMoby, int pZAngle, int pDistance, int pMobyRadius,
-                  int pMobySurfaceRadius, int pFlags);
-
 /// @brief Moves a moby horizontally by (distance) along (angle), then resolves
-/// floor/wall collision and snaps height, gated by flag bits. Returns 0 normally,
-/// 1 on a blocking hit, 2 when the floor is out of reach.
+/// floor/wall collision and snaps height, gated by flag bits. Returns 0
+/// normally, 1 on a blocking hit, 2 when the floor is out of reach.
 int func_80039688(Moby *pMoby, int angle, int distance, int floorOffset,
                   int radius, int flags) {
   Vector3D newPos;
   int floorZ;
-  int delta;
-  int zBase;
-  int absDelta;
 
   if (D_800756C4 == 3) {
     distance = distance + (distance >> 1);
@@ -574,23 +573,23 @@ int func_80039688(Moby *pMoby, int angle, int distance, int floorOffset,
     distance = distance << 1;
   }
 
-  newPos.x = pMoby->m_Position.x + (COSINE_8(angle) * distance >> 12);
-  newPos.y = pMoby->m_Position.y + (SINE_8(angle) * distance >> 12);
+  newPos.x = pMoby->m_Position.x + FIXED_MUL(COSINE_8(angle), distance);
+  newPos.y = pMoby->m_Position.y + FIXED_MUL(SINE_8(angle), distance);
   newPos.z = pMoby->m_Position.z;
 
   if (floorOffset != 0) {
-    if (flags & 2) {
+    if (flags & 0x2) {
       func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 3);
     } else if (func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 0) != 0) {
       return 1;
     }
   }
 
-  if (flags & 1) {
-    /* split so gcc adds the constant before radius (matches retail order) */
-    zBase = newPos.z + 0x12C;
-    newPos.z = zBase + radius;
+  if (flags & 0x1) {
+    newPos.z += 300;
+    newPos.z += radius;
   }
+
   if (radius != 0 && func_8004BE4C(&newPos, radius, radius) != 0) {
     if ((flags & 0x20) == 0) {
       return 2;
@@ -598,7 +597,7 @@ int func_80039688(Moby *pMoby, int angle, int distance, int floorOffset,
     VecCopy(&newPos, &g_CollisionPoint);
   }
 
-  if (flags & 0x14) {
+  if (flags & 0x10 || flags & 0x4) {
     newPos.z = newPos.z + 0x400;
     floorZ = func_8004D5EC(&newPos, 0x1388);
   }
@@ -612,24 +611,25 @@ int func_80039688(Moby *pMoby, int angle, int distance, int floorOffset,
   pMoby->m_Position.x = newPos.x;
   pMoby->m_Position.y = newPos.y;
 
-  if (flags & 4) {
-    delta = (floorZ + pMoby->m_FloorDistance) - pMoby->m_Position.z;
-    newPos.z = newPos.z + 0x400;
-    absDelta = ABS(delta);
-    if (absDelta >= 0x259) {
+  if (flags & 0x4) {
+    int delta = (floorZ + pMoby->m_FloorDistance) - pMoby->m_Position.z;
+    newPos.z = newPos.z + 1024;
+
+    if (ABS(delta) > 600) {
       if (delta > 0) {
-        pMoby->m_Position.z = pMoby->m_Position.z + 0xFA;
+        pMoby->m_Position.z = pMoby->m_Position.z + 250;
       } else {
-        pMoby->m_Position.z = pMoby->m_Position.z - 0xFA;
+        pMoby->m_Position.z = pMoby->m_Position.z - 250;
       }
     } else {
       pMoby->m_Position.z = floorZ + pMoby->m_FloorDistance;
     }
   }
 
-  if (flags & 0x54) {
+  if (flags & 0x4 || flags & 0x10 || flags & 0x40) {
     func_800533D0(pMoby);
   }
+
   func_800529E4(pMoby, 2);
   return 0;
 }
