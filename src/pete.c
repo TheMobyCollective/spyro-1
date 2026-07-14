@@ -1414,7 +1414,44 @@ void func_800495D8(int pDeltaTime) {
 /// @brief Update the head animation
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80049660);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80049880);
+/// @brief Eases Spyro's head rotation toward m_HeadLookTarget using a per-axis
+/// spring-damper. The smoothed result is written to the real head rotation,
+/// which lives at m_bodyRotation + 4 (one padding byte ahead of the struct's
+/// m_headRotation), the same location consumed by the head rotation matrix.
+void func_80049880(void) {
+  Vector3D8 *headRot = (Vector3D8 *)((u_char *)&g_Spyro.m_bodyRotation + 4);
+  int delta;
+
+  // Per axis: take the angle delta to the target, wrap it to the shortest
+  // signed direction, integrate it into a velocity accumulator, then advance
+  // the current angle by that velocity.
+  delta = (g_Spyro.m_HeadLookTarget.x - g_Spyro.unk_0x1b0) & 0xFFF;
+  if (delta > 0x800) {
+    delta -= 0x1000;
+  }
+  g_Spyro.unk_0x1bc += ((delta << 7) - (g_Spyro.unk_0x1bc << 4)) >> 6;
+  g_Spyro.unk_0x1b0 += g_Spyro.unk_0x1bc >> 6;
+
+  delta = (g_Spyro.m_HeadLookTarget.y - g_Spyro.unk_0x1b4) & 0xFFF;
+  if (delta > 0x800) {
+    delta -= 0x1000;
+  }
+  g_Spyro.unk_0x1c0 += ((delta << 7) - (g_Spyro.unk_0x1c0 << 4)) >> 6;
+  g_Spyro.unk_0x1b4 += g_Spyro.unk_0x1c0 >> 6;
+
+  delta = (g_Spyro.m_HeadLookTarget.z - g_Spyro.unk_0x1b8) & 0xFFF;
+  if (delta > 0x800) {
+    delta -= 0x1000;
+  }
+
+  // The rotation bytes are the current angles scaled down by 16.
+  headRot->x = g_Spyro.unk_0x1b0 >> 4;
+  headRot->y = g_Spyro.unk_0x1b4 >> 4;
+
+  g_Spyro.unk_0x1c4 += ((delta << 7) - (g_Spyro.unk_0x1c4 << 4)) >> 6;
+  g_Spyro.unk_0x1b8 += g_Spyro.unk_0x1c4 >> 6;
+  headRot->z = g_Spyro.unk_0x1b8 >> 4;
+}
 
 void func_800499C0(void);
 /// @brief Update flame
