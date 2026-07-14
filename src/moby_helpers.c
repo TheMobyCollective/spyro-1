@@ -467,7 +467,92 @@ int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6) {
   return 0;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039398);
+int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
+                  int flags) {
+  Vector3D newPos;
+  int floorZ;
+  int delta;
+  int zBase;
+  int slope;
+  int absDelta;
+
+  if (D_800756C4 == 3) {
+    distance = distance + (distance >> 1);
+  } else if (D_800756C4 == 4) {
+    distance = distance << 1;
+  }
+
+  newPos.x = pMoby->m_Position.x + (COSINE_8(pMoby->m_Rotation.z) * distance >> 12);
+  newPos.y = pMoby->m_Position.y + (SINE_8(pMoby->m_Rotation.z) * distance >> 12);
+  newPos.z = pMoby->m_Position.z;
+
+  if (floorOffset != 0) {
+    if (flags & 2) {
+      func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 3);
+    } else if (func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 0) != 0) {
+      return 1;
+    }
+  }
+
+  if (flags & 1) {
+    zBase = newPos.z + 0x12C;
+    newPos.z = zBase + radius;
+  }
+  if (radius != 0 && func_8004BE4C(&newPos, radius, radius) != 0) {
+    if ((flags & 0x20) == 0) {
+      return 2;
+    }
+    VecCopy(&newPos, &g_CollisionPoint);
+  }
+  if (flags & 1) {
+    zBase = newPos.z - 0x12C;
+    newPos.z = zBase - radius;
+  }
+
+  if (flags & 0x54) {
+    newPos.z = newPos.z + 0x400;
+    floorZ = func_8004D5EC(&newPos, 0x1388);
+  }
+
+  if (flags & 0x10) {
+    if (ABS2((floorZ + pMoby->m_FloorDistance) - pMoby->m_Position.z) >= 0x191) {
+      return 2;
+    }
+  }
+
+  if (flags & 0x40) {
+    slope = Atan2(VecMagnitude(&g_CollisionNormal, 0), g_CollisionNormal.z, 0);
+    if (slope >= 0x81) {
+      slope = slope - 0x100;
+    }
+    if (ABS(slope) < 0x17) {
+      return 2;
+    }
+  }
+
+  pMoby->m_Position.x = newPos.x;
+  pMoby->m_Position.y = newPos.y;
+
+  if (flags & 4) {
+    delta = (floorZ + pMoby->m_FloorDistance) - pMoby->m_Position.z;
+    absDelta = ABS(delta);
+    if (absDelta >= 0x259) {
+      if (delta > 0) {
+        pMoby->m_Position.z = pMoby->m_Position.z + 0xFA;
+      } else {
+        pMoby->m_Position.z = pMoby->m_Position.z - 0xFA;
+      }
+    } else {
+      pMoby->m_Position.z = floorZ + pMoby->m_FloorDistance;
+    }
+  }
+
+  if (flags & 0x54) {
+    func_800533D0(pMoby);
+  }
+  func_800529E4(pMoby, 2);
+  return 0;
+}
 
 int func_80039688(Moby *pMoby, int pZAngle, int pDistance, int pMobyRadius,
                   int pMobySurfaceRadius, int pFlags);
