@@ -63,7 +63,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist1)(Moby *pBalloonist) {
 void NAME_OVERLAY_FUNCTION(Balloonist2)(void) {
   func_8002D02C();
   g_Spyro.unk_0x1b4 = 0;
-  g_Spyro.m_headRotation.z = 0;
+  g_Spyro.m_headRotation.y = 0;
   if (g_Sparx != nullptr) {
     g_Sparx->m_RenderRadius = 16;
   }

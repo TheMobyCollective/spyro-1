@@ -1304,7 +1304,6 @@ void func_8003DAE4(void);
 
 /// @brief Rotation updates for Spyro
 void func_8004888C(void) {
-  int _pad[2]; // Stack padding to match original 0x20 frame
 
   switch (g_Spyro.m_State) {
   case 6:
@@ -1313,26 +1312,26 @@ void func_8004888C(void) {
   case 1:
     func_8003DAE4();
     if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed != 0) {
+
       if (g_Spyro.m_againstWall != 0) {
         g_Spyro.m_bodyAnimationSpeed = 4;
       } else {
-        g_Spyro.m_bodyAnimationSpeed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed >> 7;
+        g_Spyro.m_bodyAnimationSpeed =
+            g_Spyro.m_Physics.m_SpeedAngle.m_Speed >> 7;
       }
-      if (g_Spyro.m_bodyAnimationSpeed <= 0) {
+
+      if (g_Spyro.m_bodyAnimationSpeed < 1) {
         g_Spyro.m_bodyAnimationSpeed = 1;
       }
-      if (g_Spyro.m_bodyAnimationSpeed >= 0x11) {
-        g_Spyro.m_bodyAnimationSpeed = 0x10;
+
+      if (g_Spyro.m_bodyAnimationSpeed > 16) {
+        g_Spyro.m_bodyAnimationSpeed = 16;
       }
+
     } else {
-      // Reused across both assignments in the original (shared register)
-      int temp = 4;
-      g_Spyro.m_bodyAnimationSpeed = temp;
-      if (D_80075914 & 0x10) {
-        if (g_Camera.unk_0xC0 >= 0) {
-          temp = 0x80000000;
-          g_Camera.unk_0xC0 = temp;
-        }
+      g_Spyro.m_bodyAnimationSpeed = 4;
+      if (D_80075914 & 0x10 && !(g_Camera.unk_0xC0 & 0x80000000)) {
+        g_Camera.unk_0xC0 = 0x80000000;
       }
     }
     break;
@@ -1357,18 +1356,20 @@ void func_8004888C(void) {
   case 11:
     func_8003DAE4();
     if ((g_Spyro.m_walkingState & 1) && g_Spyro.m_touchingMoby != 0) {
-      g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 0xA00;
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 2560;
     }
     break;
   case 19:
     func_8003DAE4();
     g_Spyro.m_bodyAnimationSpeed =
         (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >> 11) + 3;
+
     if (g_Spyro.m_bodyAnimationSpeed < 4) {
       g_Spyro.m_bodyAnimationSpeed = 4;
     }
-    if (g_Spyro.m_bodyAnimationSpeed >= 0xD) {
-      g_Spyro.m_bodyAnimationSpeed = 0xC;
+
+    if (g_Spyro.m_bodyAnimationSpeed > 12) {
+      g_Spyro.m_bodyAnimationSpeed = 12;
     }
     break;
   case 20:
@@ -1381,8 +1382,8 @@ void func_8004888C(void) {
     if (g_Spyro.m_bodyAnimationSpeed < 6) {
       g_Spyro.m_bodyAnimationSpeed = 6;
     }
-    if (g_Spyro.m_bodyAnimationSpeed >= 0x11) {
-      g_Spyro.m_bodyAnimationSpeed = 0x10;
+    if (g_Spyro.m_bodyAnimationSpeed > 16) {
+      g_Spyro.m_bodyAnimationSpeed = 16;
     }
     break;
   case 44:
@@ -1425,9 +1426,9 @@ void func_8004888C(void) {
     break;
   case 24:
     RotateSpyroToAcceleration();
-    g_Spyro.m_Physics.m_gravity += 0xC;
-    if (g_Spyro.m_Physics.m_gravity >= 0xC1) {
-      g_Spyro.m_Physics.m_gravity = 0xC0;
+    g_Spyro.m_Physics.m_gravity += 12;
+    if (g_Spyro.m_Physics.m_gravity > 192) {
+      g_Spyro.m_Physics.m_gravity = 192;
     }
     break;
   default:
@@ -1552,7 +1553,6 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80049660);
 /// which lives at m_bodyRotation + 4 (one padding byte ahead of the struct's
 /// m_headRotation), the same location consumed by the head rotation matrix.
 void func_80049880(void) {
-  Vector3D8 *headRot = (Vector3D8 *)((u_char *)&g_Spyro.m_bodyRotation + 4);
   int delta;
 
   // Per axis: take the angle delta to the target, wrap it to the shortest
@@ -1577,13 +1577,13 @@ void func_80049880(void) {
     delta -= 0x1000;
   }
 
-  // The rotation bytes are the current angles scaled down by 16.
-  headRot->x = g_Spyro.unk_0x1b0 >> 4;
-  headRot->y = g_Spyro.unk_0x1b4 >> 4;
-
   g_Spyro.unk_0x1c4 += ((delta << 7) - (g_Spyro.unk_0x1c4 << 4)) >> 6;
   g_Spyro.unk_0x1b8 += g_Spyro.unk_0x1c4 >> 6;
-  headRot->z = g_Spyro.unk_0x1b8 >> 4;
+
+  // The rotation bytes are the current angles scaled down by 16.
+  g_Spyro.m_headRotation.x = g_Spyro.unk_0x1b0 >> 4;
+  g_Spyro.m_headRotation.y = g_Spyro.unk_0x1b4 >> 4;
+  g_Spyro.m_headRotation.z = g_Spyro.unk_0x1b8 >> 4;
 }
 
 void func_800499C0(void);
