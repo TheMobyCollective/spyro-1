@@ -1,10 +1,12 @@
 #include "4BEF8.h"
+#include "balloonist.h"
 #include "buffers.h"
 #include "camera.h"
 #include "cd.h"
 #include "cheats.h"
 #include "common.h"
 #include "cutscene.h"
+#include "cyclorama.h"
 #include "dragon.h"
 #include "environment.h"
 #include "gamepad.h"
@@ -532,7 +534,163 @@ INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800314B4);
 
 /// @brief Gamestate 12 (Balloonist)
 void func_800324D8(void);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800324D8);
+/*
+ * The Balloonist ride/cutscene state. D_800777E8 is the balloonist's shared
+ * working struct (see include/balloonist.h). This update runs every frame the
+ * gamestate is GS_Balloonist; the bulk of the per-state logic lives in the
+ * level overlay reached through D_8007574C. This routine only handles the
+ * "in flight to the destination homeworld" phase (m_State == 4) directly,
+ * dispatching to the overlay code for every other state.
+ *
+ * For m_State == 4 it:
+ *   - keeps streaming the destination level in (LoadLevel) until it has caught
+ *     up, then
+ *   - for the first 0x100 frames eases the camera around the destination
+ *     balloon on a Sin-shaped path (orbit angle/radius/height interpolated),
+ *     and
+ *   - once the timer passes 0x100 and the level has finished loading
+ *     (g_LoadStage == 0xA) snaps Spyro and the camera onto the arrival balloon,
+ *     copies the queued cyclorama in, and advances to m_State == 5.
+ */
+
+// Per-homeworld arrival data: a landing position plus a facing rotation,
+// indexed by m_Homeworld (16-byte stride).
+typedef struct {
+  Vector3D m_Position;
+  int m_Rotation;
+} BalloonArrival;
+extern BalloonArrival D_8006EA4C[];
+
+extern int func_8001796C(int, int);
+
+void func_800324D8(void) {
+  Vector3D toCamera;
+  Vector3D16 targetRot;
+  int sineProgress;
+  int orbitAngle;
+  int orbitRadius;
+  BalloonArrival *arrival;
+  int balloonSpin;
+  int *pArrivalRotation;
+
+  D_800777E8.unk_0x04 += g_DeltaTime;
+  SpecularUpdate(3);
+
+  if (D_800777E8.m_State == 4) {
+    // Keep pulling the destination level in until it is fully streamed.
+    if (g_LoadStage < 0xA) {
+      LoadLevel(1);
+    }
+
+    if (D_800777E8.unk_0x04 < 0x100) {
+      // Sin-shaped ease (0 -> 0x1000) over the orbit.
+      sineProgress =
+          Sin(((D_800777E8.unk_0x04 << 11) >> 8) - 0x400) + 0x1000;
+
+      // Interpolate the orbit azimuth, taking the short way around the circle.
+      if (((D_800777E8.unk_0x50 - D_800777E8.unk_0x38) & 0xFFF) <= 0x800) {
+        orbitAngle =
+            D_800777E8.unk_0x38 +
+            (func_80017928(D_800777E8.unk_0x50, D_800777E8.unk_0x38) *
+                 sineProgress >>
+             13);
+      } else {
+        orbitAngle =
+            D_800777E8.unk_0x38 -
+            (func_80017928(D_800777E8.unk_0x50, D_800777E8.unk_0x38) *
+                 sineProgress >>
+             13);
+      }
+
+      orbitRadius =
+          D_800777E8.unk_0x3c +
+          ((D_800777E8.unk_0x54 - D_800777E8.unk_0x3c) * sineProgress >> 13);
+
+      g_Camera.m_Position.x =
+          D_800777E8.m_BalloonMoby->m_Position.x + (Cos(orbitAngle) * orbitRadius >> 12);
+      g_Camera.m_Position.y =
+          D_800777E8.m_BalloonMoby->m_Position.y + (Sin(orbitAngle) * orbitRadius >> 12);
+      g_Camera.m_Position.z =
+          D_800777E8.unk_0x40 +
+          ((D_800777E8.unk_0x58 - D_800777E8.unk_0x40) * sineProgress >> 13);
+
+      VecSub(&toCamera, &D_800777E8.m_BalloonMoby->m_Position, &g_Camera.m_Position);
+      toCamera.z += 0x200;
+
+      if (D_800777E8.unk_0x04 < 0x40) {
+        // Ease the look direction toward the balloon over the first frames.
+        targetRot.x = 0;
+        targetRot.y = Atan2(VecMagnitude(&toCamera, 0), -toCamera.z, 1);
+        targetRot.z = Atan2(toCamera.x, toCamera.y, 1);
+        g_Camera.m_Rotation.y =
+            (g_Camera.m_Rotation.y +
+             (func_8001796C(targetRot.y, g_Camera.m_Rotation.y) *
+                  D_800777E8.unk_0x04 >>
+              6)) &
+            0xFFF;
+        g_Camera.m_Rotation.z =
+            (g_Camera.m_Rotation.z +
+             (func_8001796C(targetRot.z, g_Camera.m_Rotation.z) *
+                  D_800777E8.unk_0x04 >>
+              6)) &
+            0xFFF;
+      } else {
+        // After the ease-in just look straight at the balloon.
+        g_Camera.m_Rotation.y = Atan2(VecMagnitude(&toCamera, 0), -toCamera.z, 1);
+        g_Camera.m_Rotation.z = Atan2(toCamera.x, toCamera.y, 1);
+      }
+    } else if (g_LoadStage == 0xA) {
+      // Level finished streaming: snap onto the arrival balloon and hand off.
+      Vector3D arrivalVec;
+
+      g_Cyclorama = g_NewCyclorama;
+      D_800777E8.m_State = 5;
+      D_800777E8.unk_0x04 = 0;
+
+      // Reposition/orient the balloonist moby at the arrival point.
+      arrival = D_8006EA4C;
+      VecCopy(&D_800777E8.m_BalloonMoby->m_Position, &arrival[D_800777E8.m_Homeworld].m_Position);
+      // Take the facing from the same arrival slot. Walk an int pointer from the
+      // table's first rotation field to this homeworld's slot (4 ints per
+      // BalloonArrival) rather than re-indexing, so it reads through the arrival
+      // table base rather than the scaled index.
+      pArrivalRotation = &arrival->m_Rotation;
+      pArrivalRotation += D_800777E8.m_Homeworld * 4;
+      D_800777E8.m_BalloonMoby->m_Rotation.z = *pArrivalRotation;
+
+      // Drop Spyro onto the balloon, slightly above it.
+      VecCopy(&g_Spyro.m_Position, &D_800777E8.m_BalloonMoby->m_Position);
+      g_Spyro.m_Position.z += 0x2D4;
+      g_Spyro.m_bodyRotation.z = D_800777E8.m_BalloonMoby->m_Rotation.z + 0x80;
+
+      // Place the camera on the orbit at a fixed start angle/radius.
+      D_800777E8.unk_0x50 = (D_800777E8.m_BalloonMoby->m_Rotation.z * 0x10 + 0x390) & 0xFFF;
+      g_Camera.m_Position.x =
+          D_800777E8.m_BalloonMoby->m_Position.x + (Cos(D_800777E8.unk_0x50) * D_800777E8.unk_0x54 >> 12);
+      g_Camera.m_Position.y =
+          D_800777E8.m_BalloonMoby->m_Position.y + (Sin(D_800777E8.unk_0x50) * D_800777E8.unk_0x54 >> 12);
+      g_Camera.m_Position.z = D_800777E8.m_BalloonMoby->m_Position.z + 0x200;
+
+      VecSub(&arrivalVec, &D_800777E8.m_BalloonMoby->m_Position, &g_Camera.m_Position);
+      arrivalVec.z += 0x200;
+      g_Camera.m_Rotation.y = Atan2(VecMagnitude(&arrivalVec, 0), -arrivalVec.z, 1);
+      g_Camera.m_Rotation.z = Atan2(arrivalVec.x, arrivalVec.y, 1);
+
+      // Seed the orbit parameters for the m_State == 5 descent.
+      balloonSpin = (D_800777E8.m_BalloonMoby->m_Rotation.z * 0x10 + 0xBA0) & 0xFFF;
+      D_800777E8.unk_0x58 = g_Camera.m_Position.z;
+      D_800777E8.unk_0x40 = g_Camera.m_Position.z - 0xFCE;
+      D_800777E8.unk_0x38 = balloonSpin;
+    }
+  } else {
+    // All other states are handled by the level overlay's camera code.
+    (*D_8007574C)();
+  }
+
+  func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
+  func_80049660();
+  func_80049E8C();
+}
 
 //
 // Memory card functions used only by titlescreen?!?!?!?!?!?!?!?!?!?!?!
