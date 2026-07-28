@@ -3,10 +3,13 @@
 #include "camera.h"
 #include "cd.h"
 #include "cheats.h"
+#include "checkpoint.h"
 #include "common.h"
 #include "cutscene.h"
+#include "cyclorama.h"
 #include "dragon.h"
 #include "environment.h"
+#include "game_over.h"
 #include "gamepad.h"
 #include "gamestates/draw.h"
 #include "gamestates/init.h"
@@ -517,7 +520,218 @@ void func_8002EB2C(void) {
 
 /// @brief Gamestate 4 & 5
 void func_8002EDF0(void);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002EDF0);
+
+/**
+ * @brief Respawn (GS_Respawn=4) / Game Over (GS_GameOver=5) update.
+ *
+ * Drives the death/respawn spiral. A small state machine in D_80075940
+ * sequences three phases:
+ *
+ *   - State 0: First-time setup. On the very first tick all sounds/music are
+ *     killed. If this is a plain respawn (g_Gamestate == GS_Respawn) the game
+ *     re-enters the level immediately. Otherwise (Game Over) it streams in the
+ *     dedicated "GAME OVER" skybox from the CD, relocates the cyclorama into
+ *     the low-poly scratch buffer, parks the camera at a fixed vantage point,
+ *     resets Spyro's stats/checkpoint, and decides which level to reload
+ *     (homeworld vs. the next sub-level). Then it advances to state 1.
+ *
+ *   - State 1: Plays the actual spiral animation. While the tick counter is in
+ *     [0xB4, 0x174) Spyro is flung outward and spun on a shrinking radius;
+ *     at tick 0x174 he snaps into a fixed landing pose. Once g_LoadStage drops
+ *     below 0xB the level load is kicked off; pressing Start lets the player
+ *     skip ahead, advancing to state 2.
+ *
+ *   - State 2: Waits a few ticks then issues the final level load.
+ *
+ * @note Tick units are 1/60s; the constants 0xB4/0x174 etc. are tick stamps.
+ */
+void func_8002EDF0(void) {
+  u_char *pSkyData;
+  u_char *pSkyBase;
+  int sectorIndex;
+  int relTicks;
+  int angle;
+  int radius;
+  int nextLevel;
+  int colR, colG, colB;
+  int cosAngle;
+  int landTicks;
+  int pad[8]; // REVIEW: reserves retail's 0x50 frame (optimised-out locals)
+
+  // On the very first frame of the sequence, silence everything.
+  if (g_GameOverTicks == 0) {
+    KillSoundsAndMusic(0);
+  }
+  g_GameOverTicks++;
+  SpecularUpdate(3);
+
+  if (D_80075940 == 0) {
+    // ---- State 0: one-time setup -------------------------------------------
+    if (g_GameOverTicks < 0x10) {
+      return; // Let a few frames pass before kicking things off.
+    }
+
+    if (g_Gamestate == GS_Respawn) {
+      // A plain respawn just drops straight back into the level.
+      func_8002C8A4();
+      func_800144C8();
+      return;
+    }
+
+    // Game Over: stream the dedicated skybox in from the CD into the tail of
+    // the low-poly scratch buffer.
+    pSkyData = (u_char *)g_Buffers.m_LowerPolyBuffer -
+               g_WadHeader.m_GameOverSkybox.m_Length;
+    CDLoadSync(g_CdState.m_WadSector, pSkyData,
+               g_WadHeader.m_GameOverSkybox.m_Length,
+               g_WadHeader.m_GameOverSkybox.m_Offset, 0x258);
+
+    pSkyData = (u_char *)g_Buffers.m_LowerPolyBuffer -
+               g_WadHeader.m_GameOverSkybox.m_Length;
+
+    // First three bytes are the background colour; mirror it into the cyclorama
+    // and both draw environments.
+    g_Cyclorama.m_BackgroundColor.r = colR = pSkyData[0];
+    g_Cyclorama.m_BackgroundColor.g = colG = pSkyData[1];
+    g_Cyclorama.m_BackgroundColor.b = colB = pSkyData[2];
+    g_DB[0].m_DrawEnv.r0 = colR;
+    g_DB[0].m_DrawEnv.g0 = colG;
+    g_DB[0].m_DrawEnv.b0 = colB;
+    g_DB[1].m_DrawEnv.r0 = colR;
+    g_DB[1].m_DrawEnv.g0 = colG;
+    g_DB[1].m_DrawEnv.b0 = colB;
+
+    // Parse the cyclorama header and relocate its sector pointers so they are
+    // valid at the buffer's new address.
+    pSkyBase = pSkyData;
+    pSkyData += 4; // skip the colour word
+    g_Cyclorama.m_SectorCount = *(int *)pSkyData;
+    pSkyData += 4;
+    g_Cyclorama.m_Sectors = (void *)pSkyData;
+    for (sectorIndex = 0; sectorIndex < g_Cyclorama.m_SectorCount;
+         sectorIndex++) {
+      *(int *)pSkyData = (int)pSkyBase + *(int *)pSkyData;
+      pSkyData += 4;
+    }
+
+    // Park the camera at a fixed vantage point looking at the spiral.
+    g_Camera.m_Position.x = 0x2800;
+    g_Camera.m_Position.y = 0x80;
+    g_Camera.m_Rotation.x = 0;
+    g_Camera.m_Position.z = 0x800;
+    g_Camera.m_Rotation.y = g_GameOverRotY;
+    g_Camera.m_Rotation.z = g_GameOverRotZ;
+    func_8004AC24(1);
+
+    // Reset Spyro's stats and clear the checkpoint state.
+    g_Spyro.m_bodyAnimation = 0x10;
+    g_Spyro.m_nextBodyAnimation = 0x10;
+    g_Spyro.m_nextBodyAnimationFrame = 1;
+    g_SpyroLifeCount = 4;
+    g_LifeOrbCount = 0;
+    g_Spyro.m_health = 3;
+    g_HasLevelTransition = 0;
+    g_PortalLevelId = 0;
+    g_PreviousLevelId = g_LevelIndex;
+    Memset(&g_Checkpoint, 0, 0x68);
+
+    // Pick where we reload: a homeworld hub (level id multiple of 10) reloads
+    // itself; any sub-level sends us to the start of its homeworld instead.
+    nextLevel = (g_LevelId / 10) * 10;
+    if (g_LevelId != nextLevel) {
+      g_NextLevelId = nextLevel;
+      g_LoadStage = 2;
+      D_8007576C = -1;
+    } else {
+      g_LoadStage = 0xB;
+    }
+    D_80075940 = 1;
+    g_GameOverTicks = 0;
+    return;
+  }
+
+  if (D_80075940 == 1) {
+    // ---- State 1: the spiral animation -------------------------------------
+    relTicks = g_GameOverTicks - 0xB4;
+    if ((u_int)relTicks < 0xC0) {
+      // Spin Spyro on a shrinking radius. The angle sweeps with the tick count
+      // and the radius collapses linearly from ~0x87C toward zero.
+      angle = ((relTicks << 4) + 0xE00) & 0xFFF;
+      cosAngle = Cos(angle);
+      radius = 0x87C - ((((relTicks * 17) << 5) - relTicks) << 1) / 192;
+
+      g_Spyro.m_Position.x = (cosAngle * radius >> 12) + 0x2A00;
+      g_Spyro.m_Position.y = (Sin(angle) * radius >> 12) + 0xC00;
+      g_Spyro.m_Position.z = 0xB44 - (((relTicks << 1) + relTicks) << 1);
+
+      g_Spyro.m_bodyRotation.z = (angle + 0x400) >> 4;
+      g_Spyro.m_bodyRotation.y = 0;
+      g_Spyro.m_bodyRotation.x = relTicks / 12 - 0x20;
+
+      if (g_GameOverTicks < 0x164) {
+        func_8003CB24(3);
+      } else {
+        // Tail end of the spiral: ease Spyro into the landing animation.
+        landTicks = g_GameOverTicks - 0x164;
+        g_Spyro.m_nextBodyAnimation = 0xE;
+        g_Spyro.m_nextBodyAnimationFrame = 0;
+        g_Spyro.m_bodyFrameProgress = g_GameOverTicks - 0x64;
+        g_Spyro.m_bodyRotation.y = -((((landTicks << 2) + landTicks) << 1) / 16);
+        g_Spyro.m_bodyRotation.x = g_GameOverTicks - 0x74;
+      }
+      func_80049660();
+      func_80049E8C();
+    }
+
+    if (g_GameOverTicks >= 0x174) {
+      if (g_GameOverTicks == 0x174) {
+        // Snap into the seated landing animation exactly once.
+        g_Spyro.m_bodyAnimation = 0xE;
+        g_Spyro.m_nextBodyAnimation = 0xE;
+        g_Spyro.m_bodyAnimationFrame = 0;
+        g_Spyro.m_nextBodyAnimationFrame = 1;
+        g_Spyro.m_bodyFrameProgress = 0;
+      }
+
+      // Hold the final landing pose.
+      g_Spyro.m_Position.x = 0x26F8;
+      g_Spyro.m_Position.y = 0x900;
+      g_Spyro.m_Position.z = 0x6C4;
+      g_Spyro.m_bodyRotation.y = 0xF6;
+      g_Spyro.m_bodyRotation.x = 0;
+      g_Spyro.m_bodyRotation.z = 0xE0;
+      func_8003CB24(3);
+      func_80049660();
+      func_80049E8C();
+    }
+
+    if (g_LoadStage < 0xB) {
+      LoadLevel(1);
+      return;
+    }
+
+    // Once enough time has passed, Start lets the player skip to the load.
+    if (g_GameOverTicks < 0x169) {
+      return;
+    }
+    if (!(g_Pad.m_Held & PAD_START)) {
+      return;
+    }
+    func_8003FDC8(0);
+    D_80075940 = 2;
+    g_GameOverTicks = 0;
+    return;
+  }
+
+  // ---- State 2: kick off the final level load -----------------------------
+  if (g_GameOverTicks < 0x11) {
+    return;
+  }
+  LoadLevel(1);
+  if (g_LoadStage < 0) {
+    func_8002C8A4();
+  }
+}
 
 /// @brief Gamestate 6 (Empty, used to be the dragon dialogue)
 void func_8002F3C4(void) { func_8002C91C(); }
