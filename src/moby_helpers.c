@@ -727,7 +727,95 @@ int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
 /// @brief Fodder walking movement
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039AA8);
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039E94);
+// g_SonyImage's data region is reused at runtime; at +0x400 it holds a
+// null-terminated table of pointers to the "linked" mobys we may wait on.
+extern u_char D_8006FCF4[];
+
+int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
+                  int floorOffset, int turnSpeed, int withinAngle,
+                  int waitForFlags, int moveFlags) {
+  int closeInZ;
+  int targetAngle;
+  int dx;
+  int dy;
+  Moby **pWaitList;
+  Moby *pOther;
+  int reachedNode;
+
+  // Scale walk speed by the frame's delta time.
+  if (D_800756C4 == 3) {
+    speed = speed + (speed >> 1);
+  } else if (D_800756C4 == 4) {
+    speed = speed << 1;
+  }
+
+  reachedNode = 0;
+
+  if (moveFlags & 0x100) {
+    // Only "arrive" once we are also close in Z to the node.
+    int zDelta = pMoby->m_Position.z - pPath->m_Nodes[pPath->m_CurrentNode].m_Position.z;
+    closeInZ = ABS(zDelta) < arrivalRadius;
+  } else {
+    closeInZ = 1;
+  }
+
+  // Have we reached the current node (close in XY and, if required, Z)?
+  if (OctDistance(&pMoby->m_Position,
+                  &pPath->m_Nodes[pPath->m_CurrentNode].m_Position) < arrivalRadius &&
+      closeInZ != 0) {
+    pMoby->m_Substate = 0;
+
+    if (pPath->m_Reversed == -1) {
+      // Forward traversal: advance, wrapping back to the first node.
+      if ((u_char)(++pPath->m_CurrentNode) == pPath->m_NodeCount) {
+        pPath->m_CurrentNode = 0;
+      }
+    } else {
+      // Reverse traversal: step back, wrapping to the last node.
+      if ((u_char)(--pPath->m_CurrentNode) == 0xFF) {
+        pPath->m_CurrentNode = pPath->m_NodeCount - 1;
+      }
+    }
+
+    reachedNode = pPath->m_CurrentNode + 0x100;
+  }
+
+  // Steer toward the (possibly newly selected) current node.
+  dx = pPath->m_Nodes[pPath->m_CurrentNode].m_Position.x - pMoby->m_Position.x;
+  dy = pPath->m_Nodes[pPath->m_CurrentNode].m_Position.y - pMoby->m_Position.y;
+  targetAngle = Atan2(dx, dy, 0);
+
+  // Already facing the node: finish the turn smoothly and walk toward it.
+  if (withinAngle >= func_80017908(targetAngle, pMoby->m_Rotation.z)) {
+    pMoby->m_Substate = 1;
+    RotateMobyToAngle(pMoby, targetAngle, turnSpeed, withinAngle, 1);
+    func_80039398(pMoby, speed, floorOffset, 0, moveFlags);
+  } else if (pMoby->m_Substate == 0 && waitForFlags != 0xFF) {
+    // Freshly idle: skip the turn while a linked moby in the same pod that is
+    // on-screen and active is still busy.
+    pWaitList = (Moby **)(D_8006FCF4 + 0x400);
+    pOther = *pWaitList++;
+    while (pOther != nullptr) {
+      if (pOther->m_Pod == waitForFlags &&
+          pOther->m_State < 0x80 && pOther->m_Substate == 1) {
+        break;
+      }
+      pOther = *pWaitList++;
+    }
+    if (pOther == nullptr) {
+      do {
+        pMoby->m_Rotation.z =
+            func_800179F0(targetAngle, pMoby->m_Rotation.z, turnSpeed, withinAngle);
+        pMoby->m_Substate = 2;
+      } while (0);
+    }
+  } else {
+    pMoby->m_Rotation.z =
+        func_800179F0(targetAngle, pMoby->m_Rotation.z, turnSpeed, withinAngle);
+  }
+
+  return reachedNode;
+}
 
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003A16C);
 
