@@ -120,8 +120,8 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
       }
 
       if (D_800777E8.unk_0x04 < 24) {
-        int temp = Sin((D_800777E8.unk_0x04 << 11) / 24 - 0x400) + 0x1000;
-        if ((D_800777E8.unk_0x34 - D_800777E8.unk_0x30 & 0xfff) <= 0x800) {
+        int temp = Sin((D_800777E8.unk_0x04 << 11) / 24 - 1024) + 4096;
+        if ((D_800777E8.unk_0x34 - D_800777E8.unk_0x30 & 0xfff) <= 2048) {
           g_Spyro.m_bodyRotation.z =
               (D_800777E8.unk_0x30 +
                (func_80017928(D_800777E8.unk_0x34, D_800777E8.unk_0x30) *
@@ -139,7 +139,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
         g_Spyro.m_bodyAnimationSpeed = 8;
       } else if (D_800777E8.unk_0x04 < 72) {
         int temp =
-            (Sin(((D_800777E8.unk_0x04 - 24) * 0x800) / 48 - 0x400) + 0x1000);
+            (Sin(((D_800777E8.unk_0x04 - 24) * 2048) / 48 - 1024) + 4096);
         VecSub(&vec, &D_800777E8.unk_0x2C, &D_800777E8.unk_0x18);
         VecMult(&vec, &vec, temp);
         VecShiftRight(&vec, 13);
@@ -153,19 +153,18 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
           g_Spyro.m_bodyAnimationSpeed = 0x10;
         }
       } else {
-        int temp =
-            Sin(((D_800777E8.unk_0x04 - 72) * 0x800) / 24 - 0x400) + 0x1000;
+        int temp = Sin(((D_800777E8.unk_0x04 - 72) * 2048) / 24 - 1024) + 4096;
         if (D_800777E8.unk_0x04 - g_DeltaTime < 72) {
           D_800777E8.unk_0x30 = g_Spyro.m_bodyRotation.z << 4;
           D_800777E8.unk_0x34 =
-              D_800777E8.m_BalloonistMoby->m_Rotation.z * 16 - 0x800 & 0xfff;
+              D_800777E8.m_BalloonistMoby->m_Rotation.z * 16 - 2048 & 0xfff;
           g_Spyro.m_nextBodyAnimation = 3;
           g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
           g_Spyro.m_nextBodyAnimationFrame = 0;
           g_Spyro.m_bodyFrameProgress = 0;
           g_Spyro.m_bodyAnimationSpeed = 8;
         }
-        if (0x800 >= ((D_800777E8.unk_0x34 - D_800777E8.unk_0x30) & 0xfff)) {
+        if (((D_800777E8.unk_0x34 - D_800777E8.unk_0x30) & 0xfff) <= 2048) {
           g_Spyro.m_bodyRotation.z =
               (D_800777E8.unk_0x30 +
                (func_80017928(D_800777E8.unk_0x34, D_800777E8.unk_0x30) *
@@ -191,27 +190,31 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
       func_80048D10(g_DeltaTime);
 
       if ((D_800777E8.unk_0x50 - D_800777E8.unk_0x38 & 0xfff) <= 0x800) {
-        interpAngle = D_800777E8.unk_0x38 +
-                      (func_80017928(D_800777E8.unk_0x50, D_800777E8.unk_0x38) *
-                           lerpProgress >>
-                       13);
+        interpAngle =
+            D_800777E8.unk_0x38 +
+            (FIXED_MUL(func_80017928(D_800777E8.unk_0x50, D_800777E8.unk_0x38),
+                       lerpProgress) >>
+             1);
       } else {
-        interpAngle = D_800777E8.unk_0x38 -
-                      (func_80017928(D_800777E8.unk_0x50, D_800777E8.unk_0x38) *
-                           lerpProgress >>
-                       13);
+        interpAngle =
+            D_800777E8.unk_0x38 -
+            (FIXED_MUL(func_80017928(D_800777E8.unk_0x50, D_800777E8.unk_0x38),
+                       lerpProgress) >>
+             1);
       }
 
-      interpRadius =
-          (D_800777E8.unk_0x3c +
-           ((D_800777E8.unk_0x54 - D_800777E8.unk_0x3c) * lerpProgress >> 13));
+      interpRadius = (D_800777E8.unk_0x3c +
+                      (FIXED_MUL(D_800777E8.unk_0x54 - D_800777E8.unk_0x3c,
+                                 lerpProgress) >>
+                       1));
       g_Camera.m_Position.x = D_800777E8.m_BalloonistMoby->m_Position.x +
-                              (Cos(interpAngle) * interpRadius >> 12);
+                              FIXED_MUL(Cos(interpAngle), interpRadius);
       g_Camera.m_Position.y = D_800777E8.m_BalloonistMoby->m_Position.y +
-                              (Sin(interpAngle) * interpRadius >> 12);
+                              FIXED_MUL(Sin(interpAngle), interpRadius);
       g_Camera.m_Position.z =
           D_800777E8.unk_0x40 +
-          (((D_800777E8.unk_0x58 - D_800777E8.unk_0x40) * lerpProgress) >> 13);
+          (FIXED_MUL(D_800777E8.unk_0x58 - D_800777E8.unk_0x40, lerpProgress) >>
+           1);
 
       vec.x = 0x220;
       vec.y = 0;
@@ -253,10 +256,10 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
     } else {
       g_Camera.m_Position.x =
           D_800777E8.m_BalloonistMoby->m_Position.x +
-          ((Cos(D_800777E8.unk_0x50) * D_800777E8.unk_0x54) >> 12);
+          FIXED_MUL(Cos(D_800777E8.unk_0x50), D_800777E8.unk_0x54);
       g_Camera.m_Position.y =
           D_800777E8.m_BalloonistMoby->m_Position.y +
-          ((Sin(D_800777E8.unk_0x50) * D_800777E8.unk_0x54) >> 12);
+          FIXED_MUL(Sin(D_800777E8.unk_0x50), D_800777E8.unk_0x54);
       g_Camera.m_Position.z = D_800777E8.unk_0x58;
 
       VecCopy(&g_Spyro.m_Position, &D_800777E8.unk_0x2C);
@@ -404,7 +407,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
     Vector3D16 shortvec;
     int lerpProgress, currentAngle, currentDist;
     if (D_800777E8.unk_0x04 < 102) {
-      lerpProgress = Sin((D_800777E8.unk_0x04 * 0x800) / 0x66 - 0x400) + 0x1000;
+      lerpProgress = Sin((D_800777E8.unk_0x04 * 2048) / 102 - 1024) + 4096;
       if (D_800777E8.unk_0x04 == g_DeltaTime) {
         D_800777E8.m_BalloonMoby->m_SectorIndex = -1;
         D_800777E8.unk_0x38 = Atan2(
@@ -419,12 +422,12 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
         D_800777E8.unk_0x44.z = g_Camera.m_Rotation.z;
 
         D_800777E8.unk_0x50 =
-            D_800777E8.m_BalloonMoby->m_Rotation.z * 0x10 - 0x480 & 0xfff;
+            D_800777E8.m_BalloonMoby->m_Rotation.z * 16 - 1152 & 0xfff;
         D_800777E8.unk_0x54 = 0xe00;
-        D_800777E8.unk_0x58 = D_800777E8.m_BalloonMoby->m_Position.z + 0x200;
+        D_800777E8.unk_0x58 = D_800777E8.m_BalloonMoby->m_Position.z + 512;
         D_800777E8.unk_0x5C[0] = D_800777E8.m_BalloonMoby->m_Position.z;
         D_800777E8.unk_0x5C[1] =
-            D_800777E8.m_BalloonistMoby->m_Position.z + 0x488;
+            D_800777E8.m_BalloonistMoby->m_Position.z + 1160;
         VecCopy(&D_800777E8.unk_0x18, &g_Spyro.m_Position);
         VecCopy(&D_800777E8.unk_0x2C, &D_800777E8.m_BalloonistMoby->m_Position);
         g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
@@ -445,7 +448,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
              D_800777E8.unk_0x04) /
                 48;
         g_Spyro.m_Position.z =
-            D_800777E8.unk_0x18.z + (Sin(D_800777E8.unk_0x04 << 5) * 10) / 0x24;
+            D_800777E8.unk_0x18.z + (Sin(D_800777E8.unk_0x04 << 5) * 10) / 36;
         g_Spyro.m_surfaceBelowSpyro =
             func_8004D5EC(&g_Spyro.m_Position, 0x10000);
         RotVec8ToMatrix(&g_Spyro.m_bodyRotation, &g_Spyro.m_RotationMatrix, 0);
@@ -454,7 +457,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
         if (D_800777E8.unk_0x04 - g_DeltaTime < 48) {
           D_800777E8.unk_0x18.x = D_800777E8.unk_0x2C.x;
           D_800777E8.unk_0x18.y = D_800777E8.unk_0x2C.y;
-          D_800777E8.unk_0x18.z = D_800777E8.unk_0x18.z + 0x325;
+          D_800777E8.unk_0x18.z = D_800777E8.unk_0x18.z + 805;
           VecCopy(&D_800777E8.unk_0x2C, &D_800777E8.m_BalloonMoby->m_Position);
           g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
           g_Spyro.m_nextBodyAnimationFrame = 0;
@@ -477,7 +480,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
                                  (Sin((D_800777E8.unk_0x04 - 54) * 32) >> 2);
         }
       }
-      if ((D_800777E8.unk_0x50 - D_800777E8.unk_0x38 & 0xfff) < 0x801) {
+      if ((D_800777E8.unk_0x50 - D_800777E8.unk_0x38 & 0xfff) <= 2048) {
         currentAngle =
             D_800777E8.unk_0x38 +
             (func_80017928(D_800777E8.unk_0x50, D_800777E8.unk_0x38) *
@@ -490,13 +493,15 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
                  lerpProgress >>
              13);
       }
+
       currentDist =
           D_800777E8.unk_0x3c +
-          ((D_800777E8.unk_0x54 - D_800777E8.unk_0x3c) * lerpProgress >> 13);
+          (FIXED_MUL(D_800777E8.unk_0x54 - D_800777E8.unk_0x3c, lerpProgress) >>
+           1);
       g_Camera.m_Position.x = D_800777E8.m_BalloonMoby->m_Position.x +
-                              (Cos(currentAngle) * currentDist >> 0xc);
+                              FIXED_MUL(Cos(currentAngle), currentDist);
       g_Camera.m_Position.y = D_800777E8.m_BalloonMoby->m_Position.y +
-                              (Sin(currentAngle) * currentDist >> 0xc);
+                              FIXED_MUL(Sin(currentAngle), currentDist);
       g_Camera.m_Position.z =
           D_800777E8.unk_0x40 +
           ((D_800777E8.unk_0x58 - D_800777E8.unk_0x40) * lerpProgress >> 13);
@@ -536,7 +541,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
         D_800777E8.unk_0x40 = g_Camera.m_Position.z;
         g_Spyro.m_Position.x = D_800777E8.unk_0x2C.x;
         g_Spyro.m_Position.y = D_800777E8.unk_0x2C.y;
-        g_Spyro.m_Position.z = D_800777E8.m_BalloonMoby->m_Position.z + 0x2d4;
+        g_Spyro.m_Position.z = D_800777E8.m_BalloonMoby->m_Position.z + 724;
         g_Spyro.m_nextBodyAnimation = 0;
         g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
         g_Spyro.m_bodyAnimationSpeed = 4;
@@ -544,23 +549,23 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
         g_Spyro.m_bodyFrameProgress = 0;
         g_Spyro.m_sortingDepth = 3;
       }
-      if (D_800777E8.unk_0x04 < 0x40) {
+      if (D_800777E8.unk_0x04 < 64) {
         D_800777E8.m_BalloonMoby->m_Position.z =
             D_800777E8.unk_0x5C[0] +
-            ((Sin(D_800777E8.unk_0x04 * 0x10 + 0xc00) + 0x1000) * 3 >> 2);
+            ((Sin(D_800777E8.unk_0x04 * 16 + 3072) + 4096) * 3 >> 2);
       } else {
         D_800777E8.m_BalloonMoby->m_Position.z =
             D_800777E8.m_BalloonMoby->m_Position.z + g_DeltaTime * 75;
         g_Camera.m_Position.z =
             D_800777E8.unk_0x40 +
-            ((Sin(D_800777E8.unk_0x04 * 0x10 + 0x800) + 0x1000) * 3 >> 2);
+            ((Sin(D_800777E8.unk_0x04 * 16 + 2048) + 4096) * 3 >> 2);
       }
       VecSub(&vec, &D_800777E8.m_BalloonMoby->m_Position, &g_Camera.m_Position);
       g_Camera.m_Rotation.y = Atan2(VecMagnitude(&vec, 0), -vec.z, 1);
 
       g_Camera.m_Rotation.z = Atan2(vec.x, vec.y, 1);
-      g_Spyro.m_Position.z = D_800777E8.m_BalloonMoby->m_Position.z + 0x2d4;
-      g_Spyro.m_bodyRotation.z = D_800777E8.m_BalloonMoby->m_Rotation.z + 0x80;
+      g_Spyro.m_Position.z = D_800777E8.m_BalloonMoby->m_Position.z + 724;
+      g_Spyro.m_bodyRotation.z = D_800777E8.m_BalloonMoby->m_Rotation.z + 128;
     } else {
       D_800777E8.unk_0x38 = Atan2(
           g_Camera.m_Position.x - D_800777E8.m_BalloonMoby->m_Position.x,
@@ -569,7 +574,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
       D_800777E8.unk_0x3c = VecMagnitude(&vec, 0);
       D_800777E8.unk_0x40 = g_Camera.m_Position.z;
       D_800777E8.unk_0x50 =
-          (0x390 + D_800777E8.m_BalloonMoby->m_Rotation.z * 0x10) & 0xfff;
+          (912 + D_800777E8.m_BalloonMoby->m_Rotation.z * 16) & 0xfff;
       D_800777E8.unk_0x54 = 0x800;
       g_LoadStage = 0;
       D_8007576C = -1;
@@ -611,8 +616,8 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
       LoadLevel(1);
     }
     if (D_800777E8.unk_0x04 < 0x100) {
-      sineProgress = Sin(((D_800777E8.unk_0x04 << 0xb) >> 8) - 0x400) + 0x1000;
-      if ((D_800777E8.unk_0x38 - D_800777E8.unk_0x50 & 0xfff) <= 0x800) {
+      sineProgress = Sin(((D_800777E8.unk_0x04 << 0xb) >> 8) - 1024) + 4096;
+      if ((D_800777E8.unk_0x38 - D_800777E8.unk_0x50 & 0xfff) <= 2048) {
         angle = D_800777E8.unk_0x50 +
                 (func_80017928(D_800777E8.unk_0x38, D_800777E8.unk_0x50) *
                      sineProgress >>
@@ -623,15 +628,18 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
                      sineProgress >>
                  13);
       }
-      dist = D_800777E8.unk_0x54 +
-             ((D_800777E8.unk_0x3c - D_800777E8.unk_0x54) * sineProgress >> 13);
+      dist =
+          D_800777E8.unk_0x54 +
+          (FIXED_MUL(D_800777E8.unk_0x3c - D_800777E8.unk_0x54, sineProgress) >>
+           1);
       g_Camera.m_Position.x =
-          D_800777E8.m_BalloonMoby->m_Position.x + (Cos(angle) * dist >> 12);
+          D_800777E8.m_BalloonMoby->m_Position.x + FIXED_MUL(Cos(angle), dist);
       g_Camera.m_Position.y =
-          D_800777E8.m_BalloonMoby->m_Position.y + (Sin(angle) * dist >> 12);
+          D_800777E8.m_BalloonMoby->m_Position.y + FIXED_MUL(Sin(angle), dist);
       g_Camera.m_Position.z =
           D_800777E8.unk_0x58 +
-          ((D_800777E8.unk_0x40 - D_800777E8.unk_0x58) * sineProgress >> 13);
+          (FIXED_MUL(D_800777E8.unk_0x40 - D_800777E8.unk_0x58, sineProgress) >>
+           1);
       VecSub(&vec, &D_800777E8.m_BalloonMoby->m_Position, &g_Camera.m_Position);
       vec.z += 0x200 - (sineProgress >> 4);
       g_Camera.m_Rotation.y = Atan2(VecMagnitude(&vec, 0), -vec.z, 1);
@@ -651,23 +659,23 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
         D_800777E8.unk_0x5C[0] = D_800777E8.m_BalloonMoby->m_Position.z;
         D_800777E8.unk_0x40 = g_Camera.m_Position.z;
       }
-      if (D_800777E8.unk_0x04 < 0x40) {
+      if (D_800777E8.unk_0x04 < 64) {
         D_800777E8.m_BalloonMoby->m_Position.z -= g_DeltaTime * 75;
         g_Camera.m_Position.z =
-            D_800777E8.unk_0x40 + (Sin(-D_800777E8.unk_0x04 * 0x10) * 3 >> 2);
+            D_800777E8.unk_0x40 + (Sin(-D_800777E8.unk_0x04 * 16) * 3 >> 2);
       } else {
-        if (D_800777E8.unk_0x04 - g_DeltaTime < 0x40) {
+        if (D_800777E8.unk_0x04 - g_DeltaTime < 64) {
           D_800777E8.unk_0x5C[0] = D_800777E8.m_BalloonMoby->m_Position.z - 75;
         }
         D_800777E8.m_BalloonMoby->m_Position.z =
             D_800777E8.unk_0x5C[0] +
-            (Sin(0x400 - D_800777E8.unk_0x04 * 0x10) * 3 >> 2);
+            (Sin(1024 - D_800777E8.unk_0x04 * 16) * 3 >> 2);
       }
       VecSub(&vec, &D_800777E8.m_BalloonMoby->m_Position, &g_Camera.m_Position);
       g_Camera.m_Rotation.y = Atan2(VecMagnitude(&vec, 0), -vec.z, 1);
       g_Camera.m_Rotation.z = Atan2(vec.x, vec.y, 1);
-      g_Spyro.m_Position.z = D_800777E8.m_BalloonMoby->m_Position.z + 0x2d4;
-      g_Spyro.m_bodyRotation.z = D_800777E8.m_BalloonMoby->m_Rotation.z + 0x80;
+      g_Spyro.m_Position.z = D_800777E8.m_BalloonMoby->m_Position.z + 724;
+      g_Spyro.m_bodyRotation.z = D_800777E8.m_BalloonMoby->m_Rotation.z + 128;
 
     } else {
       D_800777E8.m_State = 7;
@@ -677,7 +685,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
       D_800777E8.unk_0x2C.y = D_8006EADC[D_800777E8.m_Homeworld][1];
       D_800777E8.unk_0x2C.z = g_Spyro.m_Position.z;
       D_800777E8.unk_0x2C.z =
-          func_8004D5EC(&D_800777E8.unk_0x2C, 0x10000) + 0x164;
+          func_8004D5EC(&D_800777E8.unk_0x2C, 0x10000) + 356;
       g_Spyro.m_nextBodyAnimation = 5;
       g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
       g_Spyro.m_nextBodyAnimationFrame = 0;
@@ -689,7 +697,7 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
 
   case 7: {
     int pad[2];
-    if (D_800777E8.unk_0x04 < 0x40) {
+    if (D_800777E8.unk_0x04 < 64) {
       g_Spyro.m_Position.x = D_800777E8.unk_0x18.x +
                              ((D_800777E8.unk_0x2C.x - D_800777E8.unk_0x18.x) *
                                   D_800777E8.unk_0x04 >>
@@ -699,9 +707,9 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
                                   D_800777E8.unk_0x04 >>
                               6);
       g_Spyro.m_Position.z = D_800777E8.unk_0x2C.z +
-                             (Sin(D_800777E8.unk_0x04 * 24 + 0x200) *
+                             (Sin(D_800777E8.unk_0x04 * 24 + 512) *
                               (D_800777E8.unk_0x18.z - D_800777E8.unk_0x2C.z)) /
-                                 0xb50;
+                                 2896;
       g_Spyro.m_surfaceBelowSpyro = func_8004D5EC(&g_Spyro.m_Position, 0x10000);
       RotVec8ToMatrix(&g_Spyro.m_bodyRotation, &g_Spyro.m_RotationMatrix, 0);
       func_80049FAC(1);
