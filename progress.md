@@ -254,7 +254,7 @@
 - [x] func_80049E8C
 - [x] func_80049F3C
 - [ ] func_80049FAC
-- [ ] func_8004A200
+- [x] func_8004A200
 - [x] UpdateSpyroEnterReturnHome
 - [x] UpdateSpyroReturnHome
 - [x] func_8004AC24
