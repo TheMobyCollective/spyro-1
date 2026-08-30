@@ -544,7 +544,6 @@ void func_8002EDF0(void);
  *
  *   - State 2: Waits a few ticks then issues the final level load.
  *
- * @note Tick units are 1/60s; the constants 0xB4/0x174 etc. are tick stamps.
  */
 void func_8002EDF0(void) {
   u_char *pSkyData;
@@ -557,7 +556,7 @@ void func_8002EDF0(void) {
   int colR, colG, colB;
   int cosAngle;
   int landTicks;
-  int pad[8]; // REVIEW: reserves retail's 0x50 frame (optimised-out locals)
+  char _pad[32]; // Likely a sprintf buffer
 
   // On the very first frame of the sequence, silence everything.
   if (g_GameOverTicks == 0) {
@@ -568,7 +567,7 @@ void func_8002EDF0(void) {
 
   if (D_80075940 == 0) {
     // ---- State 0: one-time setup -------------------------------------------
-    if (g_GameOverTicks < 0x10) {
+    if (g_GameOverTicks < 16) {
       return; // Let a few frames pass before kicking things off.
     }
 
@@ -585,7 +584,7 @@ void func_8002EDF0(void) {
                g_WadHeader.m_GameOverSkybox.m_Length;
     CDLoadSync(g_CdState.m_WadSector, pSkyData,
                g_WadHeader.m_GameOverSkybox.m_Length,
-               g_WadHeader.m_GameOverSkybox.m_Offset, 0x258);
+               g_WadHeader.m_GameOverSkybox.m_Offset, 600);
 
     pSkyData = (u_char *)g_Buffers.m_LowerPolyBuffer -
                g_WadHeader.m_GameOverSkybox.m_Length;
@@ -616,17 +615,17 @@ void func_8002EDF0(void) {
     }
 
     // Park the camera at a fixed vantage point looking at the spiral.
-    g_Camera.m_Position.x = 0x2800;
-    g_Camera.m_Position.y = 0x80;
+    g_Camera.m_Position.x = 10240;
+    g_Camera.m_Position.y = 128;
     g_Camera.m_Rotation.x = 0;
-    g_Camera.m_Position.z = 0x800;
+    g_Camera.m_Position.z = 2048;
     g_Camera.m_Rotation.y = g_GameOverRotY;
     g_Camera.m_Rotation.z = g_GameOverRotZ;
     func_8004AC24(1);
 
     // Reset Spyro's stats and clear the checkpoint state.
-    g_Spyro.m_bodyAnimation = 0x10;
-    g_Spyro.m_nextBodyAnimation = 0x10;
+    g_Spyro.m_bodyAnimation = 16;
+    g_Spyro.m_nextBodyAnimation = 16;
     g_Spyro.m_nextBodyAnimationFrame = 1;
     g_SpyroLifeCount = 4;
     g_LifeOrbCount = 0;
@@ -634,7 +633,7 @@ void func_8002EDF0(void) {
     g_HasLevelTransition = 0;
     g_PortalLevelId = 0;
     g_PreviousLevelId = g_LevelIndex;
-    Memset(&g_Checkpoint, 0, 0x68);
+    Memset(&g_Checkpoint, 0, sizeof(g_Checkpoint));
 
     // Pick where we reload: a homeworld hub (level id multiple of 10) reloads
     // itself; any sub-level sends us to the start of its homeworld instead.
@@ -644,7 +643,7 @@ void func_8002EDF0(void) {
       g_LoadStage = 2;
       D_8007576C = -1;
     } else {
-      g_LoadStage = 0xB;
+      g_LoadStage = 11;
     }
     D_80075940 = 1;
     g_GameOverTicks = 0;
@@ -653,71 +652,74 @@ void func_8002EDF0(void) {
 
   if (D_80075940 == 1) {
     // ---- State 1: the spiral animation -------------------------------------
-    relTicks = g_GameOverTicks - 0xB4;
-    if ((u_int)relTicks < 0xC0) {
+    relTicks = g_GameOverTicks - 180;
+    if ((u_int)relTicks < 192) {
       // Spin Spyro on a shrinking radius. The angle sweeps with the tick count
-      // and the radius collapses linearly from ~0x87C toward zero.
-      angle = ((relTicks << 4) + 0xE00) & 0xFFF;
+      // and the radius collapses linearly from ~2172 toward zero.
+      angle = ((relTicks << 4) + 3584) & 0xFFF;
       cosAngle = Cos(angle);
-      radius = 0x87C - ((((relTicks * 17) << 5) - relTicks) << 1) / 192;
+      radius = 2172 - ((((relTicks * 17) << 5) - relTicks) << 1) / 192;
 
-      g_Spyro.m_Position.x = (cosAngle * radius >> 12) + 0x2A00;
-      g_Spyro.m_Position.y = (Sin(angle) * radius >> 12) + 0xC00;
-      g_Spyro.m_Position.z = 0xB44 - (((relTicks << 1) + relTicks) << 1);
+      g_Spyro.m_Position.x = (cosAngle * radius >> 12) + 10752;
+      g_Spyro.m_Position.y = (Sin(angle) * radius >> 12) + 3072;
+      g_Spyro.m_Position.z = 2884 - (((relTicks << 1) + relTicks) << 1);
 
-      g_Spyro.m_bodyRotation.z = (angle + 0x400) >> 4;
+      g_Spyro.m_bodyRotation.z = (angle + 1024) >> 4;
       g_Spyro.m_bodyRotation.y = 0;
-      g_Spyro.m_bodyRotation.x = relTicks / 12 - 0x20;
+      g_Spyro.m_bodyRotation.x = relTicks / 12 - 32;
 
-      if (g_GameOverTicks < 0x164) {
+      if (g_GameOverTicks < 356) {
         func_8003CB24(3);
       } else {
         // Tail end of the spiral: ease Spyro into the landing animation.
-        landTicks = g_GameOverTicks - 0x164;
-        g_Spyro.m_nextBodyAnimation = 0xE;
+        landTicks = g_GameOverTicks - 356;
+        g_Spyro.m_nextBodyAnimation = 14;
         g_Spyro.m_nextBodyAnimationFrame = 0;
-        g_Spyro.m_bodyFrameProgress = g_GameOverTicks - 0x64;
-        g_Spyro.m_bodyRotation.y = -((((landTicks << 2) + landTicks) << 1) / 16);
-        g_Spyro.m_bodyRotation.x = g_GameOverTicks - 0x74;
+        g_Spyro.m_bodyFrameProgress = g_GameOverTicks - 100;
+        g_Spyro.m_bodyRotation.y =
+            -((((landTicks << 2) + landTicks) << 1) / 16);
+        g_Spyro.m_bodyRotation.x = g_GameOverTicks - 116;
       }
       func_80049660();
       func_80049E8C();
     }
 
-    if (g_GameOverTicks >= 0x174) {
-      if (g_GameOverTicks == 0x174) {
+    if (g_GameOverTicks >= 372) {
+      if (g_GameOverTicks == 372) {
         // Snap into the seated landing animation exactly once.
-        g_Spyro.m_bodyAnimation = 0xE;
-        g_Spyro.m_nextBodyAnimation = 0xE;
+        g_Spyro.m_bodyAnimation = 14;
+        g_Spyro.m_nextBodyAnimation = 14;
         g_Spyro.m_bodyAnimationFrame = 0;
         g_Spyro.m_nextBodyAnimationFrame = 1;
         g_Spyro.m_bodyFrameProgress = 0;
       }
 
       // Hold the final landing pose.
-      g_Spyro.m_Position.x = 0x26F8;
-      g_Spyro.m_Position.y = 0x900;
-      g_Spyro.m_Position.z = 0x6C4;
-      g_Spyro.m_bodyRotation.y = 0xF6;
+      g_Spyro.m_Position.x = 9976;
+      g_Spyro.m_Position.y = 2304;
+      g_Spyro.m_Position.z = 1732;
+      g_Spyro.m_bodyRotation.y = 246;
       g_Spyro.m_bodyRotation.x = 0;
-      g_Spyro.m_bodyRotation.z = 0xE0;
+      g_Spyro.m_bodyRotation.z = 224;
       func_8003CB24(3);
       func_80049660();
       func_80049E8C();
     }
 
-    if (g_LoadStage < 0xB) {
+    if (g_LoadStage < 11) {
       LoadLevel(1);
       return;
     }
 
     // Once enough time has passed, Start lets the player skip to the load.
-    if (g_GameOverTicks < 0x169) {
+    if (g_GameOverTicks < 361) {
       return;
     }
+
     if (!(g_Pad.m_Held & PAD_START)) {
       return;
     }
+
     func_8003FDC8(0);
     D_80075940 = 2;
     g_GameOverTicks = 0;
@@ -725,10 +727,12 @@ void func_8002EDF0(void) {
   }
 
   // ---- State 2: kick off the final level load -----------------------------
-  if (g_GameOverTicks < 0x11) {
+  if (g_GameOverTicks < 17) {
     return;
   }
+
   LoadLevel(1);
+
   if (g_LoadStage < 0) {
     func_8002C8A4();
   }

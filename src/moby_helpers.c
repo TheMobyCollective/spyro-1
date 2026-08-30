@@ -11,6 +11,7 @@
 #include "moby_helpers.h"
 #include "overlay_pointers.h"
 #include "renderers.h"
+#include "sony_image.h"
 #include "spu.h"
 #include "spyro.h"
 #include "strings.h"
@@ -727,10 +728,6 @@ int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
 /// @brief Fodder walking movement
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039AA8);
 
-// g_SonyImage's data region is reused at runtime; at +0x400 it holds a
-// null-terminated table of pointers to the "linked" mobys we may wait on.
-extern u_char D_8006FCF4[];
-
 int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
                   int floorOffset, int turnSpeed, int withinAngle,
                   int waitForFlags, int moveFlags) {
@@ -753,7 +750,8 @@ int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
 
   if (moveFlags & 0x100) {
     // Only "arrive" once we are also close in Z to the node.
-    int zDelta = pMoby->m_Position.z - pPath->m_Nodes[pPath->m_CurrentNode].m_Position.z;
+    int zDelta =
+        pMoby->m_Position.z - pPath->m_Nodes[pPath->m_CurrentNode].m_Position.z;
     closeInZ = ABS(zDelta) < arrivalRadius;
   } else {
     closeInZ = 1;
@@ -761,7 +759,8 @@ int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
 
   // Have we reached the current node (close in XY and, if required, Z)?
   if (OctDistance(&pMoby->m_Position,
-                  &pPath->m_Nodes[pPath->m_CurrentNode].m_Position) < arrivalRadius &&
+                  &pPath->m_Nodes[pPath->m_CurrentNode].m_Position) <
+          arrivalRadius &&
       closeInZ != 0) {
     pMoby->m_Substate = 0;
 
@@ -793,19 +792,19 @@ int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
   } else if (pMoby->m_Substate == 0 && waitForFlags != 0xFF) {
     // Freshly idle: skip the turn while a linked moby in the same pod that is
     // on-screen and active is still busy.
-    pWaitList = (Moby **)(D_8006FCF4 + 0x400);
+    pWaitList = (Moby **)(&g_SonyImage.u.m_Buf[0x400]);
     pOther = *pWaitList++;
     while (pOther != nullptr) {
-      if (pOther->m_Pod == waitForFlags &&
-          pOther->m_State < 0x80 && pOther->m_Substate == 1) {
+      if (pOther->m_Pod == waitForFlags && pOther->m_State < 0x80 &&
+          pOther->m_Substate == 1) {
         break;
       }
       pOther = *pWaitList++;
     }
     if (pOther == nullptr) {
       do {
-        pMoby->m_Rotation.z =
-            func_800179F0(targetAngle, pMoby->m_Rotation.z, turnSpeed, withinAngle);
+        pMoby->m_Rotation.z = func_800179F0(targetAngle, pMoby->m_Rotation.z,
+                                            turnSpeed, withinAngle);
         pMoby->m_Substate = 2;
       } while (0);
     }
@@ -828,7 +827,8 @@ int func_8003A16C(Moby *pMoby, PathData *pPath, int threshold, int maxMag,
   int absDelta;
   int reached;
 
-  VecSub(&dir, &pPath->m_Nodes[pPath->m_CurrentNode].m_Position, &pMoby->m_Position);
+  VecSub(&dir, &pPath->m_Nodes[pPath->m_CurrentNode].m_Position,
+         &pMoby->m_Position);
   rot.x = 0;
   mag = VecMagnitude(&dir, 0);
   rot.y = Atan2(mag, dir.z, 0);
@@ -837,51 +837,67 @@ int func_8003A16C(Moby *pMoby, PathData *pPath, int threshold, int maxMag,
   } else {
     heading = Atan2(dir.x, dir.y, 0);
     delta = (heading - *pHeading) & 0xFF;
-    if (delta >= 0x81) {
-      delta = delta - 0x100;
+
+    if (delta > 128) {
+      delta = delta - 256;
     }
+
     absDelta = (delta >= 0) ? delta : -delta;
+
     if (arc < absDelta) {
       maxMag = 0;
     }
+
     if (delta < -clampRange) {
       delta = -clampRange;
     }
+
     if (clampRange < delta) {
       delta = clampRange;
     }
+
     heading = delta + *pHeading;
     rot.z = heading;
     *pHeading = heading & 0xFF;
   }
 
   mag = VecMagnitude(&dir, 1);
+
   if (mag < maxMag) {
     maxMag = mag;
   }
+
   RotVec8ToMatrix(&rot, &mtx, 0);
+
   dir.x = maxMag;
   dir.y = 0;
   dir.z = 0;
+
   VecRotateByMatrix(&mtx, &dir, &dir);
   VecAdd(&dir, &pMoby->m_Position, &dir);
 
   if (radius != 0) {
     func_8004E3C8(&dir, radius, 0, 0, pMoby, 0);
   }
+
   dir.z = dir.z + 0x400;
   mag = func_8004D5EC(&dir, 0x400);
+
   if (mag != 0) {
     dir.z = mag;
   } else {
     dir.z = dir.z - 0x400;
   }
+
   VecCopy(&pMoby->m_Position, &dir);
   func_800533D0(pMoby);
   func_800529E4(pMoby, 2);
 
   reached = 0;
-  VecSub(&dir, &pPath->m_Nodes[pPath->m_CurrentNode].m_Position, &pMoby->m_Position);
+
+  VecSub(&dir, &pPath->m_Nodes[pPath->m_CurrentNode].m_Position,
+         &pMoby->m_Position);
+
   if (VecMagnitude(&dir, 1) < threshold) {
     pMoby->m_Substate = 0;
     pPath->m_CurrentNode = pPath->m_CurrentNode + 1;
@@ -890,6 +906,7 @@ int func_8003A16C(Moby *pMoby, PathData *pPath, int threshold, int maxMag,
     }
     reached = pPath->m_CurrentNode + 0x100;
   }
+
   return reached;
 }
 
