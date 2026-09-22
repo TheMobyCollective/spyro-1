@@ -639,22 +639,24 @@ int func_80039688(Moby *pMoby, int angle, int distance, int mobyCollisionRadius,
 }
 
 /**
- * @brief Updates moby movement with timed horizontal motion and gravity.
+ * @brief Updates moby movement with horizontal motion, deceleration and
+ * gravity.
  *
  * Handles two types of movement:
- * 1. Horizontal movement via timer - calls func_80039688 while timer > 0
+ * 1. Horizontal movement via speed - calls func_80039688 while speed > 0
  * 2. Vertical movement with gravity - applies velocity and detects landing
  *
- * @param pMoby The moby to update
- * @param pTimer Pointer to movement timer (decremented each frame until 0)
- * @param pSpeed Speed/angle parameter passed to horizontal movement
+ * @param pMoby The moby to move
+ * @param pHorizontalSpeed Pointer to horizontal speed (decremented each frame
+ * until 0)
+ * @param pAngle Angle parameter passed to horizontal movement
  * @param pZVelocity Pointer to vertical velocity (NULL or 0xFFFF to disable)
- * @param pTimerDecrement Amount to subtract from timer each frame
+ * @param pDeceleration Amount to subtract from horizontal speed each frame
  * @param pGravity Gravity to subtract from z velocity each frame
  * @return 0 = normal, 2 = horizontal collision, 3 = landed on ground
  */
-int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
-                        int pTimerDecrement, int pGravity) {
+int MoveMobyWithGravity(Moby *pMoby, int *pHorizontalSpeed, int pAngle,
+                        int *pZVelocity, int pDeceleration, int pGravity) {
   int result;
   int flags;
   int mobyCollisionRadius;
@@ -670,7 +672,7 @@ int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
     flags = 0x25;
   }
 
-  // Check collisionRange for floor offset and flag modifications
+  // Check collisionRange for Moby collision radius and flag modifications
   collisionRange = pMoby->m_CollisionRange;
   if (collisionRange == 0xFE) {
     flags = 1;
@@ -682,14 +684,14 @@ int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
     }
   }
 
-  // Handle horizontal movement with timer
-  if (*pTimer != 0) {
-    // Horizontal movement with floor collision detection
-    result =
-        func_80039688(pMoby, pSpeed, *pTimer, mobyCollisionRadius, 500, flags);
-    *pTimer -= pTimerDecrement;
-    if (*pTimer < 0) {
-      *pTimer = 0;
+  // Handle horizontal movement
+  if (*pHorizontalSpeed != 0) {
+    // Horizontal movement with collision detection
+    result = func_80039688(pMoby, pAngle, *pHorizontalSpeed,
+                           mobyCollisionRadius, 500, flags);
+    *pHorizontalSpeed -= pDeceleration;
+    if (*pHorizontalSpeed < 0) {
+      *pHorizontalSpeed = 0;
     }
   }
 
