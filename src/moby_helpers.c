@@ -235,7 +235,78 @@ void func_800385BC(Moby *pMoby, int pUnknown) {
   func_800530C0(pMoby, pUnknown);
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038638);
+/// @brief Moves a Moby around a point toward a target angle, with angle limits
+/// and collision checks
+int func_80038638(Moby *pMoby, Vector3D *pCenter, int radius, int targetAngle,
+                  int angleThreshold, int moveSpeed, int turnSpeed,
+                  int turnThreshold, int limitAngle1, int limitAngle2,
+                  int mobyCollisionRadius, int collisionRadius, int flags) {
+  Vector3D targetPosition;
+  int moveAngle;
+  int angle;
+  int angleDiff;
+  int result;
+
+  angle = Atan2(pMoby->m_Position.x - pCenter->x,
+                pMoby->m_Position.y - pCenter->y, 0);
+  angleDiff = func_800381BC(targetAngle, angle);
+  result = ABS(angleDiff);
+
+  if (result < angleThreshold) {
+    return result;
+  }
+
+  if (limitAngle1 != 0xFF && func_80017908(angle, limitAngle1) < 5) {
+    result = func_800381BC(limitAngle1, angle);
+    if ((angleDiff < 0 && result < 0) || (angleDiff > 0 && result > 0)) {
+      return 0x100;
+    }
+  }
+
+  if (limitAngle2 != 0xFF && func_80017908(angle, limitAngle2) < 5) {
+    result = func_800381BC(limitAngle2, angle);
+    if ((angleDiff < 0 && result < 0) || (angleDiff > 0 && result > 0)) {
+      return 0x100;
+    }
+  }
+
+  if (angleDiff < 0) {
+    angle = func_80038074(angle, 3);
+  } else {
+    angle = func_80038074(angle, -3);
+  }
+
+  targetPosition.x = pCenter->x + FIXED_MUL(COSINE_8(angle), radius);
+  targetPosition.y = pCenter->y + FIXED_MUL(SINE_8(angle), radius);
+  moveAngle = Atan2(targetPosition.x - pMoby->m_Position.x,
+                    targetPosition.y - pMoby->m_Position.y, 0);
+
+  if (D_800756C4 == 3) {
+    moveSpeed += moveSpeed >> 1;
+  } else if (D_800756C4 == 4) {
+    moveSpeed <<= 1;
+  }
+
+  if (flags & 0x8) {
+    RotateMobyToAngle(pMoby,
+                      Atan2(pCenter->x - pMoby->m_Position.x,
+                            pCenter->y - pMoby->m_Position.y, 0),
+                      turnSpeed, 0, 0);
+    result = func_80039688(pMoby, moveAngle, moveSpeed, mobyCollisionRadius,
+                           collisionRadius, flags);
+    if (result) {
+      return -result;
+    }
+  } else if (RotateMobyToAngle(pMoby, moveAngle, turnSpeed, turnThreshold, 1)) {
+    result = func_80039398(pMoby, moveSpeed, mobyCollisionRadius,
+                           collisionRadius, flags);
+    if (result) {
+      return -result;
+    }
+  }
+
+  return ABS(angleDiff);
+}
 
 int func_8003891C(Vector3D *pVec1, Vector3D *pVec2, int p3, int p4, int *pOut) {
   struct {

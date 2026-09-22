@@ -160,7 +160,7 @@
 - [x] func_80038494
 - [x] func_8003851C
 - [x] func_800385BC
-- [ ] func_80038638
+- [x] func_80038638
 - [x] func_8003891C
 - [x] func_80038A40
 - [x] func_80038AFC
