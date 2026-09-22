@@ -468,8 +468,8 @@ int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6) {
   return 0;
 }
 
-int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
-                  int flags) {
+int func_80039398(Moby *pMoby, int distance, int mobyCollisionRadius,
+                  int collisionRadius, int flags) {
   Vector3D newPos;
   int floorZ;
   int delta;
@@ -489,19 +489,21 @@ int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
       pMoby->m_Position.y + FIXED_MUL(SINE_8(pMoby->m_Rotation.z), distance);
   newPos.z = pMoby->m_Position.z;
 
-  if (floorOffset != 0) {
+  if (mobyCollisionRadius != 0) {
     if (flags & 0x2) {
-      func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 3);
-    } else if (func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 0) != 0) {
+      func_8004E3C8(&newPos, mobyCollisionRadius, 0, 0, pMoby, 3);
+    } else if (func_8004E3C8(&newPos, mobyCollisionRadius, 0, 0, pMoby, 0) !=
+               0) {
       return 1;
     }
   }
 
   if (flags & 0x1) {
     zBase = newPos.z + 300;
-    newPos.z = zBase + radius;
+    newPos.z = zBase + collisionRadius;
   }
-  if (radius != 0 && func_8004BE4C(&newPos, radius, radius) != 0) {
+  if (collisionRadius != 0 &&
+      func_8004BE4C(&newPos, collisionRadius, collisionRadius) != 0) {
     if ((flags & 0x20) == 0) {
       return 2;
     }
@@ -510,7 +512,7 @@ int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
 
   if (flags & 0x1) {
     zBase = newPos.z - 300;
-    newPos.z = zBase - radius;
+    newPos.z = zBase - collisionRadius;
   }
 
   if (flags & 0x4 || flags & 0x10 || flags & 0x40) {
@@ -563,8 +565,8 @@ int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
 /// @brief Moves a moby horizontally by (distance) along (angle), then resolves
 /// floor/wall collision and snaps height, gated by flag bits. Returns 0
 /// normally, 1 on a blocking hit, 2 when the floor is out of reach.
-int func_80039688(Moby *pMoby, int angle, int distance, int floorOffset,
-                  int radius, int flags) {
+int func_80039688(Moby *pMoby, int angle, int distance, int mobyCollisionRadius,
+                  int collisionRadius, int flags) {
   Vector3D newPos;
   int floorZ;
 
@@ -578,20 +580,21 @@ int func_80039688(Moby *pMoby, int angle, int distance, int floorOffset,
   newPos.y = pMoby->m_Position.y + FIXED_MUL(SINE_8(angle), distance);
   newPos.z = pMoby->m_Position.z;
 
-  if (floorOffset != 0) {
+  if (mobyCollisionRadius != 0) {
     if (flags & 0x2) {
-      func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 3);
-    } else if (func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 0) != 0) {
+      func_8004E3C8(&newPos, mobyCollisionRadius, 0, 0, pMoby, 3);
+    } else if (func_8004E3C8(&newPos, mobyCollisionRadius, 0, 0, pMoby, 0)) {
       return 1;
     }
   }
 
   if (flags & 0x1) {
     newPos.z += 300;
-    newPos.z += radius;
+    newPos.z += collisionRadius;
   }
 
-  if (radius != 0 && func_8004BE4C(&newPos, radius, radius) != 0) {
+  if (collisionRadius != 0 &&
+      func_8004BE4C(&newPos, collisionRadius, collisionRadius) != 0) {
     if ((flags & 0x20) == 0) {
       return 2;
     }
@@ -654,13 +657,13 @@ int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
                         int pTimerDecrement, int pGravity) {
   int result;
   int flags;
-  int floorOffset;
+  int mobyCollisionRadius;
   int floorZ;
   u_char collisionRange;
 
   result = 0;
   flags = 0x21;
-  floorOffset = 300;
+  mobyCollisionRadius = 300;
 
   // Check if pZVelocity is valid
   if (pZVelocity == nullptr || *pZVelocity == 0xFFFF) {
@@ -673,16 +676,17 @@ int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
     flags = 1;
   } else if (collisionRange != 0) {
     flags &= ~0x20;
-    floorOffset = collisionRange << 2;
+    mobyCollisionRadius = collisionRange << 2;
     if (collisionRange == 0xFF) {
-      floorOffset = 0;
+      mobyCollisionRadius = 0;
     }
   }
 
   // Handle horizontal movement with timer
   if (*pTimer != 0) {
     // Horizontal movement with floor collision detection
-    result = func_80039688(pMoby, pSpeed, *pTimer, floorOffset, 500, flags);
+    result =
+        func_80039688(pMoby, pSpeed, *pTimer, mobyCollisionRadius, 500, flags);
     *pTimer -= pTimerDecrement;
     if (*pTimer < 0) {
       *pTimer = 0;
@@ -729,7 +733,7 @@ int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039AA8);
 
 int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
-                  int floorOffset, int turnSpeed, int withinAngle,
+                  int mobyCollisionRadius, int turnSpeed, int withinAngle,
                   int waitForFlags, int moveFlags) {
   int closeInZ;
   int targetAngle;
@@ -788,7 +792,7 @@ int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
   if (withinAngle >= func_80017908(targetAngle, pMoby->m_Rotation.z)) {
     pMoby->m_Substate = 1;
     RotateMobyToAngle(pMoby, targetAngle, turnSpeed, withinAngle, 1);
-    func_80039398(pMoby, speed, floorOffset, 0, moveFlags);
+    func_80039398(pMoby, speed, mobyCollisionRadius, 0, moveFlags);
   } else if (pMoby->m_Substate == 0 && waitForFlags != 0xFF) {
     // Freshly idle: skip the turn while a linked moby in the same pod that is
     // on-screen and active is still busy.
@@ -817,7 +821,8 @@ int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
 }
 
 int func_8003A16C(Moby *pMoby, PathData *pPath, int threshold, int maxMag,
-                  int radius, int clampRange, int arc, int *pHeading) {
+                  int mobyCollisionRadius, int clampRange, int arc,
+                  int *pHeading) {
   Vector3D8 rot;
   Vector3D dir;
   MATRIX mtx;
@@ -876,8 +881,8 @@ int func_8003A16C(Moby *pMoby, PathData *pPath, int threshold, int maxMag,
   VecRotateByMatrix(&mtx, &dir, &dir);
   VecAdd(&dir, &pMoby->m_Position, &dir);
 
-  if (radius != 0) {
-    func_8004E3C8(&dir, radius, 0, 0, pMoby, 0);
+  if (mobyCollisionRadius != 0) {
+    func_8004E3C8(&dir, mobyCollisionRadius, 0, 0, pMoby, 0);
   }
 
   dir.z = dir.z + 0x400;
