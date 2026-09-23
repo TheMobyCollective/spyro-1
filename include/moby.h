@@ -406,6 +406,30 @@ typedef struct {
   } m_Nodes[1];
 } PathData;
 
+// Present in some fodder classes, as well as the class 214/216 Gnorcs
+typedef struct {
+  Vector3D m_Origin;
+  u_char m_MoveSpeed;
+  u_char m_TurnSpeed;
+  u_char m_CollisionRadius;
+  u_char m_TurnTimerMin;
+  u_char m_TurnTimerMax;
+  u_char m_RandomTurnMin;
+  u_char m_RandomTurnMax;
+  u_char m_WanderRadius;
+  u_char m_TargetAngleOffsetLimit;
+  u_char m_TargetAngleOffsetStep;
+  u_char m_0x16;
+  u_char m_TurnTimer;
+  u_char m_TargetAngle;
+  u_char m_TargetAngleOffsetDirection;
+  u_char m_FleeRadius;
+  u_char m_IsFleeing;
+  u_char m_FleeDelay;
+  u_char m_IgnoreMobyCollisionTimer;
+  short m_TargetAngleOffset;
+} MobyWanderState;
+
 // WIP Flight Moby Class 407 408 Flight Train/Wagon
 typedef struct {
   PathData *m_Path;

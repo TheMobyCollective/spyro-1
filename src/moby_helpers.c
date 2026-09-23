@@ -869,8 +869,135 @@ int MoveMobyWithGravity(Moby *pMoby, int *pHorizontalSpeed, int pAngle,
   return result;
 }
 
-/// @brief Fodder walking movement
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039AA8);
+/// @brief Moby walking movement, used by most fodder and classes 214/216
+void func_80039AA8(Moby *pMoby, MobyWanderState *pWander) {
+  int moveSpeed;
+  int turnSpeed;
+  int turnAngle;
+  int spyroDistance;
+  int originDistance;
+  int movementResult;
+  int randomTurn;
+  int facingTargetAngle;
+
+  turnSpeed = pWander->m_TurnSpeed;
+  moveSpeed = pWander->m_MoveSpeed;
+  facingTargetAngle = 1;
+
+  if (D_800756C4 == 3) {
+    moveSpeed += moveSpeed >> 1;
+    turnSpeed += turnSpeed >> 1;
+  } else if (D_800756C4 == 4) {
+    moveSpeed <<= 1;
+    turnSpeed <<= 1;
+  }
+
+  if (!pWander->m_TurnTimer--) {
+    randomTurn = RandRange(pWander->m_RandomTurnMin, pWander->m_RandomTurnMax);
+
+    if (rand() & 1) {
+      randomTurn = -randomTurn;
+    }
+
+    pWander->m_TargetAngle =
+        (pWander->m_TargetAngle + randomTurn + 0x100) % 0x100;
+    pWander->m_TurnTimer =
+        RandRange(pWander->m_TurnTimerMin, pWander->m_TurnTimerMax);
+    pWander->m_TargetAngleOffset = 0;
+    pWander->m_IsFleeing = 0;
+  }
+
+  turnAngle = pWander->m_TargetAngle;
+
+  if (pWander->m_TargetAngleOffsetLimit != 0) {
+    turnAngle += pWander->m_TargetAngleOffset;
+    pWander->m_TargetAngleOffset += pWander->m_TargetAngleOffsetStep *
+                                    pWander->m_TargetAngleOffsetDirection;
+
+    if (ABS2(pWander->m_TargetAngleOffset) >=
+        pWander->m_TargetAngleOffsetLimit) {
+      pWander->m_TargetAngleOffsetDirection =
+          -pWander->m_TargetAngleOffsetDirection;
+    }
+  }
+
+  if (RotateMobyToAngle(pMoby, turnAngle, turnSpeed, 5, 1) == 0) {
+    facingTargetAngle = 0;
+  }
+
+  if (pWander->m_IgnoreMobyCollisionTimer != 0) {
+    movementResult =
+        func_80039398(pMoby, moveSpeed, 0, pWander->m_CollisionRadius, 0x55);
+  } else {
+    movementResult = func_80039398(pMoby, moveSpeed, pWander->m_CollisionRadius,
+                                   pWander->m_CollisionRadius, 0x55);
+  }
+
+  if (movementResult != 0) {
+    if (facingTargetAngle != 0) {
+      pWander->m_TargetAngle =
+          func_80038074(pWander->m_TargetAngle, RandRange(0x40, 0xC0));
+      pWander->m_TurnTimer =
+          RandRange(pWander->m_TurnTimerMin, pWander->m_TurnTimerMax);
+      pWander->m_IsFleeing = 0;
+
+      if (movementResult & 2) {
+        pWander->m_FleeDelay = 20;
+      } else {
+        pWander->m_IgnoreMobyCollisionTimer = 6;
+      }
+    }
+    return;
+  }
+
+  spyroDistance = OctDistance(&pMoby->m_Position, &g_Spyro.m_Position);
+
+  if (spyroDistance < 1100 && pWander->m_IsFleeing == 0) {
+    pWander->m_TargetAngle =
+        Atan2(pMoby->m_Position.x - g_Spyro.m_Position.x,
+              pMoby->m_Position.y - g_Spyro.m_Position.y, 0);
+    pWander->m_TargetAngle =
+        func_80038074(pWander->m_TargetAngle, RandRange(-60, 60));
+    pWander->m_TurnTimer =
+        RandRange(pWander->m_TurnTimerMin, pWander->m_TurnTimerMax);
+    pWander->m_IsFleeing = 1;
+    return;
+  }
+
+  if (pWander->m_FleeRadius != 0 && pWander->m_IsFleeing == 0 &&
+      pWander->m_FleeDelay == 0 &&
+      spyroDistance < (pWander->m_FleeRadius << 10)) {
+    pWander->m_TargetAngle =
+        Atan2(pMoby->m_Position.x - g_Spyro.m_Position.x,
+              pMoby->m_Position.y - g_Spyro.m_Position.y, 0);
+    pWander->m_TargetAngle =
+        func_80038074(pWander->m_TargetAngle, RandRange(-48, 48));
+    pWander->m_TurnTimer =
+        RandRange(pWander->m_TurnTimerMin, pWander->m_TurnTimerMax);
+    pWander->m_IsFleeing = 1;
+    return;
+  }
+
+  originDistance = OctDistance(&pMoby->m_Position, &pWander->m_Origin);
+
+  if ((pWander->m_WanderRadius << 10) < originDistance) {
+    pWander->m_TargetAngle =
+        Atan2(pWander->m_Origin.x - pMoby->m_Position.x,
+              pWander->m_Origin.y - pMoby->m_Position.y, 0);
+    pWander->m_IsFleeing = 0;
+    pWander->m_FleeDelay = 20;
+    pWander->m_TurnTimer = originDistance / pWander->m_MoveSpeed;
+    return;
+  }
+
+  if (pWander->m_FleeDelay != 0) {
+    pWander->m_FleeDelay--;
+  }
+
+  if (pWander->m_IgnoreMobyCollisionTimer != 0) {
+    pWander->m_IgnoreMobyCollisionTimer--;
+  }
+}
 
 int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
                   int mobyCollisionRadius, int turnSpeed, int withinAngle,
