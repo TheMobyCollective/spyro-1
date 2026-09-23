@@ -169,7 +169,7 @@
 - [x] func_80038D54
 - [x] RotateMobyToSpyro
 - [x] RotateMobyToAngle
-- [ ] func_80038FC8
+- [x] func_80038FC8
 - [x] func_80039228
 - [x] func_80039398
 - [x] func_80039688

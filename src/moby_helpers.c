@@ -9,6 +9,7 @@
 #include "hud.h"
 #include "math.h"
 #include "moby_helpers.h"
+#include "moby.h"
 #include "overlay_pointers.h"
 #include "renderers.h"
 #include "sony_image.h"
@@ -506,7 +507,73 @@ int RotateMobyToAngle(Moby *pMoby, int targetAngle, int rotSpeed,
   return 1; // Moby is facing close enough to target
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038FC8);
+int func_80038FC8(Moby *pMoby, int *pTurnDirection, int *pFacingAngle,
+                  int pTurnSpeed, int pTurnSwitchThreshold,
+                  int pBaseTurnAnimation) {
+  int targetAngle;
+  int oppositeTargetAngle;
+  int angleDelta;
+  int oppositeAngleDelta;
+  int turnDirection;
+  int newAngle;
+
+  targetAngle = Atan2(g_Spyro.m_Position.x - pMoby->m_Position.x,
+                      g_Spyro.m_Position.y - pMoby->m_Position.y, 1);
+  angleDelta = (targetAngle - *pFacingAngle) & 0xFFF;
+  oppositeTargetAngle = targetAngle - 0x800;
+  oppositeAngleDelta = (oppositeTargetAngle - *pFacingAngle) & 0xFFF;
+
+  if (angleDelta > 0x800) {
+    angleDelta -= 0x1000;
+  }
+  if (oppositeAngleDelta > 0x800) {
+    oppositeAngleDelta -= 0x1000;
+  }
+
+  if (D_800756C4 == 3) {
+    pTurnSpeed += pTurnSpeed >> 1;
+  } else if (D_800756C4 == 4) {
+    pTurnSpeed <<= 1;
+  }
+
+  if (ABS(angleDelta) < pTurnSpeed) {
+    pTurnSpeed = ABS(angleDelta);
+  }
+
+  turnDirection = *pTurnDirection;
+  if (turnDirection == 0) {
+    if (angleDelta < 0) {
+      turnDirection = -1;
+    } else {
+      turnDirection = 1;
+    }
+    *pTurnDirection = turnDirection;
+  } else if (angleDelta < 0) {
+    if (turnDirection > 0 && pTurnSwitchThreshold < ABS(oppositeAngleDelta)) {
+      *pTurnDirection = -1;
+    }
+  } else if (turnDirection < 0 && angleDelta > 0 &&
+             pTurnSwitchThreshold < ABS(oppositeAngleDelta)) {
+    *pTurnDirection = 1;
+  }
+
+  if (ABS(angleDelta) > 0x100) {
+    if (*pTurnDirection == 1) {
+      MOBY_ANIM_CHANGE_CLEAR_FINISHED(pMoby, pBaseTurnAnimation);
+    } else {
+      MOBY_ANIM_CHANGE_CLEAR_FINISHED(pMoby, pBaseTurnAnimation + 1);
+    }
+  }
+
+  newAngle = *pFacingAngle + pTurnSpeed * *pTurnDirection;
+  *pFacingAngle = newAngle;
+  if (newAngle < 0) {
+    *pFacingAngle = newAngle + 0x1000;
+  }
+  pMoby->m_Rotation.z = *pFacingAngle >> 4;
+
+  return angleDelta;
+}
 
 int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6) {
   Vector3D vec2;
