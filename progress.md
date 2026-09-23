@@ -185,7 +185,7 @@
 - [x] ApplyFlameHeatExternal
 - [x] ApplyFlameHeat
 - [x] SpawnMobySparkle
-- [ ] func_8003ABC0
+- [x] func_8003ABC0
 - [x] func_8003B0DC
 - [x] func_8003B160
 - [x] func_8003B1E8

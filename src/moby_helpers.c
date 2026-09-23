@@ -8,8 +8,8 @@
 #include "common.h"
 #include "hud.h"
 #include "math.h"
-#include "moby_helpers.h"
 #include "moby.h"
+#include "moby_helpers.h"
 #include "overlay_pointers.h"
 #include "renderers.h"
 #include "sony_image.h"
@@ -1393,7 +1393,149 @@ int SpawnMobySparkle(Moby *pMoby, Vector3D *pOffset) {
   return slot;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003ABC0);
+/// @brief Spawns a Moby drop and initializes its position and movement
+Moby *func_8003ABC0(Moby *pMoby, int pSpawnMode, Vector3D *pStartPosition,
+                    Vector3D *pTargetPosition) {
+  Vector3D startPosition;
+  Vector3D targetPosition;
+  Moby *spawnedMoby;
+  MobyCollectableProps *dropProps;
+  int dropClass;
+  int initialZVelocity;
+  int flightFrames;
+  int floorZ;
+  int surfaceAngle;
+  int currentZ;
+  int zVelocity;
+
+  dropClass = pMoby->m_DropMoby & 0x7F;
+
+  if (dropClass >= 1 && dropClass <= 0x7E) {
+    if (pMoby->m_DroppedFlag & 0x80) {
+      return nullptr;
+    } else {
+      pMoby->m_DroppedFlag |= 0x80;
+    }
+  } else {
+    int roll;
+
+    dropClass = MOBYCLASS_LIFE_ORB;
+    // rand() % 100
+    roll = ((rand() & 0xFFF) * 25) << 2 >> 12;
+
+    // 2% Life statue, 10% Butterfly, 88% Life Orb
+    if (roll <= 1) {
+      dropClass = MOBYCLASS_LIFE_STATUE;
+    } else if (g_Spyro.m_health < 3 && roll <= 11) {
+      dropClass = MOBYCLASS_BUTTERFLY;
+    }
+  }
+
+  if (dropClass == MOBYCLASS_BUTTERFLY) {
+    if (g_Sparx != nullptr || g_Spyro.m_health < 0) {
+      spawnedMoby = (*g_SpawnMoby)(MOBYCLASS_BUTTERFLY, pMoby);
+    } else {
+      spawnedMoby = (*g_SpawnMoby)(MOBYCLASS_SPARX, pMoby);
+      func_8003851C(spawnedMoby, 0, nullptr);
+      g_Spyro.m_health = 1;
+      g_Sparx = spawnedMoby;
+    }
+
+    return spawnedMoby;
+  } else if (dropClass == MOBYCLASS_LIFE_STATUE) {
+    spawnedMoby = (*g_SpawnMoby)(MOBYCLASS_LIFE_STATUE, pMoby);
+    dropProps = spawnedMoby->m_Props;
+    dropProps->m_SpawnState = 1;
+    return spawnedMoby;
+  }
+
+  spawnedMoby = (*g_SpawnMoby)(dropClass, pMoby);
+  dropProps = spawnedMoby->m_Props;
+
+  if (pSpawnMode == 0) {
+    VecCopy(&targetPosition, &pMoby->m_Position);
+    initialZVelocity = 140;
+  } else if (pSpawnMode == 6) {
+    VecCopy(&targetPosition, &pMoby->m_Position);
+    initialZVelocity = 300;
+    targetPosition.x += (rand() & 0x1FF) - 0x100;
+    targetPosition.y += (rand() & 0x1FF) - 0x100;
+  } else if (pSpawnMode == 1) {
+    VecCopy(&targetPosition, &pMoby->m_Position);
+    initialZVelocity = 140;
+    targetPosition.x += (rand() & 0x3FF) - 0x200;
+    targetPosition.y += (rand() & 0x3FF) - 0x200;
+  } else if (pSpawnMode == 2) {
+    VecCopy(&targetPosition, pTargetPosition);
+    initialZVelocity = 140;
+  } else if (pSpawnMode == 3 || pSpawnMode == 4) {
+    if (pSpawnMode == 4 || g_Spyro.m_State == 11 || g_Spyro.m_State == 24 ||
+        g_Spyro.m_State == 20 || g_Spyro.m_State == 44) {
+      if (pSpawnMode == 4 ||
+          (OctDistance(&spawnedMoby->m_Position, &g_Spyro.m_Position) < 0x800 &&
+           ABS2((spawnedMoby->m_Position.z - spawnedMoby->m_FloorDistance) -
+                g_Spyro.m_Position.z) < 0x400)) {
+        VecCopy(&spawnedMoby->m_Position, &pMoby->m_Position);
+        spawnedMoby->m_Position.z += 0x100;
+        VecCopy(&dropProps->m_InitPos, &spawnedMoby->m_Position);
+        dropProps->m_RotY = rand() & 0xE;
+        dropProps->m_RotZ = rand() & 0xE;
+        dropProps->m_RotationTicks = rand() & 0xE;
+        spawnedMoby->m_Substate = 3;
+        spawnedMoby->m_UpdateDistance = 0xFF;
+        return spawnedMoby;
+      }
+    }
+
+    VecCopy(&targetPosition, &pMoby->m_Position);
+    initialZVelocity = 140;
+    targetPosition.x += (rand() & 0x3FF) - 0x200;
+    targetPosition.y += (rand() & 0x3FF) - 0x200;
+  } else if (pSpawnMode == 5) {
+    VecCopy(&spawnedMoby->m_Position, &pMoby->m_Position);
+    spawnedMoby->m_Position.z += 0x100;
+    VecNull(&dropProps->m_InitPos);
+    return spawnedMoby;
+  }
+
+  if (pStartPosition != nullptr) {
+    VecCopy(&startPosition, pStartPosition);
+  } else {
+    VecCopy(&startPosition, &pMoby->m_Position);
+    startPosition.z += 0x100;
+  }
+
+  targetPosition.z += 0x400;
+  floorZ = func_8004D5EC(&targetPosition, 0x800);
+  targetPosition.z -= 0x400;
+
+  surfaceAngle = (signed char)Atan2Fast(g_CollisionNormal.z,
+                                        VecMagnitude(&g_CollisionNormal, 0));
+
+  if (floorZ == 0 || surfaceAngle >= 0x18 ||
+      func_8004E3C8(&targetPosition, 200, nullptr, 0, nullptr, 0) != 0) {
+    VecCopy(&targetPosition, &pMoby->m_Position);
+  }
+
+  flightFrames = 0;
+  currentZ = startPosition.z;
+  zVelocity = initialZVelocity;
+
+  while (zVelocity > 0 || targetPosition.z < currentZ) {
+    currentZ += zVelocity;
+    zVelocity -= 10;
+    flightFrames++;
+  }
+
+  VecCopy(&spawnedMoby->m_Position, &startPosition);
+  VecSub(&targetPosition, &targetPosition, &startPosition);
+  func_800177F8(&targetPosition, &targetPosition, flightFrames);
+  targetPosition.z = initialZVelocity;
+  VecCopy(&dropProps->m_InitPos, &targetPosition);
+  dropProps->m_SpawnState = 1;
+
+  return spawnedMoby;
+}
 
 // Moby pods
 
