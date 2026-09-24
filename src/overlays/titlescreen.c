@@ -1080,7 +1080,7 @@ void TitlescreenDrawSprite(int pX, int pY, int pSprite, int pColorId) {
   }
 
   p = D_800757B0;
-  p->tag = 0x09000000;
+  p->tag = PRIM_TAG(POLY_FT4);
   ((u_long *)p)[1] = g_TitlescreenSelColors[pColorId];
 
   setXY4(p, pX, pY, g_TitlescreenSprites[pSprite].m_w + pX, pY, pX,

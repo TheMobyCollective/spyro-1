@@ -272,8 +272,8 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
     g_HudMobys = D_800756FC = g_Buffers.m_HudOTStart - 0x1C200;
     for (i = 0; i < 4; i++) {
       ft4 = D_800757B0;
-      ft4->tag = 0x9000000;
-      ft4->code = 0x2C;
+      ft4->tag = PRIM_TAG(POLY_FT4);
+      ft4->code = PRIM_POLY_FT4;
       setRGB0(ft4, 0x4C, 0x80, 0x40);
       setXY4(ft4, i * 128, 8, ft4->x0 + 128, ft4->y0, ft4->x0,
              ft4->y0 + 224 - 1, ft4->x0 + 128, ft4->y0 + 224 - 1);
@@ -285,8 +285,8 @@ void NAME_OVERLAY_FUNCTION(Flight5)(void) {
       D_800757B0 = ft4 + 1;
     }
     l2 = D_800757B0;
-    l2->tag = 0x3000000;
-    l2->code = 0x40;
+    l2->tag = PRIM_TAG(LINE_F2);
+    l2->code = PRIM_LINE_F2;
     setXY2(l2, 0, 231, 512, 231);
     setRGB0(l2, 0, 0, 0);
     func_800168DC(l2);

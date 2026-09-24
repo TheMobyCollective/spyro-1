@@ -75,6 +75,24 @@ typedef struct {
 
 extern Glow D_80078800[16];
 
+// Primitive codes
+#define PRIM_LINE_F2 (0x40)
+#define PRIM_LINE_G2 (0x50)
+
+#define PRIM_POLY_F3 (0x20)
+#define PRIM_POLY_F4 (0x28)
+#define PRIM_POLY_G3 (0x30)
+#define PRIM_POLY_G4 (0x38)
+
+#define PRIM_POLY_FT3 (0x24)
+#define PRIM_POLY_GT3 (0x34)
+#define PRIM_POLY_FT4 (0x2C)
+#define PRIM_POLY_GT4 (0x3C)
+// Set semi-transparency bit in primitive code
+#define PRIM_STP(primCode) (primCode | 0x2)
+// Calculate 'len' of P_TAG with 'addr' null, as one int
+#define PRIM_TAG(primType) ((sizeof(primType) / 4 - 1) << 24);
+
 // static_assert(sizeof(g_DB[0]) == 0x84);
 
 #endif
