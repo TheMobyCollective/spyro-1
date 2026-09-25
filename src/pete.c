@@ -1622,8 +1622,63 @@ void func_800495D8(int pDeltaTime) {
   }
 }
 
-/// @brief Update the head animation
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80049660);
+extern u_char D_80075264[2][2];
+extern u_char D_80075268[4];
+
+/// @brief Update the head animation, handling mismatched body and head
+/// animations
+void func_80049660(void) {
+  switch (g_Spyro.unk_0x60) {
+  case 0:
+    if (g_Spyro.unk_0x198 == g_Spyro.unk_0x68) {
+      if (g_Spyro.unk_0x198 == 0) {
+        g_Spyro.m_headAnimation = g_Spyro.m_bodyAnimation;
+        g_Spyro.m_headAnimationFrame = g_Spyro.m_bodyAnimationFrame;
+        g_Spyro.m_nextHeadAnimation = g_Spyro.m_nextBodyAnimation;
+        g_Spyro.m_nextHeadAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+        g_Spyro.m_headFrameProgress = g_Spyro.m_bodyFrameProgress;
+        return;
+      }
+      func_800495D8(g_Spyro.m_headAnimationSpeed);
+      return;
+    }
+
+    switch (D_80075264[g_Spyro.unk_0x68][g_Spyro.unk_0x198]) {
+    case 2:
+      g_Spyro.unk_0x60 = D_80075264[g_Spyro.unk_0x68][g_Spyro.unk_0x198];
+      g_Spyro.m_headAnimation = g_Spyro.m_nextHeadAnimation;
+      g_Spyro.m_headAnimationFrame = g_Spyro.m_nextHeadAnimationFrame;
+      g_Spyro.m_nextHeadAnimation = D_80075268[g_Spyro.unk_0x198];
+      g_Spyro.m_nextHeadAnimationFrame = 0;
+      g_Spyro.m_headFrameProgress = 4;
+      g_Spyro.unk_0x68 = g_Spyro.unk_0x198;
+      return;
+    case 1:
+      g_Spyro.unk_0x60 = D_80075264[g_Spyro.unk_0x68][g_Spyro.unk_0x198];
+      g_Spyro.m_headAnimation = g_Spyro.m_nextHeadAnimation;
+      g_Spyro.m_headAnimationFrame = g_Spyro.m_nextHeadAnimationFrame;
+      g_Spyro.m_nextHeadAnimation = g_Spyro.m_nextBodyAnimation;
+      g_Spyro.m_nextHeadAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+      g_Spyro.m_headFrameProgress = 2;
+      g_Spyro.unk_0x68 = g_Spyro.unk_0x198;
+      return;
+    }
+    break;
+  case 2:
+    g_Spyro.m_headFrameProgress += 4;
+    if (g_Spyro.m_headFrameProgress >= 16) {
+      func_800495D8(0);
+      g_Spyro.unk_0x60 = 0;
+    }
+    break;
+  case 1:
+    g_Spyro.m_headFrameProgress += 2;
+    if (g_Spyro.m_headFrameProgress >= 16) {
+      func_800495D8(0);
+      g_Spyro.unk_0x60 = 0;
+    }
+  }
+}
 
 /// @brief Eases Spyro's head rotation toward m_HeadLookTarget using a per-axis
 /// spring-damper. The smoothed result is written to the real head rotation,
@@ -1665,7 +1720,6 @@ void func_80049880(void) {
 
 // Particle direction vector, start offset and end offset for flame particles
 extern Vector3D D_8006E238[4];
-extern u_char D_80075268[4];
 
 /// @brief Update flame
 void func_800499C0(void) {
