@@ -145,8 +145,8 @@ void func_8001844C(int pX0, int pY0, int pX1, int pY1) {
   LINE_G2 *line;
 
   line = D_800757B0;
-  line->tag = 0x04000000;
-  setcode(line, 0x50);
+  line->tag = PRIM_TAG(LINE_G2);
+  setcode(line, PRIM_LINE_G2);
   setXY2(line, pX0, pY0, pX1, pY1);
   intensity = 128 - (u_char)func_80017908(Atan2Fast(pX0 - 256, pY0 - 120),
                                           D_800770C8.m_specularTime);
@@ -184,9 +184,8 @@ void func_8001860C(int pX0, int pX1, int pY0, int pY1) {
   SetDrawMode(drm, 1, 0, getTPage(0, 2, 0, 0), 0);
   func_800168DC(drm);
   f4 = (POLY_F4 *)(drm + 1);
-  f4->tag = (sizeof(POLY_F4) / 4 - 1) << 24;
-  // Set transparency bit of POLY_F4 code
-  setcode(f4, 0x28 | 0x2);
+  f4->tag = PRIM_TAG(POLY_F4);
+  setcode(f4, PRIM_STP(PRIM_POLY_F4));
   f4->x0 = pX0;
   f4->x1 = pX1;
   f4->x2 = pX0;
@@ -395,9 +394,8 @@ void func_800189F0(void) {
             SetDrawMode(drm, 1, 0, getTPage(0, 1, 0, 0), 0);
             func_800168A0(drm, ot_z);
             g4 = (POLY_G4 *)(drm + 1);
-            g4->tag = 0x08000000;
-            // set G4 code with semi-transparency bit
-            setcode(g4, 0x38 | 0x2);
+            g4->tag = PRIM_TAG(POLY_G4);
+            setcode(g4, PRIM_STP(PRIM_POLY_G4));
             g4->x0 = x0;
             g4->x1 = x1;
             g4->x2 = x2;
@@ -445,8 +443,8 @@ void func_80018F30(void) {
     }
   }
   bar = D_800757B0;
-  bar->tag = 0x05000000;
-  bar->code = 0x28;
+  bar->tag = PRIM_TAG(POLY_F4);
+  bar->code = PRIM_POLY_F4;
   bar->x0 = 0;
   bar->x1 = 512;
   bar->x2 = 0;
@@ -458,8 +456,8 @@ void func_80018F30(void) {
   setRGB0(bar, 0, 0, 0);
   func_800168DC(bar);
   D_800757B0 = ++bar;
-  bar->tag = 0x05000000;
-  bar->code = 0x28;
+  bar->tag = PRIM_TAG(POLY_F4);
+  bar->code = PRIM_POLY_F4;
   bar->y2 = 240;
   bar->y3 = 240;
   bar->x0 = 0;
@@ -484,10 +482,9 @@ void func_800190D4(int pMode, int pR, int pG, int pB) {
   SetDrawMode(drm, 1, 0, pMode << 5, 0);
   func_800168DC(drm);
 
-  f4->tag = 0x05000000;
+  f4->tag = PRIM_TAG(POLY_F4);
 
-  // set semi-transparency bit
-  setcode(f4, 0x28 | 0x2);
+  setcode(f4, PRIM_STP(PRIM_POLY_F4));
   setXYWH(f4, 0, 8, 512, 240 - 16);
   setRGB0(f4, pR, pG, pB);
 
@@ -501,8 +498,8 @@ void func_8001919C(RECT *pDest, Tiledef *pUV, ColorInt *pColor) {
 
   POLY_FT4 *ft4;
   ft4 = D_800757B0;
-  ft4->tag = 0x09000000;
-  setcode(ft4, 0x2C);
+  ft4->tag = PRIM_TAG(POLY_FT4);
+  setcode(ft4, PRIM_POLY_FT4);
 
   if (pColor == 0)
     setRGB0(ft4, 0x80, 0x80, 0x80);
@@ -952,8 +949,8 @@ void func_8001A40C(void) {
 
     for (i = 0; i < 4; i++) {
       ft4 = D_800757B0;
-      ft4->tag = 0x9000000;
-      ft4->code = 0x2C;
+      ft4->tag = PRIM_TAG(POLY_FT4);
+      ft4->code = PRIM_POLY_FT4;
       setRGB0(ft4, 0x4C, 0x80, 0x40);
       setXY4(ft4, i * 128, 8, ft4->x0 + 128, ft4->y0, ft4->x0,
              ft4->y0 + 224 - 1, ft4->x0 + 128, ft4->y0 + 224 - 1);
@@ -966,8 +963,8 @@ void func_8001A40C(void) {
     }
 
     l2 = D_800757B0;
-    l2->tag = 0x3000000;
-    l2->code = 0x40;
+    l2->tag = PRIM_TAG(LINE_F2);
+    l2->code = PRIM_LINE_F2;
     setXY2(l2, 0, 231, 512, 231);
     setRGB0(l2, 0, 0, 0);
     func_800168DC(l2);
@@ -981,8 +978,8 @@ void func_8001A40C(void) {
       SetDrawMode(drm, 1, 0, getTPage(0, 2, 0, 0), nullptr);
       func_800168DC(drm);
       f4 = (POLY_F4 *)(drm + 1);
-      f4->tag = 0x05000000;
-      f4->code = 0x2A; // polyF4 + semiTrans
+      f4->tag = PRIM_TAG(POLY_F4);
+      f4->code = PRIM_STP(PRIM_POLY_F4);
       setRGB0(f4, 64, 64, 64);
       f4->y0 = 67;
       f4->y1 = 67;
@@ -1344,8 +1341,8 @@ void func_8001A40C(void) {
       func_800168DC(drm);
 
       f4 = (POLY_F4 *)(drm + 1);
-      f4->tag = 0x05000000;
-      setcode(f4, 0x28 | 0x2); // polyF4 + semiTrans
+      f4->tag = PRIM_TAG(POLY_F4);
+      f4->code = PRIM_STP(PRIM_POLY_F4);
       setRGB0(f4, 96, 96, 96);
       setXY4(f4, 64, 70, 448, 70, 64, 71, 448, 71);
       func_800168DC(f4);
@@ -1411,8 +1408,8 @@ void func_8001A40C(void) {
           SetDrawMode(drm, 1, 0, getTPage(0, 2, 0, 0), nullptr);
           func_800168DC(drm);
           f4 = (POLY_F4 *)(drm + 1);
-          f4->tag = 0x05000000;
-          f4->code = 0x2A; // polyF4 + semiTrans
+          f4->tag = PRIM_TAG(POLY_F4);
+          f4->code = PRIM_STP(PRIM_POLY_F4);
           setRGB0(f4, 40, 40, 40);
           setXY4(f4, D_800757CC, level_y - 10, D_800757CC + 511, level_y - 10,
                  D_800757CC, level_y + 9, D_800757CC + 511, level_y + 9);
@@ -1581,8 +1578,8 @@ void func_8001C694(void) {
       f4 = D_800757B0;
 
       // setPolyFT4(f4); (Doesn't match, because they zero out the addr field)
-      f4->tag = 0x9000000;
-      f4->code = 0x2C;
+      f4->tag = PRIM_TAG(POLY_FT4);
+      f4->code = PRIM_POLY_FT4;
 
       setRGB0(f4, 0x4C, 0x80, 0x40);
       setXY4(f4, i << 7, 8, f4->x0 + 0x80, f4->y0, f4->x0, f4->y0 + 0xDF,
@@ -1602,8 +1599,8 @@ void func_8001C694(void) {
     l2 = (LINE_F2 *)(f4 + 1);
 
     // setLineF2(l2); (Doesn't match, because they zero out the addr field)
-    l2->tag = 0x3000000;
-    l2->code = 0x40;
+    l2->tag = PRIM_TAG(LINE_F2);
+    l2->code = PRIM_LINE_F2;
 
     setXY2(l2, 0, 231, 512, 231);
     setRGB0(l2, 0, 0, 0);

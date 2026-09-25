@@ -8,6 +8,7 @@
 #include "common.h"
 #include "hud.h"
 #include "math.h"
+#include "moby.h"
 #include "moby_helpers.h"
 #include "overlay_pointers.h"
 #include "renderers.h"
@@ -235,7 +236,78 @@ void func_800385BC(Moby *pMoby, int pUnknown) {
   func_800530C0(pMoby, pUnknown);
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038638);
+/// @brief Moves a Moby around a point toward a target angle, with angle limits
+/// and collision checks
+int func_80038638(Moby *pMoby, Vector3D *pCenter, int radius, int targetAngle,
+                  int angleThreshold, int moveSpeed, int turnSpeed,
+                  int turnThreshold, int limitAngle1, int limitAngle2,
+                  int mobyCollisionRadius, int collisionRadius, int flags) {
+  Vector3D targetPosition;
+  int moveAngle;
+  int angle;
+  int angleDiff;
+  int result;
+
+  angle = Atan2(pMoby->m_Position.x - pCenter->x,
+                pMoby->m_Position.y - pCenter->y, 0);
+  angleDiff = func_800381BC(targetAngle, angle);
+  result = ABS(angleDiff);
+
+  if (result < angleThreshold) {
+    return result;
+  }
+
+  if (limitAngle1 != 0xFF && func_80017908(angle, limitAngle1) < 5) {
+    result = func_800381BC(limitAngle1, angle);
+    if ((angleDiff < 0 && result < 0) || (angleDiff > 0 && result > 0)) {
+      return 0x100;
+    }
+  }
+
+  if (limitAngle2 != 0xFF && func_80017908(angle, limitAngle2) < 5) {
+    result = func_800381BC(limitAngle2, angle);
+    if ((angleDiff < 0 && result < 0) || (angleDiff > 0 && result > 0)) {
+      return 0x100;
+    }
+  }
+
+  if (angleDiff < 0) {
+    angle = func_80038074(angle, 3);
+  } else {
+    angle = func_80038074(angle, -3);
+  }
+
+  targetPosition.x = pCenter->x + FIXED_MUL(COSINE_8(angle), radius);
+  targetPosition.y = pCenter->y + FIXED_MUL(SINE_8(angle), radius);
+  moveAngle = Atan2(targetPosition.x - pMoby->m_Position.x,
+                    targetPosition.y - pMoby->m_Position.y, 0);
+
+  if (D_800756C4 == 3) {
+    moveSpeed += moveSpeed >> 1;
+  } else if (D_800756C4 == 4) {
+    moveSpeed <<= 1;
+  }
+
+  if (flags & 0x8) {
+    RotateMobyToAngle(pMoby,
+                      Atan2(pCenter->x - pMoby->m_Position.x,
+                            pCenter->y - pMoby->m_Position.y, 0),
+                      turnSpeed, 0, 0);
+    result = func_80039688(pMoby, moveAngle, moveSpeed, mobyCollisionRadius,
+                           collisionRadius, flags);
+    if (result) {
+      return -result;
+    }
+  } else if (RotateMobyToAngle(pMoby, moveAngle, turnSpeed, turnThreshold, 1)) {
+    result = func_80039398(pMoby, moveSpeed, mobyCollisionRadius,
+                           collisionRadius, flags);
+    if (result) {
+      return -result;
+    }
+  }
+
+  return ABS(angleDiff);
+}
 
 int func_8003891C(Vector3D *pVec1, Vector3D *pVec2, int p3, int p4, int *pOut) {
   struct {
@@ -435,7 +507,73 @@ int RotateMobyToAngle(Moby *pMoby, int targetAngle, int rotSpeed,
   return 1; // Moby is facing close enough to target
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80038FC8);
+int func_80038FC8(Moby *pMoby, int *pTurnDirection, int *pFacingAngle,
+                  int pTurnSpeed, int pTurnSwitchThreshold,
+                  int pBaseTurnAnimation) {
+  int targetAngle;
+  int oppositeTargetAngle;
+  int angleDelta;
+  int oppositeAngleDelta;
+  int turnDirection;
+  int newAngle;
+
+  targetAngle = Atan2(g_Spyro.m_Position.x - pMoby->m_Position.x,
+                      g_Spyro.m_Position.y - pMoby->m_Position.y, 1);
+  angleDelta = (targetAngle - *pFacingAngle) & 0xFFF;
+  oppositeTargetAngle = targetAngle - 0x800;
+  oppositeAngleDelta = (oppositeTargetAngle - *pFacingAngle) & 0xFFF;
+
+  if (angleDelta > 0x800) {
+    angleDelta -= 0x1000;
+  }
+  if (oppositeAngleDelta > 0x800) {
+    oppositeAngleDelta -= 0x1000;
+  }
+
+  if (D_800756C4 == 3) {
+    pTurnSpeed += pTurnSpeed >> 1;
+  } else if (D_800756C4 == 4) {
+    pTurnSpeed <<= 1;
+  }
+
+  if (ABS(angleDelta) < pTurnSpeed) {
+    pTurnSpeed = ABS(angleDelta);
+  }
+
+  turnDirection = *pTurnDirection;
+  if (turnDirection == 0) {
+    if (angleDelta < 0) {
+      turnDirection = -1;
+    } else {
+      turnDirection = 1;
+    }
+    *pTurnDirection = turnDirection;
+  } else if (angleDelta < 0) {
+    if (turnDirection > 0 && pTurnSwitchThreshold < ABS(oppositeAngleDelta)) {
+      *pTurnDirection = -1;
+    }
+  } else if (turnDirection < 0 && angleDelta > 0 &&
+             pTurnSwitchThreshold < ABS(oppositeAngleDelta)) {
+    *pTurnDirection = 1;
+  }
+
+  if (ABS(angleDelta) > 0x100) {
+    if (*pTurnDirection == 1) {
+      MOBY_ANIM_CHANGE_CLEAR_FINISHED(pMoby, pBaseTurnAnimation);
+    } else {
+      MOBY_ANIM_CHANGE_CLEAR_FINISHED(pMoby, pBaseTurnAnimation + 1);
+    }
+  }
+
+  newAngle = *pFacingAngle + pTurnSpeed * *pTurnDirection;
+  *pFacingAngle = newAngle;
+  if (newAngle < 0) {
+    *pFacingAngle = newAngle + 0x1000;
+  }
+  pMoby->m_Rotation.z = *pFacingAngle >> 4;
+
+  return angleDelta;
+}
 
 int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6) {
   Vector3D vec2;
@@ -468,8 +606,8 @@ int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6) {
   return 0;
 }
 
-int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
-                  int flags) {
+int func_80039398(Moby *pMoby, int distance, int mobyCollisionRadius,
+                  int collisionRadius, int flags) {
   Vector3D newPos;
   int floorZ;
   int delta;
@@ -489,19 +627,21 @@ int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
       pMoby->m_Position.y + FIXED_MUL(SINE_8(pMoby->m_Rotation.z), distance);
   newPos.z = pMoby->m_Position.z;
 
-  if (floorOffset != 0) {
+  if (mobyCollisionRadius != 0) {
     if (flags & 0x2) {
-      func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 3);
-    } else if (func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 0) != 0) {
+      func_8004E3C8(&newPos, mobyCollisionRadius, 0, 0, pMoby, 3);
+    } else if (func_8004E3C8(&newPos, mobyCollisionRadius, 0, 0, pMoby, 0) !=
+               0) {
       return 1;
     }
   }
 
   if (flags & 0x1) {
     zBase = newPos.z + 300;
-    newPos.z = zBase + radius;
+    newPos.z = zBase + collisionRadius;
   }
-  if (radius != 0 && func_8004BE4C(&newPos, radius, radius) != 0) {
+  if (collisionRadius != 0 &&
+      func_8004BE4C(&newPos, collisionRadius, collisionRadius) != 0) {
     if ((flags & 0x20) == 0) {
       return 2;
     }
@@ -510,7 +650,7 @@ int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
 
   if (flags & 0x1) {
     zBase = newPos.z - 300;
-    newPos.z = zBase - radius;
+    newPos.z = zBase - collisionRadius;
   }
 
   if (flags & 0x4 || flags & 0x10 || flags & 0x40) {
@@ -563,8 +703,8 @@ int func_80039398(Moby *pMoby, int distance, int floorOffset, int radius,
 /// @brief Moves a moby horizontally by (distance) along (angle), then resolves
 /// floor/wall collision and snaps height, gated by flag bits. Returns 0
 /// normally, 1 on a blocking hit, 2 when the floor is out of reach.
-int func_80039688(Moby *pMoby, int angle, int distance, int floorOffset,
-                  int radius, int flags) {
+int func_80039688(Moby *pMoby, int angle, int distance, int mobyCollisionRadius,
+                  int collisionRadius, int flags) {
   Vector3D newPos;
   int floorZ;
 
@@ -578,20 +718,21 @@ int func_80039688(Moby *pMoby, int angle, int distance, int floorOffset,
   newPos.y = pMoby->m_Position.y + FIXED_MUL(SINE_8(angle), distance);
   newPos.z = pMoby->m_Position.z;
 
-  if (floorOffset != 0) {
+  if (mobyCollisionRadius != 0) {
     if (flags & 0x2) {
-      func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 3);
-    } else if (func_8004E3C8(&newPos, floorOffset, 0, 0, pMoby, 0) != 0) {
+      func_8004E3C8(&newPos, mobyCollisionRadius, 0, 0, pMoby, 3);
+    } else if (func_8004E3C8(&newPos, mobyCollisionRadius, 0, 0, pMoby, 0)) {
       return 1;
     }
   }
 
   if (flags & 0x1) {
     newPos.z += 300;
-    newPos.z += radius;
+    newPos.z += collisionRadius;
   }
 
-  if (radius != 0 && func_8004BE4C(&newPos, radius, radius) != 0) {
+  if (collisionRadius != 0 &&
+      func_8004BE4C(&newPos, collisionRadius, collisionRadius) != 0) {
     if ((flags & 0x20) == 0) {
       return 2;
     }
@@ -636,56 +777,59 @@ int func_80039688(Moby *pMoby, int angle, int distance, int floorOffset,
 }
 
 /**
- * @brief Updates moby movement with timed horizontal motion and gravity.
+ * @brief Updates moby movement with horizontal motion, deceleration and
+ * gravity.
  *
  * Handles two types of movement:
- * 1. Horizontal movement via timer - calls func_80039688 while timer > 0
+ * 1. Horizontal movement via speed - calls func_80039688 while speed > 0
  * 2. Vertical movement with gravity - applies velocity and detects landing
  *
- * @param pMoby The moby to update
- * @param pTimer Pointer to movement timer (decremented each frame until 0)
- * @param pSpeed Speed/angle parameter passed to horizontal movement
+ * @param pMoby The moby to move
+ * @param pHorizontalSpeed Pointer to horizontal speed (decremented each frame
+ * until 0)
+ * @param pAngle Angle parameter passed to horizontal movement
  * @param pZVelocity Pointer to vertical velocity (NULL or 0xFFFF to disable)
- * @param pTimerDecrement Amount to subtract from timer each frame
+ * @param pDeceleration Amount to subtract from horizontal speed each frame
  * @param pGravity Gravity to subtract from z velocity each frame
  * @return 0 = normal, 2 = horizontal collision, 3 = landed on ground
  */
-int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
-                        int pTimerDecrement, int pGravity) {
+int MoveMobyWithGravity(Moby *pMoby, int *pHorizontalSpeed, int pAngle,
+                        int *pZVelocity, int pDeceleration, int pGravity) {
   int result;
   int flags;
-  int floorOffset;
+  int mobyCollisionRadius;
   int floorZ;
   u_char collisionRange;
 
   result = 0;
   flags = 0x21;
-  floorOffset = 300;
+  mobyCollisionRadius = 300;
 
   // Check if pZVelocity is valid
   if (pZVelocity == nullptr || *pZVelocity == 0xFFFF) {
     flags = 0x25;
   }
 
-  // Check collisionRange for floor offset and flag modifications
+  // Check collisionRange for Moby collision radius and flag modifications
   collisionRange = pMoby->m_CollisionRange;
   if (collisionRange == 0xFE) {
     flags = 1;
   } else if (collisionRange != 0) {
     flags &= ~0x20;
-    floorOffset = collisionRange << 2;
+    mobyCollisionRadius = collisionRange << 2;
     if (collisionRange == 0xFF) {
-      floorOffset = 0;
+      mobyCollisionRadius = 0;
     }
   }
 
-  // Handle horizontal movement with timer
-  if (*pTimer != 0) {
-    // Horizontal movement with floor collision detection
-    result = func_80039688(pMoby, pSpeed, *pTimer, floorOffset, 500, flags);
-    *pTimer -= pTimerDecrement;
-    if (*pTimer < 0) {
-      *pTimer = 0;
+  // Handle horizontal movement
+  if (*pHorizontalSpeed != 0) {
+    // Horizontal movement with collision detection
+    result = func_80039688(pMoby, pAngle, *pHorizontalSpeed,
+                           mobyCollisionRadius, 500, flags);
+    *pHorizontalSpeed -= pDeceleration;
+    if (*pHorizontalSpeed < 0) {
+      *pHorizontalSpeed = 0;
     }
   }
 
@@ -725,11 +869,138 @@ int MoveMobyWithGravity(Moby *pMoby, int *pTimer, int pSpeed, int *pZVelocity,
   return result;
 }
 
-/// @brief Fodder walking movement
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_80039AA8);
+/// @brief Moby walking movement, used by most fodder and classes 214/216
+void func_80039AA8(Moby *pMoby, MobyWanderState *pWander) {
+  int moveSpeed;
+  int turnSpeed;
+  int turnAngle;
+  int spyroDistance;
+  int originDistance;
+  int movementResult;
+  int randomTurn;
+  int facingTargetAngle;
+
+  turnSpeed = pWander->m_TurnSpeed;
+  moveSpeed = pWander->m_MoveSpeed;
+  facingTargetAngle = 1;
+
+  if (D_800756C4 == 3) {
+    moveSpeed += moveSpeed >> 1;
+    turnSpeed += turnSpeed >> 1;
+  } else if (D_800756C4 == 4) {
+    moveSpeed <<= 1;
+    turnSpeed <<= 1;
+  }
+
+  if (!pWander->m_TurnTimer--) {
+    randomTurn = RandRange(pWander->m_RandomTurnMin, pWander->m_RandomTurnMax);
+
+    if (rand() & 1) {
+      randomTurn = -randomTurn;
+    }
+
+    pWander->m_TargetAngle =
+        (pWander->m_TargetAngle + randomTurn + 0x100) % 0x100;
+    pWander->m_TurnTimer =
+        RandRange(pWander->m_TurnTimerMin, pWander->m_TurnTimerMax);
+    pWander->m_TargetAngleOffset = 0;
+    pWander->m_IsFleeing = 0;
+  }
+
+  turnAngle = pWander->m_TargetAngle;
+
+  if (pWander->m_TargetAngleOffsetLimit != 0) {
+    turnAngle += pWander->m_TargetAngleOffset;
+    pWander->m_TargetAngleOffset += pWander->m_TargetAngleOffsetStep *
+                                    pWander->m_TargetAngleOffsetDirection;
+
+    if (ABS2(pWander->m_TargetAngleOffset) >=
+        pWander->m_TargetAngleOffsetLimit) {
+      pWander->m_TargetAngleOffsetDirection =
+          -pWander->m_TargetAngleOffsetDirection;
+    }
+  }
+
+  if (RotateMobyToAngle(pMoby, turnAngle, turnSpeed, 5, 1) == 0) {
+    facingTargetAngle = 0;
+  }
+
+  if (pWander->m_IgnoreMobyCollisionTimer != 0) {
+    movementResult =
+        func_80039398(pMoby, moveSpeed, 0, pWander->m_CollisionRadius, 0x55);
+  } else {
+    movementResult = func_80039398(pMoby, moveSpeed, pWander->m_CollisionRadius,
+                                   pWander->m_CollisionRadius, 0x55);
+  }
+
+  if (movementResult != 0) {
+    if (facingTargetAngle != 0) {
+      pWander->m_TargetAngle =
+          func_80038074(pWander->m_TargetAngle, RandRange(0x40, 0xC0));
+      pWander->m_TurnTimer =
+          RandRange(pWander->m_TurnTimerMin, pWander->m_TurnTimerMax);
+      pWander->m_IsFleeing = 0;
+
+      if (movementResult & 2) {
+        pWander->m_FleeDelay = 20;
+      } else {
+        pWander->m_IgnoreMobyCollisionTimer = 6;
+      }
+    }
+    return;
+  }
+
+  spyroDistance = OctDistance(&pMoby->m_Position, &g_Spyro.m_Position);
+
+  if (spyroDistance < 1100 && pWander->m_IsFleeing == 0) {
+    pWander->m_TargetAngle =
+        Atan2(pMoby->m_Position.x - g_Spyro.m_Position.x,
+              pMoby->m_Position.y - g_Spyro.m_Position.y, 0);
+    pWander->m_TargetAngle =
+        func_80038074(pWander->m_TargetAngle, RandRange(-60, 60));
+    pWander->m_TurnTimer =
+        RandRange(pWander->m_TurnTimerMin, pWander->m_TurnTimerMax);
+    pWander->m_IsFleeing = 1;
+    return;
+  }
+
+  if (pWander->m_FleeRadius != 0 && pWander->m_IsFleeing == 0 &&
+      pWander->m_FleeDelay == 0 &&
+      spyroDistance < (pWander->m_FleeRadius << 10)) {
+    pWander->m_TargetAngle =
+        Atan2(pMoby->m_Position.x - g_Spyro.m_Position.x,
+              pMoby->m_Position.y - g_Spyro.m_Position.y, 0);
+    pWander->m_TargetAngle =
+        func_80038074(pWander->m_TargetAngle, RandRange(-48, 48));
+    pWander->m_TurnTimer =
+        RandRange(pWander->m_TurnTimerMin, pWander->m_TurnTimerMax);
+    pWander->m_IsFleeing = 1;
+    return;
+  }
+
+  originDistance = OctDistance(&pMoby->m_Position, &pWander->m_Origin);
+
+  if ((pWander->m_WanderRadius << 10) < originDistance) {
+    pWander->m_TargetAngle =
+        Atan2(pWander->m_Origin.x - pMoby->m_Position.x,
+              pWander->m_Origin.y - pMoby->m_Position.y, 0);
+    pWander->m_IsFleeing = 0;
+    pWander->m_FleeDelay = 20;
+    pWander->m_TurnTimer = originDistance / pWander->m_MoveSpeed;
+    return;
+  }
+
+  if (pWander->m_FleeDelay != 0) {
+    pWander->m_FleeDelay--;
+  }
+
+  if (pWander->m_IgnoreMobyCollisionTimer != 0) {
+    pWander->m_IgnoreMobyCollisionTimer--;
+  }
+}
 
 int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
-                  int floorOffset, int turnSpeed, int withinAngle,
+                  int mobyCollisionRadius, int turnSpeed, int withinAngle,
                   int waitForFlags, int moveFlags) {
   int closeInZ;
   int targetAngle;
@@ -788,7 +1059,7 @@ int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
   if (withinAngle >= func_80017908(targetAngle, pMoby->m_Rotation.z)) {
     pMoby->m_Substate = 1;
     RotateMobyToAngle(pMoby, targetAngle, turnSpeed, withinAngle, 1);
-    func_80039398(pMoby, speed, floorOffset, 0, moveFlags);
+    func_80039398(pMoby, speed, mobyCollisionRadius, 0, moveFlags);
   } else if (pMoby->m_Substate == 0 && waitForFlags != 0xFF) {
     // Freshly idle: skip the turn while a linked moby in the same pod that is
     // on-screen and active is still busy.
@@ -817,7 +1088,8 @@ int func_80039E94(Moby *pMoby, PathData *pPath, int arrivalRadius, int speed,
 }
 
 int func_8003A16C(Moby *pMoby, PathData *pPath, int threshold, int maxMag,
-                  int radius, int clampRange, int arc, int *pHeading) {
+                  int mobyCollisionRadius, int clampRange, int arc,
+                  int *pHeading) {
   Vector3D8 rot;
   Vector3D dir;
   MATRIX mtx;
@@ -876,8 +1148,8 @@ int func_8003A16C(Moby *pMoby, PathData *pPath, int threshold, int maxMag,
   VecRotateByMatrix(&mtx, &dir, &dir);
   VecAdd(&dir, &pMoby->m_Position, &dir);
 
-  if (radius != 0) {
-    func_8004E3C8(&dir, radius, 0, 0, pMoby, 0);
+  if (mobyCollisionRadius != 0) {
+    func_8004E3C8(&dir, mobyCollisionRadius, 0, 0, pMoby, 0);
   }
 
   dir.z = dir.z + 0x400;
@@ -1248,7 +1520,149 @@ int SpawnMobySparkle(Moby *pMoby, Vector3D *pOffset) {
   return slot;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003ABC0);
+/// @brief Spawns a Moby drop and initializes its position and movement
+Moby *func_8003ABC0(Moby *pMoby, int pSpawnMode, Vector3D *pStartPosition,
+                    Vector3D *pTargetPosition) {
+  Vector3D startPosition;
+  Vector3D targetPosition;
+  Moby *spawnedMoby;
+  MobyCollectableProps *dropProps;
+  int dropClass;
+  int initialZVelocity;
+  int flightFrames;
+  int floorZ;
+  int surfaceAngle;
+  int currentZ;
+  int zVelocity;
+
+  dropClass = pMoby->m_DropMoby & 0x7F;
+
+  if (dropClass >= 1 && dropClass <= 0x7E) {
+    if (pMoby->m_DroppedFlag & 0x80) {
+      return nullptr;
+    } else {
+      pMoby->m_DroppedFlag |= 0x80;
+    }
+  } else {
+    int roll;
+
+    dropClass = MOBYCLASS_LIFE_ORB;
+    // rand() % 100
+    roll = ((rand() & 0xFFF) * 25) << 2 >> 12;
+
+    // 2% Life statue, 10% Butterfly, 88% Life Orb
+    if (roll <= 1) {
+      dropClass = MOBYCLASS_LIFE_STATUE;
+    } else if (g_Spyro.m_health < 3 && roll <= 11) {
+      dropClass = MOBYCLASS_BUTTERFLY;
+    }
+  }
+
+  if (dropClass == MOBYCLASS_BUTTERFLY) {
+    if (g_Sparx != nullptr || g_Spyro.m_health < 0) {
+      spawnedMoby = (*g_SpawnMoby)(MOBYCLASS_BUTTERFLY, pMoby);
+    } else {
+      spawnedMoby = (*g_SpawnMoby)(MOBYCLASS_SPARX, pMoby);
+      func_8003851C(spawnedMoby, 0, nullptr);
+      g_Spyro.m_health = 1;
+      g_Sparx = spawnedMoby;
+    }
+
+    return spawnedMoby;
+  } else if (dropClass == MOBYCLASS_LIFE_STATUE) {
+    spawnedMoby = (*g_SpawnMoby)(MOBYCLASS_LIFE_STATUE, pMoby);
+    dropProps = spawnedMoby->m_Props;
+    dropProps->m_SpawnState = 1;
+    return spawnedMoby;
+  }
+
+  spawnedMoby = (*g_SpawnMoby)(dropClass, pMoby);
+  dropProps = spawnedMoby->m_Props;
+
+  if (pSpawnMode == 0) {
+    VecCopy(&targetPosition, &pMoby->m_Position);
+    initialZVelocity = 140;
+  } else if (pSpawnMode == 6) {
+    VecCopy(&targetPosition, &pMoby->m_Position);
+    initialZVelocity = 300;
+    targetPosition.x += (rand() & 0x1FF) - 0x100;
+    targetPosition.y += (rand() & 0x1FF) - 0x100;
+  } else if (pSpawnMode == 1) {
+    VecCopy(&targetPosition, &pMoby->m_Position);
+    initialZVelocity = 140;
+    targetPosition.x += (rand() & 0x3FF) - 0x200;
+    targetPosition.y += (rand() & 0x3FF) - 0x200;
+  } else if (pSpawnMode == 2) {
+    VecCopy(&targetPosition, pTargetPosition);
+    initialZVelocity = 140;
+  } else if (pSpawnMode == 3 || pSpawnMode == 4) {
+    if (pSpawnMode == 4 || g_Spyro.m_State == 11 || g_Spyro.m_State == 24 ||
+        g_Spyro.m_State == 20 || g_Spyro.m_State == 44) {
+      if (pSpawnMode == 4 ||
+          (OctDistance(&spawnedMoby->m_Position, &g_Spyro.m_Position) < 0x800 &&
+           ABS2((spawnedMoby->m_Position.z - spawnedMoby->m_FloorDistance) -
+                g_Spyro.m_Position.z) < 0x400)) {
+        VecCopy(&spawnedMoby->m_Position, &pMoby->m_Position);
+        spawnedMoby->m_Position.z += 0x100;
+        VecCopy(&dropProps->m_InitPos, &spawnedMoby->m_Position);
+        dropProps->m_RotY = rand() & 0xE;
+        dropProps->m_RotZ = rand() & 0xE;
+        dropProps->m_RotationTicks = rand() & 0xE;
+        spawnedMoby->m_Substate = 3;
+        spawnedMoby->m_UpdateDistance = 0xFF;
+        return spawnedMoby;
+      }
+    }
+
+    VecCopy(&targetPosition, &pMoby->m_Position);
+    initialZVelocity = 140;
+    targetPosition.x += (rand() & 0x3FF) - 0x200;
+    targetPosition.y += (rand() & 0x3FF) - 0x200;
+  } else if (pSpawnMode == 5) {
+    VecCopy(&spawnedMoby->m_Position, &pMoby->m_Position);
+    spawnedMoby->m_Position.z += 0x100;
+    VecNull(&dropProps->m_InitPos);
+    return spawnedMoby;
+  }
+
+  if (pStartPosition != nullptr) {
+    VecCopy(&startPosition, pStartPosition);
+  } else {
+    VecCopy(&startPosition, &pMoby->m_Position);
+    startPosition.z += 0x100;
+  }
+
+  targetPosition.z += 0x400;
+  floorZ = func_8004D5EC(&targetPosition, 0x800);
+  targetPosition.z -= 0x400;
+
+  surfaceAngle = (signed char)Atan2Fast(g_CollisionNormal.z,
+                                        VecMagnitude(&g_CollisionNormal, 0));
+
+  if (floorZ == 0 || surfaceAngle >= 0x18 ||
+      func_8004E3C8(&targetPosition, 200, nullptr, 0, nullptr, 0) != 0) {
+    VecCopy(&targetPosition, &pMoby->m_Position);
+  }
+
+  flightFrames = 0;
+  currentZ = startPosition.z;
+  zVelocity = initialZVelocity;
+
+  while (zVelocity > 0 || targetPosition.z < currentZ) {
+    currentZ += zVelocity;
+    zVelocity -= 10;
+    flightFrames++;
+  }
+
+  VecCopy(&spawnedMoby->m_Position, &startPosition);
+  VecSub(&targetPosition, &targetPosition, &startPosition);
+  func_800177F8(&targetPosition, &targetPosition, flightFrames);
+  targetPosition.z = initialZVelocity;
+  VecCopy(&dropProps->m_InitPos, &targetPosition);
+  dropProps->m_SpawnState = 1;
+
+  return spawnedMoby;
+}
 
 // Moby pods
 
@@ -1539,7 +1953,7 @@ void CollectItem(Moby *pMoby) {
 
   // particle spawn
   (*D_800758E4)(6, 0xC, pMoby,
-                (void *)D_8006E44C[12 + (pMoby->m_Class - MOBYCLASS_GEM_1)]);
+                    D_8006E44C[12 + (pMoby->m_Class - MOBYCLASS_GEM_1)]);
 
   if (pMoby->m_Class == MOBYCLASS_GEM_1)
     gem_value = 1;
@@ -1893,11 +2307,11 @@ void UpdateMobyDragonFragment(Moby *pMoby) {
       particleParams[0] = rand() & 3;
       particleParams[1] = rand() & 3;
       particleParams[2] = 0x14;
-      (*D_800758E4)(1, 1, &pMoby->m_Position, particleParams);
+      (*D_800758E4)(1, 1, &pMoby->m_Position, (int)particleParams);
     }
   } else {
     // Fragment finished - spawn end particles and deactivate
-    (*D_800758E4)(3, 0x46, &pMoby->m_Position, (void *)0x10);
+    (*D_800758E4)(3, 0x46, &pMoby->m_Position, 0x10);
     func_80052568(pMoby);
   }
 }

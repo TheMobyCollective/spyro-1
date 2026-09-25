@@ -160,7 +160,7 @@
 - [x] func_80038494
 - [x] func_8003851C
 - [x] func_800385BC
-- [ ] func_80038638
+- [x] func_80038638
 - [x] func_8003891C
 - [x] func_80038A40
 - [x] func_80038AFC
@@ -169,12 +169,12 @@
 - [x] func_80038D54
 - [x] RotateMobyToSpyro
 - [x] RotateMobyToAngle
-- [ ] func_80038FC8
+- [x] func_80038FC8
 - [x] func_80039228
 - [x] func_80039398
 - [x] func_80039688
 - [x] MoveMobyWithGravity
-- [ ] func_80039AA8
+- [x] func_80039AA8
 - [x] func_80039E94
 - [x] func_8003A16C
 - [x] MoveMobyAlongPath
@@ -185,7 +185,7 @@
 - [x] ApplyFlameHeatExternal
 - [x] ApplyFlameHeat
 - [x] SpawnMobySparkle
-- [ ] func_8003ABC0
+- [x] func_8003ABC0
 - [x] func_8003B0DC
 - [x] func_8003B160
 - [x] func_8003B1E8

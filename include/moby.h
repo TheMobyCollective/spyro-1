@@ -243,6 +243,52 @@ typedef struct {
   void *m_Faces;
 } SimpleModel;
 
+// g_AnimationFinished
+extern int D_80075794;
+
+// Restart 'anim' from frame 0 at its natural model speed
+#define MOBY_ANIM_RESTART(m, anim)                                             \
+  (m)->m_AnimationState.m_FrameProgress = 0;                                   \
+  (m)->m_AnimationState.m_PerFrameProgress =                                   \
+      g_Models[(m)->m_Class]->m_Animations[(anim)]->m_ProgressPerTick;         \
+  (m)->m_AnimationState.m_Animation = (anim);                                  \
+  (m)->m_AnimationState.m_NextAnimation = (anim);                              \
+  (m)->m_AnimationState.m_Frame = 0;                                           \
+  (m)->m_AnimationState.m_NextFrame = 1;
+
+// Promote existing next anim to current, then set 'anim' as next anim
+#define MOBY_ANIM_ADVANCE(m, anim)                                             \
+  (m)->m_AnimationState.m_FrameProgress = 0x10;                                \
+  (m)->m_AnimationState.m_PerFrameProgress = 0x10;                             \
+  (m)->m_AnimationState.m_Animation = (m)->m_AnimationState.m_NextAnimation;   \
+  (m)->m_AnimationState.m_NextAnimation = (anim);                              \
+  (m)->m_AnimationState.m_Frame = (m)->m_AnimationState.m_NextFrame;           \
+  (m)->m_AnimationState.m_NextFrame = 0;                                       \
+  func_80037E98(m);
+
+// Advance to 'anim' if it is not already the next anim
+#define MOBY_ANIM_CHANGE(m, anim)                                              \
+  if ((m)->m_AnimationState.m_NextAnimation != (anim)) {                       \
+    MOBY_ANIM_ADVANCE((m), (anim));                                            \
+  }
+
+// Advance to 'anim' if it is not already the next anim and clear D_80075794
+#define MOBY_ANIM_CHANGE_CLEAR_FINISHED(m, anim)                               \
+  if ((m)->m_AnimationState.m_NextAnimation != (anim)) {                       \
+    D_80075794 = 0;                                                            \
+    MOBY_ANIM_ADVANCE((m), (anim));                                            \
+  }
+
+// Set 'anim' as next without promoting the existing next anim
+#define MOBY_ANIM_SET_NEXT(m, anim)                                            \
+  if ((m)->m_AnimationState.m_NextAnimation != (anim)) {                       \
+    (m)->m_AnimationState.m_FrameProgress = 0x10;                              \
+    (m)->m_AnimationState.m_PerFrameProgress = 0x10;                           \
+    (m)->m_AnimationState.m_NextAnimation = (anim);                            \
+    (m)->m_AnimationState.m_NextFrame = 0;                                     \
+    func_80037E98(m);                                                          \
+  }
+
 // Data related
 
 typedef enum {
@@ -361,6 +407,30 @@ typedef struct {
     int unk_0xC; // Padding I assume
   } m_Nodes[1];
 } PathData;
+
+// Present in some fodder classes, as well as the class 214/216 Gnorcs
+typedef struct {
+  Vector3D m_Origin;
+  u_char m_MoveSpeed;
+  u_char m_TurnSpeed;
+  u_char m_CollisionRadius;
+  u_char m_TurnTimerMin;
+  u_char m_TurnTimerMax;
+  u_char m_RandomTurnMin;
+  u_char m_RandomTurnMax;
+  u_char m_WanderRadius;
+  u_char m_TargetAngleOffsetLimit;
+  u_char m_TargetAngleOffsetStep;
+  u_char m_0x16;
+  u_char m_TurnTimer;
+  u_char m_TargetAngle;
+  u_char m_TargetAngleOffsetDirection;
+  u_char m_FleeRadius;
+  u_char m_IsFleeing;
+  u_char m_FleeDelay;
+  u_char m_IgnoreMobyCollisionTimer;
+  short m_TargetAngleOffset;
+} MobyWanderState;
 
 // WIP Flight Moby Class 407 408 Flight Train/Wagon
 typedef struct {
