@@ -260,14 +260,14 @@ int func_80038638(Moby *pMoby, Vector3D *pCenter, int radius, int targetAngle,
   if (limitAngle1 != 0xFF && func_80017908(angle, limitAngle1) < 5) {
     result = func_800381BC(limitAngle1, angle);
     if ((angleDiff < 0 && result < 0) || (angleDiff > 0 && result > 0)) {
-      return 0x100;
+      return 256;
     }
   }
 
   if (limitAngle2 != 0xFF && func_80017908(angle, limitAngle2) < 5) {
     result = func_800381BC(limitAngle2, angle);
     if ((angleDiff < 0 && result < 0) || (angleDiff > 0 && result > 0)) {
-      return 0x100;
+      return 256;
     }
   }
 
@@ -520,14 +520,14 @@ int func_80038FC8(Moby *pMoby, int *pTurnDirection, int *pFacingAngle,
   targetAngle = Atan2(g_Spyro.m_Position.x - pMoby->m_Position.x,
                       g_Spyro.m_Position.y - pMoby->m_Position.y, 1);
   angleDelta = (targetAngle - *pFacingAngle) & 0xFFF;
-  oppositeTargetAngle = targetAngle - 0x800;
+  oppositeTargetAngle = targetAngle - 2048;
   oppositeAngleDelta = (oppositeTargetAngle - *pFacingAngle) & 0xFFF;
 
-  if (angleDelta > 0x800) {
-    angleDelta -= 0x1000;
+  if (angleDelta > 2048) {
+    angleDelta -= 4096;
   }
-  if (oppositeAngleDelta > 0x800) {
-    oppositeAngleDelta -= 0x1000;
+  if (oppositeAngleDelta > 2048) {
+    oppositeAngleDelta -= 4096;
   }
 
   if (D_800756C4 == 3) {
@@ -557,7 +557,7 @@ int func_80038FC8(Moby *pMoby, int *pTurnDirection, int *pFacingAngle,
     *pTurnDirection = 1;
   }
 
-  if (ABS(angleDelta) > 0x100) {
+  if (ABS(angleDelta) > 256) {
     if (*pTurnDirection == 1) {
       MOBY_ANIM_CHANGE_CLEAR_FINISHED(pMoby, pBaseTurnAnimation);
     } else {
@@ -568,7 +568,7 @@ int func_80038FC8(Moby *pMoby, int *pTurnDirection, int *pFacingAngle,
   newAngle = *pFacingAngle + pTurnSpeed * *pTurnDirection;
   *pFacingAngle = newAngle;
   if (newAngle < 0) {
-    *pFacingAngle = newAngle + 0x1000;
+    *pFacingAngle = newAngle + 4096;
   }
   pMoby->m_Rotation.z = *pFacingAngle >> 4;
 
@@ -899,8 +899,7 @@ void func_80039AA8(Moby *pMoby, MobyWanderState *pWander) {
       randomTurn = -randomTurn;
     }
 
-    pWander->m_TargetAngle =
-        (pWander->m_TargetAngle + randomTurn + 0x100) % 0x100;
+    pWander->m_TargetAngle = (pWander->m_TargetAngle + randomTurn + 256) % 256;
     pWander->m_TurnTimer =
         RandRange(pWander->m_TurnTimerMin, pWander->m_TurnTimerMax);
     pWander->m_TargetAngleOffset = 0;
@@ -927,16 +926,16 @@ void func_80039AA8(Moby *pMoby, MobyWanderState *pWander) {
 
   if (pWander->m_IgnoreMobyCollisionTimer != 0) {
     movementResult =
-        func_80039398(pMoby, moveSpeed, 0, pWander->m_CollisionRadius, 0x55);
+        func_80039398(pMoby, moveSpeed, 0, pWander->m_CollisionRadius, 85);
   } else {
     movementResult = func_80039398(pMoby, moveSpeed, pWander->m_CollisionRadius,
-                                   pWander->m_CollisionRadius, 0x55);
+                                   pWander->m_CollisionRadius, 85);
   }
 
   if (movementResult != 0) {
     if (facingTargetAngle != 0) {
       pWander->m_TargetAngle =
-          func_80038074(pWander->m_TargetAngle, RandRange(0x40, 0xC0));
+          func_80038074(pWander->m_TargetAngle, RandRange(64, 192));
       pWander->m_TurnTimer =
           RandRange(pWander->m_TurnTimerMin, pWander->m_TurnTimerMax);
       pWander->m_IsFleeing = 0;
@@ -1537,7 +1536,7 @@ Moby *func_8003ABC0(Moby *pMoby, int pSpawnMode, Vector3D *pStartPosition,
 
   dropClass = pMoby->m_DropMoby & 0x7F;
 
-  if (dropClass >= 1 && dropClass <= 0x7E) {
+  if (dropClass >= 1 && dropClass < 127) {
     if (pMoby->m_DroppedFlag & 0x80) {
       return nullptr;
     } else {
@@ -1547,8 +1546,9 @@ Moby *func_8003ABC0(Moby *pMoby, int pSpawnMode, Vector3D *pStartPosition,
     int roll;
 
     dropClass = MOBYCLASS_LIFE_ORB;
+
     // rand() % 100
-    roll = ((rand() & 0xFFF) * 25) << 2 >> 12;
+    roll = FIXED_MUL(rand() & 0xFFF, 100);
 
     // 2% Life statue, 10% Butterfly, 88% Life Orb
     if (roll <= 1) {
@@ -1585,13 +1585,13 @@ Moby *func_8003ABC0(Moby *pMoby, int pSpawnMode, Vector3D *pStartPosition,
   } else if (pSpawnMode == 6) {
     VecCopy(&targetPosition, &pMoby->m_Position);
     initialZVelocity = 300;
-    targetPosition.x += (rand() & 0x1FF) - 0x100;
-    targetPosition.y += (rand() & 0x1FF) - 0x100;
+    targetPosition.x += (rand() & 0x1FF) - 256;
+    targetPosition.y += (rand() & 0x1FF) - 256;
   } else if (pSpawnMode == 1) {
     VecCopy(&targetPosition, &pMoby->m_Position);
     initialZVelocity = 140;
-    targetPosition.x += (rand() & 0x3FF) - 0x200;
-    targetPosition.y += (rand() & 0x3FF) - 0x200;
+    targetPosition.x += (rand() & 0x3FF) - 512;
+    targetPosition.y += (rand() & 0x3FF) - 512;
   } else if (pSpawnMode == 2) {
     VecCopy(&targetPosition, pTargetPosition);
     initialZVelocity = 140;
@@ -1603,7 +1603,7 @@ Moby *func_8003ABC0(Moby *pMoby, int pSpawnMode, Vector3D *pStartPosition,
            ABS2((spawnedMoby->m_Position.z - spawnedMoby->m_FloorDistance) -
                 g_Spyro.m_Position.z) < 0x400)) {
         VecCopy(&spawnedMoby->m_Position, &pMoby->m_Position);
-        spawnedMoby->m_Position.z += 0x100;
+        spawnedMoby->m_Position.z += 256;
         VecCopy(&dropProps->m_InitPos, &spawnedMoby->m_Position);
         dropProps->m_RotY = rand() & 0xE;
         dropProps->m_RotZ = rand() & 0xE;
@@ -1616,11 +1616,11 @@ Moby *func_8003ABC0(Moby *pMoby, int pSpawnMode, Vector3D *pStartPosition,
 
     VecCopy(&targetPosition, &pMoby->m_Position);
     initialZVelocity = 140;
-    targetPosition.x += (rand() & 0x3FF) - 0x200;
-    targetPosition.y += (rand() & 0x3FF) - 0x200;
+    targetPosition.x += (rand() & 0x3FF) - 512;
+    targetPosition.y += (rand() & 0x3FF) - 512;
   } else if (pSpawnMode == 5) {
     VecCopy(&spawnedMoby->m_Position, &pMoby->m_Position);
-    spawnedMoby->m_Position.z += 0x100;
+    spawnedMoby->m_Position.z += 256;
     VecNull(&dropProps->m_InitPos);
     return spawnedMoby;
   }
@@ -1629,17 +1629,17 @@ Moby *func_8003ABC0(Moby *pMoby, int pSpawnMode, Vector3D *pStartPosition,
     VecCopy(&startPosition, pStartPosition);
   } else {
     VecCopy(&startPosition, &pMoby->m_Position);
-    startPosition.z += 0x100;
+    startPosition.z += 256;
   }
 
-  targetPosition.z += 0x400;
-  floorZ = func_8004D5EC(&targetPosition, 0x800);
-  targetPosition.z -= 0x400;
+  targetPosition.z += 1024;
+  floorZ = func_8004D5EC(&targetPosition, 2048);
+  targetPosition.z -= 1024;
 
   surfaceAngle = (signed char)Atan2Fast(g_CollisionNormal.z,
                                         VecMagnitude(&g_CollisionNormal, 0));
 
-  if (floorZ == 0 || surfaceAngle >= 0x18 ||
+  if (floorZ == 0 || surfaceAngle >= 24 ||
       func_8004E3C8(&targetPosition, 200, nullptr, 0, nullptr, 0) != 0) {
     VecCopy(&targetPosition, &pMoby->m_Position);
   }
@@ -1953,7 +1953,7 @@ void CollectItem(Moby *pMoby) {
 
   // particle spawn
   (*D_800758E4)(6, 0xC, pMoby,
-                    D_8006E44C[12 + (pMoby->m_Class - MOBYCLASS_GEM_1)]);
+                D_8006E44C[12 + (pMoby->m_Class - MOBYCLASS_GEM_1)]);
 
   if (pMoby->m_Class == MOBYCLASS_GEM_1)
     gem_value = 1;

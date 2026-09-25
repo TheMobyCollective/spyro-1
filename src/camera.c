@@ -331,7 +331,7 @@ void func_8003740C(void) {
                &g_Spyro.unk_0x240->m_Nodes[activePathNode - 1].m_Position);
       }
 
-      func_80017330(&nodeNodeDifference, 0x1000);
+      func_80017330(&nodeNodeDifference, 4096);
 
       // SKELETON: Holy shit, this literally makes the compiler output dead
       // code the ABS is useless, and the < 0 that follows it more so
@@ -344,11 +344,11 @@ void func_8003740C(void) {
         var_s0 = 0;
       }
 
-      if (var_s0 > 0x1000) {
-        var_s0 = 0x1000;
+      if (var_s0 > 4096) {
+        var_s0 = 4096;
       }
 
-      var_s0 = (var_s0 << 7) >> 0xc;
+      var_s0 = FIXED_MUL(var_s0, 128);
     }
   } else {
     // Spyro hasn't gone through the portal yet
