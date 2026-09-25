@@ -288,10 +288,10 @@ void PatchInSpyroAnimations(void *data) {
                 ->m_Frames;
     for (j = 0; j < SPYRO_MODEL->m_Animations[animation_index]->m_NumFrames;
          ++j) {
-      lower = ((int)((frame->m.m_Data & 0x001FFFFF) + past_frame_data) >> 1) &
+      lower = ((int)((frame->m_Data & 0x001FFFFF) + past_frame_data) >> 1) &
               0x1FFFFF;
-      upper = (frame->m.m_Data & 0xFFE00000);
-      frame->m.m_Data = upper + lower;
+      upper = (frame->m_Data & 0xFFE00000);
+      frame->m_Data = upper + lower;
 
       ++frame;
     }

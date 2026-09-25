@@ -251,8 +251,8 @@ typedef struct {
   int m_RotYAccumulator; // Spring-damper accumulator for smooth RotY
                          // transitions
   int unk_0x260;         // No XREFS
-  int unk_0x264;
-  int unk_0x268;
+  int m_LastBodyFrameData;
+  int m_LastHeadFrameData;
   int unk_0x26c; // No XREFS
   int unk_0x270; // No XREFS
   int m_CollisionTriangleIndex;

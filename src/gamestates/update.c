@@ -18,6 +18,7 @@
 #include "initialization.h"
 #include "loaders.h"
 #include "math.h"
+#include "memory.h"
 #include "music.h"
 #include "overlay_pointers.h"
 #include "sony_image.h"

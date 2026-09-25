@@ -184,13 +184,15 @@ typedef struct {
   u_char m_ShortOffset;
 } AnimationFrame;
 
-typedef struct {
-  union {
-    // TODO: Document the Spyro model format
-    // struct {
-    // } m_Props;
-    u_int m_Data;
-  } m;
+typedef union {
+  struct {
+    u_int frameDataOffset : 21;
+    u_int nextNotCompressed : 1;
+    u_int headNextNotCompressed : 1;
+    u_int tailNextNotCompressed : 1;
+    u_int soundForFrame : 8;
+  } m_Props;
+  u_int m_Data;
 } SpyroAnimationFrame;
 
 typedef struct {

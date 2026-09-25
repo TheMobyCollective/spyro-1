@@ -3,12 +3,6 @@
 
 #include "moby.h"
 
-/// @brief Return home, sets gamestate to 1
-void func_8002C664(void);
-
-/// @brief Unpauses from the inventory menu
-void func_8002C7BC(void);
-
 /// @brief Initializes and starts the credits sequence
 void InitCreditsSequence(int pLoadSharedModels);
 
@@ -20,12 +14,24 @@ void func_8002C420(int pEnteringFromGameplay);
 // The arg `pResumeMusic` is always set to 1 in every call of this function.
 void func_8002C534(int pResumeMusic);
 
+/// @brief Exits level
+void func_8002C618(void);
+
+/// @brief Return home, sets gamestate to 1
+void func_8002C664(void);
+
 /// @brief Opens the inventory menu
 /// @param pEnteringFromGameplay
 void func_8002C714(int pEnteringFromGameplay);
 
-/// @brief Exits level
-void func_8002C618(void);
+/// @brief Unpauses from the inventory menu
+void func_8002C7BC(void);
+
+/// @brief Die, lose a life and respawn or game over
+void func_8002C85C(void);
+
+/// @brief Sets gamestate 0, resets background color, and resets the specular
+void func_8002C8A4(void);
 
 /// @brief Empty, proto dragon dialogue update calls this for some reason
 void func_8002C91C(void);
