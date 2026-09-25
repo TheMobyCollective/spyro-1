@@ -1953,7 +1953,7 @@ void CollectItem(Moby *pMoby) {
 
   // particle spawn
   (*D_800758E4)(6, 0xC, pMoby,
-                (void *)D_8006E44C[12 + (pMoby->m_Class - MOBYCLASS_GEM_1)]);
+                    D_8006E44C[12 + (pMoby->m_Class - MOBYCLASS_GEM_1)]);
 
   if (pMoby->m_Class == MOBYCLASS_GEM_1)
     gem_value = 1;
@@ -2307,11 +2307,11 @@ void UpdateMobyDragonFragment(Moby *pMoby) {
       particleParams[0] = rand() & 3;
       particleParams[1] = rand() & 3;
       particleParams[2] = 0x14;
-      (*D_800758E4)(1, 1, &pMoby->m_Position, particleParams);
+      (*D_800758E4)(1, 1, &pMoby->m_Position, (int)particleParams);
     }
   } else {
     // Fragment finished - spawn end particles and deactivate
-    (*D_800758E4)(3, 0x46, &pMoby->m_Position, (void *)0x10);
+    (*D_800758E4)(3, 0x46, &pMoby->m_Position, 0x10);
     func_80052568(pMoby);
   }
 }

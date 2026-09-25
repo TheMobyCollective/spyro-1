@@ -39,6 +39,12 @@ void VecSub(Vector3D *pOut, Vector3D *pIn1, Vector3D *pIn2);
 /// @brief Converts a vector to a short vector
 void VecToShortVec(Vector3D16 *pOut, Vector3D *pVec);
 
+/// @brief Converts a vector to a short vector, scaling elements down by 4
+void func_80017BFC(Vector3D16 *pOut, Vector3D *pVec);
+
+/// @brief Adds two short vectors together
+void func_80017C84(Vector3D16 *pOut, Vector3D16 *pIn1, Vector3D16 *pIn2);
+
 /// @brief Scales a vector to a desired length
 /// @param pVec The vector, modified in place
 /// @param pCurrentLength The current length

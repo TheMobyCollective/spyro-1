@@ -762,7 +762,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
   g_Particles = g_Buffers.m_ParticleSpaceStart;
   g_ParticleAllocPtr = g_Buffers.m_ParticleSpaceStart;
 
-  g_Particles[0].m_Type = -1;       // Make the first particle a terminator
+  g_Particles[0].m_RenderType = -1;       // Make the first particle a terminator
   *(int *)(&g_Particles[256]) = -1; // Terminate the last particle
 
   // Mark all glows and sparkles as dead to initialize them

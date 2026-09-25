@@ -18,7 +18,7 @@ extern void (*g_FlightResultsUpdate)();
 extern void (*D_8007567C)(); // g_DrawGameState7
 
 extern void (*D_800758E4)(int pAmount, int pClass, void *spawnParam,
-                          void *extraParam); // g_ParticleSpawn
+                          int extraParam); // g_ParticleSpawn
 extern void (*g_UpdateParticle)(int);
 
 extern void (*D_800757A0)(); // g_BalloonistTriggerCode (called inside the
@@ -37,16 +37,18 @@ extern int (*D_800758C4)(int pTimer, Vector3D* pPos, int pColor); // g_DrawTime
 
 // clang-format off
 #define FOR_LEVELS(o) \
-    o(10) \
-    o(11) \
-    o(12) \
-    o(13) \
-    o(14) \
-    o(15)
+    o(10) o(11) o(12) o(13) o(14) o(15) \
+    o(20) o(21) o(22) o(23) o(24) o(25) \
+    o(30) o(31) o(32) o(33) o(34) o(35) \
+    o(40) o(41) o(42) o(43) o(44) o(45) \
+    o(50) o(51) o(52) o(53) o(54) o(55) \
+    o(60) o(61) o(62) o(63) o(64)
 
 
 #define o(level) \
-    Moby *NAME_OVERLAY_FUNCTION_LEVEL(SpawnMoby, level)(int pClass, Moby *pParent);
+    Moby *NAME_OVERLAY_FUNCTION_LEVEL(SpawnMoby, level)(int pClass, Moby *pParent); \
+    void NAME_OVERLAY_FUNCTION_LEVEL(SpawnParticle, level)(int pAmount, int pClass, void *spawnParam, int extraParam); \
+    void NAME_OVERLAY_FUNCTION_LEVEL(UpdateParticle, level)(int pDelta);
 
 #define FOR_FLIGHTS(f)\
     f(15) \

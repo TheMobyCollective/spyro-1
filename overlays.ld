@@ -9,18 +9,23 @@ OVERLAY main_BSS_END : NOCROSSREFS SUBALIGN(4) {
         LONG(overlay_id); \
         build/src/overlays/folder/moby.o(.rodata); \
         build/src/overlays/folder/moby.o(.rodata.jtbl); \
-        build/src/overlays/folder/particle.o(.rodata); \
-        build/src/overlays/folder/particle.o(.rodata.jtbl); \
+        build/src/overlays/folder/particle_update.o(.rodata); \
+        build/src/overlays/folder/particle_spawn.o(.rodata); \
+        build/src/overlays/folder/particle_update.o(.rodata.jtbl); \
+        build/src/overlays/folder/particle_spawn.o(.rodata.jtbl); \
         build/src/overlays/folder/terminator.o(.rodata); \
         build/src/overlays/folder/terminator.o(.rodata.jtbl); \
         build/src/overlays/folder/moby.o(.text*); \
-        build/src/overlays/folder/particle.o(.text*); \
+        build/src/overlays/folder/particle_update.o(.text*); \
+        build/src/overlays/folder/particle_spawn.o(.text*); \
         build/src/overlays/folder/terminator.o(.text*); \
         build/src/overlays/folder/moby.o(.data*); \
-        build/src/overlays/folder/particle.o(.data*); \
+        build/src/overlays/folder/particle_update.o(.data*); \
+        build/src/overlays/folder/particle_spawn.o(.data*); \
         build/src/overlays/folder/terminator.o(.data*); \
         build/src/overlays/folder/moby.o(.bss*); \
-        build/src/overlays/folder/particle.o(.bss*); \
+        build/src/overlays/folder/particle_update.o(.bss*); \
+        build/src/overlays/folder/particle_spawn.o(.bss*); \
         build/src/overlays/folder/terminator.o(.bss*); \
         .folder##_end = .; \
         /* Pad to the sector */ \
@@ -33,21 +38,26 @@ OVERLAY main_BSS_END : NOCROSSREFS SUBALIGN(4) {
         build/src/overlays/folder/balloonist.o(.rodata); \
         build/src/overlays/folder/moby.o(.rodata); \
         build/src/overlays/folder/moby.o(.rodata.jtbl); \
-        build/src/overlays/folder/particle.o(.rodata); \
-        build/src/overlays/folder/particle.o(.rodata.jtbl); \
+        build/src/overlays/folder/particle_update.o(.rodata); \
+        build/src/overlays/folder/particle_spawn.o(.rodata); \
+        build/src/overlays/folder/particle_update.o(.rodata.jtbl); \
+        build/src/overlays/folder/particle_spawn.o(.rodata.jtbl); \
         build/src/overlays/folder/terminator.o(.rodata); \
         build/src/overlays/folder/terminator.o(.rodata.jtbl); \
         build/src/overlays/folder/balloonist.o(.text*); \
         build/src/overlays/folder/moby.o(.text*); \
-        build/src/overlays/folder/particle.o(.text*); \
+        build/src/overlays/folder/particle_update.o(.text*); \
+        build/src/overlays/folder/particle_spawn.o(.text*); \
         build/src/overlays/folder/terminator.o(.text*); \
         build/src/overlays/folder/balloonist.o(.data*); \
         build/src/overlays/folder/moby.o(.data*); \
-        build/src/overlays/folder/particle.o(.data*); \
+        build/src/overlays/folder/particle_update.o(.data*); \
+        build/src/overlays/folder/particle_spawn.o(.data*); \
         build/src/overlays/folder/terminator.o(.data*); \
         build/src/overlays/folder/balloonist.o(.bss*); \
         build/src/overlays/folder/moby.o(.bss*); \
-        build/src/overlays/folder/particle.o(.bss*); \
+        build/src/overlays/folder/particle_update.o(.bss*); \
+        build/src/overlays/folder/particle_spawn.o(.bss*); \
         build/src/overlays/folder/terminator.o(.bss*); \
         .folder##_end = .; \
         /* Pad to the sector */ \
@@ -60,21 +70,26 @@ OVERLAY main_BSS_END : NOCROSSREFS SUBALIGN(4) {
         build/src/overlays/folder/flight.o(.rodata.jtbl); \
         build/src/overlays/folder/moby.o(.rodata); \
         build/src/overlays/folder/moby.o(.rodata.jtbl); \
-        build/src/overlays/folder/particle.o(.rodata); \
-        build/src/overlays/folder/particle.o(.rodata.jtbl); \
+        build/src/overlays/folder/particle_update.o(.rodata); \
+        build/src/overlays/folder/particle_spawn.o(.rodata); \
+        build/src/overlays/folder/particle_update.o(.rodata.jtbl); \
+        build/src/overlays/folder/particle_spawn.o(.rodata.jtbl); \
         build/src/overlays/folder/terminator.o(.rodata); \
         build/src/overlays/folder/terminator.o(.rodata.jtbl); \
         build/src/overlays/folder/flight.o(.text*); \
         build/src/overlays/folder/moby.o(.text*); \
-        build/src/overlays/folder/particle.o(.text*); \
+        build/src/overlays/folder/particle_update.o(.text*); \
+        build/src/overlays/folder/particle_spawn.o(.text*); \
         build/src/overlays/folder/terminator.o(.text*); \
         build/src/overlays/folder/flight.o(.data*); \
         build/src/overlays/folder/moby.o(.data*); \
-        build/src/overlays/folder/particle.o(.data*); \
+        build/src/overlays/folder/particle_update.o(.data*); \
+        build/src/overlays/folder/particle_spawn.o(.data*); \
         build/src/overlays/folder/terminator.o(.data*); \
         build/src/overlays/folder/flight.o(.bss*); \
         build/src/overlays/folder/moby.o(.bss*); \
-        build/src/overlays/folder/particle.o(.bss*); \
+        build/src/overlays/folder/particle_update.o(.bss*); \
+        build/src/overlays/folder/particle_spawn.o(.bss*); \
         build/src/overlays/folder/terminator.o(.bss*); \
         .folder##_end = .; \
         /* Pad to the sector */ \

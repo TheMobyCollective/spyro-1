@@ -31,14 +31,65 @@ typedef struct {
 
 extern ParticleTexture *D_80076278[32];
 
+// 20 bytes
 typedef struct {
-  u_char m_Class; // Particle class, determines behavior
-  u_char m_Type;  // TODO: Document
-  u_char m_Life;  // Remaining life in ticks
-  u_char m_03;
+  Vector3D16 m_Position;
+  Vector3D16 m_End;
+  Color m_Color0;
+  struct {
+    u_char r;
+    u_char g;
+    u_char b;
+    u_char m_OtOffset;
+  } m_Color1;
+} ParticleLineData;
+
+// 14 bytes
+typedef struct {
+  Vector3D16 m_Position;
+  u_char m_Size;
+  u_char m_Rotation;
+  Color m_Color;
+  u_char m_TextureIndex;
+  u_char m_OtOffset;
+} ParticleRotatedQuadData;
+
+// 14 bytes
+typedef struct {
+  Vector3D16 m_Position;
+  u_char m_Width;
+  u_char m_Height;
+  Color m_Color;
+  u_char m_TextureIndex;
+  u_char m_OtOffset;
+} ParticleQuadData;
+
+// 12 bytes
+typedef struct {
+  Vector3D16 m_Position;
+  u_char m_OtOffset;
+  u_char m_0x07;
+  Color m_Color;
+} ParticlePointData;
+
+typedef union {
+  u_char m_Raw[28];
+  Vector3D16 m_Position;
+
+  ParticlePointData m_Point;
+  ParticleRotatedQuadData m_RotatedQuad;
+  ParticleQuadData m_Quad;
+  ParticleLineData m_Line;
+} ParticleData;
+
+typedef struct {
+  u_char m_Class;      // Particle class, determines behavior
+  u_char m_RenderType; // TODO: Document and make enum/defines
+  u_char m_Timer;      // Particle age
+  u_char m_WasRendered;
 
   // Depends on the type, and class
-  u_char m_Data[28];
+  ParticleData m_Data;
 } Particle;
 
 // Particle array
@@ -48,6 +99,12 @@ extern Particle *g_Particles;
 // It starts at the beginning of the array, and moves forward as particles are
 // allocated, then wraps around to the beginning when it reaches the end
 extern Particle *g_ParticleAllocPtr;
+
+/// @brief Allocates a particle
+Particle *func_80053570(int pRenderType);
+
+/// @brief Frees a particle
+void func_80053608(Particle *particle);
 
 /// @brief Renders the glows and sparkles (C FUNCTION, NOT RELOCATED YET)
 void func_80058BA8(void);
