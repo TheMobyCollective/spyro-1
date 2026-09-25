@@ -1659,16 +1659,14 @@ void func_80049880(void) {
   g_Spyro.m_headRotation.z = g_Spyro.unk_0x1b8 >> 4;
 }
 
-void func_800499C0(void);
-
-// Flame muzzle offset vectors (rotate-by-head-matrix sources for particles)
-extern Vector3D D_8006E238[];
-extern Vector3D D_8006E244[];
+// Particle direction vector, start offset and end offset for flame particles
+extern Vector3D D_8006E238[4];
 extern u_char D_80075268[4];
 
 /// @brief Update flame
 void func_800499C0(void) {
-  if (spyro_FlameBlockedInAnimation[spyro_StateDefaultAnimation[g_Spyro.m_State]]) {
+  if (spyro_FlameBlockedInAnimation
+          [spyro_StateDefaultAnimation[g_Spyro.m_State]]) {
     g_Spyro.unk_0x198 = 0;
     VecNull(&g_Spyro.m_HeadLookTarget);
     func_80049880();
@@ -1678,58 +1676,63 @@ void func_800499C0(void) {
   switch (g_Spyro.unk_0x198) {
   case 0:
     g_SpyroFlame.unk_99[1] = 0;
-    if ((g_Pad.m_Down & 0x20) && g_SpyroFlame.m_IsFlameActive == 0) {
+    if ((g_Pad.m_Down & PAD_CIRCLE) && g_SpyroFlame.m_IsFlameActive == 0) {
       int headSpeed;
+
       g_Spyro.unk_0x198 = 1;
       g_Spyro.unk_0x1a0 = -1;
       g_Spyro.unk_0x60 = 0;
+
       headSpeed =
           spyro_AnimationDetails[D_80075268[g_Spyro.unk_0x198]].m_FrameRate;
       g_SpyroFlame.m_IsFlameActive = 1;
+      g_Spyro.m_headAnimationSpeed = headSpeed;
       g_SpyroFlame.unk_99[0] = 0;
       g_SpyroFlame.unk_99[1] = 1;
-      g_Spyro.m_headAnimationSpeed = headSpeed;
       g_SpyroFlame.unk_99[2] = rand() & 1;
+
       if (g_SpyroFlame.m_FairyKissTimer != 0) {
         g_SpyroFlame.unk_9c = 1;
       } else {
         g_SpyroFlame.unk_9c = 0;
       }
+
       Memset(&g_SpyroFlame.unk_20, 0, 8);
       VecNull(&g_Spyro.m_HeadLookTarget);
     }
     break;
   case 1:
-    if (g_Spyro.unk_0x1a0 == 0x10) {
+    if (g_Spyro.unk_0x1a0 == 16) {
       g_SpyroFlame.unk_99[1] = 0;
     }
-    if ((g_Spyro.unk_0x1a0 & 3) == 0 &&
-        (u_int)(g_Spyro.unk_0x1a0 - 0xC) < 0x11 && g_LoadStage < 0) {
-      Vector3D worldPos;
-      Vector3D scratch;
-      Vector3D *muzzle;
-      Vector3D *muzzle2;
 
-      muzzle = D_8006E238;
-      VecRotateByMatrix(&g_Spyro.m_headRotationMatrix, muzzle, &worldPos);
-      VecAdd(&worldPos, &worldPos, &g_Spyro.m_Position);
-      VecRotateByLastMatrix(muzzle + 2, &scratch);
+    if ((g_Spyro.unk_0x1a0 & 3) == 0 && g_Spyro.unk_0x1a0 >= 12 &&
+        g_Spyro.unk_0x1a0 <= 28 && g_LoadStage < 0) {
+      Vector3D particleStart;
+      Vector3D direction;
+
+      VecRotateByMatrix(&g_Spyro.m_headRotationMatrix, &D_8006E238[0],
+                        &particleStart);
+      VecAdd(&particleStart, &particleStart, &g_Spyro.m_Position);
+      VecRotateByLastMatrix(&D_8006E238[2], &direction);
+
       if (g_SpyroFlame.unk_9c != 0) {
-        D_800758E4(1, 1, &worldPos, &scratch);
+        D_800758E4(1, 1, &particleStart, &direction);
       } else {
-        D_800758E4(1, 0, &worldPos, &scratch);
+        D_800758E4(1, 0, &particleStart, &direction);
       }
 
-      muzzle2 = D_8006E244;
-      VecRotateByMatrix(&g_Spyro.m_headRotationMatrix, muzzle2, &worldPos);
-      VecAdd(&worldPos, &worldPos, &g_Spyro.m_Position);
-      VecRotateByLastMatrix(muzzle2 + 2, &scratch);
+      VecRotateByMatrix(&g_Spyro.m_headRotationMatrix, &D_8006E238[1],
+                        &particleStart);
+      VecAdd(&particleStart, &particleStart, &g_Spyro.m_Position);
+      VecRotateByLastMatrix(&D_8006E238[3], &direction);
+
       if (g_SpyroFlame.unk_9c != 0) {
-        D_800758E4(1, 1, &worldPos, &scratch);
+        D_800758E4(1, 1, &particleStart, &direction);
       } else {
-        D_800758E4(1, 0, &worldPos, &scratch);
+        D_800758E4(1, 0, &particleStart, &direction);
       }
-    } else if ((g_Pad.m_Down & 0x20) && g_Spyro.unk_0x1a0 >= 0x2C) {
+    } else if ((g_Pad.m_Down & PAD_CIRCLE) && g_Spyro.unk_0x1a0 >= 44) {
       g_Spyro.unk_0x1a0 = -1;
       g_Spyro.unk_0x60 = 2;
       g_Spyro.m_headFrameProgress = 4;
@@ -1738,13 +1741,15 @@ void func_800499C0(void) {
       g_SpyroFlame.unk_99[0] = 0;
       g_SpyroFlame.unk_99[1] = 1;
       g_SpyroFlame.unk_99[2] = rand() & 1;
+
       if (g_SpyroFlame.m_FairyKissTimer != 0) {
         g_SpyroFlame.unk_9c = 1;
       } else {
         g_SpyroFlame.unk_9c = 0;
       }
+
       Memset(&g_SpyroFlame.unk_20, 0, 8);
-    } else if (g_Spyro.unk_0x1a0 >= 0x30) {
+    } else if (g_Spyro.unk_0x1a0 >= 48) {
       g_SpyroFlame.m_IsFlameActive = 0;
       Memset(&g_SpyroFlame.unk_20, 0, 8);
       g_Spyro.unk_0x198 = 0;
@@ -1849,8 +1854,8 @@ void UpdateSpyroEnterReturnHome(void) {
   func_80053708(&g_Pad, &g_PadBackup);
 
   // Force state to 15 (gliding) if not already there
-  if (g_Spyro.m_State != 0xF) {
-    func_8003EA68(0xF);
+  if (g_Spyro.m_State != 15) {
+    func_8003EA68(15);
   }
 
   // Set walking state to 8
