@@ -416,9 +416,11 @@ void UpdateSpyroTurnMomentum(int pTableIndex) {
     rawAngleDiff = g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ -
                    g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
     turnAmount = rawAngleDiff & 0xFFF;
+
     if (turnAmount >= 2049) {
       turnAmount -= 4096; // Convert to signed (-2048 to +2047)
     }
+
     g_Spyro.m_Physics.m_TurnMomentum = 0;
     func_8003D52C(turnAmount); // Applies rotation delta to Spyro's Z angle
   }
@@ -463,12 +465,12 @@ void ApplySpyroSoftTurn(void) {
               g_Spyro.m_Physics.m_SpeedAngle.m_RotZ) &
              0xFFF;
 
-      if (diff > 0x800) {
-        diff -= 0x1000;
+      if (diff > 2048) {
+        diff -= 4096;
       }
 
       // Big pending turn — flag the state machine so Spyro visibly reorients
-      if (ABS2(diff) > 0x100) {
+      if (ABS2(diff) > 256) {
         g_Spyro.m_walkingState = 1;
       }
 
@@ -553,70 +555,71 @@ void RotateSpyroToNeutral(void) {
 
 void func_8003DAE4(void) {
   Vector3D t;
-  int cosZ, sinZ;
-  int mag;
-  int rot[2]; // per-axis scratch: target angle, then delta, then applied rotation
-  int pad[2]; // reserves the frame slot of retail locals the optimiser removed
+  Vector3D rot;
 
-  if (g_Spyro.m_slopeAngle >= 0x17) {
+  if (g_Spyro.m_slopeAngle >= 23) {
     RotateSpyroToNeutral();
     return;
   }
 
-  cosZ = Cos(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
-  sinZ = Sin(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
-  t.x = (g_Spyro.m_floorPositonOnSlope.x * cosZ +
-         g_Spyro.m_floorPositonOnSlope.y * sinZ) >>
+  // I was hoping FIXED_MUL would match here, but sadly it doesn't
+  t.x = (g_Spyro.m_floorPositonOnSlope.x *
+             Cos(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ) +
+         g_Spyro.m_floorPositonOnSlope.y *
+             Sin(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ)) >>
         12;
-  cosZ = Cos(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
-  sinZ = Sin(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
-  t.y = (g_Spyro.m_floorPositonOnSlope.y * cosZ -
-         g_Spyro.m_floorPositonOnSlope.x * sinZ) >>
-        12;
-  t.z = g_Spyro.m_floorPositonOnSlope.z;
-  mag = func_80017A38(t.x * t.x + t.z * t.z);
-  rot[0] = -Atan2(mag, t.y, 1);
-  rot[1] = -Atan2(t.z, t.x, 1);
 
-  rot[0] = (rot[0] - g_Spyro.m_Physics.m_SpeedAngle.m_RotX) & 0xFFF;
-  if (rot[0] > 0x800) {
-    rot[0] -= 0x1000;
+  t.y = (g_Spyro.m_floorPositonOnSlope.y *
+             Cos(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ) -
+         g_Spyro.m_floorPositonOnSlope.x *
+             Sin(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ)) >>
+        12;
+
+  t.z = g_Spyro.m_floorPositonOnSlope.z;
+
+  rot.x = -Atan2(func_80017A38(t.x * t.x + t.z * t.z), t.y, 1);
+  rot.y = -Atan2(t.z, t.x, 1);
+
+  rot.x = (rot.x - g_Spyro.m_Physics.m_SpeedAngle.m_RotX) & 0xFFF;
+  if (rot.x > 2048) {
+    rot.x -= 4096;
   }
-  rot[1] = (rot[1] - g_Spyro.m_Physics.m_SpeedAngle.m_RotY) & 0xFFF;
-  if (rot[1] > 0x800) {
-    rot[1] -= 0x1000;
+
+  rot.y = (rot.y - g_Spyro.m_Physics.m_SpeedAngle.m_RotY) & 0xFFF;
+  if (rot.y > 2048) {
+    rot.y -= 4096;
   }
 
   g_Spyro.m_RotXAccumulator +=
-      ((rot[0] << 2) >> 4) - ((g_Spyro.m_RotXAccumulator << 4) >> 6);
+      ((rot.x << 2) >> 4) - ((g_Spyro.m_RotXAccumulator << 4) >> 6);
   g_Spyro.m_RotYAccumulator +=
-      ((rot[1] << 2) >> 4) - ((g_Spyro.m_RotYAccumulator << 4) >> 6);
+      ((rot.y << 2) >> 4) - ((g_Spyro.m_RotYAccumulator << 4) >> 6);
 
-  rot[0] = g_Spyro.m_RotXAccumulator >> 2;
-  rot[1] = g_Spyro.m_RotYAccumulator >> 2;
+  rot.x = g_Spyro.m_RotXAccumulator >> 2;
+  rot.y = g_Spyro.m_RotYAccumulator >> 2;
 
   g_Spyro.m_Physics.m_SpeedAngle.m_RotX =
-      (g_Spyro.m_Physics.m_SpeedAngle.m_RotX + rot[0]) & 0xFFF;
-  if (g_Spyro.m_Physics.m_SpeedAngle.m_RotX > 0x800) {
-    g_Spyro.m_Physics.m_SpeedAngle.m_RotX -= 0x1000;
+      (g_Spyro.m_Physics.m_SpeedAngle.m_RotX + rot.x) & 0xFFF;
+  if (g_Spyro.m_Physics.m_SpeedAngle.m_RotX > 2048) {
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotX -= 4096;
   }
+
   g_Spyro.m_Physics.m_SpeedAngle.m_RotY =
-      (g_Spyro.m_Physics.m_SpeedAngle.m_RotY + rot[1]) & 0xFFF;
-  if (g_Spyro.m_Physics.m_SpeedAngle.m_RotY > 0x800) {
-    g_Spyro.m_Physics.m_SpeedAngle.m_RotY -= 0x1000;
+      (g_Spyro.m_Physics.m_SpeedAngle.m_RotY + rot.y) & 0xFFF;
+  if (g_Spyro.m_Physics.m_SpeedAngle.m_RotY > 2048) {
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotY -= 4096;
   }
 
-  if ((u_char)(g_Spyro.m_bodyRotation.x - 0x20) < 0xC1) {
-    return;
-  }
-  if ((u_char)(g_Spyro.m_bodyRotation.y - 0x20) < 0xC1) {
+  if (g_Spyro.m_bodyRotation.x >= 32 && g_Spyro.m_bodyRotation.x <= 224 ||
+      g_Spyro.m_bodyRotation.y >= 32 && g_Spyro.m_bodyRotation.y <= 224) {
     return;
   }
 
-  t.y = (-Sin(rot[0]) * 372) >> 12;
-  t.x = (-Sin(rot[1]) * 372) >> 12;
-  t.z = ((0x2000 - Cos(rot[0]) - Cos(rot[1])) * 372) >> 12;
-  RotVec8ToMatrix(&g_Spyro.m_bodyRotation, &g_Spyro.m_RotationMatrix, NULL);
+  t.y = FIXED_MUL(-Sin(rot.x), 372);
+  t.x = FIXED_MUL(-Sin(rot.y), 372);
+  t.z = FIXED_MUL((8192 - Cos(rot.x) - Cos(rot.y)), 372);
+
+  RotVec8ToMatrix(&g_Spyro.m_bodyRotation, &g_Spyro.m_RotationMatrix, nullptr);
   VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &t, &t);
   VecAdd(&g_Spyro.m_Position, &g_Spyro.m_Position, &t);
 }
@@ -863,7 +866,7 @@ void UpdateSlopeFloorCollision(void) {
 
     // Clamp negative angles (invalid floor normal) to max slope
     if (angle < 0) {
-      g_Spyro.m_slopeAngle = 0x400;
+      g_Spyro.m_slopeAngle = 1024;
     }
 
     // Store collision triangle for moving platform tracking
@@ -872,8 +875,8 @@ void UpdateSlopeFloorCollision(void) {
                  g_Spyro.m_collisionTriangleUnpacked.points);
 
     // Check if slope is walkable (< 33 degrees)
-    if (g_Spyro.m_slopeAngle < 0x21) {
-      g_Spyro.m_onSlope = (g_Spyro.m_slopeAngle < 0x17) ^ 1;
+    if (g_Spyro.m_slopeAngle < 33) {
+      g_Spyro.m_onSlope = (g_Spyro.m_slopeAngle < 23) ^ 1;
       g_Spyro.m_airTime = 0;
 
       // === REVERSE VERIFICATION CHECK ===
@@ -929,13 +932,13 @@ void UpdateSlopeFloorCollision(void) {
 
       // Clamp negative angles to max slope
       if (angle < 0) {
-        g_Spyro.m_slopeAngle = 0x400;
+        g_Spyro.m_slopeAngle = 1024;
       }
 
       // If walkable, mark as grounded and set slope flag
-      if (g_Spyro.m_slopeAngle < 0x21) {
+      if (g_Spyro.m_slopeAngle < 33) {
         g_Spyro.m_airTime = 0;
-        g_Spyro.m_onSlope = (g_Spyro.m_slopeAngle < 0x17) ^ 1;
+        g_Spyro.m_onSlope = (g_Spyro.m_slopeAngle < 23) ^ 1;
       }
     }
   }
@@ -1627,22 +1630,22 @@ void func_80049880(void) {
   // signed direction, integrate it into a velocity accumulator, then advance
   // the current angle by that velocity.
   delta = (g_Spyro.m_HeadLookTarget.x - g_Spyro.unk_0x1b0) & 0xFFF;
-  if (delta > 0x800) {
-    delta -= 0x1000;
+  if (delta > 2048) {
+    delta -= 4096;
   }
   g_Spyro.unk_0x1bc += ((delta << 7) - (g_Spyro.unk_0x1bc << 4)) >> 6;
   g_Spyro.unk_0x1b0 += g_Spyro.unk_0x1bc >> 6;
 
   delta = (g_Spyro.m_HeadLookTarget.y - g_Spyro.unk_0x1b4) & 0xFFF;
-  if (delta > 0x800) {
-    delta -= 0x1000;
+  if (delta > 2048) {
+    delta -= 4096;
   }
   g_Spyro.unk_0x1c0 += ((delta << 7) - (g_Spyro.unk_0x1c0 << 4)) >> 6;
   g_Spyro.unk_0x1b4 += g_Spyro.unk_0x1c0 >> 6;
 
   delta = (g_Spyro.m_HeadLookTarget.z - g_Spyro.unk_0x1b8) & 0xFFF;
-  if (delta > 0x800) {
-    delta -= 0x1000;
+  if (delta > 2048) {
+    delta -= 4096;
   }
 
   g_Spyro.unk_0x1c4 += ((delta << 7) - (g_Spyro.unk_0x1c4 << 4)) >> 6;
