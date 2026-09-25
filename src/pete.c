@@ -551,7 +551,75 @@ void RotateSpyroToNeutral(void) {
   g_Spyro.m_Physics.m_SpeedAngle.m_RotY += t.y;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003DAE4);
+void func_8003DAE4(void) {
+  Vector3D t;
+  int cosZ, sinZ;
+  int mag;
+  int rot[2]; // per-axis scratch: target angle, then delta, then applied rotation
+  int pad[2]; // reserves the frame slot of retail locals the optimiser removed
+
+  if (g_Spyro.m_slopeAngle >= 0x17) {
+    RotateSpyroToNeutral();
+    return;
+  }
+
+  cosZ = Cos(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
+  sinZ = Sin(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
+  t.x = (g_Spyro.m_floorPositonOnSlope.x * cosZ +
+         g_Spyro.m_floorPositonOnSlope.y * sinZ) >>
+        12;
+  cosZ = Cos(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
+  sinZ = Sin(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
+  t.y = (g_Spyro.m_floorPositonOnSlope.y * cosZ -
+         g_Spyro.m_floorPositonOnSlope.x * sinZ) >>
+        12;
+  t.z = g_Spyro.m_floorPositonOnSlope.z;
+  mag = func_80017A38(t.x * t.x + t.z * t.z);
+  rot[0] = -Atan2(mag, t.y, 1);
+  rot[1] = -Atan2(t.z, t.x, 1);
+
+  rot[0] = (rot[0] - g_Spyro.m_Physics.m_SpeedAngle.m_RotX) & 0xFFF;
+  if (rot[0] > 0x800) {
+    rot[0] -= 0x1000;
+  }
+  rot[1] = (rot[1] - g_Spyro.m_Physics.m_SpeedAngle.m_RotY) & 0xFFF;
+  if (rot[1] > 0x800) {
+    rot[1] -= 0x1000;
+  }
+
+  g_Spyro.m_RotXAccumulator +=
+      ((rot[0] << 2) >> 4) - ((g_Spyro.m_RotXAccumulator << 4) >> 6);
+  g_Spyro.m_RotYAccumulator +=
+      ((rot[1] << 2) >> 4) - ((g_Spyro.m_RotYAccumulator << 4) >> 6);
+
+  rot[0] = g_Spyro.m_RotXAccumulator >> 2;
+  rot[1] = g_Spyro.m_RotYAccumulator >> 2;
+
+  g_Spyro.m_Physics.m_SpeedAngle.m_RotX =
+      (g_Spyro.m_Physics.m_SpeedAngle.m_RotX + rot[0]) & 0xFFF;
+  if (g_Spyro.m_Physics.m_SpeedAngle.m_RotX > 0x800) {
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotX -= 0x1000;
+  }
+  g_Spyro.m_Physics.m_SpeedAngle.m_RotY =
+      (g_Spyro.m_Physics.m_SpeedAngle.m_RotY + rot[1]) & 0xFFF;
+  if (g_Spyro.m_Physics.m_SpeedAngle.m_RotY > 0x800) {
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotY -= 0x1000;
+  }
+
+  if ((u_char)(g_Spyro.m_bodyRotation.x - 0x20) < 0xC1) {
+    return;
+  }
+  if ((u_char)(g_Spyro.m_bodyRotation.y - 0x20) < 0xC1) {
+    return;
+  }
+
+  t.y = (-Sin(rot[0]) * 372) >> 12;
+  t.x = (-Sin(rot[1]) * 372) >> 12;
+  t.z = ((0x2000 - Cos(rot[0]) - Cos(rot[1])) * 372) >> 12;
+  RotVec8ToMatrix(&g_Spyro.m_bodyRotation, &g_Spyro.m_RotationMatrix, NULL);
+  VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &t, &t);
+  VecAdd(&g_Spyro.m_Position, &g_Spyro.m_Position, &t);
+}
 
 /// @brief Smoothly rotates Spyro's orientation to align with his acceleration
 /// Uses a spring-damper system via m_RotXAccumulator and m_RotYAccumulator.
