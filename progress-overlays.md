@@ -105,7 +105,7 @@
 - [ ] func_level_30_8008D2D0
 - [x] func_level_30_8008E608
 - [ ] func_level_31_8007BB00
-- [ ] func_level_31_8008A36C
+- [x] func_level_31_8008A36C
 - [ ] func_level_31_8008AF54
 - [ ] func_level_31_8008C9D8
 - [x] func_level_31_8008DEC0
