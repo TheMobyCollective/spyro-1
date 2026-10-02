@@ -1000,10 +1000,584 @@ void func_80035F58() {
   }
 }
 
-void func_80035FB4(void);
+// Not sure how to represent these properly, they might be part of an array
+extern SphericalCoordsOffset D_8006C8D4;
+extern int D_8006C8D8;
+extern SphericalCoordsOffset D_8006C934;
+extern SphericalCoordsOffset D_8006C964;
+extern SphericalCoordsOffset D_8006C94C;
+extern SphericalCoordsOffset D_8006C97C;
+extern SphericalCoordsOffset D_8006C994;
+extern SphericalCoordsOffset D_8006C9AC;
+extern SphericalCoordsOffset D_8006C9DC;
+extern SphericalCoordsOffset D_8006CA0C;
+extern SphericalCoordsOffset D_8006CB5C;
+extern SphericalCoordsOffset D_8006CB74;
+extern u_char D_8007527C;
+extern Vector3D D_80077798;
+
+// The 0x100 member of g_Camera was a separate symbol in the original source:
+// referencing it through the g_Camera symbol folds the address into a
+// g_Camera-relative register (one addiu instead of a lui/addiu pair); the
+// distinct name keeps the reference absolute, as in the ROM.
+extern Vector3D D_80076ED0;
+__asm__(".globl D_80076ED0\nD_80076ED0 = g_Camera + 0x100");
+
+void func_80034480(void);
 
 // Camera state update for all other states
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80035FB4);
+void func_80035FB4(void) {
+  Vector3D diff1;
+  int pad1;
+  Vector3D scaled1;
+  int pad2;
+  Vector3D diff2;
+  int pad3[3];
+  Vector3D scaled2;
+  int new_var;
+  int pad4[8];
+  int step;
+  Vector3D *pPos;
+  Vector3D *pSpyroB;
+  Vector3D *pDest;
+  int azA;
+  int azB;
+  int i;
+  if (((D_80075914 & 0x10) != 0) || (D_8007592C != 0)) {
+    if (g_Camera.m_State == 15) {
+      g_Camera.m_State = 0;
+    }
+  }
+  step = (g_Camera.m_SpyroOffCenterFrames + 1) >> 1;
+  if (step >= 5) {
+    step = 4;
+  }
+  switch ((int)g_Camera.m_State) {
+  case 0:
+  case 0x80000000:
+    if ((D_80075914 & 0x10) == 0) {
+      goto case0_setup;
+    }
+    if (g_Camera.m_OnMovingPlatform != 0) {
+      goto case0_setup;
+    }
+    if (D_80075924 != 0) {
+      goto case0_setup;
+    }
+    if (g_Camera.unk_0xC4 != 0) {
+      goto case0_setup;
+    }
+    if (D_80075894 != 0) {
+      goto case0_cont;
+    }
+    if (g_Spyro.m_State != 0x1B) {
+      goto case0_setup;
+    }
+    goto case0_cont;
+  case0_setup:
+    g_Camera.m_SphericalPreset = &D_8006C8D4;
+
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    if ((g_Camera.unk_0xC4 != 0) && (g_GameTick >= 0x78)) {
+      goto case0_cont;
+    }
+    ApplySphericalPreset();
+    goto case0_cont;
+  case0_cont:
+    if (((D_80075914 & 0x10) == 0) && (D_8007592C == 0)) {
+      goto tail_check;
+    }
+
+    if (g_Pad.m_NoButtonsDown == 0) {
+      goto tail_check;
+    }
+    if (D_800756B8 == 0) {
+      goto tail_check;
+    }
+    if (g_Camera.m_OnMovingPlatform != 0) {
+      goto tail_check;
+    }
+    if (D_80075894 == 0) {
+      goto tail_break;
+    }
+    {
+      int rot = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ - 0x800;
+      azA = (g_Camera.m_Simulation.m_Coords.azimuth + rot) & 0xFFF;
+    }
+    if (azA >= 0x801) {
+      azA -= 0x1000;
+    }
+    azB = (g_Camera.m_Simulation.m_Coords.elevation - D_8006C8D8) & 0xFFF;
+    if (azB >= 0x801) {
+      azB -= 0x1000;
+    }
+    if ((ABS(azA) < 0x191) && (ABS(azB) < 0x101)) {
+      goto tail_break;
+    }
+    D_80075894 -= g_DeltaTime;
+    if (D_80075894 > 0) {
+      goto tail_break;
+    }
+    D_80075894 = 0;
+    g_Camera.unk_0xA8.m_Coords.azimuth = 0;
+    g_Camera.unk_0xA8.m_Coords.elevation = 0;
+    g_Camera.unk_0xA8.m_Coords.radius = 0;
+    g_Camera.unk_0xA8.m_Offset.azimuth = 0;
+    g_Camera.unk_0xA8.m_Offset.elevation = 0;
+    g_Camera.unk_0xA8.m_Offset.radius = 0;
+    goto tail_break;
+  tail_check:
+    D_80075894 = 0x5A;
+
+    goto tail_break;
+
+  case 0x80000010:
+    g_Camera.m_SphericalPreset = &D_8006C8D4;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    if (g_Camera.unk_0xC4 == 0) {
+      ApplySphericalPreset();
+    }
+
+  case 0x80000011:
+    D_80075938--;
+    goto tail_break;
+
+  case 1: {
+    Vector3D **ppFocus = &g_Camera.m_Focus;
+    *ppFocus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+    if (g_Camera.unk_0xC4 != 0) {
+      goto tail_break;
+    }
+    if (func_80017928(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
+                      g_Camera.m_Rotation.z) >= 0x579) {
+      g_Camera.m_SphericalPreset = &D_8006C964;
+    } else {
+      g_Camera.m_SphericalPreset = &D_8006C934;
+      if ((D_80075914 & 0x40) == 0) {
+        g_Camera.unk_0xE8 =
+            func_80033F08((Vector3D *)(((char *)ppFocus) - 0xA8));
+        g_Camera.m_Sphere.m_Coords.azimuth =
+            g_Camera.m_Simulation.m_Coords.azimuth;
+      }
+    }
+    ApplySphericalPreset();
+    {
+      Vector3D *pSpyroA = &g_Spyro.m_Position;
+      VecSub(&diff1, pSpyroA, &g_Camera.m_Position);
+      VecMult(&scaled1, &g_Spyro.m_Physics.m_TrueVelocity, D_8007527C);
+      VecShiftRight(&scaled1, 6);
+      VecAdd(&scaled1, &diff1, &scaled1);
+      g_Camera.m_LastSimulation.m_Offset.radius =
+          (Atan2(diff1.x, diff1.y, 1) - Atan2(scaled1.x, scaled1.y, 1)) & 0xFFF;
+    }
+    goto tail_break;
+  }
+
+  case 3: {
+    Vector3D *pPos = &g_Camera.m_Position;
+    g_Camera.m_SphericalPreset = &D_8006C994;
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+    g_Camera.unk_0xE8 = func_80033F08(pPos);
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    if (g_Camera.unk_0xC4 != 0) {
+      g_Camera.unk_0xE8 = func_80033F08(pPos);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+      goto tail_break;
+    }
+    ApplySphericalPreset();
+    g_Camera.m_LastSimulation.m_Offset.radius =
+        ((-g_Spyro.m_Physics.m_TurnMomentum) << 3) & 0xFFF;
+    goto tail_break;
+  }
+
+  case 5:
+    pSpyroB = &g_Spyro.m_Position;
+    g_Camera.m_Focus = pSpyroB;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+    if (g_Camera.unk_0xC4 != 0) {
+      goto case5_c4;
+    }
+    if (g_Spyro.m_flyingAbility != 0) {
+      if (g_Spyro.m_walkingState != 2) {
+        goto case5_not2;
+      }
+      azA = (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ - g_Camera.m_Rotation.z) &
+            0xFFF;
+      if (azA >= 0x801) {
+        azA -= 0x1000;
+      }
+      if (azA > 0) {
+        g_Camera.m_SphericalPreset = &D_8006C94C;
+      } else {
+        g_Camera.m_SphericalPreset = &D_8006C97C;
+      }
+      g_Camera.m_FocusRotation =
+          (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ + 0x800) & 0xFFF;
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere.m_Coords.azimuth =
+          g_Camera.m_Simulation.m_Coords.azimuth;
+      goto apply_break;
+    case5_not2:
+      pPos = &g_Camera.m_Position;
+      if (g_Spyro.m_walkingState == 1) {
+        azA = (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ - g_Camera.m_Rotation.z) &
+              0xFFF;
+        if (azA >= 0x801) {
+          azA -= 0x1000;
+        }
+        if (azA >= 0x101) {
+          g_Camera.m_SphericalPreset = &D_8006C94C;
+        } else if (azA < (-0x100)) {
+          g_Camera.m_SphericalPreset = &D_8006C97C;
+        } else {
+          g_Camera.m_SphericalPreset = &D_8006C934;
+        }
+        g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+        g_Camera.m_Sphere.m_Coords.azimuth =
+            g_Camera.m_Simulation.m_Coords.azimuth;
+        goto tail_break;
+      }
+      g_Camera.m_SphericalPreset = &D_8006C934;
+      g_Camera.unk_0xE8 = func_80033F08(pPos);
+      g_Camera.m_Sphere.m_Coords.azimuth =
+          g_Camera.m_Simulation.m_Coords.azimuth;
+      g_Camera.m_Sphere.m_Coords.elevation =
+          g_Camera.m_Simulation.m_Coords.elevation;
+      ApplySphericalPreset();
+      VecSub(&diff2, pSpyroB, pPos);
+      VecMult(&scaled2, &g_Spyro.m_Physics.m_TrueVelocity, D_8007527C);
+      VecShiftRight(&scaled2, 5);
+      VecAdd(&scaled2, &diff2, &scaled2);
+      g_Camera.m_LastSimulation.m_Offset.radius =
+          (Atan2(diff2.x, diff2.y, 1) - Atan2(scaled2.x, scaled2.y, 1)) & 0xFFF;
+      goto tail_break;
+    } else {
+      azA = func_80017928(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
+                          g_Camera.m_Rotation.z);
+      if ((g_Spyro.m_walkingState != 0xB) && (azA >= 0x579)) {
+        g_Camera.m_SphericalPreset = &D_8006C964;
+      } else {
+        g_Camera.m_SphericalPreset = &D_8006C934;
+        g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+        g_Camera.m_Sphere.m_Coords.azimuth =
+            g_Camera.m_Simulation.m_Coords.azimuth;
+        g_Camera.m_Sphere.m_Coords.elevation =
+            g_Camera.m_Simulation.m_Coords.elevation;
+      }
+      ApplySphericalPreset();
+      {
+        Vector3D *pSpyroA = &g_Spyro.m_Position;
+        VecSub(&diff2, pSpyroA, &g_Camera.m_Position);
+        VecMult(&scaled2, &g_Spyro.m_Physics.m_TrueVelocity, D_8007527C);
+        VecShiftRight(&scaled2, 5);
+        VecAdd(&scaled2, &diff2, &scaled2);
+        g_Camera.m_LastSimulation.m_Offset.radius =
+            (Atan2(diff2.x, diff2.y, 1) - Atan2(scaled2.x, scaled2.y, 1)) &
+            0xFFF;
+      }
+      goto tail_break;
+    }
+  case5_c4:
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+    g_Camera.m_Sphere = g_Camera.m_Simulation;
+    goto tail_break;
+
+  case 6:
+    if (g_Camera.m_Focus != (&D_80077798)) {
+      VecCopy(&D_80077798, g_Camera.m_Focus);
+      g_Camera.m_Focus = &D_80077798;
+    }
+    D_80075924 = 0;
+    if ((((((ABS(g_Camera.unk_0xA8.m_Coords.azimuth) +
+             ABS(g_Camera.unk_0xA8.m_Coords.elevation)) +
+            ABS(g_Camera.unk_0xA8.m_Coords.radius)) +
+           ABS(g_Camera.unk_0xA8.m_Offset.azimuth)) +
+          ABS(g_Camera.unk_0xA8.m_Offset.elevation)) +
+         ABS(g_Camera.unk_0xA8.m_Offset.radius)) >= 0x21) {
+      for (i = 0; i < g_DeltaTime; i++) {
+        func_80034CE8(0);
+      }
+
+      pDest = &g_Camera.m_DestinationPosition;
+      func_80034204(pDest);
+      VecAdd(pDest, pDest, g_Camera.m_Focus);
+      CameraForceToDestination();
+      func_800342F8();
+    }
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    g_Camera.m_Sphere.m_Coords.elevation =
+        g_Camera.m_Simulation.m_Coords.elevation;
+    g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+    g_Camera.m_Sphere.m_Offset.azimuth = g_Camera.m_Simulation.m_Offset.azimuth;
+    g_Camera.m_Sphere.m_Offset.elevation =
+        g_Camera.m_Simulation.m_Offset.elevation;
+    g_Camera.m_Sphere.m_Offset.radius = g_Camera.m_Simulation.m_Offset.radius;
+    return;
+
+  case 4:
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+    if (g_Camera.unk_0xC4 != 0) {
+      goto case4_c4;
+    }
+    if (func_80017928(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
+                      g_Camera.m_Rotation.z) >= 0x579) {
+      g_Camera.m_SphericalPreset = &D_8006C9DC;
+      goto apply_break;
+    }
+    g_Camera.m_SphericalPreset = &D_8006C9AC;
+    if ((D_80075914 & 0x40) == 0) {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere.m_Coords.azimuth =
+          g_Camera.m_Simulation.m_Coords.azimuth;
+    }
+    goto apply_break;
+
+  case4_c4:
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+    g_Camera.m_Sphere = g_Camera.m_Simulation;
+    goto tail_break;
+
+  case 0x80000009:
+    g_Camera.m_SphericalPreset = &D_8006CA0C;
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    g_Camera.m_Sphere.m_Coords.elevation =
+        g_Camera.m_Simulation.m_Coords.elevation;
+    g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+    if (g_Camera.unk_0xC4 != 0) {
+      step = 5;
+      goto tail_break;
+    }
+    ApplySphericalPreset();
+    if ((g_ActivePad->m_Down == 3) &&
+        (((*((int *)(&g_ActivePad->m_Sticks))) & 0xFFFF0000) != 0x7F7F0000)) {
+      g_Camera.unk_0xDC += (g_ActivePad->m_Sticks.m_LeftX - 0x7F) >> 1;
+      g_Camera.unk_0xE0 += (0x7F - g_ActivePad->m_Sticks.m_LeftY) >> 1;
+    } else {
+      if ((g_Pad.m_Held & PAD_LEFT) != 0) {
+        g_Camera.unk_0xDC -= 0x30;
+      } else if ((g_Pad.m_Held & PAD_RIGHT) != 0) {
+        g_Camera.unk_0xDC += 0x30;
+      }
+      if ((g_Pad.m_Held & PAD_UP) != 0) {
+        g_Camera.unk_0xE0 += 0x30;
+      } else if ((g_Pad.m_Held & PAD_DOWN) != 0) {
+        g_Camera.unk_0xE0 -= 0x30;
+      }
+    }
+    if (g_Camera.unk_0xDC < (-0x400)) {
+      g_Camera.unk_0xDC = -0x400;
+    }
+    if (g_Camera.unk_0xDC >= 0x401) {
+      g_Camera.unk_0xDC = 0x400;
+    }
+    if (g_Camera.unk_0xE0 < (-0x3D0)) {
+      g_Camera.unk_0xE0 = -0x3D0;
+    }
+    if (g_Camera.unk_0xE0 >= 0x501) {
+      g_Camera.unk_0xE0 = 0x500;
+    }
+    g_Camera.m_LastSimulation.m_Coords.azimuth += g_Camera.unk_0xDC;
+    if (g_Camera.unk_0xE0 < (-0x140)) {
+      int base = g_Camera.m_LastSimulation.m_Offset.elevation + 0x140;
+      int radius = base + g_Camera.unk_0xE0;
+      int elev = g_Camera.m_LastSimulation.m_Coords.elevation - 0x140;
+      g_Camera.m_LastSimulation.m_Coords.elevation = elev;
+      g_Camera.m_LastSimulation.m_Offset.elevation = radius;
+    } else {
+      g_Camera.m_LastSimulation.m_Coords.elevation += g_Camera.unk_0xE0;
+    }
+    azB = -g_Camera.unk_0xDC;
+    if (azB < (-0x300)) {
+      azB = -0x300;
+    }
+    if (azB >= 0x301) {
+      azB = 0x300;
+    }
+    g_Spyro.m_HeadLookTarget.z = azB;
+    azB = -g_Camera.unk_0xE0;
+    if (azB < (-0x200)) {
+      azB = -0x200;
+    }
+    if (azB >= 0x201) {
+      azB = 0x200;
+    }
+    g_Spyro.m_HeadLookTarget.y = azB;
+    step = 5;
+    goto tail_break;
+
+  case 2:
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+    if (g_Camera.unk_0xC4 != 0) {
+      goto case2_c4;
+    }
+    if (func_80017928(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
+                      g_Camera.m_Rotation.z) >= 0x579) {
+      g_Camera.m_SphericalPreset = &D_8006C964;
+    } else {
+      g_Camera.m_SphericalPreset = &D_8006C934;
+    }
+    goto apply_break;
+  apply_break:
+    ApplySphericalPreset();
+
+    goto tail_break;
+
+  case2_c4:
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+    g_Camera.m_Sphere = g_Camera.m_Simulation;
+    goto tail_break;
+
+  case 0x80000007: {
+    Moby *moby;
+    g_Camera.m_SphericalPreset = &D_8006CB5C;
+    g_Camera.m_Focus = &D_80076ED0;
+    moby = g_Spyro.m_mobyInUseBySpyro;
+    D_80076ED0.x = moby->m_Position.x;
+    new_var = moby->m_Position.y;
+    D_80076ED0.z = g_Spyro.m_Position.z;
+    D_80076ED0.y = new_var;
+    g_Camera.m_FocusRotation = moby->m_Rotation.z << 4;
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    g_Camera.m_Sphere.m_Coords.elevation =
+        g_Camera.m_Simulation.m_Coords.elevation;
+    g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+    goto apply_break;
+  }
+
+  case 0x8000000C: {
+    Moby *moby;
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    moby = g_Spyro.m_mobyInUseBySpyro;
+    g_Camera.m_FocusRotation =
+        Atan2(moby->m_Position.x - g_Spyro.m_Position.x,
+              moby->m_Position.y - g_Spyro.m_Position.y, 1);
+    if (g_Camera.unk_0xC4 != 0) {
+      goto tail_break;
+    }
+    g_Camera.m_SphericalPreset = &D_8006CB74;
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+    goto apply_break;
+  }
+
+  case 0x8000000A:
+    pPos = &g_Camera.m_Position;
+    g_Camera.unk_0xE8 = func_80033F08(pPos);
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    g_Camera.m_Sphere.m_Coords.elevation =
+        g_Camera.m_Simulation.m_Coords.elevation;
+    g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+    if (g_Camera.unk_0xC4 == 0) {
+      ApplySphericalPreset();
+    } else {
+      g_Camera.unk_0xE8 = func_80033F08(pPos);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+    if ((g_Spyro.m_ControlFlags & 0x1000) == 0) {
+      goto tail_break;
+    }
+    step = 5;
+    goto tail_break;
+
+  case 15:
+    pPos = &g_Camera.m_Position;
+    g_Camera.m_SphericalPreset = &D_8006C8D4;
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+    g_Camera.unk_0xE8 = func_80033F08(pPos);
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+    if (g_Camera.unk_0xC4 == 0) {
+      goto apply_break;
+    }
+    g_Camera.unk_0xE8 = func_80033F08(pPos);
+    g_Camera.m_Sphere = g_Camera.m_Simulation;
+    goto tail_break;
+
+  default:
+    goto tail_break;
+  }
+
+tail_break:
+  if ((((((g_Camera.m_State != 0x80000009) &&
+          (g_Camera.m_State != 0x80000007)) &&
+         (g_Camera.m_State != 0x80000012)) &&
+        (g_Camera.m_State != 0x8000000B)) &&
+       (g_Camera.m_State != 0x8000000E)) &&
+      (g_Camera.m_State != 3)) {
+    func_80035F58();
+  } else {
+    D_80075924 = 0;
+  }
+
+  if (((D_80075914 & 0x10) != 0) || (D_8007592C != 0)) {
+    if (D_800756B8 == 0) {
+      goto smooth;
+    }
+    if (D_80075894 == 0) {
+      goto smooth;
+    }
+    if (g_Camera.m_OnMovingPlatform != 0) {
+      goto smooth;
+    }
+    if (D_80075924 != 0) {
+      goto smooth;
+    }
+    if ((g_Camera.m_State != 0) && (g_Camera.m_State != 0x80000000)) {
+      goto smooth;
+    }
+    VecCopy(&g_Camera.m_DestinationPosition, &g_Camera.m_Position);
+    g_Camera.unk_0xA8.m_Coords.azimuth = 0;
+    g_Camera.unk_0xA8.m_Coords.elevation = 0;
+    g_Camera.unk_0xA8.m_Coords.radius = 0;
+    g_Camera.unk_0xA8.m_Offset.azimuth = 0;
+    g_Camera.unk_0xA8.m_Offset.elevation = 0;
+    g_Camera.unk_0xA8.m_Offset.radius = 0;
+    goto final;
+  }
+smooth:
+  for (i = 0; i < g_DeltaTime; i++) {
+    func_80034CE8(step);
+  }
+
+  func_80034204(&g_Camera.m_DestinationPosition);
+  VecAdd(&g_Camera.m_DestinationPosition, &g_Camera.m_DestinationPosition,
+         g_Camera.m_Focus);
+  func_80034480();
+  func_800342F8();
+final:
+  g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+  if (((((D_80075914 & 0x10) != 0) && (g_Spyro.m_State == 5)) &&
+       (g_Camera.m_OnMovingPlatform == 0)) &&
+      (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 0x400)) {
+    goto skip_azimuth;
+  }
+  g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+skip_azimuth:
+  g_Camera.m_Sphere.m_Coords.elevation =
+      g_Camera.m_Simulation.m_Coords.elevation;
+
+  g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+  g_Camera.m_Sphere.m_Offset.azimuth = g_Camera.m_Simulation.m_Offset.azimuth;
+  g_Camera.m_Sphere.m_Offset.elevation =
+      g_Camera.m_Simulation.m_Offset.elevation;
+  g_Camera.m_Sphere.m_Offset.radius = g_Camera.m_Simulation.m_Offset.radius;
+}
 
 // Camera state update for 0x8000000B
 void func_8003740C(void) {

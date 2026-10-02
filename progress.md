@@ -68,7 +68,7 @@
 - [x] func_80034CE8
 - [x] func_800357A4
 - [x] func_80035F58
-- [ ] func_80035FB4
+- [x] func_80035FB4
 - [x] func_8003740C
 - [x] func_80037714
 - [x] func_800377A8
