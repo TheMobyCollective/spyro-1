@@ -761,8 +761,6 @@ extern u_char D_8006F398[];
 extern u_char D_8006F399[];
 extern Vector3D D_8006F3F0[];
 
-extern int func_8001796C(int, int);
-
 /// @brief Gamestate 8 Dragon cutscene
 void func_8002F3E4(void) {
   Vector3D delta;
@@ -1524,9 +1522,471 @@ void func_8002F3E4(void) {
   }
 }
 
+extern int func_8001796C(int, int);
+
+extern void func_8002C924(Moby *pMoby);
+
+extern void func_80048D10(int pDeltaTime);
+
+extern int RotateMobyToSpyro(Moby *pMoby, int rotSpeed, int withinAngle,
+                             int continueRotation);
+
+extern u_char D_8006FCF4[];
+
+static const char s_SaveFileName[20] = "BASCUS-94228SPYRO";
+
 /// @brief Gamestate 11 (Fairy)
-void func_800314B4(void);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_800314B4);
+void func_800314B4(void) {
+  Vector3D toCamera;
+  Vector3D16 targetRotation;
+  int sineProgress;
+  int orbitAngle;
+  int orbitRadius;
+  Moby *moby;
+
+  g_FairyCutscene.m_AnimationTimer += g_DeltaTime;
+  SpecularUpdate(3);
+
+  *(Moby **)(&D_8006FCF4[0x400]) = g_FairyCutscene.m_CutsceneFairy;
+  *(Moby **)(&D_8006FCF4[0x404]) = nullptr;
+  func_800522C0((Moby **)(&D_8006FCF4[0x400]), 0);
+
+  switch (g_FairyCutscene.m_State) {
+  case 0:
+    if (g_FairyCutscene.m_AnimationTimer < 0x40) {
+      // Ease the camera and cutscene mobys from the fairy's start pose to the
+      // saved menu pose over the first 64 frames.
+      sineProgress =
+          Sin((g_FairyCutscene.m_AnimationTimer << 5) - 0x400) + 0x1000;
+
+      {
+        Moby *moby =
+            &g_LevelMobys[((int *)g_FairyCutscene.m_CutsceneFairy->m_Props)[1]];
+        if (moby->m_State == 2) {
+          moby->m_Substate += g_DeltaTime;
+          if (moby->m_Substate >= 0x30) {
+            moby->m_State = 0;
+            moby->m_AnimationState.m_Animation = 0;
+          }
+        }
+      }
+      // Interpolate the orbit azimuth, taking the short way around the circle.
+      if (((g_FairyCutscene.m_CameraInitAngle -
+            g_FairyCutscene.m_AngleFromSpyro) &
+           0xFFF) < 0x801) {
+        orbitAngle = g_FairyCutscene.m_AngleFromSpyro +
+                     (FIXED_MUL(func_80017928(g_FairyCutscene.m_CameraInitAngle,
+                                              g_FairyCutscene.m_AngleFromSpyro),
+                                sineProgress) >>
+                      1);
+      } else {
+        orbitAngle = g_FairyCutscene.m_AngleFromSpyro -
+                     (FIXED_MUL(func_80017928(g_FairyCutscene.m_CameraInitAngle,
+                                              g_FairyCutscene.m_AngleFromSpyro),
+                                sineProgress) >>
+                      1);
+      }
+
+      orbitRadius = g_FairyCutscene.m_DistanceFromSpyro +
+                    (FIXED_MUL(g_FairyCutscene.m_CameraInitDistance -
+                                   g_FairyCutscene.m_DistanceFromSpyro,
+                               sineProgress) >>
+                     1);
+
+      g_FairyCutscene.m_CutsceneFairy->m_Position.x =
+          g_Spyro.m_Position.x + FIXED_MUL(Cos(orbitAngle), orbitRadius);
+      g_FairyCutscene.m_CutsceneFairy->m_Position.y =
+          g_Spyro.m_Position.y + FIXED_MUL(Sin(orbitAngle), orbitRadius);
+      g_FairyCutscene.m_CutsceneFairy->m_Position.z =
+          g_FairyCutscene.m_CameraInitZ +
+          (FIXED_MUL(g_FairyCutscene.m_CameraTargetZ -
+                         g_FairyCutscene.m_CameraInitZ,
+                     sineProgress) >>
+           1);
+
+      RotateMobyToSpyro(g_FairyCutscene.m_CutsceneFairy, 3, 0, 0);
+      func_8004D5EC(&g_FairyCutscene.m_CutsceneFairy->m_Position, 0x1000);
+      func_800533D0(g_FairyCutscene.m_CutsceneFairy);
+
+      if (g_Sparx != nullptr) {
+        // Pan the Sparx moby onto its waypoint.
+        if (((g_FairyCutscene.m_CameraEndAngle -
+              g_FairyCutscene.m_CameraTargetAngle) &
+             0xFFF) < 0x801) {
+          orbitAngle =
+              g_FairyCutscene.m_CameraTargetAngle +
+              (FIXED_MUL(func_80017928(g_FairyCutscene.m_CameraEndAngle,
+                                       g_FairyCutscene.m_CameraTargetAngle),
+                         sineProgress) >>
+               1);
+        } else {
+          orbitAngle =
+              g_FairyCutscene.m_CameraTargetAngle -
+              (FIXED_MUL(func_80017928(g_FairyCutscene.m_CameraEndAngle,
+                                       g_FairyCutscene.m_CameraTargetAngle),
+                         sineProgress) >>
+               1);
+        }
+
+        orbitRadius = g_FairyCutscene.m_CameraTargetDistance +
+                      (FIXED_MUL(g_FairyCutscene.m_CameraEndDistance -
+                                     g_FairyCutscene.m_CameraTargetDistance,
+                                 sineProgress) >>
+                       1);
+
+        g_Sparx->m_Position.x =
+            g_Spyro.m_Position.x + FIXED_MUL(Cos(orbitAngle), orbitRadius);
+        g_Sparx->m_Position.y =
+            g_Spyro.m_Position.y + FIXED_MUL(Sin(orbitAngle), orbitRadius);
+      }
+
+      // Finally ease the camera itself onto its viewing pose.
+      if (((g_FairyCutscene.m_CameraViewAngle -
+            g_FairyCutscene.m_CameraStartAngle) &
+           0xFFF) < 0x801) {
+        orbitAngle =
+            g_FairyCutscene.m_CameraStartAngle +
+            (FIXED_MUL(func_80017928(g_FairyCutscene.m_CameraViewAngle,
+                                     g_FairyCutscene.m_CameraStartAngle),
+                       sineProgress) >>
+             1);
+      } else {
+        orbitAngle =
+            g_FairyCutscene.m_CameraStartAngle -
+            (FIXED_MUL(func_80017928(g_FairyCutscene.m_CameraViewAngle,
+                                     g_FairyCutscene.m_CameraStartAngle),
+                       sineProgress) >>
+             1);
+      }
+
+      orbitRadius = g_FairyCutscene.m_CameraStartDistance +
+                    (FIXED_MUL(g_FairyCutscene.m_CameraViewDistance -
+                                   g_FairyCutscene.m_CameraStartDistance,
+                               sineProgress) >>
+                     1);
+
+      g_Camera.m_Position.x =
+          g_Spyro.m_Position.x + FIXED_MUL(Cos(orbitAngle), orbitRadius);
+      g_Camera.m_Position.y =
+          g_Spyro.m_Position.y + FIXED_MUL(Sin(orbitAngle), orbitRadius);
+      g_Camera.m_Position.z = g_FairyCutscene.m_CameraStartZ +
+                              (FIXED_MUL(g_FairyCutscene.m_CameraViewZ -
+                                             g_FairyCutscene.m_CameraStartZ,
+                                         sineProgress) >>
+                               1);
+
+      VecAdd(&toCamera, &g_Spyro.m_Position,
+             &g_FairyCutscene.m_CutsceneFairy->m_Position);
+      toCamera.z += 0x240;
+      VecShiftRight(&toCamera, 1);
+      VecSub(&toCamera, &toCamera, &g_Camera.m_Position);
+
+      if (g_FairyCutscene.m_AnimationTimer < 0x20) {
+        // Ease the look direction toward Spyro over the first frames.
+        targetRotation.x = 0;
+        targetRotation.y = Atan2(VecMagnitude(&toCamera, 0), -toCamera.z, 1);
+        targetRotation.z = Atan2(toCamera.x, toCamera.y, 1);
+        g_Camera.m_Rotation.x =
+            (g_Camera.m_Rotation.x +
+             (func_8001796C(targetRotation.x, g_Camera.m_Rotation.x) *
+                  g_FairyCutscene.m_AnimationTimer >>
+              5)) &
+            0xFFF;
+        g_Camera.m_Rotation.y =
+            (g_Camera.m_Rotation.y +
+             (func_8001796C(targetRotation.y, g_Camera.m_Rotation.y) *
+                  g_FairyCutscene.m_AnimationTimer >>
+              5)) &
+            0xFFF;
+        g_Camera.m_Rotation.z =
+            (g_Camera.m_Rotation.z +
+             (func_8001796C(targetRotation.z, g_Camera.m_Rotation.z) *
+                  g_FairyCutscene.m_AnimationTimer >>
+              5)) &
+            0xFFF;
+      } else {
+        // After the ease-in just look straight at Spyro.
+        g_Camera.m_Rotation.x = 0;
+        g_Camera.m_Rotation.y =
+            Atan2(VecMagnitude(&toCamera, 0), -toCamera.z, 1);
+        g_Camera.m_Rotation.z = Atan2(toCamera.x, toCamera.y, 1);
+      }
+
+      // Face Spyro toward the dragon pad for the menu pose.
+      if (((g_FairyCutscene.m_AngleToDragonPad -
+            g_FairyCutscene.m_unused_SavedSpyroRotZ) &
+           0xFFF) < 0x801) {
+        g_Spyro.m_bodyRotation.z =
+            (g_FairyCutscene.m_unused_SavedSpyroRotZ +
+             (FIXED_MUL(func_80017928(g_FairyCutscene.m_AngleToDragonPad,
+                                      g_FairyCutscene.m_unused_SavedSpyroRotZ),
+                        sineProgress) >>
+              1)) >>
+            4;
+      } else {
+        g_Spyro.m_bodyRotation.z =
+            (g_FairyCutscene.m_unused_SavedSpyroRotZ -
+             (FIXED_MUL(func_80017928(g_FairyCutscene.m_AngleToDragonPad,
+                                      g_FairyCutscene.m_unused_SavedSpyroRotZ),
+                        sineProgress) >>
+              1)) >>
+            4;
+      }
+
+      RotVec8ToMatrix(&g_Spyro.m_bodyRotation, &g_Spyro.m_RotationMatrix,
+                      nullptr);
+      g_Spyro.m_headRotation.y = (u_int)sineProgress >> 9;
+
+      func_8003CB24(0x10);
+      func_80049660();
+      func_80049E8C();
+      func_80048D10(g_DeltaTime);
+      g_UpdateParticle(g_DeltaTime);
+      return;
+    }
+
+    // The intro is over: snap the mobys onto their final poses and hand the
+    // cutscene over to the dialogue pages.
+    g_FairyCutscene.m_CutsceneFairy->m_Position.x =
+        g_Spyro.m_Position.x + FIXED_MUL(Cos(g_FairyCutscene.m_CameraInitAngle),
+                                         g_FairyCutscene.m_CameraInitDistance);
+    g_FairyCutscene.m_CutsceneFairy->m_Position.y =
+        g_Spyro.m_Position.y + FIXED_MUL(Sin(g_FairyCutscene.m_CameraInitAngle),
+                                         g_FairyCutscene.m_CameraInitDistance);
+    g_FairyCutscene.m_CutsceneFairy->m_Position.z =
+        g_FairyCutscene.m_CameraTargetZ;
+    g_FairyCutscene.m_CutsceneFairy->m_Rotation.z = Atan2(
+        g_Spyro.m_Position.x - g_FairyCutscene.m_CutsceneFairy->m_Position.x,
+        g_Spyro.m_Position.y - g_FairyCutscene.m_CutsceneFairy->m_Position.y,
+        0);
+
+    if (g_Sparx != nullptr) {
+      g_Sparx->m_Position.x = g_Spyro.m_Position.x +
+                              FIXED_MUL(Cos(g_FairyCutscene.m_CameraEndAngle),
+                                        g_FairyCutscene.m_CameraEndDistance);
+      g_Sparx->m_Position.y = g_Spyro.m_Position.y +
+                              FIXED_MUL(Sin(g_FairyCutscene.m_CameraEndAngle),
+                                        g_FairyCutscene.m_CameraEndDistance);
+    }
+
+    g_Camera.m_Position.x =
+        g_Spyro.m_Position.x + FIXED_MUL(Cos(g_FairyCutscene.m_CameraViewAngle),
+                                         g_FairyCutscene.m_CameraViewDistance);
+    sineProgress = Sin(g_FairyCutscene.m_CameraViewAngle);
+    g_Spyro.m_bodyFrameProgress = 4;
+    g_Spyro.m_nextBodyAnimation = 0;
+    g_Spyro.m_nextBodyAnimationFrame = 0;
+    g_Spyro.m_bodyAnimationSpeed = 4;
+    g_Camera.m_Position.z = g_FairyCutscene.m_CameraViewZ;
+    g_Spyro.m_bodyRotation.z = g_FairyCutscene.m_AngleToDragonPad >> 4;
+    g_Camera.m_Position.y =
+        g_Spyro.m_Position.y +
+        FIXED_MUL(sineProgress, g_FairyCutscene.m_CameraViewDistance);
+    g_FairyCutscene.m_State = 1;
+    g_FairyCutscene.m_AnimationTimer = 0;
+    return;
+
+  case 1:
+    func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
+    func_80049660();
+    func_80049E8C();
+    g_GameTick++;
+    g_UpdateParticle(g_DeltaTime);
+
+    switch (g_FairyCutscene.m_MenuDialoguePage) {
+    case 0:
+      if (g_Pad.m_Down & PAD_DOWN) {
+        PlaySound(g_Spu.m_SoundTable->menuCursor, nullptr, 0x10, nullptr);
+        g_FairyCutscene.m_AnimationTimer = 0;
+        g_FairyCutscene.m_MenuSelectedOption++;
+        if (g_FairyCutscene.m_MenuSelectedOption >= 3) {
+          g_FairyCutscene.m_MenuSelectedOption = 0;
+        }
+      } else if (g_Pad.m_Down & PAD_UP) {
+        PlaySound(g_Spu.m_SoundTable->menuCursor, nullptr, 0x10, nullptr);
+        g_FairyCutscene.m_AnimationTimer = 0;
+        g_FairyCutscene.m_MenuSelectedOption--;
+        if (g_FairyCutscene.m_MenuSelectedOption < 0) {
+          g_FairyCutscene.m_MenuSelectedOption = 2;
+        }
+      }
+
+      if (g_FairyCutscene.m_AnimationTimer >= 8 && (g_Pad.m_Down & PAD_CROSS)) {
+        PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 0x10, nullptr);
+        if (g_FairyCutscene.m_MenuSelectedOption == 0) {
+          g_FairyCutscene.m_AnimationTimer = 0;
+          if (g_FairyCutscene.m_HasMemoryCard != 0) {
+            g_FairyCutscene.m_MenuDialoguePage = 2;
+          } else {
+            g_FairyCutscene.m_MenuDialoguePage = 1;
+          }
+        } else if (g_FairyCutscene.m_MenuSelectedOption == 1) {
+          RescuedDragonMobyProps *props;
+
+          moby = &g_LevelMobys[(
+              (int *)g_FairyCutscene.m_CutsceneFairy->m_Props)[0]];
+          props = (RescuedDragonMobyProps *)moby->m_Props;
+          if (props->m_OldDialogueId == -1 &&
+              props->m_CutsceneId != props->m_OldDialogueId) {
+            func_8002D02C();
+            moby->m_State = 2;
+            moby->m_CollisionGroup = nullptr;
+            moby->m_CollisionRegion = -1;
+            func_8002C924(moby);
+            g_DragonTotal--;
+            g_LevelDragonCount[g_LevelIndex]--;
+          }
+        } else {
+          func_8002D02C();
+          PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 0x10, nullptr);
+        }
+      }
+      break;
+
+    case 1:
+      if (g_FairyCutscene.m_AnimationTimer >= 0x3C &&
+          (g_Pad.m_Down & PAD_CROSS)) {
+        PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 0x10, nullptr);
+        g_FairyCutscene.m_AnimationTimer = 0;
+        g_FairyCutscene.m_MenuDialoguePage = 0;
+        g_FairyCutscene.m_MenuSelectedOption = 2;
+      }
+      break;
+
+    case 2:
+      if (g_FairyCutscene.m_MenuSelectedOption == 0) {
+        MemCardStart();
+        MemCardAccept(g_FairyCutscene.m_MemoryCardSlot);
+        g_FairyCutscene.m_MenuSelectedOption = 1;
+        break;
+      }
+
+      if (g_FairyCutscene.m_MenuSelectedOption == 1) {
+        if (MemCardSync(1, (u_long *)&g_FairyCutscene.unk_0x24,
+                        (u_long *)&g_FairyCutscene.unk_0x28) == 0) {
+          break;
+        }
+
+        if (g_FairyCutscene.unk_0x28 == 0 || g_FairyCutscene.unk_0x28 == 3) {
+          MemCardReadFile(
+              g_FairyCutscene.m_MemoryCardSlot, (char *)s_SaveFileName,
+              (u_long *)((u_char *)g_Buffers.m_HudOTStart - 0x600), 0, 0x80);
+          g_FairyCutscene.m_MenuSelectedOption = 2;
+          return;
+        }
+        if (g_FairyCutscene.unk_0x28 == 4) {
+          g_FairyCutscene.m_MenuDialoguePage = g_FairyCutscene.unk_0x28;
+        } else {
+          g_FairyCutscene.m_MenuDialoguePage = 3;
+        }
+        g_FairyCutscene.m_AnimationTimer = 0;
+      } else if (g_FairyCutscene.m_MenuSelectedOption == 2) {
+        if (MemCardSync(1, (u_long *)&g_FairyCutscene.unk_0x24,
+                        (u_long *)&g_FairyCutscene.unk_0x28) == 0) {
+          break;
+        }
+
+        if (g_FairyCutscene.unk_0x28 == 0) {
+          if (g_FairyCutscene.unk_0x20 !=
+              ((MemCardSaveFile *)((u_char *)g_Buffers.m_HudOTStart - 0x600))
+                  ->m_Header.m_Clut[15]) {
+            g_FairyCutscene.m_MenuDialoguePage = 4;
+          } else {
+            SaveCreate((SaveFile *)((u_char *)g_Buffers.m_HudOTStart - 0x600));
+            MemCardWriteFile(
+                g_FairyCutscene.m_MemoryCardSlot, (char *)s_SaveFileName,
+                (u_long *)((u_char *)g_Buffers.m_HudOTStart - 0x600),
+                (g_FairyCutscene.unk_0x1c * 0x600) + 0x200, 0x600);
+            g_FairyCutscene.m_MenuSelectedOption = 3;
+            return;
+          }
+        } else if (g_FairyCutscene.unk_0x28 == 5) {
+          g_FairyCutscene.m_MenuDialoguePage = 4;
+        } else {
+          g_FairyCutscene.m_MenuDialoguePage = 5;
+        }
+        g_FairyCutscene.m_AnimationTimer = 0;
+      } else if (g_FairyCutscene.m_MenuSelectedOption == 3) {
+        if (MemCardSync(1, (u_long *)&g_FairyCutscene.unk_0x24,
+                        (u_long *)&g_FairyCutscene.unk_0x28) == 0) {
+          break;
+        }
+
+        if (g_FairyCutscene.unk_0x28 != 0) {
+          g_FairyCutscene.m_MenuDialoguePage = 5;
+        } else {
+          MemCardReadFile(g_FairyCutscene.m_MemoryCardSlot,
+                          (char *)s_SaveFileName,
+                          (u_long *)((u_char *)g_Buffers.m_HudOTStart - 0x600),
+                          (g_FairyCutscene.unk_0x1c * 0x600) + 0x200, 0x600);
+          g_FairyCutscene.m_MenuSelectedOption = 4;
+          return;
+        }
+        g_FairyCutscene.m_AnimationTimer = 0;
+      } else {
+        if (MemCardSync(1, (u_long *)&g_FairyCutscene.unk_0x24,
+                        (u_long *)&g_FairyCutscene.unk_0x28) == 0) {
+          break;
+        }
+
+        if (g_FairyCutscene.unk_0x28 != 0) {
+          g_FairyCutscene.m_MenuDialoguePage = 5;
+        } else if (SaveChecksum((u_char *)g_Buffers.m_HudOTStart - 0x600) ==
+                   ((SaveFile *)((u_char *)g_Buffers.m_HudOTStart - 0x600))
+                       ->m_Checksum) {
+          g_FairyCutscene.m_MenuDialoguePage = 7;
+        } else {
+          g_FairyCutscene.m_MenuDialoguePage = 5;
+        }
+        g_FairyCutscene.m_AnimationTimer = 0;
+      }
+      break;
+
+    case 3:
+    case 4:
+    case 5:
+      if (g_FairyCutscene.m_AnimationTimer >= 0x3C &&
+          (g_Pad.m_Down & PAD_CROSS)) {
+        PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 0x10, nullptr);
+        g_FairyCutscene.m_AnimationTimer = 0;
+        g_FairyCutscene.m_MenuDialoguePage = 6;
+        g_FairyCutscene.m_MenuSelectedOption = 0;
+      }
+      break;
+
+    case 6:
+      if (g_Pad.m_Down & (PAD_DOWN | PAD_UP)) {
+        PlaySound(g_Spu.m_SoundTable->menuCursor, nullptr, 0x10, nullptr);
+        g_FairyCutscene.m_MenuSelectedOption =
+            1 - g_FairyCutscene.m_MenuSelectedOption;
+      }
+
+      if (g_FairyCutscene.m_AnimationTimer >= 0x20 &&
+          (g_Pad.m_Down & PAD_CROSS)) {
+        MemCardStop();
+        if (g_FairyCutscene.m_MenuSelectedOption == 0) {
+          PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 0x10, nullptr);
+          g_FairyCutscene.m_AnimationTimer = 0;
+          g_FairyCutscene.m_MenuDialoguePage = 2;
+          g_FairyCutscene.m_MenuSelectedOption = 0;
+        } else {
+          func_8002D02C();
+          PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 0x10, nullptr);
+        }
+      }
+      break;
+
+    case 7:
+      if (g_FairyCutscene.m_AnimationTimer >= 8 && (g_Pad.m_Down & PAD_CROSS)) {
+        MemCardStop();
+        func_8002D02C();
+        PlaySound(g_Spu.m_SoundTable->menuConfirm, nullptr, 0x10, nullptr);
+      }
+      break;
+    }
+    break;
+  }
+}
 
 /*
  * The Balloonist ride/cutscene state. The bulk of the per-state logic lives in
