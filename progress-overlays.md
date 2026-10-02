@@ -139,7 +139,7 @@
 - [ ] func_level_40_8007B7E4
 - [ ] func_level_40_8007D784
 - [ ] func_level_40_8007E18C
-- [ ] func_level_40_80087EF0
+- [x] func_level_40_80087EF0
 - [ ] func_level_40_800888F8
 - [ ] func_level_40_80089AB8
 - [x] func_level_40_8008AB70
