@@ -295,7 +295,246 @@ void func_80034358(void) {
 }
 
 // Does the camera's collision, updates the spherical coordinates
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80034480);
+extern SphericalCoordsOffset D_8006C82C[5];
+extern SphericalCoordsOffset D_8006C830[5];
+extern SphericalCoordsOffset D_8006C834[5];
+extern SphericalCoordsOffset D_8006CAB4[5];
+extern Vector3D g_CollisionPoint;
+
+void func_80034480(void) {
+  Vector3D sp10;
+  Vector3D sp20;
+  SphericalCoordsOffset savedSimulation;
+  int i;
+  int j;
+  int steps;
+  int far;
+  int collisionFound;
+  int validMask;
+  Vector3D *pDest;
+  Vector3D *pArg;
+  SphericalCoordsOffset *pSphere;
+  collisionFound = 0;
+  pDest = &g_Camera.m_DestinationPosition;
+  VecSub(&sp20, pDest, &g_Spyro.m_Position);
+  far = VecMagnitude(&sp20, 1) >= 0x2001;
+  VecCopy(&sp10, pDest);
+  VecSub(&sp20, pDest, &g_Camera.m_Position);
+  steps = (VecMagnitude(&sp20, 1) / 0x100) + 1;
+  if (steps >= 2) {
+    sp20.x /= steps;
+    sp20.y /= steps;
+    sp20.z /= steps;
+  }
+  VecCopy(pDest, &g_Camera.m_Position);
+  j = 0;
+  if (collisionFound >= steps) {
+    goto outer_end;
+  }
+outer_loop:
+  VecAdd(pDest, pDest, &sp20);
+
+  for (i = 0; i < 6; i++) {
+    if (func_8004BE4C(pDest, 0x100, 0x100) == 0) {
+      break;
+    }
+    VecCopy(pDest, &g_CollisionPoint);
+    collisionFound = 1;
+  }
+
+  if (i == 6) {
+    VecCopy(pDest, &sp10);
+    j = steps;
+  }
+  j++;
+  if (j < steps) {
+    goto outer_loop;
+  }
+outer_end:
+  g_Camera.unk_0xCC = 0;
+
+  if (i < 6) {
+    if (collisionFound != 0) {
+      VecSub(&sp10, &g_Camera.m_DestinationPosition, &g_Camera.m_Position);
+      if (((sp10.x >= 0) ? (sp10.x) : (-sp10.x)) < 0x20) {
+        sp10.x = 0;
+      }
+      if (((sp10.y >= 0) ? (sp10.y) : (-sp10.y)) < 0x20) {
+        sp10.y = 0;
+      }
+      if (((sp10.z >= 0) ? (sp10.z) : (-sp10.z)) < 0x20) {
+        sp10.z = 0;
+      }
+      if (steps) {
+        VecAdd(&g_Camera.m_Position, &g_Camera.m_Position, &sp10);
+      } else {
+        VecAdd(&g_Camera.m_Position, &g_Camera.m_Position, &sp10);
+      }
+    } else {
+      VecCopy(&g_Camera.m_Position, &g_Camera.m_DestinationPosition);
+      g_Camera.unk_0xCC = 1;
+    }
+  }
+  g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+  VecCopy(&sp20, &g_Spyro.m_Position);
+  sp20.z -= 0x134;
+  if ((func_80033E40(&g_Camera.m_Position, &sp20) == 0) ||
+      (func_80033E40(&sp20, &g_Camera.m_Position) == 0)) {
+    D_800756B8 = 0;
+    if (((u_char)g_Spyro.m_sortingDepth) < 0x7F) {
+      g_Spyro.m_sortingDepth = 2;
+    }
+    D_8007AA10.unk_1c = 0;
+    g_Camera.m_SpyroOffCenterFrames++;
+    validMask = 0;
+    if (g_Camera.m_SpyroOffCenterFrames >= 0x1F) {
+      for (i = 0; i < 5; i++) {
+        g_Camera.m_SphericalPreset = &D_8006CAB4[i];
+        func_80034358();
+        if (((func_8004BE4C(&g_Camera.m_DestinationPosition, 0x100, 0x100) ==
+              0) &&
+             (func_80033E40(&g_Camera.m_DestinationPosition, &sp20) != 0)) &&
+            (func_80033E40(&sp20, &g_Camera.m_DestinationPosition) != 0)) {
+          return;
+        }
+      }
+
+      validMask = 0;
+    }
+    savedSimulation = g_Camera.m_Simulation;
+    for (i = 0; i < 5; i++) {
+      pSphere = &g_Camera.m_Sphere;
+      g_Camera.m_Sphere.m_Coords.azimuth =
+          (g_Camera.m_Simulation.m_Coords.azimuth +
+           D_8006C82C[i].m_Coords.azimuth) &
+          0xFFF;
+      g_Camera.m_Sphere.m_Coords.elevation =
+          (g_Camera.m_Simulation.m_Coords.elevation +
+           D_8006C830[i].m_Coords.azimuth) &
+          0xFFF;
+      g_Camera.m_Sphere.m_Coords.radius =
+          g_Camera.m_Simulation.m_Coords.radius +
+          D_8006C834[i].m_Coords.azimuth;
+      func_80034204(&g_Camera.m_DestinationPosition);
+      VecAdd(&g_Camera.m_DestinationPosition, &g_Camera.m_DestinationPosition,
+             g_Camera.m_Focus);
+      if (func_8004BE4C(&g_Camera.m_DestinationPosition, 0x100, 0x100) != 0) {
+        continue;
+      }
+      validMask |= 1 << i;
+      if (func_80033E40(&g_Camera.m_DestinationPosition, &sp20) == 0) {
+        continue;
+      }
+      if (func_80033E40(&sp20, &g_Camera.m_DestinationPosition) != 0) {
+        pArg = &g_Camera.m_DestinationPosition;
+        goto found_simulation;
+      }
+    }
+
+    if (validMask != 0) {
+      for (i = 0; i < 5; i++) {
+        pSphere = &g_Camera.m_Sphere;
+        if (!(validMask & (1 << i))) {
+          continue;
+        }
+        g_Camera.m_Sphere.m_Coords.azimuth =
+            (g_Camera.m_Simulation.m_Coords.azimuth +
+             (D_8006C82C[i].m_Coords.azimuth * 2)) &
+            0xFFF;
+        g_Camera.m_Sphere.m_Coords.elevation =
+            (g_Camera.m_Simulation.m_Coords.elevation +
+             (D_8006C830[i].m_Coords.azimuth * 2)) &
+            0xFFF;
+        g_Camera.m_Sphere.m_Coords.radius =
+            g_Camera.m_Simulation.m_Coords.radius +
+            (D_8006C834[i].m_Coords.azimuth * 2);
+        func_80034204(&g_Camera.m_DestinationPosition);
+        VecAdd(&g_Camera.m_DestinationPosition, &g_Camera.m_DestinationPosition,
+               g_Camera.m_Focus);
+        if (func_8004BE4C(&g_Camera.m_DestinationPosition, 0x100, 0x100) != 0) {
+          continue;
+        }
+        if (func_80033E40(&g_Camera.m_DestinationPosition, &sp20) == 0) {
+          continue;
+        }
+        if (func_80033E40(&sp20, &g_Camera.m_DestinationPosition) != 0) {
+          pArg = &g_Camera.m_DestinationPosition;
+          goto found_simulation;
+        }
+      }
+
+      if (validMask != 0) {
+        for (i = 0; i < 5; i++) {
+          pSphere = &g_Camera.m_Sphere;
+          if (!(validMask & (1 << i))) {
+            continue;
+            do {
+            } while (0);
+          }
+          g_Camera.m_Sphere.m_Coords.azimuth =
+              (g_Camera.m_Simulation.m_Coords.azimuth +
+               (D_8006C82C[i].m_Coords.azimuth * 4)) &
+              0xFFF;
+          g_Camera.m_Sphere.m_Coords.elevation =
+              (g_Camera.m_Simulation.m_Coords.elevation +
+               (D_8006C830[i].m_Coords.azimuth * 4)) &
+              0xFFF;
+          g_Camera.m_Sphere.m_Coords.radius =
+              g_Camera.m_Simulation.m_Coords.radius +
+              (D_8006C834[i].m_Coords.azimuth * 4);
+          func_80034204(&g_Camera.m_DestinationPosition);
+          VecAdd(&g_Camera.m_DestinationPosition,
+                 &g_Camera.m_DestinationPosition, g_Camera.m_Focus);
+          if (func_8004BE4C(&g_Camera.m_DestinationPosition, 0x100, 0x100) !=
+              0) {
+            continue;
+          }
+          if (func_80033E40(&g_Camera.m_DestinationPosition, &sp20) == 0) {
+            continue;
+          }
+          if (func_80033E40(&sp20, &g_Camera.m_DestinationPosition) != 0) {
+            pArg = &g_Camera.m_DestinationPosition;
+            goto found_simulation;
+          }
+        }
+      }
+    }
+    return;
+  }
+  D_800756B8 = 1;
+  if (g_Camera.unk_0xC4 != 0) {
+    if ((g_Camera.m_State == 0) || (g_Camera.m_State == 0x80000009)) {
+      asm volatile("" : : : "memory");
+      if (g_Camera.unk_0xE8 != 0) {
+        g_Camera.unk_0xC4--;
+      }
+    } else {
+      g_Camera.unk_0xC4--;
+    }
+  }
+  if (((int)g_Camera.m_State) < 0) {
+    goto zero_offcenter;
+  }
+  func_80017AA4(&sp20, &g_Spyro.m_Position);
+  if (((((u_int)(sp20.x - 0x21)) >= 0x1BF) ||
+       (((u_int)(sp20.y - 0x19)) >= 0xBF)) ||
+      (far != 0)) {
+    goto incr_offcenter;
+  }
+zero_offcenter:
+  g_Camera.m_SpyroOffCenterFrames = 0;
+
+  return;
+found_simulation:
+  *((int *)(((char *)pSphere) + 0x4C)) = 5;
+  func_80033F08(pArg);
+  *((SphericalCoordinates *)(((char *)pSphere) - 0x18)) =
+      *((SphericalCoordinates *)(((char *)pSphere) + 0x18));
+  *((SphericalCoordsOffset *)(((char *)pSphere) + 0x18)) = savedSimulation;
+  return;
+incr_offcenter:
+  g_Camera.m_SpyroOffCenterFrames++;
+}
 
 /// @brief Forces the camera to its destination position
 void CameraForceToDestination(void) {
