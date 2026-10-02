@@ -44,7 +44,7 @@ void SpecularUpdate(int deltaTime) {
   // are two separate tables otherwise the compiler inserts a random scope for
   // no reason
   setXYZ(&D_800770C8.m_specularLightDirection,
-         COSINE_8(D_800770C8.m_specularTime) * 1983 >> 11,
+         FIXED_MUL(COSINE_8(D_800770C8.m_specularTime), 3966),
          FIXED_MUL(SINE_8(D_800770C8.m_specularTime), 6345), -1024);
 }
 
