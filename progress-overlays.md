@@ -159,7 +159,7 @@
 - [ ] func_level_43_8008869C
 - [x] func_level_43_80089848
 - [ ] func_level_44_8007B770
-- [ ] func_level_44_800874FC
+- [x] func_level_44_800874FC
 - [ ] func_level_44_80088178
 - [ ] func_level_44_800894B0
 - [x] func_level_44_8008A69C
