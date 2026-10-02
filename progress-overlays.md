@@ -71,7 +71,7 @@
 - [ ] func_level_22_8007B898
 - [ ] func_level_22_8007D838
 - [ ] func_level_22_8007E240
-- [ ] func_level_22_80088B88
+- [x] func_level_22_80088B88
 - [ ] func_level_22_80089714
 - [ ] func_level_22_8008A9A8
 - [x] func_level_22_8008BAF8
