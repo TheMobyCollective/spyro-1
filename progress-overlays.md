@@ -232,7 +232,7 @@
 - [ ] func_level_62_80084EAC
 - [x] func_level_62_80086004
 - [ ] func_level_63_8007AD64
-- [ ] func_level_63_80082F24
+- [x] func_level_63_80082F24
 - [ ] func_level_63_800836F0
 - [ ] func_level_63_80084634
 - [x] func_level_63_800854B4
