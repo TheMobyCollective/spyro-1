@@ -4703,10 +4703,61 @@ void func_80049F3C(void) {
   }
 }
 
-void func_80049FAC(int);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80049FAC);
+extern Vector3D D_8006E2A8[8]; // Shadow sample offset vectors
+extern int D_8006E9A4[36];     // Per-level shadow height thresholds
 
-extern int D_8006E9A4[TOTAL_LEVEL_COUNT]; // per-level surface-height threshold
+/// @brief Updates Spyro's shadow, sampling the floor below him
+/// @param pSampleShadow Whether to sample the floor for shadow opacity
+void func_80049FAC(int pSampleShadow) {
+  Vector3D vec;
+  int surface;
+
+  vec.x = 0;
+  vec.y = 0;
+  vec.z = -0x164;
+  VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec, &vec);
+  VecAdd(&vec, &vec, &g_Spyro.m_Position);
+  VecCopy(&D_8007AA10.m_Position, &vec);
+  D_8007AA10.m_Position.z = g_Spyro.m_surfaceBelowSpyro;
+
+  if (g_Spyro.m_sortingDepth < 0x7F) {
+    g_Spyro.m_sortingDepth = 5;
+  }
+
+  D_8007AA10.unk_1c = 3;
+  if (g_Spyro.m_Position.z - g_Spyro.m_surfaceBelowSpyro >= 0x365) {
+    D_8007AA10.unk_1c = 5;
+  }
+
+  D_8007AA10.m_IsSpyroOverWater = 0;
+  if (D_8006E9A4[g_LevelIndex] >= g_Spyro.m_surfaceBelowSpyro ||
+      g_Spyro.m_SurfaceProximityState != 0) {
+    D_8007AA10.m_IsSpyroOverWater = 1;
+  }
+
+  D_8007AA10.unk_20 = (D_8007AA10.unk_20 + 1) & 7;
+
+  if (pSampleShadow != 0) {
+    VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &D_8006E2A8[D_8007AA10.unk_20],
+                      &vec);
+    VecAdd(&vec, &vec, &g_Spyro.m_Position);
+    vec.z += 0x200;
+    surface = func_8004D5EC(&vec, 0x400);
+    vec.z -= 0x200;
+
+    if ((u_int)(vec.z - surface + 0x80) >= 0x100) {
+      D_8007AA10.unk_08[D_8007AA10.unk_20] = 1;
+      D_8007AA10.unk_00[D_8007AA10.unk_20] = 0;
+    } else {
+      D_8007AA10.unk_08[D_8007AA10.unk_20] = 0;
+      D_8007AA10.unk_00[D_8007AA10.unk_20] =
+          (194 * (D_8007AA10.m_Position.z - surface)) / 512;
+    }
+  } else {
+    D_8007AA10.unk_08[D_8007AA10.unk_20] = 0;
+    D_8007AA10.unk_00[D_8007AA10.unk_20] = 0;
+  }
+}
 
 void func_80048D10(int pDeltaTime);
 

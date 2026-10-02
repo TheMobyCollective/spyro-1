@@ -370,10 +370,8 @@ typedef struct {
 extern SpyroFlame g_SpyroFlame;
 
 typedef struct {
-  int unk_00;
-  int unk_04;
-  int unk_08;
-  int unk_0c;
+  u_char unk_00[8];
+  u_char unk_08[8];
   Vector3D m_Position;
   int unk_1c;
   int unk_20;
