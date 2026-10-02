@@ -198,7 +198,7 @@
 - [ ] func_level_53_800881D8
 - [x] func_level_53_80089820
 - [ ] func_level_54_8007AF50
-- [ ] func_level_54_800836A8
+- [x] func_level_54_800836A8
 - [ ] func_level_54_80084028
 - [ ] func_level_54_80085254
 - [x] func_level_54_80086348
