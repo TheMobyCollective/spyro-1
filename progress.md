@@ -245,7 +245,7 @@
 - [x] func_80047B60
 - [x] func_8004888C
 - [x] UpdateSpyroPhysicsAndSurfaces
-- [ ] func_80048D10
+- [x] func_80048D10
 - [x] func_800495D8
 - [x] func_80049660
 - [x] func_80049880

@@ -4190,7 +4190,239 @@ void UpdateSpyroPhysicsAndSurfaces(void) {
   ApplySpecialSurfaceEffects(surfaceFlag, 1);
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80048D10);
+// Flame breath particle frame: 3 packed shorts + padding (8 bytes).
+typedef struct {
+  Vector3D16 m_Pos;
+  u_short m_Pad;
+} FlameFrame;
+
+extern Vector3D D_8006DA6C[4];
+extern Vector3D D_8006DA9C;
+extern FlameFrame D_8006DAA8[];
+extern FlameFrame D_8006DDA8[];
+extern u_char D_8006E1C8[2][8];
+extern Vector3D D_8006E1D8[8];
+void func_80017C4C(Vector3D *pOut, void *pIn);
+
+/// @brief Updates Spyro's flame breath particles
+void func_80048D10(int pDeltaTime) {
+  int i;
+  int j;
+  int partsDone;
+  int soundPlayed;
+  Vector3D kissVec;
+  Vector3D trailVec;
+  Vector3D partPos;
+  Vector3D partParams;
+
+  partsDone = 0;
+  soundPlayed = 0;
+
+  if (g_SpyroFlame.m_FairyKissTimer != 0) {
+    kissVec.x = (rand() & 0x1FF) - 0x160;
+    kissVec.y = (rand() & 0x7F) - 0x40;
+    kissVec.z = ((kissVec.x >> 1) + (rand() & 0x3F)) - 0x60;
+    VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &kissVec, &kissVec);
+    VecAdd(&kissVec, &kissVec, &g_Spyro.m_Position);
+    D_800758E4(1, 0x1E, &kissVec, ((void *)0));
+    g_Spyro.m_colorFilter.m_red = 0x90;
+    g_Spyro.m_colorFilter.m_green = 0x20;
+    g_Spyro.m_colorFilter.m_blue = 0x10;
+
+    if (g_SpyroFlame.m_FairyKissTimer < 0x78 &&
+        g_SpyroFlame.m_FairyKissTimer % 24 >= 0xE) {
+      g_Spyro.m_colorFilter.m_interpolation = 0;
+    } else {
+      g_Spyro.m_colorFilter.m_interpolation =
+          Sin(g_SpyroFlame.m_FairyKissTimer << 7) / 256 - 0x28;
+    }
+
+    g_SpyroFlame.m_FairyKissTimer -= g_DeltaTime;
+
+    if (g_SpyroFlame.m_FairyKissTimer <= 0) {
+      g_SpyroFlame.m_FairyKissTimer = 0;
+      g_Spyro.m_colorFilter.m_interpolation = 0;
+    }
+  }
+
+  if (g_SpyroFlame.m_IsFlameActive != 0) {
+    if (g_Spyro.m_airTime == 0 && (u_int)g_Spyro.m_bodyRotation.y >= 0x81) {
+      g_Spyro.m_HeadLookTarget.y = (0x100 - g_Spyro.m_bodyRotation.y) * 8;
+    } else {
+      g_Spyro.m_HeadLookTarget.y = 0;
+    }
+
+    for (j = 0; j < pDeltaTime; j++) {
+      if (g_SpyroFlame.unk_99[0] < 8) {
+        ((u_char *)&g_SpyroFlame.unk_20)[D_8006E1C8[g_SpyroFlame.unk_99[2]]
+                                                   [g_SpyroFlame.unk_99[0]]] =
+            pDeltaTime - j;
+        ((u_char *)&g_SpyroFlame.unk_28)[D_8006E1C8[g_SpyroFlame.unk_99[2]]
+                                                   [g_SpyroFlame.unk_99[0]]] =
+            0x20;
+        ((u_char *)&g_SpyroFlame.unk_30)[D_8006E1C8[g_SpyroFlame.unk_99[2]]
+                                                   [g_SpyroFlame.unk_99[0]]] =
+            0;
+      }
+      g_SpyroFlame.unk_99[0]++;
+    }
+
+    if (g_SpyroFlame.unk_99[0] < 0x1E &&
+        (*(int *)&g_Spyro.m_bodyAnimation & 0xFFFF0000) == 0x07070000 &&
+        g_Spyro.m_headAnimationFrame == 4) {
+      g_Spyro.m_headFrameProgress = 0;
+    }
+
+    if (g_SpyroFlame.unk_99[1] != 0) {
+      int frameData;
+
+      g_SpyroFlame.m_Rotation.x = g_Spyro.m_bodyRotation.x;
+      g_SpyroFlame.m_Rotation.y = g_Spyro.m_bodyRotation.y;
+      g_SpyroFlame.m_Rotation.z = g_Spyro.m_bodyRotation.z;
+      Memcpy((u_char *)&g_SpyroFlame + 0xA4, &g_Spyro.m_headRotationMatrix,
+             0x14);
+
+      frameData = *(
+          int *)((u_char *)g_Models[0]->m_Animations[g_Spyro.m_bodyAnimation] +
+                 g_Spyro.m_bodyAnimationFrame * 4 + 0x24);
+      j = *(int *)(((frameData & 0x1FFFFF) * 2) + 0x10);
+      trailVec.x = j >> 21;
+      trailVec.y = (j << 11) >> 21;
+      trailVec.z = (j << 22) >> 21;
+
+      VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &trailVec, &trailVec);
+      VecAdd(&g_SpyroFlame.m_Position, &trailVec, &g_Spyro.m_Position);
+
+      if (g_SpyroFlame.unk_99[0] < 8) {
+        VecCopy(&trailVec, &D_8006DA6C[g_SpyroFlame.unk_99[0] >> 1]);
+      } else {
+        VecCopy(&trailVec, &D_8006DA9C);
+      }
+
+      VecRotateByMatrix((MATRIX *)((u_char *)&g_SpyroFlame + 0xA4), &trailVec,
+                        &trailVec);
+      VecAdd(&g_SpyroFlame.m_Position, &g_SpyroFlame.m_Position, &trailVec);
+      VecSub((Vector3D *)((u_char *)&g_SpyroFlame + 0xCC),
+             &g_SpyroFlame.m_Position, &g_Spyro.m_Position);
+    } else {
+      VecAdd(&g_SpyroFlame.m_Position, &g_Spyro.m_Position,
+             (Vector3D *)((u_char *)&g_SpyroFlame + 0xCC));
+    }
+
+    for (i = 0; i < 8; i++) {
+      if (((u_char *)&g_SpyroFlame.unk_20)[i] != 0) {
+        int max;
+        int limit;
+
+        if (i < 4) {
+          max = 0x18;
+          limit = 0x20;
+        } else {
+          max = 0x20;
+          limit = 0x28;
+        }
+
+        if (((u_char *)&g_SpyroFlame.unk_30)[i] != 0) {
+          ((u_char *)&g_SpyroFlame.unk_20)[i] += pDeltaTime;
+        }
+
+        if (((u_char *)&g_SpyroFlame.unk_20)[i] >= limit) {
+          ((u_char *)&g_SpyroFlame.unk_20)[i] = 0;
+        } else if (((u_char *)&g_SpyroFlame.unk_30)[i] != 2) {
+          FlameFrame *frames;
+          int lastFrame;
+
+          if (i < 4) {
+            frames = &D_8006DAA8[i * max];
+          } else {
+            frames = &D_8006DDA8[(i - 4) * max];
+          }
+
+          lastFrame = max - 1;
+          if (((u_char *)&g_SpyroFlame.unk_20)[i] < lastFrame) {
+            func_80017C4C(
+                &partPos,
+                (FlameFrame *)((u_char *)frames +
+                               (((u_char *)&g_SpyroFlame.unk_20)[i] + 1) * 8));
+            VecRotateByMatrix((MATRIX *)((u_char *)&g_SpyroFlame + 0xA4),
+                              &partPos, &partPos);
+            VecAdd(&partPos, &partPos, (Vector3D *)&g_SpyroFlame);
+
+            if (((u_char *)&g_SpyroFlame.unk_30)[i] == 0) {
+              VecCopy(&partParams, &g_Spyro.m_Position);
+              ((u_char *)&g_SpyroFlame.unk_30)[i] = 1;
+            } else {
+              VecCopy(&partParams,
+                      (Vector3D *)((u_char *)&g_SpyroFlame + 0xD8 + i * 0xC));
+            }
+            VecCopy((Vector3D *)((u_char *)&g_SpyroFlame + 0xD8 + i * 0xC),
+                    &partPos);
+
+            if (func_8004E3C8(&partPos, 0xA0, ((void *)0),
+                              g_SpyroFlame.unk_9c != 0 ? 0x90000 : 0x10000,
+                              ((void *)0), 0) != 0 ||
+                func_8004AE38(&partParams, &partPos) != 0) {
+              ((u_char *)&g_SpyroFlame.unk_30)[i] = 2;
+              ((u_char *)&g_SpyroFlame.unk_28)[i] =
+                  ((u_char *)&g_SpyroFlame.unk_20)[i];
+              partParams.x = -0x10;
+              partParams.y = (rand() & 0x1F) - 0x10;
+              partParams.z = 0;
+              VecRotateByMatrix((MATRIX *)((u_char *)&g_SpyroFlame + 0xA4),
+                                &partParams, &partParams);
+              partParams.z = 0;
+              D_800758E4(1, 1, &partPos, &partParams);
+
+              if (g_SpyroFlame.unk_9c == 0) {
+                D_800758E4(4, 0x4E, &partPos, ((void *)0));
+              }
+
+              partParams.x = 0x30;
+              partParams.y = 0;
+              partParams.z = 0;
+              VecRotateByLastMatrix(&partParams, &partParams);
+              D_800758E4(g_SpyroFlame.unk_9c * 5 + 5, 0x4F, &partPos,
+                         &partParams);
+
+              if (soundPlayed == 0) {
+                PlaySound(g_Spu.m_SoundTable->spyroFlame, (Moby *)&g_Spyro, 4,
+                          ((void *)0));
+                soundPlayed = 1;
+              }
+            }
+          } else if (((u_char *)&g_SpyroFlame.unk_20)[i] > max &&
+                     ((u_char *)&g_SpyroFlame.unk_20)[i] <= max + pDeltaTime) {
+            func_80017C4C(&partPos, &frames[lastFrame]);
+            VecRotateByMatrix((MATRIX *)((u_char *)&g_SpyroFlame + 0xA4),
+                              &partPos, &partPos);
+            VecAdd(&partPos, &partPos, (Vector3D *)&g_SpyroFlame);
+            VecNull(&partParams);
+
+            if (g_SpyroFlame.unk_9c != 0) {
+              D_800758E4(1, 1, &partPos, &partParams);
+            } else {
+              D_800758E4(1, 0, &partPos, &partParams);
+            }
+
+            if (g_SpyroFlame.unk_9c == 0) {
+              D_800758E4(4, 0x4E, &partPos, ((void *)0));
+            }
+
+            VecRotateByLastMatrix(&D_8006E1D8[i], &partParams);
+            D_800758E4(g_SpyroFlame.unk_9c * 5 + 5, 0x4F, &partPos,
+                       &partParams);
+          }
+        }
+      } else {
+        partsDone++;
+      }
+    }
+
+    if (partsDone == 8) {
+      g_SpyroFlame.m_IsFlameActive = 0;
+    }
+  }
+}
 
 /// @brief Increments the head animation
 void func_800495D8(int pDeltaTime) {
