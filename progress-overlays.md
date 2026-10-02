@@ -222,7 +222,7 @@
 - [ ] func_level_60_80084EA0
 - [x] func_level_60_80085CE0
 - [ ] func_level_61_8007B528
-- [ ] func_level_61_80085664
+- [x] func_level_61_80085664
 - [ ] func_level_61_80086144
 - [ ] func_level_61_8008747C
 - [x] func_level_61_80088668
