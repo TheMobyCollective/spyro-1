@@ -169,7 +169,7 @@
 - [ ] func_level_45_8007B4B0
 - [ ] func_level_45_8007B68C
 - [ ] func_level_45_8007CFB4
-- [ ] func_level_45_8008223C
+- [x] func_level_45_8008223C
 - [ ] func_level_45_80082F54
 - [ ] func_level_45_80083BAC
 - [x] func_level_45_80084844
