@@ -237,7 +237,7 @@
 - [ ] func_level_63_80084634
 - [x] func_level_63_800854B4
 - [ ] func_level_64_8007AD4C
-- [ ] func_level_64_80083690
+- [x] func_level_64_80083690
 - [ ] func_level_64_800840FC
 - [ ] func_level_64_80085230
 - [x] func_level_64_80086264
