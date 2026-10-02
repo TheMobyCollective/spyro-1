@@ -2166,7 +2166,95 @@ int unused_GetSpyroQuadrant(Moby *pMoby) {
   return result;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BFC0);
+/// @brief Follows a path of nodes, interpolating curve segments
+/// @param pMoby The moby to move
+/// @param pPath Path data: node count at 0x0, current node at 0x1, a rolling
+/// window of nodes from 0x8 (16 bytes each)
+/// @param pOut Previous curve vector used by the interpolation
+/// @param pIndex Current interpolation index
+/// @param pCount Number of nodes in the window
+/// @param pFlags Bit 0x4 keeps the interpolated Z
+/// @return Number of path nodes advanced
+int func_8003BFC0(Moby *pMoby, u_char *pPath, Vector3D *pOut, int *pIndex,
+                  int pCount, int pFlags) {
+  int step;
+  register int divisor asm("a2");
+  int tmp;
+  Vector3D vec;
+  Vector3D temp;
+  short *table;
+  u_char pathIndex;
+  int counter;
+
+  counter = 0;
+
+  if (pCount >= 9) {
+    table = D_8006CBCC;
+    step = 7;
+  } else if (pCount >= 7) {
+    table = D_8006CBB4;
+    step = 5;
+  } else if (pCount >= 5) {
+    table = D_8006CBA4;
+    step = 3;
+  } else {
+    table = D_80075280;
+    step = 1;
+  }
+
+  if (pIndex) {
+    pathIndex = pPath[1];
+  } else {
+    pathIndex = pPath[1];
+  }
+
+  if (*pIndex >= pCount) {
+    VecSub(&vec, (Vector3D *)(pPath + 8 + (pathIndex << 4)),
+           &pMoby->m_Position);
+    VecCopy(pOut, &vec);
+    counter++;
+    pPath[1]++;
+    if ((pPath[1] & 0xFF) < pPath[0]) {
+    } else {
+      pPath[1] = 0;
+      counter++;
+    }
+    *pIndex = 0;
+  } else if (*pIndex > step) {
+    VecSub(&vec, (Vector3D *)(pPath + 8 + (pathIndex << 4)),
+           &pMoby->m_Position);
+    tmp = *pIndex - 1;
+    divisor = pCount - tmp;
+    vec.x /= divisor;
+    vec.y /= divisor;
+    vec.z /= divisor;
+    (*pIndex)++;
+  } else {
+    VecSub(&vec, (Vector3D *)(pPath + 8 + (pathIndex << 4)),
+           &pMoby->m_Position);
+    tmp = *pIndex - 1;
+    divisor = pCount - tmp;
+    vec.x /= divisor;
+    vec.y /= divisor;
+    vec.z /= divisor;
+    VecMult(&vec, &vec, table[*pIndex * 2]);
+    VecMult(&temp, pOut, table[*pIndex * 2 + 1]);
+    VecAdd(&vec, &vec, &temp);
+    VecShiftRight(&vec, 10);
+    (*pIndex)++;
+  }
+
+  if (!(pFlags & 4)) {
+    vec.z = 0;
+  }
+
+  pMoby->m_Rotation.z = Atan2Fast(vec.x, vec.y);
+  pMoby->m_Rotation.y = -Atan2Fast(vec.z, VecMagnitude(&vec, 0)) + 0x40;
+  VecAdd(&pMoby->m_Position, &pMoby->m_Position, &vec);
+  func_800529E4(pMoby, 2);
+
+  return counter;
+}
 
 #define setMobyLetterProps(props, parent, index, len)                          \
   (props)->m_Parent = parent;                                                  \
