@@ -130,7 +130,7 @@
 - [ ] func_level_35_8007B4B0
 - [ ] func_level_35_8007B68C
 - [ ] func_level_35_8007CFB4
-- [ ] func_level_35_80081F0C
+- [x] func_level_35_80081F0C
 - [ ] func_level_35_80082AA0
 - [ ] func_level_35_800836F8
 - [x] func_level_35_80084390
