@@ -115,7 +115,7 @@
 - [ ] func_level_32_8008B0B0
 - [x] func_level_32_8008C73C
 - [ ] func_level_33_8007B7A8
-- [ ] func_level_33_80086DD8
+- [x] func_level_33_80086DD8
 - [ ] func_level_33_80087B40
 - [ ] func_level_33_80089450
 - [x] func_level_33_8008A8A0
