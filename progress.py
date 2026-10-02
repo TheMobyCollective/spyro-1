@@ -114,7 +114,8 @@ commits = list(repo.iter_commits(paths='progress.md'))
 
 # Process each commit
 progress = []
-for commit in commits:
+# Oldest-first so same-second commits keep topological order after the stable sort below
+for commit in reversed(commits):
     # Preserve commit order by using the true commit timestamp (UTC) instead of
     # truncating to midnight, otherwise multiple updates in a day can regress.
     date = commit.committed_datetime.astimezone(datetime.timezone.utc)
@@ -211,3 +212,85 @@ plt.savefig('.github/assets/progress.png', dpi=150)
 # Print summary
 print(f"Functions: {final_func_pct:.2f}% ({final_funcs_matched}/{final_funcs_total})")
 print(f"Bytes:     {final_bytes_pct:.2f}% ({final_bytes_matched:,}/{final_bytes_total:,})")
+
+
+# --- Overlay progress (function counts only) ---
+# Overlay functions live outside the main-executable address range used for
+# byte sizes above, so this chart tracks function counts only.
+overlay_path = 'progress-overlays.md'
+overlay_commits = list(repo.iter_commits(paths=overlay_path))
+if overlay_commits:
+    overlay_progress = []
+    # Oldest-first so same-second commits keep topological order after the stable sort below
+    for commit in reversed(overlay_commits):
+        date = commit.committed_datetime.astimezone(datetime.timezone.utc)
+
+        content = commit.tree / overlay_path
+        content = content.data_stream.read().decode('utf-8')
+
+        checked_funcs, unchecked_funcs = extract_function_names(content)
+
+        overlay_progress.append((
+            date,
+            len(checked_funcs),
+            len(unchecked_funcs)
+        ))
+
+    overlay_progress = sorted(overlay_progress, key=lambda x: x[0])
+    overlay_range = pd.date_range(start=overlay_progress[0][0], end=overlay_progress[-1][0], freq='h')
+
+    # Interpolate progress for smooth chart
+    overlay_interp = []
+    for date in overlay_range:
+        funcs_matched = 0
+        funcs_unmatched = 0
+
+        for d, fm, fu in overlay_progress:
+            if d <= date:
+                funcs_matched = fm
+                funcs_unmatched = fu
+
+        total_funcs = funcs_matched + funcs_unmatched
+        func_pct = (funcs_matched * 100 / total_funcs) if total_funcs > 0 else 0
+
+        overlay_interp.append((date, func_pct))
+
+    # Ensure the final data point is included
+    if overlay_progress and (not overlay_interp or overlay_interp[-1][0] < overlay_progress[-1][0]):
+        date, fm, fu = overlay_progress[-1]
+        total_funcs = fm + fu
+        func_pct = (fm * 100 / total_funcs) if total_funcs > 0 else 0
+        overlay_interp.append((date, func_pct))
+
+    overlay_df = pd.DataFrame(overlay_interp, columns=['date', 'functions'])
+
+    # Create the chart
+    fig2, ax2 = plt.subplots(figsize=(10, 6))
+
+    ax2.plot(overlay_df['date'], overlay_df['functions'], label='Functions', color='green', linewidth=2)
+
+    ax2.xaxis.set_major_locator(mdates.MonthLocator())
+    ax2.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
+    ax2.xaxis.set_minor_locator(mdates.WeekdayLocator())
+    ax2.set_ylim(0, 100)
+    ax2.yaxis.set_major_formatter(ticker.PercentFormatter())
+    ax2.legend(loc='upper left')
+    ax2.grid(True, alpha=0.3)
+    ax2.set_xlabel('Date')
+    ax2.set_ylabel('Overlay Decompilation Progress')
+
+    # Get final statistics
+    ofm, ofu = overlay_progress[-1][1], overlay_progress[-1][2]
+    of_pct = (ofm * 100 / (ofm + ofu)) if (ofm + ofu) > 0 else 0
+
+    plt.title(
+        f'Overlay Decompilation Progress\n'
+        f'Functions: {of_pct:.1f}% ({ofm}/{ofm + ofu})'
+    )
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.savefig('.github/assets/progress-overlays.png', dpi=150)
+
+    print(f"Overlays:  {of_pct:.2f}% ({ofm}/{ofu + ofm})")
+else:
+    print("Overlays:  no progress-overlays.md history found, skipping")
