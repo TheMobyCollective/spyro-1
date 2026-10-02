@@ -149,7 +149,7 @@
 - [ ] func_level_41_800866D8
 - [x] func_level_41_80087944
 - [ ] func_level_42_8007AFBC
-- [ ] func_level_42_80084718
+- [x] func_level_42_80084718
 - [ ] func_level_42_80085084
 - [ ] func_level_42_800861CC
 - [x] func_level_42_80087130
