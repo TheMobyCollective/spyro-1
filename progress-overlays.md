@@ -81,7 +81,7 @@
 - [ ] func_level_23_80085184
 - [x] func_level_23_80086260
 - [ ] func_level_24_8007AEB8
-- [ ] func_level_24_800845F0
+- [x] func_level_24_800845F0
 - [ ] func_level_24_80084EF0
 - [ ] func_level_24_8008611C
 - [x] func_level_24_80087210
