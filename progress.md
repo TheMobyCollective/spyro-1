@@ -58,7 +58,7 @@
 - [x] SpuUpdate
 - [x] func_80033C50
 - [x] func_80033E40
-- [ ] func_80033F08
+- [x] func_80033F08
 - [x] ApplySphericalPreset
 - [x] func_80034204
 - [x] func_800342F8

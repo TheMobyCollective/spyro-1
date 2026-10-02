@@ -119,10 +119,81 @@ int func_80033E40(Vector3D *pPoint1, Vector3D *pPoint2) {
 }
 
 // Return is something happened to the azimuth
-int func_80033F08(Vector3D *pVec);
+int func_80033F08(Vector3D *pVec) {
+  Vector3D diff;
+  int magnitude;
+  int newAzimuth;
+  int azimuthDiff;
+  int shiftedAzimuth;
+  int flippedDiff;
+  int elevationDiff;
+  int azimuthOffset;
+  int result;
 
-// Function for updating the spherical coordinates
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80033F08);
+  VecSub(&diff, pVec, g_Camera.m_Focus);
+
+  magnitude = VecMagnitude(&diff, 1);
+  g_Camera.m_Simulation.m_Coords.radius = magnitude;
+  magnitude = VecRefineMagnitude(&diff, magnitude, 1);
+  g_Camera.m_Simulation.m_Coords.radius = magnitude;
+
+  magnitude = VecMagnitude(&diff, 0);
+  magnitude = VecRefineMagnitude(&diff, magnitude, 0);
+
+  g_Camera.m_Simulation.m_Coords.elevation = Atan2(magnitude, diff.z, 1);
+  newAzimuth = Atan2(diff.x, -diff.y, 1);
+
+  azimuthDiff = (newAzimuth - g_Camera.m_Simulation.m_Coords.azimuth) & 0xFFF;
+  if (azimuthDiff >= 0x801) {
+    azimuthDiff -= 0x1000;
+  }
+
+  shiftedAzimuth = g_Camera.m_Simulation.m_Coords.azimuth - 0x800;
+  flippedDiff = (newAzimuth - shiftedAzimuth) & 0xFFF;
+  if (flippedDiff >= 0x801) {
+    flippedDiff -= 0x1000;
+  }
+
+  if ((ABS(flippedDiff) < ABS(azimuthDiff)) &&
+      (g_Camera.m_State == 0x80000009 || g_Camera.unk_0xE8 != 0)) {
+    if (ABS(diff.x) >= 0x81 || ABS(diff.y) >= 0x81) {
+      g_Camera.m_Simulation.m_Coords.azimuth = (newAzimuth + 0x800) & 0xFFF;
+    } else {
+      g_Camera.m_Simulation.m_Coords.azimuth =
+          g_Camera.m_Sphere.m_Coords.azimuth;
+    }
+    g_Camera.m_Simulation.m_Coords.elevation =
+        (0x800 - g_Camera.m_Simulation.m_Coords.elevation) & 0xFFF;
+    result = 1;
+  } else {
+    if (ABS(diff.x) >= 0x81 || ABS(diff.y) >= 0x81) {
+      g_Camera.m_Simulation.m_Coords.azimuth = newAzimuth;
+    } else {
+      g_Camera.m_Simulation.m_Coords.azimuth =
+          g_Camera.m_Sphere.m_Coords.azimuth;
+    }
+    result = 0;
+  }
+
+  g_Camera.m_Simulation.m_Offset.azimuth = g_Camera.m_Rotation.x;
+  elevationDiff =
+      (g_Camera.m_Rotation.y - g_Camera.m_Simulation.m_Coords.elevation) &
+      0xFFF;
+  g_Camera.m_Simulation.m_Offset.elevation = elevationDiff;
+  if (elevationDiff >= 0x801) {
+    g_Camera.m_Simulation.m_Offset.elevation = elevationDiff - 0x1000;
+  }
+
+  azimuthOffset =
+      (0x800 - g_Camera.m_Rotation.z - g_Camera.m_Simulation.m_Coords.azimuth) &
+      0xFFF;
+  g_Camera.m_Simulation.m_Offset.radius = azimuthOffset;
+  if (azimuthOffset >= 0x801) {
+    g_Camera.m_Simulation.m_Offset.radius = azimuthOffset - 0x1000;
+  }
+
+  return result;
+}
 
 /// @brief Updates the spherical coordinates
 void ApplySphericalPreset(void) {
