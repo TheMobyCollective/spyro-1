@@ -576,6 +576,81 @@ allocRecord:
   }
 }
 
-INCLUDE_ASM("asm/nonmatchings/overlays/credits", func_credits_8007BFD0);
+void func_credits_8007BFD0(void) {
+  RECT rc;
+  int y;
+  int i;
+  CreditsRecord *record;
+
+  if (g_CreditsStage == -1) {
+    DrawSync(0);
+    VSync(0);
+    rc.x = 0;
+    rc.y = y = g_CurDB != g_DB ? (256 - 8) : 8;
+    rc.w = 512;
+    rc.h = 224;
+    MoveImage(&rc, 0, 256 - y);
+    DrawSync(0);
+  } else {
+    setRGB0(&g_DB[0].m_DrawEnv, g_Cyclorama.m_BackgroundColor.r,
+            g_Cyclorama.m_BackgroundColor.g, g_Cyclorama.m_BackgroundColor.b);
+    setRGB0(&g_DB[1].m_DrawEnv, g_Cyclorama.m_BackgroundColor.r,
+            g_Cyclorama.m_BackgroundColor.g, g_Cyclorama.m_BackgroundColor.b);
+
+    for (i = 0; i < D_800756E4; i++) {
+      record = &D_8007589C[i];
+      Memset(--g_HudMobys, 0, sizeof(Moby));
+      g_HudMobys->m_Position.x = record->m_Position.x;
+      g_HudMobys->m_Position.y = record->m_Position.y;
+      g_HudMobys->m_Position.z = record->m_Position.z;
+      g_HudMobys->m_Rotation.x = record->m_RotationX;
+      if (record->m_Class == 0x115) {
+        g_HudMobys->m_Rotation.x += 0x29;
+        g_HudMobys->m_Position.z = 0x1C00;
+      }
+      g_HudMobys->m_Rotation.y = record->m_RotationY;
+      g_HudMobys->m_Rotation.z = record->m_RotationZ;
+      g_HudMobys->m_Class = record->m_Class;
+      g_HudMobys->m_SpecularMetalType = 11;
+      g_HudMobys->m_RenderRadius = 0xFF;
+      g_HudMobys->m_DepthOffset = 127;
+    }
+
+    if (g_Fade) {
+      func_800190D4(2, g_Fade * 16, g_Fade * 16, g_Fade * 16);
+    }
+
+    g_SonyImage.m_ShadedMobys[0] = 0;
+    func_80018880();
+    Memset(g_SonyImage.u.m_Buf, 0, 0x900);
+    func_80022A2C();
+    Memset16(g_SonyImage.u.m_Buf, 0, 0x1C00);
+
+    g_Environment.m_CullingDistance = 0x28000;
+
+    func_800258F0(-1);
+    func_8004EBA8(-1, &g_Camera.m_ViewMatrix, &g_Camera.m_ProjectionMatrix);
+
+    DrawSync(0);
+
+    if (D_80075784) {
+      VSync(0);
+    }
+
+    D_80075950.pre = VSync(-1);
+
+    while (D_80075950.pre - D_80075950.post < 2) {
+      VSync(0);
+      D_80075950.pre = VSync(-1);
+    }
+
+    D_80075950.post = VSync(-1);
+
+    PutDispEnv(&g_CurDB->m_DispEnv);
+    PutDrawEnv(&g_CurDB->m_DrawEnv);
+    DrawOTag(func_80016784(0x800));
+  }
+}
+
 
 void func_credits_8007C338(void) {}

@@ -1,5 +1,5 @@
 - [x] func_credits_8007AA50
-- [ ] func_credits_8007BFD0
+- [x] func_credits_8007BFD0
 - [x] func_credits_8007C338
 - [ ] func_level_10_8007AEA0
 - [ ] func_level_10_8007AFDC
