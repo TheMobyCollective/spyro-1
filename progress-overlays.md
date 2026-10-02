@@ -120,7 +120,7 @@
 - [ ] func_level_33_80089450
 - [x] func_level_33_8008A8A0
 - [ ] func_level_34_8007AF28
-- [ ] func_level_34_80083AB4
+- [x] func_level_34_80083AB4
 - [ ] func_level_34_80084830
 - [ ] func_level_34_80085F40
 - [x] func_level_34_8008749C
