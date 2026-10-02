@@ -183,7 +183,7 @@
 - [ ] func_level_50_8008AA24
 - [x] func_level_50_8008BB38
 - [ ] func_level_51_8007B4F8
-- [ ] func_level_51_80084B94
+- [x] func_level_51_80084B94
 - [ ] func_level_51_800857FC
 - [ ] func_level_51_80086D38
 - [x] func_level_51_800880D4
