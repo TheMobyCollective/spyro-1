@@ -62,7 +62,7 @@
 - [ ] func_level_21_8007B898
 - [ ] func_level_21_8007D838
 - [ ] func_level_21_8007E240
-- [ ] func_level_21_8008A4D0
+- [x] func_level_21_8008A4D0
 - [ ] func_level_21_8008B1C0
 - [ ] func_level_21_8008C540
 - [x] func_level_21_8008D600
