@@ -85,7 +85,7 @@
 - [x] CalculateCompletion
 - [x] func_8002BA68
 - [x] func_8002BAB8
-- [ ] func_80050BD0
+- [x] func_80050BD0
 - [x] CheckpointSave
 - [x] func_8002A6FC
 - [x] func_8002B390
