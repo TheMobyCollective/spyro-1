@@ -144,7 +144,7 @@
 - [ ] func_level_40_80089AB8
 - [x] func_level_40_8008AB70
 - [ ] func_level_41_8007B5DC
-- [ ] func_level_41_8008465C
+- [x] func_level_41_8008465C
 - [ ] func_level_41_800853AC
 - [ ] func_level_41_800866D8
 - [x] func_level_41_80087944
