@@ -33,7 +33,7 @@
 - [x] func_8002EB2C
 - [x] func_8002EDF0
 - [x] func_8002F3C4
-- [ ] func_8002F3E4
+- [x] func_8002F3E4
 - [ ] func_800314B4
 - [x] func_800324D8
 - [x] CheckMemcardsExist

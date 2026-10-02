@@ -1,3 +1,4 @@
+#include "42CC4.h"
 #include "4BEF8.h"
 #include "balloonist.h"
 #include "buffers.h"
@@ -5,11 +6,13 @@
 #include "cd.h"
 #include "cheats.h"
 #include "checkpoint.h"
+#include "collision.h"
 #include "common.h"
 #include "cutscene.h"
 #include "cyclorama.h"
 #include "dragon.h"
 #include "environment.h"
+#include "fairy.h"
 #include "game_over.h"
 #include "gamepad.h"
 #include "gamestates/draw.h"
@@ -19,8 +22,10 @@
 #include "loaders.h"
 #include "math.h"
 #include "memory.h"
+#include "moby_helpers.h"
 #include "music.h"
 #include "overlay_pointers.h"
+#include "renderers.h"
 #include "sony_image.h"
 #include "specular_and_metal.h"
 #include "spyro.h"
@@ -742,9 +747,782 @@ void func_8002EDF0(void) {
 /// @brief Gamestate 6 (Empty, used to be the dragon dialogue)
 void func_8002F3C4(void) { func_8002C91C(); }
 
+typedef struct {
+  Vector3D m_Position;
+  Vector3D m_Rotation;
+} DragonCutsceneCameraNode;
+
+extern int func_80017948(int, int);
+extern void func_80049FAC(int);
+extern void UpdateMobyDragonFragment(Moby *pMoby);
+extern u_char D_8006F390[];
+extern u_char D_8006F391[];
+extern u_char D_8006F398[];
+extern u_char D_8006F399[];
+extern Vector3D D_8006F3F0[];
+
+extern int func_8001796C(int, int);
+
 /// @brief Gamestate 8 Dragon cutscene
-void func_8002F3E4(void);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/gamestates/update", func_8002F3E4);
+void func_8002F3E4(void) {
+  Vector3D delta;
+  Vector3D16 targetRot;
+  SoundDefinition sndBak;
+  int ticks = g_DragonCutscene.m_CutsceneTicks;
+  int dt = g_DeltaTime;
+
+  g_DragonCutscene.m_CutsceneTicks = ticks + dt;
+  g_DragonCutscene.unk_0x50 += dt;
+
+  switch (g_DragonCutscene.m_State) {
+  case 0: {
+    RescuedDragonMobyProps *props;
+    g_GameTick++;
+    g_UpdateMoby(dt);
+    func_8004A200();
+    CameraUpdate();
+
+    D_80076248.unk_0x0 = 1;
+    ((u_char *)&D_80076248)[0x2B] = g_DragonCutscene.m_CutsceneTicks * 4 + 0x40;
+    D_80076248.unk_0x24 = g_DragonCutscene.m_CutsceneTicks * 0x10;
+    D_80076248.vec_0x28.z +=
+        ((g_DragonCutscene.m_CutsceneTicks >> 4) + 2) * g_DeltaTime;
+
+    if (g_DragonCutscene.m_CutsceneTicks >= 0x21) {
+      g_DragonCutscene.m_Fade =
+          (g_DragonCutscene.m_CutsceneTicks - 0x20) * 0x10;
+    } else {
+      g_DragonCutscene.m_Fade = 0;
+    }
+
+    if (D_800757D0 < 8) {
+      D_800757D0 = 8;
+    }
+    D_8007584C = 0x46;
+
+    if (g_DragonCutscene.m_CutsceneTicks >= 0x30) {
+      g_DragonCutscene.m_State = 1;
+      g_DragonCutscene.m_CutsceneTicks = 0;
+      g_DragonCutscene.m_Fade = 0xFF;
+      g_DragonCutscene.m_RescuedDragonMoby->m_Position.z -= 0x78;
+      g_DragonCutscene.unk_0x60 =
+          Atan2(g_Spyro.m_Position.x -
+                    g_DragonCutscene.m_RescuedDragonMoby->m_Position.x,
+                g_Spyro.m_Position.y -
+                    g_DragonCutscene.m_RescuedDragonMoby->m_Position.y,
+                1);
+      VecSub(&delta, &g_Spyro.m_Position,
+             &g_DragonCutscene.m_RescuedDragonMoby->m_Position);
+      g_DragonCutscene.unk_0x64 = VecMagnitude(&delta, 0);
+      g_DragonCutscene.unk_0x68 =
+          ((RescuedDragonMobyProps *)
+               g_DragonCutscene.m_RescuedDragonMoby->m_Props)
+              ->m_Angle.x;
+      g_DragonCutscene.unk_0x6C =
+          ((RescuedDragonMobyProps *)
+               g_DragonCutscene.m_RescuedDragonMoby->m_Props)
+              ->m_Angle.y;
+      g_DragonCutscene.unk_0x70 =
+          Atan2(g_Camera.m_Position.x -
+                    g_DragonCutscene.m_RescuedDragonMoby->m_Position.x,
+                g_Camera.m_Position.y -
+                    g_DragonCutscene.m_RescuedDragonMoby->m_Position.y,
+                1);
+      VecSub(&delta, &g_Camera.m_Position,
+             &g_DragonCutscene.m_RescuedDragonMoby->m_Position);
+      g_DragonCutscene.unk_0x74 = VecMagnitude(&delta, 0);
+      g_DragonCutscene.unk_0x78 = g_Camera.m_Position.z;
+      props = (RescuedDragonMobyProps *)
+                  g_DragonCutscene.m_RescuedDragonMoby->m_Props;
+      g_DragonCutscene.unk_0x7C =
+          Atan2(props->m_CameraPosition.x -
+                    g_DragonCutscene.m_RescuedDragonMoby->m_Position.x,
+                props->m_CameraPosition.y -
+                    g_DragonCutscene.m_RescuedDragonMoby->m_Position.y,
+                1);
+      VecSub(&delta, &props->m_CameraPosition,
+             &g_DragonCutscene.m_RescuedDragonMoby->m_Position);
+      g_DragonCutscene.unk_0x80 = VecMagnitude(&delta, 0);
+      g_DragonCutscene.unk_0x84 = props->m_CameraPosition.z;
+      g_DragonCutscene.unk_0x40 = (func_80017928(g_DragonCutscene.unk_0x60,
+                                                 g_DragonCutscene.unk_0x68) >>
+                                   4) +
+                                  0x28;
+      if (g_DragonCutscene.unk_0x40 < 0x40) {
+        g_DragonCutscene.unk_0x40 = 0x40;
+      }
+      if (g_DragonCutscene.unk_0x40 >= 0x81) {
+        g_DragonCutscene.unk_0x40 = 0x80;
+      }
+      g_SavedFairyKissTimer = g_SpyroFlame.m_FairyKissTimer;
+      func_8004AC24(1);
+      g_Spyro.m_bodyAnimation = 1;
+      g_Spyro.m_nextBodyAnimation = 1;
+      g_Spyro.m_nextBodyAnimationFrame = 1;
+      g_Spyro.m_bodyAnimationFrame = 0;
+      g_Spyro.m_bodyFrameProgress = 0;
+      g_ParticleAllocPtr = g_Particles;
+      g_Particles->m_Type = 0xFF;
+      KillSoundsAndMusic(
+          1 << g_DragonCutscene.m_RescuedDragonMoby->m_SoundChannel);
+      PlaySound(g_Spu.m_SoundTable->dragonRumbleBreaking, nullptr, 16,
+                (u_char *)&g_DragonCutscene.m_SoundVoice);
+    }
+    break;
+  }
+
+  case 1: {
+    RescuedDragonMobyProps *props;
+    int sinT;
+    int angle;
+    int radius;
+    int facing;
+
+    if (g_DragonCutscene.m_CutsceneTicks < 0x20) {
+      int r = 0x20 - g_DragonCutscene.m_CutsceneTicks;
+      D_80076248.unk_0x0 = 1;
+      ((u_char *)&D_80076248)[0x2B] = r * 4 + 0x40;
+      D_80076248.unk_0x24 = r * 0x10;
+      D_80076248.vec_0x28.z += ((r >> 4) + 2) * g_DeltaTime;
+    } else {
+      D_80076248.unk_0x0 = 0;
+    }
+
+    if (g_DragonCutscene.m_CutsceneTicks < 8) {
+      g_DragonCutscene.m_Fade = (8 - g_DragonCutscene.m_CutsceneTicks) << 5;
+    } else {
+      g_DragonCutscene.m_Fade = 0;
+    }
+
+    g_DragonCutscene.m_RescuedDragonMoby->m_Substate =
+        (g_DragonCutscene.m_RescuedDragonMoby->m_Substate + 1) & 3;
+    g_DragonCutscene.m_RescuedDragonMoby->m_Rotation.x =
+        D_8006F390[g_DragonCutscene.m_RescuedDragonMoby->m_Substate * 2];
+    g_DragonCutscene.m_RescuedDragonMoby->m_Rotation.y =
+        D_8006F391[g_DragonCutscene.m_RescuedDragonMoby->m_Substate * 2];
+
+    if (D_800757D0 < 8) {
+      D_800757D0 = 8;
+    }
+    D_8007584C = 0x46;
+    g_SpawnMoby(0xFB, g_DragonCutscene.m_RescuedDragonMoby);
+
+    if (g_DragonCutscene.m_CutsceneTicks < g_DragonCutscene.unk_0x40) {
+      sinT = Sin((g_DragonCutscene.m_CutsceneTicks << 11) /
+                     g_DragonCutscene.unk_0x40 -
+                 0x400) +
+             0x1000;
+      if (((g_DragonCutscene.unk_0x68 - g_DragonCutscene.unk_0x60) & 0xFFF) <
+          0x801) {
+        angle = g_DragonCutscene.unk_0x60 +
+                (func_80017928(g_DragonCutscene.unk_0x68,
+                               g_DragonCutscene.unk_0x60) *
+                     sinT >>
+                 13);
+      } else {
+        angle = g_DragonCutscene.unk_0x60 -
+                (func_80017928(g_DragonCutscene.unk_0x68,
+                               g_DragonCutscene.unk_0x60) *
+                     sinT >>
+                 13);
+      }
+      radius = g_DragonCutscene.unk_0x64 +
+               ((g_DragonCutscene.unk_0x6C - g_DragonCutscene.unk_0x64) *
+                    (Sin((g_DragonCutscene.m_CutsceneTicks << 10) /
+                             g_DragonCutscene.unk_0x40 -
+                         0x400) +
+                     0x1000) >>
+                12);
+      VecCopy(&delta, &g_Spyro.m_Position);
+      g_Spyro.m_Position.x =
+          g_DragonCutscene.m_RescuedDragonMoby->m_Position.x +
+          (Cos(angle) * radius >> 12);
+      g_Spyro.m_Position.y =
+          g_DragonCutscene.m_RescuedDragonMoby->m_Position.y +
+          (Sin(angle) * radius >> 12);
+      VecSub(&delta, &g_Spyro.m_Position, &delta);
+      facing = Atan2(delta.x, delta.y, 0);
+      if (func_80017908(facing, g_Spyro.m_bodyRotation.z) >= 4) {
+        if (((facing - g_Spyro.m_bodyRotation.z) & 0xFF) < 0x81) {
+          g_Spyro.m_bodyRotation.z +=
+              func_80017908(facing, g_Spyro.m_bodyRotation.z) >> 2;
+        } else {
+          g_Spyro.m_bodyRotation.z -=
+              func_80017908(facing, g_Spyro.m_bodyRotation.z) >> 2;
+        }
+      }
+      g_Spyro.m_bodyAnimationSpeed = VecMagnitude(&delta, 0) >> 1;
+      if (g_Spyro.m_bodyAnimationSpeed < 4) {
+        g_Spyro.m_bodyAnimationSpeed = 4;
+      }
+      if (g_Spyro.m_bodyAnimationSpeed >= 0x11) {
+        g_Spyro.m_bodyAnimationSpeed = 0x10;
+      }
+      if (((g_DragonCutscene.unk_0x7C - g_DragonCutscene.unk_0x70) & 0xFFF) <
+          0x801) {
+        angle = g_DragonCutscene.unk_0x70 +
+                (func_80017928(g_DragonCutscene.unk_0x7C,
+                               g_DragonCutscene.unk_0x70) *
+                     sinT >>
+                 13);
+      } else {
+        angle = g_DragonCutscene.unk_0x70 -
+                (func_80017928(g_DragonCutscene.unk_0x7C,
+                               g_DragonCutscene.unk_0x70) *
+                     sinT >>
+                 13);
+      }
+      radius =
+          g_DragonCutscene.unk_0x74 +
+          ((g_DragonCutscene.unk_0x80 - g_DragonCutscene.unk_0x74) * sinT >>
+           13);
+      g_Camera.m_Position.x =
+          g_DragonCutscene.m_RescuedDragonMoby->m_Position.x +
+          (Cos(angle) * radius >> 12);
+      g_Camera.m_Position.y =
+          g_DragonCutscene.m_RescuedDragonMoby->m_Position.y +
+          (Sin(angle) * radius >> 12);
+      g_Camera.m_Position.z =
+          g_DragonCutscene.unk_0x78 +
+          ((g_DragonCutscene.unk_0x84 - g_DragonCutscene.unk_0x78) * sinT >>
+           13);
+      if (g_DragonCutscene.m_CutsceneTicks >=
+              g_DragonCutscene.unk_0x40 - 0x10 &&
+          g_DragonCutscene.m_CutsceneTicks - g_DeltaTime <
+              g_DragonCutscene.unk_0x40 - 0x10) {
+        g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+        g_Spyro.m_nextBodyAnimation = 3;
+        g_Spyro.m_nextBodyAnimationFrame = 0;
+        g_Spyro.m_bodyFrameProgress = 0;
+        g_Spyro.m_bodyAnimationSpeed = 12;
+      }
+    } else if (g_DragonCutscene.m_CutsceneTicks <
+               g_DragonCutscene.unk_0x40 + 0x20) {
+      if (g_DragonCutscene.m_CutsceneTicks - g_DeltaTime <
+          g_DragonCutscene.unk_0x40) {
+        g_Spyro.m_Position.x =
+            g_DragonCutscene.m_RescuedDragonMoby->m_Position.x +
+            (Cos(g_DragonCutscene.unk_0x68) * g_DragonCutscene.unk_0x6C >> 12);
+        g_Spyro.m_Position.y =
+            g_DragonCutscene.m_RescuedDragonMoby->m_Position.y +
+            (Sin(g_DragonCutscene.unk_0x68) * g_DragonCutscene.unk_0x6C >> 12);
+        g_DragonCutscene.unk_0x60 = g_Spyro.m_bodyRotation.z * 16;
+        g_DragonCutscene.unk_0x68 = (g_DragonCutscene.unk_0x68 + 0x800) & 0xFFF;
+        props = (RescuedDragonMobyProps *)
+                    g_DragonCutscene.m_RescuedDragonMoby->m_Props;
+        VecCopy(&g_Camera.m_Position, &props->m_CameraPosition);
+      }
+      if (((g_DragonCutscene.unk_0x68 - g_DragonCutscene.unk_0x60) & 0xFFF) <
+          0x801) {
+        angle =
+            g_DragonCutscene.unk_0x60 +
+            (func_80017928(g_DragonCutscene.unk_0x68,
+                           g_DragonCutscene.unk_0x60) *
+             (g_DragonCutscene.m_CutsceneTicks - g_DragonCutscene.unk_0x40) /
+             32);
+      } else {
+        angle =
+            g_DragonCutscene.unk_0x60 -
+            (func_80017928(g_DragonCutscene.unk_0x68,
+                           g_DragonCutscene.unk_0x60) *
+             (g_DragonCutscene.m_CutsceneTicks - g_DragonCutscene.unk_0x40) /
+             32);
+      }
+      g_Spyro.m_bodyRotation.z = angle >> 4;
+      g_Spyro.m_bodyAnimationSpeed = 8;
+    } else {
+      g_DragonCutscene.m_State = 2;
+      g_Spyro.m_bodyFrameProgress = 4;
+      g_DragonCutscene.m_CutsceneTicks = 0;
+      g_Spyro.m_nextBodyAnimation = 0;
+      g_Spyro.m_nextBodyAnimationFrame = 0;
+      g_Spyro.m_bodyAnimationSpeed = 4;
+      g_Spyro.m_bodyRotation.z = g_DragonCutscene.unk_0x68 >> 4;
+    }
+
+    if (g_DragonCutscene.m_State == 1) {
+      VecAdd(&delta, &g_Spyro.m_Position,
+             &g_DragonCutscene.m_RescuedDragonMoby->m_Position);
+      VecShiftRight(&delta, 1);
+      VecSub(&delta, &delta, &g_Camera.m_Position);
+      if (g_DragonCutscene.m_CutsceneTicks < 0x10) {
+        targetRot.x = 0;
+        targetRot.y = Atan2(VecMagnitude(&delta, 0), -delta.z, 1);
+        targetRot.z = Atan2(delta.x, delta.y, 1);
+        g_Camera.m_Rotation.x =
+            ((u_short)g_Camera.m_Rotation.x +
+             (func_8001796C(targetRot.x, g_Camera.m_Rotation.x) *
+                  g_DragonCutscene.m_CutsceneTicks >>
+              4)) &
+            0xFFF;
+        g_Camera.m_Rotation.y =
+            ((u_short)g_Camera.m_Rotation.y +
+             (func_8001796C(targetRot.y, g_Camera.m_Rotation.y) *
+                  g_DragonCutscene.m_CutsceneTicks >>
+              4)) &
+            0xFFF;
+        g_Camera.m_Rotation.z =
+            ((u_short)g_Camera.m_Rotation.z +
+             (func_8001796C(targetRot.z, g_Camera.m_Rotation.z) *
+                  g_DragonCutscene.m_CutsceneTicks >>
+              4)) &
+            0xFFF;
+      } else if (g_DragonCutscene.m_CutsceneTicks <
+                 g_DragonCutscene.unk_0x40 - 0x20) {
+        g_Camera.m_Rotation.x = 0;
+        g_Camera.m_Rotation.y = Atan2(VecMagnitude(&delta, 0), -delta.z, 1);
+        g_Camera.m_Rotation.z = Atan2(delta.x, delta.y, 1);
+      } else {
+        props = (RescuedDragonMobyProps *)
+                    g_DragonCutscene.m_RescuedDragonMoby->m_Props;
+        targetRot.x = 0;
+        targetRot.y = Atan2(VecMagnitude(&delta, 0), -delta.z, 1);
+        targetRot.z = Atan2(delta.x, delta.y, 1);
+        g_Camera.m_Rotation.x =
+            ((u_short)targetRot.x +
+             (func_8001796C(props->m_CameraRotation.x, targetRot.x) *
+                  ((g_DragonCutscene.m_CutsceneTicks -
+                    g_DragonCutscene.unk_0x40) +
+                   0x20) >>
+              6)) &
+            0xFFF;
+        g_Camera.m_Rotation.y =
+            ((u_short)targetRot.y +
+             (func_8001796C(props->m_CameraRotation.y, targetRot.y) *
+                  ((g_DragonCutscene.m_CutsceneTicks -
+                    g_DragonCutscene.unk_0x40) +
+                   0x20) >>
+              6)) &
+            0xFFF;
+        g_Camera.m_Rotation.z =
+            ((u_short)targetRot.z +
+             (func_8001796C(props->m_CameraRotation.z, targetRot.z) *
+                  ((g_DragonCutscene.m_CutsceneTicks -
+                    g_DragonCutscene.unk_0x40) +
+                   0x20) >>
+              6)) &
+            0xFFF;
+      }
+    }
+
+    delta.x =
+        (g_Spyro.m_floorPositonOnSlope.x * Cos(g_Spyro.m_bodyRotation.z * 16) +
+         g_Spyro.m_floorPositonOnSlope.y *
+             Sin(g_Spyro.m_bodyRotation.z * 16)) >>
+        12;
+    delta.y =
+        (g_Spyro.m_floorPositonOnSlope.y * Cos(g_Spyro.m_bodyRotation.z * 16) -
+         g_Spyro.m_floorPositonOnSlope.x *
+             Sin(g_Spyro.m_bodyRotation.z * 16)) >>
+        12;
+    delta.z = g_Spyro.m_floorPositonOnSlope.z;
+    g_Spyro.m_bodyRotation.x = -Atan2(
+        func_80017A38(delta.x * delta.x + g_Spyro.m_floorPositonOnSlope.z *
+                                              g_Spyro.m_floorPositonOnSlope.z),
+        delta.y, 1);
+    g_Spyro.m_bodyRotation.y = -Atan2(delta.z, delta.x, 1);
+    func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
+    func_80049660();
+    func_80049E8C();
+    g_Spyro.m_Position.z += 0x400;
+    g_Spyro.m_surfaceBelowSpyro = func_8004DF24(&g_Spyro.m_Position);
+    g_Spyro.m_Position.z = g_Spyro.m_surfaceBelowSpyro + 0x164;
+    func_80049FAC(0);
+    break;
+  }
+
+  case 2: {
+    Moby *moby;
+    int i;
+    g_DragonCutscene.m_RescuedDragonMoby->m_Substate =
+        (g_DragonCutscene.m_RescuedDragonMoby->m_Substate + 1) & 3;
+    g_DragonCutscene.m_RescuedDragonMoby->m_Rotation.x =
+        D_8006F398[g_DragonCutscene.m_RescuedDragonMoby->m_Substate * 2];
+    g_DragonCutscene.m_RescuedDragonMoby->m_Rotation.y =
+        D_8006F399[g_DragonCutscene.m_RescuedDragonMoby->m_Substate * 2];
+
+    if (D_800757D0 < 8) {
+      D_800757D0 = 8;
+    }
+    D_8007584C = 0x46;
+    g_SpawnMoby(0xFB, g_DragonCutscene.m_RescuedDragonMoby);
+
+    if (g_DragonCutscene.m_CutsceneTicks < 0x10 ||
+        g_DragonCutscene.m_Stage < 3) {
+      func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
+      func_80049660();
+      func_80049E8C();
+    } else {
+      g_DragonCutscene.m_State = 3;
+      g_DragonCutscene.m_CutsceneTicks = 0;
+      for (i = 0; i < 32; i++) {
+        g_SpawnMoby(0xFB, g_DragonCutscene.m_RescuedDragonMoby);
+      }
+      moby = func_800524C4();
+      g_DragonCutscene.m_CutsceneSpyro = moby;
+      func_8003A720(moby);
+      g_DragonCutscene.m_CutsceneSpyro->m_Class = 0x1FE;
+      VecCopy(&g_DragonCutscene.m_CutsceneSpyro->m_Position,
+              &g_DragonCutscene.m_RescuedDragonMoby->m_Position);
+      g_DragonCutscene.m_CutsceneSpyro->m_Rotation.z =
+          g_DragonCutscene.m_RescuedDragonMoby->m_Rotation.z;
+      g_DragonCutscene.m_CutsceneSpyro->m_ScaleOverride = 0x60;
+      g_DragonCutscene.m_CutsceneSpyro->m_DepthOffset = 5;
+      g_DragonCutscene.m_CutsceneSpyro->m_ShadowDistance = -1;
+      g_DragonCutscene.m_CutsceneSpyro->m_Position.z += 0x400;
+      func_8004DF24(&g_DragonCutscene.m_CutsceneSpyro->m_Position);
+      g_DragonCutscene.m_CutsceneSpyro->m_Position.z -= 0x400;
+      func_800533D0(g_DragonCutscene.m_CutsceneSpyro);
+      func_800526A8(g_DragonCutscene.m_CutsceneSpyro);
+      g_DragonCutscene.m_CutsceneDragon = func_800524C4();
+      func_8003A720(g_DragonCutscene.m_CutsceneDragon);
+      g_DragonCutscene.m_CutsceneDragon->m_Class = 0x1FF;
+      VecCopy(&g_DragonCutscene.m_CutsceneDragon->m_Position,
+              &g_Spyro.m_Position);
+      g_DragonCutscene.m_CutsceneDragon->m_DepthOffset = 5;
+      func_800526A8(g_DragonCutscene.m_CutsceneDragon);
+      StopSound(g_DragonCutscene.m_SoundVoice, 4);
+      PlaySound(g_Spu.m_SoundTable->dragonBreak, nullptr, 16,
+                (u_char *)&g_DragonCutscene.m_SoundVoice);
+      g_DragonCutscene.m_RescuedDragonMoby->m_Position.z += 0x78;
+      func_80052568(g_DragonCutscene.m_RescuedDragonMoby);
+    }
+    break;
+  }
+
+  case 3: {
+    if (g_DragonCutscene.m_CutsceneTicks < 0x18) {
+      g_DragonCutscene.m_CutsceneSpyro->m_ScaleOverride =
+          0x60 - g_DragonCutscene.m_CutsceneTicks * 3;
+      g_DragonCutscene.m_CutsceneSpyro->m_Rotation.z =
+          g_DragonCutscene.m_RescuedDragonMoby->m_Rotation.z +
+          (func_80017948(((RescuedDragonMobyProps *)
+                              g_DragonCutscene.m_RescuedDragonMoby->m_Props)
+                                 ->m_Angle.z >>
+                             4,
+                         g_DragonCutscene.m_RescuedDragonMoby->m_Rotation.z) *
+           g_DragonCutscene.m_CutsceneTicks) /
+              24;
+    } else {
+      g_DragonCutscene.m_State = 4;
+      g_DragonCutscene.m_CutsceneTicks = 0;
+      g_DragonCutscene.m_CutsceneSpyro->m_Rotation.z =
+          ((RescuedDragonMobyProps *)
+               g_DragonCutscene.m_RescuedDragonMoby->m_Props)
+              ->m_Angle.z >>
+          4;
+      g_DragonCutscene.m_CutsceneSpyro->m_ScaleOverride = 0;
+      g_DragonCutscene.m_CutsceneDragon->m_Rotation.x =
+          g_Spyro.m_bodyRotation.x;
+      g_DragonCutscene.m_CutsceneDragon->m_Rotation.y =
+          g_Spyro.m_bodyRotation.y;
+      g_DragonCutscene.m_CutsceneDragon->m_Rotation.z =
+          g_Spyro.m_bodyRotation.z;
+    }
+    break;
+  }
+
+  case 4: {
+    int i;
+    int div;
+    i = 0;
+    if (g_DragonCutscene.m_CutsceneTicks < g_DragonCutscene.unk_0x4C * 2) {
+      if (g_DragonCutscene.unk_0x58 == 0 &&
+          g_DragonCutscene.m_CutsceneTicks >=
+              ((RescuedDragonMobyProps *)
+                   g_DragonCutscene.m_RescuedDragonMoby->m_Props)
+                  ->m_CutsceneTicks) {
+        Memcpy(&sndBak, g_Spu.m_SoundDefinitions, sizeof(SoundDefinition));
+        g_Spu.m_SoundDefinitions->m_Addr =
+            0x80000 - g_DragonCutscene.m_Header.m_SpuData.m_Length;
+        g_Spu.m_SoundDefinitions->m_LoopAddr = -1;
+        g_Spu.m_SoundDefinitions->unk_0x8 = 0x32;
+        g_Spu.m_SoundDefinitions->m_Pitch =
+            (((RescuedDragonMobyProps *)
+                  g_DragonCutscene.m_RescuedDragonMoby->m_Props)
+                 ->m_CutsceneAudioPitch
+             << 10) /
+            11025;
+        g_Spu.m_SoundDefinitions->m_PitchVariance = 0;
+        g_Spu.m_SoundDefinitions->m_PitchMultiplier = 0;
+        g_Spu.m_SoundDefinitions->m_VarianceType = 0;
+        g_Spu.m_NextSoundOverrideFlags = 1;
+        g_Spu.m_VolumeOverride.left = 0x3FFF;
+        g_Spu.m_VolumeOverride.right = 0x3FFF;
+        StopSound(g_DragonCutscene.m_SoundVoice, 4);
+        PlaySound(0, nullptr, 16, (u_char *)&g_DragonCutscene.m_SoundVoice);
+        Memcpy(g_Spu.m_SoundDefinitions, &sndBak, sizeof(SoundDefinition));
+        g_DragonCutscene.unk_0x58 = 1;
+      }
+      g_Camera.m_Position.x =
+          ((DragonCutsceneCameraNode *)
+               g_DragonCutscene.unk_0x48)[g_DragonCutscene.m_CutsceneTicks >> 1]
+              .m_Position.x;
+      g_Camera.m_Position.y =
+          ((DragonCutsceneCameraNode *)
+               g_DragonCutscene.unk_0x48)[g_DragonCutscene.m_CutsceneTicks >> 1]
+              .m_Position.y;
+      g_Camera.m_Position.z =
+          ((DragonCutsceneCameraNode *)
+               g_DragonCutscene.unk_0x48)[g_DragonCutscene.m_CutsceneTicks >> 1]
+              .m_Position.z;
+      g_Camera.m_Rotation.x =
+          ((DragonCutsceneCameraNode *)
+               g_DragonCutscene.unk_0x48)[g_DragonCutscene.m_CutsceneTicks >> 1]
+              .m_Rotation.x;
+      g_Camera.m_Rotation.y =
+          ((DragonCutsceneCameraNode *)
+               g_DragonCutscene.unk_0x48)[g_DragonCutscene.m_CutsceneTicks >> 1]
+              .m_Rotation.y;
+      g_Camera.m_Rotation.z =
+          ((DragonCutsceneCameraNode *)
+               g_DragonCutscene.unk_0x48)[g_DragonCutscene.m_CutsceneTicks >> 1]
+              .m_Rotation.z;
+      if (g_Models[0x1FE]->m_Animations[0]->m_ProgressPerTick == 0x10) {
+        div = 8;
+      } else if (g_Models[0x1FE]->m_Animations[0]->m_ProgressPerTick == 0x15) {
+        div = 6;
+      } else if (g_Models[0x1FE]->m_Animations[0]->m_ProgressPerTick == 0x20) {
+        div = 4;
+      } else {
+        div = 2;
+      }
+      g_DragonCutscene.m_CutsceneSpyro->m_AnimationState.m_Frame =
+          g_DragonCutscene.m_CutsceneTicks / div;
+      g_DragonCutscene.m_CutsceneSpyro->m_AnimationState.m_NextFrame =
+          g_DragonCutscene.m_CutsceneSpyro->m_AnimationState.m_Frame + 1;
+      g_DragonCutscene.m_CutsceneSpyro->m_AnimationState.m_FrameProgress =
+          ((g_DragonCutscene.m_CutsceneTicks % div) << 6) / div;
+      if (g_DragonCutscene.m_CutsceneSpyro->m_AnimationState.m_NextFrame >=
+          g_Models[0x1FE]->m_Animations[0]->m_NumFrames) {
+        g_DragonCutscene.m_CutsceneSpyro->m_AnimationState.m_Frame =
+            g_Models[0x1FE]->m_Animations[0]->m_NumFrames - 1;
+        g_DragonCutscene.m_CutsceneSpyro->m_AnimationState.m_FrameProgress = 0;
+      }
+      if (g_Models[0x1FF]->m_Animations[0]->m_ProgressPerTick == 0x10) {
+        div = 8;
+      } else if (g_Models[0x1FF]->m_Animations[0]->m_ProgressPerTick == 0x15) {
+        div = 6;
+      } else if (g_Models[0x1FF]->m_Animations[0]->m_ProgressPerTick == 0x20) {
+        div = 4;
+      } else {
+        div = 2;
+      }
+      g_DragonCutscene.m_CutsceneDragon->m_AnimationState.m_Frame =
+          g_DragonCutscene.m_CutsceneTicks / div;
+      g_DragonCutscene.m_CutsceneDragon->m_AnimationState.m_NextFrame =
+          g_DragonCutscene.m_CutsceneDragon->m_AnimationState.m_Frame + 1;
+      g_DragonCutscene.m_CutsceneDragon->m_AnimationState.m_FrameProgress =
+          ((g_DragonCutscene.m_CutsceneTicks % div) << 6) / div;
+      if (g_DragonCutscene.m_CutsceneDragon->m_AnimationState.m_NextFrame >=
+          g_Models[0x1FF]->m_Animations[0]->m_NumFrames) {
+        g_DragonCutscene.m_CutsceneDragon->m_AnimationState.m_Frame =
+            g_Models[0x1FF]->m_Animations[0]->m_NumFrames - 1;
+        g_DragonCutscene.m_CutsceneDragon->m_AnimationState.m_FrameProgress = 0;
+      }
+      if (g_Pad.m_Down & PAD_CROSS) {
+        if (((RescuedDragonMobyProps *)
+                 g_DragonCutscene.m_RescuedDragonMoby->m_Props)
+                ->m_IsUnskipable != 0) {
+          if (g_DragonCutscene.unk_0x5C == 0) {
+            g_DragonCutscene.unk_0x5C = 1;
+          }
+        } else {
+          i = 1;
+        }
+      }
+    }
+    if (i != 0 ||
+        g_DragonCutscene.m_CutsceneTicks >= g_DragonCutscene.unk_0x4C * 2) {
+      g_DragonCutscene.m_State = 5;
+      g_DragonCutscene.m_CutsceneTicks = 0;
+      g_Camera.m_Position.x =
+          ((DragonCutsceneCameraNode *)g_DragonCutscene.unk_0x48 +
+           g_DragonCutscene.unk_0x4C)[-1]
+              .m_Position.x;
+      g_Camera.m_Position.y =
+          ((DragonCutsceneCameraNode *)g_DragonCutscene.unk_0x48 +
+           g_DragonCutscene.unk_0x4C)[-1]
+              .m_Position.y;
+      g_Camera.m_Position.z =
+          ((DragonCutsceneCameraNode *)g_DragonCutscene.unk_0x48 +
+           g_DragonCutscene.unk_0x4C)[-1]
+              .m_Position.z;
+      g_Camera.m_Rotation.x =
+          ((DragonCutsceneCameraNode *)g_DragonCutscene.unk_0x48 +
+           g_DragonCutscene.unk_0x4C)[-1]
+              .m_Rotation.x;
+      g_Camera.m_Rotation.y =
+          ((DragonCutsceneCameraNode *)g_DragonCutscene.unk_0x48 +
+           g_DragonCutscene.unk_0x4C)[-1]
+              .m_Rotation.y;
+      g_Camera.m_Rotation.z =
+          ((DragonCutsceneCameraNode *)g_DragonCutscene.unk_0x48 +
+           g_DragonCutscene.unk_0x4C)[-1]
+              .m_Rotation.z;
+      g_DragonCutscene.m_CutsceneSpyro->m_AnimationState.m_Frame =
+          *(u_char *)g_Models[0x1FE]->m_Animations[0] - 1;
+      g_DragonCutscene.m_CutsceneSpyro->m_AnimationState.m_FrameProgress = 0;
+      g_DragonCutscene.m_CutsceneDragon->m_AnimationState.m_Frame =
+          *(u_char *)g_Models[0x1FF]->m_Animations[0] - 1;
+      g_DragonCutscene.m_CutsceneDragon->m_AnimationState.m_FrameProgress = 0;
+      g_Spyro.m_bodyAnimation = 0;
+      g_Spyro.m_nextBodyAnimation = 0;
+      g_Spyro.m_bodyAnimationFrame = 0;
+      g_Spyro.m_nextBodyAnimationFrame = 1;
+      g_Spyro.m_bodyFrameProgress = 0;
+      g_Spyro.m_bodyAnimationSpeed = 4;
+      func_80049660();
+      func_80049E8C();
+      StopSound(g_DragonCutscene.m_SoundVoice, 2);
+      SpuUpdate();
+      if (g_DragonCutscene.m_HasOverflow == 0) {
+        SpuSetTransferStartAddr(0x80000 -
+                                g_DragonCutscene.m_Header.m_SpuData.m_Length);
+        SpuWrite((void *)((int)g_Buffers.m_ModelData +
+                          g_DragonCutscene.m_Header.m_SpuData.m_Offset),
+                 g_DragonCutscene.m_Header.m_SpuData.m_Length);
+        while (!SpuIsTransferCompleted(0)) {
+        }
+      }
+    }
+    if (g_DragonCutscene.unk_0x5C != 0) {
+      g_DragonCutscene.unk_0x5C += g_DeltaTime;
+      if (g_DragonCutscene.unk_0x5C >= 0x78) {
+        g_DragonCutscene.unk_0x5C = 0;
+      }
+    }
+    break;
+  }
+
+  case 5: {
+    int i;
+    for (i = 0; i < (short)g_Models[0x1FE]->m_Animations[0]->m_NumColors; i++) {
+      ((int *)g_Models[0x1FE]->m_Animations[0]->m_Colors)[i] =
+          ColorLerp(((int *)g_Models[0x1FE]->m_Animations[0]->m_Colors)[i],
+                    0xFFFFFF, 0x200);
+    }
+    func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
+    func_80049660();
+    func_80049E8C();
+    for (i = 0; i < 3; i++) {
+      VecCopy(&g_Hud.m_Mobys[5 + i].m_Position, &D_8006F3F0[i]);
+      if (g_DragonCutscene.m_CutsceneTicks < 0x19) {
+        g_Hud.m_Mobys[5 + i].m_Position.y +=
+            (g_HudOpeningOffsets[g_DragonCutscene.m_CutsceneTicks >> 1] * 3) >>
+            1;
+      } else {
+        g_Hud.m_Mobys[5 + i].m_Position.y +=
+            (g_HudOpeningOffsets[0xC] * 3) >> 1;
+      }
+    }
+    if (g_DragonCutscene.m_CutsceneTicks >= 0x19) {
+      Vector3D *vec = (Vector3D *)&targetRot;
+      g_DragonCutscene.m_State = 6;
+      g_DragonCutscene.m_CutsceneTicks = 0;
+      g_Hud.m_DragonProgress = 0;
+      VecCopy(vec, &g_DragonCutscene.m_CutsceneSpyro->m_Position);
+      vec->z += 0x40;
+      (*D_800758E4)(0x20, 0x18, vec, nullptr);
+      VecCopy(&D_80076248.vec_0x04, vec);
+      func_80052568(g_DragonCutscene.m_CutsceneSpyro);
+      func_80052568(g_DragonCutscene.m_CutsceneDragon);
+      PlaySound(g_Spu.m_SoundTable->dragonCounter, nullptr, 16,
+                (u_char *)&g_DragonCutscene.m_SoundVoice);
+    }
+    break;
+  }
+
+  case 6:
+    func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
+    func_80049660();
+    func_80049E8C();
+    if (g_Hud.m_DragonCount != g_DragonTotal || g_Hud.m_DragonProgress != 0) {
+      g_Hud.m_DragonProgress += 0x10;
+      HudPrint(5, 2, g_Hud.m_DragonCount + 1, 0);
+      HudMobyRotate(5, 2, g_Hud.m_DragonProgress);
+      if (g_Hud.m_DragonProgress == 0xC0) {
+        g_Hud.m_DragonCount++;
+      }
+      if (g_Hud.m_DragonProgress == 0) {
+        PlaySound(g_Spu.m_SoundTable->dragonCounterBam, nullptr, 16,
+                  (u_char *)&g_DragonCutscene.m_SoundVoice);
+      }
+    }
+    if (g_DragonCutscene.m_CutsceneTicks >= 0x60 &&
+        g_DragonCutscene.m_Stage == 6) {
+      g_DragonCutscene.m_State = 7;
+      g_DragonCutscene.m_CutsceneTicks = 0;
+      g_ParticleAllocPtr = g_Particles;
+      g_Particles->m_Type = 0xFF;
+      PlaySound(g_Spu.m_SoundTable->dragonFlash, nullptr, 16,
+                (u_char *)&g_DragonCutscene.m_SoundVoice);
+    }
+    break;
+
+  case 7: {
+    int i;
+    int fadeTicks;
+    int fadeMul;
+    func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
+    func_80049660();
+    func_80049E8C();
+    if (g_DragonCutscene.m_CutsceneTicks < 0x10) {
+      for (i = 0; i < 3; i++) {
+        VecCopy(&g_Hud.m_Mobys[5 + i].m_Position, &D_8006F3F0[i]);
+        g_Hud.m_Mobys[5 + i].m_Position.y +=
+            (0x11 - g_DragonCutscene.m_CutsceneTicks) * 3;
+      }
+    }
+    if (g_DragonCutscene.m_CutsceneTicks < 0x10) {
+      fadeTicks = g_DragonCutscene.m_CutsceneTicks;
+      fadeMul = fadeTicks * 16;
+    } else {
+      fadeTicks = 0x20 - g_DragonCutscene.m_CutsceneTicks;
+      fadeMul = fadeTicks * 16;
+    }
+    g_DragonCutscene.m_Fade = fadeMul - 1;
+    D_80076248.unk_0x0 = 1;
+    ((u_char *)&D_80076248)[0x2B] = fadeTicks * 8 + 0x40;
+    D_80076248.unk_0x24 = fadeTicks * 0x50;
+    D_80076248.vec_0x28.z += 8;
+    if (g_DragonCutscene.m_CutsceneTicks >= 0x20) {
+      D_80076248.unk_0x0 = 0;
+      func_8002CB6C();
+    }
+    break;
+  }
+  }
+
+  g_UpdateParticle(g_DeltaTime);
+  if (g_DragonCutscene.m_State > 0) {
+    LoadDragonCutscene();
+  }
+
+  {
+    Moby *moby;
+    u_char *pState;
+    u_char state;
+    int fragClass;
+    int termState;
+    moby = g_LevelMobys;
+    state = moby->m_State;
+    if ((state & 0xFF) != 0xFF) {
+      fragClass = 0xFB;
+      termState = 0xFF;
+      pState = &moby->m_State;
+      do {
+        if (((Moby *)((char *)pState - 72))->m_Class == fragClass &&
+            (state & 0xFF) < 0x80) {
+          UpdateMobyDragonFragment(moby);
+        }
+        pState += sizeof(Moby);
+        moby++;
+        state = *pState;
+      } while (state != termState);
+    }
+  }
+}
 
 /// @brief Gamestate 11 (Fairy)
 void func_800314B4(void);

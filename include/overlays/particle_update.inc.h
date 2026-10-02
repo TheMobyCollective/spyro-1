@@ -14,7 +14,7 @@
 void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
   Particle *particle;
 
-  for (particle = g_Particles; particle->m_RenderType != 0xFF; particle++) {
+  for (particle = g_Particles; particle->m_Type != 0xFF; particle++) {
     switch (particle->m_Class) {
 #ifdef HAS_PARTICLE_0
     case 0:
@@ -91,7 +91,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
       Vector3D delta;
       int value;
 
-      if (particle->m_RenderType == 3) {
+      if (particle->m_Type == 3) {
         func_80017C24(&position, &particle->m_Data.m_Quad.m_Position);
       } else {
         func_80017C24(&position, &particle->m_Data.m_Point.m_Position);
@@ -115,7 +115,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
         position.y += *(short *)&particle->m_Data.m_Raw[22];
         position.z -= *(short *)&particle->m_Data.m_Raw[24];
 
-        if (particle->m_RenderType == 3) {
+        if (particle->m_Type == 3) {
           func_80017BFC(&particle->m_Data.m_Quad.m_Position, &position);
         } else {
           func_80017BFC(&particle->m_Data.m_Point.m_Position, &position);
@@ -155,7 +155,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
 
           VecAdd(&position, &position, &delta);
 
-          if (particle->m_RenderType == 3) {
+          if (particle->m_Type == 3) {
             func_80017BFC(&particle->m_Data.m_Quad.m_Position,
                                  &position);
           } else {
@@ -195,7 +195,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
           VecScaleToLength(&delta, value, 0x100);
           VecAdd(&position, &position, &delta);
 
-          if (particle->m_RenderType == 3) {
+          if (particle->m_Type == 3) {
             func_80017BFC(&particle->m_Data.m_Quad.m_Position,
                                  &position);
           } else {
@@ -209,17 +209,17 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
       VecSub(&delta, &position, &g_Camera.m_Position);
       value = ABS2(delta.x) + ABS2(delta.y) + ABS2(delta.z);
 
-      if (particle->m_RenderType == 3) {
+      if (particle->m_Type == 3) {
         if (value > 0x3000) {
           particle->m_Data.m_Point.m_Color.r = 255;
           particle->m_Data.m_Point.m_Color.g = 255;
           particle->m_Data.m_Point.m_Color.b = 255;
           particle->m_Data.m_Point.m_OtOffset = 4;
-          particle->m_RenderType = 0;
+          particle->m_Type = 0;
           particle->m_Data.m_Point.m_Color.s = PRIM_LINE_F2;
         }
       } else if (value < 0x2800) {
-        particle->m_RenderType = 3;
+        particle->m_Type = 3;
         particle->m_Data.m_Quad.m_Color.r = 128;
         particle->m_Data.m_Quad.m_Color.g = 128;
         particle->m_Data.m_Quad.m_Color.b = 128;
@@ -319,7 +319,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
       int green;
       int blue;
 
-      if (particle->m_RenderType == 3) {
+      if (particle->m_Type == 3) {
         func_80017C24(&position, &particle->m_Data.m_Quad.m_Position);
       } else {
         func_80017C24(&position, &particle->m_Data.m_Point.m_Position);
@@ -343,7 +343,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
         VecScaleToLength(&delta, value, 0x80);
         VecAdd(&position, &position, &delta);
 
-        if (particle->m_RenderType == 3) {
+        if (particle->m_Type == 3) {
           func_80017BFC(&particle->m_Data.m_Quad.m_Position, &position);
         } else {
           func_80017BFC(&particle->m_Data.m_Point.m_Position, &position);
@@ -354,11 +354,11 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
         VecSub(&delta, &position, &g_Camera.m_Position);
         value = ABS2(delta.x) + ABS2(delta.y) + ABS2(delta.z);
 
-        if (particle->m_RenderType == 3) {
+        if (particle->m_Type == 3) {
           if (value > 0x3000) {
             particle->m_Data.m_Point.m_OtOffset = 4;
             particle->m_Data.m_Point.m_Color.s = PRIM_LINE_F2;
-            particle->m_RenderType = 0;
+            particle->m_Type = 0;
 
             red = particle->m_Data.m_Point.m_Color.r << 1;
             green = particle->m_Data.m_Point.m_Color.g << 1;
@@ -369,7 +369,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
             particle->m_Data.m_Point.m_Color.b = blue;
           }
         } else if (value < 0x2800) {
-          particle->m_RenderType = 3;
+          particle->m_Type = 3;
           particle->m_Data.m_Quad.m_OtOffset = 4;
           particle->m_Data.m_Quad.m_Color.s = PRIM_POLY_FT4;
           particle->m_Data.m_Quad.m_TextureIndex = 0;
@@ -898,7 +898,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
       // Particles 4 and 8 use this manner of check, and this case wouldn't
       // match without two calls like this. The condition does not emit assembly
       // and this Particle only uses RenderType 3.
-      if (particle->m_RenderType == 3) {
+      if (particle->m_Type == 3) {
         func_80017C24(&position, &particle->m_Data.m_Quad.m_Position);
       } else {
         func_80017C24(&position, &particle->m_Data.m_Raw);
