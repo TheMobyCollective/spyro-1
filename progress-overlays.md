@@ -53,7 +53,7 @@
 - [ ] func_level_20_8007B9F8
 - [ ] func_level_20_8007D998
 - [ ] func_level_20_8007E3A0
-- [ ] func_level_20_8008A258
+- [x] func_level_20_8008A258
 - [ ] func_level_20_8008AE28
 - [ ] func_level_20_8008BFF0
 - [x] func_level_20_8008CFA4
