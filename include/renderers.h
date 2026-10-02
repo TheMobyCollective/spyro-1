@@ -84,7 +84,7 @@ typedef union {
 
 typedef struct {
   u_char m_Class;      // Particle class, determines behavior
-  u_char m_RenderType; // TODO: Document and make enum/defines
+  u_char m_Type;       // TODO: Document and make enum/defines
   u_char m_Timer;      // Particle age
   u_char m_WasRendered;
 

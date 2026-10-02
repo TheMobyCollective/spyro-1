@@ -18,7 +18,7 @@ extern void (*g_FlightResultsUpdate)();
 extern void (*D_8007567C)(); // g_DrawGameState7
 
 extern void (*D_800758E4)(int pAmount, int pClass, void *spawnParam,
-                          int extraParam); // g_ParticleSpawn
+                          void *extraParam); // g_ParticleSpawn
 extern void (*g_UpdateParticle)(int);
 
 extern void (*D_800757A0)(); // g_BalloonistTriggerCode (called inside the

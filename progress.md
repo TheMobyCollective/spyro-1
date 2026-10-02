@@ -33,8 +33,8 @@
 - [x] func_8002EB2C
 - [x] func_8002EDF0
 - [x] func_8002F3C4
-- [ ] func_8002F3E4
-- [ ] func_800314B4
+- [x] func_8002F3E4
+- [x] func_800314B4
 - [x] func_800324D8
 - [x] CheckMemcardsExist
 - [x] func_80032AB0
@@ -58,17 +58,17 @@
 - [x] SpuUpdate
 - [x] func_80033C50
 - [x] func_80033E40
-- [ ] func_80033F08
+- [x] func_80033F08
 - [x] ApplySphericalPreset
 - [x] func_80034204
 - [x] func_800342F8
 - [x] func_80034358
-- [ ] func_80034480
+- [x] func_80034480
 - [x] CameraForceToDestination
-- [ ] func_80034CE8
-- [ ] func_800357A4
+- [x] func_80034CE8
+- [x] func_800357A4
 - [x] func_80035F58
-- [ ] func_80035FB4
+- [x] func_80035FB4
 - [x] func_8003740C
 - [x] func_80037714
 - [x] func_800377A8
@@ -201,7 +201,7 @@
 - [x] MoveMobyTowardTarget
 - [x] func_8003BCCC
 - [x] unused_GetSpyroQuadrant
-- [ ] func_8003BFC0
+- [x] func_8003BFC0
 - [x] func_8003C358
 - [x] UpdateMobyDragonFragment
 - [x] SetSpyroHeadLookTarget
@@ -234,18 +234,18 @@
 - [x] func_8003E628
 - [x] AdjustAirCollision
 - [x] func_8003E90C
-- [ ] func_8003EA68
+- [x] func_8003EA68
 - [x] func_8003FDC8
 - [ ] func_8003FE40
 - [x] HandleSpyroDamage
 - [x] func_80041270
 - [x] CycleSpyroIdleAnimation
-- [ ] func_80041670
+- [x] func_80041670
 - [ ] func_80043FE4
-- [ ] func_80047B60
+- [x] func_80047B60
 - [x] func_8004888C
 - [x] UpdateSpyroPhysicsAndSurfaces
-- [ ] func_80048D10
+- [x] func_80048D10
 - [x] func_800495D8
 - [x] func_80049660
 - [x] func_80049880
@@ -253,7 +253,7 @@
 - [x] func_80049DFC
 - [x] func_80049E8C
 - [x] func_80049F3C
-- [ ] func_80049FAC
+- [x] func_80049FAC
 - [x] func_8004A200
 - [x] UpdateSpyroEnterReturnHome
 - [x] UpdateSpyroReturnHome

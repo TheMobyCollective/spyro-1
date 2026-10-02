@@ -430,7 +430,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
                             &D_8006E4E0[extraParam >> 24], &mobyPosition);
           VecAdd(&mobyPosition, &mobyPosition, &((Moby *)spawnParam)->m_Position);
         } else {
-          particle->m_RenderType = 5;
+          particle->m_Type = 5;
           particle->m_Data.m_RotatedQuad.m_OtOffset = 0x16;
           VecCopy(&mobyPosition, &D_8006E4E0[extraParam >> 24]);
         }
