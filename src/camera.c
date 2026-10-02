@@ -20,6 +20,7 @@
 // Fuck knows
 int D_80075894;
 int D_80075924; // L2 and R2 rotation speed
+int D_80075938;
 
 // Flag: set to 1 when camera forced to destination, 0 in collision func
 int D_800756B8;
@@ -838,7 +839,148 @@ radiusOffsetApply: {
 void func_800357A4(void);
 
 // Camera movement related, seems to be for warping it when blocked
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_800357A4);
+void func_800357A4(void) {
+  Vector3D tempVector;
+  int nextState;
+  int *pState = &g_Camera.unk_0xC0;
+
+  if (g_Camera.unk_0xC0 == 0x80000009) {
+    if (D_80075914 & 0x10) {
+      if (g_Spyro.m_State != 0 && g_Spyro.m_State != 0xD) {
+        g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+        g_Spyro.m_HeadLookTarget.x = 0;
+        g_Spyro.m_HeadLookTarget.y = 0;
+        g_Spyro.m_HeadLookTarget.z = 0;
+      } else if (!(g_Pad.m_Held & PAD_TRIANGLE)) {
+        g_Camera.unk_0xC0 = 0x80000010;
+        D_80075938 = 0x2D;
+        g_Spyro.m_HeadLookTarget.x = 0;
+        g_Spyro.m_HeadLookTarget.y = 0;
+        g_Spyro.m_HeadLookTarget.z = 0;
+      }
+    } else if (!(g_Pad.m_Held & PAD_TRIANGLE) || g_Spyro.m_State != 0) {
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+      g_Spyro.m_HeadLookTarget.x = 0;
+      g_Spyro.m_HeadLookTarget.y = 0;
+      g_Spyro.m_HeadLookTarget.z = 0;
+    }
+  } else if (g_Camera.unk_0xC0 == 0x8000000A) {
+    if (!(g_Spyro.m_ControlFlags & CTRL_CAMERA_0200)) {
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+      g_Camera.m_Focus = &g_Spyro.m_Position;
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+      if (((D_80075914 & 0x10) || D_8007592C != 0) && g_Camera.unk_0xC0 == 0 &&
+          g_Camera.m_OnMovingPlatform == 0) {
+        g_Camera.unk_0xC0 = 0x80000010;
+        D_80075938 = 0x2D;
+      }
+    } else if (g_Camera.m_State != 0x8000000A) {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+  } else if (g_Camera.unk_0xC0 == 0x80000007) {
+    if (!(g_Spyro.m_ControlFlags & CTRL_CAMERA_8000)) {
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+      g_Camera.m_Focus = &g_Spyro.m_Position;
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    } else if (g_Camera.m_State != 0x80000007) {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+  } else if (g_Camera.unk_0xC0 == 0x8000000C) {
+    if (!(g_Spyro.m_ControlFlags & CTRL_CAMERA_10000)) {
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+      g_Camera.m_Focus = &g_Spyro.m_Position;
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    } else if (g_Camera.m_State != 0x8000000C) {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+  } else if (g_Camera.unk_0xC0 == 0x8000000B) {
+    if (!(g_Spyro.m_ControlFlags & CTRL_CAMERA_0400)) {
+      nextState = D_8006C588[g_Spyro.m_State];
+      g_Camera.m_Focus = &g_Spyro.m_Position;
+    storeCameraState:
+      *pState = nextState;
+    } else if (g_Camera.m_State != 0x8000000B) {
+      if (g_Spyro.unk_0x248 != 0) {
+        g_Spyro.unk_0x240->m_CurrentNode = g_Spyro.unk_0x240->m_NodeCount - 1;
+      } else {
+        g_Spyro.unk_0x240->m_CurrentNode = 0;
+      }
+    }
+  } else if (g_Camera.unk_0xC0 == 0x80000010) {
+  updateStateFromTable:
+    nextState = D_8006C588[g_Spyro.m_State];
+    if (nextState == 0 || nextState == 4) {
+      if (D_80075938 <= 0) {
+        goto loadCameraState;
+      }
+    } else {
+      goto storeCameraState;
+    }
+  } else if (g_Camera.unk_0xC0 == 0x80000011) {
+    goto updateStateFromTable;
+  } else if (g_Camera.unk_0xC0 == 0x80000000) {
+    if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >= 0x401) {
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+    } else {
+      func_80017AA4(&tempVector, &g_Spyro.m_Position);
+      tempVector.x -= 0x100;
+      tempVector.y -= 0x78;
+      if (ABS(tempVector.x) >= 0x41 || ABS(tempVector.y) >= 0x29 ||
+          (u_int)tempVector.z >= 0x1401) {
+      loadCameraState:
+        g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+      }
+    }
+  } else if (g_Camera.unk_0xC0 == 0 && g_Spyro.unk_0x194 == 0 &&
+             ((D_80075914 & 0x10) || D_8007592C != 0) &&
+             g_Camera.m_OnMovingPlatform == 0) {
+    func_80017AA4(&tempVector, &g_Spyro.m_Position);
+    tempVector.x -= 0x100;
+    tempVector.y -= 0x78;
+    if (ABS(tempVector.x) >= 0x41 || ABS(tempVector.y) >= 0x29 ||
+        (u_int)tempVector.z >= 0x1401) {
+      g_Camera.unk_0xC0 = 0x80000010;
+      D_80075938 = 0x2D;
+    }
+  } else if (g_Camera.m_Focus != &g_Spyro.m_Position) {
+    if (g_Camera.m_State != 6) {
+      g_Camera.m_Focus = &g_Spyro.m_Position;
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+  }
+
+  if (g_Camera.unk_0xC0 != g_Camera.m_State) {
+    if (((D_80075914 & 0x10) || D_8007592C != 0) && g_Spyro.unk_0x194 == 0 &&
+        g_Camera.m_OnMovingPlatform == 0 &&
+        (g_Camera.unk_0xC0 == 0 || g_Camera.unk_0xC0 == 0x80000000) &&
+        g_Camera.m_State != 0x80000011 &&
+        g_Camera.m_Focus == &g_Spyro.m_Position) {
+      D_80075938 = 8;
+      g_Camera.unk_0xC0 = 0x80000011;
+      D_80075894 = 0x5A;
+    } else if (g_Camera.m_State == 2 || g_Camera.m_State == 0x8000000E) {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+
+    g_Camera.m_State = g_Camera.unk_0xC0;
+
+    if (g_Camera.m_State == 0x80000009) {
+      if (D_800756B8 != 0) {
+        g_Camera.unk_0xC4 = 0;
+      }
+      g_Camera.unk_0xDC = 0;
+      g_Camera.unk_0xE0 = 0;
+    }
+  }
+}
 
 /// @brief Camera rotation with gamepad L2 R2
 void func_80035F58() {
