@@ -77,6 +77,28 @@ extern int D_80075914; // Active (2) / passive (82) camera
 
 extern Camera g_Camera;
 
+// Camera spring-damper coefficient tables (see func_80034CE8): three groups
+// of six `short[6]` tables indexed by channel-set id, one table per channel
+// in coords-azimuth/elevation/radius, offset-azimuth/elevation/radius order.
+extern short D_8006C754[6]; // Spring: coords azimuth
+extern short D_8006C760[6]; // Spring: coords elevation
+extern short D_8006C76C[6]; // Spring: coords radius
+extern short D_8006C778[6]; // Spring: offset azimuth
+extern short D_8006C784[6]; // Spring: offset elevation
+extern short D_8006C790[6]; // Spring: offset radius
+extern short D_8006C79C[6]; // Damping: coords azimuth
+extern short D_8006C7A8[6]; // Damping: coords elevation
+extern short D_8006C7B4[6]; // Damping: coords radius
+extern short D_8006C7C0[6]; // Damping: offset azimuth
+extern short D_8006C7CC[6]; // Damping: offset elevation
+extern short D_8006C7D8[6]; // Damping: offset radius
+extern short D_8006C7E4[6]; // Deadband: coords azimuth
+extern short D_8006C7F0[6]; // Deadband: coords elevation
+extern short D_8006C7FC[6]; // Deadband: coords radius
+extern short D_8006C808[6]; // Deadband: offset azimuth
+extern short D_8006C814[6]; // Deadband: offset elevation
+extern short D_8006C820[6]; // Deadband: offset radius
+
 // static_assert(sizeof(Camera) == 0x110);
 
 /// @brief Creates the Camera's view and projection matrices

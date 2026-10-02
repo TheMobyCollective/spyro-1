@@ -546,10 +546,294 @@ void CameraForceToDestination(void) {
   g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
 }
 
-void func_80034CE8(int);
-
 // Related to updating the spherical coordinates, not 100% sure
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80034CE8);
+// (spring/damper coefficient tables now declared in camera.h)
+void func_80034CE8(int arg0) {
+  register int spring;
+  register int delta;
+  int k3;
+  int t;
+  spring = D_8006C754[arg0];
+  if ((g_Camera.m_State == 3) && (spring < 0x400)) {
+    spring = 0x400;
+  }
+  t = D_80075924;
+  if (t != 0) {
+    delta = t;
+  } else if (((((D_80075914 & 0x10) == 0) && (D_8007592C == 0)) ||
+              (g_Camera.m_State != 0x80000011)) ||
+             ((delta = 0, D_800756B8 == 0))) {
+    if ((((((D_80075914 & 0x10) && (((u_int)(g_Spyro.m_State - 5)) < 2)) ||
+           (D_8007592C != 0)) &&
+          (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 0x400)) &&
+         (g_Camera.unk_0xC4 == 0)) &&
+        ((delta = 0, g_Camera.m_OnMovingPlatform == 0))) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = 0;
+      goto azimuthMult;
+    } else {
+      delta = 0;
+      if (g_Camera.m_State == 6) {
+        goto azimuthMult;
+      }
+      delta = (g_Camera.m_LastSimulation.m_Coords.azimuth -
+               g_Camera.m_Sphere.m_Coords.azimuth) &
+              0xFFF;
+      if (delta >= 0x801) {
+        delta -= 0x1000;
+      }
+    }
+  }
+azimuthMult: {
+  int val;
+  val = (g_Camera.unk_0xA8.m_Coords.azimuth +=
+         (((spring * delta) -
+           (D_8006C79C[arg0] * g_Camera.unk_0xA8.m_Coords.azimuth)) >>
+          8));
+  k3 = D_8006C7E4[arg0];
+  if (val < 0) {
+    val = -val;
+  }
+  val = (val < k3);
+  if (val) {
+    g_Camera.unk_0xA8.m_Coords.azimuth = 0;
+    if (g_Camera.unk_0xCC != 0) {
+      if (delta > 0) {
+        g_Camera.unk_0xA8.m_Coords.azimuth = 0x100;
+      } else if (delta < 0) {
+        g_Camera.unk_0xA8.m_Coords.azimuth = -0x100;
+      }
+    }
+  }
+}
+  if ((g_Spyro.m_State == 0xF) && (g_Spyro.m_walkingState == 0xB)) {
+    if (g_Camera.unk_0xA8.m_Coords.azimuth < (-0x800)) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = -0x800;
+    }
+    if (g_Camera.unk_0xA8.m_Coords.azimuth >= 0x801) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = 0x800;
+    }
+  }
+  if (((D_80075914 & 0x40) && (g_Camera.unk_0xC4 == 0)) &&
+      ((g_Camera.m_State == 0x80000009) || (g_Camera.m_State == 3))) {
+    if (g_Camera.unk_0xA8.m_Coords.azimuth < (-0x2000)) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = -0x2000;
+    }
+    if (g_Camera.unk_0xA8.m_Coords.azimuth >= 0x2001) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = 0x2000;
+    }
+  }
+  if ((((((D_80075914 & 0x10) || (D_8007592C != 0)) && (D_80075894 == 0)) &&
+        (D_800756B8 != 0)) &&
+       (g_Camera.m_OnMovingPlatform == 0)) &&
+      ((g_Camera.m_State == 0) || (g_Camera.m_State == 0x80000000))) {
+    if (g_Camera.unk_0xA8.m_Coords.azimuth < (-0x800)) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = -0x800;
+    }
+    if (g_Camera.unk_0xA8.m_Coords.azimuth >= 0x801) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = 0x800;
+    }
+  }
+  g_Camera.m_Sphere.m_Coords.azimuth +=
+      ((int)g_Camera.unk_0xA8.m_Coords.azimuth) >> 8;
+  if (((D_80075914 & 0x10) || (D_8007592C != 0)) &&
+      (g_Camera.m_State == 0x80000011)) {
+    goto elevationZero;
+  }
+  if (((D_80075914 & 0x10) && (g_Spyro.m_State == 6)) &&
+      ((delta = 0, g_Camera.unk_0xC4 == 0))) {
+    g_Camera.unk_0xA8.m_Coords.elevation = 0;
+    goto elevationJoin;
+  } else {
+    if (g_Camera.m_State != 6) {
+      goto elevationCompute;
+    }
+  elevationZero:
+    delta = 0;
+
+    goto elevationJoin;
+  elevationCompute:
+    delta = (g_Camera.m_LastSimulation.m_Coords.elevation -
+             g_Camera.m_Sphere.m_Coords.elevation) &
+            0xFFF;
+
+    if (delta >= 0x801) {
+      delta -= 0x1000;
+    }
+  }
+elevationJoin: {
+  int val;
+  val = (g_Camera.unk_0xA8.m_Coords.elevation +=
+         (((spring = D_8006C760[arg0]) * delta) -
+          (D_8006C7A8[arg0] * g_Camera.unk_0xA8.m_Coords.elevation)) >>
+         8);
+  k3 = D_8006C7F0[arg0];
+  if (val < 0) {
+    val = -val;
+  }
+  val = (val < k3);
+  if (val) {
+    g_Camera.unk_0xA8.m_Coords.elevation = 0;
+    if (g_Camera.unk_0xCC != 0) {
+      if (delta > 0) {
+        g_Camera.unk_0xA8.m_Coords.elevation = 0x100;
+      } else if (delta < 0) {
+        g_Camera.unk_0xA8.m_Coords.elevation = -0x100;
+      }
+    }
+  }
+}
+  if (((D_80075914 & 0x40) && (g_Camera.m_State == 0x80000009)) &&
+      (g_Camera.unk_0xC4 == 0)) {
+    if (g_Camera.unk_0xA8.m_Coords.elevation < (-0x2000)) {
+      g_Camera.unk_0xA8.m_Coords.elevation = -0x2000;
+    }
+    if (g_Camera.unk_0xA8.m_Coords.elevation >= 0x2001) {
+      g_Camera.unk_0xA8.m_Coords.elevation = 0x2000;
+    }
+  }
+  g_Camera.m_Sphere.m_Coords.elevation +=
+      ((int)g_Camera.unk_0xA8.m_Coords.elevation) >> 8;
+  if ((((D_80075914 & 0x10) || (D_8007592C != 0)) &&
+       (g_Camera.m_State == 0x80000011)) ||
+      (g_Camera.m_State == 6)) {
+    delta = 0;
+  } else {
+    delta = g_Camera.m_LastSimulation.m_Coords.radius -
+            g_Camera.m_Sphere.m_Coords.radius;
+  }
+radiusJoin: {
+  int val;
+  val = (g_Camera.unk_0xA8.m_Coords.radius +=
+         (((spring = D_8006C76C[arg0]) * delta) -
+          (D_8006C7B4[arg0] * g_Camera.unk_0xA8.m_Coords.radius)) >>
+         8);
+  k3 = D_8006C7FC[arg0];
+  if (val < 0) {
+    val = -val;
+  }
+  val = (val < k3);
+  if (val) {
+    g_Camera.unk_0xA8.m_Coords.radius = 0;
+    if (g_Camera.unk_0xCC != 0) {
+      if (delta > 0) {
+        g_Camera.unk_0xA8.m_Coords.radius = 0x100;
+      } else if (delta < 0) {
+        g_Camera.unk_0xA8.m_Coords.radius = -0x100;
+      }
+    }
+  }
+}
+  g_Camera.m_Sphere.m_Coords.radius +=
+      ((int)g_Camera.unk_0xA8.m_Coords.radius) >> 8;
+  if ((((D_80075914 & 0x10) || (D_8007592C != 0)) &&
+       (g_Camera.m_State == 0x80000011)) ||
+      (g_Camera.m_State == 6)) {
+    delta = 0;
+    goto azimuthOffsetApply;
+  }
+  delta = (g_Camera.m_LastSimulation.m_Offset.azimuth -
+           g_Camera.m_Sphere.m_Offset.azimuth) &
+          0xFFF;
+  if (delta >= 0x801) {
+    delta -= 0x1000;
+  }
+azimuthOffsetApply: {
+  int val;
+  val = (g_Camera.unk_0xA8.m_Offset.azimuth +=
+         (((spring = D_8006C778[arg0]) * delta) -
+          (D_8006C7C0[arg0] * g_Camera.unk_0xA8.m_Offset.azimuth)) >>
+         8);
+  k3 = D_8006C808[arg0];
+  if (val < 0) {
+    val = -val;
+  }
+  val = (val < k3);
+  if (val) {
+    g_Camera.unk_0xA8.m_Offset.azimuth = 0;
+    if (g_Camera.unk_0xCC != 0) {
+      if (delta > 0) {
+        g_Camera.unk_0xA8.m_Offset.azimuth = 0x100;
+      } else if (delta < 0) {
+        g_Camera.unk_0xA8.m_Offset.azimuth = -0x100;
+      }
+    }
+  }
+}
+  g_Camera.m_Sphere.m_Offset.azimuth +=
+      ((int)g_Camera.unk_0xA8.m_Offset.azimuth) >> 8;
+  if ((((D_80075914 & 0x10) || (D_8007592C != 0)) &&
+       (g_Camera.m_State == 0x80000011)) ||
+      (g_Camera.m_State == 6)) {
+    delta = 0;
+    goto elevationOffsetApply;
+  }
+  delta = (g_Camera.m_LastSimulation.m_Offset.elevation -
+           g_Camera.m_Sphere.m_Offset.elevation) &
+          0xFFF;
+  if (delta >= 0x801) {
+    delta -= 0x1000;
+  }
+elevationOffsetApply: {
+  int val;
+  val = (g_Camera.unk_0xA8.m_Offset.elevation +=
+         (((spring = D_8006C784[arg0]) * delta) -
+          (D_8006C7CC[arg0] * g_Camera.unk_0xA8.m_Offset.elevation)) >>
+         8);
+  k3 = D_8006C814[arg0];
+  if (val < 0) {
+    val = -val;
+  }
+  val = (val < k3);
+  if (val) {
+    g_Camera.unk_0xA8.m_Offset.elevation = 0;
+    if (g_Camera.unk_0xCC != 0) {
+      if (delta > 0) {
+        g_Camera.unk_0xA8.m_Offset.elevation = 0x100;
+      } else if (delta < 0) {
+        g_Camera.unk_0xA8.m_Offset.elevation = -0x100;
+      }
+    }
+  }
+}
+  g_Camera.m_Sphere.m_Offset.elevation +=
+      ((int)g_Camera.unk_0xA8.m_Offset.elevation) >> 8;
+  if ((((D_80075914 & 0x10) || (D_8007592C != 0)) &&
+       (g_Camera.m_State == 0x80000011)) ||
+      (g_Camera.m_State == 6)) {
+    delta = 0;
+    goto radiusOffsetApply;
+  }
+  delta = (g_Camera.m_LastSimulation.m_Offset.radius -
+           g_Camera.m_Sphere.m_Offset.radius) &
+          0xFFF;
+  if (delta >= 0x801) {
+    delta -= 0x1000;
+  }
+radiusOffsetApply: {
+  int val;
+  val = (g_Camera.unk_0xA8.m_Offset.radius +=
+         (((spring = D_8006C790[arg0]) * delta) -
+          (D_8006C7D8[arg0] * g_Camera.unk_0xA8.m_Offset.radius)) >>
+         8);
+  k3 = D_8006C820[arg0];
+  if (val < 0) {
+    val = -val;
+  }
+  val = (val < k3);
+  if (val) {
+    g_Camera.unk_0xA8.m_Offset.radius = 0;
+    if (g_Camera.unk_0xCC != 0) {
+      if (delta > 0) {
+        g_Camera.unk_0xA8.m_Offset.radius = 0x100;
+      } else if (delta < 0) {
+        g_Camera.unk_0xA8.m_Offset.radius = -0x100;
+      }
+    }
+  }
+}
+  g_Camera.m_Sphere.m_Offset.radius +=
+      ((int)g_Camera.unk_0xA8.m_Offset.radius) >> 8;
+}
 
 void func_800357A4(void);
 
