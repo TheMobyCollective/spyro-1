@@ -76,7 +76,7 @@
 - [ ] func_level_22_8008A9A8
 - [x] func_level_22_8008BAF8
 - [ ] func_level_23_8007B4C8
-- [ ] func_level_23_80083608
+- [x] func_level_23_80083608
 - [ ] func_level_23_80083F2C
 - [ ] func_level_23_80085184
 - [x] func_level_23_80086260
