@@ -30,6 +30,8 @@ I started this project late last year, I've been working on it on and off. Now t
 
 Overlays in the first two Spyro games are a bit of a mess. The initial focus won't be on matching those, but as soon as enough Moby classes have been implemented, an attempt to do so should be made.
 
+![Overlay Progress](.github/assets/progress-overlays.png)
+
 Spyro 3 fans really got it good
 
 ## PSYQ
