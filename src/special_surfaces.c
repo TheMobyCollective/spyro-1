@@ -119,14 +119,14 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
 
       if (sidedness < 0) {
         g_LevelMobys[pathMoby].m_Substate = 1;
-        pathData->unk_0x4.x = -(*pportal)->unk_0x8.x >> 1;
-        pathData->unk_0x4.y = -(*pportal)->unk_0x8.y >> 1;
-        pathData->unk_0x4.z = -(*pportal)->unk_0x8.z >> 1;
+        pathData->m_0x04.x = -(*pportal)->unk_0x8.x >> 1;
+        pathData->m_0x04.y = -(*pportal)->unk_0x8.y >> 1;
+        pathData->m_0x04.z = -(*pportal)->unk_0x8.z >> 1;
       } else {
         g_LevelMobys[pathMoby].m_Substate = 0;
-        pathData->unk_0x4.x = (*pportal)->unk_0x8.x >> 1;
-        pathData->unk_0x4.y = (*pportal)->unk_0x8.y >> 1;
-        pathData->unk_0x4.z = (*pportal)->unk_0x8.z >> 1;
+        pathData->m_0x04.x = (*pportal)->unk_0x8.x >> 1;
+        pathData->m_0x04.y = (*pportal)->unk_0x8.y >> 1;
+        pathData->m_0x04.z = (*pportal)->unk_0x8.z >> 1;
       }
     }
     break;

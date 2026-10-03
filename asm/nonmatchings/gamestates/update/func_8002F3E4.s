@@ -1957,8 +1957,8 @@ glabel func_8002F3E4
 /* 218E8 800310E8 21300002 */  addu       $a2, $s0, $zero
 /* 218EC 800310EC 21380000 */  addu       $a3, $zero, $zero
 /* 218F0 800310F0 2800A28F */  lw         $v0, 0x28($sp)
-/* 218F4 800310F4 0780033C */  lui        $v1, %hi(D_800758E4)
-/* 218F8 800310F8 E458638C */  lw         $v1, %lo(D_800758E4)($v1)
+/* 218F4 800310F4 0780033C */  lui        $v1, %hi(g_SpawnParticle)
+/* 218F8 800310F8 E458638C */  lw         $v1, %lo(g_SpawnParticle)($v1)
 /* 218FC 800310FC 40004224 */  addiu      $v0, $v0, 0x40
 /* 21900 80031100 09F86000 */  jalr       $v1
 /* 21904 80031104 2800A2AF */   sw        $v0, 0x28($sp)

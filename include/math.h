@@ -19,6 +19,9 @@ extern short D_8006CC78[256];
 #define SINE_8(x) D_8006CBF8[(x)]
 #define COSINE_8(x) D_8006CC78[(x)]
 
+#define ROTDEG8(X) ((int)((X) / (360.0f / 256.0f)))
+#define ROTDEG12(X) ((int)((X) / (360.0f / 4096.0f)))
+
 /// @brief Level entrance Z offset table
 extern int D_8006EDB4[42];
 

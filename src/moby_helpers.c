@@ -1952,7 +1952,7 @@ void CollectItem(Moby *pMoby) {
   func_800529E4(pMoby, UPDATE_PROP_ROTMATRIX);
 
   // particle spawn
-  (*D_800758E4)(6, 0xC, pMoby,
+  (*g_SpawnParticle)(6, 0xC, pMoby,
                 D_8006E44C[12 + (pMoby->m_Class - MOBYCLASS_GEM_1)]);
 
   if (pMoby->m_Class == MOBYCLASS_GEM_1)
@@ -2280,24 +2280,24 @@ void UpdateMobyDragonFragment(Moby *pMoby) {
   MobyDragonFragmentProps *props = pMoby->m_Props;
   int particleParams[3];
 
-  if ((u_char)props->m_Lifetime != 0 && pMoby->m_Position.z > props->initZ) {
+  if (props->m_Lifetime != 0 && pMoby->m_Position.z > props->m_MinZ) {
     // Update position with velocity
-    pMoby->m_Position.x += props->trajectory.x;
-    pMoby->m_Position.y += props->trajectory.y;
+    pMoby->m_Position.x += props->m_Velocity.x;
+    pMoby->m_Position.y += props->m_Velocity.y;
 
     // Apply gravity to z velocity
-    props->trajectory.z -= 6;
-    if (props->trajectory.z < -0x80) {
-      props->trajectory.z = -0x80;
+    props->m_Velocity.z -= 6;
+    if (props->m_Velocity.z < -0x80) {
+      props->m_Velocity.z = -0x80;
     }
 
     // Update z position
-    pMoby->m_Position.z += props->trajectory.z;
+    pMoby->m_Position.z += props->m_Velocity.z;
 
     // Update rotation
-    pMoby->m_Rotation.x += props->unk_0x10;
-    pMoby->m_Rotation.y += props->unk_0x11;
-    pMoby->m_Rotation.z += props->unk_0x12;
+    pMoby->m_Rotation.x += props->m_AngularVelocity.x;
+    pMoby->m_Rotation.y += props->m_AngularVelocity.y;
+    pMoby->m_Rotation.z += props->m_AngularVelocity.z;
 
     // Decrement timer
     props->m_Lifetime--;
@@ -2307,11 +2307,11 @@ void UpdateMobyDragonFragment(Moby *pMoby) {
       particleParams[0] = rand() & 3;
       particleParams[1] = rand() & 3;
       particleParams[2] = 0x14;
-      (*D_800758E4)(1, 1, &pMoby->m_Position, (int)particleParams);
+      (*g_SpawnParticle)(1, 1, &pMoby->m_Position, (int)particleParams);
     }
   } else {
     // Fragment finished - spawn end particles and deactivate
-    (*D_800758E4)(3, 0x46, &pMoby->m_Position, 0x10);
+    (*g_SpawnParticle)(3, 0x46, &pMoby->m_Position, 0x10);
     func_80052568(pMoby);
   }
 }

@@ -17,7 +17,7 @@ extern void (*g_UpdateMoby)();
 extern void (*g_FlightResultsUpdate)();
 extern void (*D_8007567C)(); // g_DrawGameState7
 
-extern void (*D_800758E4)(int pAmount, int pClass, void *spawnParam,
+extern void (*g_SpawnParticle)(int pAmount, int pClass, void *spawnParam,
                           int extraParam); // g_ParticleSpawn
 extern void (*g_UpdateParticle)(int);
 
@@ -47,6 +47,7 @@ extern int (*D_800758C4)(int pTimer, Vector3D* pPos, int pColor); // g_DrawTime
 
 #define o(level) \
     Moby *NAME_OVERLAY_FUNCTION_LEVEL(SpawnMoby, level)(int pClass, Moby *pParent); \
+    void NAME_OVERLAY_FUNCTION_LEVEL(UpdateMoby, level)(void); \
     void NAME_OVERLAY_FUNCTION_LEVEL(SpawnParticle, level)(int pAmount, int pClass, void *spawnParam, int extraParam); \
     void NAME_OVERLAY_FUNCTION_LEVEL(UpdateParticle, level)(int pDelta);
 

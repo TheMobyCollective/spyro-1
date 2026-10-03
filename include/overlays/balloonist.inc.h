@@ -90,9 +90,9 @@ void NAME_OVERLAY_FUNCTION(Balloonist3)(void) {
         if (g_Sparx != nullptr) {
           g_Sparx->m_RenderRadius = 0;
           g_Sparx->m_WasDrawn = 0;
-          if (((MobySparxProps *)g_Sparx->m_Props)->glow != 0) {
-            func_80058B60(((MobySparxProps *)g_Sparx->m_Props)->glow);
-            ((MobySparxProps *)g_Sparx->m_Props)->glow = 0;
+          if (((MobySparxProps *)g_Sparx->m_Props)->m_Glow != 0) {
+            func_80058B60(((MobySparxProps *)g_Sparx->m_Props)->m_Glow);
+            ((MobySparxProps *)g_Sparx->m_Props)->m_Glow = 0;
           }
         }
         g_SavedFairyKissTimer = g_SpyroFlame.m_FairyKissTimer;

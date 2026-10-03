@@ -9,6 +9,8 @@
 /// @return non-0 if the timer has elapsed
 int func_80037F90(void *pTimer, int pTimerType);
 
+#define TICK_TIMER(t) func_80037F90(&(t), sizeof((t)))
+
 /// @brief Adds two angles together
 /// @param p1 Angle 1
 /// @param p2 Angle 2
@@ -20,6 +22,21 @@ int func_80038074(int p1, int p2);
 /// @param p2 Angle 2
 /// @return The normalized difference
 int func_800381BC(int p1, int p2);
+
+// Distance and delta helpers
+#define DISTANCE_TO_SPYRO(m) OctDistance(&(m)->m_Position, &g_Spyro.m_Position)
+#define MOBY_BASE_Z(m) ((m)->m_Position.z - (m)->m_FloorDistance)
+#define MOBY_BASE_Z_DELTA(m, z) (MOBY_BASE_Z(m) - (z))
+#define MOBY_BASE_Z_DISTANCE(m, z) ABS2(MOBY_BASE_Z_DELTA(m, z))
+#define SPYRO_BASE_Z_DELTA(m) MOBY_BASE_Z_DELTA(m, g_Spyro.m_Position.z)
+#define SPYRO_BASE_Z_DISTANCE(m) ABS2(SPYRO_BASE_Z_DELTA(m))
+// This version does not use m_FloorDistance
+#define SPYRO_ORIGIN_Z_DELTA(m) ((m)->m_Position.z - g_Spyro.m_Position.z)
+#define SPYRO_ORIGIN_Z_DISTANCE(m) ABS2(SPYRO_ORIGIN_Z_DELTA(m))
+// Angle helpers
+#define ANGLE_FROM(from, to) Atan2((to).x - (from).x, (to).y - (from).y, 0)
+#define ANGLE_TO_SPYRO(from) ANGLE_FROM((from), g_Spyro.m_Position)
+#define ANGLE_FROM_SPYRO(to) ANGLE_FROM(g_Spyro.m_Position, (to))
 
 /// @brief Plays a sound from a Moby
 void func_8003851C(Moby *pMoby, int pSoundIndex, u_char *pChannel);

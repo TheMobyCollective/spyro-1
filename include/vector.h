@@ -16,6 +16,11 @@ typedef struct {
 } Vector3D16;
 
 typedef struct {
+  Vector3D normal;
+  int offset;
+} Plane;
+
+typedef struct {
   int x, y;
 } Vector2D;
 

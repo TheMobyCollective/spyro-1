@@ -1775,9 +1775,9 @@ void func_800499C0(void) {
       VecRotateByLastMatrix(&D_8006E238[2], &direction);
 
       if (g_SpyroFlame.unk_9c != 0) {
-        D_800758E4(1, 1, &particleStart, &direction);
+        g_SpawnParticle(1, 1, &particleStart, (int)&direction);
       } else {
-        D_800758E4(1, 0, &particleStart, &direction);
+        g_SpawnParticle(1, 0, &particleStart, (int)&direction);
       }
 
       VecRotateByMatrix(&g_Spyro.m_headRotationMatrix, &D_8006E238[1],
@@ -1786,9 +1786,9 @@ void func_800499C0(void) {
       VecRotateByLastMatrix(&D_8006E238[3], &direction);
 
       if (g_SpyroFlame.unk_9c != 0) {
-        D_800758E4(1, 1, &particleStart, &direction);
+        g_SpawnParticle(1, 1, &particleStart, (int)&direction);
       } else {
-        D_800758E4(1, 0, &particleStart, &direction);
+        g_SpawnParticle(1, 0, &particleStart, (int)&direction);
       }
     } else if ((g_Pad.m_Down & PAD_CIRCLE) && g_Spyro.unk_0x1a0 >= 44) {
       g_Spyro.unk_0x1a0 = -1;

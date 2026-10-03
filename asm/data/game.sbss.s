@@ -224,7 +224,7 @@ dlabel D_8007578C
 dlabel D_80075790
 /* 65F68 80075790 */ .space 0x04
 
-dlabel D_80075794
+dlabel g_AnimationFinished
 /* 65F6C 80075794 */ .space 0x04
 
 dlabel D_80075798
@@ -297,7 +297,7 @@ dlabel D_800757EC
 dlabel D_800757F0
 /* 65FC8 800757F0 */ .space 0x04
 
-dlabel D_800757F4
+dlabel g_AnimFrameFinished
 /* 65FCC 800757F4 */ .space 0x04
 
 dlabel g_MobyPods
@@ -486,7 +486,7 @@ dlabel D_800758DC
 dlabel D_800758E0
 /* 660B8 800758E0 */ .space 0x04
 
-dlabel D_800758E4
+dlabel g_SpawnParticle
 /* 660BC 800758E4 */ .space 0x04
 
 dlabel g_LifeOrbCount

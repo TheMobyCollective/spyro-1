@@ -342,7 +342,7 @@ void HudTick(void) {
       }
     } else if (g_Hud.m_EggSteadyTicks == 1) {
       setXYZ(&vec, g_Hud.m_EggCount * 324 - 2500, 1008, 4096);
-      (*D_800758E4)(16, 77, &vec, 0);
+      (*g_SpawnParticle)(16, 77, &vec, 0);
     } else if (g_Hud.m_EggSteadyTicks > 8) {
       g_Hud.m_EggCount += 1;
       g_Hud.m_EggSteadyTicks = 0;
@@ -389,7 +389,7 @@ void HudTick(void) {
     if (g_Hud.m_KeyFlag != g_KeyFlag) {
       if (g_Hud.m_KeySteadyTicks == 0) {
         for (j = 0; j < 6; ++j) {
-          (*D_800758E4)(1, 12, &g_Hud.m_Mobys[11].m_Props,
+          (*g_SpawnParticle)(1, 12, &g_Hud.m_Mobys[11].m_Props,
                         (int)(something_hud(j) + 0x8080));
         }
       } else if (g_Hud.m_KeySteadyTicks > 11) {
@@ -445,8 +445,8 @@ void GenerateGemCollectMobys(int pGemValue, Moby *pGemPos) {
     setXYZ(&pMoby->m_Rotation, 0, 0, g_Camera.m_Rotation.z >> 4);
 
     props = pMoby->m_Props;
-    setXYZ(&props->unk_0x8, vec.x, vec.y, vec.z);
-    props->unk_0x4 = rem * i;
+    setXYZ(&props->m_Velocity, vec.x, vec.y, vec.z);
+    props->m_DigitPlaceValue = rem * i;
 
     // this FIXED_MUL may not be exactly what they are getting at, but it
     // matches
