@@ -16,6 +16,10 @@ typedef struct {
 } Vector3D16;
 
 typedef struct {
+  int x, y;
+} Vector2D;
+
+typedef struct {
   int azimuth, elevation, radius;
 } SphericalCoordinates;
 

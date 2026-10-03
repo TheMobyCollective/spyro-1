@@ -6407,8 +6407,8 @@ glabel func_level_31_8007BB00
 /* 29FF8D8 80080B10 09000224 */  addiu      $v0, $zero, 0x9
 /* 29FF8DC 80080B14 000062AC */  sw         $v0, 0x0($v1)
 /* 29FF8E0 80080B18 0C00438E */  lw         $v1, 0xC($s2)
-/* 29FF8E4 80080B1C 0780023C */  lui        $v0, %hi(D_8006E390)
-/* 29FF8E8 80080B20 90E34224 */  addiu      $v0, $v0, %lo(D_8006E390)
+/* 29FF8E4 80080B1C 0780023C */  lui        $v0, %hi(g_SparxGlowVerts)
+/* 29FF8E8 80080B20 90E34224 */  addiu      $v0, $v0, %lo(g_SparxGlowVerts)
 /* 29FF8EC 80080B24 DF020208 */  j          .Llevel_31_80080B7C
 /* 29FF8F0 80080B28 040062AC */   sw        $v0, 0x4($v1)
 .Llevel_31_80080B2C:
@@ -6781,9 +6781,9 @@ glabel func_level_31_8007BB00
 .Llevel_31_80081088:
 /* 29FFE50 80081088 01000424 */  addiu      $a0, $zero, 0x1
 /* 29FFE54 8008108C 80100300 */  sll        $v0, $v1, 2
-/* 29FFE58 80081090 0780013C */  lui        $at, %hi(D_8006E330)
+/* 29FFE58 80081090 0780013C */  lui        $at, %hi(g_DefaultGlowVerts + 0x28)
 /* 29FFE5C 80081094 21082200 */  addu       $at, $at, $v0
-/* 29FFE60 80081098 30E3278C */  lw         $a3, %lo(D_8006E330)($at)
+/* 29FFE60 80081098 30E3278C */  lw         $a3, %lo(g_DefaultGlowVerts + 0x28)($at)
 .Llevel_31_8008109C:
 /* 29FFE64 8008109C 0780023C */  lui        $v0, %hi(D_800758E4)
 /* 29FFE68 800810A0 E458428C */  lw         $v0, %lo(D_800758E4)($v0)

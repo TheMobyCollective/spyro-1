@@ -64,16 +64,18 @@ extern int g_TracerPointCount[4];
 extern TracerPoint *g_TracerLists[4];
 
 typedef struct {
-  int unk_0x00;
-  int* unk_0x04;
-  Vector3D* MobyPos;
-  Color GlowColor;
-  int unk_0x010;
-  Vector3D PosOffset;
-  int unk_0x20;
+  int m_VertexCount;
+  Vector2D *m_Vertices;
+  Vector3D *m_MobyPos;
+  Color m_GlowColor;
+  int m_Radius;
+  Vector3D m_PosOffset;
+  int m_OtOffset;
 } Glow;
 
-extern Glow D_80078800[16];
+extern Glow g_Glows[16];
+extern Vector2D g_DefaultGlowVerts[17];
+extern Vector2D g_SparxGlowVerts[9];
 
 // Primitive codes
 #define PRIM_LINE_F2 (0x40)

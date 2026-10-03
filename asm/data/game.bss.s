@@ -230,7 +230,7 @@ dlabel g_PadBuffer
 dlabel g_SpyroFlame
 /* Total size from 800786C8 to 80078800 */ .space 0x138
 
-dlabel D_80078800
+dlabel g_Glows
 /* Total size from 80078800 to 80078A40 */ .space 0x240
 
 dlabel g_Cyclorama
