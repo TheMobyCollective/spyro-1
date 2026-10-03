@@ -1,6 +1,7 @@
 #ifndef __CHECKPOINT_H
 #define __CHECKPOINT_H
 
+#include "moby.h"
 #include "vector.h"
 
 typedef struct {
@@ -30,5 +31,7 @@ typedef struct {
 } CheckpointData;
 
 extern CheckpointData g_Checkpoint;
+
+void CheckpointSave(Moby *checkpoint, u_int checkpointRotation);
 
 #endif

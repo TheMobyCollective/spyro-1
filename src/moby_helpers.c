@@ -373,7 +373,7 @@ int func_80038AFC(PathData *pPathData, int *pNodeIndexOut) {
 }
 
 /// @brief Find the path node furthest away from Spyro
-int func_80038BB0(PathData *pPathData, int *pNodeIndexOut) {
+int func_80038BB0(PathData *pPathData) {
   int furthestNodeDistance = 0;
   int furthestNodeIndex;
   int i;
@@ -410,12 +410,13 @@ int func_80038C4C(Vector3D *point, Vector3D *rect) {
   return 0;
 }
 
-/// @brief Returns the dot product of two vectors (doesn't use the GTE)
-int func_80038D54(Vector3D *param_1, Vector3D *param_2) {
+/// @brief Returns the dot product of a vector and a plane's normal vector
+/// (doesn't use the GTE)
+int func_80038D54(Vector3D *param_1, Plane *param_2) {
   Vector3D unused; // Needed to match stack usage
-  int sum = param_2->x * param_1->x + param_2->y * param_1->y +
-            param_2->z * param_1->z;
-  return ABS((sum >> 10) + param_2[1].x);
+  int sum = param_2->normal.x * param_1->x + param_2->normal.y * param_1->y +
+            param_2->normal.z * param_1->z;
+  return ABS((sum >> 10) + param_2->offset);
 }
 
 /// @brief Rotate moby to face Spyro
@@ -1953,7 +1954,7 @@ void CollectItem(Moby *pMoby) {
 
   // particle spawn
   (*g_SpawnParticle)(6, 0xC, pMoby,
-                D_8006E44C[12 + (pMoby->m_Class - MOBYCLASS_GEM_1)]);
+                     D_8006E44C[12 + (pMoby->m_Class - MOBYCLASS_GEM_1)]);
 
   if (pMoby->m_Class == MOBYCLASS_GEM_1)
     gem_value = 1;

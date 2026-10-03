@@ -33,8 +33,14 @@ void func_8002C85C(void);
 /// @brief Sets gamestate 0, resets background color, and resets the specular
 void func_8002C8A4(void);
 
+/// @brief Empty, used to open the dragon dialogue in protos
+void func_8002C914(int pDialogueId, int pHasSelection);
+
 /// @brief Empty, proto dragon dialogue update calls this for some reason
 void func_8002C91C(void);
+
+/// @brief Rescue a dragon, increments the needed values and starts the cutscene
+void func_8002C924(Moby *pMoby);
 
 /**
  * @brief Initializes fairy cutscene when Spyro talks to a fairy

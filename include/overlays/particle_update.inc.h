@@ -3,10 +3,10 @@
 #include "graphics.h"
 #include "math.h"
 #include "overlay_pointers.h"
+#include "rand.h"
 #include "renderers.h"
 #include "spyro.h"
 #include "vector.h"
-
 
 // TODO:
 // -Determine how to handle m_Raw access. Dedicated structs per class?
@@ -19,8 +19,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
 #ifdef HAS_PARTICLE_0
     case 0:
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       if (*(short *)&particle->m_Data.m_Raw[26] != 0) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->z++;
@@ -42,8 +42,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
 #ifdef HAS_PARTICLE_1
     case 1:
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       if (*(short *)&particle->m_Data.m_Raw[26] != 0) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->z++;
@@ -65,8 +65,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
 #ifdef HAS_PARTICLE_2
     case 2:
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       if (*(short *)&particle->m_Data.m_Raw[26] != 0) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->z++;
@@ -129,8 +129,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
           *(short *)&particle->m_Data.m_Raw[24] = 0;
           *(short *)&particle->m_Data.m_Raw[26] = 8;
         } else {
-          func_80017C24(&delta,
-                               (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+          func_80017C24(&delta, (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
           if (*(short *)&particle->m_Data.m_Raw[26] & 2) {
             delta.x += (particle->m_Timer * Cos(particle->m_Timer << 7)) >> 7;
@@ -156,11 +155,9 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
           VecAdd(&position, &position, &delta);
 
           if (particle->m_RenderType == 3) {
-            func_80017BFC(&particle->m_Data.m_Quad.m_Position,
-                                 &position);
+            func_80017BFC(&particle->m_Data.m_Quad.m_Position, &position);
           } else {
-            func_80017BFC(&particle->m_Data.m_Point.m_Position,
-                                 &position);
+            func_80017BFC(&particle->m_Data.m_Point.m_Position, &position);
           }
           particle->m_Timer++;
         }
@@ -186,9 +183,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
           }
 
           *(short *)&particle->m_Data.m_Raw[26] = (rand() & 6) + 1;
-          func_80017BFC(
-              (Vector3D16 *)&particle->m_Data.m_Raw[20],
-              &(*(Moby **)&particle->m_Data.m_Raw[20])->m_Position);
+          func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
+                        &(*(Moby **)&particle->m_Data.m_Raw[20])->m_Position);
           *(short *)&particle->m_Data.m_Raw[24] += rand() & 127;
           particle->m_Timer = 0;
         } else {
@@ -196,11 +192,9 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
           VecAdd(&position, &position, &delta);
 
           if (particle->m_RenderType == 3) {
-            func_80017BFC(&particle->m_Data.m_Quad.m_Position,
-                                 &position);
+            func_80017BFC(&particle->m_Data.m_Quad.m_Position, &position);
           } else {
-            func_80017BFC(&particle->m_Data.m_Point.m_Position,
-                                 &position);
+            func_80017BFC(&particle->m_Data.m_Point.m_Position, &position);
           }
           particle->m_Timer++;
         }
@@ -245,8 +239,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->y += (rand() & 6) - 3;
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->z -= 1;
 
-        func_80017C24(&velocity,
-                             (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+        func_80017C24(&velocity, (Vector3D16 *)&particle->m_Data.m_Raw[20]);
         VecShiftRight(&velocity, 2);
         VecAdd(&position, &position, &velocity);
         func_80017BFC(&particle->m_Data.m_Quad.m_Position, &position);
@@ -396,8 +389,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
 #ifdef HAS_PARTICLE_9
     case 9:
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       if (*(short *)&particle->m_Data.m_Raw[26] != 0) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->z++;
@@ -448,7 +441,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
       // This particle is spawned by func_800530C0
       Vector3D16 *velocity = (Vector3D16 *)&particle->m_Data.m_Raw[14];
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position, velocity);
+                    &particle->m_Data.m_RotatedQuad.m_Position, velocity);
       particle->m_Data.m_RotatedQuad.m_Color.r -= 8;
       particle->m_Data.m_RotatedQuad.m_Color.g -= 8;
       particle->m_Data.m_RotatedQuad.m_Color.b -= 8;
@@ -494,8 +487,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
       }
 
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       if (*(short *)&particle->m_Data.m_Raw[26] != 0) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->z++;
@@ -545,8 +538,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
     case 14: {
       int value;
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       if (((Vector3D16 *)&particle->m_Data.m_Raw[20])->x > 0) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->x--;
@@ -618,8 +611,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
 #ifdef HAS_PARTICLE_16
     case 16:
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       if (*(short *)&particle->m_Data.m_Raw[26] != 0) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->z++;
@@ -641,8 +634,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
 #ifdef HAS_PARTICLE_17
     case 17:
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       if (*(short *)&particle->m_Data.m_Raw[26] != 0) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->z++;
@@ -728,8 +721,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
       int value;
 
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       if (((Vector3D16 *)&particle->m_Data.m_Raw[20])->x > 0) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->x--;
@@ -767,8 +760,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
 #ifdef HAS_PARTICLE_23
     case 23:
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       particle->m_Data.m_RotatedQuad.m_Rotation += particle->m_Data.m_Raw[26];
       particle->m_Data.m_RotatedQuad.m_Size += pDelta * 2;
@@ -830,8 +823,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
 #ifdef HAS_PARTICLE_25
     case 25:
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       if (*(short *)&particle->m_Data.m_Raw[26] != 0) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->z++;
@@ -901,7 +894,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
       if (particle->m_RenderType == 3) {
         func_80017C24(&position, &particle->m_Data.m_Quad.m_Position);
       } else {
-        func_80017C24(&position, &particle->m_Data.m_Raw);
+        func_80017C24(&position, (Vector3D16 *)&particle->m_Data.m_Raw);
       }
 
       if (*(short *)&particle->m_Data.m_Raw[26] & 8) {
@@ -934,8 +927,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
         } else {
           int value;
 
-          func_80017C24(&delta,
-                               (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+          func_80017C24(&delta, (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
           if (*(short *)&particle->m_Data.m_Raw[26] & 2) {
             delta.x += (particle->m_Timer * Cos(particle->m_Timer << 7)) >> 7;
@@ -991,7 +983,7 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
             moby->m_Substate = 1;
             *(short *)&particle->m_Data.m_Raw[26] = (rand() & 6) + 1;
             func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                                 &moby->m_Position);
+                          &moby->m_Position);
             *(short *)&particle->m_Data.m_Raw[24] += rand() & 127;
             particle->m_Timer = 0;
             break;
@@ -1027,8 +1019,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
 #ifdef HAS_PARTICLE_31
     case 31:
       func_80017C84(&particle->m_Data.m_Quad.m_Position,
-                  &particle->m_Data.m_Quad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_Quad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
       particle->m_Timer += pDelta;
 
       if (particle->m_Timer >= 64) {
@@ -1042,8 +1034,8 @@ void NAME_OVERLAY_FUNCTION(UpdateParticle)(int pDelta) {
     case 33: {
       int value;
       func_80017C84(&particle->m_Data.m_RotatedQuad.m_Position,
-                  &particle->m_Data.m_RotatedQuad.m_Position,
-                  (Vector3D16 *)&particle->m_Data.m_Raw[20]);
+                    &particle->m_Data.m_RotatedQuad.m_Position,
+                    (Vector3D16 *)&particle->m_Data.m_Raw[20]);
 
       if (*(short *)&particle->m_Data.m_Raw[26] != 0) {
         ((Vector3D16 *)&particle->m_Data.m_Raw[20])->z++;

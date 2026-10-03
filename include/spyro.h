@@ -398,6 +398,8 @@ void UpdateSpyroReturnHome(void);
 /// @brief Handles the state transition for Spyro's body animation
 void func_8003CCE4(void);
 
+void func_8003DFA4(void);
+
 /// @brief Changes Spyro's state
 void func_8003EA68(int pNewState);
 

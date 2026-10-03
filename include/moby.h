@@ -254,6 +254,9 @@ typedef struct {
 extern int g_AnimationFinished;
 extern int g_AnimFrameFinished;
 
+// Moby interpolation check
+void func_80037E98(Moby *pMoby);
+
 // Restart 'anim' from frame 0 at its natural model speed
 #define MOBY_ANIM_RESTART(m, anim)                                             \
   (m)->m_AnimationState.m_FrameProgress = 0;                                   \
@@ -836,7 +839,7 @@ typedef struct {
 typedef struct {
   int m_0x00;
   int m_0x04;
-  int m_0x08;
+  PathData *m_0x08;
   Vector3D m_0x0c;
   int m_0x18;
   int m_0x1c;
@@ -1855,8 +1858,6 @@ typedef struct {
   int m_CutsceneTicks;      // The number of ticks the cutscene lasts
   int m_ShakeTimer;
   Vector3D m_AngleStorage; // Used in moby code
-  // TODO: Not part of any props struct. Prototypes?
-  // int m_PosZStorage;       // Used in moby code
 } RescuedDragonMobyProps;
 
 typedef struct {

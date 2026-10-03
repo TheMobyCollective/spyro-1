@@ -232,7 +232,7 @@ void func_8002C8A4(void) {
 }
 
 /// @brief Empty, used to open the dragon dialogue in protos
-void func_8002C914(void){};
+void func_8002C914(int pDialogueId, int pHasSelection){};
 
 /// @brief Empty, proto dragon dialogue update calls this for some reason
 void func_8002C91C(void){};

@@ -86,7 +86,7 @@ void CameraUpdateMatrices(void) {
   Memcpy(&g_Camera.m_ProjectionMatrix, &mtx, sizeof(SHORTMATRIX));
 }
 
-// Casts a ray between two points, returns false if it hits something
+/// @brief Casts a ray between two points, returns false if it hits something
 int func_80033E40(Vector3D *pPoint1, Vector3D *pPoint2) {
   Vector3D distance;
   Vector3D rayStart, rayEnd;

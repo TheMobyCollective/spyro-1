@@ -48,11 +48,19 @@ void VecSub(Vector3D *pOut, Vector3D *pIn1, Vector3D *pIn2);
 /// @brief Converts a vector to a short vector
 void VecToShortVec(Vector3D16 *pOut, Vector3D *pVec);
 
+/// @brief Converts a short vector to a vector, scaling elements up by 4
+void func_80017C24(Vector3D *pOut, Vector3D16 *pIn);
+
+/// @brief Converts a short vector to a vector
+void func_80017C4C(Vector3D *pOut, Vector3D16 *pIn);
+
 /// @brief Converts a vector to a short vector, scaling elements down by 4
 void func_80017BFC(Vector3D16 *pOut, Vector3D *pVec);
 
 /// @brief Adds two short vectors together
 void func_80017C84(Vector3D16 *pOut, Vector3D16 *pIn1, Vector3D16 *pIn2);
+
+int func_80017428(Vector3D *pIn, Vector3D *pNormal, Vector3D *pOut);
 
 /// @brief Scales a vector to a desired length
 /// @param pVec The vector, modified in place
@@ -68,5 +76,7 @@ void func_80017330(Vector3D *pVec, int pNormalizedDistance);
 /// @param pIncludeZAxis Whether to include the Z axis in the calculation
 /// @return The magnitude of the provided vector
 int VecMagnitude(Vector3D *pVec, int pIncludeZAxis);
+
+int func_80017D7C(Vector3D *, Vector3D *, Vector3D *, int);
 
 #endif // !__VECTOR_H

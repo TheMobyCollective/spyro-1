@@ -19,6 +19,12 @@ void func_800526A8(Moby *pMoby);
 /// @param pMoby The Moby :)
 void func_800529CC(Moby *pMoby);
 
+/// @brief Gets the position of a vertex in a Moby's animated mesh
+/// @param pMoby Moby :)
+/// @param pVertexIdx Index of the vertex
+/// @param pVector Output vector
+void func_80052D64(Moby *pMoby, int pVertexIdx, Vector3D *pVector);
+
 enum MobyPropUpdateFlags {
   // Update the collision data based on frame data
   UPDATE_PROP_COLLISION = 1 << 0,

@@ -10,12 +10,14 @@
 #include "environment.h"
 #include "gamepad.h"
 #include "gamestates/draw.h"
+#include "gamestates/init.h"
 #include "graphics.h"
 #include "hud.h"
 #include "loaders.h"
 #include "math.h"
 #include "moby.h"
 #include "moby_helpers.h"
+#include "moby_lists.h"
 #include "overlay_pointers.h"
 #include "rand.h"
 #include "renderers.h"
@@ -25,7 +27,6 @@
 #include "spyro.h"
 #include "variables.h"
 #include "vector.h"
-
 
 extern struct {
   Vector3D16 m_LocalOffset;
@@ -9765,10 +9766,10 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             props->m_0x64 = (rand() % 0x20) + 100;
             func_8003851C(moby, (rand() % 3) + 2, 0);
           }
-          func_8003BFC0(moby, (int)props->m_0x08, &props->m_0x10,
-                        &props->m_0x1c, 0x10, 0);
-        } else if (func_8003BFC0(moby, (int)props->m_0x08, &props->m_0x10,
-                                 &props->m_0x1c, 0x16, 0) != 0) {
+          func_8003BFC0(moby, props->m_0x08, &props->m_0x10,
+                        (int *)&props->m_0x1c, 0x10, 0);
+        } else if (func_8003BFC0(moby, props->m_0x08, &props->m_0x10,
+                                 (int *)&props->m_0x1c, 0x16, 0) != 0) {
           moby->m_State = 2;
           MOBY_ANIM_CHANGE(moby, 2);
         }
@@ -9897,8 +9898,8 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         }
         break;
       case 99:
-        if (func_8003BFC0(moby, (int)props->m_0x08, &props->m_0x10,
-                          &props->m_0x1c, 0x10, 4) == 2) {
+        if (func_8003BFC0(moby, props->m_0x08, &props->m_0x10,
+                          (int *)&props->m_0x1c, 0x10, 4) == 2) {
           Moby126Props *linkedProps;
 
           props->m_0x50 = 0;
@@ -11852,7 +11853,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             childProps->m_0x04 = 260;
             childProps->m_0x06 =
                 func_8003891C(&props->m_0x38->m_Position, &target, 260,
-                              childProps->m_0x08, childProps);
+                              childProps->m_0x08, &childProps->m_0x00);
             if (childProps->m_0x00 == 0) {
               props->m_0x38->m_State = 2;
             }
@@ -11992,8 +11993,8 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           g_Spyro.m_ControlFlags = 0x80002000;
         }
         if (props->m_0x00->m_CurrentNode != props->m_0x0c[props->m_0x14]) {
-          func_8003BFC0(moby, (int)props->m_0x00, &props->m_0x1c,
-                        &props->m_0x28, 8, 4);
+          func_8003BFC0(moby, props->m_0x00, &props->m_0x1c,
+                        (int *)&props->m_0x28, 8, 4);
         } else {
           VecNull(&props->m_0x1c);
           moby->m_Rotation.y = 0;
@@ -13163,8 +13164,8 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         rotation = moby->m_Rotation.z;
 
         if (g_Spyro.m_walkingState < 8) {
-          if (func_8003BFC0(moby, (int)props->m_0x00, &props->m_0x34,
-                            &props->m_0x40, 0xA, 4) == 2) {
+          if (func_8003BFC0(moby, props->m_0x00, &props->m_0x34, &props->m_0x40,
+                            0xA, 4) == 2) {
             props->m_0x14 = (props->m_0x14 + 1) & 3;
 
             switch (props->m_0x14) {
@@ -20415,11 +20416,13 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           if (VecMagnitude(&dragonPickupDelta, 1) < 1088) {
             int rotZ;
             int cutsceneId;
+
             if (dragonProps->m_DragonPadLink != -1) {
               rotZ = g_LevelMobys[dragonProps->m_DragonPadLink].m_Rotation.z;
             } else {
               rotZ = dragonProps->m_Rotation;
             }
+
             func_8003B854(0, moby);
             CheckpointSave(moby, rotZ);
 
@@ -20431,43 +20434,49 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                 g_LevelMobys[dragonProps->m_DragonPadLink].m_State = 1;
               }
               func_80052568(moby);
-              // TODO: can we do without this assignment?
-            } else if (cutsceneId = dragonProps->m_CutsceneId,
-                       cutsceneId == dragonProps->m_OldDialogueId) {
-              g_LevelDragonCount[g_LevelIndex]++;
-              g_DragonTotal++;
-              if (dragonProps->m_DragonPadLink != cutsceneId) {
-                g_LevelMobys[dragonProps->m_DragonPadLink].m_State = 1;
-              }
-              func_80052568(moby);
             } else {
-              moby->m_State = 2;
-              moby->m_Rotation.x = dragonProps->m_AngleStorage.x;
-              moby->m_Rotation.y = dragonProps->m_AngleStorage.y;
-              moby->m_Position.z = dragonProps->m_AngleStorage.z;
-              func_8002C924(moby);
-              VecNull(&g_Spyro.m_HeadLookTarget);
-              g_Spyro.m_ControlFlags =
-                  0x80000000 | 0x2000 | 0x100 | 0x40 | 0x4 | 0x2 | 0x1;
-              if (g_Spyro.m_airTime != 0) {
-                g_Spyro.m_fallingState = 6;
-                g_Spyro.unk_0x208.x = g_Spyro.m_Physics.m_TrueVelocity.x >> 8;
-                g_Spyro.unk_0x208.y = g_Spyro.m_Physics.m_TrueVelocity.y >> 8;
-                if (g_Spyro.m_Physics.m_TrueVelocity.z > 0) {
-                  g_Spyro.unk_0x208.z = 0;
-                } else {
-                  g_Spyro.unk_0x208.z = g_Spyro.m_Physics.m_TrueVelocity.z >> 6;
+              cutsceneId = dragonProps->m_CutsceneId;
+              if (cutsceneId == -1) {
+                // No cutscene, used in prototypes on the later levels
+                g_LevelDragonCount[g_LevelIndex]++;
+                g_DragonTotal++;
+
+                if (dragonProps->m_DragonPadLink != -1) {
+                  g_LevelMobys[dragonProps->m_DragonPadLink].m_State = 1;
                 }
+
+                func_80052568(moby);
               } else {
-                g_Spyro.m_fallingState = 3;
-                VecCopy(&g_Spyro.unk_0x208, &g_Spyro.m_Physics.m_TrueVelocity);
-                VecShiftRight(&g_Spyro.unk_0x208, 6);
-                g_Spyro.unk_0x208.z = 0;
-                if (g_Spyro.unk_0x208.x != 0 || g_Spyro.unk_0x208.y != 0) {
-                  VecScaleToLength(&g_Spyro.unk_0x208,
-                                   VecMagnitude(&g_Spyro.unk_0x208, 0), 0x60);
+                moby->m_State = 2;
+                moby->m_Rotation.x = dragonProps->m_AngleStorage.x;
+                moby->m_Rotation.y = dragonProps->m_AngleStorage.y;
+                moby->m_Position.z = dragonProps->m_AngleStorage.z;
+                func_8002C924(moby);
+                VecNull(&g_Spyro.m_HeadLookTarget);
+                g_Spyro.m_ControlFlags =
+                    0x80000000 | 0x2000 | 0x100 | 0x40 | 0x4 | 0x2 | 0x1;
+                if (g_Spyro.m_airTime != 0) {
+                  g_Spyro.m_fallingState = 6;
+                  g_Spyro.unk_0x208.x = g_Spyro.m_Physics.m_TrueVelocity.x >> 8;
+                  g_Spyro.unk_0x208.y = g_Spyro.m_Physics.m_TrueVelocity.y >> 8;
+                  if (g_Spyro.m_Physics.m_TrueVelocity.z > 0) {
+                    g_Spyro.unk_0x208.z = 0;
+                  } else {
+                    g_Spyro.unk_0x208.z =
+                        g_Spyro.m_Physics.m_TrueVelocity.z >> 6;
+                  }
+                } else {
+                  g_Spyro.m_fallingState = 3;
+                  VecCopy(&g_Spyro.unk_0x208,
+                          &g_Spyro.m_Physics.m_TrueVelocity);
+                  VecShiftRight(&g_Spyro.unk_0x208, 6);
+                  g_Spyro.unk_0x208.z = 0;
+                  if (g_Spyro.unk_0x208.x != 0 || g_Spyro.unk_0x208.y != 0) {
+                    VecScaleToLength(&g_Spyro.unk_0x208,
+                                     VecMagnitude(&g_Spyro.unk_0x208, 0), 0x60);
+                  }
+                  g_Spyro.unk_0x208.z = 0;
                 }
-                g_Spyro.unk_0x208.z = 0;
               }
             }
           }
@@ -22458,9 +22467,18 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                 continue;
               }
 
+              // SKELETON: One param too little lol
+#ifndef MODERN_COMPILER
               RotateMobyToAngle(moby, props->m_0x14, 4, 0x10);
+#else
+              RotateMobyToAngle(moby, props->m_0x14, 4, 0x10, 0);
+#endif
             } else {
+#ifndef MODERN_COMPILER
               RotateMobyToAngle(moby, props->m_0x14, 4, 0x10);
+#else
+              RotateMobyToAngle(moby, props->m_0x14, 4, 0x10, 0);
+#endif
               props->m_0x10 &= ~1;
             }
             break;
@@ -22790,9 +22808,9 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             curr = ambProps->m_0x08->m_CurrentNode;
             nxt = (curr + 1) % ambProps->m_0x08->m_NodeCount;
             ambProps->m_0x24 =
-                func_80017D7C((int)&PATH_NODE_POS(ambProps->m_0x08, curr),
-                              (int)&PATH_NODE_POS(ambProps->m_0x08, nxt),
-                              (void *)&ambProps->m_0x18.x, ambProps->m_0x14);
+                func_80017D7C(&PATH_NODE_POS(ambProps->m_0x08, curr),
+                              &PATH_NODE_POS(ambProps->m_0x08, nxt),
+                              &ambProps->m_0x18, ambProps->m_0x14);
           }
           if (moby->m_SoundChannel == 0x7F &&
               ambProps->m_0x24 == (ambProps->m_0x24 / 48) * 48) {
@@ -24490,11 +24508,11 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         rotation = moby->m_Rotation.z;
 
         if (g_LevelId == 15 || g_LevelId == 45) {
-          func_8003BFC0(moby, (int)props->m_0x00, &props->m_0x20,
-                        &props->m_0x2c, 0xC, 4);
+          func_8003BFC0(moby, props->m_0x00, &props->m_0x20, &props->m_0x2c,
+                        0xC, 4);
         } else {
-          func_8003BFC0(moby, (int)props->m_0x00, &props->m_0x20,
-                        &props->m_0x2c, 0x16, 0);
+          func_8003BFC0(moby, props->m_0x00, &props->m_0x20, &props->m_0x2c,
+                        0x16, 0);
         }
 
         rotation = (moby->m_Rotation.z - rotation) & 0xFF;
@@ -31343,8 +31361,8 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       }
 
       case 80: {
-        if (func_8003BFC0(moby, (int)props->m_0x14, &props->m_0x18,
-                          &props->m_0x24, 0x20, 4) == 2) {
+        if (func_8003BFC0(moby, props->m_0x14, &props->m_0x18,
+                          (int *)&props->m_0x24, 0x20, 4) == 2) {
           moby->m_State = 81;
           moby->m_SoundDistance = 0;
           props->m_0x4c = moby->m_Position.z + 1400;
@@ -31422,8 +31440,8 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       }
 
       case 90: {
-        if (func_8003BFC0(moby, (int)props->m_0x14, &props->m_0x18,
-                          &props->m_0x24, 0x20, 4) == 2) {
+        if (func_8003BFC0(moby, props->m_0x14, &props->m_0x18,
+                          (int *)&props->m_0x24, 0x20, 4) == 2) {
           moby->m_State = 91;
           props->m_0x4c = moby->m_Position.z + 1400;
           props->m_0x14 = props->m_0x40;

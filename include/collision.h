@@ -12,6 +12,13 @@ int func_8004DF24(Vector3D *pos);
 // Checks for collision between two points
 int func_8004AE38(Vector3D *point1, Vector3D *point2);
 
+/// @brief Hitbox collision check
+/// @param pPos Center
+/// @param pSize The size of the box
+/// @param pDamageOutput Damage to apply to Spyro if he's inside
+/// @return Whether the hitbox was hit
+int func_8004E2E8(Vector3D *pPos, int pSize, int pDamageOutput);
+
 /// @brief Sphere collision check
 /// @param pPos The center position of the sphere
 /// @param pRadiusMobys Our radius VS mobys

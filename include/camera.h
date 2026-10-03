@@ -94,6 +94,9 @@ void func_800342F8(void);
 /// @brief Some camera reset stuff
 void func_80034358(void);
 
+/// @brief Casts a ray between two points, returns false if it hits something
+int func_80033E40(Vector3D *pPoint1, Vector3D *pPoint2);
+
 /// @brief Sets the level fly-in parameters
 /// @param param New level fly-in parameters
 void func_80037714(LevelFlyInParameters *param);

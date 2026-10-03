@@ -1,3 +1,4 @@
+#include "42CC4.h"
 #include "camera.h"
 #include "graphics.h"
 #include "math.h"
@@ -21,8 +22,8 @@ extern Vector3D D_8006E570;
 // -Document spawnParam/extraParam types for each case. Possibly find a way to
 //  avoid having to cast
 
-void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnParam,
-                                          int extraParam) {
+void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass,
+                                          void *spawnParam, int extraParam) {
   Particle *particle;
   int i;
 
@@ -35,9 +36,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = 0;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                           (Vector3D *)extraParam);
+                    (Vector3D *)extraParam);
       *(short *)&particle->m_Data.m_Raw[26] = 0;
       particle->m_Data.m_RotatedQuad.m_Size = 24;
       particle->m_Data.m_RotatedQuad.m_Rotation = rand();
@@ -59,9 +60,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = 0;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                           (Vector3D *)extraParam);
+                    (Vector3D *)extraParam);
 
       // TODO: hack
       gamestate = g_Gamestate;
@@ -92,14 +93,13 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = 0;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       randomVelocity.x = (rand() & 63) - 32;
       randomVelocity.y = (rand() & 63) - 32;
       randomVelocity.z = 30;
 
-      func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                           &randomVelocity);
+      func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20], &randomVelocity);
       *(short *)&particle->m_Data.m_Raw[26] = 0;
       particle->m_Data.m_RotatedQuad.m_Size = 32;
       particle->m_Data.m_RotatedQuad.m_Rotation = rand();
@@ -120,7 +120,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 7;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_Quad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       particle->m_Data.m_Quad.m_Position.x += (rand() & 126) - 63;
       particle->m_Data.m_Quad.m_Position.y += (rand() & 126) - 63;
@@ -148,7 +148,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 7;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_Quad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       particle->m_Data.m_Quad.m_Position.x += (rand() & 62) - 31;
       particle->m_Data.m_Quad.m_Position.y += (rand() & 62) - 31;
@@ -183,13 +183,14 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_WasRendered = 1;
 
       func_80017BFC(&particle->m_Data.m_Quad.m_Position,
-                           &((Moby *)spawnParam)->m_Position);
+                    &((Moby *)spawnParam)->m_Position);
 
       particle->m_Data.m_Quad.m_Position.x += (rand() & 126) - 63;
       particle->m_Data.m_Quad.m_Position.y += (rand() & 126) - 63;
       particle->m_Data.m_Quad.m_Position.z += (rand() & 511) - 256;
 
-      *(Vector3D **)&particle->m_Data.m_Raw[20] = &((Moby *)spawnParam)->m_Position;
+      *(Vector3D **)&particle->m_Data.m_Raw[20] =
+          &((Moby *)spawnParam)->m_Position;
       *(short *)&particle->m_Data.m_Raw[24] = props[1];
       *(short *)&particle->m_Data.m_Raw[26] = props[0] >> 6;
 
@@ -269,7 +270,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 15;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       if (extraParam != 0) {
         particle->m_Data.m_RotatedQuad.m_Position.x +=
@@ -319,8 +320,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
 
       func_80017330(&position, 0x80);
 
-      func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                           &position);
+      func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20], &position);
 
       particle->m_Data.m_Raw[26] = (Moby *)extraParam - g_LevelMobys;
       particle->m_Data.m_Raw[27] = 0;
@@ -361,9 +361,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = 0;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                           (Vector3D *)extraParam);
+                    (Vector3D *)extraParam);
       *(short *)&particle->m_Data.m_Raw[26] = 0;
       particle->m_Data.m_RotatedQuad.m_Size = 24;
       particle->m_Data.m_RotatedQuad.m_Rotation = rand();
@@ -398,8 +398,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Class = pClass;
       particle->m_Timer = rand() & 31;
       particle->m_WasRendered = 1;
-      func_80017BFC(&particle->m_Data.m_Quad.m_Position,
-                           &g_Spyro.m_Position);
+      func_80017BFC(&particle->m_Data.m_Quad.m_Position, &g_Spyro.m_Position);
       particle->m_Data.m_Quad.m_Width = 24;
       particle->m_Data.m_Quad.m_Height = 15;
       particle->m_Data.m_Quad.m_Color.r = D_8006E438[i].r;
@@ -428,7 +427,8 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
         if (extraParam >> 24 < 6) {
           VecRotateByMatrix((MATRIX *)&((Moby *)spawnParam)->m_RotationMatrix,
                             &D_8006E4E0[extraParam >> 24], &mobyPosition);
-          VecAdd(&mobyPosition, &mobyPosition, &((Moby *)spawnParam)->m_Position);
+          VecAdd(&mobyPosition, &mobyPosition,
+                 &((Moby *)spawnParam)->m_Position);
         } else {
           particle->m_RenderType = 5;
           particle->m_Data.m_RotatedQuad.m_OtOffset = 0x16;
@@ -439,17 +439,18 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
         if (((Moby *)spawnParam)->m_Class == MOBYCLASS_SPARX) {
           VecRotateByMatrix((MATRIX *)&((Moby *)spawnParam)->m_RotationMatrix,
                             &D_8006E570, &mobyPosition);
-          VecAdd(&mobyPosition, &mobyPosition, &((Moby *)spawnParam)->m_Position);
+          VecAdd(&mobyPosition, &mobyPosition,
+                 &((Moby *)spawnParam)->m_Position);
 
         } else {
           VecRotateByMatrix((MATRIX *)&((Moby *)spawnParam)->m_RotationMatrix,
                             &D_8006E498[i], &mobyPosition);
-          VecAdd(&mobyPosition, &mobyPosition, &((Moby *)spawnParam)->m_Position);
+          VecAdd(&mobyPosition, &mobyPosition,
+                 &((Moby *)spawnParam)->m_Position);
         }
       }
 
-      func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           &mobyPosition);
+      func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position, &mobyPosition);
       particle->m_Data.m_RotatedQuad.m_Color.g = extraParam >> 8;
       particle->m_Data.m_RotatedQuad.m_Color.r = extraParam;
       particle->m_Data.m_RotatedQuad.m_Color.b = extraParam >> 16;
@@ -467,9 +468,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = 0;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                           (Vector3D *)extraParam);
+                    (Vector3D *)extraParam);
       *(short *)&particle->m_Data.m_Raw[26] = 0;
       particle->m_Data.m_RotatedQuad.m_Size = 24;
       particle->m_Data.m_RotatedQuad.m_Rotation = rand();
@@ -494,9 +495,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
         particle->m_Timer = 0;
         particle->m_WasRendered = 1;
         func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                             (Vector3D *)spawnParam);
+                      (Vector3D *)spawnParam);
         func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                             (Vector3D *)extraParam);
+                      (Vector3D *)extraParam);
 
         *(short *)&particle->m_Data.m_Raw[26] = 0;
         particle->m_Data.m_RotatedQuad.m_Size = 64;
@@ -526,7 +527,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 7;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_Quad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       ((Vector3D16 *)&particle->m_Data.m_Raw[20])->x = (rand() & 0x1E) - 15;
       ((Vector3D16 *)&particle->m_Data.m_Raw[20])->y = (rand() & 0x1E) - 15;
@@ -558,9 +559,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = 0;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                           (Vector3D *)spawnParam + 1);
+                    (Vector3D *)spawnParam + 1);
       *(short *)&particle->m_Data.m_Raw[26] = 0;
       particle->m_Data.m_RotatedQuad.m_Size = ((int *)extraParam)[0];
       particle->m_Data.m_RotatedQuad.m_Rotation = rand();
@@ -582,9 +583,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = 0;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                           (Vector3D *)spawnParam + 1);
+                    (Vector3D *)spawnParam + 1);
       *(short *)&particle->m_Data.m_Raw[26] = 0;
       particle->m_Data.m_RotatedQuad.m_Size = 24;
       particle->m_Data.m_RotatedQuad.m_Rotation = rand();
@@ -609,7 +610,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
         particle->m_Timer = 0;
         particle->m_WasRendered = 1;
         func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                             (Vector3D *)spawnParam);
+                      (Vector3D *)spawnParam);
 
         *(int *)&particle->m_Data.m_Raw[20] = 32;
         particle->m_Data.m_RotatedQuad.m_Size = 64;
@@ -638,9 +639,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Class = pClass;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[14],
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       if ((extraParam & 0x1F) < 0x10) {
         particle->m_Data.m_Raw[20] = extraParam * 2;
@@ -672,7 +673,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
         particle->m_Timer = rand() & 15;
         particle->m_WasRendered = 1;
         func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                             (Vector3D *)spawnParam);
+                      (Vector3D *)spawnParam);
 
         particle->m_Data.m_RotatedQuad.m_Position.x +=
             (((rand() & 0xFFF) - 0x7FF) * 300) >> 12;
@@ -714,7 +715,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 15;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       ((Vector3D16 *)&particle->m_Data.m_Raw[20])->x = (rand() & 0x3E) - 0x1F;
       ((Vector3D16 *)&particle->m_Data.m_Raw[20])->y = (rand() & 0x3E) - 0x1F;
@@ -746,9 +747,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Class = pClass;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[14],
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       particle->m_Data.m_RotatedQuad.m_Size = 48;
       particle->m_Data.m_RotatedQuad.m_Color.r = 128;
       particle->m_Data.m_RotatedQuad.m_Color.g = 128;
@@ -771,9 +772,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = 0;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                           (Vector3D *)spawnParam + 1);
+                    (Vector3D *)spawnParam + 1);
       *(short *)&particle->m_Data.m_Raw[26] = 0;
       particle->m_Data.m_RotatedQuad.m_Size = 24;
       particle->m_Data.m_RotatedQuad.m_Rotation = rand();
@@ -809,7 +810,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = 0;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       particle->m_Data.m_RotatedQuad.m_Size = 12;
       particle->m_Data.m_RotatedQuad.m_Rotation = rand();
       particle->m_Data.m_RotatedQuad.m_Color.r = extraParam * 8;
@@ -828,7 +829,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = 0;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       particle->m_Data.m_RotatedQuad.m_Size = ((extraParam >> 16) * 6) + 12;
       particle->m_Data.m_RotatedQuad.m_Rotation =
           g_Spyro.m_bodyRotation.z + (rand() & 7) + 29;
@@ -864,7 +865,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 15;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           &((Moby *)spawnParam)->m_Position);
+                    &((Moby *)spawnParam)->m_Position);
       particle->m_Data.m_RotatedQuad.m_Size = particle->m_Timer * 4;
       particle->m_Data.m_RotatedQuad.m_Rotation = rand();
       ((Vector3D16 *)&particle->m_Data.m_Raw[20])->x = particleVelocity.x;
@@ -884,7 +885,8 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
     case 29: {
       // TODO: Type props struct
       int *props;
-      // spawnParam is the Haunted Wizard Moby (204) that is spawning this particle
+      // spawnParam is the Haunted Wizard Moby (204) that is spawning this
+      // particle
       props = ((Moby *)extraParam)->m_Props;
 
       particle = func_80053570(3);
@@ -892,7 +894,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 7;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_Quad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       particle->m_Data.m_Quad.m_Position.x += (rand() & 126) - 63;
       particle->m_Data.m_Quad.m_Position.y += (rand() & 126) - 63;
@@ -922,7 +924,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = 0;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       *(short *)&particle->m_Data.m_Raw[26] = rand() % 2 + 1;
       particle->m_Data.m_RotatedQuad.m_Size = 8;
@@ -947,7 +949,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 15;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_Quad.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       ((Vector3D16 *)&particle->m_Data.m_Raw[20])->x =
           COSINE_8(temp) << 2 >> 12;
@@ -990,10 +992,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
         spyroPosition.y += (rand() & 0x3E) - 0x1F;
       }
 
-      func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position,
-                           &spyroPosition);
+      func_80017BFC(&particle->m_Data.m_RotatedQuad.m_Position, &spyroPosition);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20],
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       *(short *)&particle->m_Data.m_Raw[26] = 0;
       particle->m_Data.m_RotatedQuad.m_Size = 16;
       particle->m_Data.m_RotatedQuad.m_Rotation = rand();
@@ -1013,7 +1014,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 3;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_Line.m_Position,
-                           &((Moby *)spawnParam)->m_Position);
+                    &((Moby *)spawnParam)->m_Position);
 
       particle->m_Data.m_Line.m_Position.x += (rand() & 126) - 63;
       particle->m_Data.m_Line.m_Position.y += (rand() & 126) - 63;
@@ -1355,9 +1356,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 15;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_Point.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[12],
-                           (Vector3D *)extraParam);
+                    (Vector3D *)extraParam);
 
       particle->m_Data.m_Point.m_Color.r = 255;
       particle->m_Data.m_Point.m_Color.g = 255;
@@ -1376,7 +1377,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 7;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_Point.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       particle->m_Data.m_Point.m_Position.x += (rand() & 0x3E) - 0x1F;
       particle->m_Data.m_Point.m_Position.y += (rand() & 0x3E) - 0x1F;
@@ -1400,9 +1401,9 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Class = pClass;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_Point.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[12],
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       if ((extraParam & 0x1F) < 0x10) {
         particle->m_Data.m_Raw[20] = extraParam * 2;
@@ -1430,7 +1431,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 15;
       func_80017BFC(&particle->m_Data.m_Line.m_End, (Vector3D *)spawnParam);
       func_80017BFC(&particle->m_Data.m_Line.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       angle = rand() & 0xFFF;
 
@@ -1458,7 +1459,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 0x1F;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_Point.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       particle->m_Data.m_Point.m_Position.x += (rand() & 63) - 32;
       particle->m_Data.m_Point.m_Position.y += (rand() & 63) - 32;
@@ -1495,8 +1496,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particleOffset.y += (rand() & 63) - 32;
       particleOffset.z += (rand() & 127) - 64;
 
-      func_80017BFC(&particle->m_Data.m_Line.m_Position,
-                           &particleOffset);
+      func_80017BFC(&particle->m_Data.m_Line.m_Position, &particleOffset);
       particle->m_Data.m_Line.m_Color1.m_OtOffset = 2;
 
       if (g_SpyroFlame.unk_9c == 0) {
@@ -1533,7 +1533,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass, void *spawnPar
       particle->m_Timer = rand() & 15;
       particle->m_WasRendered = 1;
       func_80017BFC(&particle->m_Data.m_Line.m_Position,
-                           (Vector3D *)spawnParam);
+                    (Vector3D *)spawnParam);
 
       particleOffset.x = (extraParam * ((rand() & 0xFFF) - 0x800)) >> 12;
       particleOffset.y = (extraParam * ((rand() & 0xFFF) - 0x800)) >> 12;

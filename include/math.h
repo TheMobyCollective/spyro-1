@@ -104,6 +104,9 @@ void func_800177F8(Vector3D *pOut, Vector3D *pIn, int pVal);
 /// @return 12 bit value
 int func_80017928(int pAngle1, int pAngle2);
 
+// Similar to func_80017908
+int func_80017948(int pAngle1, int pAngle2);
+
 /// @brief Subtracts two angles
 /// @param pAngle1
 /// @param pAngle2

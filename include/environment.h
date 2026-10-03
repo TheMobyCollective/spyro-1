@@ -82,6 +82,25 @@ void func_8002B4AC(void);
 /// @param pDeltaTime Delta time in ticks (1/60th of a second)
 void func_8002A6FC(int pDeltaTime);
 
+/// @brief: Change environment animation's flags
+/// @param pAnimationIndex Index of the animation to modify
+/// @param pMask Bits to mask off
+/// @param pSet Bits to set
+// Usually called with pMask=0xFC, pSet=0x00, which clears the pause and
+// alternative track bits, to resume an animation
+void func_8002B390(int pAnimationIndex, int pMask, int pSet);
+
+/// @brief: Get environment animation's current frame
+/// @param pAnimationIndex Index of the animation
+/// @return The current frame
+int func_8002B3F4(int pAnimationIndex);
+
+/// @brief: Set environment animation's current frame
+/// @param pAnimationIndex Index of the animation
+/// @param pFrame Frame
+/// @param pDelay Sets frame delay to 1 if set
+void func_8002B444(int pAnimationIndex, int pFrame, int pDelay);
+
 extern Environment g_Environment;
 
 extern int g_SurfaceBelowFlags; // Surface type flags from last height query
