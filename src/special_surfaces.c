@@ -139,7 +139,7 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
 }
 
 /// @brief Checks if the surface is a special surface, and returns it's type.
-int func_80057380(void) {
+int GetSurfaceType(void) {
   int idx = g_SurfaceBelowFlags & 63;
 
   if (idx != 63) // If the flag is 63, it means we're not touching a surface

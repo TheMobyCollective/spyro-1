@@ -580,7 +580,7 @@ glabel func_80047B60
 /* 38AE4 800482E4 AC006214 */  bne        $v1, $v0, .L80048598
 /* 38AE8 800482E8 B4FD0426 */   addiu     $a0, $s0, -0x24C
 /* 38AEC 800482EC 64010524 */  addiu      $a1, $zero, 0x164
-/* 38AF0 800482F0 932F010C */  jal        func_8004BE4C
+/* 38AF0 800482F0 932F010C */  jal        ColSphere
 /* 38AF4 800482F4 64010624 */   addiu     $a2, $zero, 0x164
 /* 38AF8 800482F8 A7004010 */  beqz       $v0, .L80048598
 /* 38AFC 800482FC 00000000 */   nop
@@ -743,7 +743,7 @@ glabel func_80047B60
 /* 38D3C 8004853C 00000000 */  nop
 /* 38D40 80048540 A7006214 */  bne        $v1, $v0, .L800487E0
 /* 38D44 80048544 4CFF0426 */   addiu     $a0, $s0, -0xB4
-/* 38D48 80048548 7B35010C */  jal        func_8004D5EC
+/* 38D48 80048548 7B35010C */  jal        ColFindFloor
 /* 38D4C 8004854C 0100053C */   lui       $a1, (0x10000 >> 16)
 /* 38D50 80048550 0880013C */  lui        $at, %hi(g_Spyro + 0xA0)
 /* 38D54 80048554 F88A22AC */  sw         $v0, %lo(g_Spyro + 0xA0)($at)
@@ -952,7 +952,7 @@ glabel func_80047B60
 /* 39044 80048844 1800A28F */  lw         $v0, 0x18($sp)
 /* 39048 80048848 000C0524 */  addiu      $a1, $zero, 0xC00
 /* 3904C 8004884C 00084224 */  addiu      $v0, $v0, 0x800
-/* 39050 80048850 7B35010C */  jal        func_8004D5EC
+/* 39050 80048850 7B35010C */  jal        ColFindFloor
 /* 39054 80048854 1800A2AF */   sw        $v0, 0x18($sp)
 /* 39058 80048858 0880013C */  lui        $at, %hi(g_Spyro + 0x30)
 /* 3905C 8004885C 888A22AC */  sw         $v0, %lo(g_Spyro + 0x30)($at)

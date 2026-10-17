@@ -387,7 +387,41 @@ void func_level_64_8007AD4C();
 void func_level_64_80085230();
 void func_level_64_800840FC();
 
-// TODO: In the future, turn this into a preprocessor macro.
+#define LEVEL_CASE(pLevel)                                                     \
+  case pLevel:                                                                 \
+    g_Buffers.m_CopyBuf = Terminator_LEVEL_##pLevel;                           \
+    g_SpawnMoby = SpawnMoby_LEVEL_##pLevel;                                    \
+    g_UpdateMoby = UpdateMoby_LEVEL_##pLevel;                                  \
+    g_SpawnParticle = SpawnParticle_LEVEL_##pLevel;                            \
+    g_UpdateParticle = UpdateParticle_LEVEL_##pLevel;                          \
+    break;
+
+#define LEVEL_CASE_BALLOON(pLevel)                                             \
+  case pLevel:                                                                 \
+    g_Buffers.m_CopyBuf = Terminator_LEVEL_##pLevel;                           \
+    g_SpawnMoby = SpawnMoby_LEVEL_##pLevel;                                    \
+    g_UpdateMoby = UpdateMoby_LEVEL_##pLevel;                                  \
+    g_SpawnParticle = SpawnParticle_LEVEL_##pLevel;                            \
+    g_UpdateParticle = UpdateParticle_LEVEL_##pLevel;                          \
+    D_800757A0 = Balloonist1_LEVEL_##pLevel;                                   \
+    D_800758A8 = Balloonist2_LEVEL_##pLevel;                                   \
+    D_8007574C = Balloonist3_LEVEL_##pLevel;                                   \
+    D_800758D8 = Balloonist4_LEVEL_##pLevel;                                   \
+    break;
+
+#define LEVEL_CASE_FLIGHT(pLevel)                                              \
+  case pLevel:                                                                 \
+    g_Buffers.m_CopyBuf = Terminator_LEVEL_##pLevel;                           \
+    g_SpawnMoby = SpawnMoby_LEVEL_##pLevel;                                    \
+    g_UpdateMoby = UpdateMoby_LEVEL_##pLevel;                                  \
+    g_SpawnParticle = SpawnParticle_LEVEL_##pLevel;                            \
+    g_UpdateParticle = UpdateParticle_LEVEL_##pLevel;                          \
+    D_80075694 = Flight1_LEVEL_##pLevel;                                       \
+    D_800757A8 = Flight2_LEVEL_##pLevel;                                       \
+    g_FlightResultsUpdate = Flight3_LEVEL_##pLevel;                            \
+    D_8007567C = Flight5_LEVEL_##pLevel;                                       \
+    D_800758C4 = Flight4_LEVEL_##pLevel;                                       \
+    break;
 
 void SetOverlayPointers(void) {
   switch (g_LevelId) {
@@ -503,574 +537,56 @@ void SetOverlayPointers(void) {
     // D_8007567C = (int *)0x0;
     // D_800758C4 = (int *)0x0;
     break;
-  case 10:
-    g_Buffers.m_CopyBuf = func_level_10_80088620; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_10;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_10;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_10;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_10;   // g_UpdateParticle
-    D_800757A0 = Balloonist1_level_10;            // g_BalloonistTriggerCode
-    D_800758A8 = Balloonist2_level_10;            // g_BalloonistCloseDialogue
-    D_8007574C = Balloonist3_level_10;            // g_BalloonistCameraCode
-    D_800758D8 = Balloonist4_level_10;            // g_BalloonistTalkCode
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 11:
-    g_Buffers.m_CopyBuf = func_level_11_8008A3B8; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_11;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_11;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_11;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_11;   // g_UpdateParticle
-    D_800757A0 = Balloonist1_level_11;            // g_BalloonistTriggerCode
-    D_800758A8 = Balloonist2_level_11;            // g_BalloonistCloseDialogue
-    D_8007574C = Balloonist3_level_11;            // g_BalloonistCameraCode
-    D_800758D8 = Balloonist4_level_11;            // g_BalloonistTalkCode
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 12:
-    g_Buffers.m_CopyBuf = func_level_12_80085594; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_12;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_12;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_12;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_12;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 13:
-    g_Buffers.m_CopyBuf = func_level_13_80089ECC; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_13;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_13;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_13;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_13;   // g_UpdateParticle
-    D_800757A0 = Balloonist1_level_13;            // g_BalloonistTriggerCode
-    D_800758A8 = Balloonist2_level_13;            // g_BalloonistCloseDialogue
-    D_8007574C = Balloonist3_level_13;            // g_BalloonistCameraCode
-    D_800758D8 = Balloonist4_level_13;            // g_BalloonistTalkCode
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 14:
-    g_Buffers.m_CopyBuf = func_level_14_80084A10; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_14;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_14;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_14;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_14;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 15:
-    g_Buffers.m_CopyBuf = func_level_15_80084ED0; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_15;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_15;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_15;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_15;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    D_80075694 = Flight1_level_15;            // g_UnkFunc1Flight
-    D_800757A8 = Flight2_level_15;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = Flight3_level_15; // g_UpdateGameState7
-    D_8007567C = Flight5_level_15;            // g_DrawGameState7
-    D_800758C4 = Flight4_level_15;            // g_DrawTime
-    break;
-  case 20:
-    g_Buffers.m_CopyBuf = func_level_20_8008CFA4; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_20;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_20;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_20;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_20;   // g_UpdateParticle
-    D_800757A0 = Balloonist1_level_20;            // g_BalloonistTriggerCode
-    D_800758A8 = Balloonist2_level_20;            // g_BalloonistCloseDialogue
-    D_8007574C = Balloonist3_level_20;            // g_BalloonistCameraCode
-    D_800758D8 = Balloonist4_level_20;            // g_BalloonistTalkCode
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 21:
-    g_Buffers.m_CopyBuf = func_level_21_8008D600; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_21;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_21;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_21;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_21;   // g_UpdateParticle
-    D_800757A0 = Balloonist1_level_21;            // g_BalloonistTriggerCode
-    D_800758A8 = Balloonist2_level_21;            // g_BalloonistCloseDialogue
-    D_8007574C = Balloonist3_level_21;            // g_BalloonistCameraCode
-    D_800758D8 = Balloonist4_level_21;            // g_BalloonistTalkCode
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 22:
-    g_Buffers.m_CopyBuf = func_level_22_8008BAF8; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_22;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_22;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_22;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_22;   // g_UpdateParticle
-    D_800757A0 = Balloonist1_level_22;            // g_BalloonistTriggerCode
-    D_800758A8 = Balloonist2_level_22;            // g_BalloonistCloseDialogue
-    D_8007574C = Balloonist3_level_22;            // g_BalloonistCameraCode
-    D_800758D8 = Balloonist4_level_22;            // g_BalloonistTalkCode
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 23:
-    g_Buffers.m_CopyBuf = func_level_23_80086260; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_23;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_23;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_23;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_23;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 24:
-    g_Buffers.m_CopyBuf = func_level_24_80087210; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_24;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_24;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_24;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_24;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 25:
-    g_Buffers.m_CopyBuf = func_level_25_80083BF0; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_25;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_25;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_25;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_25;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    D_80075694 = Flight1_level_25;            // g_UnkFunc1Flight
-    D_800757A8 = Flight2_level_25;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = Flight3_level_25; // g_UpdateGameState7
-    D_8007567C = Flight5_level_25;            // g_DrawGameState7
-    D_800758C4 = Flight4_level_25;            // g_DrawTime
-    break;
-  case 30:
-    g_Buffers.m_CopyBuf = func_level_30_8008E608; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_30;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_30;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_30;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_30;   // g_UpdateParticle
-    D_800757A0 = Balloonist1_level_30;            // g_BalloonistTriggerCode
-    D_800758A8 = Balloonist2_level_30;            // g_BalloonistCloseDialogue
-    D_8007574C = Balloonist3_level_30;            // g_BalloonistCameraCode
-    D_800758D8 = Balloonist4_level_30;            // g_BalloonistTalkCode
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 31:
-    g_Buffers.m_CopyBuf = func_level_31_8008DEC0; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_31;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_31;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_31;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_31;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 32:
-    g_Buffers.m_CopyBuf = func_level_32_8008C73C; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_32;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_32;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_32;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_32;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 33:
-    g_Buffers.m_CopyBuf = func_level_33_8008A8A0; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_33;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_33;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_33;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_33;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 34:
-    g_Buffers.m_CopyBuf = func_level_34_8008749C; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_34;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_34;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_34;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_34;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 35:
-    g_Buffers.m_CopyBuf = func_level_35_80084390; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_35;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_35;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_35;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_35;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    D_80075694 = Flight1_level_35;            // g_UnkFunc1Flight
-    D_800757A8 = Flight2_level_35;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = Flight3_level_35; // g_UpdateGameState7
-    D_8007567C = Flight5_level_35;            // g_DrawGameState7
-    D_800758C4 = Flight4_level_35;            // g_DrawTime
-    break;
-  case 40:
-    g_Buffers.m_CopyBuf = func_level_40_8008AB70; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_40;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_40;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_40;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_40;   // g_UpdateParticle
-    D_800757A0 = Balloonist1_level_40;            // g_BalloonistTriggerCode
-    D_800758A8 = Balloonist2_level_40;            // g_BalloonistCloseDialogue
-    D_8007574C = Balloonist3_level_40;            // g_BalloonistCameraCode
-    D_800758D8 = Balloonist4_level_40;            // g_BalloonistTalkCode
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 41:
-    g_Buffers.m_CopyBuf = func_level_41_80087944; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_41;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_41;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_41;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_41;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 42:
-    g_Buffers.m_CopyBuf = func_level_42_80087130; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_42;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_42;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_42;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_42;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 43:
-    g_Buffers.m_CopyBuf = func_level_43_80089848; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_43;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_43;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_43;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_43;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 44:
-    g_Buffers.m_CopyBuf = func_level_44_8008A69C; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_44;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_44;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_44;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_44;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 45:
-    g_Buffers.m_CopyBuf = func_level_45_80084844; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_45;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_45;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_45;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_45;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    D_80075694 = Flight1_level_45;            // g_UnkFunc1Flight
-    D_800757A8 = Flight2_level_45;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = Flight3_level_45; // g_UpdateGameState7
-    D_8007567C = Flight5_level_45;            // g_DrawGameState7
-    D_800758C4 = Flight4_level_45;            // g_DrawTime
-    break;
-  case 50:
-    g_Buffers.m_CopyBuf = func_level_50_8008BB38; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_50;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_50;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_50;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_50;   // g_UpdateParticle
-    D_800757A0 = Balloonist1_level_50;
-    ; // g_BalloonistTriggerCode
-    D_800758A8 = Balloonist2_level_50;
-    ; // g_BalloonistCloseDialogue
-    D_8007574C = Balloonist3_level_50;
-    ; // g_BalloonistCameraCode
-    D_800758D8 = Balloonist4_level_50;
-    ; // g_BalloonistTalkCode
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 51:
-    g_Buffers.m_CopyBuf = func_level_51_800880D4; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_51;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_51;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_51;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_51;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 52:
-    g_Buffers.m_CopyBuf = func_level_52_8008771C; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_52;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_52;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_52;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_52;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 53:
-    g_Buffers.m_CopyBuf = func_level_53_80089820; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_53;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_53;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_53;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_53;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 54:
-    g_Buffers.m_CopyBuf = func_level_54_80086348; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_54;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_54;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_54;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_54;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 55:
-    g_Buffers.m_CopyBuf = func_level_55_80084934; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_55;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_55;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_55;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_55;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    D_80075694 = Flight1_level_55;            // g_UnkFunc1Flight
-    D_800757A8 = Flight2_level_55;            // g_UnkFunc2Flight
-    g_FlightResultsUpdate = Flight3_level_55; // g_UpdateGameState7
-    D_8007567C = Flight5_level_55;            // g_DrawGameState7
-    D_800758C4 = Flight4_level_55;            // g_DrawTime
-    break;
-  case 60:
-    g_Buffers.m_CopyBuf = func_level_60_80085CE0; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_60;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_60;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_60;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_60;   // g_UpdateParticle
-    D_800757A0 = Balloonist1_level_60;
-    ; // g_BalloonistTriggerCode
-    D_800758A8 = Balloonist2_level_60;
-    ; // g_BalloonistCloseDialogue
-    D_8007574C = Balloonist3_level_60;
-    ; // g_BalloonistCameraCode
-    D_800758D8 = Balloonist4_level_60;
-    ; // g_BalloonistTalkCode
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 61:
-    g_Buffers.m_CopyBuf = func_level_61_80088668; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_61;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_61;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_61;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_61;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 62:
-    g_Buffers.m_CopyBuf = func_level_62_80086004; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_62;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_62;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_62;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_62;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 63:
-    g_Buffers.m_CopyBuf = func_level_63_800854B4; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_63;             // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_63;           // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_63;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_63;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
-  case 64:
-    g_Buffers.m_CopyBuf = func_level_64_80086264; // g_CopyBufferPointer
-    g_SpawnMoby = SpawnMoby_level_64;         // g_SpawnMoby
-    g_UpdateMoby = UpdateMoby_level_64;        // g_UpdateMoby
-    g_SpawnParticle = SpawnParticle_level_64;     // g_SpawnParticle
-    g_UpdateParticle = UpdateParticle_level_64;   // g_UpdateParticle
-    // D_800757A0 = (int *)0x0;
-    // D_800758A8 = (int *)0x0;
-    // D_8007574C = (int *)0x0;
-    // D_800758D8 = (int *)0x0;
-    // D_80075694 = (int *)0x0;
-    // D_800757A8 = (int *)0x0;
-    // g_FlightResultsUpdate = (int *)0x0;
-    // D_8007567C = (int *)0x0;
-    // D_800758C4 = (int *)0x0;
-    break;
+
+    // Cases
+
+    // Artisans
+    LEVEL_CASE_BALLOON(10);
+    LEVEL_CASE_BALLOON(11);
+    LEVEL_CASE(12);
+    LEVEL_CASE_BALLOON(13);
+    LEVEL_CASE(14);
+    LEVEL_CASE_FLIGHT(15);
+
+    // Peace Keepers
+    LEVEL_CASE_BALLOON(20);
+    LEVEL_CASE_BALLOON(21);
+    LEVEL_CASE_BALLOON(22);
+    LEVEL_CASE(23);
+    LEVEL_CASE(24);
+    LEVEL_CASE_FLIGHT(25);
+
+    // Magic Crafters
+    LEVEL_CASE_BALLOON(30);
+    LEVEL_CASE(31);
+    LEVEL_CASE(32);
+    LEVEL_CASE(33);
+    LEVEL_CASE(34);
+    LEVEL_CASE_FLIGHT(35);
+
+    // Beast Makers
+    LEVEL_CASE_BALLOON(40);
+    LEVEL_CASE(41);
+    LEVEL_CASE(42);
+    LEVEL_CASE(43);
+    LEVEL_CASE(44);
+    LEVEL_CASE_FLIGHT(45);
+
+    // Dream Weavers
+    LEVEL_CASE_BALLOON(50);
+    LEVEL_CASE(51);
+    LEVEL_CASE(52);
+    LEVEL_CASE(53);
+    LEVEL_CASE(54);
+    LEVEL_CASE_FLIGHT(55);
+
+    // Gnasty's World
+    LEVEL_CASE_BALLOON(60);
+    LEVEL_CASE(61);
+    LEVEL_CASE(62);
+    LEVEL_CASE(63);
+    LEVEL_CASE(64);
+
   case 99:
     g_Buffers.m_CopyBuf = func_level_99_8007C654; // g_CopyBufferPointer
     g_SpawnMoby = func_level_99_8007B0C0;         // g_SpawnMoby

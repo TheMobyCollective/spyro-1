@@ -6134,7 +6134,7 @@ glabel func_8002A6FC
 .size func_8002A6FC, . - func_8002A6FC
 
 /* Handwritten function */
-glabel func_8002B390
+glabel EnvAnimSetFlags
 /* 1BB90 8002B390 00008D20 */  addi       $t5, $a0, 0x0 /* handwritten instruction */
 /* 1BB94 8002B394 0000AE20 */  addi       $t6, $a1, 0x0 /* handwritten instruction */
 /* 1BB98 8002B398 0000CF20 */  addi       $t7, $a2, 0x0 /* handwritten instruction */
@@ -6163,10 +6163,10 @@ glabel func_8002B390
 .L8002B3EC:
 /* 1BBEC 8002B3EC 0800E003 */  jr         $ra
 /* 1BBF0 8002B3F0 00000000 */   nop
-.size func_8002B390, . - func_8002B390
+.size EnvAnimSetFlags, . - EnvAnimSetFlags
 
 /* Handwritten function */
-glabel func_8002B3F4
+glabel EnvAnimGetState
 /* 1BBF4 8002B3F4 006E0400 */  sll        $t5, $a0, 24
 /* 1BBF8 8002B3F8 0880183C */  lui        $t8, %hi(g_EnvironmentAnimations)
 /* 1BBFC 8002B3FC 60851827 */  addiu      $t8, $t8, %lo(g_EnvironmentAnimations)
@@ -6190,10 +6190,10 @@ glabel func_8002B3F4
 .L8002B43C:
 /* 1BC3C 8002B43C 0800E003 */  jr         $ra
 /* 1BC40 8002B440 00000000 */   nop
-.size func_8002B3F4, . - func_8002B3F4
+.size EnvAnimGetState, . - EnvAnimGetState
 
 /* Handwritten function */
-glabel func_8002B444
+glabel EnvAnimSetFrame
 /* 1BC44 8002B444 00008D20 */  addi       $t5, $a0, 0x0 /* handwritten instruction */
 /* 1BC48 8002B448 0000AE20 */  addi       $t6, $a1, 0x0 /* handwritten instruction */
 /* 1BC4C 8002B44C 0000CF20 */  addi       $t7, $a2, 0x0 /* handwritten instruction */
@@ -6223,7 +6223,7 @@ glabel func_8002B444
 .L8002B4A4:
 /* 1BCA4 8002B4A4 0800E003 */  jr         $ra
 /* 1BCA8 8002B4A8 00000000 */   nop
-.size func_8002B444, . - func_8002B444
+.size EnvAnimSetFrame, . - EnvAnimSetFrame
 
 /* Handwritten function */
 glabel func_8002B4AC

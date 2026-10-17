@@ -21,6 +21,7 @@ MASPSX          = "./tools/maspsx/maspsx.py"
 REMOVE_SECTIONS = "./tools/remove_sections.py"
 FIX_JTBL_ALIGN  = "./tools/fix_jtbl_align.py"
 FIX_STR_ALIGN   = "./tools/fix_str_align.py"
+FIX_STR_ALIGN_CMD = $(PYTHON) $(FIX_STR_ALIGN) |
 
 # -------------------------------
 # Compilation Flags
@@ -37,75 +38,17 @@ AS_FLAGS  = -EL -Iinclude -Iasm -Iasm/renderers -march=r3000 -mtune=r3000 -no-pa
 TARGET_ELF = build/psx.elf
 TARGET_EXE = build/PSX.EXE
 
-# Define WAD file names
-LEVELS = \
-	level_0_artisans_home \
-	level_1_artisans_stone_hill \
-	level_2_artisans_dark_hollow \
-	level_3_artisans_town_square \
-	level_4_artisans_toasty \
-	level_5_artisans_sunny_flight \
-	level_6_peace_keepers_home \
-	level_7_peace_keepers_dry_canyon \
-	level_8_peace_keepers_cliff_town \
-	level_9_peace_keepers_ice_cavern \
-	level_10_peace_keepers_doctor_shemp \
-	level_11_peace_keepers_night_flight \
-	level_12_magic_crafters_home \
-	level_13_magic_crafters_alpine_ridge \
-	level_14_magic_crafters_high_caves \
-	level_15_magic_crafters_wizard_peak \
-	level_16_magic_crafters_blowhard \
-	level_17_magic_crafters_crystal_flight \
-	level_18_beast_makers_home \
-	level_19_beast_makers_terrace_village \
-	level_20_beast_makers_misty_bog \
-	level_21_beast_makers_tree_tops \
-	level_22_beast_makers_metalhead \
-	level_23_beast_makers_wild_flight \
-	level_24_dream_weavers_home \
-	level_25_dream_weavers_dark_passage \
-	level_26_dream_weavers_lofty_castle \
-	level_27_dream_weavers_haunted_towers \
-	level_28_dream_weavers_jacques \
-	level_29_dream_weavers_icy_flight \
-	level_30_gnastys_world_gnorc_gnexus \
-	level_31_gnastys_world_gnorc_cove \
-	level_32_gnastys_world_twilight_harbor \
-	level_33_gnastys_world_gnasty_gnorc \
-	level_34_gnastys_world_gnastys_loot
+OVERLAYS    = $(shell $(PYTHON) tools/overlays/get_overlays.py)
+OVERLAY_OBJ = $(shell $(PYTHON) tools/overlays/get_overlay_objects.py)
+OVERLAY_LD  = build/overlays.ld
+TARGET_OVERLAYS = $(patsubst %, build/wad/%.ovl, $(OVERLAYS))
 
-# And which level number they corrospond to
-# for the overlay sections
-LEVEL_NUMBERS = \
-	10 11 12 13 14 15 \
-	20 21 22 23 24 25 \
-	30 31 32 33 34 35 \
-	40 41 42 43 44 45 \
-	50 51 52 53 54 55 \
-	60 61 62 63 64
-
-# Generate object names and their section numbers
-TARGET_OVERLAYS = $(patsubst %, build/wad/%_code.ovl, $(LEVELS)) build/wad/credits.ovl build/wad/titlescreen_code.ovl
-OVERLAY_SECTIONS  = $(foreach n, $(LEVEL_NUMBERS), .level_$(n))
-
-# Input is one of TARGET_OVERLAYS' values and it returns the OVERLAY_SECTIONS entry at the same index
-define LEVEL_TO_SECTION
-    $(strip
-			$(foreach idx, $(shell seq 1 $(words $(TARGET_OVERLAYS))), \
-        $(if $(filter $(word $(idx),$(TARGET_OVERLAYS)),$(1)), \
-            $(word $(idx),$(OVERLAY_SECTIONS)) \
-        ) \
-    	) \
-		)
-endef
-
-SRC_C  = $(shell find src -type f -name '*.c')
+SRC_C  = $(wildcard src/*.c) $(wildcard src/gamestates/*.c)
 SRC_S  = $(shell find asm -type f -name '*.s' | grep -v asm/nonmatchings)
 
 OBJ_C  = $(SRC_C:src/%.c=build/src/%.o)
 OBJ_S  = $(SRC_S:asm/%.s=build/asm/%.o)
-DEPENDS = $(OBJ_C:.o=.o.d)
+DEPENDS = $(OBJ_C:.o=.o.d) $(OVERLAY_OBJ:.o=.o.d)
 
 # -------------------------------
 # Dependency Handling
@@ -115,10 +58,10 @@ DEPENDS = $(OBJ_C:.o=.o.d)
 # -------------------------------
 # Directories Setup
 # -------------------------------
-$(OBJ_C): | create_dirs
+$(OBJ_C) $(OVERLAY_OBJ) $(OVERLAY_LD): | create_dirs
 
 create_dirs:
-	@mkdir -p build/asm build/src $(sort $(dir $(OBJ_C))) $(sort $(dir $(OBJ_S))) build/wad
+	@mkdir -p build/asm build/src $(sort $(dir $(OBJ_C) $(OVERLAY_OBJ))) $(sort $(dir $(OBJ_S))) build/wad
 
 # -------------------------------
 # Build Targets
@@ -141,6 +84,29 @@ MASPSX_COMMAND = $(if ${MODERN_COMPILER},,$(PYTHON) $(MASPSX) -G4 --aspsx-versio
 build/src/overlays/%.o: C_FLAGS := $(subst -G8,-G0,$(C_FLAGS))
 
 
+# For the padding garbage, skip the align (it's handled in the LD instead)
+build/src/overlays/LEVEL_%.o: FIX_STR_ALIGN_CMD :=
+
+# Strip overlay functions based on the classes they're configured to include
+build/src/overlays/%/moby_spawn.o     build/src/overlays/%/moby_update.o:     STRIP_CLASSES = moby
+build/src/overlays/%/particle_spawn.o build/src/overlays/%/particle_update.o: STRIP_CLASSES = particle
+OVERLAY_STRIP = $(if $(STRIP_CLASSES),$(PYTHON) tools/overlays/strip_overlay_function.py "$$($(PYTHON) tools/overlays/get_overlay_$(STRIP_CLASSES)_classes.py $*)" |)
+
+define OVERLAY_SOURCE
+build/src/overlays/%/$(1).o: src/overlays/$(1).c
+	@echo "\e[0;36m[Compiling/$$*] $$< \e[0m"
+	@$$(GCC) -DOVERLAY_NAME=$$* -DIS_$$* $$(MODERN_COMPILER_FLAG) $$(NEW_PSYQ_FLAG) $$(DEBUG_FLAG) $$(NON_MATCHING_FLAG) -Iinclude -Ipsyq/include -ffreestanding -MT $$@ -MMD -MP -MF $$@.d $$< | \
+		$$(OVERLAY_STRIP) \
+		$$(CC) $$(C_FLAGS) | \
+		$$(MASPSX_COMMAND) \
+		$$(FIX_STR_ALIGN_CMD) \
+		$$(PYTHON) $$(REMOVE_SECTIONS) | \
+		$$(PYTHON) $$(FIX_JTBL_ALIGN) | \
+		$$(AS) $$(AS_FLAGS) -o $$@
+endef
+
+$(foreach src,$(basename $(notdir $(wildcard src/overlays/*.c))),$(eval $(call OVERLAY_SOURCE,$(src))))
+
 build/src/%.o: src/%.c
 	@echo "\e[0;36m[Compiling] $<\e[0m"
 		
@@ -148,7 +114,7 @@ build/src/%.o: src/%.c
 		$(CC) $(C_FLAGS) |\
 		$(MASPSX_COMMAND) \
 		$(PYTHON) $(REMOVE_SECTIONS) | \
-		$(PYTHON) $(FIX_STR_ALIGN) | \
+		$(FIX_STR_ALIGN_CMD) \
 		$(PYTHON) $(FIX_JTBL_ALIGN) | \
 		$(AS) $(AS_FLAGS) -o $@
 
@@ -161,9 +127,9 @@ build/asm/%.o: asm/%.s
 # -------------------------------
 
 # Main ELF
-$(TARGET_ELF): $(OBJ_C) $(OBJ_S) psx.ld overlays.ld
+$(TARGET_ELF): $(OBJ_C) $(OVERLAY_OBJ) $(OBJ_S) psx.ld $(OVERLAY_LD)
 	@echo "\e[0;32m[Linking] $@\e[0m"
-	@gcc -E -P -x assembler-with-cpp -c psx.ld $(NEW_PSYQ_FLAG) -o /tmp/psx.ld
+	@gcc -E -P -x assembler-with-cpp -c psx.ld -Ibuild $(NEW_PSYQ_FLAG) -o /tmp/psx.ld
 	@$(LD) $(LD_FLAGS) -o $@
 
 # Main executable
@@ -171,22 +137,23 @@ $(TARGET_EXE): $(TARGET_ELF)
 	@echo "\e[0;32m[Copying] $< → $@\e[0m"
 	@$(OBJCOPY) --only-section=.header --only-section=.main -O binary $< $@
 
-# Overlays
-build/wad/credits.ovl: $(TARGET_ELF)
-	@echo "\e[0;32m[Copying] $< → $@\e[0m"
-	@$(OBJCOPY) --only-section=.credits -O binary $< $@
+# Overlay linker script from the yaml
+$(OVERLAY_LD): overlays/overlays.yaml tools/overlays/generate_overlay_ld.py tools/overlays/get_overlay_objects.py
+	@echo "\e[0;32m[Generating] $@\e[0m"
+	@$(PYTHON) tools/overlays/generate_overlay_ld.py > $@
 
-build/wad/titlescreen_code.ovl: $(TARGET_ELF)
-	@echo "\e[0;32m[Copying] $< → $@\e[0m"
-	@$(OBJCOPY) --only-section=.titlescreen -O binary $< $@
+# The overlays themselves
+define OVERLAY_RULE
+build/wad/$(1).ovl: $$(TARGET_ELF)
+	@echo "\e[0;32m[Copying] $$< → $$@\e[0m"
+	@$$(OBJCOPY) --only-section=.$(1) -O binary $$< $$@
+endef
 
-build/wad/%_code.ovl: $(TARGET_ELF)
-	@echo "\e[0;32m[Copying] $< → $@\e[0m"
-	@$(OBJCOPY) --only-section=$(strip $(call LEVEL_TO_SECTION,$@)) -O binary $< $@
+$(foreach overlay, $(OVERLAYS), $(eval $(call OVERLAY_RULE,$(overlay))))
 
 # -------------------------------
 # Cleaning
 # -------------------------------
 clean:
 	@echo "\e[0;31m[Cleaning] Removing build artifacts...\e[0m"
-	@rm -f $(OBJ_C) $(OBJ_S) $(DEPENDS) $(TARGET_ELF) $(TARGET_EXE) $(TARGET_OVERLAYS)
+	@rm -f $(OBJ_C) $(OVERLAY_OBJ) $(OBJ_S) $(DEPENDS) $(OVERLAY_LD) $(TARGET_ELF) $(TARGET_EXE) $(TARGET_OVERLAYS)

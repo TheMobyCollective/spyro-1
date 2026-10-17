@@ -88,7 +88,7 @@ void HudReset(int pArg) {
   int i;
   Memset(g_Hud.m_Mobys, 0, sizeof(g_Hud.m_Mobys));
   for (i = 0; i < 12; ++i) {
-    func_800529CC(&g_Hud.m_Mobys[i]);
+    MobySetShaded(&g_Hud.m_Mobys[i]);
     VecCopy(&g_Hud.m_Mobys[i].m_Position, &g_HudMobyTargetPos[i]);
     g_Hud.m_Mobys[i].m_DepthOffset = 32;
     g_Hud.m_Mobys[i].m_RenderRadius = 0xFF;
@@ -390,7 +390,7 @@ void HudTick(void) {
       if (g_Hud.m_KeySteadyTicks == 0) {
         for (j = 0; j < 6; ++j) {
           (*g_SpawnParticle)(1, 12, &g_Hud.m_Mobys[11].m_Props,
-                        (int)(something_hud(j) + 0x8080));
+                             (int)(something_hud(j) + 0x8080));
         }
       } else if (g_Hud.m_KeySteadyTicks > 11) {
         g_Hud.m_Mobys[11].m_Substate = 64;

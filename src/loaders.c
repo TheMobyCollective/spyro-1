@@ -699,15 +699,15 @@ void LoadLevelScene(int pAnimationsAndSparx) {
 
     // Check non-shaded marker
     if ((int)g_Models[g_LevelMobys[i].m_Class] < 0) {
-      func_800526A8(&g_LevelMobys[i]); // Initialize normal Moby
+      MobyUpdateCollision(&g_LevelMobys[i]); // Initialize normal Moby
     } else {
-      func_800529CC(&g_LevelMobys[i]); // Initialize shaded Moby
+      MobySetShaded(&g_LevelMobys[i]); // Initialize shaded Moby
     }
 
     VecCopy(&v, &g_LevelMobys[i].m_Position);
-    v.z += 1024;                     // +1M
-    func_8004D5EC(&v, 1024 * 64);    // 64M
-    func_800533D0(&g_LevelMobys[i]); // Set shadow based on distance
+    v.z += 1024;                        // +1M
+    ColFindFloor(&v, 1024 * 64);        // 64M
+    MobyUpdateShadow(&g_LevelMobys[i]); // Set shadow based on distance
 
     if ((g_LevelMobys[i].m_DroppedFlag & 0x7f) < 0x20) {
       index = i >> 5;
@@ -726,7 +726,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
     if ((D_80077908[g_LevelIndex][index] & (1 << bit)) != 0) {
       if ((g_Checkpoint.m_KilledMobysSaved[index] & (1 << bit)) == 0) {
         if ((g_LevelMobys[i].m_DroppedFlag & 0x7F) == 0x7D) {
-          func_80052568(&g_LevelMobys[i]); // Free the Moby
+          MobyFree(&g_LevelMobys[i]); // Free the Moby
         } else {
           g_LevelMobys[i].m_DropMoby = -1;
         }
@@ -743,7 +743,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
         if (btemp) {
           g_LevelMobys[i].m_DropMoby = -1;
         } else {
-          func_80052568(&g_LevelMobys[i]); // Free the Moby
+          MobyFree(&g_LevelMobys[i]); // Free the Moby
         }
       }
     }
@@ -762,7 +762,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
   g_Particles = g_Buffers.m_ParticleSpaceStart;
   g_ParticleAllocPtr = g_Buffers.m_ParticleSpaceStart;
 
-  g_Particles[0].m_RenderType = -1;       // Make the first particle a terminator
+  g_Particles[0].m_RenderType = -1; // Make the first particle a terminator
   *(int *)(&g_Particles[256]) = -1; // Terminate the last particle
 
   // Mark all glows and sparkles as dead to initialize them

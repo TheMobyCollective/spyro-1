@@ -1,0 +1,3379 @@
+# This file specifies which mobys should be included in which overlays
+# (names come from moby spreadsheet, can be inaccurate)
+
+1:
+  description: "Portal Text Centre"
+  overlays:
+    - LEVEL_10
+    - LEVEL_20
+    - LEVEL_30
+    - LEVEL_40
+    - LEVEL_50
+    - LEVEL_60
+
+2:
+  description: "Unoccupied"
+  overlays:
+
+3:
+  description: "Unoccupied"
+  overlays:
+
+4:
+  description: "Unoccupied"
+  overlays:
+
+5:
+  description: "Swamp Grass"
+  overlays:
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+
+6:
+  description: "Flags (Beast Makers)"
+  overlays:
+    - LEVEL_40
+    - LEVEL_42
+
+7:
+  description: "Unoccupied"
+  overlays:
+
+8:
+  description: "Unoccupied"
+  overlays:
+
+9:
+  description: "Exit Vortex"
+  overlays:
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_64
+
+10:
+  description: "Sheep"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+
+11:
+  description: "Waterfall Mist Emittors"
+  overlays:
+    - LEVEL_10
+    - LEVEL_30
+    - LEVEL_31
+
+12:
+  description: "Unoccupied"
+  overlays:
+
+13:
+  description: "Gem Spawning Point"
+  overlays:
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+14:
+  description: "Life Statue"
+  overlays: ALL
+
+15:
+  description: "Life Orb"
+  overlays: ALL
+
+16:
+  description: "Butterfly"
+  overlays: ALL
+
+17:
+  description: "Unused flight projectile"
+  overlays:
+    - LEVEL_15
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_64
+
+18:
+  description: "Sunny Flight Entrance Stones"
+  overlays:
+    - LEVEL_10
+
+19:
+  description: "Unoccupied"
+  overlays:
+
+20:
+  description: "Unoccupied"
+  overlays:
+
+21:
+  description: "Unoccupied"
+  overlays:
+
+22:
+  description: "Unoccupied"
+  overlays:
+
+23:
+  description: "Bull"
+  overlays:
+    - LEVEL_13
+
+24:
+  description: "Unoccupied"
+  overlays:
+
+25:
+  description: "Unoccupied"
+  overlays:
+
+26:
+  description: "Unoccupied"
+  overlays:
+
+27:
+  description: "Unoccupied"
+  overlays:
+
+28:
+  description: "Misty Bog Gnorcs"
+  overlays:
+    - LEVEL_42
+
+29:
+  description: "Unoccupied"
+  overlays:
+
+30:
+  description: "Unoccupied"
+  overlays:
+
+31:
+  description: "Attack frog tongue"
+  overlays:
+    - LEVEL_42
+
+32:
+  description: "Laser zap effect large gnorc"
+  overlays:
+    - LEVEL_41
+
+33:
+  description: "Thief"
+  overlays:
+    - LEVEL_11
+    - LEVEL_13
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+
+34:
+  description: "Dragon Egg"
+  overlays: ALL
+
+35:
+  description: "Gunner Gnorc"
+  overlays:
+    - LEVEL_41
+
+36:
+  description: "Fodder (Sheep(?) - Magic Crafters worlds)"
+  overlays:
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+
+37:
+  description: "Blowhard Storm Cloud"
+  overlays:
+    - LEVEL_34
+
+38:
+  description: "Storm Wizard Lightning"
+  overlays:
+    - LEVEL_30
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_53
+
+39:
+  description: "Blowhard Storm Cloud Lightning"
+  overlays:
+    - LEVEL_34
+
+40:
+  description: "Unoccupied"
+  overlays:
+
+41:
+  description: "Unoccupied"
+  overlays:
+
+42:
+  description: "Tree tops bondfire"
+  overlays:
+    - LEVEL_43
+
+43:
+  description: "Unoccupied"
+  overlays:
+
+44:
+  description: "Unoccupied"
+  overlays:
+
+45:
+  description: "Armored Horrors"
+  overlays:
+    - LEVEL_54
+
+46:
+  description: "Giant Pansies   "
+  overlays:
+    - LEVEL_54
+
+47:
+  description: "Gift projectile"
+  overlays:
+    - LEVEL_54
+
+48:
+  description: "Metalhead"
+  overlays:
+    - LEVEL_44
+
+49:
+  description: "Toasty Entrance Control"
+  overlays:
+    - LEVEL_10
+
+50:
+  description: "Devil Dog (big)"
+  overlays:
+    - LEVEL_51
+
+51:
+  description: "Devil Dog (small)"
+  overlays:
+    - LEVEL_51
+
+52:
+  description: "Cupid"
+  overlays:
+    - LEVEL_51
+    - LEVEL_52
+
+53:
+  description: "Armored Turtle (big)"
+  overlays:
+    - LEVEL_51
+
+54:
+  description: "Armored Turtle (small)"
+  overlays:
+    - LEVEL_51
+
+55:
+  description: "Arrow projectile (cupid)"
+  overlays:
+    - LEVEL_51
+    - LEVEL_52
+
+56:
+  description: "Bat projectile (?!)"
+  overlays:
+    - LEVEL_51
+
+57:
+  description: "Banana projectile"
+  overlays:
+    - LEVEL_43
+    - LEVEL_44
+
+58:
+  description: "HUD Spyro's head"
+  overlays:
+
+59:
+  description: "Unoccupied"
+  overlays:
+
+60:
+  description: "Unoccupied"
+  overlays:
+
+61:
+  description: "Fairy Cage"
+  overlays:
+    - LEVEL_52
+
+62:
+  description: "Puffer Bird"
+  overlays:
+    - LEVEL_52
+
+63:
+  description: "Unoccupied"
+  overlays:
+
+64:
+  description: "Dream Weavers Torch"
+  overlays:
+    - LEVEL_50
+    - LEVEL_51
+
+65:
+  description: "Metalhead Pole"
+  overlays:
+    - LEVEL_44
+
+66:
+  description: "Snowman Gnorc"
+  overlays:
+    - LEVEL_33
+
+67:
+  description: "Spring Chest Fragment"
+  overlays:
+    - LEVEL_13
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+68:
+  description: "Spring Chest Fragment"
+  overlays:
+    - LEVEL_13
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+69:
+  description: "Spring Chest Fragment"
+  overlays:
+    - LEVEL_13
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+70:
+  description: "Metalhead Pole Effect"
+  overlays:
+    - LEVEL_44
+
+71:
+  description: "Unoccupied"
+  overlays:
+
+72:
+  description: "Unoccupied"
+  overlays:
+
+73:
+  description: "Unoccupied"
+  overlays:
+
+74:
+  description: "Torch"
+  overlays:
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+
+75:
+  description: "! text model"
+  overlays:
+
+76:
+  description: "Apostrophe text model"
+  overlays: ALL
+
+77:
+  description: "Dream Weavers Cannon Effect"
+  overlays:
+    - LEVEL_50
+
+78:
+  description: "TNT Barrel"
+  overlays:
+    - LEVEL_15
+    - LEVEL_55
+
+79:
+  description: "Unoccupied"
+  overlays:
+
+80:
+  description: "Lamp (Wizard Peak)"
+  overlays:
+    - LEVEL_33
+
+81:
+  description: "Unoccupied"
+  overlays:
+
+82:
+  description: "Metalhead Zap Projectile"
+  overlays:
+    - LEVEL_44
+
+83:
+  description: "Red Gem"
+  overlays: ALL
+
+84:
+  description: "Green Gem"
+  overlays: ALL
+
+85:
+  description: "Blue Gem"
+  overlays: ALL
+
+86:
+  description: "Yellow Gem"
+  overlays: ALL
+
+87:
+  description: "Pink Gem"
+  overlays: ALL
+
+88:
+  description: "Lofty Fairy"
+  overlays:
+    - LEVEL_52
+
+89:
+  description: "Unoccupied"
+  overlays:
+
+90:
+  description: "Unoccupied"
+  overlays:
+
+91:
+  description: "Dream Weavers Cannon"
+  overlays:
+    - LEVEL_50
+
+92:
+  description: "Carrot-Topped Monk"
+  overlays:
+    - LEVEL_50
+
+93:
+  description: "Metal Fragment"
+  overlays:
+    - LEVEL_41
+    - LEVEL_44
+
+94:
+  description: "Unoccupied"
+  overlays:
+
+95:
+  description: "Unoccupied"
+  overlays:
+
+96:
+  description: "Unoccupied"
+  overlays:
+
+97:
+  description: "Unoccupied"
+  overlays:
+
+98:
+  description: "Unoccupied"
+  overlays:
+
+99:
+  description: "Unoccupied"
+  overlays:
+
+100:
+  description: "Banana Boy"
+  overlays:
+    - LEVEL_43
+
+101:
+  description: "Strongarms"
+  overlays:
+    - LEVEL_43
+
+102:
+  description: "Armored Banana Boy"
+  overlays:
+    - LEVEL_44
+
+103:
+  description: "Unoccupied"
+  overlays:
+
+104:
+  description: ""
+  overlays:
+    - LEVEL_50
+
+105:
+  description: "Dream Weavers flag"
+  overlays:
+    - LEVEL_50
+
+106:
+  description: "Unoccupied"
+  overlays:
+
+107:
+  description: "Unoccupied"
+  overlays:
+
+108:
+  description: "Unoccupied"
+  overlays:
+
+109:
+  description: "Catch Fairy (High Caves)"
+  overlays:
+    - LEVEL_32
+
+110:
+  description: "Dragon Pad Fairy"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+
+111:
+  description: "Unoccupied"
+  overlays:
+
+112:
+  description: "Unoccupied"
+  overlays:
+
+113:
+  description: "Shepherd"
+  overlays:
+    - LEVEL_11
+
+114:
+  description: "Gnorc (Artisans)"
+  overlays:
+    - LEVEL_10
+
+115:
+  description: "Club Gnorc (Dark Hollow)"
+  overlays:
+    - LEVEL_12
+
+116:
+  description: "Unoccupied"
+  overlays:
+
+117:
+  description: "Unoccupied"
+  overlays:
+
+118:
+  description: "Unoccupied"
+  overlays:
+
+119:
+  description: "Unoccupied"
+  overlays:
+
+120:
+  description: "Sparx"
+  overlays: ALL
+
+121:
+  description: "Ram"
+  overlays:
+    - LEVEL_11
+
+122:
+  description: "Lamp Fool"
+  overlays:
+    - LEVEL_51
+
+123:
+  description: "Unoccupied"
+  overlays:
+
+124:
+  description: "Lamp Fool.. Transition Fool?"
+  overlays:
+    - LEVEL_51
+
+125:
+  description: "Unoccupied"
+  overlays:
+
+126:
+  description: "Timer Fool"
+  overlays:
+    - LEVEL_50
+    - LEVEL_54
+
+127:
+  description: "Tall Tree (Dark Hollow)"
+  overlays:
+    - LEVEL_12
+
+128:
+  description: "Wall Lamp"
+  overlays:
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_30
+
+129:
+  description: "Hanging Pole Lamp (Dark Hollow)"
+  overlays:
+    - LEVEL_12
+    - LEVEL_51
+
+130:
+  description: "Slap-Happy Armored Monk"
+  overlays:
+    - LEVEL_50
+
+131:
+  description: "Unoccupied"
+  overlays:
+
+132:
+  description: "Door collision (Haunted Towers)"
+  overlays:
+    - LEVEL_53
+
+133:
+  description: "Door Fragment"
+  overlays:
+    - LEVEL_53
+
+134:
+  description: "Gnorc-Adier"
+  overlays:
+    - LEVEL_53
+
+135:
+  description: "Gnorc-Adier grenade"
+  overlays:
+    - LEVEL_53
+
+136:
+  description: "Door"
+  overlays:
+    - LEVEL_53
+
+137:
+  description: "Hog"
+  overlays:
+    - LEVEL_40
+    - LEVEL_42
+
+138:
+  description: "Wide Tree (Dark Hollow)"
+  overlays:
+    - LEVEL_12
+
+139:
+  description: "Unoccupied"
+  overlays:
+
+140:
+  description: "Unoccupied"
+  overlays:
+
+141:
+  description: "Double Tree (Dark Hollow)"
+  overlays:
+    - LEVEL_12
+
+142:
+  description: "Kiss Fairy"
+  overlays:
+    - LEVEL_53
+
+143:
+  description: "Gnasty Laser Explosion"
+  overlays:
+    - LEVEL_63
+
+144:
+  description: "Unoccupied"
+  overlays:
+
+145:
+  description: "Machine Gunner"
+  overlays:
+    - LEVEL_62
+
+146:
+  description: "Tent"
+  overlays:
+    - LEVEL_20
+
+147:
+  description: "Gnorc Commando"
+  overlays:
+    - LEVEL_62
+
+148:
+  description: "Gnorc Survivalist"
+  overlays:
+    - LEVEL_62
+
+149:
+  description: "Ceiling Lamp"
+  overlays:
+    - LEVEL_10
+
+150:
+  description: "Jacques"
+  overlays:
+    - LEVEL_54
+
+151:
+  description: "Fireworks Chest Fragment"
+  overlays:
+    - LEVEL_21
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_61
+    - LEVEL_63
+    - LEVEL_64
+
+152:
+  description: "Fireworks Chest Fragment"
+  overlays:
+    - LEVEL_21
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_61
+    - LEVEL_63
+    - LEVEL_64
+
+153:
+  description: "Fireworks Chest Fragment"
+  overlays:
+    - LEVEL_21
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_61
+    - LEVEL_63
+    - LEVEL_64
+
+154:
+  description: "Barrel Dispenser"
+  overlays:
+    - LEVEL_61
+
+155:
+  description: "Turtle Projectile"
+  overlays:
+    - LEVEL_51
+
+156:
+  description: "Bullet Projectile"
+  overlays:
+    - LEVEL_62
+
+157:
+  description: "Bonfire"
+  overlays:
+    - LEVEL_12
+
+158:
+  description: "Unoccupied"
+  overlays:
+
+159:
+  description: "Key Thief (Green)"
+  overlays:
+    - LEVEL_63
+
+160:
+  description: "Mushroom Fodder"
+  overlays:
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+
+161:
+  description: "Gnasty Gnorc"
+  overlays:
+    - LEVEL_63
+
+162:
+  description: "Boat Gnorc"
+  overlays:
+    - LEVEL_45
+
+163:
+  description: "Copter Gnorc"
+  overlays:
+    - LEVEL_55
+
+164:
+  description: "Unoccupied"
+  overlays:
+
+165:
+  description: "Gnorc (Dark Hollow)"
+  overlays:
+    - LEVEL_12
+
+166:
+  description: "Large Armoured Gnorc (Dark Hollow)"
+  overlays:
+    - LEVEL_12
+
+167:
+  description: "Unoccupied"
+  overlays:
+
+168:
+  description: "Gnasty Projectile Effect"
+  overlays:
+    - LEVEL_63
+
+169:
+  description: "Gnasty Projectile Centre"
+  overlays:
+    - LEVEL_63
+
+170:
+  description: "Strongarms (Metalhead)"
+  overlays:
+    - LEVEL_44
+
+171:
+  description: "Bridge Crank"
+  overlays:
+    - LEVEL_62
+
+172:
+  description: "Flag"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+
+173:
+  description: "Key"
+  overlays: ALL
+
+174:
+  description: "Locked Safe"
+  overlays:
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_40
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_52
+    - LEVEL_54
+    - LEVEL_61
+
+175:
+  description: "Unoccupied"
+  overlays:
+
+176:
+  description: "Gnorc Survivalist Grenade"
+  overlays:
+    - LEVEL_62
+
+177:
+  description: "Thief Rocket"
+  overlays:
+    - LEVEL_64
+
+178:
+  description: "Unoccupied"
+  overlays:
+
+179:
+  description: "Key Thief (Purple)"
+  overlays:
+    - LEVEL_64
+
+180:
+  description: "Unoccupied"
+  overlays:
+
+181:
+  description: "Thief Key"
+  overlays:
+    - LEVEL_63
+    - LEVEL_64
+
+182:
+  description: "Unoccupied"
+  overlays:
+
+183:
+  description: "Unoccupied"
+  overlays:
+
+184:
+  description: "Vulture-wielding Gnorc"
+  overlays:
+    - LEVEL_21
+
+185:
+  description: "Unoccupied"
+  overlays:
+
+186:
+  description: "Musket Gnorc"
+  overlays:
+    - LEVEL_21
+
+187:
+  description: "Balloonist (Artisans)"
+  overlays:
+    - LEVEL_10
+
+188:
+  description: "Balloonist (Peace Keepers)"
+  overlays:
+    - LEVEL_20
+
+189:
+  description: "Balloonist (Magic Crafters)"
+  overlays:
+    - LEVEL_30
+
+190:
+  description: "Balloonist (Beast Makers)"
+  overlays:
+    - LEVEL_40
+
+191:
+  description: "Balloonist (Dream Weavers)"
+  overlays:
+    - LEVEL_50
+
+192:
+  description: "Balloonist (Gnorc Gnexus)"
+  overlays:
+    - LEVEL_60
+
+193:
+  description: "Fodder (Rabbit - Peace Keepers)"
+  overlays:
+    - LEVEL_20
+    - LEVEL_21
+
+194:
+  description: "Basket"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+195:
+  description: "Metal Chest"
+  overlays:
+    - LEVEL_11
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+196:
+  description: "Unoccupied"
+  overlays:
+
+197:
+  description: "Cannon Ball Projectile"
+  overlays:
+    - LEVEL_21
+
+198:
+  description: "Ice Gnorc (Ice Cavern)"
+  overlays:
+    - LEVEL_23
+
+199:
+  description: "Engineer"
+  overlays:
+    - LEVEL_61
+
+200:
+  description: "Dockworker"
+  overlays:
+    - LEVEL_61
+
+201:
+  description: "TNT Wrangler"
+  overlays:
+    - LEVEL_61
+
+202:
+  description: "TNT Barrel"
+  overlays:
+    - LEVEL_61
+
+203:
+  description: "Tin Soldiers"
+  overlays:
+    - LEVEL_53
+
+204:
+  description: "Haunted Wizards"
+  overlays:
+    - LEVEL_53
+
+205:
+  description: "Lamp On Pole"
+  overlays:
+    - LEVEL_23
+    - LEVEL_24
+
+206:
+  description: "Small Cactus"
+  overlays:
+    - LEVEL_21
+    - LEVEL_22
+
+207:
+  description: "Metal Barrel"
+  overlays:
+    - LEVEL_61
+
+208:
+  description: "Gnexus Dragon Head Controls"
+  overlays:
+    - LEVEL_60
+
+209:
+  description: "Snowball Projectile"
+  overlays:
+    - LEVEL_23
+
+210:
+  description: "Metalhead Pole Red Effect"
+  overlays:
+    - LEVEL_44
+
+211:
+  description: "Green Ski Gnorc (Ice Cavern)"
+  overlays:
+    - LEVEL_23
+
+212:
+  description: "Purple Ski Gnorc (Ice Cavern)"
+  overlays:
+    - LEVEL_23
+
+213:
+  description: "Fodder (Bat - Ice Cavern)"
+  overlays:
+    - LEVEL_23
+
+214:
+  description: "Blue Hat Gnorc (Peace Keepers)"
+  overlays:
+    - LEVEL_20
+
+215:
+  description: "Tin Soldier Pieces??"
+  overlays:
+    - LEVEL_53
+
+216:
+  description: "Red Hat Gnorc (Peace Keepers)"
+  overlays:
+    - LEVEL_20
+
+217:
+  description: "unknown, near beginning"
+  overlays:
+    - LEVEL_64
+
+218:
+  description: "Cauldron"
+  overlays:
+    - LEVEL_22
+
+219:
+  description: "Unoccupied"
+  overlays:
+
+220:
+  description: "Unoccupied"
+  overlays:
+
+221:
+  description: "Unoccupied"
+  overlays:
+
+222:
+  description: "Tall Tree (Stone Hill)"
+  overlays:
+    - LEVEL_11
+
+223:
+  description: "Wide Tree (Stone Hill)"
+  overlays:
+    - LEVEL_11
+
+224:
+  description: "Double Tree (Stone Hill)"
+  overlays:
+    - LEVEL_11
+
+225:
+  description: "Cannon"
+  overlays:
+    - LEVEL_20
+
+226:
+  description: "Pueblo"
+  overlays:
+    - LEVEL_22
+
+227:
+  description: "Kiss Fairy (High Caves)"
+  overlays:
+    - LEVEL_32
+
+228:
+  description: "Unoccupied"
+  overlays:
+
+229:
+  description: "Fat Lady (Cliff Town)"
+  overlays:
+    - LEVEL_22
+
+230:
+  description: "Vulture"
+  overlays:
+    - LEVEL_21
+    - LEVEL_22
+
+231:
+  description: "Armoured Ice Gnorc"
+  overlays:
+    - LEVEL_23
+
+232:
+  description: "Gnorc Copter Blades"
+  overlays:
+    - LEVEL_55
+
+233:
+  description: "Unoccupied"
+  overlays:
+
+234:
+  description: "Barrier effect"
+  overlays:
+    - LEVEL_11
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_22
+    - LEVEL_41
+    - LEVEL_54
+
+235:
+  description: "Unoccupied"
+  overlays:
+
+236:
+  description: "Fodder (Rats - Gnorc Gnexus)"
+  overlays:
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+
+237:
+  description: "Cannonball Projectile"
+  overlays:
+    - LEVEL_20
+
+238:
+  description: "Fodder (Peace Keepers worlds)"
+  overlays:
+    - LEVEL_22
+
+239:
+  description: "Tall Cactus"
+  overlays:
+    - LEVEL_21
+    - LEVEL_22
+
+240:
+  description: "Hanging Lamp"
+  overlays:
+    - LEVEL_23
+
+241:
+  description: "Gold Kissy Fairy"
+  overlays:
+    - LEVEL_53
+
+242:
+  description: "Round Cactus"
+  overlays:
+    - LEVEL_21
+    - LEVEL_22
+
+243:
+  description: "Red Flag"
+  overlays:
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+
+244:
+  description: "Unoccupied"
+  overlays:
+
+245:
+  description: "Unoccupied"
+  overlays:
+
+246:
+  description: "Unoccupied"
+  overlays:
+
+247:
+  description: "Unoccupied"
+  overlays:
+
+248:
+  description: "Unoccupied"
+  overlays:
+
+249:
+  description: "Unoccupied"
+  overlays:
+
+250:
+  description: "Crystal Dragon"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+
+251:
+  description: "Crystal Dragon Fragment"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+
+252:
+  description: "Unoccupied"
+  overlays:
+
+253:
+  description: "Large Beast"
+  overlays:
+    - LEVEL_31
+
+254:
+  description: "Unoccupied"
+  overlays:
+
+255:
+  description: "Chest fragment"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+256:
+  description: "Chest fragment"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+257:
+  description: "Chest fragment"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+258:
+  description: "Unoccupied"
+  overlays:
+
+259:
+  description: "Unoccupied"
+  overlays:
+
+260:
+  description: "0 model"
+  overlays: ALL
+
+261:
+  description: "1 model"
+  overlays: ALL
+
+262:
+  description: "2 model"
+  overlays: ALL
+
+263:
+  description: "3 model"
+  overlays: ALL
+
+264:
+  description: "4 model"
+  overlays: ALL
+
+265:
+  description: "5 model"
+  overlays: ALL
+
+266:
+  description: "6 model"
+  overlays: ALL
+
+267:
+  description: "7 model"
+  overlays: ALL
+
+268:
+  description: "8 model"
+  overlays: ALL
+
+269:
+  description: "9 model"
+  overlays: ALL
+
+270:
+  description: "Druid"
+  overlays:
+    - LEVEL_30
+    - LEVEL_31
+
+271:
+  description: "Armoured Druid"
+  overlays:
+    - LEVEL_30
+    - LEVEL_31
+
+272:
+  description: "% text model"
+  overlays:
+
+273:
+  description: "Unoccupied"
+  overlays:
+
+274:
+  description: "Unoccupied"
+  overlays:
+
+275:
+  description: "Unoccupied"
+  overlays:
+
+276:
+  description: "Unoccupied"
+  overlays:
+
+277:
+  description: "/ text model"
+  overlays: ALL
+
+278:
+  description: "? text model"
+  overlays:
+
+279:
+  description: "Unoccupied"
+  overlays:
+
+280:
+  description: "Unoccupied"
+  overlays:
+
+281:
+  description: "Unoccupied"
+  overlays:
+
+282:
+  description: "Unoccupied"
+  overlays:
+
+283:
+  description: "Storm Wizard"
+  overlays:
+    - LEVEL_30
+    - LEVEL_33
+    - LEVEL_34
+
+284:
+  description: "Armoured Druid (Wizard Peak)"
+  overlays:
+    - LEVEL_33
+
+285:
+  description: "Ice Wizard (Wizard Peak)"
+  overlays:
+    - LEVEL_33
+
+286:
+  description: "Ambient Noise Centre"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_50
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_64
+
+287:
+  description: "Unoccupied"
+  overlays:
+
+288:
+  description: "Bird Feather"
+  overlays:
+    - LEVEL_21
+    - LEVEL_22
+
+289:
+  description: "Bird Feather"
+  overlays:
+    - LEVEL_21
+    - LEVEL_22
+
+290:
+  description: "Unoccupied"
+  overlays:
+
+291:
+  description: "Unoccupied"
+  overlays:
+
+292:
+  description: "Unoccupied"
+  overlays:
+
+293:
+  description: "Tree Tops Green Thief"
+  overlays:
+    - LEVEL_43
+
+294:
+  description: "Tree Tops Red Thief"
+  overlays:
+    - LEVEL_43
+
+295:
+  description: "Ice Wizard Projectile"
+  overlays:
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+
+296:
+  description: "Gnorc Balloonist Balloon"
+  overlays:
+    - LEVEL_52
+
+297:
+  description: "Unoccupied"
+  overlays:
+
+298:
+  description: "Gnorc Balloonist"
+  overlays:
+    - LEVEL_52
+
+299:
+  description: "Glowing Chest"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+
+300:
+  description: "Whirlwind"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_22
+    - LEVEL_24
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+
+301:
+  description: "Ice Wizard (High Caves)"
+  overlays:
+    - LEVEL_32
+
+302:
+  description: "Druid (High Caves)"
+  overlays:
+    - LEVEL_32
+
+303:
+  description: "Tornado Wizard"
+  overlays:
+    - LEVEL_32
+
+304:
+  description: "Tornado"
+  overlays:
+    - LEVEL_32
+
+305:
+  description: "Metalback Spiders"
+  overlays:
+    - LEVEL_32
+
+306:
+  description: "Unoccupied"
+  overlays:
+
+307:
+  description: "Unoccupied"
+  overlays:
+
+308:
+  description: "Plane"
+  overlays:
+    - LEVEL_15
+    - LEVEL_35
+    - LEVEL_45
+
+309:
+  description: "Safe Fragment 3 (large)"
+  overlays:
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+310:
+  description: "Safe Fragment 1 (small)"
+  overlays:
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+311:
+  description: "Safe Fragment 2 (small)"
+  overlays:
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+312:
+  description: "Fireworks Chest"
+  overlays:
+    - LEVEL_21
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_61
+    - LEVEL_63
+    - LEVEL_64
+
+313:
+  description: "Unoccupied"
+  overlays:
+
+314:
+  description: "Toasty / Toasty Wood"
+  overlays:
+    - LEVEL_14
+
+315:
+  description: "Yellow Beast Snack"
+  overlays:
+    - LEVEL_31
+
+316:
+  description: "Unoccupied"
+  overlays:
+
+317:
+  description: "Unoccupied"
+  overlays:
+
+318:
+  description: "Ice Wizard Projectile Sparks"
+  overlays:
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+
+319:
+  description: "Unoccupied"
+  overlays:
+
+320:
+  description: "Unoccupied"
+  overlays:
+
+321:
+  description: "Caret"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+
+322:
+  description: "Unoccupied"
+  overlays:
+
+323:
+  description: "Fodder Respawner"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+
+324:
+  description: "Unoccupied"
+  overlays:
+
+325:
+  description: "Unoccupied"
+  overlays:
+
+326:
+  description: "Ice Wizard (Alpine Ridge)"
+  overlays:
+    - LEVEL_31
+
+327:
+  description: ". HUD Timer model"
+  overlays: ALL
+
+328:
+  description: "Druid Moveable Geometry"
+  overlays:
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_34
+
+329:
+  description: "Spring Chest"
+  overlays:
+    - LEVEL_13
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+330:
+  description: "Unoccupied"
+  overlays:
+
+331:
+  description: "Dragon Pad (Artisans, Beast Makers, Gnasty's World)"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+
+332:
+  description: "Dragon Pad (Peace Keepers worlds)"
+  overlays:
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+
+333:
+  description: "Dragon Pad (Magic Crafters worlds)"
+  overlays:
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+
+334:
+  description: "Unoccupied"
+  overlays:
+
+335:
+  description: "Sheepdog (Toasty)"
+  overlays:
+    - LEVEL_14
+
+336:
+  description: "Tulips (single)"
+  overlays:
+    - LEVEL_10
+
+337:
+  description: "Unoccupied"
+  overlays:
+
+338:
+  description: "Unoccupied"
+  overlays:
+
+339:
+  description: "Thief Gnorc (Artisans)"
+  overlays:
+    - LEVEL_10
+
+340:
+  description: "Ring"
+  overlays:
+    - LEVEL_25
+    - LEVEL_35
+
+341:
+  description: "Unoccupied"
+  overlays:
+
+342:
+  description: "Tulips (double)"
+  overlays:
+    - LEVEL_10
+
+343:
+  description: "Large Gnorc Weapon Effect"
+  overlays:
+    - LEVEL_41
+
+344:
+  description: "Unoccupied"
+  overlays:
+
+345:
+  description: "+1 model"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+
+346:
+  description: "+2 model"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+
+347:
+  description: "+3 model"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+
+348:
+  description: "Wall Flag"
+  overlays:
+    - LEVEL_10
+
+349:
+  description: "Shepherd (Toasty)"
+  overlays:
+    - LEVEL_14
+
+350:
+  description: "Sunny Flight Entrance Control"
+  overlays:
+    - LEVEL_10
+
+351:
+  description: "Unoccupied"
+  overlays:
+
+352:
+  description: "Unoccupied"
+  overlays:
+
+353:
+  description: "Arches"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+354:
+  description: "Tall Tree (Artisans)"
+  overlays:
+    - LEVEL_10
+
+355:
+  description: "Double Tree (Artisans)"
+  overlays:
+    - LEVEL_10
+
+356:
+  description: "Wide Tree (Artisans)"
+  overlays:
+    - LEVEL_10
+
+357:
+  description: "Unoccupied"
+  overlays:
+
+358:
+  description: "Flight controller"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+
+359:
+  description: "Wood Fragment (Flight)"
+  overlays:
+    - LEVEL_15
+    - LEVEL_45
+    - LEVEL_55
+
+360:
+  description: "Wood Fragment (Flight)"
+  overlays:
+    - LEVEL_15
+    - LEVEL_45
+    - LEVEL_55
+
+361:
+  description: "Wood Fragment (Flight)"
+  overlays:
+    - LEVEL_15
+    - LEVEL_45
+    - LEVEL_55
+
+362:
+  description: "Train Wheel"
+  overlays:
+    - LEVEL_15
+    - LEVEL_55
+
+363:
+  description: "Water Splash (Purple)"
+  overlays:
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_61
+    - LEVEL_63
+
+364:
+  description: "Water Bubbles (Purple)"
+  overlays:
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_61
+    - LEVEL_63
+
+365:
+  description: "Unoccupied"
+  overlays:
+
+366:
+  description: "Unoccupied"
+  overlays:
+
+367:
+  description: "Unoccupied"
+  overlays:
+
+368:
+  description: "Unoccupied"
+  overlays:
+
+369:
+  description: "Unoccupied"
+  overlays:
+
+370:
+  description: "Kamikaze Tribesmen"
+  overlays:
+    - LEVEL_24
+
+371:
+  description: "Doctor Shemp"
+  overlays:
+    - LEVEL_24
+
+372:
+  description: "Fat Lady (Doctor Shemp)"
+  overlays:
+    - LEVEL_24
+
+373:
+  description: "Unoccupied"
+  overlays:
+
+374:
+  description: "Arch Broken Base"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+375:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+376:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+377:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+378:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+379:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+380:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+381:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+382:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+383:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+384:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+385:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+386:
+  description: "Arch Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+387:
+  description: "Ring HUD model"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+388:
+  description: "Arch HUD model"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+
+389:
+  description: "Glowing Chest HUD model"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+
+390:
+  description: "Fan Chest"
+  overlays:
+    - LEVEL_13
+    - LEVEL_21
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_64
+
+391:
+  description: "Smoke Particle Emittor"
+  overlays:
+    - LEVEL_10
+
+392:
+  description: "Fan Chest Fan"
+  overlays:
+    - LEVEL_13
+    - LEVEL_21
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_64
+
+393:
+  description: "Plane Icon Flight HUD"
+  overlays:
+    - LEVEL_15
+    - LEVEL_35
+    - LEVEL_45
+
+394:
+  description: "Copter Icon Flight HUD"
+  overlays:
+    - LEVEL_55
+
+395:
+  description: "Matador Gnorc"
+  overlays:
+    - LEVEL_13
+
+396:
+  description: "Boat Icon Flight HUD"
+  overlays:
+    - LEVEL_45
+
+397:
+  description: "Lighthouse Light"
+  overlays:
+    - LEVEL_25
+    - LEVEL_55
+
+398:
+  description: "Portal Path Moby"
+  overlays:
+    - LEVEL_10
+    - LEVEL_20
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_40
+    - LEVEL_50
+    - LEVEL_60
+
+399:
+  description: "Lighthouse Light.. Lit?"
+  overlays:
+    - LEVEL_25
+    - LEVEL_55
+
+400:
+  description: "Textured Water Splash"
+  overlays:
+    - LEVEL_15
+    - LEVEL_35
+    - LEVEL_42
+    - LEVEL_45
+    - LEVEL_55
+    - LEVEL_61
+    - LEVEL_64
+
+401:
+  description: "Safe"
+  overlays:
+    - LEVEL_20
+    - LEVEL_22
+    - LEVEL_30
+    - LEVEL_33
+    - LEVEL_41
+    - LEVEL_43
+    - LEVEL_51
+    - LEVEL_53
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_64
+
+402:
+  description: "Firework Rocket"
+  overlays:
+    - LEVEL_22
+    - LEVEL_41
+    - LEVEL_51
+    - LEVEL_64
+
+403:
+  description: "Attack Frog"
+  overlays:
+    - LEVEL_42
+
+404:
+  description: "Unoccupied"
+  overlays:
+
+405:
+  description: "Water Bubbles (Blue)"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_15
+    - LEVEL_20
+    - LEVEL_25
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_35
+    - LEVEL_42
+    - LEVEL_45
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_55
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_64
+
+406:
+  description: "Unoccupied"
+  overlays:
+
+407:
+  description: "Train Front"
+  overlays:
+    - LEVEL_15
+    - LEVEL_55
+
+408:
+  description: "Train Carriage"
+  overlays:
+    - LEVEL_15
+    - LEVEL_55
+
+409:
+  description: "Unoccupied"
+  overlays:
+
+410:
+  description: "Unoccupied"
+  overlays:
+
+411:
+  description: "Unoccupied"
+  overlays:
+
+412:
+  description: "Fodder (Frog - Dark Hollow)"
+  overlays:
+    - LEVEL_12
+
+413:
+  description: "Fodder (Chicken - Town Square)"
+  overlays:
+    - LEVEL_13
+
+414:
+  description: "You're Toast Gnorc! Spyro"
+  overlays:
+    - LEVEL_63
+
+415:
+  description: "Unoccupied"
+  overlays:
+
+416:
+  description: "Balloon"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_30
+    - LEVEL_40
+    - LEVEL_50
+    - LEVEL_60
+
+417:
+  description: "Unclear, possibly breakable wall"
+  overlays:
+    - LEVEL_20
+
+418:
+  description: "Unoccupied"
+  overlays:
+
+419:
+  description: "Unoccupied"
+  overlays:
+
+420:
+  description: "Unoccupied"
+  overlays:
+
+421:
+  description: "Life Basket"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_33
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+
+422:
+  description: "Life Basket Eyes"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_33
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+
+423:
+  description: "Life Basket Fragment"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_33
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+
+424:
+  description: "Life Basket Fragment"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_33
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+
+425:
+  description: "Life Basket Fragment"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_33
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+
+426:
+  description: "A model"
+  overlays: ALL
+
+427:
+  description: "B model"
+  overlays: ALL
+
+428:
+  description: "C model"
+  overlays: ALL
+
+429:
+  description: "D model"
+  overlays: ALL
+
+430:
+  description: "E model"
+  overlays: ALL
+
+431:
+  description: "F model"
+  overlays: ALL
+
+432:
+  description: "G model"
+  overlays: ALL
+
+433:
+  description: "H model"
+  overlays: ALL
+
+434:
+  description: "I model"
+  overlays: ALL
+
+435:
+  description: "J model"
+  overlays: ALL
+
+436:
+  description: "K model"
+  overlays: ALL
+
+437:
+  description: "L model"
+  overlays: ALL
+
+438:
+  description: "M model"
+  overlays: ALL
+
+439:
+  description: "N model"
+  overlays: ALL
+
+440:
+  description: "O model"
+  overlays: ALL
+
+441:
+  description: "P model"
+  overlays: ALL
+
+442:
+  description: "Q model"
+  overlays: ALL
+
+443:
+  description: "R model"
+  overlays: ALL
+
+444:
+  description: "S model"
+  overlays: ALL
+
+445:
+  description: "T model"
+  overlays: ALL
+
+446:
+  description: "U model"
+  overlays: ALL
+
+447:
+  description: "V model"
+  overlays: ALL
+
+448:
+  description: "W model"
+  overlays: ALL
+
+449:
+  description: "X model"
+  overlays: ALL
+
+450:
+  description: "Y model"
+  overlays: ALL
+
+451:
+  description: "Z model"
+  overlays: ALL
+
+452:
+  description: "Unoccupied"
+  overlays:
+
+453:
+  description: "Duplicate of the Beast Makers Chicken?"
+  overlays:
+    - LEVEL_43
+
+454:
+  description: "Breakable Fragment"
+  overlays:
+    - LEVEL_20
+
+455:
+  description: "Breakable Fragment"
+  overlays:
+    - LEVEL_20
+
+456:
+  description: "Breakable Fragment"
+  overlays:
+    - LEVEL_20
+
+457:
+  description: "Unoccupied"
+  overlays:
+
+458:
+  description: "Cannonball Fragment"
+  overlays:
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_53
+    - LEVEL_62
+
+459:
+  description: "Cannonball Fragment"
+  overlays:
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_53
+    - LEVEL_62
+
+460:
+  description: "Unoccupied"
+  overlays:
+
+461:
+  description: "Electro Gnorcs"
+  overlays:
+    - LEVEL_40
+    - LEVEL_41
+
+462:
+  description: "Unoccupied"
+  overlays:
+
+463:
+  description: "Unoccupied"
+  overlays:
+
+464:
+  description: "Unoccupied"
+  overlays:
+
+465:
+  description: "Unoccupied"
+  overlays:
+
+466:
+  description: "Fodder (Chicken - Beast Makers worlds)"
+  overlays:
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_44
+
+467:
+  description: "Big Laser Gnorc"
+  overlays:
+    - LEVEL_41
+
+468:
+  description: "Unoccupied"
+  overlays:
+
+469:
+  description: "Unoccupied"
+  overlays:
+
+470:
+  description: "Unoccupied"
+  overlays:
+
+471:
+  description: "HUD Chest half-open"
+  overlays:
+
+472:
+  description: "Unoccupied"
+  overlays:
+
+473:
+  description: "HUD Chest open"
+  overlays:
+
+474:
+  description: "Unoccupied"
+  overlays:
+
+475:
+  description: "Small Bush (Beast Makers worlds)"
+  overlays:
+    - LEVEL_40
+
+476:
+  description: "Dragon-Eating Plant"
+  overlays:
+    - LEVEL_42
+
+477:
+  description: "Water Splash (Blue)"
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_15
+    - LEVEL_20
+    - LEVEL_25
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_35
+    - LEVEL_42
+    - LEVEL_45
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_55
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_64
+
+478:
+  description: "Glowing Chest Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+
+479:
+  description: "Glowing Chest Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+
+480:
+  description: "Glowing Chest Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+
+481:
+  description: "Train and Plane Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+    - LEVEL_64
+
+482:
+  description: "Train and Plane Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+    - LEVEL_64
+
+483:
+  description: "Plane Fragment"
+  overlays:
+    - LEVEL_15
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_64
+
+484:
+  description: "Sign Fairy Misty Bog"
+  overlays:
+    - LEVEL_42
+
+485:
+  description: "Sign Fairy Night Flight"
+  overlays:
+    - LEVEL_25
+    - LEVEL_35
+
+486:
+  description: "Torch on Pole (Beast Makers worlds)"
+  overlays:
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+
+487:
+  description: "Chicken Cage"
+  overlays:
+    - LEVEL_42
+
+488:
+  description: "Unoccupied"
+  overlays:
+
+489:
+  description: "Unoccupied"
+  overlays:
+
+490:
+  description: "Barrel HUD model"
+  overlays:
+    - LEVEL_15
+    - LEVEL_55
+
+491:
+  description: "Lighthouse HUD model"
+  overlays:
+    - LEVEL_25
+    - LEVEL_55
+
+492:
+  description: "Unoccupied"
+  overlays:
+
+493:
+  description: "Explosion Effect"
+  overlays:
+    - LEVEL_21
+    - LEVEL_22
+
+494:
+  description: "Zap Effect"
+  overlays:
+    - LEVEL_41
+
+495:
+  description: "Blowhard"
+  overlays:
+    - LEVEL_34
+
+496:
+  description: "Unoccupied"
+  overlays:
+
+497:
+  description: "Druid (Blowhard)"
+  overlays:
+    - LEVEL_34
+
+498:
+  description: "Unoccupied"
+  overlays:
+
+499:
+  description: "Tall Tree (Alpine Ridge)"
+  overlays:
+    - LEVEL_31
+
+500:
+  description: "White Flag (Alpine Ridge, Blowhard)"
+  overlays:
+    - LEVEL_31
+    - LEVEL_34
+
+501:
+  description: "Tuft of grass"
+  overlays:
+    - LEVEL_10
+
+502:
+  description: "Chicken Feather"
+  overlays:
+    - LEVEL_13
+
+503:
+  description: "Tall Tree, Normal (Magic Crafters)"
+  overlays:
+    - LEVEL_30
+    - LEVEL_34
+
+504:
+  description: "Tall Tree, in Snow (Magic Crafters)"
+  overlays:
+    - LEVEL_30
+    - LEVEL_34
+
+505:
+  description: "Unoccupied"
+  overlays:
+
+506:
+  description: "HUD Dragon statue"
+  overlays:
+
+507:
+  description: "Water Splash (Yellow)"
+  overlays:
+    - LEVEL_14
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_44
+    - LEVEL_54
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+508:
+  description: "Water Bubbles (Yellow)"
+  overlays:
+    - LEVEL_14
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_44
+    - LEVEL_54
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+509:
+  description: "Unoccupied"
+  overlays:

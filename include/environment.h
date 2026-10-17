@@ -82,24 +82,36 @@ void func_8002B4AC(void);
 /// @param pDeltaTime Delta time in ticks (1/60th of a second)
 void func_8002A6FC(int pDeltaTime);
 
+typedef enum {
+  ENV_ANIM_FLAG_ALT_TRACK = 1 << 0,
+  ENV_ANIM_FLAG_PAUSE = 1 << 1,
+
+  // Commonly used
+  ENV_ANIM_FLAG_UNPAUSE = ~(ENV_ANIM_FLAG_PAUSE | ENV_ANIM_FLAG_ALT_TRACK)
+} EnvironmentAnimationFlags;
+
 /// @brief: Change environment animation's flags
 /// @param pAnimationIndex Index of the animation to modify
 /// @param pMask Bits to mask off
 /// @param pSet Bits to set
 // Usually called with pMask=0xFC, pSet=0x00, which clears the pause and
 // alternative track bits, to resume an animation
-void func_8002B390(int pAnimationIndex, int pMask, int pSet);
+void EnvAnimSetFlags(int pAnimationIndex, u_char pMask, u_char pSet);
 
-/// @brief: Get environment animation's current frame
+#define ENV_ANIM_FLAGS(result) ((result)&0xFF)
+#define ENV_ANIM_FRAME(result) (((result) >> 8) & 0xFF)
+#define ENV_ANIM_FRAME_DELAY(result) (((result) >> 16) & 0xFF)
+
+/// @brief: Get environment animation's current state
 /// @param pAnimationIndex Index of the animation
-/// @return The current frame
-int func_8002B3F4(int pAnimationIndex);
+/// @return flags | frame | frame delay as a single int, 8 bits each
+int EnvAnimGetState(int pAnimationIndex);
 
 /// @brief: Set environment animation's current frame
 /// @param pAnimationIndex Index of the animation
 /// @param pFrame Frame
 /// @param pDelay Sets frame delay to 1 if set
-void func_8002B444(int pAnimationIndex, int pFrame, int pDelay);
+void EnvAnimSetFrame(int pAnimationIndex, int pFrame, int pDelay);
 
 extern Environment g_Environment;
 

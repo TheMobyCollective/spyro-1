@@ -42,7 +42,8 @@ void func_80016FD0(MATRIX *pOut, MATRIX *pIn);
 
 // TODO: When the we've used it in more places, check if maybe we have to
 // change the type to char
-// (it matches as char in func_8003838C atleast, then it doesn't need casting)
+// (it matches as char in MobyFloorStandable atleast, then it doesn't need
+// casting)
 
 /// @brief Also an atan2 function, but less precise
 int Atan2Fast(int pY, int pX);

@@ -15,19 +15,36 @@ int func_80037F90(void *pTimer, int pTimerType);
 /// @param p1 Angle 1
 /// @param p2 Angle 2
 /// @return The sum of the two angles
-int func_80038074(int p1, int p2);
+int AngleAdd(int p1, int p2);
 
-/// @brief Normalizes the difference between two angles to -128 to 128
+/// @brief Gives the shorted signed distance from angle p1 to angle p2
 /// @param p1 Angle 1
 /// @param p2 Angle 2
-/// @return The normalized difference
-int func_800381BC(int p1, int p2);
+/// @return Distance normalised to -128 to 128
+int AngleSignedDistance(int p1, int p2);
 
-int func_80038098(int p1, int p2, int p3);
+/// @brief Clamps the distance between two angles to a maximum
+/// @param p1 Angle 1
+/// @param p2 Angle 2
+/// @param p3 Maximum step
+/// @return The new angle after clamping
+int AngleClampDistance(int p1, int p2, int p3);
 
-int func_80038120(int p1, int p2, u_char p3);
+/// @brief Linearly interpolates between two angles
+/// @param p1 Angle 1
+/// @param p2 Angle 2
+/// @param interp Interpolation factor (0-255)
+/// @return The interpolated angle
+int AngleLerp(int p1, int p2, u_char interp);
 
-int func_80038178(int p1, int p2, int p3, u_char p4);
+/// @brief Interpolates between two angles, clamping the maximum distance
+/// between calls
+/// @param p1 Angle 1
+/// @param p2 Angle 2
+/// @param maxDistance Maximum distance per call
+/// @param interp Interpolation factor (0-255)
+/// @return The resulting angle after clamping and interpolation
+int AngleLerpClamped(int p1, int p2, int maxDistance, u_char interp);
 
 // Distance and delta helpers
 #define DISTANCE_TO_SPYRO(m) OctDistance(&(m)->m_Position, &g_Spyro.m_Position)
@@ -45,7 +62,7 @@ int func_80038178(int p1, int p2, int p3, u_char p4);
 #define ANGLE_FROM_SPYRO(to) ANGLE_FROM(g_Spyro.m_Position, (to))
 
 /// @brief Plays a sound from a Moby
-void func_8003851C(Moby *pMoby, int pSoundIndex, u_char *pChannel);
+void MobyPlaySound(Moby *pMoby, int pSoundIndex, u_char *pChannel);
 
 /// @brief Returns the dot product of a vector and a plane's normal vector
 /// (doesn't use the GTE)
@@ -64,7 +81,7 @@ void func_80039AA8(Moby *pMoby, MobyWanderState *pWander);
 /// rotation deltas, and spawns particles every other frame. When lifetime
 /// expires or fragment falls below initZ, spawns end particles and deactivates
 /// the moby.
-void UpdateMobyDragonFragment(Moby *pMoby);
+void MobyUpdateDragonFragment(Moby *pMoby);
 
 /**
  * @brief Moves a moby along a 3D path with rotation toward waypoints
@@ -88,7 +105,7 @@ int MoveMobyAlongPath(Moby *pMoby, PathData *pPath, int threshold, int maxSpeed,
 /// @param pPath The path data containing waypoints
 /// @param threshold Distance threshold to advance to the next waypoint
 /// @param maxSpeed Maximum movement speed (clamped)
-/// @param pBounds Collision bounds (passed to MoveMobyTowardTarget)
+/// @param pBounds Collision bounds (passed to MobyMoveTowardTarget)
 /// @param turnRateH Horizontal/yaw turn rate
 /// @param turnRateV Vertical/pitch turn rate
 /// @note Only used for Puffer Bird in Lofty Castle
@@ -104,7 +121,7 @@ void UpdatePufferBirdMobyPathNode(Moby *pMoby, PathData *pPath, int threshold,
 /// @param turnRateV Vertical (pitch) turn rate limit
 /// @param pBounds Collision bounds radius (0 to skip collision checks)
 /// @return 1 if collision occurred, 0 otherwise
-int MoveMobyTowardTarget(Moby *pMoby, Vector3D *pTarget, int pSpeed,
+int MobyMoveTowardTarget(Moby *pMoby, Vector3D *pTarget, int pSpeed,
                          int turnRateH, int turnRateV, int pBounds);
 
 /**
@@ -112,7 +129,7 @@ int MoveMobyTowardTarget(Moby *pMoby, Vector3D *pTarget, int pSpeed,
  * gravity.
  *
  * Handles two types of movement:
- * 1. Horizontal movement via speed - calls func_80039688 while speed > 0
+ * 1. Horizontal movement via speed - calls MobyMove while speed > 0
  * 2. Vertical movement with gravity - applies velocity and detects landing
  *
  * @param pMoby The moby to move
@@ -124,17 +141,17 @@ int MoveMobyTowardTarget(Moby *pMoby, Vector3D *pTarget, int pSpeed,
  * @param pGravity Gravity to subtract from z velocity each frame
  * @return 0 = normal, 2 = horizontal collision, 3 = landed on ground
  */
-int MoveMobyWithGravity(Moby *pMoby, int *pHorizontalSpeed, int pAngle,
+int MobyMoveWithGravity(Moby *pMoby, int *pHorizontalSpeed, int pAngle,
                         int *pZVelocity, int pDeceleration, int pGravity);
 
 /// @brief Moves a moby horizontally by (distance) along (angle), then resolves
 /// floor/wall collision and snaps height, gated by flag bits. Returns 0
 /// normally, 1 on a blocking hit, 2 when the floor is out of reach.
-int func_80039688(Moby *pMoby, int angle, int distance, int mobyCollisionRadius,
-                  int collisionRadius, int flags);
+int MobyMove(Moby *pMoby, int angle, int distance, int mobyCollisionRadius,
+             int collisionRadius, int flags);
 
-int func_8003BCCC(Moby *pMoby, int pForwardDist, int pMobyRadius,
-                  int pGroundRadius, int flags);
+int MobyMoveForward(Moby *pMoby, int pForwardDist, int pMobyRadius,
+                    int pGroundRadius, int flags);
 
 int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6);
 
@@ -145,7 +162,7 @@ int func_80039228(Moby *pMoby, Vector3D vec1, int arg4, int arg5, int arg6);
 /// @param withinAngle The threshold angle for "close enough"
 /// @param continueRotation Whether to continue rotating when close
 /// @return 1 if close to target angle, 0 otherwise
-int RotateMobyToAngle(Moby *pMoby, int targetAngle, int rotSpeed,
+int MobyRotateToAngle(Moby *pMoby, int targetAngle, int rotSpeed,
                       int withinAngle, int continueRotation);
 
 /// @brief Rotate moby to face Spyro
@@ -154,21 +171,21 @@ int RotateMobyToAngle(Moby *pMoby, int targetAngle, int rotSpeed,
 /// @param withinAngle The threshold angle for "close enough"
 /// @param continueRotation Whether to continue rotating when close
 /// @return 1 if close to target angle, 0 otherwise
-int RotateMobyToSpyro(Moby *pMoby, int rotSpeed, int withinAngle,
+int MobyRotateToSpyro(Moby *pMoby, int rotSpeed, int withinAngle,
                       int continueRotation);
 
-int func_80038250(Vector3D *pPoint);
+int MobyCanSeeSpyro(Vector3D *pPoint);
 
 /// @brief Looks for the floor below the Moby
-int func_80038340(Moby *pMoby);
+int MobyFloorHeight(Moby *pMoby);
 
-int func_8003838C(Moby *pMoby);
+int MobyFloorStandable(Moby *pMoby);
 
 int func_80038400(Moby *pMoby, int pDistFromFloor);
 
 void func_80038458(Moby *pMoby);
 
-void func_800385BC(Moby *pMoby, int pUnknown);
+void MobyCreatePoof(Moby *pMoby, int pSmokeSize);
 
 /// @brief Moves a Moby around a point toward a target angle, with angle limits
 /// and collision checks
@@ -183,10 +200,10 @@ int func_8003891C(Vector3D *pVec1, Vector3D *pVec2, int p3, int p4, int *pOut);
 int func_80038A40(Moby *pMoby, PathData *pPathData, int *pNodeIndexOut);
 
 /// @brief Finds the path node closest to Spyro
-int func_80038AFC(PathData *pPathData, int *pNodeIndexOut);
+int PathNodeClosestToSpyro(PathData *pPathData, int *pNodeIndexOut);
 
 /// @brief Find the path node furthest away from Spyro
-int func_80038BB0(PathData *pPathData);
+int PathNodeFurthestFromSpyro(PathData *pPathData);
 
 /// @brief Checks if a point is within a rectangle
 int func_80038C4C(Vector3D *point, Vector3D *rect);
@@ -202,15 +219,29 @@ int func_8003A16C(Moby *pMoby, PathData *pPath, int threshold, int maxMag,
                   int mobyCollisionRadius, int clampRange, int arc,
                   int *pHeading);
 
+typedef enum {
+  DROP_MODE_LAUNCH_NO_SCATTER = 0, // Launches without scatter (unused and bad)
+  DROP_MODE_SCATTER = 1,           // Launches and always scatters
+  DROP_MODE_AT_TARGET = 2,         // Arches aimed at a specific target
+
+  // Launches with scatter but can conditionally home in
+  // Based on the distance to Spyro, and if Spyro is in a state
+  // considered charging (charge)
+  DROP_MODE_SCATTER_OR_HOMING = 3,
+  DROP_MODE_HOMING = 4,      // Always homes in
+  DROP_MODE_NO_MOVEMENT = 5, // Used by spring and life chest
+  DROP_MODE_FIREWORKS = 6,   // High launch tight scatter
+} DropSpawnMode;
+
 /// @brief Spawns a Moby drop and initializes its position and movement
-Moby *func_8003ABC0(Moby *pMoby, int pSpawnMode, Vector3D *pStartPosition,
+Moby *MobySpawnDrop(Moby *pMoby, int pSpawnMode, Vector3D *pStartPosition,
                     Vector3D *pTargetPosition);
 
 /// @brief Returns if a Moby has been killed
-int func_80038494(Moby *pMoby);
+int MobyIsMarkedKilled(Moby *pMoby);
 
 /// @brief Marks a moby as killed
-void func_8003B7C0(Moby *pMoby);
+void MobyMarkKilled(Moby *pMoby);
 
 int func_8003BFC0(Moby *pMoby, PathData *pPath, Vector3D *pPreviousMovement,
                   int *pSegmentFrame, int pSegmentDuration, int pFlags);
@@ -254,19 +285,19 @@ void func_8003B294(Moby *pMoby, int pPodIdx, uint pFlag, int pWithinOctDist,
 
 /// @brief Sets the state of all mobys in this pod, if they do not have a
 /// certain state
-void func_8003B47C(Moby *pMoby, u_int pState, u_int pRequiredNotState);
+void MobyPodSetStateIfNot(Moby *pMoby, u_int pState, u_int pRequiredNotState);
 
 /// @brief Sets the state of all mobys in this pod, if they have a certain state
-void func_8003B538(Moby *pMoby, u_int pState, u_int pRequiredState);
+void MobyPodSetStateIf(Moby *pMoby, u_int pState, u_int pRequiredState);
 
 /// @brief Sets the damage flags of all mobys in this pod (metalhead)
-void func_8003B5F4(int pPodId, int pDamageFlags);
+void PodDamage(int pPodId, int pDamageFlags);
 
 /// @brief Deallocates all mobys inside this pod (metalhead)
-void func_8003B688(int pPodId);
+void PodDeallocate(int pPodId);
 
 /// @brief Sets the substate of all mobys in this pod
-void func_8003B728(Moby *pMoby, u_int pSubstate);
+void MobyPodSetSubstate(Moby *pMoby, u_int pSubstate);
 
 // Vector interpolation curve lookup tables
 // Each table contains pairs of weights (w1, w2) where w1 + w2 = 1024
@@ -288,10 +319,10 @@ extern short D_8006CBCC[];
 int SpawnMobySparkle(Moby *pMoby, Vector3D *pOffset);
 
 /// @brief Persist a collected gem to checkpoint / global collected mask
-void func_8003B854(int pGemValue, Moby *pMoby);
+void MobyMarkCollected(int pGemValue, Moby *pMoby);
 
 /// @brief Collect an item (gem, key, ...)
-void CollectItem(Moby *pMoby);
+void MobyCollectItem(Moby *pMoby);
 
 /// @brief Create portal text
 void func_8003C358(Moby *pMoby, int pIsLevelName);

@@ -109,7 +109,7 @@ glabel func_80034480
 .L800345FC:
 /* 24DFC 800345FC 21206002 */  addu       $a0, $s3, $zero
 /* 24E00 80034600 00010524 */  addiu      $a1, $zero, 0x100
-/* 24E04 80034604 932F010C */  jal        func_8004BE4C
+/* 24E04 80034604 932F010C */  jal        ColSphere
 /* 24E08 80034608 00010624 */   addiu     $a2, $zero, 0x100
 /* 24E0C 8003460C 0A004010 */  beqz       $v0, .L80034638
 /* 24E10 80034610 06000224 */   addiu     $v0, $zero, 0x6
@@ -247,7 +247,7 @@ glabel func_80034480
 /* 24FE8 800347E8 000082AE */   sw        $v0, 0x0($s4)
 /* 24FEC 800347EC 21206002 */  addu       $a0, $s3, $zero
 /* 24FF0 800347F0 00010524 */  addiu      $a1, $zero, 0x100
-/* 24FF4 800347F4 932F010C */  jal        func_8004BE4C
+/* 24FF4 800347F4 932F010C */  jal        ColSphere
 /* 24FF8 800347F8 00010624 */   addiu     $a2, $zero, 0x100
 /* 24FFC 800347FC 09004014 */  bnez       $v0, .L80034824
 /* 25000 80034800 21206002 */   addu      $a0, $s3, $zero
@@ -316,7 +316,7 @@ glabel func_80034480
 /* 250F0 800348F0 21286002 */   addu      $a1, $s3, $zero
 /* 250F4 800348F4 21206002 */  addu       $a0, $s3, $zero
 /* 250F8 800348F8 00010524 */  addiu      $a1, $zero, 0x100
-/* 250FC 800348FC 932F010C */  jal        func_8004BE4C
+/* 250FC 800348FC 932F010C */  jal        ColSphere
 /* 25100 80034900 00010624 */   addiu     $a2, $zero, 0x100
 /* 25104 80034904 0C004014 */  bnez       $v0, .L80034938
 /* 25108 80034908 01000224 */   addiu     $v0, $zero, 0x1
@@ -378,7 +378,7 @@ glabel func_80034480
 /* 251E0 800349E0 21286002 */   addu      $a1, $s3, $zero
 /* 251E4 800349E4 21206002 */  addu       $a0, $s3, $zero
 /* 251E8 800349E8 00010524 */  addiu      $a1, $zero, 0x100
-/* 251EC 800349EC 932F010C */  jal        func_8004BE4C
+/* 251EC 800349EC 932F010C */  jal        ColSphere
 /* 251F0 800349F0 00010624 */   addiu     $a2, $zero, 0x100
 /* 251F4 800349F4 09004014 */  bnez       $v0, .L80034A1C
 /* 251F8 800349F8 21206002 */   addu      $a0, $s3, $zero
@@ -437,7 +437,7 @@ glabel func_80034480
 /* 252C4 80034AC4 21286002 */   addu      $a1, $s3, $zero
 /* 252C8 80034AC8 21206002 */  addu       $a0, $s3, $zero
 /* 252CC 80034ACC 00010524 */  addiu      $a1, $zero, 0x100
-/* 252D0 80034AD0 932F010C */  jal        func_8004BE4C
+/* 252D0 80034AD0 932F010C */  jal        ColSphere
 /* 252D4 80034AD4 00010624 */   addiu     $a2, $zero, 0x100
 /* 252D8 80034AD8 09004014 */  bnez       $v0, .L80034B00
 /* 252DC 80034ADC 21206002 */   addu      $a0, $s3, $zero

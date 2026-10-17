@@ -775,7 +775,7 @@ void CheckWallCollision(void) {
   VecRotateByLastMatrix(&vec2, &vec2);
   VecAdd(&vec2, &vec2, &g_Spyro.m_Position);
 
-  if (func_8004AE38(&vec1, &vec2) == 0)
+  if (ColTraceRay(&vec1, &vec2) == 0)
     return;
 
   magnitude = VecMagnitude(&g_CollisionNormal, 0);
@@ -856,7 +856,7 @@ void UpdateSlopeFloorCollision(void) {
   VecAdd(&vec2, &vec2, &g_Spyro.m_Position);
 
   // Cast the ray and check for collision
-  if (func_8004AE38(&vec1, &vec2) != 0) {
+  if (ColTraceRay(&vec1, &vec2) != 0) {
     // Collision found - extract floor normal from g_CollisionNormal
     VecCopy(&g_Spyro.m_floorPositonOnSlope, &g_CollisionNormal);
 
@@ -900,7 +900,7 @@ void UpdateSlopeFloorCollision(void) {
       VecAdd(&vec2, &vec2, &g_Spyro.m_Position);
 
       // If reverse check fails, Spyro is on an edge
-      if (func_8004AE38(&vec1, &vec2) == 0) {
+      if (ColTraceRay(&vec1, &vec2) == 0) {
         g_Spyro.m_onEdge = 1;
       }
     }
@@ -925,7 +925,7 @@ void UpdateSlopeFloorCollision(void) {
     VecAdd(&vec1, &vec1, &g_Spyro.m_Position);
     VecAdd(&vec2, &vec2, &g_Spyro.m_Position);
 
-    if (func_8004AE38(&vec1, &vec2) != 0) {
+    if (ColTraceRay(&vec1, &vec2) != 0) {
       // Collision found - recalculate slope from this hit
       VecCopy(&g_Spyro.m_floorPositonOnSlope, &g_CollisionNormal);
       magnitude = VecMagnitude(&g_Spyro.m_floorPositonOnSlope, 0);
@@ -1006,7 +1006,7 @@ void AdjustAirCollision(void) {
   VecRotateByLastMatrix(&vec2, &vec2);
   VecAdd(&vec2, &g_Spyro.m_Position, &vec2);
 
-  if (func_8004AE38(&vec3, &vec1) != 0 && g_CollisionNormal.z > 0) {
+  if (ColTraceRay(&vec3, &vec1) != 0 && g_CollisionNormal.z > 0) {
     VecSub(&vec2, &g_CollisionPoint, &vec2);
 
     if (ABS(vec2.x) < 8) {
@@ -1051,7 +1051,7 @@ void func_8003E90C(void) {
     VecAdd(&vecA, &vecA, &g_Spyro.m_Position);
     VecAdd(&vecB, &vecB, &g_Spyro.m_Position);
 
-    if (func_8004AE38(&vecA, &vecB) != 0) {
+    if (ColTraceRay(&vecA, &vecB) != 0) {
       result |= 1 << i;
     }
 
@@ -1561,7 +1561,7 @@ void UpdateSpyroPhysicsAndSurfaces(void) {
   }
 
   // Query the surface height below Spyro (max search depth 0x10000)
-  surfaceBelow = func_8004D5EC(&g_Spyro.m_Position, 0x10000);
+  surfaceBelow = ColFindFloor(&g_Spyro.m_Position, 0x10000);
   g_Spyro.m_surfaceBelowSpyro = surfaceBelow;
   g_Spyro.m_SurfaceProximityState = 0;
 

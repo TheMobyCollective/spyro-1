@@ -1,0 +1,566 @@
+# This file specifies which particles should be included in which overlays
+0:
+  description:
+  overlays: ALL
+
+1:
+  description:
+  overlays: ALL
+
+2:
+  description:
+  overlays: ALL
+
+3:
+  description: Unoccupied
+  overlays:
+
+4:
+  description:
+  overlays:
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+
+5:
+  description:
+  overlays:
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+
+6:
+  description:
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_14
+    - LEVEL_22
+    - LEVEL_24
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+
+7:
+  description:
+  overlays:
+    - LEVEL_30
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_41
+    - LEVEL_53
+
+8:
+  description:
+  overlays:
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_34
+
+9:
+  description:
+  overlays: ALL
+
+10:
+  description:
+  overlays: ALL
+
+11:
+  description:
+  overlays: ALL
+
+12:
+  description:
+  overlays: ALL
+
+13:
+  description:
+  overlays:
+    - LEVEL_15
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_51
+    - LEVEL_53
+    - LEVEL_55
+    - LEVEL_62
+
+14:
+  description:
+  overlays:
+    - LEVEL_10
+
+15:
+  description:
+  overlays:
+    - LEVEL_23
+
+16:
+  description:
+  overlays:
+    - LEVEL_21
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_61
+    - LEVEL_63
+    - LEVEL_64
+
+17:
+  description:
+  overlays:
+    - LEVEL_21
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_61
+    - LEVEL_63
+    - LEVEL_64
+
+18:
+  description: Unoccupied
+  overlays:
+
+19:
+  description:
+  overlays:
+    - LEVEL_15
+    - LEVEL_55
+
+20:
+  description: Unoccupied
+  overlays:
+
+21:
+  description:
+  overlays:
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_64
+
+22:
+  description:
+  overlays:
+    - LEVEL_10
+    - LEVEL_30
+    - LEVEL_31
+
+23:
+  description:
+  overlays:
+    - LEVEL_20
+
+24:
+  description:
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+
+25:
+  description:
+  overlays:
+    - LEVEL_43
+    - LEVEL_63
+
+26:
+  description:
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+    - LEVEL_64
+
+27:
+  description:
+  overlays:
+    - LEVEL_15
+    - LEVEL_25
+    - LEVEL_35
+    - LEVEL_45
+    - LEVEL_55
+    - LEVEL_64
+
+28:
+  description:
+  overlays:
+    - LEVEL_51
+    - LEVEL_52
+
+29:
+  description:
+  overlays:
+    - LEVEL_53
+
+30:
+  description:
+  overlays:
+    - LEVEL_10
+    - LEVEL_32
+    - LEVEL_53
+
+31:
+  description:
+  overlays:
+    - LEVEL_32
+    - LEVEL_53
+
+32:
+  description: Unoccupied
+  overlays:
+
+33:
+  description:
+  overlays: ALL
+
+34:
+  description: Unoccupied
+  overlays:
+
+35:
+  description: Unoccupied
+  overlays:
+
+36:
+  description: Unoccupied
+  overlays:
+
+37:
+  description: Unoccupied
+  overlays:
+
+38:
+  description: Unoccupied
+  overlays:
+
+39:
+  description: Unoccupied
+  overlays:
+
+40:
+  description: Unoccupied
+  overlays:
+
+41:
+  description: Unoccupied
+  overlays:
+
+42:
+  description: Unoccupied
+  overlays:
+
+43:
+  description: Unoccupied
+  overlays:
+
+44:
+  description: Unoccupied
+  overlays:
+
+45:
+  description: Unoccupied
+  overlays:
+
+46:
+  description: Unoccupied
+  overlays:
+
+47:
+  description: Unoccupied
+  overlays:
+
+48:
+  description: Unoccupied
+  overlays:
+
+49:
+  description: Unoccupied
+  overlays:
+
+50:
+  description: Unoccupied
+  overlays:
+
+51:
+  description: Unoccupied
+  overlays:
+
+52:
+  description: Unoccupied
+  overlays:
+
+53:
+  description: Unoccupied
+  overlays:
+
+54:
+  description: Unoccupied
+  overlays:
+
+55:
+  description: Unoccupied
+  overlays:
+
+56:
+  description: Unoccupied
+  overlays:
+
+57:
+  description: Unoccupied
+  overlays:
+
+58:
+  description: Unoccupied
+  overlays:
+
+59:
+  description: Unoccupied
+  overlays:
+
+60:
+  description: Unoccupied
+  overlays:
+
+61:
+  description: Unoccupied
+  overlays:
+
+62:
+  description: Unoccupied
+  overlays:
+
+63:
+  description: Unoccupied
+  overlays:
+
+64:
+  description: Unoccupied
+  overlays:
+
+65:
+  description:
+  overlays:
+    - LEVEL_30
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_53
+
+66:
+  description:
+  overlays: ALL
+
+67:
+  description: Unoccupied
+  overlays:
+
+68:
+  description: Unoccupied
+  overlays:
+
+69:
+  description:
+  overlays:
+    - LEVEL_32
+
+70:
+  description:
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_63
+    - LEVEL_64
+
+71:
+  description:
+  overlays: ALL
+
+72:
+  description:
+  overlays: ALL
+
+73:
+  description:
+  overlays:
+    - LEVEL_32
+
+74:
+  description:
+  overlays:
+    - LEVEL_20
+    - LEVEL_22
+    - LEVEL_41
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_64
+
+75:
+  description:
+  overlays:
+    - LEVEL_23
+
+76:
+  description:
+  overlays:
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_61
+    - LEVEL_62
+    - LEVEL_64
+
+77:
+  description:
+  overlays: ALL
+
+78:
+  description:
+  overlays: ALL
+
+79:
+  description:
+  overlays: ALL
+
+80:
+  description:
+  overlays:
+    - LEVEL_10
+    - LEVEL_11
+    - LEVEL_12
+    - LEVEL_13
+    - LEVEL_14
+    - LEVEL_20
+    - LEVEL_21
+    - LEVEL_22
+    - LEVEL_23
+    - LEVEL_24
+    - LEVEL_30
+    - LEVEL_31
+    - LEVEL_32
+    - LEVEL_33
+    - LEVEL_34
+    - LEVEL_40
+    - LEVEL_41
+    - LEVEL_42
+    - LEVEL_43
+    - LEVEL_44
+    - LEVEL_50
+    - LEVEL_51
+    - LEVEL_52
+    - LEVEL_53
+    - LEVEL_54
+    - LEVEL_60
+    - LEVEL_61
+    - LEVEL_62

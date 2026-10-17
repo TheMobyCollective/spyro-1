@@ -97,7 +97,7 @@ glabel func_80049FAC
 /* 3A90C 8004A10C 1800A28F */  lw         $v0, 0x18($sp)
 /* 3A910 8004A110 00040524 */  addiu      $a1, $zero, 0x400
 /* 3A914 8004A114 00024224 */  addiu      $v0, $v0, 0x200
-/* 3A918 8004A118 7B35010C */  jal        func_8004D5EC
+/* 3A918 8004A118 7B35010C */  jal        ColFindFloor
 /* 3A91C 8004A11C 1800A2AF */   sw        $v0, 0x18($sp)
 /* 3A920 8004A120 1800A38F */  lw         $v1, 0x18($sp)
 /* 3A924 8004A124 21204000 */  addu       $a0, $v0, $zero

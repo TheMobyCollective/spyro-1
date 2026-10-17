@@ -176,16 +176,16 @@ glabel func_800314B4
 /* 21EE8 800316E8 140083AC */  sw         $v1, 0x14($a0)
 /* 21EEC 800316EC 0880043C */  lui        $a0, %hi(g_FairyCutscene + 0x74)
 /* 21EF0 800316F0 748D848C */  lw         $a0, %lo(g_FairyCutscene + 0x74)($a0)
-/* 21EF4 800316F4 70E3000C */  jal        RotateMobyToSpyro
+/* 21EF4 800316F4 70E3000C */  jal        MobyRotateToSpyro
 /* 21EF8 800316F8 21380000 */   addu      $a3, $zero, $zero
 /* 21EFC 800316FC 0880043C */  lui        $a0, %hi(g_FairyCutscene + 0x74)
 /* 21F00 80031700 748D848C */  lw         $a0, %lo(g_FairyCutscene + 0x74)($a0)
 /* 21F04 80031704 00100524 */  addiu      $a1, $zero, 0x1000
-/* 21F08 80031708 7B35010C */  jal        func_8004D5EC
+/* 21F08 80031708 7B35010C */  jal        ColFindFloor
 /* 21F0C 8003170C 0C008424 */   addiu     $a0, $a0, 0xC
 /* 21F10 80031710 0880043C */  lui        $a0, %hi(g_FairyCutscene + 0x74)
 /* 21F14 80031714 748D848C */  lw         $a0, %lo(g_FairyCutscene + 0x74)($a0)
-/* 21F18 80031718 F44C010C */  jal        func_800533D0
+/* 21F18 80031718 F44C010C */  jal        MobyUpdateShadow
 /* 21F1C 8003171C 00000000 */   nop
 /* 21F20 80031720 0780023C */  lui        $v0, %hi(g_Sparx)
 /* 21F24 80031724 9858428C */  lw         $v0, %lo(g_Sparx)($v0)

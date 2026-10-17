@@ -15,4 +15,4 @@ RUN apt update && \
 
 RUN git config --global --add safe.directory /s1
 
-RUN python3 -m pip install --break-system-packages colorama GitPython matplotlib pandas watchdog levenshtein cxxfilt
+RUN python3 -m pip install --break-system-packages colorama GitPython matplotlib pandas watchdog levenshtein cxxfilt PyYAML

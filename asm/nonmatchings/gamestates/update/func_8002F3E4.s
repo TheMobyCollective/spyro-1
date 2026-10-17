@@ -1166,7 +1166,7 @@ glabel func_8002F3E4
 /* 20D18 80030518 2000022A */  slti       $v0, $s0, 0x20
 /* 20D1C 8003051C F7FF4014 */  bnez       $v0, .L800304FC
 /* 20D20 80030520 FB000424 */   addiu     $a0, $zero, 0xFB
-/* 20D24 80030524 3149010C */  jal        func_800524C4
+/* 20D24 80030524 3149010C */  jal        MobyAlloc
 /* 20D28 80030528 05001124 */   addiu     $s1, $zero, 0x5
 /* 20D2C 8003052C 21204000 */  addu       $a0, $v0, $zero
 /* 20D30 80030530 0780103C */  lui        $s0, %hi(g_DragonCutscene + 0x88)
@@ -1220,12 +1220,12 @@ glabel func_8002F3E4
 /* 20DF0 800305F0 00FC4224 */  addiu      $v0, $v0, -0x400
 /* 20DF4 800305F4 140062AC */  sw         $v0, 0x14($v1)
 /* 20DF8 800305F8 0000048E */  lw         $a0, 0x0($s0)
-/* 20DFC 800305FC F44C010C */  jal        func_800533D0
+/* 20DFC 800305FC F44C010C */  jal        MobyUpdateShadow
 /* 20E00 80030600 00000000 */   nop
 /* 20E04 80030604 0000048E */  lw         $a0, 0x0($s0)
-/* 20E08 80030608 AA49010C */  jal        func_800526A8
+/* 20E08 80030608 AA49010C */  jal        MobyUpdateCollision
 /* 20E0C 8003060C 00000000 */   nop
-/* 20E10 80030610 3149010C */  jal        func_800524C4
+/* 20E10 80030610 3149010C */  jal        MobyAlloc
 /* 20E14 80030614 00000000 */   nop
 /* 20E18 80030618 21204000 */  addu       $a0, $v0, $zero
 /* 20E1C 8003061C 0780013C */  lui        $at, %hi(g_DragonCutscene + 0x8C)
@@ -1248,7 +1248,7 @@ glabel func_8002F3E4
 /* 20E60 80030660 470051A0 */  sb         $s1, 0x47($v0)
 /* 20E64 80030664 0780043C */  lui        $a0, %hi(g_DragonCutscene + 0x8C)
 /* 20E68 80030668 BC70848C */  lw         $a0, %lo(g_DragonCutscene + 0x8C)($a0)
-/* 20E6C 8003066C AA49010C */  jal        func_800526A8
+/* 20E6C 8003066C AA49010C */  jal        MobyUpdateCollision
 /* 20E70 80030670 00000000 */   nop
 /* 20E74 80030674 CCFF048E */  lw         $a0, -0x34($s0)
 /* 20E78 80030678 8058010C */  jal        StopSound
@@ -1270,7 +1270,7 @@ glabel func_8002F3E4
 /* 20EB8 800306B8 140062AC */  sw         $v0, 0x14($v1)
 /* 20EBC 800306BC 0780043C */  lui        $a0, %hi(g_DragonCutscene + 0x90)
 /* 20EC0 800306C0 C070848C */  lw         $a0, %lo(g_DragonCutscene + 0x90)($a0)
-/* 20EC4 800306C4 5A49010C */  jal        func_80052568
+/* 20EC4 800306C4 5A49010C */  jal        MobyFree
 /* 20EC8 800306C8 00000000 */   nop
 /* 20ECC 800306CC FEC40008 */  j          .L800313F8
 /* 20ED0 800306D0 00000000 */   nop
@@ -1968,11 +1968,11 @@ glabel func_8002F3E4
 /* 21914 80031114 21280002 */   addu      $a1, $s0, $zero
 /* 21918 80031118 0780043C */  lui        $a0, %hi(g_DragonCutscene + 0x88)
 /* 2191C 8003111C B870848C */  lw         $a0, %lo(g_DragonCutscene + 0x88)($a0)
-/* 21920 80031120 5A49010C */  jal        func_80052568
+/* 21920 80031120 5A49010C */  jal        MobyFree
 /* 21924 80031124 00000000 */   nop
 /* 21928 80031128 0780043C */  lui        $a0, %hi(g_DragonCutscene + 0x8C)
 /* 2192C 8003112C BC70848C */  lw         $a0, %lo(g_DragonCutscene + 0x8C)($a0)
-/* 21930 80031130 5A49010C */  jal        func_80052568
+/* 21930 80031130 5A49010C */  jal        MobyFree
 /* 21934 80031134 00000000 */   nop
 /* 21938 80031138 21280000 */  addu       $a1, $zero, $zero
 /* 2193C 8003113C 0780023C */  lui        $v0, %hi(g_Spu + 0x2CC)
@@ -2193,7 +2193,7 @@ glabel func_8002F3E4
 /* 21C68 80031468 8000422C */  sltiu      $v0, $v0, 0x80
 /* 21C6C 8003146C 03004010 */  beqz       $v0, .L8003147C
 /* 21C70 80031470 00000000 */   nop
-/* 21C74 80031474 B9F1000C */  jal        UpdateMobyDragonFragment
+/* 21C74 80031474 B9F1000C */  jal        MobyUpdateDragonFragment
 /* 21C78 80031478 21202002 */   addu      $a0, $s1, $zero
 .L8003147C:
 /* 21C7C 8003147C 58001026 */  addiu      $s0, $s0, 0x58

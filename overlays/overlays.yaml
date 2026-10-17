@@ -1,0 +1,393 @@
+# This file specifies which files should be included in which overlays
+# See tools/overlays/get_overlays.py, tools/overlays/get_overlay_objects.py
+# and tools/overlays/generate_overlay_ld.py for how it's used
+
+- name: LEVEL_10
+  psyq_overlay_index: 11
+  description: Artisans
+  padding_garbage: [0x2A, 0x2A, 0x2A]
+  files:
+    - balloonist.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_11
+  psyq_overlay_index: 12
+  description: Stone Hill
+  padding_garbage: [0x2A, 0x2A, 0x2A]
+  files:
+    - balloonist.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_12
+  psyq_overlay_index: 13
+  description: Dark Hollow
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_13
+  psyq_overlay_index: 14
+  description: Town Square
+  padding_garbage: [0x2A, 0x2A, 0x2A]
+  files:
+    - balloonist.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_14
+  psyq_overlay_index: 15
+  description: Toasty
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_15
+  psyq_overlay_index: 16
+  description: Sunny Flight
+  files:
+    - flight.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_20
+  psyq_overlay_index: 17
+  description: Peace Keepers
+  padding_garbage: [0x09, 0x53, 0x70]
+  files:
+    - balloonist.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_21
+  psyq_overlay_index: 18
+  description: Dry Canyon
+  padding_garbage: [0x3B, 0x0D, 0x0A]
+  files:
+    - balloonist.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_22
+  psyq_overlay_index: 19
+  description: Cliff Town
+  padding_garbage: [0x2A, 0x2A, 0x2A]
+  files:
+    - balloonist.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_23
+  psyq_overlay_index: 20
+  description: Ice Cavern
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_24
+  psyq_overlay_index: 21
+  description: Doctor Shemp
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_25
+  psyq_overlay_index: 22
+  description: Night Flight
+  padding_garbage: [0x2A, 0x2A]
+  files:
+    - flight.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_30
+  psyq_overlay_index: 23
+  description: Magic Crafters
+  padding_garbage: [0x2A, 0x2A, 0x2A]
+  files:
+    - balloonist.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_31
+  psyq_overlay_index: 24
+  description: Alpine Ridge
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_32
+  psyq_overlay_index: 25
+  description: High Caves
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_33
+  psyq_overlay_index: 26
+  description: Wizard Peak
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_34
+  psyq_overlay_index: 27
+  description: Blowhard
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_35
+  psyq_overlay_index: 28
+  description: Crystal Flight
+  padding_garbage: [0x0D, 0x0A]
+  files:
+    - flight.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_40
+  psyq_overlay_index: 29
+  description: Beast Makers
+  padding_garbage: [0x20, 0x6C, 0x77]
+  files:
+    - balloonist.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_41
+  psyq_overlay_index: 30
+  description: Terrace Village
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_42
+  psyq_overlay_index: 31
+  description: Misty Bog
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_43
+  psyq_overlay_index: 32
+  description: Tree Tops
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_44
+  psyq_overlay_index: 33
+  description: Metalhead
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_45
+  psyq_overlay_index: 34
+  description: Wild Flight
+  padding_garbage: [0x74, 0x20]
+  files:
+    - flight.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_50
+  psyq_overlay_index: 35
+  description: Dream Weavers
+  padding_garbage: [0x20, 0x70, 0x6F]
+  files:
+    - balloonist.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_51
+  psyq_overlay_index: 36
+  description: Dark Passage
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_52
+  psyq_overlay_index: 37
+  description: Lofty Castle
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_53
+  psyq_overlay_index: 38
+  description: Haunted Towers
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_54
+  psyq_overlay_index: 39
+  description: Jacques
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_55
+  psyq_overlay_index: 40
+  description: Icy Flight
+  files:
+    - flight.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_60
+  psyq_overlay_index: 41
+  description: Gnorc Gnexus
+  padding_garbage: [0x35, 0x11, 0x3A]
+  files:
+    - balloonist.c
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_61
+  psyq_overlay_index: 42
+  description: Gnorc Cove
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_62
+  psyq_overlay_index: 43
+  description: Twilight Harbor
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_63
+  psyq_overlay_index: 44
+  description: Gnasty Gnorc
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: LEVEL_64
+  psyq_overlay_index: 45
+  description: Gnasty's Loot
+  files:
+    - moby_update.c
+    - moby_spawn.c
+    - particle_update.c
+    - particle_spawn.c
+    - terminator.c
+
+- name: credits
+  psyq_overlay_index: 47
+  description: Credits overlay
+  files:
+    - credits.c
+
+- name: titlescreen_code
+  psyq_overlay_index: 48
+  description: Titlescreen overlay
+  files:
+    - titlescreen.c

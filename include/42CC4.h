@@ -5,25 +5,25 @@
 
 /// @brief Allocates a new Moby
 /// @return A pointer to the newly allocated Moby
-Moby *func_800524C4(void);
+Moby *MobyAlloc(void);
 
 /// @brief Frees a Moby
 /// @param pMoby The Moby to free
-void func_80052568(Moby *pMoby);
+void MobyFree(Moby *pMoby);
 
 /// @brief Updates a Moby's collision
 /// @param pMoby The Moby to update
-void func_800526A8(Moby *pMoby);
+void MobyUpdateCollision(Moby *pMoby);
 
 /// @brief Sets that a moby is a shaded moby with no collision
 /// @param pMoby The Moby :)
-void func_800529CC(Moby *pMoby);
+void MobySetShaded(Moby *pMoby);
 
 /// @brief Gets the position of a vertex in a Moby's animated mesh
 /// @param pMoby Moby :)
 /// @param pVertexIdx Index of the vertex
-/// @param pVector Output vector
-void func_80052D64(Moby *pMoby, int pVertexIdx, Vector3D *pVector);
+/// @param pOutVector Output vector
+void MobyGetAnimatedVertex(Moby *pMoby, int pVertexIdx, Vector3D *pOutVector);
 
 enum MobyPropUpdateFlags {
   // Update the collision data based on frame data
@@ -41,9 +41,11 @@ void func_800529E4(Moby *pMoby, int pFlags);
 
 /// @brief Updates a Moby's shadow
 /// @param pMoby The Moby to update
-void func_800533D0(Moby *pMoby);
+void MobyUpdateShadow(Moby *pMoby);
 
 /// @brief Creates the death sparks and poofs
-void func_800530C0(Moby *pMoby, int pSomething);
+/// @param pMoby The Moby :)
+/// @param pSize The size of the smoke particle
+void func_800530C0(Moby *pMoby, int pSize);
 
 #endif

@@ -2841,7 +2841,7 @@ glabel func_80043FE4
 /* 36FA0 800467A0 4A1A0108 */  j          .L80046928
 /* 36FA4 800467A4 21980000 */   addu      $s3, $zero, $zero
 .L800467A8:
-/* 36FA8 800467A8 7B35010C */  jal        func_8004D5EC
+/* 36FA8 800467A8 7B35010C */  jal        ColFindFloor
 /* 36FAC 800467AC 0100053C */   lui       $a1, (0x10000 >> 16)
 /* 36FB0 800467B0 0880033C */  lui        $v1, %hi(g_Spyro + 0x254)
 /* 36FB4 800467B4 AC8C638C */  lw         $v1, %lo(g_Spyro + 0x254)($v1)

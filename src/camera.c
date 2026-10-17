@@ -109,7 +109,7 @@ int func_80033E40(Vector3D *pPoint1, Vector3D *pPoint2) {
     VecAdd(&rayEnd, &rayStart, &distance);
 
     // Look if we've got a collision
-    if (func_8004AE38(&rayStart, &rayEnd))
+    if (ColTraceRay(&rayStart, &rayEnd))
       return 0; // If we did, return it
 
     VecCopy(&rayStart, &rayEnd); // Advance the ray
