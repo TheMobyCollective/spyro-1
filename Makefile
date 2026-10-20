@@ -92,8 +92,15 @@ build/src/overlays/%/moby_spawn.o     build/src/overlays/%/moby_update.o:     ST
 build/src/overlays/%/particle_spawn.o build/src/overlays/%/particle_update.o: STRIP_CLASSES = particle
 OVERLAY_STRIP = $(if $(STRIP_CLASSES),$(PYTHON) tools/overlays/strip_overlay_function.py "$$($(PYTHON) tools/overlays/get_overlay_$(STRIP_CLASSES)_classes.py $*)" |)
 
+# Because the yaml files change the overlay behavior
+# we have to depend on them so changes in the file are reflected in the objects
+OVERLAY_YAML_moby_spawn     = overlays/mobys.yaml
+OVERLAY_YAML_moby_update    = overlays/mobys.yaml
+OVERLAY_YAML_particle_spawn  = overlays/particles.yaml
+OVERLAY_YAML_particle_update = overlays/particles.yaml
+
 define OVERLAY_SOURCE
-build/src/overlays/%/$(1).o: src/overlays/$(1).c
+build/src/overlays/%/$(1).o: src/overlays/$(1).c $(OVERLAY_YAML_$(1))
 	@echo "\e[0;36m[Compiling/$$*] $$< \e[0m"
 	@$$(GCC) -DOVERLAY_NAME=$$* -DIS_$$* $$(MODERN_COMPILER_FLAG) $$(NEW_PSYQ_FLAG) $$(DEBUG_FLAG) $$(NON_MATCHING_FLAG) -Iinclude -Ipsyq/include -ffreestanding -MT $$@ -MMD -MP -MF $$@.d $$< | \
 		$$(OVERLAY_STRIP) \
