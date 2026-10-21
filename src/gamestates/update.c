@@ -173,7 +173,7 @@ extern int D_80075720; // Selected menu item index
 extern int D_800757C8; // OptionsSubmenuIsOpen
 extern int D_80075900; // Flight Pause Menu Quit related?
 
-void func_titlescreen_8007DDE8(void); // Titlescreen terminator
+void Terminator_titlescreen_code(void); // Titlescreen terminator
 
 /// @brief Gamestate 2, the pause menu
 void func_8002E12C(void) {
@@ -234,8 +234,8 @@ void func_8002E12C(void) {
       ClearImage(&fullscreen, 0, 0, 0);
       DrawSync(0);
 
-      g_Buffers.m_CopyBuf = func_titlescreen_8007DDE8;
-      g_Buffers.m_DiscCopyBuf = func_titlescreen_8007DDE8;
+      g_Buffers.m_CopyBuf = Terminator_titlescreen_code;
+      g_Buffers.m_DiscCopyBuf = Terminator_titlescreen_code;
       g_LoadStage = 0;
       g_CutsceneIdx = 0;
 
@@ -1285,7 +1285,7 @@ void func_800333DC(void) {
 }
 
 // Titlescreen terminator
-extern void func_titlescreen_8007DDE8(void);
+extern void Terminator_titlescreen_code(void);
 
 /// @brief Update demo mode
 int func_800334D4(void) {
@@ -1334,8 +1334,8 @@ int func_800334D4(void) {
     ClearImage(&r, 0, 0, 0);
     DrawSync(0);
 
-    g_Buffers.m_CopyBuf = &func_titlescreen_8007DDE8;
-    g_Buffers.m_DiscCopyBuf = &func_titlescreen_8007DDE8;
+    g_Buffers.m_CopyBuf = &Terminator_titlescreen_code;
+    g_Buffers.m_DiscCopyBuf = &Terminator_titlescreen_code;
 
     D_80075904 = 0;
     D_80075764 = 0;

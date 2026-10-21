@@ -156,7 +156,7 @@
 - [x] MobyFloorHeight
 - [x] MobyFloorStandable
 - [x] func_80038400
-- [x] func_80038458
+- [x] MobySnapToGround
 - [x] MobyIsMarkedKilled
 - [x] MobyPlaySound
 - [x] MobyCreatePoof

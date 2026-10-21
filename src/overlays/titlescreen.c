@@ -1450,6 +1450,3 @@ void TitlescreenDraw(void) {
   PutDrawEnv(&g_CurDB->m_DrawEnv);
   DrawOTag(func_80016784(0x800));
 }
-
-// Only exists to find the end of the overlay
-void func_titlescreen_8007DDE8(void) {}

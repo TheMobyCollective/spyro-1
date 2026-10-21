@@ -213,7 +213,7 @@ int func_80038400(Moby *pMoby, int pDistFromFloor) {
   return position;
 }
 
-void func_80038458(Moby *pMoby) {
+void MobySnapToGround(Moby *pMoby) {
   int floorZ = MobyFloorHeight(pMoby);
 
   pMoby->m_Position.z = floorZ + pMoby->m_FloorDistance;

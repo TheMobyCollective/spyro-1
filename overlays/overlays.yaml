@@ -385,9 +385,11 @@
   description: Credits overlay
   files:
     - credits.c
+    - terminator.c
 
 - name: titlescreen_code
   psyq_overlay_index: 48
   description: Titlescreen overlay
   files:
     - titlescreen.c
+    - terminator.c

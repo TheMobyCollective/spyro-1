@@ -259,7 +259,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
       switch (moby->m_State) {
       case 0: {
-        func_80038458(moby);
+        MobySnapToGround(moby);
 
         if (DISTANCE_TO_SPYRO(moby) < 0x1400 &&
             SPYRO_ORIGIN_Z_DISTANCE(moby) < 0x400) {
@@ -1751,7 +1751,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       case 25: {
         VecCopy(&moby->m_Position, &PATH_NODE_POS(props->m_0x00, 0));
         props->m_0x00->m_CurrentNode = 1;
-        func_80038458(moby);
+        MobySnapToGround(moby);
         moby->m_State = 23;
         continue;
       }
@@ -1824,7 +1824,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         MOBY_ANIM_CHANGE_CLEAR_FINISHED(moby, 1);
         if (moby->m_Position.z < 0x800) {
           VecCopy(&moby->m_Position, &PATH_CUR_POS(props->m_0x00));
-          func_80038458(moby);
+          MobySnapToGround(moby);
         }
         props->m_0x14 = 0xB4;
         if (PATH_CUR_NODE(props->m_0x00).unk_0xC > 0) {
@@ -1846,7 +1846,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         distance = OctDistance(&moby->m_Position, &PATH_CUR_POS(props->m_0x00));
         if (moby->m_Position.z < 0x800) {
           VecCopy(&moby->m_Position, &PATH_CUR_POS(props->m_0x00));
-          func_80038458(moby);
+          MobySnapToGround(moby);
         }
         angle = ANGLE_FROM(moby->m_Position, PATH_CUR_POS(props->m_0x00));
         MobyRotateToAngle(moby, angle, 6, 0, 0);
@@ -1878,7 +1878,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         MobyRotateToSpyro(moby, 6, 0, 0);
         if (moby->m_Position.z < 0x800) {
           VecCopy(&moby->m_Position, &PATH_CUR_POS(props->m_0x00));
-          func_80038458(moby);
+          MobySnapToGround(moby);
         }
         path = props->m_0x00;
         heightDelta = g_Spyro.m_Position.z - PATH_NODE_POS(path, 10).z;
@@ -1923,7 +1923,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         props->m_0x14 = 200;
         if (moby->m_Position.z < 0x800) {
           VecCopy(&moby->m_Position, &PATH_CUR_POS(props->m_0x00));
-          func_80038458(moby);
+          MobySnapToGround(moby);
         }
         if (func_80039E94(moby, props->m_0x00, 0x100, props->m_0x14, 0, 8, 0x20,
                           0xFF, 5) == props->m_0x00->m_NodeCount + 0xFF) {
@@ -5578,12 +5578,12 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             func_80038C4C(&g_Spyro.m_Position, &props->m_0x4c) != 0) {
           props->m_0x24->m_CurrentNode = 0;
           VecCopy(&moby->m_Position, &PATH_NODE_POS(props->m_0x24, 0));
-          func_80038458(moby);
+          MobySnapToGround(moby);
         } else if (props->m_0x24->m_CurrentNode != 1 &&
                    func_80038C4C(&g_Spyro.m_Position, &props->m_0x64) != 0) {
           props->m_0x24->m_CurrentNode = 1;
           VecCopy(&moby->m_Position, &PATH_NODE_POS(props->m_0x24, 1));
-          func_80038458(moby);
+          MobySnapToGround(moby);
         }
       }
 
@@ -6057,12 +6057,12 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             func_80038C4C(&g_Spyro.m_Position, &props->m_0x3c) != 0) {
           props->m_0x38->m_CurrentNode = 0;
           VecCopy(&moby->m_Position, &PATH_NODE_POS(props->m_0x38, 0));
-          func_80038458(moby);
+          MobySnapToGround(moby);
         } else if (props->m_0x38->m_CurrentNode != 1 &&
                    func_80038C4C(&g_Spyro.m_Position, &props->m_0x54) != 0) {
           props->m_0x38->m_CurrentNode = 1;
           VecCopy(&moby->m_Position, &PATH_NODE_POS(props->m_0x38, 1));
-          func_80038458(moby);
+          MobySnapToGround(moby);
         }
       }
 
@@ -7126,7 +7126,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         if (collectableProps->m_SpawnState != 0) {
 
           if (collectableProps->m_SpawnState == 1) {
-            func_80038458(moby);    // Place on floor
+            MobySnapToGround(moby); // Place on floor
             MobyUpdateShadow(moby); // Set shadow
             if (moby->m_Class >= 83) {
               collectableProps->m_RotY = -Atan2Fast(
@@ -7155,7 +7155,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             moby->m_Position.z = collectableCollVerts[0].z / 3;
 
             func_800529E4(moby, UPDATE_PROP_CHAIN);
-            func_80038458(moby);    // Place on floor
+            MobySnapToGround(moby); // Place on floor
             MobyUpdateShadow(moby); // Set shadow
           } else if (collectableProps->m_SpawnState == 3) {
             int colIndex;
@@ -8583,7 +8583,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           continue;
         }
 
-        func_80038458(moby);
+        MobySnapToGround(moby);
         break;
       }
       case 1: {
@@ -8616,7 +8616,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           continue;
         }
 
-        func_80038458(moby);
+        MobySnapToGround(moby);
         break;
       }
 
@@ -8653,7 +8653,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           continue;
         }
 
-        func_80038458(moby);
+        MobySnapToGround(moby);
         break;
       }
 
@@ -12175,7 +12175,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       case 1:
         if (moby->m_Position.z < 0x800) {
           VecCopy(&moby->m_Position, &PATH_CUR_POS(props->m_0x00));
-          func_80038458(moby);
+          MobySnapToGround(moby);
         }
         if (TICK_TIMER(props->m_0x08)) {
           minSpeed = 0xDC - D_80075838[props->m_0x04] * 6;
@@ -12443,7 +12443,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       switch (moby->m_State) {
       case 0: {
         int angle;
-        func_80038458(moby);
+        MobySnapToGround(moby);
         MobyRotateToSpyro(moby, 4, 0, 0);
         if (TICK_TIMER(props->m_0x60) && props->m_0xc4 != 0) {
           angle = ANGLE_FROM(g_Camera.m_Position, moby->m_Position);
@@ -12569,7 +12569,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           VecCopy(
               &moby->m_Position,
               &PATH_NODE_POS(props->m_0x00, props->m_0x00->m_NodeCount - 1));
-          func_80038458(moby);
+          MobySnapToGround(moby);
           props->m_0x00->m_CurrentNode = 0;
           moby->m_State = 21;
           continue;
@@ -15700,7 +15700,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
       // Useful in Alpine Ridge when the floor is moved up and down by druids
       if (chestProps->m_FollowFloorZ) {
-        func_80038458(moby);
+        MobySnapToGround(moby);
       }
 
       if (moby->m_DamageFlags &
@@ -15734,7 +15734,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       // Would likely have been used on moving platforms like with wooden
       // chests
       if (chestProps->m_FollowFloorZ != 0) {
-        func_80038458(moby);
+        MobySnapToGround(moby);
       }
 
       // Shake animation after being flamed
@@ -17833,7 +17833,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         case 5:
         case 6:
           MOBY_ANIM_CHANGE_CLEAR_FINISHED(moby, 1);
-          func_80038458(moby);
+          MobySnapToGround(moby);
           func_80039AA8(moby, &props->m_Wander);
           if (DISTANCE_TO_SPYRO(moby) < 0x2000) {
             MobyPodSetStateIf(moby, 0xA, 0);
@@ -18507,7 +18507,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       Moby222Props *props = moby->m_Props;
 
       if (!props->m_Initialized) {
-        func_80038458(moby);
+        MobySnapToGround(moby);
         moby->m_Rotation.y =
             Atan2(g_CollisionNormal.z, VecMagnitude(&g_CollisionNormal, 0), 0);
         moby->m_Rotation.z =
@@ -20207,7 +20207,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           break;
 
         case 2:
-          func_80038458(moby);
+          MobySnapToGround(moby);
           if (props->m_0x28 != 0) {
             if (MobyRotateToSpyro(moby, 4, 0x14, 1) != 0 &&
                 moby->m_AnimationState.m_NextAnimation != 2) {
@@ -20283,7 +20283,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         }
 
         case 5:
-          func_80038458(moby);
+          MobySnapToGround(moby);
           MobyRotateToSpyro(moby, 6, 0, 0);
           if (moby->m_Substate != 0) {
             props->m_0x10 = 2;
@@ -20753,7 +20753,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               range += 0xC00;
             }
 
-            func_80038458(moby);
+            MobySnapToGround(moby);
             MobyRotateToSpyro(moby, 6, 0, 0);
 
             if (envAnimState2 < 2) {
@@ -20789,7 +20789,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               MobyRotateToAngle(moby, angle, 6, 0, 0);
             }
 
-            func_80038458(moby);
+            MobySnapToGround(moby);
 
             if (TICK_TIMER(props->m_0x4c)) {
               if (!((g_Spyro.m_State == 0x2C || g_Spyro.m_State == 0x18 ||
@@ -20836,7 +20836,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             Moby *linkedMoby = &g_LevelMobys[props->m_0x0c];
             int *linkedProps = (int *)linkedMoby->m_Props;
 
-            func_80038458(moby);
+            MobySnapToGround(moby);
             MobyRotateToAngle(
                 moby, ANGLE_FROM(moby->m_Position, linkedMoby->m_Position), 6,
                 0, 0);
@@ -20921,7 +20921,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       case 90: {
         StopSound(moby->m_SoundChannel, 4);
         props->m_0x54 = 0;
-        func_80038458(moby);
+        MobySnapToGround(moby);
 
         if (props->m_0x44) {
           int envAnimState;
@@ -20949,7 +20949,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           MobyPlaySound(moby, rand() % 4, 0);
         }
 
-        func_80038458(moby);
+        MobySnapToGround(moby);
 
         if (props->m_0x44) {
           int envAnimState;
@@ -21099,7 +21099,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         case 3: {
           MOBY_ANIM_CHANGE_CLEAR_FINISHED(moby, 0);
           MobyRotateToSpyro(moby, 6, 0, 0);
-          func_80038458(moby);
+          MobySnapToGround(moby);
           if (TICK_TIMER(props->m_0x2c) &&
               DISTANCE_TO_SPYRO(moby) < closeRange &&
               SPYRO_BASE_Z_DISTANCE(moby) < 800) {
@@ -21486,7 +21486,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
       case 4:
         MobyRotateToSpyro(moby, 6, 0, 0);
-        func_80038458(moby);
+        MobySnapToGround(moby);
         if (moby->m_AnimationState.m_NextFrame >= 0x1C) {
           if (props->m_0x14 == 2) {
             moby->m_State = 100;
@@ -22606,7 +22606,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           VecCopy(
               &moby->m_Position,
               &PATH_NODE_POS(props->m_0x04, props->m_0x04->m_NodeCount - 2));
-          func_80038458(moby);
+          MobySnapToGround(moby);
           moby->m_State = 5;
           continue;
         }
@@ -22621,7 +22621,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           moby->m_Rotation.z = ANGLE_TO_SPYRO(moby->m_Position);
           if (D_80075870[props->m_0x24] != 0) {
             VecCopy(&moby->m_Position, &PATH_NODE_POS(props->m_0x08, 0));
-            func_80038458(moby);
+            MobySnapToGround(moby);
             moby->m_State = 3;
             MOBY_ANIM_CHANGE(moby, 3);
             continue;
@@ -22631,7 +22631,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           VecCopy(
               &moby->m_Position,
               &PATH_NODE_POS(props->m_0x04, props->m_0x04->m_NodeCount - 2));
-          func_80038458(moby);
+          MobySnapToGround(moby);
           moby->m_State = 5;
           continue;
         }
@@ -22856,7 +22856,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           VecCopy(
               &moby->m_Position,
               &PATH_NODE_POS(props->m_0x04, props->m_0x04->m_NodeCount - 2));
-          func_80038458(moby);
+          MobySnapToGround(moby);
           moby->m_State = 5;
         } else if (result == lastNode + 0x100) {
           if (props->m_0x24 == 0 || props->m_0x24 == 1) {
@@ -22895,7 +22895,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         height =
             func_80038638(moby, &PATH_CUR_POS(props->m_0x04), props->m_0x00,
                           angle, 0x1E, 100, 0xF, 0x20, 0xFF, 0xFF, 0, 0, 0);
-        func_80038458(moby);
+        MobySnapToGround(moby);
         if (height < 0x23 && g_Spyro.m_State != 0xB &&
             g_Spyro.m_State != 0x14) {
           if (TICK_TIMER(props->m_0x2c)) {
@@ -22916,7 +22916,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         height =
             func_80038638(moby, &PATH_CUR_POS(props->m_0x04), props->m_0x00,
                           angle, 5, 200, 0xF, 0x20, 0xFF, 0xFF, 0, 0, 0);
-        func_80038458(moby);
+        MobySnapToGround(moby);
         if (DISTANCE_TO_SPYRO(moby) < 4000 || g_Spyro.m_State == 0xB ||
             g_Spyro.m_State == 0x14) {
           moby->m_State = 5;
@@ -27360,7 +27360,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           func_800529E4(moby, UPDATE_PROP_ROTMATRIX);
           MobyCreatePoof(moby, 0x40);
           moby->m_FloorDistance = 0;
-          func_80038458(moby);
+          MobySnapToGround(moby);
           MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
           MobyMarkKilled(moby);
           MobyFree(moby);
@@ -28726,7 +28726,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         break;
       }
 
-      func_80038458(moby);
+      MobySnapToGround(moby);
       MobyUpdateShadow(moby);
 
       switch (moby->m_State) {
@@ -28740,7 +28740,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         break;
 
       case 1:
-        func_80038458(moby);
+        MobySnapToGround(moby);
 
         if (g_AnimationFinished) {
           props->m_0x20 = RandRange(0x78, 0xf0);
@@ -28769,7 +28769,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       Moby413Props *props = moby->m_Props;
       int i;
 
-      func_80038458(moby);
+      MobySnapToGround(moby);
       MobyUpdateShadow(moby);
 
       if ((moby->m_DamageFlags &
@@ -28891,7 +28891,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       props = moby->m_Props;
 
       if (props->m_0x14 == 1) {
-        func_80038458(moby);
+        MobySnapToGround(moby);
         MobyUpdateShadow(moby);
       }
 
@@ -30608,7 +30608,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
       case 7: {
         if (g_AnimationFinished) {
-          func_80038458(moby);
+          MobySnapToGround(moby);
           MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
           MobyMarkKilled(moby);
           MobyFree(moby);

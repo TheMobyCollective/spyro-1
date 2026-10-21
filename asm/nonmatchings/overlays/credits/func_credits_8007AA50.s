@@ -33,8 +33,8 @@ glabel func_credits_8007AA50
 /* 5C97850 8007AA88 6000B0AF */   sw        $s0, 0x60($sp)
 /* 5C97854 8007AA8C 0780023C */  lui        $v0, %hi(g_CreditsBuffer)
 /* 5C97858 8007AA90 6857428C */  lw         $v0, %lo(g_CreditsBuffer)($v0)
-/* 5C9785C 8007AA94 0880053C */  lui        $a1, %hi(func_credits_8007C338)
-/* 5C97860 8007AA98 38C3A524 */  addiu      $a1, $a1, %lo(func_credits_8007C338)
+/* 5C9785C 8007AA94 0880053C */  lui        $a1, %hi(Terminator_credits)
+/* 5C97860 8007AA98 38C3A524 */  addiu      $a1, $a1, %lo(Terminator_credits)
 /* 5C97864 8007AA9C 1A004014 */  bnez       $v0, .Lcredits_8007AB08
 /* 5C97868 8007AAA0 00080624 */   addiu     $a2, $zero, 0x800
 /* 5C9786C 8007AAA4 21200000 */  addu       $a0, $zero, $zero

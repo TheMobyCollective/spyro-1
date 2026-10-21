@@ -183,7 +183,7 @@ int MobyFloorStandable(Moby *pMoby);
 
 int func_80038400(Moby *pMoby, int pDistFromFloor);
 
-void func_80038458(Moby *pMoby);
+void MobySnapToGround(Moby *pMoby);
 
 void MobyCreatePoof(Moby *pMoby, int pSmokeSize);
 

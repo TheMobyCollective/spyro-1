@@ -28,9 +28,15 @@ I started this project late last year, I've been working on it on and off. Now t
 
 ## Overlays
 
-Overlays in the first two Spyro games are a bit of a mess. The initial focus won't be on matching those, but as soon as enough Moby classes have been implemented, an attempt to do so should be made.
+The way overlays were implemented in the Spyro trilogy is quite interesting, but were very challenging to match.
 
-Spyro 3 fans really got it good
+All level overlays have since been matched, but require *a lot* of documentation still.
+There's 2 functions left unmatched in the credits overlay.
+
+They're made from the same set of files, but with bits and pieces included or excluded depending on the level.
+Which files are included in overlays is listed in `overlays/overlays.yaml`, and the classes included in levels
+are specified in `overlays/mobys.yaml` and `overlays/particles.yaml`.
+The source files used for producing the overlays are in the `src/overlays/` directory.
 
 ## PSYQ
 

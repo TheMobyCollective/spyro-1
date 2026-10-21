@@ -226,7 +226,7 @@ void func_8001277C(void) {
   func_80012604(); // Resets some saved stuff
 }
 
-void func_titlescreen_8007DDE8(void); // Titlescreen terminator
+void Terminator_titlescreen_code(void); // Titlescreen terminator
 
 // Init function
 void Initialize(void) {
@@ -261,9 +261,9 @@ void Initialize(void) {
   SetGeomScreen(341);      // Set the FOV
 
   // Set the copy buffer to the titlescreen terminator
-  g_Buffers.m_CopyBuf = func_titlescreen_8007DDE8;
+  g_Buffers.m_CopyBuf = Terminator_titlescreen_code;
   // Ditto for the disc
-  g_Buffers.m_DiscCopyBuf = func_titlescreen_8007DDE8;
+  g_Buffers.m_DiscCopyBuf = Terminator_titlescreen_code;
 
   frameCountStart = VSync(-1); // Get the frame count
 
