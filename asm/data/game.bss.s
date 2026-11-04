@@ -47,7 +47,10 @@ dlabel g_LevelHeader
 /* Total size from 80076C00 to 80076DD0 */ .space 0x1D0
 
 dlabel g_Camera
-/* Total size from 80076DD0 to 80076EE0 */ .space 0x110
+/* Total size from 80076DD0 to 80076EE0 */ .space 0x100
+
+dlabel D_80076ED0
+ .space 0x10
 
 dlabel g_DB
 /* Total size from 80076EE0 to 80076FE8 */ .space 0x108

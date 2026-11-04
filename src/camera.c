@@ -27,9 +27,8 @@ int D_800756B8;
 // Used in func_80035FB4
 int D_80075938;
 
-/* Linker alias for g_Camera.unk_0x100, retained for matching func_80035FB4. */
+// Temporary vector used in func_80035FB4
 extern Vector3D D_80076ED0;
-__asm__(".globl D_80076ED0\nD_80076ED0 = g_Camera + 0x100");
 
 /// @brief Creates the Camera's view and projection matrices
 void CameraUpdateMatrices(void) {
@@ -230,6 +229,8 @@ void func_80034358(void) {
   D_8007590C = 0;
 }
 
+void func_80034480(void);
+
 // Does the camera's collision, updates the spherical coordinates
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80034480);
 
@@ -245,405 +246,386 @@ void CameraForceToDestination(void) {
 
 // Updates the camera's spherical coordinates using six smoothing channels.
 void func_80034CE8(int smoothingPreset) {
-    int inputDelta;
-    int springCoefficient;
-    int deadbandThreshold;
-    int filterResult;
+  int inputDelta;
+  int springCoefficient;
+  int deadbandThreshold;
+  int filterResult;
 
-    // Six Camera Channels
-    // Channel One: coordinate azimuth.
+  // Six Camera Channels
+  // Channel One: coordinate azimuth.
 
-    springCoefficient = D_8006C754[smoothingPreset];
+  springCoefficient = D_8006C754[smoothingPreset];
 
-    // Enforce a minimum spring coefficient in camera state 3.
-    if (g_Camera.m_State == 3 && springCoefficient < 0x400) {
-        springCoefficient = 0x400;
-    }
+  // Enforce a minimum spring coefficient in camera state 3.
+  if (g_Camera.m_State == 3 && springCoefficient < 0x400) {
+    springCoefficient = 0x400;
+  }
 
-    // Select the azimuth input delta, accounting for special camera states.
-    if (D_80075924 != 0) {
-        inputDelta = D_80075924;
-    } else if (((((D_80075914 & 0x10) == 0) &&
-                 (D_8007592C == 0)) ||
-                (g_Camera.m_State != 0x80000011)) ||
-               ((inputDelta = 0, D_800756B8 == 0))) {
+  // Select the azimuth input delta, accounting for special camera states.
+  if (D_80075924 != 0) {
+    inputDelta = D_80075924;
+  } else if (((((D_80075914 & 0x10) == 0) && (D_8007592C == 0)) ||
+              (g_Camera.m_State != 0x80000011)) ||
+             ((inputDelta = 0, D_800756B8 == 0))) {
 
-        if ((((((D_80075914 & 0x10) != 0) &&
-               ((u_int)(g_Spyro.m_State - 5) < 2)) ||
-              (D_8007592C != 0)) &&
-             (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 0x400)) &&
-            (g_Camera.unk_0xC4 == 0) &&
-            ((inputDelta = 0, g_Camera.m_OnMovingPlatform == 0))) {
-
-            g_Camera.unk_0xA8.m_Coords.azimuth = 0;
-
-        } else {
-            inputDelta = 0;
-
-            if (g_Camera.m_State != 6) {
-                inputDelta =
-                    (g_Camera.m_LastSimulation.m_Coords.azimuth -
-                     g_Camera.m_Sphere.m_Coords.azimuth) & 0xFFF;
-
-                if (inputDelta >= 0x801) {
-                    inputDelta -= 0x1000;
-                }
-            }
-        }
-    }
-
-    // Apply the azimuth spring and damping, then test the deadband.
-    // filterResult is reused for the accumulator, its magnitude and the
-    // deadband predicate to retain the matching instruction sequence.
-    filterResult =
-        (g_Camera.unk_0xA8.m_Coords.azimuth +=
-         (((springCoefficient * inputDelta) -
-           (D_8006C79C[smoothingPreset] *
-            g_Camera.unk_0xA8.m_Coords.azimuth)) >> 8));
-
-    deadbandThreshold = D_8006C7E4[smoothingPreset];
-
-    if (filterResult < 0) {
-        filterResult = -filterResult;
-    }
-
-    filterResult = (filterResult < deadbandThreshold);
-
-    if (filterResult) {
-        g_Camera.unk_0xA8.m_Coords.azimuth = 0;
-
-        if (g_Camera.unk_0xCC != 0) {
-            if (inputDelta > 0) {
-                g_Camera.unk_0xA8.m_Coords.azimuth = 0x100;
-            } else if (inputDelta < 0) {
-                g_Camera.unk_0xA8.m_Coords.azimuth = -0x100;
-            }
-        }
-    }
-
-    // Clamp azimuth during a particular Spyro animation state.
-    if (g_Spyro.m_State == 0xF &&
-        g_Spyro.m_walkingState == 0xB) {
-
-        if (g_Camera.unk_0xA8.m_Coords.azimuth < -0x800) {
-            g_Camera.unk_0xA8.m_Coords.azimuth = -0x800;
-        }
-
-        if (g_Camera.unk_0xA8.m_Coords.azimuth >= 0x801) {
-            g_Camera.unk_0xA8.m_Coords.azimuth = 0x800;
-        }
-    }
-
-    // Apply the optional azimuth limit for camera state 0x80000009 or state 3.
-    if ((D_80075914 & 0x40) != 0 &&
-        g_Camera.unk_0xC4 == 0 &&
-        (g_Camera.m_State == 0x80000009u ||
-         g_Camera.m_State == 3)) {
-
-        if (g_Camera.unk_0xA8.m_Coords.azimuth < -0x2000) {
-            g_Camera.unk_0xA8.m_Coords.azimuth = -0x2000;
-        }
-
-        if (g_Camera.unk_0xA8.m_Coords.azimuth > 0x2000) {
-            g_Camera.unk_0xA8.m_Coords.azimuth = 0x2000;
-        }
-    }
-
-    // Apply the additional clamp for camera states 0 and 0x80000000.
-    if (((((D_80075914 & 0x10) ||
-           (D_8007592C != 0)) &&
-          (D_80075894 == 0)) &&
-         (D_800756B8 != 0)) &&
-        (g_Camera.m_OnMovingPlatform == 0) &&
-        ((g_Camera.m_State == 0) ||
-         (g_Camera.m_State == 0x80000000))) {
-
-        if (g_Camera.unk_0xA8.m_Coords.azimuth < -0x800) {
-            g_Camera.unk_0xA8.m_Coords.azimuth = -0x800;
-        }
-
-        if (g_Camera.unk_0xA8.m_Coords.azimuth >= 0x801) {
-            g_Camera.unk_0xA8.m_Coords.azimuth = 0x800;
-        }
-    }
-
-    // Accumulate the filtered azimuth into the camera angle.
-    g_Camera.m_Sphere.m_Coords.azimuth +=
-        g_Camera.unk_0xA8.m_Coords.azimuth >> 8;
-
-
-    // Channel Two: coordinate elevation.
-
-    if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
-        g_Camera.m_State == 0x80000011) {
-
-        inputDelta = 0;
-
-    } else if ((D_80075914 & 0x10) != 0 &&
-               g_Spyro.m_State == 6 &&
-               ((inputDelta = 0), g_Camera.unk_0xC4 == 0)) {
-
-        g_Camera.unk_0xA8.m_Coords.elevation = 0;
-
-    } else if (g_Camera.m_State == 6) {
-        inputDelta = 0;
-
-    } else {
-        inputDelta =
-            (g_Camera.m_LastSimulation.m_Coords.elevation -
-             g_Camera.m_Sphere.m_Coords.elevation) & 0xFFF;
-
-        if (inputDelta >= 0x801) {
-            inputDelta -= 0x1000;
-        }
-    }
-
-    // Apply the elevation spring, damping and deadband.
-    filterResult =
-        (g_Camera.unk_0xA8.m_Coords.elevation +=
-         (((springCoefficient = D_8006C760[smoothingPreset]) * inputDelta -
-           (D_8006C7A8[smoothingPreset] *
-            g_Camera.unk_0xA8.m_Coords.elevation)) >> 8));
-
-    deadbandThreshold = D_8006C7F0[smoothingPreset];
-
-    if (filterResult < 0) {
-        filterResult = -filterResult;
-    }
-
-    filterResult = (filterResult < deadbandThreshold);
-
-    if (filterResult) {
-        g_Camera.unk_0xA8.m_Coords.elevation = 0;
-
-        if (g_Camera.unk_0xCC != 0) {
-            if (inputDelta > 0) {
-                g_Camera.unk_0xA8.m_Coords.elevation = 0x100;
-            } else if (inputDelta < 0) {
-                g_Camera.unk_0xA8.m_Coords.elevation = -0x100;
-            }
-        }
-    }
-
-    // Apply the optional elevation limit for camera state 0x80000009.
-    if ((D_80075914 & 0x40) != 0 &&
-        g_Camera.m_State == 0x80000009 &&
-        g_Camera.unk_0xC4 == 0) {
-
-        if (g_Camera.unk_0xA8.m_Coords.elevation < -0x2000) {
-            g_Camera.unk_0xA8.m_Coords.elevation = -0x2000;
-        }
-
-        if (g_Camera.unk_0xA8.m_Coords.elevation > 0x2000) {
-            g_Camera.unk_0xA8.m_Coords.elevation = 0x2000;
-        }
-    }
-
-    // Accumulate the filtered elevation into the camera angle.
-    g_Camera.m_Sphere.m_Coords.elevation +=
-        g_Camera.unk_0xA8.m_Coords.elevation >> 8;
-
-
-    // Channel Three: coordinate radius.
-
-    if (((((D_80075914 & 0x10) != 0) ||
+    if ((((((D_80075914 & 0x10) != 0) && ((u_int)(g_Spyro.m_State - 5) < 2)) ||
           (D_8007592C != 0)) &&
-         (g_Camera.m_State == 0x80000011)) ||
-        (g_Camera.m_State == 6)) {
+         (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 0x400)) &&
+        (g_Camera.unk_0xC4 == 0) &&
+        ((inputDelta = 0, g_Camera.m_OnMovingPlatform == 0))) {
 
-        inputDelta = 0;
-
-    } else {
-        inputDelta = g_Camera.m_LastSimulation.m_Coords.radius -
-                     g_Camera.m_Sphere.m_Coords.radius;
-    }
-
-    // Apply the radius spring, damping and deadband.
-    filterResult =
-        (g_Camera.unk_0xA8.m_Coords.radius +=
-         (((springCoefficient = D_8006C76C[smoothingPreset]) * inputDelta -
-           (D_8006C7B4[smoothingPreset] *
-            g_Camera.unk_0xA8.m_Coords.radius)) >> 8));
-
-    deadbandThreshold = D_8006C7FC[smoothingPreset];
-
-    if (filterResult < 0) {
-        filterResult = -filterResult;
-    }
-
-    filterResult = (filterResult < deadbandThreshold);
-
-    if (filterResult) {
-        g_Camera.unk_0xA8.m_Coords.radius = 0;
-
-        if (g_Camera.unk_0xCC != 0) {
-            if (inputDelta > 0) {
-                g_Camera.unk_0xA8.m_Coords.radius = 0x100;
-            } else if (inputDelta < 0) {
-                g_Camera.unk_0xA8.m_Coords.radius = -0x100;
-            }
-        }
-    }
-
-    // Accumulate the filtered radius into the camera distance.
-    g_Camera.m_Sphere.m_Coords.radius +=
-        g_Camera.unk_0xA8.m_Coords.radius >> 8;
-
-
-    // Channel Four: offset azimuth.
-
-    if (((((D_80075914 & 0x10) != 0) ||
-          (D_8007592C != 0)) &&
-         (g_Camera.m_State == 0x80000011)) ||
-        (g_Camera.m_State == 6)) {
-
-        inputDelta = 0;
+      g_Camera.unk_0xA8.m_Coords.azimuth = 0;
 
     } else {
-        inputDelta =
-            (g_Camera.m_LastSimulation.m_Offset.azimuth -
-             g_Camera.m_Sphere.m_Offset.azimuth) & 0xFFF;
+      inputDelta = 0;
+
+      if (g_Camera.m_State != 6) {
+        inputDelta = (g_Camera.m_LastSimulation.m_Coords.azimuth -
+                      g_Camera.m_Sphere.m_Coords.azimuth) &
+                     0xFFF;
 
         if (inputDelta >= 0x801) {
-            inputDelta -= 0x1000;
+          inputDelta -= 0x1000;
         }
+      }
+    }
+  }
+
+  // Apply the azimuth spring and damping, then test the deadband.
+  // filterResult is reused for the accumulator, its magnitude and the
+  // deadband predicate to retain the matching instruction sequence.
+  filterResult =
+      (g_Camera.unk_0xA8.m_Coords.azimuth +=
+       (((springCoefficient * inputDelta) -
+         (D_8006C79C[smoothingPreset] * g_Camera.unk_0xA8.m_Coords.azimuth)) >>
+        8));
+
+  deadbandThreshold = D_8006C7E4[smoothingPreset];
+
+  if (filterResult < 0) {
+    filterResult = -filterResult;
+  }
+
+  filterResult = (filterResult < deadbandThreshold);
+
+  if (filterResult) {
+    g_Camera.unk_0xA8.m_Coords.azimuth = 0;
+
+    if (g_Camera.unk_0xCC != 0) {
+      if (inputDelta > 0) {
+        g_Camera.unk_0xA8.m_Coords.azimuth = 0x100;
+      } else if (inputDelta < 0) {
+        g_Camera.unk_0xA8.m_Coords.azimuth = -0x100;
+      }
+    }
+  }
+
+  // Clamp azimuth during a particular Spyro animation state.
+  if (g_Spyro.m_State == 0xF && g_Spyro.m_walkingState == 0xB) {
+
+    if (g_Camera.unk_0xA8.m_Coords.azimuth < -0x800) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = -0x800;
     }
 
-    // Apply the offset azimuth spring, damping and deadband.
-    filterResult =
-        (g_Camera.unk_0xA8.m_Offset.azimuth +=
-         (((springCoefficient = D_8006C778[smoothingPreset]) * inputDelta -
-           (D_8006C7C0[smoothingPreset] *
-            g_Camera.unk_0xA8.m_Offset.azimuth)) >> 8));
+    if (g_Camera.unk_0xA8.m_Coords.azimuth >= 0x801) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = 0x800;
+    }
+  }
 
-    deadbandThreshold = D_8006C808[smoothingPreset];
+  // Apply the optional azimuth limit for camera state 0x80000009 or state 3.
+  if ((D_80075914 & 0x40) != 0 && g_Camera.unk_0xC4 == 0 &&
+      (g_Camera.m_State == 0x80000009u || g_Camera.m_State == 3)) {
 
-    if (filterResult < 0) {
-        filterResult = -filterResult;
+    if (g_Camera.unk_0xA8.m_Coords.azimuth < -0x2000) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = -0x2000;
     }
 
-    filterResult = (filterResult < deadbandThreshold);
+    if (g_Camera.unk_0xA8.m_Coords.azimuth > 0x2000) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = 0x2000;
+    }
+  }
 
-    if (filterResult) {
-        g_Camera.unk_0xA8.m_Offset.azimuth = 0;
+  // Apply the additional clamp for camera states 0 and 0x80000000.
+  if (((((D_80075914 & 0x10) || (D_8007592C != 0)) && (D_80075894 == 0)) &&
+       (D_800756B8 != 0)) &&
+      (g_Camera.m_OnMovingPlatform == 0) &&
+      ((g_Camera.m_State == 0) || (g_Camera.m_State == 0x80000000))) {
 
-        if (g_Camera.unk_0xCC != 0) {
-            if (inputDelta > 0) {
-                g_Camera.unk_0xA8.m_Offset.azimuth = 0x100;
-            } else if (inputDelta < 0) {
-                g_Camera.unk_0xA8.m_Offset.azimuth = -0x100;
-            }
-        }
+    if (g_Camera.unk_0xA8.m_Coords.azimuth < -0x800) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = -0x800;
     }
 
-    // Accumulate the filtered offset azimuth.
-    g_Camera.m_Sphere.m_Offset.azimuth +=
-        g_Camera.unk_0xA8.m_Offset.azimuth >> 8;
+    if (g_Camera.unk_0xA8.m_Coords.azimuth >= 0x801) {
+      g_Camera.unk_0xA8.m_Coords.azimuth = 0x800;
+    }
+  }
 
+  // Accumulate the filtered azimuth into the camera angle.
+  g_Camera.m_Sphere.m_Coords.azimuth += g_Camera.unk_0xA8.m_Coords.azimuth >> 8;
 
-    // Channel Five: offset elevation.
+  // Channel Two: coordinate elevation.
 
-    if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
-        g_Camera.m_State == 0x80000011) {
+  if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
+      g_Camera.m_State == 0x80000011) {
 
-        inputDelta = 0;
+    inputDelta = 0;
 
-    } else if (g_Camera.m_State == 6) {
-        inputDelta = 0;
+  } else if ((D_80075914 & 0x10) != 0 && g_Spyro.m_State == 6 &&
+             ((inputDelta = 0), g_Camera.unk_0xC4 == 0)) {
 
-    } else {
-        inputDelta =
-            (g_Camera.m_LastSimulation.m_Offset.elevation -
-             g_Camera.m_Sphere.m_Offset.elevation) & 0xFFF;
+    g_Camera.unk_0xA8.m_Coords.elevation = 0;
 
-        if (inputDelta >= 0x801) {
-            inputDelta -= 0x1000;
-        }
+  } else if (g_Camera.m_State == 6) {
+    inputDelta = 0;
+
+  } else {
+    inputDelta = (g_Camera.m_LastSimulation.m_Coords.elevation -
+                  g_Camera.m_Sphere.m_Coords.elevation) &
+                 0xFFF;
+
+    if (inputDelta >= 0x801) {
+      inputDelta -= 0x1000;
+    }
+  }
+
+  // Apply the elevation spring, damping and deadband.
+  filterResult =
+      (g_Camera.unk_0xA8.m_Coords.elevation +=
+       (((springCoefficient = D_8006C760[smoothingPreset]) * inputDelta -
+         (D_8006C7A8[smoothingPreset] *
+          g_Camera.unk_0xA8.m_Coords.elevation)) >>
+        8));
+
+  deadbandThreshold = D_8006C7F0[smoothingPreset];
+
+  if (filterResult < 0) {
+    filterResult = -filterResult;
+  }
+
+  filterResult = (filterResult < deadbandThreshold);
+
+  if (filterResult) {
+    g_Camera.unk_0xA8.m_Coords.elevation = 0;
+
+    if (g_Camera.unk_0xCC != 0) {
+      if (inputDelta > 0) {
+        g_Camera.unk_0xA8.m_Coords.elevation = 0x100;
+      } else if (inputDelta < 0) {
+        g_Camera.unk_0xA8.m_Coords.elevation = -0x100;
+      }
+    }
+  }
+
+  // Apply the optional elevation limit for camera state 0x80000009.
+  if ((D_80075914 & 0x40) != 0 && g_Camera.m_State == 0x80000009 &&
+      g_Camera.unk_0xC4 == 0) {
+
+    if (g_Camera.unk_0xA8.m_Coords.elevation < -0x2000) {
+      g_Camera.unk_0xA8.m_Coords.elevation = -0x2000;
     }
 
-    // Apply the offset elevation spring, damping and deadband.
-    filterResult =
-        (g_Camera.unk_0xA8.m_Offset.elevation +=
-         (((springCoefficient = D_8006C784[smoothingPreset]) * inputDelta -
-           (D_8006C7CC[smoothingPreset] *
-            g_Camera.unk_0xA8.m_Offset.elevation)) >> 8));
-
-    deadbandThreshold = D_8006C814[smoothingPreset];
-
-    if (filterResult < 0) {
-        filterResult = -filterResult;
+    if (g_Camera.unk_0xA8.m_Coords.elevation > 0x2000) {
+      g_Camera.unk_0xA8.m_Coords.elevation = 0x2000;
     }
+  }
 
-    filterResult = (filterResult < deadbandThreshold);
+  // Accumulate the filtered elevation into the camera angle.
+  g_Camera.m_Sphere.m_Coords.elevation +=
+      g_Camera.unk_0xA8.m_Coords.elevation >> 8;
 
-    if (filterResult) {
-        g_Camera.unk_0xA8.m_Offset.elevation = 0;
+  // Channel Three: coordinate radius.
 
-        if (g_Camera.unk_0xCC != 0) {
-            if (inputDelta > 0) {
-                g_Camera.unk_0xA8.m_Offset.elevation = 0x100;
-            } else if (inputDelta < 0) {
-                g_Camera.unk_0xA8.m_Offset.elevation = -0x100;
-            }
-        }
+  if (((((D_80075914 & 0x10) != 0) || (D_8007592C != 0)) &&
+       (g_Camera.m_State == 0x80000011)) ||
+      (g_Camera.m_State == 6)) {
+
+    inputDelta = 0;
+
+  } else {
+    inputDelta = g_Camera.m_LastSimulation.m_Coords.radius -
+                 g_Camera.m_Sphere.m_Coords.radius;
+  }
+
+  // Apply the radius spring, damping and deadband.
+  filterResult =
+      (g_Camera.unk_0xA8.m_Coords.radius +=
+       (((springCoefficient = D_8006C76C[smoothingPreset]) * inputDelta -
+         (D_8006C7B4[smoothingPreset] * g_Camera.unk_0xA8.m_Coords.radius)) >>
+        8));
+
+  deadbandThreshold = D_8006C7FC[smoothingPreset];
+
+  if (filterResult < 0) {
+    filterResult = -filterResult;
+  }
+
+  filterResult = (filterResult < deadbandThreshold);
+
+  if (filterResult) {
+    g_Camera.unk_0xA8.m_Coords.radius = 0;
+
+    if (g_Camera.unk_0xCC != 0) {
+      if (inputDelta > 0) {
+        g_Camera.unk_0xA8.m_Coords.radius = 0x100;
+      } else if (inputDelta < 0) {
+        g_Camera.unk_0xA8.m_Coords.radius = -0x100;
+      }
     }
+  }
 
-    // Accumulate the filtered offset elevation.
-    // Unlike coordinate elevation, this channel has no additional state clamp.
-    g_Camera.m_Sphere.m_Offset.elevation +=
-        g_Camera.unk_0xA8.m_Offset.elevation >> 8;
+  // Accumulate the filtered radius into the camera distance.
+  g_Camera.m_Sphere.m_Coords.radius += g_Camera.unk_0xA8.m_Coords.radius >> 8;
 
+  // Channel Four: offset azimuth.
 
-    // Channel Six: offset radius.
+  if (((((D_80075914 & 0x10) != 0) || (D_8007592C != 0)) &&
+       (g_Camera.m_State == 0x80000011)) ||
+      (g_Camera.m_State == 6)) {
 
-    if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
-        g_Camera.m_State == 0x80000011) {
+    inputDelta = 0;
 
-        inputDelta = 0;
+  } else {
+    inputDelta = (g_Camera.m_LastSimulation.m_Offset.azimuth -
+                  g_Camera.m_Sphere.m_Offset.azimuth) &
+                 0xFFF;
 
-    } else if (g_Camera.m_State == 6) {
-        inputDelta = 0;
-
-    } else {
-        inputDelta =
-            (g_Camera.m_LastSimulation.m_Offset.radius -
-             g_Camera.m_Sphere.m_Offset.radius) & 0xFFF;
-
-        if (inputDelta >= 0x801) {
-            inputDelta -= 0x1000;
-        }
+    if (inputDelta >= 0x801) {
+      inputDelta -= 0x1000;
     }
+  }
 
-    // Apply the offset radius spring, damping and deadband.
-    filterResult =
-        (g_Camera.unk_0xA8.m_Offset.radius +=
-         (((springCoefficient = D_8006C790[smoothingPreset]) * inputDelta -
-           (D_8006C7D8[smoothingPreset] *
-            g_Camera.unk_0xA8.m_Offset.radius)) >> 8));
+  // Apply the offset azimuth spring, damping and deadband.
+  filterResult =
+      (g_Camera.unk_0xA8.m_Offset.azimuth +=
+       (((springCoefficient = D_8006C778[smoothingPreset]) * inputDelta -
+         (D_8006C7C0[smoothingPreset] * g_Camera.unk_0xA8.m_Offset.azimuth)) >>
+        8));
 
-    deadbandThreshold = D_8006C820[smoothingPreset];
+  deadbandThreshold = D_8006C808[smoothingPreset];
 
-    if (filterResult < 0) {
-        filterResult = -filterResult;
+  if (filterResult < 0) {
+    filterResult = -filterResult;
+  }
+
+  filterResult = (filterResult < deadbandThreshold);
+
+  if (filterResult) {
+    g_Camera.unk_0xA8.m_Offset.azimuth = 0;
+
+    if (g_Camera.unk_0xCC != 0) {
+      if (inputDelta > 0) {
+        g_Camera.unk_0xA8.m_Offset.azimuth = 0x100;
+      } else if (inputDelta < 0) {
+        g_Camera.unk_0xA8.m_Offset.azimuth = -0x100;
+      }
     }
+  }
 
-    filterResult = (filterResult < deadbandThreshold);
+  // Accumulate the filtered offset azimuth.
+  g_Camera.m_Sphere.m_Offset.azimuth += g_Camera.unk_0xA8.m_Offset.azimuth >> 8;
 
-    if (filterResult) {
-        g_Camera.unk_0xA8.m_Offset.radius = 0;
+  // Channel Five: offset elevation.
 
-        if (g_Camera.unk_0xCC != 0) {
-            if (inputDelta > 0) {
-                g_Camera.unk_0xA8.m_Offset.radius = 0x100;
-            } else if (inputDelta < 0) {
-                g_Camera.unk_0xA8.m_Offset.radius = -0x100;
-            }
-        }
+  if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
+      g_Camera.m_State == 0x80000011) {
+
+    inputDelta = 0;
+
+  } else if (g_Camera.m_State == 6) {
+    inputDelta = 0;
+
+  } else {
+    inputDelta = (g_Camera.m_LastSimulation.m_Offset.elevation -
+                  g_Camera.m_Sphere.m_Offset.elevation) &
+                 0xFFF;
+
+    if (inputDelta >= 0x801) {
+      inputDelta -= 0x1000;
     }
+  }
 
-    // Accumulate the filtered offset radius.
-    g_Camera.m_Sphere.m_Offset.radius +=
-        g_Camera.unk_0xA8.m_Offset.radius >> 8;
+  // Apply the offset elevation spring, damping and deadband.
+  filterResult =
+      (g_Camera.unk_0xA8.m_Offset.elevation +=
+       (((springCoefficient = D_8006C784[smoothingPreset]) * inputDelta -
+         (D_8006C7CC[smoothingPreset] *
+          g_Camera.unk_0xA8.m_Offset.elevation)) >>
+        8));
+
+  deadbandThreshold = D_8006C814[smoothingPreset];
+
+  if (filterResult < 0) {
+    filterResult = -filterResult;
+  }
+
+  filterResult = (filterResult < deadbandThreshold);
+
+  if (filterResult) {
+    g_Camera.unk_0xA8.m_Offset.elevation = 0;
+
+    if (g_Camera.unk_0xCC != 0) {
+      if (inputDelta > 0) {
+        g_Camera.unk_0xA8.m_Offset.elevation = 0x100;
+      } else if (inputDelta < 0) {
+        g_Camera.unk_0xA8.m_Offset.elevation = -0x100;
+      }
+    }
+  }
+
+  // Accumulate the filtered offset elevation.
+  // Unlike coordinate elevation, this channel has no additional state clamp.
+  g_Camera.m_Sphere.m_Offset.elevation +=
+      g_Camera.unk_0xA8.m_Offset.elevation >> 8;
+
+  // Channel Six: offset radius.
+
+  if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
+      g_Camera.m_State == 0x80000011) {
+
+    inputDelta = 0;
+
+  } else if (g_Camera.m_State == 6) {
+    inputDelta = 0;
+
+  } else {
+    inputDelta = (g_Camera.m_LastSimulation.m_Offset.radius -
+                  g_Camera.m_Sphere.m_Offset.radius) &
+                 0xFFF;
+
+    if (inputDelta >= 0x801) {
+      inputDelta -= 0x1000;
+    }
+  }
+
+  // Apply the offset radius spring, damping and deadband.
+  filterResult =
+      (g_Camera.unk_0xA8.m_Offset.radius +=
+       (((springCoefficient = D_8006C790[smoothingPreset]) * inputDelta -
+         (D_8006C7D8[smoothingPreset] * g_Camera.unk_0xA8.m_Offset.radius)) >>
+        8));
+
+  deadbandThreshold = D_8006C820[smoothingPreset];
+
+  if (filterResult < 0) {
+    filterResult = -filterResult;
+  }
+
+  filterResult = (filterResult < deadbandThreshold);
+
+  if (filterResult) {
+    g_Camera.unk_0xA8.m_Offset.radius = 0;
+
+    if (g_Camera.unk_0xCC != 0) {
+      if (inputDelta > 0) {
+        g_Camera.unk_0xA8.m_Offset.radius = 0x100;
+      } else if (inputDelta < 0) {
+        g_Camera.unk_0xA8.m_Offset.radius = -0x100;
+      }
+    }
+  }
+
+  // Accumulate the filtered offset radius.
+  g_Camera.m_Sphere.m_Offset.radius += g_Camera.unk_0xA8.m_Offset.radius >> 8;
 }
 
 void func_800357A4(void);
@@ -671,848 +653,705 @@ void func_80035F58() {
 
 // Camera state update for all other states
 void func_80035FB4(void) {
-    Vector3D relativePosition1;
-    Vector3D velocityAdjustedPosition1;
-    Vector3D relativePosition2;
-    int padArray1[4]; /* Padding placeholder for target stack-layout matching. */
-    Vector3D velocityAdjustedPosition2;
-    int padArray2[8]; /* Padding placeholder for target stack-layout matching. */
-    int step;
-    int angleA;
-    int angleB;
-    int i;
+  Vector3D relativePosition1;
+  Vector3D velocityAdjustedPosition1;
+  Vector3D relativePosition2;
+  int padArray1[4]; /* Padding placeholder for target stack-layout matching. */
+  Vector3D velocityAdjustedPosition2;
+  int padArray2[8]; /* Padding placeholder for target stack-layout matching. */
+  int step;
+  int angleA;
+  int angleB;
+  int i;
+
+  /*
+   * Reset state 15 when camera control is active or the
+   * camera-centering skip condition is enabled.
+   */
+  if ((D_80075914 & 0x10) != 0 || D_8007592C != 0) {
+    if (g_Camera.m_State == 15) {
+      g_Camera.m_State = 0;
+    }
+  }
+
+  /*
+   * Derive the camera update step from Spyro's off-center
+   * frame count, limiting the initial value to 4.
+   */
+  step = (g_Camera.m_SpyroOffCenterFrames + 1) >> 1;
+
+  if (step >= 5) {
+    step = 4;
+  }
+
+  /*
+   * Main camera-state dispatcher.
+   *
+   * Keep the state signed for matching switch lowering.
+   * The high-bit camera states must retain their target
+   * dispatch behavior.
+   */
+  switch ((int)g_Camera.m_State) {
+  case 0:
+  case 0x80000000: {
+    int rotZAdjusted;
 
     /*
-     * Reset state 15 when camera control is active or the
-     * camera-centering skip condition is enabled.
+     * Set up the camera's focus and spherical preset when
+     * the current camera-control conditions allow it.
      */
-    if ((D_80075914 & 0x10) != 0 || D_8007592C != 0) {
-        if (g_Camera.m_State == 15) {
-            g_Camera.m_State = 0;
-        }
+    if ((D_80075914 & 0x10) == 0 || g_Camera.m_OnMovingPlatform != 0 ||
+        D_80075924 != 0 || g_Camera.unk_0xC4 != 0 ||
+        (D_80075894 == 0 && g_Spyro.m_State != 0x1B)) {
+      g_Camera.m_SphericalPreset = &D_8006C8D4;
+      g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+      g_Camera.m_Focus = &g_Spyro.m_Position;
+
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+      g_Camera.m_Sphere.m_Coords.azimuth =
+          g_Camera.m_Simulation.m_Coords.azimuth;
+
+      if (g_Camera.unk_0xC4 == 0 || g_GameTick < 0x78) {
+        ApplySphericalPreset();
+      }
     }
 
     /*
-     * Derive the camera update step from Spyro's off-center
-     * frame count, limiting the initial value to 4.
-     */
-    step = (g_Camera.m_SpyroOffCenterFrames + 1) >> 1;
-
-    if (step >= 5) {
-        step = 4;
-    }
-
-    /*
-     * Main camera-state dispatcher.
+     * Maintain the camera's automatic recentering timer.
      *
-     * Keep the state signed for matching switch lowering.
-     * The high-bit camera states must retain their target
-     * dispatch behavior.
+     * Continue normally only when none of the reset conditions
+     * are active. The reset assignment is shared in the else branch.
      */
-    switch ((int)g_Camera.m_State) {
-    case 0:
-    case 0x80000000: {
-        int rotZAdjusted;
+    if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
+        g_Pad.m_NoButtonsDown != 0 && D_800756B8 != 0 &&
+        g_Camera.m_OnMovingPlatform == 0) {
+      if (D_80075894 == 0) {
+        break;
+      }
 
-        /*
-         * Set up the camera's focus and spherical preset when
-         * the current camera-control conditions allow it.
-         */
-        if ((D_80075914 & 0x10) == 0 ||
-            g_Camera.m_OnMovingPlatform != 0 ||
-            D_80075924 != 0 ||
-            g_Camera.unk_0xC4 != 0 ||
-            (D_80075894 == 0 && g_Spyro.m_State != 0x1B)) {
-            g_Camera.m_SphericalPreset = &D_8006C8D4;
-            g_Camera.m_FocusRotation =
-                g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
-            g_Camera.m_Focus = &g_Spyro.m_Position;
+      /*
+       * Compare the camera's simulated orientation with
+       * Spyro's orientation and the reference elevation.
+       */
+      rotZAdjusted = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ - 0x800;
 
-            g_Camera.unk_0xE8 =
-                func_80033F08(&g_Camera.m_Position);
+      angleA = (g_Camera.m_Simulation.m_Coords.azimuth + rotZAdjusted) & 0xFFF;
+
+      if (angleA >= 0x801) {
+        angleA -= 0x1000;
+      }
+
+      angleB = (g_Camera.m_Simulation.m_Coords.elevation - D_8006C8D8) & 0xFFF;
+
+      if (angleB >= 0x801) {
+        angleB -= 0x1000;
+      }
+
+      /*
+       * Keep the timer while both angular differences remain
+       * inside their respective thresholds.
+       */
+      if (ABS(angleA) < 0x191 && ABS(angleB) < 0x101) {
+        break;
+      }
+
+      D_80075894 -= g_DeltaTime;
+
+      if (D_80075894 > 0) {
+        break;
+      }
+
+      D_80075894 = 0;
+
+      g_Camera.unk_0xA8.m_Coords.azimuth = 0;
+      g_Camera.unk_0xA8.m_Coords.elevation = 0;
+      g_Camera.unk_0xA8.m_Coords.radius = 0;
+
+      g_Camera.unk_0xA8.m_Offset.azimuth = 0;
+      g_Camera.unk_0xA8.m_Offset.elevation = 0;
+      g_Camera.unk_0xA8.m_Offset.radius = 0;
+    } else {
+      D_80075894 = 0x5A;
+    }
+
+    break;
+  }
+
+  case 0x80000010:
+    g_Camera.m_SphericalPreset = &D_8006C8D4;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+
+    if (g_Camera.unk_0xC4 == 0) {
+      ApplySphericalPreset();
+    }
+
+    /* Fall through: state 0x80000011 shares this tail. */
+
+  case 0x80000011:
+    D_80075938--;
+    break;
+
+  case 1: {
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+    if (g_Camera.unk_0xC4 != 0) {
+      break;
+    }
+
+    if (func_80017928(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
+                      g_Camera.m_Rotation.z) >= 0x579) {
+      g_Camera.m_SphericalPreset = &D_8006C964;
+    } else {
+      g_Camera.m_SphericalPreset = &D_8006C934;
+
+      if ((D_80075914 & 0x40) == 0) {
+        g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+        g_Camera.m_Sphere.m_Coords.azimuth =
+            g_Camera.m_Simulation.m_Coords.azimuth;
+      }
+    }
+
+    ApplySphericalPreset();
+
+    VecSub(&relativePosition1, &g_Spyro.m_Position, &g_Camera.m_Position);
+
+    VecMult(&velocityAdjustedPosition1, &g_Spyro.m_Physics.m_TrueVelocity,
+            D_8007527C);
+
+    VecShiftRight(&velocityAdjustedPosition1, 6);
+
+    VecAdd(&velocityAdjustedPosition1, &relativePosition1,
+           &velocityAdjustedPosition1);
+
+    g_Camera.m_LastSimulation.m_Offset.radius =
+        (Atan2(relativePosition1.x, relativePosition1.y, 1) -
+         Atan2(velocityAdjustedPosition1.x, velocityAdjustedPosition1.y, 1)) &
+        0xFFF;
+
+    break;
+  }
+
+  case 3: {
+    g_Camera.m_SphericalPreset = &D_8006C994;
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+
+    if (g_Camera.unk_0xC4 != 0) {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+      break;
+    }
+
+    ApplySphericalPreset();
+
+    g_Camera.m_LastSimulation.m_Offset.radius =
+        ((-g_Spyro.m_Physics.m_TurnMomentum) << 3) & 0xFFF;
+
+    break;
+  }
+
+  case 5: {
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+    if (g_Camera.unk_0xC4 == 0) {
+      if (g_Spyro.m_flyingAbility != 0) {
+        if (g_Spyro.m_walkingState == 2) {
+          angleA =
+              (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ - g_Camera.m_Rotation.z) &
+              0xFFF;
+
+          if (angleA >= 0x801) {
+            angleA -= 0x1000;
+          }
+
+          if (angleA > 0) {
+            g_Camera.m_SphericalPreset = &D_8006C94C;
+          } else {
+            g_Camera.m_SphericalPreset = &D_8006C97C;
+          }
+
+          g_Camera.m_FocusRotation =
+              (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ + 0x800) & 0xFFF;
+
+          g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+          g_Camera.m_Sphere.m_Coords.azimuth =
+              g_Camera.m_Simulation.m_Coords.azimuth;
+
+          ApplySphericalPreset();
+          break;
+        } else {
+          if (g_Spyro.m_walkingState == 1) {
+            angleA = (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ -
+                      g_Camera.m_Rotation.z) &
+                     0xFFF;
+
+            if (angleA >= 0x801) {
+              angleA -= 0x1000;
+            }
+
+            if (angleA >= 0x101) {
+              g_Camera.m_SphericalPreset = &D_8006C94C;
+            } else if (angleA < -0x100) {
+              g_Camera.m_SphericalPreset = &D_8006C97C;
+            } else {
+              g_Camera.m_SphericalPreset = &D_8006C934;
+            }
+
+            g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+            g_Camera.m_Sphere.m_Coords.azimuth =
+                g_Camera.m_Simulation.m_Coords.azimuth;
+          } else {
+            g_Camera.m_SphericalPreset = &D_8006C934;
+
+            g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
 
             g_Camera.m_Sphere.m_Coords.azimuth =
                 g_Camera.m_Simulation.m_Coords.azimuth;
 
-            if (g_Camera.unk_0xC4 == 0 || g_GameTick < 0x78) {
-                ApplySphericalPreset();
-            }
-        }
+            g_Camera.m_Sphere.m_Coords.elevation =
+                g_Camera.m_Simulation.m_Coords.elevation;
 
-        /*
-         * Maintain the camera's automatic recentering timer.
-         *
-         * Continue normally only when none of the reset conditions
-         * are active. The reset assignment is shared in the else branch.
-         */
-        if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
-            g_Pad.m_NoButtonsDown != 0 &&
-            D_800756B8 != 0 &&
-            g_Camera.m_OnMovingPlatform == 0) {
-            if (D_80075894 == 0) {
-                break;
-            }
-
-            /*
-             * Compare the camera's simulated orientation with
-             * Spyro's orientation and the reference elevation.
-             */
-            rotZAdjusted =
-                g_Spyro.m_Physics.m_SpeedAngle.m_RotZ - 0x800;
-
-            angleA =
-                (g_Camera.m_Simulation.m_Coords.azimuth +
-                 rotZAdjusted) & 0xFFF;
-
-            if (angleA >= 0x801) {
-                angleA -= 0x1000;
-            }
-
-            angleB =
-                (g_Camera.m_Simulation.m_Coords.elevation -
-                 D_8006C8D8) & 0xFFF;
-
-            if (angleB >= 0x801) {
-                angleB -= 0x1000;
-            }
-
-            /*
-             * Keep the timer while both angular differences remain
-             * inside their respective thresholds.
-             */
-            if (ABS(angleA) < 0x191 && ABS(angleB) < 0x101) {
-                break;
-            }
-
-            D_80075894 -= g_DeltaTime;
-
-            if (D_80075894 > 0) {
-                break;
-            }
-
-            D_80075894 = 0;
-
-            g_Camera.unk_0xA8.m_Coords.azimuth = 0;
-            g_Camera.unk_0xA8.m_Coords.elevation = 0;
-            g_Camera.unk_0xA8.m_Coords.radius = 0;
-
-            g_Camera.unk_0xA8.m_Offset.azimuth = 0;
-            g_Camera.unk_0xA8.m_Offset.elevation = 0;
-            g_Camera.unk_0xA8.m_Offset.radius = 0;
-        } else {
-            D_80075894 = 0x5A;
-        }
-
-        break;
-    }
-
-    case 0x80000010:
-        g_Camera.m_SphericalPreset = &D_8006C8D4;
-        g_Camera.m_FocusRotation =
-            g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
-        g_Camera.m_Focus = &g_Spyro.m_Position;
-
-        g_Camera.unk_0xE8 =
-            func_80033F08(&g_Camera.m_Position);
-
-        g_Camera.m_Sphere.m_Coords.azimuth =
-            g_Camera.m_Simulation.m_Coords.azimuth;
-
-        if (g_Camera.unk_0xC4 == 0) {
             ApplySphericalPreset();
+
+            VecSub(&relativePosition2, &g_Spyro.m_Position,
+                   &g_Camera.m_Position);
+
+            VecMult(&velocityAdjustedPosition2,
+                    &g_Spyro.m_Physics.m_TrueVelocity, D_8007527C);
+
+            VecShiftRight(&velocityAdjustedPosition2, 5);
+
+            VecAdd(&velocityAdjustedPosition2, &relativePosition2,
+                   &velocityAdjustedPosition2);
+
+            g_Camera.m_LastSimulation.m_Offset.radius =
+                (Atan2(relativePosition2.x, relativePosition2.y, 1) -
+                 Atan2(velocityAdjustedPosition2.x, velocityAdjustedPosition2.y,
+                       1)) &
+                0xFFF;
+          }
         }
+      } else {
+        angleA = func_80017928(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
+                               g_Camera.m_Rotation.z);
 
-        /* Fall through: state 0x80000011 shares this tail. */
-
-    case 0x80000011:
-        D_80075938--;
-        break;
-
-    case 1: {
-        g_Camera.m_Focus = &g_Spyro.m_Position;
-        g_Camera.m_FocusRotation =
-            g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
-
-        if (g_Camera.unk_0xC4 != 0) {
-            break;
-        }
-
-        if (func_80017928(
-                g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
-                g_Camera.m_Rotation.z
-            ) >= 0x579) {
-            g_Camera.m_SphericalPreset = &D_8006C964;
+        if ((g_Spyro.m_walkingState != 0xB) && (angleA >= 0x579)) {
+          g_Camera.m_SphericalPreset = &D_8006C964;
         } else {
-            g_Camera.m_SphericalPreset = &D_8006C934;
+          g_Camera.m_SphericalPreset = &D_8006C934;
 
-            if ((D_80075914 & 0x40) == 0) {
-                g_Camera.unk_0xE8 =
-                    func_80033F08(&g_Camera.m_Position);
+          g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
 
-                g_Camera.m_Sphere.m_Coords.azimuth =
-                    g_Camera.m_Simulation.m_Coords.azimuth;
-            }
+          g_Camera.m_Sphere.m_Coords.azimuth =
+              g_Camera.m_Simulation.m_Coords.azimuth;
+
+          g_Camera.m_Sphere.m_Coords.elevation =
+              g_Camera.m_Simulation.m_Coords.elevation;
         }
 
         ApplySphericalPreset();
 
-        VecSub(
-            &relativePosition1,
-            &g_Spyro.m_Position,
-            &g_Camera.m_Position
-        );
+        VecSub(&relativePosition2, &g_Spyro.m_Position, &g_Camera.m_Position);
 
-        VecMult(
-            &velocityAdjustedPosition1,
-            &g_Spyro.m_Physics.m_TrueVelocity,
-            D_8007527C
-        );
+        VecMult(&velocityAdjustedPosition2, &g_Spyro.m_Physics.m_TrueVelocity,
+                D_8007527C);
 
-        VecShiftRight(&velocityAdjustedPosition1, 6);
+        VecShiftRight(&velocityAdjustedPosition2, 5);
 
-        VecAdd(
-            &velocityAdjustedPosition1,
-            &relativePosition1,
-            &velocityAdjustedPosition1
-        );
+        VecAdd(&velocityAdjustedPosition2, &relativePosition2,
+               &velocityAdjustedPosition2);
 
         g_Camera.m_LastSimulation.m_Offset.radius =
-            (Atan2(
-                 relativePosition1.x,
-                 relativePosition1.y,
-                 1
-             ) -
-             Atan2(
-                 velocityAdjustedPosition1.x,
-                 velocityAdjustedPosition1.y,
-                 1
-             )) & 0xFFF;
-
-        break;
-    }
-
-    case 3: {
-        g_Camera.m_SphericalPreset = &D_8006C994;
-        g_Camera.m_Focus = &g_Spyro.m_Position;
-        g_Camera.m_FocusRotation =
-            g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
-
-        g_Camera.unk_0xE8 =
-            func_80033F08(&g_Camera.m_Position);
-
-        g_Camera.m_Sphere.m_Coords.azimuth =
-            g_Camera.m_Simulation.m_Coords.azimuth;
-
-        if (g_Camera.unk_0xC4 != 0) {
-            g_Camera.unk_0xE8 =
-                func_80033F08(&g_Camera.m_Position);
-            g_Camera.m_Sphere = g_Camera.m_Simulation;
-            break;
-        }
-
-        ApplySphericalPreset();
-
-        g_Camera.m_LastSimulation.m_Offset.radius =
-            ((-g_Spyro.m_Physics.m_TurnMomentum) << 3) & 0xFFF;
-
-        break;
-    }
-
-    case 5: {
-        g_Camera.m_Focus = &g_Spyro.m_Position;
-        g_Camera.m_FocusRotation =
-            g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
-
-        if (g_Camera.unk_0xC4 == 0) {
-            if (g_Spyro.m_flyingAbility != 0) {
-                if (g_Spyro.m_walkingState == 2) {
-                    angleA =
-                        (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ -
-                         g_Camera.m_Rotation.z) & 0xFFF;
-
-                    if (angleA >= 0x801) {
-                        angleA -= 0x1000;
-                    }
-
-                    if (angleA > 0) {
-                        g_Camera.m_SphericalPreset = &D_8006C94C;
-                    } else {
-                        g_Camera.m_SphericalPreset = &D_8006C97C;
-                    }
-
-                    g_Camera.m_FocusRotation =
-                        (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ +
-                         0x800) & 0xFFF;
-
-                    g_Camera.unk_0xE8 =
-                        func_80033F08(&g_Camera.m_Position);
-
-                    g_Camera.m_Sphere.m_Coords.azimuth =
-                        g_Camera.m_Simulation.m_Coords.azimuth;
-
-                    ApplySphericalPreset();
-                    break;
-                } else {
-                    if (g_Spyro.m_walkingState == 1) {
-                        angleA =
-                            (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ -
-                             g_Camera.m_Rotation.z) & 0xFFF;
-
-                        if (angleA >= 0x801) {
-                            angleA -= 0x1000;
-                        }
-
-                        if (angleA >= 0x101) {
-                            g_Camera.m_SphericalPreset = &D_8006C94C;
-                        } else if (angleA < -0x100) {
-                            g_Camera.m_SphericalPreset = &D_8006C97C;
-                        } else {
-                            g_Camera.m_SphericalPreset = &D_8006C934;
-                        }
-
-                        g_Camera.unk_0xE8 =
-                            func_80033F08(&g_Camera.m_Position);
-
-                        g_Camera.m_Sphere.m_Coords.azimuth =
-                            g_Camera.m_Simulation.m_Coords.azimuth;
-                    } else {
-                        g_Camera.m_SphericalPreset = &D_8006C934;
-
-                        g_Camera.unk_0xE8 =
-                            func_80033F08(&g_Camera.m_Position);
-
-                        g_Camera.m_Sphere.m_Coords.azimuth =
-                            g_Camera.m_Simulation.m_Coords.azimuth;
-
-                        g_Camera.m_Sphere.m_Coords.elevation =
-                            g_Camera.m_Simulation.m_Coords.elevation;
-
-                        ApplySphericalPreset();
-
-                        VecSub(
-                            &relativePosition2,
-                            &g_Spyro.m_Position,
-                            &g_Camera.m_Position
-                        );
-
-                        VecMult(
-                            &velocityAdjustedPosition2,
-                            &g_Spyro.m_Physics.m_TrueVelocity,
-                            D_8007527C
-                        );
-
-                        VecShiftRight(&velocityAdjustedPosition2, 5);
-
-                        VecAdd(
-                            &velocityAdjustedPosition2,
-                            &relativePosition2,
-                            &velocityAdjustedPosition2
-                        );
-
-                        g_Camera.m_LastSimulation.m_Offset.radius =
-                            (Atan2(
-                                 relativePosition2.x,
-                                 relativePosition2.y,
-                                 1
-                             ) -
-                             Atan2(
-                                 velocityAdjustedPosition2.x,
-                                 velocityAdjustedPosition2.y,
-                                 1
-                             )) & 0xFFF;
-                    }
-                }
-            } else {
-                angleA =
-                    func_80017928(
-                        g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
-                        g_Camera.m_Rotation.z
-                    );
-
-                if ((g_Spyro.m_walkingState != 0xB) &&
-                    (angleA >= 0x579)) {
-                    g_Camera.m_SphericalPreset = &D_8006C964;
-                } else {
-                    g_Camera.m_SphericalPreset = &D_8006C934;
-
-                    g_Camera.unk_0xE8 =
-                        func_80033F08(&g_Camera.m_Position);
-
-                    g_Camera.m_Sphere.m_Coords.azimuth =
-                        g_Camera.m_Simulation.m_Coords.azimuth;
-
-                    g_Camera.m_Sphere.m_Coords.elevation =
-                        g_Camera.m_Simulation.m_Coords.elevation;
-                }
-
-                ApplySphericalPreset();
-
-                VecSub(
-                    &relativePosition2,
-                    &g_Spyro.m_Position,
-                    &g_Camera.m_Position
-                );
-
-                VecMult(
-                    &velocityAdjustedPosition2,
-                    &g_Spyro.m_Physics.m_TrueVelocity,
-                    D_8007527C
-                );
-
-                VecShiftRight(&velocityAdjustedPosition2, 5);
-
-                VecAdd(
-                    &velocityAdjustedPosition2,
-                    &relativePosition2,
-                    &velocityAdjustedPosition2
-                );
-
-                g_Camera.m_LastSimulation.m_Offset.radius =
-                    (Atan2(
-                         relativePosition2.x,
-                         relativePosition2.y,
-                         1
-                     ) -
-                     Atan2(
-                         velocityAdjustedPosition2.x,
-                         velocityAdjustedPosition2.y,
-                         1
-                     )) & 0xFFF;
-            }
-
-            break;
-        } else {
-            /*
-             * Special path when the camera's unk_0xC4 flag is set.
-             * Kept after the normal path to encourage tail merging.
-             */
-            g_Camera.unk_0xE8 =
-                func_80033F08(&g_Camera.m_Position);
-            g_Camera.m_Sphere = g_Camera.m_Simulation;
-        }
-
-        break;
-    }
-
-    case 6: {
-        int j;
-        int offsetMagnitude;
-
-        if (g_Camera.m_Focus != &D_80077798) {
-            VecCopy(&D_80077798, g_Camera.m_Focus);
-            g_Camera.m_Focus = &D_80077798;
-        }
-
-        D_80075924 = 0;
-
-        offsetMagnitude =
-            ABS(g_Camera.unk_0xA8.m_Coords.azimuth) +
-            ABS(g_Camera.unk_0xA8.m_Coords.elevation) +
-            ABS(g_Camera.unk_0xA8.m_Coords.radius) +
-            ABS(g_Camera.unk_0xA8.m_Offset.azimuth) +
-            ABS(g_Camera.unk_0xA8.m_Offset.elevation) +
-            ABS(g_Camera.unk_0xA8.m_Offset.radius);
-
-        if (offsetMagnitude >= 0x21) {
-            for (j = 0; j < g_DeltaTime; j++) {
-                func_80034CE8(0);
-            }
-
-            func_80034204(&g_Camera.m_DestinationPosition);
-
-            VecAdd(
-                &g_Camera.m_DestinationPosition,
-                &g_Camera.m_DestinationPosition,
-                g_Camera.m_Focus
-            );
-
-            CameraForceToDestination();
-            func_800342F8();
-        }
-
-        g_Camera.unk_0xE8 =
-            func_80033F08(&g_Camera.m_Position);
-
-        g_Camera.m_Sphere.m_Coords.azimuth =
-            g_Camera.m_Simulation.m_Coords.azimuth;
-        g_Camera.m_Sphere.m_Coords.elevation =
-            g_Camera.m_Simulation.m_Coords.elevation;
-        g_Camera.m_Sphere.m_Coords.radius =
-            g_Camera.m_Simulation.m_Coords.radius;
-
-        g_Camera.m_Sphere.m_Offset.azimuth =
-            g_Camera.m_Simulation.m_Offset.azimuth;
-        g_Camera.m_Sphere.m_Offset.elevation =
-            g_Camera.m_Simulation.m_Offset.elevation;
-        g_Camera.m_Sphere.m_Offset.radius =
-            g_Camera.m_Simulation.m_Offset.radius;
-
-        return;
-    }
-
-    case 4: {
-        g_Camera.m_Focus = &g_Spyro.m_Position;
-        g_Camera.m_FocusRotation =
-            g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
-
-        if (g_Camera.unk_0xC4 == 0) {
-            if (func_80017928(
-                    g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
-                    g_Camera.m_Rotation.z
-                ) >= 0x579) {
-                g_Camera.m_SphericalPreset = &D_8006C9DC;
-                ApplySphericalPreset();
-                break;
-            } else {
-                g_Camera.m_SphericalPreset = &D_8006C9AC;
-
-                if ((D_80075914 & 0x40) == 0) {
-                    g_Camera.unk_0xE8 =
-                        func_80033F08(&g_Camera.m_Position);
-
-                    g_Camera.m_Sphere.m_Coords.azimuth =
-                        g_Camera.m_Simulation.m_Coords.azimuth;
-                }
-            }
-
-            ApplySphericalPreset();
-            break;
-        } else {
-            g_Camera.unk_0xE8 =
-                func_80033F08(&g_Camera.m_Position);
-            g_Camera.m_Sphere = g_Camera.m_Simulation;
-        }
-
-        break;
-    }
-
-    case 0x80000009: {
-        int headLookAngle;
-
-        g_Camera.m_SphericalPreset = &D_8006CA0C;
-        g_Camera.m_Focus = &g_Spyro.m_Position;
-        g_Camera.m_FocusRotation =
-            g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
-
-        g_Camera.unk_0xE8 =
-            func_80033F08(&g_Camera.m_Position);
-
-        g_Camera.m_Sphere.m_Coords.azimuth =
-            g_Camera.m_Simulation.m_Coords.azimuth;
-        g_Camera.m_Sphere.m_Coords.elevation =
-            g_Camera.m_Simulation.m_Coords.elevation;
-        g_Camera.m_Sphere.m_Coords.radius =
-            g_Camera.m_Simulation.m_Coords.radius;
-
-        if (g_Camera.unk_0xC4 != 0) {
-            step = 5;
-            break;
-        }
-
-        ApplySphericalPreset();
-
-        /*
-         * If the active controller is an analogue stick controller
-         * and its left stick is not centred, use the stick axes.
-         */
-        if (g_ActivePad->m_Down == 3 &&
-            ((*(int *)(&g_ActivePad->m_Sticks) & 0xFFFF0000) !=
-             0x7F7F0000)) {
-            g_Camera.unk_0xDC +=
-                (g_ActivePad->m_Sticks.m_LeftX - 0x7F) >> 1;
-            g_Camera.unk_0xE0 +=
-                (0x7F - g_ActivePad->m_Sticks.m_LeftY) >> 1;
-        } else {
-            if ((g_Pad.m_Held & PAD_LEFT) != 0) {
-                g_Camera.unk_0xDC -= 0x30;
-            } else if ((g_Pad.m_Held & PAD_RIGHT) != 0) {
-                g_Camera.unk_0xDC += 0x30;
-            }
-
-            if ((g_Pad.m_Held & PAD_UP) != 0) {
-                g_Camera.unk_0xE0 += 0x30;
-            } else if ((g_Pad.m_Held & PAD_DOWN) != 0) {
-                g_Camera.unk_0xE0 -= 0x30;
-            }
-        }
-
-        /* Clamp the camera's two input offsets. */
-        if (g_Camera.unk_0xDC < -0x400) {
-            g_Camera.unk_0xDC = -0x400;
-        }
-        if (g_Camera.unk_0xDC > 0x400) {
-            g_Camera.unk_0xDC = 0x400;
-        }
-
-        if (g_Camera.unk_0xE0 < -0x3D0) {
-            g_Camera.unk_0xE0 = -0x3D0;
-        }
-        if (g_Camera.unk_0xE0 > 0x500) {
-            g_Camera.unk_0xE0 = 0x500;
-        }
-
-        /*
-         * Apply the offsets to the last simulation coordinates.
-         */
-        g_Camera.m_LastSimulation.m_Coords.azimuth +=
-            g_Camera.unk_0xDC;
-
-        if (g_Camera.unk_0xE0 < -0x140) {
-            g_Camera.m_LastSimulation.m_Coords.elevation -= 0x140;
-
-            g_Camera.m_LastSimulation.m_Offset.elevation +=
-                0x140 + g_Camera.unk_0xE0;
-        } else {
-            g_Camera.m_LastSimulation.m_Coords.elevation +=
-                g_Camera.unk_0xE0;
-        }
-
-        /*
-         * Clamp the head-look target derived from the camera offsets.
-         */
-        headLookAngle = -g_Camera.unk_0xDC;
-
-        if (headLookAngle < -0x300) {
-            headLookAngle = -0x300;
-        }
-        if (headLookAngle > 0x300) {
-            headLookAngle = 0x300;
-        }
-
-        g_Spyro.m_HeadLookTarget.z = headLookAngle;
-
-        headLookAngle = -g_Camera.unk_0xE0;
-
-        if (headLookAngle < -0x200) {
-            headLookAngle = -0x200;
-        }
-        if (headLookAngle > 0x200) {
-            headLookAngle = 0x200;
-        }
-
-        g_Spyro.m_HeadLookTarget.y = headLookAngle;
-        step = 5;
-        break;
-    }
-
-    case 2: {
-        g_Camera.m_Focus = &g_Spyro.m_Position;
-        g_Camera.m_FocusRotation =
-            g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
-
-        if (g_Camera.unk_0xC4 == 0) {
-            if (func_80017928(
-                    g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
-                    g_Camera.m_Rotation.z
-                ) >= 0x579) {
-                g_Camera.m_SphericalPreset = &D_8006C964;
-            } else {
-                g_Camera.m_SphericalPreset = &D_8006C934;
-            }
-
-            ApplySphericalPreset();
-            break;
-        } else {
-            g_Camera.unk_0xE8 =
-                func_80033F08(&g_Camera.m_Position);
-            g_Camera.m_Sphere = g_Camera.m_Simulation;
-            break;
-        }
-    }
-
-    case 0x80000007: {
-        Moby *moby;
-
-        g_Camera.m_SphericalPreset = &D_8006CB5C;
-        g_Camera.m_Focus = &D_80076ED0;
-        moby = g_Spyro.m_mobyInUseBySpyro;
-
-        D_80076ED0.x = moby->m_Position.x;
-        D_80076ED0.y = moby->m_Position.y;
-        D_80076ED0.z = g_Spyro.m_Position.z;
-
-        g_Camera.m_FocusRotation = moby->m_Rotation.z << 4;
-
-        g_Camera.unk_0xE8 =
-            func_80033F08(&g_Camera.m_Position);
-
-        g_Camera.m_Sphere.m_Coords.azimuth =
-            g_Camera.m_Simulation.m_Coords.azimuth;
-        g_Camera.m_Sphere.m_Coords.elevation =
-            g_Camera.m_Simulation.m_Coords.elevation;
-        g_Camera.m_Sphere.m_Coords.radius =
-            g_Camera.m_Simulation.m_Coords.radius;
-
-        ApplySphericalPreset();
-        break;
-    }
-
-    case 0x8000000C: {
-        Moby *moby;
-
-        g_Camera.m_Focus = &g_Spyro.m_Position;
-        moby = g_Spyro.m_mobyInUseBySpyro;
-
-        g_Camera.m_FocusRotation =
-            Atan2(
-                moby->m_Position.x - g_Spyro.m_Position.x,
-                moby->m_Position.y - g_Spyro.m_Position.y,
-                1
-            );
-
-        if (g_Camera.unk_0xC4 != 0) {
-            break;
-        }
-
-        g_Camera.m_SphericalPreset = &D_8006CB74;
-        g_Camera.unk_0xE8 =
-            func_80033F08(&g_Camera.m_Position);
-
-        ApplySphericalPreset();
-        break;
-    }
-
-    case 0x8000000A: {
-        g_Camera.unk_0xE8 =
-            func_80033F08(&g_Camera.m_Position);
-
-        g_Camera.m_Sphere.m_Coords.azimuth =
-            g_Camera.m_Simulation.m_Coords.azimuth;
-        g_Camera.m_Sphere.m_Coords.elevation =
-            g_Camera.m_Simulation.m_Coords.elevation;
-        g_Camera.m_Sphere.m_Coords.radius =
-            g_Camera.m_Simulation.m_Coords.radius;
-
-        if (g_Camera.unk_0xC4 == 0) {
-            ApplySphericalPreset();
-        } else {
-            g_Camera.unk_0xE8 =
-                func_80033F08(&g_Camera.m_Position);
-            g_Camera.m_Sphere = g_Camera.m_Simulation;
-        }
-
-        if ((g_Spyro.m_ControlFlags & 0x1000) == 0) {
-            break;
-        }
-
-        step = 5;
-        break;
-    }
-
-    case 15: {
-        g_Camera.m_SphericalPreset = &D_8006C8D4;
-        g_Camera.m_Focus = &g_Spyro.m_Position;
-        g_Camera.m_FocusRotation =
-            g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
-
-        g_Camera.unk_0xE8 =
-            func_80033F08(&g_Camera.m_Position);
-
-        g_Camera.m_Sphere.m_Coords.azimuth =
-            g_Camera.m_Simulation.m_Coords.azimuth;
-        g_Camera.m_Sphere.m_Coords.radius =
-            g_Camera.m_Simulation.m_Coords.radius;
-
-        if (g_Camera.unk_0xC4 == 0) {
-            ApplySphericalPreset();
-            break;
-        }
-
-        g_Camera.unk_0xE8 =
-            func_80033F08(&g_Camera.m_Position);
-        g_Camera.m_Sphere = g_Camera.m_Simulation;
-        break;
-    }
-
-    default:
-        break;
-    }
-
-    /*
-     * Some camera states bypass the ordinary rotation-speed update.
-     */
-    if (g_Camera.m_State != 0x80000009 &&
-        g_Camera.m_State != 0x80000007 &&
-        g_Camera.m_State != 0x80000012 &&
-        g_Camera.m_State != 0x8000000B &&
-        g_Camera.m_State != 0x8000000E &&
-        g_Camera.m_State != 3) {
-        func_80035F58();
+            (Atan2(relativePosition2.x, relativePosition2.y, 1) -
+             Atan2(velocityAdjustedPosition2.x, velocityAdjustedPosition2.y,
+                   1)) &
+            0xFFF;
+      }
+
+      break;
     } else {
-        D_80075924 = 0;
+      /*
+       * Special path when the camera's unk_0xC4 flag is set.
+       * Kept after the normal path to encourage tail merging.
+       */
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
     }
 
-    /*
-     * Either force the destination to the current camera position
-     * and clear the smoothing offsets, or advance camera smoothing.
-     */
-    if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
-        D_800756B8 != 0 &&
-        D_80075894 != 0 &&
-        g_Camera.m_OnMovingPlatform == 0 &&
-        D_80075924 == 0 &&
-        (g_Camera.m_State == 0 ||
-         g_Camera.m_State == (int)0x80000000u)) {
-        VecCopy(
-            &g_Camera.m_DestinationPosition,
-            &g_Camera.m_Position
-        );
+    break;
+  }
 
-        g_Camera.unk_0xA8.m_Coords.azimuth = 0;
-        g_Camera.unk_0xA8.m_Coords.elevation = 0;
-        g_Camera.unk_0xA8.m_Coords.radius = 0;
+  case 6: {
+    int j;
+    int offsetMagnitude;
 
-        g_Camera.unk_0xA8.m_Offset.azimuth = 0;
-        g_Camera.unk_0xA8.m_Offset.elevation = 0;
-        g_Camera.unk_0xA8.m_Offset.radius = 0;
-    } else {
-        for (i = 0; i < g_DeltaTime; i++) {
-            func_80034CE8(step);
-        }
-
-        func_80034204(&g_Camera.m_DestinationPosition);
-
-        VecAdd(
-            &g_Camera.m_DestinationPosition,
-            &g_Camera.m_DestinationPosition,
-            g_Camera.m_Focus
-        );
-
-        func_80034480();
-        func_800342F8();
+    if (g_Camera.m_Focus != &D_80077798) {
+      VecCopy(&D_80077798, g_Camera.m_Focus);
+      g_Camera.m_Focus = &D_80077798;
     }
 
-    /*
-     * Recalculate the camera's spherical position.
-     */
-    g_Camera.unk_0xE8 =
-        func_80033F08(&g_Camera.m_Position);
+    D_80075924 = 0;
 
-    /*
-     * In one specific movement state, retain the existing sphere
-     * azimuth when Spyro's speed is below 0x400.
-     */
-    if ((D_80075914 & 0x10) == 0 ||
-        g_Spyro.m_State != 5 ||
-        g_Camera.m_OnMovingPlatform != 0 ||
-        g_Spyro.m_Physics.m_SpeedAngle.m_Speed >= 0x400) {
-        g_Camera.m_Sphere.m_Coords.azimuth =
-            g_Camera.m_Simulation.m_Coords.azimuth;
+    offsetMagnitude = ABS(g_Camera.unk_0xA8.m_Coords.azimuth) +
+                      ABS(g_Camera.unk_0xA8.m_Coords.elevation) +
+                      ABS(g_Camera.unk_0xA8.m_Coords.radius) +
+                      ABS(g_Camera.unk_0xA8.m_Offset.azimuth) +
+                      ABS(g_Camera.unk_0xA8.m_Offset.elevation) +
+                      ABS(g_Camera.unk_0xA8.m_Offset.radius);
+
+    if (offsetMagnitude >= 0x21) {
+      for (j = 0; j < g_DeltaTime; j++) {
+        func_80034CE8(0);
+      }
+
+      func_80034204(&g_Camera.m_DestinationPosition);
+
+      VecAdd(&g_Camera.m_DestinationPosition, &g_Camera.m_DestinationPosition,
+             g_Camera.m_Focus);
+
+      CameraForceToDestination();
+      func_800342F8();
     }
 
-    /*
-     * The remaining five spherical values are copied unconditionally.
-     */
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
     g_Camera.m_Sphere.m_Coords.elevation =
         g_Camera.m_Simulation.m_Coords.elevation;
-    g_Camera.m_Sphere.m_Coords.radius =
-        g_Camera.m_Simulation.m_Coords.radius;
-    g_Camera.m_Sphere.m_Offset.azimuth =
-        g_Camera.m_Simulation.m_Offset.azimuth;
+    g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+
+    g_Camera.m_Sphere.m_Offset.azimuth = g_Camera.m_Simulation.m_Offset.azimuth;
     g_Camera.m_Sphere.m_Offset.elevation =
         g_Camera.m_Simulation.m_Offset.elevation;
-    g_Camera.m_Sphere.m_Offset.radius =
-        g_Camera.m_Simulation.m_Offset.radius;
+    g_Camera.m_Sphere.m_Offset.radius = g_Camera.m_Simulation.m_Offset.radius;
+
+    return;
+  }
+
+  case 4: {
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+    if (g_Camera.unk_0xC4 == 0) {
+      if (func_80017928(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
+                        g_Camera.m_Rotation.z) >= 0x579) {
+        g_Camera.m_SphericalPreset = &D_8006C9DC;
+        ApplySphericalPreset();
+        break;
+      } else {
+        g_Camera.m_SphericalPreset = &D_8006C9AC;
+
+        if ((D_80075914 & 0x40) == 0) {
+          g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+          g_Camera.m_Sphere.m_Coords.azimuth =
+              g_Camera.m_Simulation.m_Coords.azimuth;
+        }
+      }
+
+      ApplySphericalPreset();
+      break;
+    } else {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+
+    break;
+  }
+
+  case 0x80000009: {
+    int headLookAngle;
+
+    g_Camera.m_SphericalPreset = &D_8006CA0C;
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    g_Camera.m_Sphere.m_Coords.elevation =
+        g_Camera.m_Simulation.m_Coords.elevation;
+    g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+
+    if (g_Camera.unk_0xC4 != 0) {
+      step = 5;
+      break;
+    }
+
+    ApplySphericalPreset();
+
+    /*
+     * If the active controller is an analogue stick controller
+     * and its left stick is not centred, use the stick axes.
+     */
+    if (g_ActivePad->m_Down == 3 &&
+        ((*(int *)(&g_ActivePad->m_Sticks) & 0xFFFF0000) != 0x7F7F0000)) {
+      g_Camera.unk_0xDC += (g_ActivePad->m_Sticks.m_LeftX - 0x7F) >> 1;
+      g_Camera.unk_0xE0 += (0x7F - g_ActivePad->m_Sticks.m_LeftY) >> 1;
+    } else {
+      if ((g_Pad.m_Held & PAD_LEFT) != 0) {
+        g_Camera.unk_0xDC -= 0x30;
+      } else if ((g_Pad.m_Held & PAD_RIGHT) != 0) {
+        g_Camera.unk_0xDC += 0x30;
+      }
+
+      if ((g_Pad.m_Held & PAD_UP) != 0) {
+        g_Camera.unk_0xE0 += 0x30;
+      } else if ((g_Pad.m_Held & PAD_DOWN) != 0) {
+        g_Camera.unk_0xE0 -= 0x30;
+      }
+    }
+
+    /* Clamp the camera's two input offsets. */
+    if (g_Camera.unk_0xDC < -0x400) {
+      g_Camera.unk_0xDC = -0x400;
+    }
+    if (g_Camera.unk_0xDC > 0x400) {
+      g_Camera.unk_0xDC = 0x400;
+    }
+
+    if (g_Camera.unk_0xE0 < -0x3D0) {
+      g_Camera.unk_0xE0 = -0x3D0;
+    }
+    if (g_Camera.unk_0xE0 > 0x500) {
+      g_Camera.unk_0xE0 = 0x500;
+    }
+
+    /*
+     * Apply the offsets to the last simulation coordinates.
+     */
+    g_Camera.m_LastSimulation.m_Coords.azimuth += g_Camera.unk_0xDC;
+
+    if (g_Camera.unk_0xE0 < -0x140) {
+      g_Camera.m_LastSimulation.m_Coords.elevation -= 0x140;
+
+      g_Camera.m_LastSimulation.m_Offset.elevation += 0x140 + g_Camera.unk_0xE0;
+    } else {
+      g_Camera.m_LastSimulation.m_Coords.elevation += g_Camera.unk_0xE0;
+    }
+
+    /*
+     * Clamp the head-look target derived from the camera offsets.
+     */
+    headLookAngle = -g_Camera.unk_0xDC;
+
+    if (headLookAngle < -0x300) {
+      headLookAngle = -0x300;
+    }
+    if (headLookAngle > 0x300) {
+      headLookAngle = 0x300;
+    }
+
+    g_Spyro.m_HeadLookTarget.z = headLookAngle;
+
+    headLookAngle = -g_Camera.unk_0xE0;
+
+    if (headLookAngle < -0x200) {
+      headLookAngle = -0x200;
+    }
+    if (headLookAngle > 0x200) {
+      headLookAngle = 0x200;
+    }
+
+    g_Spyro.m_HeadLookTarget.y = headLookAngle;
+    step = 5;
+    break;
+  }
+
+  case 2: {
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+    if (g_Camera.unk_0xC4 == 0) {
+      if (func_80017928(g_Spyro.m_Physics.m_SpeedAngle.m_RotZ,
+                        g_Camera.m_Rotation.z) >= 0x579) {
+        g_Camera.m_SphericalPreset = &D_8006C964;
+      } else {
+        g_Camera.m_SphericalPreset = &D_8006C934;
+      }
+
+      ApplySphericalPreset();
+      break;
+    } else {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+      break;
+    }
+  }
+
+  case 0x80000007: {
+    Moby *moby;
+
+    g_Camera.m_SphericalPreset = &D_8006CB5C;
+    g_Camera.m_Focus = &D_80076ED0;
+    moby = g_Spyro.m_mobyInUseBySpyro;
+
+    D_80076ED0.x = moby->m_Position.x;
+    D_80076ED0.y = moby->m_Position.y;
+    D_80076ED0.z = g_Spyro.m_Position.z;
+
+    g_Camera.m_FocusRotation = moby->m_Rotation.z << 4;
+
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    g_Camera.m_Sphere.m_Coords.elevation =
+        g_Camera.m_Simulation.m_Coords.elevation;
+    g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+
+    ApplySphericalPreset();
+    break;
+  }
+
+  case 0x8000000C: {
+    Moby *moby;
+
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    moby = g_Spyro.m_mobyInUseBySpyro;
+
+    g_Camera.m_FocusRotation =
+        Atan2(moby->m_Position.x - g_Spyro.m_Position.x,
+              moby->m_Position.y - g_Spyro.m_Position.y, 1);
+
+    if (g_Camera.unk_0xC4 != 0) {
+      break;
+    }
+
+    g_Camera.m_SphericalPreset = &D_8006CB74;
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+    ApplySphericalPreset();
+    break;
+  }
+
+  case 0x8000000A: {
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    g_Camera.m_Sphere.m_Coords.elevation =
+        g_Camera.m_Simulation.m_Coords.elevation;
+    g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+
+    if (g_Camera.unk_0xC4 == 0) {
+      ApplySphericalPreset();
+    } else {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+
+    if ((g_Spyro.m_ControlFlags & 0x1000) == 0) {
+      break;
+    }
+
+    step = 5;
+    break;
+  }
+
+  case 15: {
+    g_Camera.m_SphericalPreset = &D_8006C8D4;
+    g_Camera.m_Focus = &g_Spyro.m_Position;
+    g_Camera.m_FocusRotation = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+    g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+
+    if (g_Camera.unk_0xC4 == 0) {
+      ApplySphericalPreset();
+      break;
+    }
+
+    g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+    g_Camera.m_Sphere = g_Camera.m_Simulation;
+    break;
+  }
+
+  default:
+    break;
+  }
+
+  /*
+   * Some camera states bypass the ordinary rotation-speed update.
+   */
+  if (g_Camera.m_State != 0x80000009 && g_Camera.m_State != 0x80000007 &&
+      g_Camera.m_State != 0x80000012 && g_Camera.m_State != 0x8000000B &&
+      g_Camera.m_State != 0x8000000E && g_Camera.m_State != 3) {
+    func_80035F58();
+  } else {
+    D_80075924 = 0;
+  }
+
+  /*
+   * Either force the destination to the current camera position
+   * and clear the smoothing offsets, or advance camera smoothing.
+   */
+  if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) && D_800756B8 != 0 &&
+      D_80075894 != 0 && g_Camera.m_OnMovingPlatform == 0 && D_80075924 == 0 &&
+      (g_Camera.m_State == 0 || g_Camera.m_State == (int)0x80000000u)) {
+    VecCopy(&g_Camera.m_DestinationPosition, &g_Camera.m_Position);
+
+    g_Camera.unk_0xA8.m_Coords.azimuth = 0;
+    g_Camera.unk_0xA8.m_Coords.elevation = 0;
+    g_Camera.unk_0xA8.m_Coords.radius = 0;
+
+    g_Camera.unk_0xA8.m_Offset.azimuth = 0;
+    g_Camera.unk_0xA8.m_Offset.elevation = 0;
+    g_Camera.unk_0xA8.m_Offset.radius = 0;
+  } else {
+    for (i = 0; i < g_DeltaTime; i++) {
+      func_80034CE8(step);
+    }
+
+    func_80034204(&g_Camera.m_DestinationPosition);
+
+    VecAdd(&g_Camera.m_DestinationPosition, &g_Camera.m_DestinationPosition,
+           g_Camera.m_Focus);
+
+    func_80034480();
+    func_800342F8();
+  }
+
+  /*
+   * Recalculate the camera's spherical position.
+   */
+  g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+  /*
+   * In one specific movement state, retain the existing sphere
+   * azimuth when Spyro's speed is below 0x400.
+   */
+  if ((D_80075914 & 0x10) == 0 || g_Spyro.m_State != 5 ||
+      g_Camera.m_OnMovingPlatform != 0 ||
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed >= 0x400) {
+    g_Camera.m_Sphere.m_Coords.azimuth = g_Camera.m_Simulation.m_Coords.azimuth;
+  }
+
+  /*
+   * The remaining five spherical values are copied unconditionally.
+   */
+  g_Camera.m_Sphere.m_Coords.elevation =
+      g_Camera.m_Simulation.m_Coords.elevation;
+  g_Camera.m_Sphere.m_Coords.radius = g_Camera.m_Simulation.m_Coords.radius;
+  g_Camera.m_Sphere.m_Offset.azimuth = g_Camera.m_Simulation.m_Offset.azimuth;
+  g_Camera.m_Sphere.m_Offset.elevation =
+      g_Camera.m_Simulation.m_Offset.elevation;
+  g_Camera.m_Sphere.m_Offset.radius = g_Camera.m_Simulation.m_Offset.radius;
 }
 
 // Camera state update for 0x8000000B

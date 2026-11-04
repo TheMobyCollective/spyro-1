@@ -108,8 +108,6 @@ typedef struct {
   int unk_0xF4;
   int unk_0xF8;
   int unk_0xFC;
-  Vector3D unk_0x100;
-  int unk_0x10C;
 } Camera;
 
 extern int D_80075844; // New occlusion group
