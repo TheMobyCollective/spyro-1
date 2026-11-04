@@ -99,6 +99,12 @@ void VecMult(Vector3D *pOut, Vector3D *pIn, int pVal);
 
 void func_800177F8(Vector3D *pOut, Vector3D *pIn, int pVal);
 
+/// @brief Signed distance between two 12 bit angles
+/// @param pAngle1
+/// @param pAngle2
+/// @return The signed distance between the two angles
+int func_8001796C(int pAngle1, int pAngle2);
+
 /// @brief Subtracts two 12 bit angles
 /// @param pAngle1
 /// @param pAngle2
@@ -122,7 +128,7 @@ int func_80017908(int pAngle1, int pAngle2);
 /// @return The new angle
 int func_800179F0(int pTargetAngle, int pAngle, int pSpeed, int pMinStep);
 
-/// @brief Returns the octagonal distance between two angles
+/// @brief Returns the octagonal distance between two positions
 /// This function is a lot faster than using square roots
 int OctDistance(Vector3D *pPos1, Vector3D *pPos2);
 

@@ -29,9 +29,7 @@ extern unsigned int strlen(char *);
 
 extern int g_ScreenBorderEnabled; // Is the screen border enabled
 extern int D_800756C0;
-void func_80049FAC(int);
 void func_80048D10(int);
-int func_8001796C(int, int);
 
 extern SphericalCoordsOffset D_8006C8BC;
 extern int D_8006EADC[9][2]; // BalloonArrivalJumpoffXY;

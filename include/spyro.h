@@ -371,10 +371,8 @@ typedef struct {
 extern SpyroFlame g_SpyroFlame;
 
 typedef struct {
-  int unk_00;
-  int unk_04;
-  int unk_08;
-  int unk_0c;
+  u_char unk_00[8];
+  u_char unk_08[8];
   Vector3D m_Position;
   int unk_1c;
   int unk_20;
@@ -412,5 +410,8 @@ void func_80049660(void);
 
 /// @brief Update the tail animation
 void func_80049E8C(void);
+
+/// @brief Update Spyro's shadow
+void func_80049FAC(int pArg);
 
 #endif // !__SPYRO_H

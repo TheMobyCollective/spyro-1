@@ -772,8 +772,6 @@ typedef struct {
 } BalloonArrival;
 extern BalloonArrival D_8006EA4C[9];
 
-extern int func_8001796C(int, int);
-
 /// @brief Gamestate 12 (Balloonist)
 void func_800324D8(void) {
   Vector3D toCamera;
