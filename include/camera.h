@@ -52,6 +52,30 @@ extern int D_8007592C;
 
 /* Temporary focus position */
 extern Vector3D D_80077798;
+/* Spherical-coordinate smoothing parameters */
+/* Spring coefficients */
+extern short D_8006C754[6]; // Coordinate azimuth
+extern short D_8006C760[6]; // Coordinate elevation
+extern short D_8006C76C[6]; // Coordinate radius
+extern short D_8006C778[6]; // Offset azimuth
+extern short D_8006C784[6]; // Offset elevation
+extern short D_8006C790[6]; // Offset radius
+
+/* Damping coefficients */
+extern short D_8006C79C[6]; // Coordinate azimuth
+extern short D_8006C7A8[6]; // Coordinate elevation
+extern short D_8006C7B4[6]; // Coordinate radius
+extern short D_8006C7C0[6]; // Offset azimuth
+extern short D_8006C7CC[6]; // Offset elevation
+extern short D_8006C7D8[6]; // Offset radius
+
+/* Deadband thresholds */
+extern short D_8006C7E4[6]; // Coordinate azimuth
+extern short D_8006C7F0[6]; // Coordinate elevation
+extern short D_8006C7FC[6]; // Coordinate radius
+extern short D_8006C808[6]; // Offset azimuth
+extern short D_8006C814[6]; // Offset elevation
+extern short D_8006C820[6]; // Offset radius
 
 typedef struct {
   SHORTMATRIX m_ProjectionMatrix; // Scaled for the aspect ratio

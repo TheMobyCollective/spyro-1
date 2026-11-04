@@ -243,10 +243,408 @@ void CameraForceToDestination(void) {
   g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
 }
 
-void func_80034CE8(int);
+// Updates the camera's spherical coordinates using six smoothing channels.
+void func_80034CE8(int smoothingPreset) {
+    int inputDelta;
+    int springCoefficient;
+    int deadbandThreshold;
+    int filterResult;
 
-// Related to updating the spherical coordinates, not 100% sure
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80034CE8);
+    // Six Camera Channels
+    // Channel One: coordinate azimuth.
+
+    springCoefficient = D_8006C754[smoothingPreset];
+
+    // Enforce a minimum spring coefficient in camera state 3.
+    if (g_Camera.m_State == 3 && springCoefficient < 0x400) {
+        springCoefficient = 0x400;
+    }
+
+    // Select the azimuth input delta, accounting for special camera states.
+    if (D_80075924 != 0) {
+        inputDelta = D_80075924;
+    } else if (((((D_80075914 & 0x10) == 0) &&
+                 (D_8007592C == 0)) ||
+                (g_Camera.m_State != 0x80000011)) ||
+               ((inputDelta = 0, D_800756B8 == 0))) {
+
+        if ((((((D_80075914 & 0x10) != 0) &&
+               ((u_int)(g_Spyro.m_State - 5) < 2)) ||
+              (D_8007592C != 0)) &&
+             (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 0x400)) &&
+            (g_Camera.unk_0xC4 == 0) &&
+            ((inputDelta = 0, g_Camera.m_OnMovingPlatform == 0))) {
+
+            g_Camera.unk_0xA8.m_Coords.azimuth = 0;
+
+        } else {
+            inputDelta = 0;
+
+            if (g_Camera.m_State != 6) {
+                inputDelta =
+                    (g_Camera.m_LastSimulation.m_Coords.azimuth -
+                     g_Camera.m_Sphere.m_Coords.azimuth) & 0xFFF;
+
+                if (inputDelta >= 0x801) {
+                    inputDelta -= 0x1000;
+                }
+            }
+        }
+    }
+
+    // Apply the azimuth spring and damping, then test the deadband.
+    // filterResult is reused for the accumulator, its magnitude and the
+    // deadband predicate to retain the matching instruction sequence.
+    filterResult =
+        (g_Camera.unk_0xA8.m_Coords.azimuth +=
+         (((springCoefficient * inputDelta) -
+           (D_8006C79C[smoothingPreset] *
+            g_Camera.unk_0xA8.m_Coords.azimuth)) >> 8));
+
+    deadbandThreshold = D_8006C7E4[smoothingPreset];
+
+    if (filterResult < 0) {
+        filterResult = -filterResult;
+    }
+
+    filterResult = (filterResult < deadbandThreshold);
+
+    if (filterResult) {
+        g_Camera.unk_0xA8.m_Coords.azimuth = 0;
+
+        if (g_Camera.unk_0xCC != 0) {
+            if (inputDelta > 0) {
+                g_Camera.unk_0xA8.m_Coords.azimuth = 0x100;
+            } else if (inputDelta < 0) {
+                g_Camera.unk_0xA8.m_Coords.azimuth = -0x100;
+            }
+        }
+    }
+
+    // Clamp azimuth during a particular Spyro animation state.
+    if (g_Spyro.m_State == 0xF &&
+        g_Spyro.m_walkingState == 0xB) {
+
+        if (g_Camera.unk_0xA8.m_Coords.azimuth < -0x800) {
+            g_Camera.unk_0xA8.m_Coords.azimuth = -0x800;
+        }
+
+        if (g_Camera.unk_0xA8.m_Coords.azimuth >= 0x801) {
+            g_Camera.unk_0xA8.m_Coords.azimuth = 0x800;
+        }
+    }
+
+    // Apply the optional azimuth limit for camera state 0x80000009 or state 3.
+    if ((D_80075914 & 0x40) != 0 &&
+        g_Camera.unk_0xC4 == 0 &&
+        (g_Camera.m_State == 0x80000009u ||
+         g_Camera.m_State == 3)) {
+
+        if (g_Camera.unk_0xA8.m_Coords.azimuth < -0x2000) {
+            g_Camera.unk_0xA8.m_Coords.azimuth = -0x2000;
+        }
+
+        if (g_Camera.unk_0xA8.m_Coords.azimuth > 0x2000) {
+            g_Camera.unk_0xA8.m_Coords.azimuth = 0x2000;
+        }
+    }
+
+    // Apply the additional clamp for camera states 0 and 0x80000000.
+    if (((((D_80075914 & 0x10) ||
+           (D_8007592C != 0)) &&
+          (D_80075894 == 0)) &&
+         (D_800756B8 != 0)) &&
+        (g_Camera.m_OnMovingPlatform == 0) &&
+        ((g_Camera.m_State == 0) ||
+         (g_Camera.m_State == 0x80000000))) {
+
+        if (g_Camera.unk_0xA8.m_Coords.azimuth < -0x800) {
+            g_Camera.unk_0xA8.m_Coords.azimuth = -0x800;
+        }
+
+        if (g_Camera.unk_0xA8.m_Coords.azimuth >= 0x801) {
+            g_Camera.unk_0xA8.m_Coords.azimuth = 0x800;
+        }
+    }
+
+    // Accumulate the filtered azimuth into the camera angle.
+    g_Camera.m_Sphere.m_Coords.azimuth +=
+        g_Camera.unk_0xA8.m_Coords.azimuth >> 8;
+
+
+    // Channel Two: coordinate elevation.
+
+    if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
+        g_Camera.m_State == 0x80000011) {
+
+        inputDelta = 0;
+
+    } else if ((D_80075914 & 0x10) != 0 &&
+               g_Spyro.m_State == 6 &&
+               ((inputDelta = 0), g_Camera.unk_0xC4 == 0)) {
+
+        g_Camera.unk_0xA8.m_Coords.elevation = 0;
+
+    } else if (g_Camera.m_State == 6) {
+        inputDelta = 0;
+
+    } else {
+        inputDelta =
+            (g_Camera.m_LastSimulation.m_Coords.elevation -
+             g_Camera.m_Sphere.m_Coords.elevation) & 0xFFF;
+
+        if (inputDelta >= 0x801) {
+            inputDelta -= 0x1000;
+        }
+    }
+
+    // Apply the elevation spring, damping and deadband.
+    filterResult =
+        (g_Camera.unk_0xA8.m_Coords.elevation +=
+         (((springCoefficient = D_8006C760[smoothingPreset]) * inputDelta -
+           (D_8006C7A8[smoothingPreset] *
+            g_Camera.unk_0xA8.m_Coords.elevation)) >> 8));
+
+    deadbandThreshold = D_8006C7F0[smoothingPreset];
+
+    if (filterResult < 0) {
+        filterResult = -filterResult;
+    }
+
+    filterResult = (filterResult < deadbandThreshold);
+
+    if (filterResult) {
+        g_Camera.unk_0xA8.m_Coords.elevation = 0;
+
+        if (g_Camera.unk_0xCC != 0) {
+            if (inputDelta > 0) {
+                g_Camera.unk_0xA8.m_Coords.elevation = 0x100;
+            } else if (inputDelta < 0) {
+                g_Camera.unk_0xA8.m_Coords.elevation = -0x100;
+            }
+        }
+    }
+
+    // Apply the optional elevation limit for camera state 0x80000009.
+    if ((D_80075914 & 0x40) != 0 &&
+        g_Camera.m_State == 0x80000009 &&
+        g_Camera.unk_0xC4 == 0) {
+
+        if (g_Camera.unk_0xA8.m_Coords.elevation < -0x2000) {
+            g_Camera.unk_0xA8.m_Coords.elevation = -0x2000;
+        }
+
+        if (g_Camera.unk_0xA8.m_Coords.elevation > 0x2000) {
+            g_Camera.unk_0xA8.m_Coords.elevation = 0x2000;
+        }
+    }
+
+    // Accumulate the filtered elevation into the camera angle.
+    g_Camera.m_Sphere.m_Coords.elevation +=
+        g_Camera.unk_0xA8.m_Coords.elevation >> 8;
+
+
+    // Channel Three: coordinate radius.
+
+    if (((((D_80075914 & 0x10) != 0) ||
+          (D_8007592C != 0)) &&
+         (g_Camera.m_State == 0x80000011)) ||
+        (g_Camera.m_State == 6)) {
+
+        inputDelta = 0;
+
+    } else {
+        inputDelta = g_Camera.m_LastSimulation.m_Coords.radius -
+                     g_Camera.m_Sphere.m_Coords.radius;
+    }
+
+    // Apply the radius spring, damping and deadband.
+    filterResult =
+        (g_Camera.unk_0xA8.m_Coords.radius +=
+         (((springCoefficient = D_8006C76C[smoothingPreset]) * inputDelta -
+           (D_8006C7B4[smoothingPreset] *
+            g_Camera.unk_0xA8.m_Coords.radius)) >> 8));
+
+    deadbandThreshold = D_8006C7FC[smoothingPreset];
+
+    if (filterResult < 0) {
+        filterResult = -filterResult;
+    }
+
+    filterResult = (filterResult < deadbandThreshold);
+
+    if (filterResult) {
+        g_Camera.unk_0xA8.m_Coords.radius = 0;
+
+        if (g_Camera.unk_0xCC != 0) {
+            if (inputDelta > 0) {
+                g_Camera.unk_0xA8.m_Coords.radius = 0x100;
+            } else if (inputDelta < 0) {
+                g_Camera.unk_0xA8.m_Coords.radius = -0x100;
+            }
+        }
+    }
+
+    // Accumulate the filtered radius into the camera distance.
+    g_Camera.m_Sphere.m_Coords.radius +=
+        g_Camera.unk_0xA8.m_Coords.radius >> 8;
+
+
+    // Channel Four: offset azimuth.
+
+    if (((((D_80075914 & 0x10) != 0) ||
+          (D_8007592C != 0)) &&
+         (g_Camera.m_State == 0x80000011)) ||
+        (g_Camera.m_State == 6)) {
+
+        inputDelta = 0;
+
+    } else {
+        inputDelta =
+            (g_Camera.m_LastSimulation.m_Offset.azimuth -
+             g_Camera.m_Sphere.m_Offset.azimuth) & 0xFFF;
+
+        if (inputDelta >= 0x801) {
+            inputDelta -= 0x1000;
+        }
+    }
+
+    // Apply the offset azimuth spring, damping and deadband.
+    filterResult =
+        (g_Camera.unk_0xA8.m_Offset.azimuth +=
+         (((springCoefficient = D_8006C778[smoothingPreset]) * inputDelta -
+           (D_8006C7C0[smoothingPreset] *
+            g_Camera.unk_0xA8.m_Offset.azimuth)) >> 8));
+
+    deadbandThreshold = D_8006C808[smoothingPreset];
+
+    if (filterResult < 0) {
+        filterResult = -filterResult;
+    }
+
+    filterResult = (filterResult < deadbandThreshold);
+
+    if (filterResult) {
+        g_Camera.unk_0xA8.m_Offset.azimuth = 0;
+
+        if (g_Camera.unk_0xCC != 0) {
+            if (inputDelta > 0) {
+                g_Camera.unk_0xA8.m_Offset.azimuth = 0x100;
+            } else if (inputDelta < 0) {
+                g_Camera.unk_0xA8.m_Offset.azimuth = -0x100;
+            }
+        }
+    }
+
+    // Accumulate the filtered offset azimuth.
+    g_Camera.m_Sphere.m_Offset.azimuth +=
+        g_Camera.unk_0xA8.m_Offset.azimuth >> 8;
+
+
+    // Channel Five: offset elevation.
+
+    if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
+        g_Camera.m_State == 0x80000011) {
+
+        inputDelta = 0;
+
+    } else if (g_Camera.m_State == 6) {
+        inputDelta = 0;
+
+    } else {
+        inputDelta =
+            (g_Camera.m_LastSimulation.m_Offset.elevation -
+             g_Camera.m_Sphere.m_Offset.elevation) & 0xFFF;
+
+        if (inputDelta >= 0x801) {
+            inputDelta -= 0x1000;
+        }
+    }
+
+    // Apply the offset elevation spring, damping and deadband.
+    filterResult =
+        (g_Camera.unk_0xA8.m_Offset.elevation +=
+         (((springCoefficient = D_8006C784[smoothingPreset]) * inputDelta -
+           (D_8006C7CC[smoothingPreset] *
+            g_Camera.unk_0xA8.m_Offset.elevation)) >> 8));
+
+    deadbandThreshold = D_8006C814[smoothingPreset];
+
+    if (filterResult < 0) {
+        filterResult = -filterResult;
+    }
+
+    filterResult = (filterResult < deadbandThreshold);
+
+    if (filterResult) {
+        g_Camera.unk_0xA8.m_Offset.elevation = 0;
+
+        if (g_Camera.unk_0xCC != 0) {
+            if (inputDelta > 0) {
+                g_Camera.unk_0xA8.m_Offset.elevation = 0x100;
+            } else if (inputDelta < 0) {
+                g_Camera.unk_0xA8.m_Offset.elevation = -0x100;
+            }
+        }
+    }
+
+    // Accumulate the filtered offset elevation.
+    // Unlike coordinate elevation, this channel has no additional state clamp.
+    g_Camera.m_Sphere.m_Offset.elevation +=
+        g_Camera.unk_0xA8.m_Offset.elevation >> 8;
+
+
+    // Channel Six: offset radius.
+
+    if (((D_80075914 & 0x10) != 0 || D_8007592C != 0) &&
+        g_Camera.m_State == 0x80000011) {
+
+        inputDelta = 0;
+
+    } else if (g_Camera.m_State == 6) {
+        inputDelta = 0;
+
+    } else {
+        inputDelta =
+            (g_Camera.m_LastSimulation.m_Offset.radius -
+             g_Camera.m_Sphere.m_Offset.radius) & 0xFFF;
+
+        if (inputDelta >= 0x801) {
+            inputDelta -= 0x1000;
+        }
+    }
+
+    // Apply the offset radius spring, damping and deadband.
+    filterResult =
+        (g_Camera.unk_0xA8.m_Offset.radius +=
+         (((springCoefficient = D_8006C790[smoothingPreset]) * inputDelta -
+           (D_8006C7D8[smoothingPreset] *
+            g_Camera.unk_0xA8.m_Offset.radius)) >> 8));
+
+    deadbandThreshold = D_8006C820[smoothingPreset];
+
+    if (filterResult < 0) {
+        filterResult = -filterResult;
+    }
+
+    filterResult = (filterResult < deadbandThreshold);
+
+    if (filterResult) {
+        g_Camera.unk_0xA8.m_Offset.radius = 0;
+
+        if (g_Camera.unk_0xCC != 0) {
+            if (inputDelta > 0) {
+                g_Camera.unk_0xA8.m_Offset.radius = 0x100;
+            } else if (inputDelta < 0) {
+                g_Camera.unk_0xA8.m_Offset.radius = -0x100;
+            }
+        }
+    }
+
+    // Accumulate the filtered offset radius.
+    g_Camera.m_Sphere.m_Offset.radius +=
+        g_Camera.unk_0xA8.m_Offset.radius >> 8;
+}
 
 void func_800357A4(void);
 
