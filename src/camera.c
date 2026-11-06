@@ -699,10 +699,187 @@ void func_80034CE8(int smoothingPreset) {
   g_Camera.m_Sphere.m_Offset.radius += g_Camera.unk_0xA8.m_Offset.radius >> 8;
 }
 
-void func_800357A4(void);
+/// @brief Camera state transitions
+void func_800357A4(void) {
+  Vector3D v;
+  int nextState;
 
-// Camera movement related, seems to be for warping it when blocked
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_800357A4);
+  // Requested state: 0x80000009.
+  if (g_Camera.unk_0xC0 == 0x80000009) {
+    if (D_80075914 & 0x10) {
+      if (g_Spyro.m_State != 0 && g_Spyro.m_State != 13) {
+
+        g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+
+        g_Spyro.m_HeadLookTarget.x = 0;
+        g_Spyro.m_HeadLookTarget.y = 0;
+        g_Spyro.m_HeadLookTarget.z = 0;
+
+      } else if (!(g_Pad.m_Held & PAD_TRIANGLE)) {
+        g_Camera.unk_0xC0 = 0x80000010;
+        D_80075938 = 45;
+
+        g_Spyro.m_HeadLookTarget.x = 0;
+        g_Spyro.m_HeadLookTarget.y = 0;
+        g_Spyro.m_HeadLookTarget.z = 0;
+      }
+
+    } else if (!(g_Pad.m_Held & PAD_TRIANGLE) || g_Spyro.m_State != 0) {
+
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+
+      g_Spyro.m_HeadLookTarget.x = 0;
+      g_Spyro.m_HeadLookTarget.y = 0;
+      g_Spyro.m_HeadLookTarget.z = 0;
+    }
+
+    // Requested state: 0x8000000A.
+  } else if (g_Camera.unk_0xC0 == 0x8000000A) {
+    if (!(g_Spyro.m_ControlFlags & CTRL_CAMERA_0200)) {
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+      g_Camera.m_Focus = &g_Spyro.m_Position;
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+
+      if (((D_80075914 & 0x10) || D_8007592C != 0) && g_Camera.unk_0xC0 == 0 &&
+          g_Camera.m_OnMovingPlatform == 0) {
+
+        g_Camera.unk_0xC0 = 0x80000010;
+        D_80075938 = 45;
+      }
+
+    } else if (g_Camera.m_State != 0x8000000A) {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+
+    // Requested state: 0x80000007.
+  } else if (g_Camera.unk_0xC0 == 0x80000007) {
+    if (!(g_Spyro.m_ControlFlags & CTRL_CAMERA_8000)) {
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+      g_Camera.m_Focus = &g_Spyro.m_Position;
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+
+    } else if (g_Camera.m_State != 0x80000007) {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+
+    // Requested state: 0x8000000C.
+  } else if (g_Camera.unk_0xC0 == 0x8000000C) {
+    if (!(g_Spyro.m_ControlFlags & CTRL_CAMERA_10000)) {
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+      g_Camera.m_Focus = &g_Spyro.m_Position;
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+
+    } else if (g_Camera.m_State != 0x8000000C) {
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+
+    // Requested state: 0x8000000B.
+  } else if (g_Camera.unk_0xC0 == 0x8000000B) {
+    if (!(g_Spyro.m_ControlFlags & CTRL_CAMERA_0400)) {
+      nextState = D_8006C588[g_Spyro.m_State];
+      g_Camera.m_Focus = &g_Spyro.m_Position;
+      g_Camera.unk_0xC0 = nextState;
+    } else if (g_Camera.m_State != 0x8000000B) {
+      if (g_Spyro.unk_0x248 != 0) {
+        g_Spyro.unk_0x240->m_CurrentNode = g_Spyro.unk_0x240->m_NodeCount - 1;
+      } else {
+        g_Spyro.unk_0x240->m_CurrentNode = 0;
+      }
+    }
+
+    // Requested state: 0x80000010.
+  } else if (g_Camera.unk_0xC0 == 0x80000010) {
+    nextState = D_8006C588[g_Spyro.m_State];
+    if (nextState != 0 && nextState != 4) {
+      g_Camera.unk_0xC0 = nextState;
+    } else if (D_80075938 <= 0) {
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+    }
+
+    // Requested state: 0x80000011.
+  } else if (g_Camera.unk_0xC0 == 0x80000011) {
+    nextState = D_8006C588[g_Spyro.m_State];
+    if (nextState != 0 && nextState != 4) {
+      g_Camera.unk_0xC0 = nextState;
+    } else if (D_80075938 <= 0) {
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+    }
+
+    // Requested state: 0x80000000.
+  } else if (g_Camera.unk_0xC0 == 0x80000000) {
+    if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 1024) {
+      g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+    } else {
+      func_80017AA4(&v, &g_Spyro.m_Position);
+
+      v.x -= 256;
+      v.y -= 120;
+
+      if (ABS(v.x) > 64 || ABS(v.y) > 40 || v.z > 5120u) {
+        g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
+      }
+    }
+
+    // Default requested state: 0.
+  } else if (g_Camera.unk_0xC0 == 0 && g_Spyro.unk_0x194 == 0 &&
+             ((D_80075914 & 0x10) || D_8007592C != 0) &&
+             g_Camera.m_OnMovingPlatform == 0) {
+
+    func_80017AA4(&v, &g_Spyro.m_Position);
+
+    v.x -= 256;
+    v.y -= 120;
+
+    if (ABS(v.x) > 64 || ABS(v.y) > 40 || v.z > 5120u) {
+
+      g_Camera.unk_0xC0 = 0x80000010;
+      D_80075938 = 45;
+    }
+
+  } else if (g_Camera.m_Focus != &g_Spyro.m_Position) {
+    if (g_Camera.m_State != 6) {
+      g_Camera.m_Focus = &g_Spyro.m_Position;
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+  }
+
+  // Apply the requested camera-state transition.
+  if (g_Camera.unk_0xC0 != g_Camera.m_State) {
+    if (((D_80075914 & 0x10) || D_8007592C != 0) && g_Spyro.unk_0x194 == 0 &&
+        g_Camera.m_OnMovingPlatform == 0 &&
+        (g_Camera.unk_0xC0 == 0 || g_Camera.unk_0xC0 == 0x80000000) &&
+        g_Camera.m_State != 0x80000011 &&
+        g_Camera.m_Focus == &g_Spyro.m_Position) {
+
+      D_80075938 = 8;
+      g_Camera.unk_0xC0 = 0x80000011;
+      D_80075894 = 90;
+
+    } else if (g_Camera.m_State == 2 || g_Camera.m_State == 0x8000000E) {
+
+      g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+      g_Camera.m_Sphere = g_Camera.m_Simulation;
+    }
+
+    g_Camera.m_State = g_Camera.unk_0xC0;
+
+    if (g_Camera.m_State == 0x80000009) {
+      if (D_800756B8 != 0) {
+        g_Camera.unk_0xC4 = 0;
+      }
+
+      g_Camera.unk_0xDC = 0;
+      g_Camera.unk_0xE0 = 0;
+    }
+  }
+}
 
 /// @brief Camera rotation with gamepad L2 R2
 void func_80035F58() {
@@ -1325,7 +1502,7 @@ void func_80035FB4(void) {
       g_Camera.m_Sphere = g_Camera.m_Simulation;
     }
 
-    if ((g_Spyro.m_ControlFlags & 0x1000) == 0) {
+    if ((g_Spyro.m_ControlFlags & CTRL_SKIP_CAMERA_CENTER) == 0) {
       break;
     }
 
