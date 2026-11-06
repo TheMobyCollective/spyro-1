@@ -144,4 +144,7 @@ void func_80017B48(Vector3D *, Vector3D *, int);
 /// @brief Unpacks a collision triangle
 void ColTriUnpack(int pIndex, Vector3D *pOut);
 
+/// @brief Returns the leading bit count
+int func_80016D08(int pVal);
+
 #endif // !__MATH_H

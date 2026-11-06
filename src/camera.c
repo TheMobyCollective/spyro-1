@@ -301,9 +301,6 @@ void func_80034358(void) {
   D_8007590C = 0;
 }
 
-extern SphericalCoordsOffset D_8006C82C[5];
-extern SphericalCoordsOffset D_8006CAB4[5];
-
 // Does the camera's collision, updates the spherical coordinates
 void func_80034480(void) {
   Vector3D v1;

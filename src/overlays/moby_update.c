@@ -73,7 +73,6 @@ extern int D_800758F8;
 extern int D_80075900;
 extern int D_80075908;
 extern int D_800770F8[4];
-extern Vector3D D_80077858;
 
 void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 

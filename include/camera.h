@@ -44,13 +44,24 @@ extern SphericalCoordsOffset D_8006CA0C;
 extern SphericalCoordsOffset D_8006CB5C;
 extern SphericalCoordsOffset D_8006CB74;
 
+extern SphericalCoordsOffset D_8006C82C[5];
+extern SphericalCoordsOffset D_8006CAB4[5];
+extern SphericalCoordsOffset D_8006CB2C;
+
 /* Camera and movement parameters */
 extern u_char D_8007527C;
 
 extern int D_8007592C;
 
+// Only xref is in Spyro code, but not gp_rel
+// and in a section related to the camera,
+// so likely part of Camera.
+// Only increments, never read
+extern int D_800777A0;
+
 /* Temporary focus position */
 extern Vector3D D_80077798;
+
 /* Spherical-coordinate smoothing parameters */
 /* Spring coefficients */
 extern short D_8006C754[6]; // Coordinate azimuth

@@ -34,11 +34,6 @@ extern u_int D_80077908[36][8]; // Gem collection mask
 
 extern u_char g_RecentGemsCollected[32];
 
-extern Vector3D
-    g_CollisionPoint; // Collision hit position (set by raycast functions)
-extern Vector3D g_CollisionNormal;   // Surface normal at collision point
-extern int g_CollisionTriangleIndex; // Index of collision triangle hit
-
 extern int D_80075754; // Sound volume
 extern int D_80075748; // Music volume
 

@@ -117,4 +117,7 @@ extern Environment g_Environment;
 
 extern int g_SurfaceBelowFlags; // Surface type flags from last height query
 
+// Flag per environment sector specifying whether the sector got rendered
+extern u_char D_800771C8[256];
+
 #endif

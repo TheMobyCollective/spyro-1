@@ -4,6 +4,12 @@
 #include "moby.h"
 #include "vector.h"
 
+extern Vector3D D_80077858;
+
+extern Vector3D g_CollisionPoint;    // Collision hit position
+extern Vector3D g_CollisionNormal;   // Surface normal at collision point
+extern int g_CollisionTriangleIndex; // Index of collision triangle hit
+
 /// @brief Updates the camera's occlusion group based on the specified position
 /// @param pos The position to check from
 /// @return Whether it found a occlusion group
@@ -32,8 +38,8 @@ int ColSphere(Vector3D *pPos, int pRadiusMobys, int pRadiusTerrain);
 /// @param pApplyingDamage The damage to apply
 /// @param pIgnoreMoby Moby to ignore during collision check
 /// @param arg5 Bitmask of some kind
-int ColMoby(Vector3D *pPos, int pRadius, int *pReceivingDamage,
-            int pApplyingDamage, Moby *pIgnoreMoby, int arg5);
+Moby *ColMoby(Vector3D *pPos, int pRadius, int *pReceivingDamage,
+              int pApplyingDamage, Moby *pIgnoreMoby, int arg5);
 
 /// @brief Looks for the floor below the specified position
 /// @param pos The position to check from

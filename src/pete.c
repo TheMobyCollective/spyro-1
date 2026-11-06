@@ -375,7 +375,7 @@ void func_8003D52C(int pUnknown) {
 /// difference. Manages turn acceleration/deceleration using a lookup table
 /// indexed by turn momentum
 /// @param pTableIndex Index selecting which row of the turn rate table to use
-void UpdateSpyroTurnMomentum(int pTableIndex) {
+int UpdateSpyroTurnMomentum(int pTableIndex) {
   int angleDiff;
   int threshold;
 
@@ -431,8 +431,8 @@ void UpdateSpyroTurnMomentum(int pTableIndex) {
   }
 
   // Calculate angular distance (And.. does nothing with it?)
-  func_80017928(g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ,
-                g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
+  return func_80017928(g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ,
+                       g_Spyro.m_Physics.m_SpeedAngle.m_RotZ);
 }
 
 /**
@@ -444,7 +444,7 @@ void UpdateSpyroTurnMomentum(int pTableIndex) {
  * deflections fall through to the normal momentum-based turn. Always
  * delegates the actual rotation to UpdateSpyroTurnMomentum() afterward.
  */
-void ApplySpyroSoftTurn(void) {
+int ApplySpyroSoftTurn(void) {
   Vector3D stickVec;
   int magnitude;
   int diff;
@@ -486,7 +486,8 @@ void ApplySpyroSoftTurn(void) {
     }
   }
 
-  UpdateSpyroTurnMomentum(0); // Apply rotation using row 0 (walking turn rate)
+  return UpdateSpyroTurnMomentum(
+      0); // Apply rotation using row 0 (walking turn rate)
 }
 
 /// @brief Makes the movement speed approach the target speed
@@ -1030,7 +1031,7 @@ void AdjustAirCollision(void) {
 
 extern int D_8006C714[16];
 
-// @brief Pushback from collision used while falling, strange implementation
+/// @brief Pushback from collision used while falling, strange implementation
 void func_8003E90C(void) {
   Vector3D vecA;
   Vector3D vecB;
@@ -1879,8 +1880,6 @@ void func_80049F3C(void) {
     g_Spyro.m_flameableFrames++;
   }
 }
-
-extern int D_8006E9A4[TOTAL_LEVEL_COUNT]; // per-level surface-height threshold
 
 extern Vector3D D_8006E2A8[8];
 

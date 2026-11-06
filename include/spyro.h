@@ -276,6 +276,14 @@ extern int g_IsSpyroHidden;
 extern int D_8007592C;        // Is spyro in look mode
 extern u_char D_8006C588[48]; // Maps Spyro's state to camera states
 
+extern u_char D_80075274[8]; // Idle animation timer start values
+
+extern int D_8006E9A4[TOTAL_LEVEL_COUNT]; // per-level surface-height threshold
+
+extern int D_80075728;    // Splash moby index
+extern int D_8006EA34[3]; // Splash moby classes
+extern int D_8006EA40[3]; // Bubble moby classes
+
 extern int D_8007580C; // Health before entering flight level
 
 extern int D_800758C0; // Related to max height
@@ -286,18 +294,23 @@ extern int D_80075960;
 extern int D_800758A0;
 extern int D_80075700;
 
+// Tweaking parameters in .data for some reason
+extern int D_8006C5B8;
+extern int D_8006C5BC;
+extern int D_8006C5C0;
+extern int D_8006C5C4;
+extern int D_8006C5C8;
+extern int D_8006C5CC;
+
 typedef struct {
   Vector3D m_Position;
   Vector3D8 m_Rotation;
   u_char pad1;
   Tiledef m_FlameTexture;
   Tiledef m_SuperFlameTexture;
-  int unk_20;
-  int unk_24;
-  int unk_28;
-  int unk_2c;
-  int unk_30;
-  int unk_34;
+  u_char unk_20[8];
+  u_char unk_28[8];
+  u_char unk_30[8];
   int unk_38;
   int unk_3c;
   int unk_40;
@@ -329,46 +342,29 @@ typedef struct {
   u_char unk_99[3];
   int unk_9c;
   int m_FairyKissTimer;
-  int unk_a4;
-  int unk_a8;
-  int unk_ac;
-  int unk_b0;
-  int unk_b4;
-  int unk_b8;
-  int unk_bc;
-  int unk_c0;
+  MATRIX m_HeadMatrix; // Head matrix when flaming started
   int unk_c4;
   int unk_c8;
-  int unk_cc;
-  int unk_d0;
-  int unk_d4;
-  int unk_d8;
-  int unk_dc;
-  int unk_e0;
-  int unk_e4;
-  int unk_e8;
-  int unk_ec;
-  int unk_f0;
-  int unk_f4;
-  int unk_f8;
-  int unk_fc;
-  int unk_100;
-  int unk_104;
-  int unk_108;
-  int unk_10c;
-  int unk_110;
-  int unk_114;
-  int unk_118;
-  int unk_11c;
-  int unk_120;
-  int unk_124;
-  int unk_128;
-  int unk_12c;
-  int unk_130;
-  int unk_134;
+  Vector3D unk_cc;
+  Vector3D unk_d8[8];
 } SpyroFlame;
 
 extern SpyroFlame g_SpyroFlame;
+
+extern u_char D_8006E1C8[2][8];
+extern Vector3D D_8006E1D8[8];
+
+extern Vector3D D_8006DA6C[4];
+extern Vector3D D_8006DA9C;
+
+// Pos and padding
+typedef struct {
+  Vector3D16 m_Pos;
+  u_short m_Pad;
+} FlameFrame;
+
+extern FlameFrame D_8006DAA8[96];
+extern FlameFrame D_8006DDA8[128];
 
 typedef struct {
   u_char unk_00[8];
@@ -404,6 +400,29 @@ void func_8003EA68(int pNewState);
 /// @brief Increments the body animation
 /// @param pDeltaTime The delta time
 void func_8003CB24(int pDeltaTime);
+
+/// @brief Creates the target speed and angle based on the stick
+void func_8003D3B8(int speed);
+
+void func_8003E1AC(void);
+
+void func_8003E628(void);
+
+/// @brief Pushback from collision used while falling, strange implementation
+void func_8003E90C(void);
+
+/// @brief Spyro collision / physics update
+int func_8003FE40(void);
+
+void ApplySlopeGravity(void);
+void AdjustAirCollision(void);
+void CheckWallCollision(void);
+void UpdateSlopeFloorCollision(void);
+
+int HandleSpyroDamage(int pFlags);
+int func_80041270(void);
+void func_8003D978(void);
+void CycleSpyroIdleAnimation(void);
 
 /// @brief Update the head animation
 void func_80049660(void);
