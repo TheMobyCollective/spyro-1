@@ -1429,8 +1429,7 @@ void unused_VecInterpolateCurve(Vector3D *pDest, u_char *pParam, int pIndex,
                                 Vector3D *pVec1, Vector3D *pVec2) {
   Vector3D vec1;
   Vector3D vec2;
-  short *table;
-  short *weights;
+  PathWeight *table;
 
   if (pParam[2] == 2) {
     table = D_80075280;
@@ -1443,10 +1442,8 @@ void unused_VecInterpolateCurve(Vector3D *pDest, u_char *pParam, int pIndex,
     }
   }
 
-  weights = (short *)((u_int)(pIndex << 2) + (u_int)table);
-
-  VecMult(&vec1, pVec1, weights[0]);
-  VecMult(&vec2, pVec2, weights[1]);
+  VecMult(&vec1, pVec1, table[pIndex].a);
+  VecMult(&vec2, pVec2, table[pIndex].b);
   VecAdd(pDest, &vec1, &vec2);
   VecShiftRight(pDest, 10);
 }
@@ -2188,7 +2185,95 @@ int unused_GetSpyroQuadrant(Moby *pMoby) {
   return result;
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/moby_helpers", func_8003BFC0);
+int func_8003BFC0(Moby *pMoby, PathData *pPath, Vector3D *pPreviousMovement,
+                  int *pSegmentFrame, int pSegmentDuration, int pFlags) {
+  Vector3D movement;
+  Vector3D previousMovement;
+  PathWeight *table;
+  int nodesAdvanced;
+  int currentNode;
+  int framesRemaining;
+  int frameCount;
+
+  nodesAdvanced = 0;
+
+  if (pSegmentDuration >= 9) {
+    frameCount = 7;
+    table = D_8006CBCC;
+    currentNode = pPath->m_CurrentNode;
+  } else if (pSegmentDuration >= 7) {
+    frameCount = 5;
+    table = D_8006CBB4;
+    currentNode = pPath->m_CurrentNode;
+  } else if (pSegmentDuration >= 5) {
+    frameCount = 3;
+    table = D_8006CBA4;
+    currentNode = pPath->m_CurrentNode;
+  } else {
+    frameCount = 1;
+    table = D_80075280;
+    currentNode = pPath->m_CurrentNode;
+  }
+
+  if (*pSegmentFrame >= pSegmentDuration) {
+    VecSub(&movement, &pPath->m_Nodes[currentNode].m_Position,
+           &pMoby->m_Position);
+    VecCopy(pPreviousMovement, &movement);
+
+    pPath->m_CurrentNode++;
+    nodesAdvanced++;
+
+    if (pPath->m_CurrentNode >= pPath->m_NodeCount) {
+      pPath->m_CurrentNode = 0;
+      nodesAdvanced++;
+    }
+
+    *pSegmentFrame = 0;
+  } else {
+    if (*pSegmentFrame > frameCount) {
+      VecSub(&movement, &pPath->m_Nodes[currentNode].m_Position,
+             &pMoby->m_Position);
+      framesRemaining = pSegmentDuration + 1 - *pSegmentFrame;
+      movement.x /= framesRemaining;
+      movement.y /= framesRemaining;
+      movement.z /= framesRemaining;
+
+      // Deadcode that uses framesRemaining needed for matching
+      framesRemaining = MAX(framesRemaining, 1);
+
+      (*pSegmentFrame)++;
+    } else {
+      VecSub(&movement, &pPath->m_Nodes[currentNode].m_Position,
+             &pMoby->m_Position);
+      framesRemaining = pSegmentDuration + 1 - *pSegmentFrame;
+      movement.x /= framesRemaining;
+      movement.y /= framesRemaining;
+      movement.z /= framesRemaining;
+
+      // Deadcode that uses framesRemaining needed for matching
+      framesRemaining = MAX(framesRemaining, 1);
+
+      VecMult(&movement, &movement, table[*pSegmentFrame].a);
+      VecMult(&previousMovement, pPreviousMovement, table[*pSegmentFrame].b);
+      VecAdd(&movement, &movement, &previousMovement);
+      VecShiftRight(&movement, 10);
+      (*pSegmentFrame)++;
+    }
+  }
+
+  if (!(pFlags & 4)) {
+    movement.z = 0;
+  }
+
+  pMoby->m_Rotation.z = Atan2Fast(movement.x, movement.y);
+  pMoby->m_Rotation.y =
+      -Atan2Fast(movement.z, VecMagnitude(&movement, 0)) + 0x40;
+
+  VecAdd(&pMoby->m_Position, &pMoby->m_Position, &movement);
+  func_800529E4(pMoby, UPDATE_PROP_CHAIN);
+
+  return nodesAdvanced;
+}
 
 #define setMobyLetterProps(props, parent, index, len)                          \
   (props)->m_Parent = parent;                                                  \

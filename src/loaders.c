@@ -1831,29 +1831,29 @@ void LoadLevel(int pArg) {
     g_HasLevelTransition = 0; // Has level transition
     g_PortalLevelId = 0;      // Portal level id
 
-    // SKELETON:
-    // This is weird..
-    // So this showed up sometime between Jun15 and Jul18.
-    // And in Jul5 it's partially here, but only the
-    // ones saved into the save file are there.
+    // Most of these showed up between Jun15 and Jul18
 
-    // There's another build right in the middle of Jul5 and Jul18
-    // that might give us some insight here
-    // but it's not been released yet :)
+    // Used by Tree Tops thieves
+    D_80075870 = 0;
+    D_80075874 = 0;
 
-    D_80075870 = 0; // Unused Var
-    D_80075874 = 0; // Unused Var
+    // Used by Gnasty Gnorc's thieves
+    // Saved into the save file, but always reset here
+    D_80075838 = 0;
+    D_8007583C = 0;
 
-    D_80075838 = 0; // Saved into save file, unused var 1
-    D_8007583C = 0; // Saved into save file, unused var 2
+    // Unused, never written
+    D_80075670 = 0;
+    D_80075674 = 0;
 
-    D_80075670 = 0; // Unused Var
-    D_80075674 = 0; // Unused Var
+    // If you've ever been eaten by a dragon eating plant
+    D_8007577C = 0;
 
-    D_8007577C = 0; // Unused Var
+    // Used by Metalhead
+    D_80075854 = 0;
 
-    D_80075854 = 0; // Unused Var
-    D_80075850 = 0; // Unused Var
+    // Used by Doctor Shemp
+    D_80075850 = 0;
 
     D_80075818 = -1; // Credits cheat return level ID
 

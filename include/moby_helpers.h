@@ -302,15 +302,19 @@ void MobyPodSetSubstate(Moby *pMoby, u_int pSubstate);
 // Vector interpolation curve lookup tables
 // Each table contains pairs of weights (w1, w2) where w1 + w2 = 1024
 // Used for smooth interpolation between two vectors along a curve
+typedef struct {
+  short a;
+  short b;
+} PathWeight;
 
 /// @brief Linear interpolation weights (1 pair for 2 steps)
-extern short D_80075280[];
+extern PathWeight D_80075280[1];
 /// @brief Interpolation curve weights (4 pairs for 5 steps)
-extern short D_8006CBA4[];
+extern PathWeight D_8006CBA4[4];
 /// @brief Interpolation curve weights (6 pairs for 7 steps)
-extern short D_8006CBB4[];
+extern PathWeight D_8006CBB4[6];
 /// @brief Interpolation curve weights (8 pairs for 9 steps)
-extern short D_8006CBCC[];
+extern PathWeight D_8006CBCC[8];
 
 /// @brief Spawns a sparkle particle attached to a moby
 /// @param pMoby The moby to attach the sparkle to

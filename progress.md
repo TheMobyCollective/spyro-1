@@ -201,7 +201,7 @@
 - [x] MobyMoveTowardTarget
 - [x] MobyMoveForward
 - [x] unused_GetSpyroQuadrant
-- [ ] func_8003BFC0
+- [x] func_8003BFC0
 - [x] func_8003C358
 - [x] MobyUpdateDragonFragment
 - [x] SetSpyroHeadLookTarget

@@ -44,6 +44,7 @@
 #define ABS2(x) ((x) > 0 ? (x) : -(x))
 
 #define MIN(a, b) ((b) < (a) ? (b) : (a))
+#define MAX(a, b) ((b) > (a) ? (b) : (a))
 
 #define CLAMP(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
 
