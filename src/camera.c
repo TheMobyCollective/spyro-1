@@ -9,6 +9,7 @@
 #include "memory.h"
 #include "rand.h"
 #include "spyro.h"
+#include "variables.h"
 
 #include <libgte.h>
 
@@ -300,10 +301,266 @@ void func_80034358(void) {
   D_8007590C = 0;
 }
 
-void func_80034480(void);
+extern SphericalCoordsOffset D_8006C82C[5];
+extern SphericalCoordsOffset D_8006CAB4[5];
 
 // Does the camera's collision, updates the spherical coordinates
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/camera", func_80034480);
+void func_80034480(void) {
+  Vector3D v1;
+  Vector3D v2;
+  SphericalCoordsOffset savedSimulation;
+
+  int distance;
+  int steps;
+  int stepIndex;
+  int hadCollision;
+  int farFromSpyro;
+  int collisionMask;
+  int i;
+
+  hadCollision = 0;
+
+  VecSub(&v2, &g_Camera.m_DestinationPosition, &g_Spyro.m_Position);
+  distance = VecMagnitude(&v2, 1);
+  farFromSpyro = distance > 8192;
+
+  VecCopy(&v1, &g_Camera.m_DestinationPosition);
+
+  VecSub(&v2, &g_Camera.m_DestinationPosition, &g_Camera.m_Position);
+  distance = VecMagnitude(&v2, 1);
+
+  if (distance < 0) {
+    distance += 255;
+  }
+
+  steps = (distance >> 8) + 1;
+
+  if (steps >= 2) {
+    v2.x /= steps;
+    v2.y /= steps;
+    v2.z /= steps;
+  }
+
+  VecCopy(&g_Camera.m_DestinationPosition, &g_Camera.m_Position);
+
+  for (stepIndex = 0; stepIndex < steps; stepIndex++) {
+    VecAdd(&g_Camera.m_DestinationPosition, &g_Camera.m_DestinationPosition,
+           &v2);
+
+    for (i = 0; i < 6; i++) {
+      if (ColSphere(&g_Camera.m_DestinationPosition, 256, 256) == 0) {
+        break;
+      }
+
+      VecCopy(&g_Camera.m_DestinationPosition, &g_CollisionPoint);
+      hadCollision = 1;
+    }
+
+    if (i == 6) {
+      VecCopy(&g_Camera.m_DestinationPosition, &v1);
+      stepIndex = steps;
+    }
+  }
+
+  g_Camera.unk_0xCC = 0;
+
+  if (i < 6) {
+    if (hadCollision != 0) {
+      VecSub(&v1, &g_Camera.m_DestinationPosition, &g_Camera.m_Position);
+
+      if (ABS(v1.x) < 32) {
+        v1.x = 0;
+      }
+
+      if (ABS(v1.y) < 32) {
+        v1.y = 0;
+      }
+
+      if (ABS(v1.z) < 32) {
+        v1.z = 0;
+      }
+
+      VecAdd(&g_Camera.m_Position, &g_Camera.m_Position, &v1);
+    } else {
+      VecCopy(&g_Camera.m_Position, &g_Camera.m_DestinationPosition);
+      g_Camera.unk_0xCC = 1;
+    }
+  }
+
+  g_Camera.unk_0xE8 = func_80033F08(&g_Camera.m_Position);
+
+  VecCopy(&v2, &g_Spyro.m_Position);
+  v2.z -= 308;
+
+  if (func_80033E40(&g_Camera.m_Position, &v2) == 0 ||
+      func_80033E40(&v2, &g_Camera.m_Position) == 0) {
+
+    D_800756B8 = 0;
+
+    if (g_Spyro.m_sortingDepth < 127) {
+      g_Spyro.m_sortingDepth = 2;
+    }
+
+    D_8007AA10.unk_1c = 0;
+    g_Camera.m_SpyroOffCenterFrames++;
+
+    if (g_Camera.m_SpyroOffCenterFrames > 30) {
+      for (i = 0; i < 5; i++) {
+        g_Camera.m_SphericalPreset = &D_8006CAB4[i];
+        func_80034358();
+
+        if (ColSphere(&g_Camera.m_DestinationPosition, 256, 256) == 0 &&
+            func_80033E40(&g_Camera.m_DestinationPosition, &v2) != 0 &&
+            func_80033E40(&v2, &g_Camera.m_DestinationPosition) != 0) {
+          return;
+        }
+      }
+    }
+
+    collisionMask = 0;
+    savedSimulation = g_Camera.m_Simulation;
+
+    for (i = 0; i < 5; i++) {
+      g_Camera.m_Sphere.m_Coords.azimuth =
+          (g_Camera.m_Simulation.m_Coords.azimuth +
+           D_8006C82C[i].m_Coords.azimuth) &
+          0xFFF;
+      g_Camera.m_Sphere.m_Coords.elevation =
+          (g_Camera.m_Simulation.m_Coords.elevation +
+           D_8006C82C[i].m_Coords.elevation) &
+          0xFFF;
+      g_Camera.m_Sphere.m_Coords.radius =
+          g_Camera.m_Simulation.m_Coords.radius + D_8006C82C[i].m_Coords.radius;
+
+      func_80034204(&g_Camera.m_DestinationPosition);
+      VecAdd(&g_Camera.m_DestinationPosition, &g_Camera.m_DestinationPosition,
+             g_Camera.m_Focus);
+
+      if (ColSphere(&g_Camera.m_DestinationPosition, 256, 256) == 0) {
+        collisionMask |= 1 << i;
+        if (func_80033E40(&g_Camera.m_DestinationPosition, &v2) != 0 &&
+            func_80033E40(&v2, &g_Camera.m_DestinationPosition) != 0) {
+          g_Camera.unk_0xC4 = 5;
+          func_80033F08(&g_Camera.m_DestinationPosition);
+
+          g_Camera.m_LastSimulation.m_Coords.azimuth =
+              g_Camera.m_Simulation.m_Coords.azimuth;
+          g_Camera.m_LastSimulation.m_Coords.elevation =
+              g_Camera.m_Simulation.m_Coords.elevation;
+          g_Camera.m_LastSimulation.m_Coords.radius =
+              g_Camera.m_Simulation.m_Coords.radius;
+
+          g_Camera.m_Simulation = savedSimulation;
+          return;
+        }
+      }
+    }
+
+    if (collisionMask != 0) {
+      for (i = 0; i < 5; i++) {
+        if ((collisionMask >> i) & 1) {
+          g_Camera.m_Sphere.m_Coords.azimuth =
+              (g_Camera.m_Simulation.m_Coords.azimuth +
+               D_8006C82C[i].m_Coords.azimuth * 2) &
+              0xFFF;
+          g_Camera.m_Sphere.m_Coords.elevation =
+              (g_Camera.m_Simulation.m_Coords.elevation +
+               D_8006C82C[i].m_Coords.elevation * 2) &
+              0xFFF;
+          g_Camera.m_Sphere.m_Coords.radius =
+              g_Camera.m_Simulation.m_Coords.radius +
+              D_8006C82C[i].m_Coords.radius * 2;
+
+          func_80034204(&g_Camera.m_DestinationPosition);
+          VecAdd(&g_Camera.m_DestinationPosition,
+                 &g_Camera.m_DestinationPosition, g_Camera.m_Focus);
+
+          if (ColSphere(&g_Camera.m_DestinationPosition, 256, 256) == 0) {
+            if (func_80033E40(&g_Camera.m_DestinationPosition, &v2) != 0 &&
+                func_80033E40(&v2, &g_Camera.m_DestinationPosition) != 0) {
+              g_Camera.unk_0xC4 = 5;
+              func_80033F08(&g_Camera.m_DestinationPosition);
+
+              g_Camera.m_LastSimulation.m_Coords.azimuth =
+                  g_Camera.m_Simulation.m_Coords.azimuth;
+              g_Camera.m_LastSimulation.m_Coords.elevation =
+                  g_Camera.m_Simulation.m_Coords.elevation;
+              g_Camera.m_LastSimulation.m_Coords.radius =
+                  g_Camera.m_Simulation.m_Coords.radius;
+
+              g_Camera.m_Simulation = savedSimulation;
+              return;
+            }
+          }
+        }
+      }
+
+      if (collisionMask != 0) {
+        for (i = 0; i < 5; i++) {
+          if ((collisionMask >> i) & 1) {
+            g_Camera.m_Sphere.m_Coords.azimuth =
+                (g_Camera.m_Simulation.m_Coords.azimuth +
+                 D_8006C82C[i].m_Coords.azimuth * 4) &
+                0xFFF;
+            g_Camera.m_Sphere.m_Coords.elevation =
+                (g_Camera.m_Simulation.m_Coords.elevation +
+                 D_8006C82C[i].m_Coords.elevation * 4) &
+                0xFFF;
+            g_Camera.m_Sphere.m_Coords.radius =
+                g_Camera.m_Simulation.m_Coords.radius +
+                D_8006C82C[i].m_Coords.radius * 4;
+
+            func_80034204(&g_Camera.m_DestinationPosition);
+            VecAdd(&g_Camera.m_DestinationPosition,
+                   &g_Camera.m_DestinationPosition, g_Camera.m_Focus);
+
+            if (ColSphere(&g_Camera.m_DestinationPosition, 256, 256) == 0) {
+              if (func_80033E40(&g_Camera.m_DestinationPosition, &v2) != 0 &&
+                  func_80033E40(&v2, &g_Camera.m_DestinationPosition) != 0) {
+                g_Camera.unk_0xC4 = 5;
+                func_80033F08(&g_Camera.m_DestinationPosition);
+
+                g_Camera.m_LastSimulation.m_Coords.azimuth =
+                    g_Camera.m_Simulation.m_Coords.azimuth;
+                g_Camera.m_LastSimulation.m_Coords.elevation =
+                    g_Camera.m_Simulation.m_Coords.elevation;
+                g_Camera.m_LastSimulation.m_Coords.radius =
+                    g_Camera.m_Simulation.m_Coords.radius;
+
+                g_Camera.m_Simulation = savedSimulation;
+                return;
+              }
+            }
+          }
+        }
+      }
+    }
+  } else {
+
+    D_800756B8 = 1;
+
+    if (g_Camera.unk_0xC4 != 0) {
+      if (g_Camera.m_State != 0 && g_Camera.m_State != 0x80000009) {
+        g_Camera.unk_0xC4 -= 1;
+      } else if (g_Camera.unk_0xE8 != 0) {
+        g_Camera.unk_0xC4 -= 1;
+      }
+    }
+
+    if (g_Camera.m_State & 0x80000000) {
+      g_Camera.m_SpyroOffCenterFrames = 0;
+    } else {
+      func_80017AA4(&v2, &g_Spyro.m_Position);
+
+      if (v2.x > 32 && v2.x < (512 - 32) && v2.y > 24 && v2.y < (240 - 24) &&
+          !farFromSpyro) {
+        g_Camera.m_SpyroOffCenterFrames = 0;
+      } else {
+        g_Camera.m_SpyroOffCenterFrames++;
+      }
+    }
+  }
+}
 
 /// @brief Forces the camera to its destination position
 void CameraForceToDestination(void) {
@@ -990,7 +1247,9 @@ void func_80035FB4(void) {
         angleA -= 0x1000;
       }
 
-      angleB = (g_Camera.m_Simulation.m_Coords.elevation - D_8006C8D8) & 0xFFF;
+      angleB = (g_Camera.m_Simulation.m_Coords.elevation -
+                D_8006C8D4.m_Coords.elevation) &
+               0xFFF;
 
       if (angleB >= 0x801) {
         angleB -= 0x1000;

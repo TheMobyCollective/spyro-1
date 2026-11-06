@@ -33,7 +33,6 @@ extern SphericalCoordsOffset D_8006C934;
 
 /* Spherical camera presets */
 extern SphericalCoordsOffset D_8006C8D4;
-extern int D_8006C8D8;
 
 extern SphericalCoordsOffset D_8006C94C;
 extern SphericalCoordsOffset D_8006C964;
