@@ -152,15 +152,6 @@ typedef struct {
 /// @brief Sparkle array
 extern Sparkle g_Sparkles[8];
 
-// r_cyclorama:
-
-/// @brief Renders the cyclorama / sky
-void func_8004EBA8(int pOcclusionGroup, SHORTMATRIX *pViewMatrix,
-                   SHORTMATRIX *pProjectionMatrix);
-
-/// @brief Renders the cyclorama, no parameters
-void func_8004F000(void);
-
 // r_moby:
 
 /// @brief Initializes the moby renderer, performs culling

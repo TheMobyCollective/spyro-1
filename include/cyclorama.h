@@ -3,6 +3,7 @@
 
 #include <sys/types.h>
 
+#include <camera.h>
 #include <common.h>
 #include <vector.h>
 
@@ -88,5 +89,12 @@ void func_8004F4BC(PortalDataSky *pSky, MATRIX *pView, MATRIX *pProj);
 
 /// @brief Renders a portal's skybox (With interpolation)
 void func_80050240(PortalDataSky *pSky, MATRIX *pView, MATRIX *pProj);
+
+/// @brief Renders the cyclorama / sky
+void func_8004EBA8(int pOcclusionGroup, SHORTMATRIX *pViewMatrix,
+                   SHORTMATRIX *pProjectionMatrix);
+
+/// @brief Renders the cyclorama, no parameters
+void func_8004F000(void);
 
 #endif
