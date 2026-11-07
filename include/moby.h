@@ -1749,7 +1749,7 @@ typedef struct {
   int m_0x08;
   int m_0x0c;
   int m_0x10;
-  int m_0x14;
+  int m_SpinAngle;
   int m_0x18;
   int m_0x1c;
   int m_0x20;
