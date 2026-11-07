@@ -1,6 +1,7 @@
 #ifndef __DRAGON_H
 #define __DRAGON_H
 
+#include "cutscene.h"
 #include "moby.h"
 #include "wad.h"
 
@@ -23,9 +24,9 @@ extern struct {
   int m_LoadLength;
   int m_CutsceneTicks; // Cutscene ticks
   int unk_0x40;
-  int m_Fade;     //
-  void *unk_0x48; // Camera data
-  int unk_0x4C;   // Camera length
+  int m_Fade;                   //
+  CutsceneCameraData *unk_0x48; // Camera data
+  int unk_0x4C;                 // Camera length
 
   // These are all used by the gamestate
   int unk_0x50;
@@ -45,8 +46,8 @@ extern struct {
   int unk_0x84;
 
   // The Moby pointers
-  Moby *m_CutsceneSpyro;     // Cutscene dragon
-  Moby *m_CutsceneDragon;    // Cutscene Spyro
+  Moby *m_CutsceneDragon;    // Cutscene dragon
+  Moby *m_CutsceneSpyro;     // Cutscene Spyro
   Moby *m_RescuedDragonMoby; // The dragon Moby being rescued
   int padding;
 } g_DragonCutscene; // Dragon cutscene struct
@@ -57,7 +58,13 @@ extern struct {
   SHORTMATRIX mat_0x10;
   int unk_0x24;
   Vector3D8 vec_0x28;
+  u_char unk_0x2b;
 } D_80076248;
+
 extern short D_8006F3C0[24];
+
+extern u_char D_8006F390[4][2];
+extern u_char D_8006F398[4][2];
+extern Vector3D D_8006F3F0[3];
 
 #endif

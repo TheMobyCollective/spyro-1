@@ -205,7 +205,7 @@ typedef union {
 
 typedef struct {
   short m_NumFrames;
-  u_short m_NumColors;
+  short m_NumColors;
 
   u_char m_IsSpyroAnimation; // If 1, the other values of the int are unused
   u_char m_Scale;

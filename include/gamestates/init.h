@@ -48,6 +48,9 @@ void func_8002C924(Moby *pMoby);
  */
 void InitFairyCutscene(Moby *pMoby);
 
+/// @brief Exit dragon cutscene, back to gamestate 0
+void func_8002CB6C(void);
+
 /// @brief Exits fairy cutscene and returns to gameplay
 void func_8002D02C(void);
 

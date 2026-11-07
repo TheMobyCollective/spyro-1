@@ -2542,7 +2542,7 @@ dlabel D_8006EBCC /* Some kind of storage? Format matches the one of the ones ab
 /* Array of 36 vectors, seems like early start positions lol */
 /* No rotation included though, so seems pretty useless */
 /* They're all similar to their final counter parts*/
-/* but offset by some amount. (also beyond dr. shemp they don't make sense*/
+/* but offset by some amount. (also beyond dr. shemp they don't make sense)*/
 dlabel D_8006EC04
 /* 5F404 8006EC04 9D540100 */ .word 0x0001549D /* Artisans */
 /* 5F408 8006EC08 3DBA0000 */ .word 0x0000BA3D
@@ -3193,9 +3193,6 @@ dlabel g_FairyDialogueBoxSizes
 
 dlabel D_8006F390
 /* 5FB90 8006F390 */ .byte 0x01
-.size D_8006F390, . - D_8006F390
-
-dlabel D_8006F391
 /* 5FB91 8006F391 */ .byte 0x00
 /* 5FB92 8006F392 */ .byte 0xFF
 /* 5FB93 8006F393 */ .byte 0x00
@@ -3203,13 +3200,10 @@ dlabel D_8006F391
 /* 5FB95 8006F395 */ .byte 0xFF
 /* 5FB96 8006F396 */ .byte 0x00
 /* 5FB97 8006F397 */ .byte 0x01
-.size D_8006F391, . - D_8006F391
+.size D_8006F390, . - D_8006F390
 
 dlabel D_8006F398
 /* 5FB98 8006F398 */ .byte 0x01
-.size D_8006F398, . - D_8006F398
-
-dlabel D_8006F399
 /* 5FB99 8006F399 */ .byte 0x01
 /* 5FB9A 8006F39A */ .byte 0xFF
 /* 5FB9B 8006F39B */ .byte 0xFF
@@ -3217,40 +3211,26 @@ dlabel D_8006F399
 /* 5FB9D 8006F39D */ .byte 0xFF
 /* 5FB9E 8006F39E */ .byte 0xFF
 /* 5FB9F 8006F39F */ .byte 0x01
+.size D_8006F398, . - D_8006F398
+
 dlabel D_8006F3A0
-/* 5FBA0 8006F3A0 */ .byte 0x80
-/* 5FBA1 8006F3A1 */ .byte 0x00
-/* 5FBA2 8006F3A2 */ .byte 0x40
-/* 5FBA3 8006F3A3 */ .byte 0x00
-/* 5FBA4 8006F3A4 */ .byte 0x60
-/* 5FBA5 8006F3A5 */ .byte 0xFF
-/* 5FBA6 8006F3A6 */ .byte 0x40
-/* 5FBA7 8006F3A7 */ .byte 0x00
-/* 5FBA8 8006F3A8 */ .byte 0xC0
-/* 5FBA9 8006F3A9 */ .byte 0xFE
-/* 5FBAA 8006F3AA */ .byte 0x80
-/* 5FBAB 8006F3AB */ .byte 0x00
-/* 5FBAC 8006F3AC */ .byte 0x80
-/* 5FBAD 8006F3AD */ .byte 0x00
-/* 5FBAE 8006F3AE */ .byte 0x40
-/* 5FBAF 8006F3AF */ .byte 0x01
-/* 5FBB0 8006F3B0 */ .byte 0x60
-/* 5FBB1 8006F3B1 */ .byte 0xFF
-/* 5FBB2 8006F3B2 */ .byte 0x40
-/* 5FBB3 8006F3B3 */ .byte 0x01
-/* 5FBB4 8006F3B4 */ .byte 0x80
-/* 5FBB5 8006F3B5 */ .byte 0x00
-/* 5FBB6 8006F3B6 */ .byte 0x00
-/* 5FBB7 8006F3B7 */ .byte 0x03
-/* 5FBB8 8006F3B8 */ .byte 0x00
-/* 5FBB9 8006F3B9 */ .byte 0xFF
-/* 5FBBA 8006F3BA */ .byte 0x00
-/* 5FBBB 8006F3BB */ .byte 0x04
-/* 5FBBC 8006F3BC */ .byte 0x40
-/* 5FBBD 8006F3BD */ .byte 0xFE
-/* 5FBBE 8006F3BE */ .byte 0x48
-/* 5FBBF 8006F3BF */ .byte 0x05
-.size D_8006F399, . - D_8006F399
+/* 5FBA0 8006F3A0 */ .short 0x0080
+/* 5FBA2 8006F3A2 */ .short 0x0040
+/* 5FBA4 8006F3A4 */ .short 0xFF60
+/* 5FBA6 8006F3A6 */ .short 0x0040
+/* 5FBA8 8006F3A8 */ .short 0xFEC0
+/* 5FBAA 8006F3AA */ .short 0x0080
+/* 5FBAC 8006F3AC */ .short 0x0080
+/* 5FBAE 8006F3AE */ .short 0x0140
+/* 5FBB0 8006F3B0 */ .short 0xFF60
+/* 5FBB2 8006F3B2 */ .short 0x0140
+/* 5FBB4 8006F3B4 */ .short 0x0080
+/* 5FBB6 8006F3B6 */ .short 0x0300
+/* 5FBB8 8006F3B8 */ .short 0xFF00
+/* 5FBBA 8006F3BA */ .short 0x0400
+/* 5FBBC 8006F3BC */ .short 0xFE40
+/* 5FBBE 8006F3BE */ .short 0x0548
+.size D_8006F3A0, . - D_8006F3A0
 
 dlabel D_8006F3C0
 /* 5FBC0 8006F3C0 */ .short 0x0EF6

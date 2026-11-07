@@ -1827,7 +1827,7 @@ void func_8001CFDC(void) {
       if (g_DragonCutscene.m_RescuedDragonMoby->m_State < 0x80)
         *mobyBuf++ = g_DragonCutscene.m_RescuedDragonMoby;
       if (g_DragonCutscene.m_State == 3)
-        *mobyBuf++ = g_DragonCutscene.m_CutsceneSpyro;
+        *mobyBuf++ = g_DragonCutscene.m_CutsceneDragon;
       *mobyBuf = nullptr;
     }
 
@@ -1868,8 +1868,8 @@ void func_8001CFDC(void) {
   } else if (g_DragonCutscene.m_State == 4) {
     {
       Moby **mobyBuf = g_SonyImage.u.m_Draw.m_Moby;
-      *mobyBuf++ = g_DragonCutscene.m_CutsceneSpyro;
       *mobyBuf++ = g_DragonCutscene.m_CutsceneDragon;
+      *mobyBuf++ = g_DragonCutscene.m_CutsceneSpyro;
       *mobyBuf = nullptr;
     }
 
@@ -1905,7 +1905,7 @@ void func_8001CFDC(void) {
   } else if (g_DragonCutscene.m_State == 5) {
     {
       Moby **mobyBuf = g_SonyImage.u.m_Draw.m_Moby;
-      *mobyBuf++ = g_DragonCutscene.m_CutsceneSpyro;
+      *mobyBuf++ = g_DragonCutscene.m_CutsceneDragon;
       *mobyBuf = nullptr;
     }
 
