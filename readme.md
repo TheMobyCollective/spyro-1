@@ -1,11 +1,9 @@
 # Spyro the Dragon Decompilation Project
 
 > [!WARNING]
-> This project barely even started, while you can make some simple mods, the project evolving will probably throw a wrench into any mods you might actively be working on.
+> While we matched the logic, we're in the process of improving naming and structure, while you can make mods, the project evolving could break them at any time.
 
 This project aims to decompile Spyro the Dragon to source code that will create a matching game executable. By achieving a byte-for-byte match, we can preserve the game and gain insights into its development.
-
-I started this project late last year, I've been working on it on and off. Now that I've broken the 40% complete mark, I think it's time to make it public.
 
 ![Priceless](.github/assets/priceless.png)
 
@@ -14,7 +12,7 @@ I started this project late last year, I've been working on it on and off. Now t
 - `src/`: Decompiled source code.
 - `include/`: Include headers for source code, and headers used by disassembly tools.
 - `assets/`: Contains binary assets included in the executable.
-- `asm/`: Disassembly for non-matching code, and code originally written in assembly.
+- `asm/`: Disassembly for code originally written in assembly.
 - `tools/`: Contains utilities for building the game.
 
 ## Target checksums
@@ -26,12 +24,13 @@ I started this project late last year, I've been working on it on and off. Now t
 
 ![Progress](.github/assets/progress.png)
 
+All C source files have been decompiled, but require significant documentation and cleanup to improve readability.
+
 ## Overlays
 
 The way overlays were implemented in the Spyro trilogy is quite interesting, but were very challenging to match.
 
 All level overlays have since been matched, but require *a lot* of documentation still.
-There's 2 functions left unmatched in the credits overlay.
 
 They're made from the same set of files, but with bits and pieces included or excluded depending on the level.
 Which files are included in overlays is listed in `overlays/overlays.yaml`, and the classes included in levels
