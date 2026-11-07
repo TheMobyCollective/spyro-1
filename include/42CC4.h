@@ -39,6 +39,8 @@ enum MobyPropUpdateFlags {
 /// @param pFlags The flags to update, see MobyPropUpdateFlags
 void func_800529E4(Moby *pMoby, int pFlags);
 
+void func_80052F38(int, Vector3D*, int, int);
+
 /// @brief Updates a Moby's shadow
 /// @param pMoby The Moby to update
 void MobyUpdateShadow(Moby *pMoby);

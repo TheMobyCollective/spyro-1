@@ -427,6 +427,10 @@ void CycleSpyroIdleAnimation(void);
 /// @brief Update Spyro's flame and fairy kiss effects
 void func_80048D10(int pDeltaTime);
 
+/// @brief Physics state update for Spyro
+/// @param pDeltaTimeIndex Deltatime index, used for the pad input buffer
+void func_80043FE4(int pDeltaTimeIndex);
+
 /// @brief Update the head animation
 void func_80049660(void);
 

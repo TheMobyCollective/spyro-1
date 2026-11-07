@@ -18541,7 +18541,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
       if (props->m_0x20 == 0) {
         props->m_0x20 = 1;
-        props->m_0x14 = moby->m_Rotation.z << 4;
+        props->m_SpinAngle = moby->m_Rotation.z << 4;
       }
 
       if (props->m_0x1c != 0) {
@@ -18610,7 +18610,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           }
         } else {
           moby->m_DamageFlags = 0;
-          props->m_0x14 = moby->m_Rotation.z << 4;
+          props->m_SpinAngle = moby->m_Rotation.z << 4;
         }
         break;
       }
