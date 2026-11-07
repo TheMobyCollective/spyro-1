@@ -1810,8 +1810,447 @@ void func_80043FE4(int pDeltaTimeIndex);
 INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80043FE4);
 
 /// @brief Per-frame state dispatch for Spyro
-void func_80047B60(void);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80047B60);
+void func_80047B60(void) {
+  Vector3D floorProbe;
+
+  int angle;
+  int slope;
+  int along;
+  int across;
+  int delta;
+
+  g_Camera.m_OnMovingPlatform = 0;
+
+  switch (g_Spyro.m_State) {
+  case 0:
+  case 12:
+  case 13:
+  case 18:
+  case 35:
+  case 36:
+  case 37:
+  case 38:
+  case 39:
+  case 40:
+  case 41:
+  case 42:
+  case 43:
+    if (g_Pad.m_NoMovementButtonPressed != 0 && (g_Pad.m_Held & PAD_TRIANGLE)) {
+      g_Camera.unk_0xC0 = 0x80000009;
+    }
+
+    func_8003E628();
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+
+    if (g_Spyro.m_ControlFlags == 0) {
+      AdjustAirCollision();
+    }
+    break;
+
+  case 1:
+  case 2:
+  case 3:
+  case 21:
+    func_8003E628();
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+    func_8003E1AC();
+
+    if (g_Spyro.m_slopeAngle != 0) {
+      angle = (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ -
+               Atan2(g_Spyro.m_floorPositonOnSlope.x,
+                     g_Spyro.m_floorPositonOnSlope.y, 1)) &
+              0xFFF;
+
+      if (angle > 2048) {
+        angle -= 4096;
+      }
+
+      slope = (g_Spyro.m_slopeAngle << 12) / 22;
+      angle = ABS(angle);
+
+      if (angle > 1024) {
+        angle = 2048 - angle;
+        along = D_8006C5C0 + ((slope * (D_8006C5CC - D_8006C5C0)) >> 12);
+      } else {
+        along = D_8006C5B8 + ((slope * (D_8006C5C4 - D_8006C5B8)) >> 12);
+      }
+
+      across = D_8006C5BC + ((slope * (D_8006C5C8 - D_8006C5BC)) >> 12);
+      along = (along * Cos(angle)) >> 12;
+      across = (across * Sin(angle)) >> 12;
+      g_Spyro.m_Physics.unk_0x144 =
+          func_80017A38(along * along + across * across);
+    } else {
+      g_Spyro.m_Physics.unk_0x144 = D_8006C5B8;
+    }
+
+    if (g_Spyro.m_State == 3) {
+      Vector3D velocity;
+
+      VecCopy(&velocity, &g_Spyro.m_Physics.m_TrueVelocity);
+      VecShiftRight(&velocity, 6);
+      g_SpawnParticle(1, 33, &velocity, 0);
+    }
+    break;
+
+  case 4: {
+    Vector3D direction;
+
+    func_8003E628();
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+    func_8003E1AC();
+
+    direction.x = 32;
+    direction.y = 0;
+    direction.z = 0;
+    VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &direction, &direction);
+    g_SpawnParticle(1, 33, &direction, 0);
+    break;
+  }
+
+  case 7:
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+    func_8003E1AC();
+
+    // Electric damage flashing
+    if (g_Spyro.m_nextBodyAnimationFrame < 10) {
+      g_Spyro.m_colorFilter.m_interpolation = 255;
+
+      if (g_Spyro.m_nextBodyAnimationFrame & 1) {
+        g_Spyro.m_colorFilter.m_blue = 255;
+        g_Spyro.m_colorFilter.m_green = 255;
+        g_Spyro.m_colorFilter.m_red = 255;
+      } else {
+        g_Spyro.m_colorFilter.m_blue = 64;
+        g_Spyro.m_colorFilter.m_green = 64;
+        g_Spyro.m_colorFilter.m_red = 64;
+      }
+    } else {
+      g_Spyro.m_colorFilter.m_interpolation = 0;
+    }
+    break;
+
+  case 25:
+  case 27:
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+    break;
+
+  case 5:
+  case 17:
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+
+    if (g_Spyro.m_againstWall == 0) {
+      CheckWallCollision();
+    }
+    break;
+
+  case 6:
+  case 16:
+    if (g_Spyro.m_flyingAbility == 0) {
+      g_Spyro.m_highestFlightPoint = g_Spyro.m_Position.z;
+    }
+
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+
+    if (g_Spyro.m_flyingAbility != 0) {
+      if (g_IsFlightLevel != 0) {
+        delta = D_800758C0 - g_Spyro.m_highestFlightPoint;
+        if (delta > 64) {
+          delta = 64;
+        }
+        if (delta < -16) {
+          delta = -16;
+        }
+        g_Spyro.m_highestFlightPoint += delta;
+      } else {
+        if (D_800758C0 != 0) {
+          delta = D_800758C0 - g_Spyro.m_highestFlightPoint;
+          if (delta > 64) {
+            delta = 64;
+          }
+          if (delta < -16) {
+            delta = -16;
+          }
+          g_Spyro.m_highestFlightPoint += delta;
+        }
+
+        if (g_Spyro.m_highestFlightPoint > D_800758C0 &&
+            g_Spyro.m_floorIdleTime != 0) {
+          D_800758C0 = g_Spyro.m_highestFlightPoint;
+        }
+
+        if (g_LevelId == 64 && D_800758C0 > D_80075678) {
+          D_800758C0 = D_80075678;
+        }
+      }
+    }
+
+    if (g_Spyro.m_againstWall == 0) {
+      CheckWallCollision();
+    }
+
+    VecCopy(&g_Spyro.m_Physics.m_Acceleration,
+            &g_Spyro.m_Physics.m_TrueVelocity);
+    break;
+
+  case 23:
+    if (g_Spyro.m_flyingAbility == 0) {
+      g_Spyro.m_highestFlightPoint = g_Spyro.m_Position.z;
+    }
+
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+
+    if (g_Spyro.m_flyingAbility != 0) {
+      if (g_IsFlightLevel != 0) {
+        delta = D_800758C0 - g_Spyro.m_highestFlightPoint;
+        if (delta > 64) {
+          delta = 64;
+        }
+        if (delta < -16) {
+          delta = -16;
+        }
+        g_Spyro.m_highestFlightPoint += delta;
+      } else {
+        if (D_800758C0 != 0) {
+          delta = D_800758C0 - g_Spyro.m_highestFlightPoint;
+          if (delta > 64) {
+            delta = 64;
+          }
+          if (delta < -16) {
+            delta = -16;
+          }
+          g_Spyro.m_highestFlightPoint += delta;
+        }
+
+        if (g_Spyro.m_highestFlightPoint > D_800758C0 &&
+            g_Spyro.m_floorIdleTime != 0) {
+          D_800758C0 = g_Spyro.m_highestFlightPoint;
+        }
+
+        if (g_LevelId == 64 && D_800758C0 > D_80075678) {
+          D_800758C0 = D_80075678;
+        }
+      }
+    }
+
+    if (g_Spyro.m_againstWall == 0) {
+      CheckWallCollision();
+    }
+    break;
+
+  case 32:
+  case 33:
+  case 34:
+    if (g_Spyro.m_flyingAbility == 0) {
+      g_Spyro.m_highestFlightPoint = g_Spyro.m_Position.z;
+    }
+
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+
+    if (g_Spyro.m_flyingAbility != 0) {
+      if (g_IsFlightLevel != 0) {
+        delta = D_800758C0 - g_Spyro.m_highestFlightPoint;
+        if (delta > 64) {
+          delta = 64;
+        }
+        if (delta < -16) {
+          delta = -16;
+        }
+        g_Spyro.m_highestFlightPoint += delta;
+
+        if (g_Spyro.m_walkingState == 3 &&
+            ColSphere(&g_Spyro.m_Position, 356, 356) != 0) {
+          D_80075694();
+        }
+      } else {
+        if (D_800758C0 != 0) {
+          delta = D_800758C0 - g_Spyro.m_highestFlightPoint;
+          if (delta > 64) {
+            delta = 64;
+          }
+          if (delta < -16) {
+            delta = -16;
+          }
+          g_Spyro.m_highestFlightPoint += delta;
+        }
+
+        if (g_Spyro.m_highestFlightPoint > D_800758C0 &&
+            g_Spyro.m_floorIdleTime != 0) {
+          D_800758C0 = g_Spyro.m_highestFlightPoint;
+        }
+
+        if (g_LevelId == 64 && D_800758C0 > D_80075678) {
+          D_800758C0 = D_80075678;
+        }
+      }
+    }
+
+    if (g_Spyro.m_againstWall == 0) {
+      CheckWallCollision();
+    }
+    break;
+
+  case 15:
+    if (g_Spyro.m_flyingAbility == 0) {
+      g_Spyro.m_highestFlightPoint = g_Spyro.m_Position.z;
+    }
+
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+
+    if (g_Spyro.m_flyingAbility != 0) {
+      if (D_800758C0 != 0) {
+        delta = D_800758C0 - g_Spyro.m_highestFlightPoint;
+        if (delta > 64) {
+          delta = 64;
+        }
+        if (delta < -16) {
+          delta = -16;
+        }
+        g_Spyro.m_highestFlightPoint += delta;
+      }
+
+      if (g_Spyro.m_highestFlightPoint > D_800758C0 &&
+          g_Spyro.m_floorIdleTime != 0) {
+        D_800758C0 = g_Spyro.m_highestFlightPoint;
+      }
+
+      if (g_LevelId == 64 && D_800758C0 > D_80075678) {
+        D_800758C0 = D_80075678;
+      }
+    }
+
+    if (g_Spyro.m_againstWall == 0) {
+      CheckWallCollision();
+    }
+
+    if ((g_Spyro.m_ControlFlags & CTRL_SKIP_SURFACE_CHECK) &&
+        g_Spyro.m_walkingState == 9) {
+      g_Spyro.m_surfaceBelowSpyro = ColFindFloor(&g_Spyro.m_Position, 0x10000);
+    }
+    break;
+
+  case 8:
+    func_8003E628();
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+    AdjustAirCollision();
+    break;
+
+  case 11:
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+    func_8003E1AC();
+    ApplySlopeGravity();
+    AdjustAirCollision();
+
+    if (g_Spyro.m_againstWall == 0) {
+      CheckWallCollision();
+    }
+    break;
+
+  case 19:
+    func_8003FE40();
+    VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_TrueVelocity);
+    UpdateSlopeFloorCollision();
+    func_8003E1AC();
+    ApplySlopeGravity();
+    break;
+
+  case 20:
+  case 24:
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+
+    if (g_Spyro.m_walkingState & 0x40) {
+      Vector3D particlePos;
+      Vector3D particleVel;
+
+      VecCopy(&particlePos, &g_Spyro.m_Position);
+      particlePos.x += (rand() & 0xFE) - 127;
+      particlePos.y += (rand() & 0xFE) - 127;
+      VecCopy(&particleVel, &g_Spyro.m_Physics.m_TrueVelocity);
+      VecShiftRight(&particleVel, 6);
+      g_SpawnParticle(1, 9, &particlePos, (int)&particleVel);
+    }
+    break;
+
+  case 9:
+  case 10:
+  case 14:
+  case 22:
+  case 26:
+  case 28:
+  case 30:
+  case 31:
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+    func_8003E1AC();
+    break;
+
+  case 29:
+    // Sink into the floor c:
+    if (g_Spyro.m_drowningOffset != 0) {
+      g_Spyro.m_drowningOffset += 8;
+      g_Spyro.m_Position.z = g_Spyro.m_damagingFloorIndex + 356;
+
+      if (g_Spyro.m_health >= 0) {
+        if (g_Spyro.m_drowningOffset > 150) {
+          g_Spyro.m_drowningOffset = 150;
+        }
+      } else if (g_Spyro.m_drowningOffset > 576) {
+        g_Spyro.m_drowningOffset = 576;
+      }
+    }
+
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+    AdjustAirCollision();
+    break;
+
+  case 44: {
+    Vector3D particlePos;
+    Vector3D particleVel;
+
+    func_8003FE40();
+    UpdateSlopeFloorCollision();
+    func_8003E1AC();
+    ApplySlopeGravity();
+
+    VecCopy(&particlePos, &g_Spyro.m_Position);
+    particlePos.x += (rand() & 0xFE) - 127;
+    particlePos.y += (rand() & 0xFE) - 127;
+    particlePos.z -= 356;
+    VecCopy(&particleVel, &g_Spyro.m_Physics.m_TrueVelocity);
+    VecShiftRight(&particleVel, 6);
+    g_SpawnParticle(1, 9, &particlePos, (int)&particleVel);
+    break;
+  }
+  }
+
+  if (g_Spyro.m_State == 29) {
+    g_Spyro.m_Position.z -= g_Spyro.m_drowningOffset;
+
+    if (g_Spyro.m_surfaceBelowSpyro != 0) {
+      g_Spyro.m_FloorDistance = g_Spyro.m_surfaceBelowSpyro;
+    } else {
+      VecCopy(&floorProbe, &g_Spyro.m_Position);
+      floorProbe.z += 2048;
+      g_Spyro.m_FloorDistance = ColFindFloor(&floorProbe, 3072);
+    }
+  } else {
+    g_Spyro.m_FloorDistance = 0;
+  }
+}
 
 void func_8003DAE4(void);
 

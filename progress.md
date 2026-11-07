@@ -242,7 +242,7 @@
 - [x] CycleSpyroIdleAnimation
 - [ ] func_80041670
 - [ ] func_80043FE4
-- [ ] func_80047B60
+- [x] func_80047B60
 - [x] func_8004888C
 - [x] UpdateSpyroPhysicsAndSurfaces
 - [x] func_80048D10
