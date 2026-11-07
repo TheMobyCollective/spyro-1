@@ -2034,8 +2034,215 @@ void UpdateSpyroPhysicsAndSurfaces(void) {
   ApplySpecialSurfaceEffects(surfaceFlag, 1);
 }
 
-void func_80048D10(int pDeltaTime);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80048D10);
+/// @brief Update Spyro's flame and fairy kiss effects
+void func_80048D10(int pDeltaTime) {
+  Vector3D kissPos;
+  Vector3D offset;
+  Vector3D pos;
+  Vector3D vec;
+
+  SpyroAnimationFrame *frame;
+  FlameFrame *frames;
+  int i;
+  int j;
+  int numDone;
+  int playedSound;
+  int numFrames;
+  int lifetime;
+  int lastFrame;
+  int nextFrame;
+
+  numDone = 0;
+  playedSound = 0;
+
+  if (g_SpyroFlame.m_FairyKissTimer) {
+    kissPos.x = (rand() & 511) - 352;
+    kissPos.y = (rand() & 127) - 64;
+    kissPos.z = (kissPos.x >> 1) + (rand() & 63) - 96;
+    VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &kissPos, &kissPos);
+    VecAdd(&kissPos, &kissPos, &g_Spyro.m_Position);
+    g_SpawnParticle(1, 30, &kissPos, 0);
+
+    g_Spyro.m_colorFilter.m_red = 144;
+    g_Spyro.m_colorFilter.m_green = 32;
+    g_Spyro.m_colorFilter.m_blue = 16;
+
+    if (g_SpyroFlame.m_FairyKissTimer < 120 &&
+        g_SpyroFlame.m_FairyKissTimer % 24 >= 14) {
+      g_Spyro.m_colorFilter.m_interpolation = 0;
+    } else {
+      g_Spyro.m_colorFilter.m_interpolation =
+          Sin(g_SpyroFlame.m_FairyKissTimer << 7) / 256 - 40;
+    }
+
+    g_SpyroFlame.m_FairyKissTimer -= g_DeltaTime;
+
+    if (g_SpyroFlame.m_FairyKissTimer <= 0) {
+      g_SpyroFlame.m_FairyKissTimer = 0;
+      g_Spyro.m_colorFilter.m_interpolation = 0;
+    }
+  }
+
+  if (g_SpyroFlame.m_IsFlameActive) {
+    if (g_Spyro.m_airTime == 0 && g_Spyro.m_bodyRotation.y > 128) {
+      g_Spyro.m_HeadLookTarget.y = (256 - g_Spyro.m_bodyRotation.y) * 8;
+    } else {
+      g_Spyro.m_HeadLookTarget.y = 0;
+    }
+
+    for (j = 0; j < pDeltaTime; j++) {
+      if (g_SpyroFlame.unk_99[0] < 8) {
+        g_SpyroFlame.unk_20[D_8006E1C8[g_SpyroFlame.unk_99[2]]
+                                      [g_SpyroFlame.unk_99[0]]] =
+            pDeltaTime - j;
+        g_SpyroFlame.unk_28[D_8006E1C8[g_SpyroFlame.unk_99[2]]
+                                      [g_SpyroFlame.unk_99[0]]] = 32;
+        g_SpyroFlame.unk_30[D_8006E1C8[g_SpyroFlame.unk_99[2]]
+                                      [g_SpyroFlame.unk_99[0]]] = 0;
+      }
+
+      g_SpyroFlame.unk_99[0]++;
+    }
+
+    if (g_SpyroFlame.unk_99[0] < 30 && g_Spyro.m_headAnimation == 7 &&
+        g_Spyro.m_nextHeadAnimation == 7 && g_Spyro.m_headAnimationFrame == 4) {
+      g_Spyro.m_headFrameProgress = 0;
+    }
+
+    if (g_SpyroFlame.unk_99[1] != 0) {
+      g_SpyroFlame.m_Rotation.x = g_Spyro.m_bodyRotation.x;
+      g_SpyroFlame.m_Rotation.y = g_Spyro.m_bodyRotation.y;
+      g_SpyroFlame.m_Rotation.z = g_Spyro.m_bodyRotation.z;
+      Memcpy(&g_SpyroFlame.m_HeadMatrix, &g_Spyro.m_headRotationMatrix, 20);
+
+      frame = &((SpyroAnimationFrame *)SPYRO_MODEL
+                    ->m_Animations[g_Spyro.m_bodyAnimation]
+                    ->m_Frames)[g_Spyro.m_bodyAnimationFrame];
+      j = *(int *)(frame->m_Props.frameDataOffset * 2 + 16);
+      offset.x = j >> 21;
+      offset.y = (j << 11) >> 21;
+      offset.z = (j << 22) >> 21;
+
+      VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &offset, &offset);
+      VecAdd(&g_SpyroFlame.m_Position, &offset, &g_Spyro.m_Position);
+
+      if (g_SpyroFlame.unk_99[0] < 8) {
+        VecCopy(&offset, &D_8006DA6C[g_SpyroFlame.unk_99[0] >> 1]);
+      } else {
+        VecCopy(&offset, &D_8006DA9C);
+      }
+
+      VecRotateByMatrix(&g_SpyroFlame.m_HeadMatrix, &offset, &offset);
+      VecAdd(&g_SpyroFlame.m_Position, &g_SpyroFlame.m_Position, &offset);
+      VecSub(&g_SpyroFlame.unk_cc, &g_SpyroFlame.m_Position,
+             &g_Spyro.m_Position);
+    } else {
+      VecAdd(&g_SpyroFlame.m_Position, &g_Spyro.m_Position,
+             &g_SpyroFlame.unk_cc);
+    }
+
+    for (i = 0; i < 8; i++) {
+      if (g_SpyroFlame.unk_20[i] != 0) {
+        if (i < 4) {
+          numFrames = 24;
+          lifetime = 32;
+        } else {
+          numFrames = 32;
+          lifetime = 40;
+        }
+
+        if (g_SpyroFlame.unk_30[i] != 0) {
+          g_SpyroFlame.unk_20[i] += pDeltaTime;
+        }
+
+        if (g_SpyroFlame.unk_20[i] >= lifetime) {
+          g_SpyroFlame.unk_20[i] = 0;
+        } else if (g_SpyroFlame.unk_30[i] != 2) {
+          if (i < 4) {
+            frames = &D_8006DAA8[i * numFrames];
+          } else {
+            frames = &D_8006DDA8[(i - 4) * numFrames];
+          }
+
+          lastFrame = numFrames - 1;
+          if (g_SpyroFlame.unk_20[i] < lastFrame) {
+            nextFrame = g_SpyroFlame.unk_20[i] + 1;
+            func_80017C4C(&pos, &frames[nextFrame].m_Pos);
+            VecRotateByMatrix(&g_SpyroFlame.m_HeadMatrix, &pos, &pos);
+            VecAdd(&pos, &pos, &g_SpyroFlame.m_Position);
+
+            if (g_SpyroFlame.unk_30[i] == 0) {
+              VecCopy(&vec, &g_Spyro.m_Position);
+              g_SpyroFlame.unk_30[i] = 1;
+            } else {
+              VecCopy(&vec, &g_SpyroFlame.unk_d8[i]);
+            }
+
+            VecCopy(&g_SpyroFlame.unk_d8[i], &pos);
+
+            // Hit a moby or the terrain
+            if (ColMoby(&pos, 160, nullptr,
+                        g_SpyroFlame.unk_9c != 0 ? 0x90000 : 0x10000, nullptr,
+                        0) != 0 ||
+                ColTraceRay(&vec, &pos) != 0) {
+              g_SpyroFlame.unk_30[i] = 2;
+              g_SpyroFlame.unk_28[i] = g_SpyroFlame.unk_20[i];
+
+              vec.x = -16;
+              vec.y = (rand() & 31) - 16;
+              vec.z = 0;
+              VecRotateByMatrix(&g_SpyroFlame.m_HeadMatrix, &vec, &vec);
+              vec.z = 0;
+              g_SpawnParticle(1, 1, &pos, (int)&vec);
+
+              if (g_SpyroFlame.unk_9c == 0) {
+                g_SpawnParticle(4, 78, &pos, 0);
+              }
+
+              vec.x = 48;
+              vec.y = 0;
+              vec.z = 0;
+              VecRotateByLastMatrix(&vec, &vec);
+              g_SpawnParticle(g_SpyroFlame.unk_9c * 5 + 5, 79, &pos, (int)&vec);
+
+              if (playedSound == 0) {
+                PlaySound(g_Spu.m_SoundTable->spyroFlame, (Moby *)&g_Spyro, 4,
+                          nullptr);
+                playedSound = 1;
+              }
+            }
+          } else if (g_SpyroFlame.unk_20[i] > numFrames &&
+                     g_SpyroFlame.unk_20[i] <= numFrames + pDeltaTime) {
+
+            func_80017C4C(&pos, &frames[lastFrame].m_Pos);
+            VecRotateByMatrix(&g_SpyroFlame.m_HeadMatrix, &pos, &pos);
+            VecAdd(&pos, &pos, &g_SpyroFlame.m_Position);
+            VecNull(&vec);
+
+            if (g_SpyroFlame.unk_9c != 0) {
+              g_SpawnParticle(1, 1, &pos, (int)&vec);
+            } else {
+              g_SpawnParticle(1, 0, &pos, (int)&vec);
+            }
+
+            if (g_SpyroFlame.unk_9c == 0) {
+              g_SpawnParticle(4, 78, &pos, 0);
+            }
+
+            VecRotateByLastMatrix(&D_8006E1D8[i], &vec);
+            g_SpawnParticle(g_SpyroFlame.unk_9c * 5 + 5, 79, &pos, (int)&vec);
+          }
+        }
+      } else {
+        numDone++;
+      }
+    }
+
+    if (numDone == 8) {
+      g_SpyroFlame.m_IsFlameActive = 0;
+    }
+  }
+}
 
 /// @brief Increments the head animation
 void func_800495D8(int pDeltaTime) {

@@ -424,6 +424,9 @@ int func_80041270(void);
 void func_8003D978(void);
 void CycleSpyroIdleAnimation(void);
 
+/// @brief Update Spyro's flame and fairy kiss effects
+void func_80048D10(int pDeltaTime);
+
 /// @brief Update the head animation
 void func_80049660(void);
 
