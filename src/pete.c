@@ -2466,8 +2466,1237 @@ void CycleSpyroIdleAnimation(void) {
   func_8003EA68(D_8006BC60[D_80075970]);
 }
 
-void func_80041670(void);
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_80041670);
+void func_80041670(void) {
+  switch (g_Spyro.m_State) {
+  case 0:
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_CROSS) != 0) {
+      func_8003EA68(5);
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+      func_8003EA68(11);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_L1) != 0) {
+      func_8003EA68(9);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_R1) != 0) {
+      func_8003EA68(10);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_TrueSpeed > 1024) {
+      func_8003EA68(3);
+      g_Spyro.m_walkingState = 7;
+      break;
+    }
+    if (g_Camera.unk_0xC0 == 0x80000009) {
+      break;
+    }
+    if (g_Pad.m_NoMovementButtonPressed == 0) {
+      func_8003EA68(1);
+      break;
+    }
+    if (g_Spyro.m_noGamepadUpdateFrames != 0) {
+      break;
+    }
+    if (g_Spyro.m_onEdge != 0) {
+      func_8003EA68(13);
+      break;
+    }
+    if (g_Spyro.m_idleTimer >= D_80075788 && g_Spyro.unk_0x198 != 1) {
+      CycleSpyroIdleAnimation();
+    }
+    break;
+  case 1: {
+    int speed;
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_CROSS) != 0) {
+      func_8003EA68(5);
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+      func_8003EA68(11);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_L1) != 0) {
+      func_8003EA68(9);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_R1) != 0) {
+      func_8003EA68(10);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed == 0 &&
+        g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed == 0 &&
+        g_Spyro.m_idleTimer >= 16) {
+      func_8003EA68(0);
+      break;
+    }
+    speed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
+    if (speed > 3840) {
+      func_8003EA68(2);
+    } else if (speed > 1920) {
+      func_8003EA68(21);
+    }
+    break;
+  }
+  case 2: {
+    int stick;
+    int speed;
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_CROSS) != 0) {
+      func_8003EA68(5);
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+      func_8003EA68(11);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_L1) != 0) {
+      func_8003EA68(9);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_R1) != 0) {
+      func_8003EA68(10);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed == 0) {
+      func_8003EA68(3);
+      break;
+    }
+    if (func_80017928(g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ,
+                      g_Spyro.m_Physics.m_SpeedAngle.m_RotZ) > 1280) {
+      if (g_Pad.m_LeftStickMoved != 0) {
+        stick = g_ActivePad->m_Sticks.m_LeftY - 127;
+        if (ABS(stick) > 48) {
+          func_8003EA68(4);
+        } else {
+          func_8003EA68(3);
+        }
+      } else {
+        func_8003EA68(4);
+      }
+      break;
+    }
+    if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed == 0) {
+      func_8003EA68(0);
+      break;
+    }
+    speed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
+    if (speed < 1600) {
+      func_8003EA68(1);
+    } else if (speed < 3200) {
+      func_8003EA68(21);
+    }
+    break;
+  }
+  case 3:
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_CROSS) != 0) {
+      func_8003EA68(5);
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+      func_8003EA68(11);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_L1) != 0) {
+      func_8003EA68(9);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_R1) != 0) {
+      func_8003EA68(10);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed == 0 &&
+        g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed == 0 &&
+        g_Spyro.m_Physics.m_TrueSpeed < 256) {
+      func_8003EA68(0);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0 &&
+        g_Spyro.m_idleTimer < 18 &&
+        func_80017928(g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ,
+                      g_Spyro.m_Physics.m_SpeedAngle.m_RotZ) > 1280) {
+      func_8003EA68(4);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 3840 &&
+        g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
+      func_8003EA68(2);
+    } else if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 1920 &&
+               g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
+      func_8003EA68(21);
+    } else if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 0 &&
+               g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
+      func_8003EA68(1);
+    }
+    break;
+  case 4:
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if (g_Spyro.m_idleTimer > 36) {
+      if (g_Pad.m_NoMovementButtonPressed != 0) {
+        func_8003EA68(0);
+      } else {
+        g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 2560;
+        func_8003EA68(1);
+      }
+    }
+    break;
+  case 5: {
+    int dot;
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if (g_Spyro.m_onSlope == 0 && (g_Pad.m_Down & PAD_CROSS) != 0) {
+      g_Spyro.m_isGliding = 1;
+    }
+    if (g_Spyro.m_Physics.m_TrueVelocity.z < 0) {
+      g_Spyro.m_walkingState = 1;
+    }
+    if (g_Spyro.m_walkingState == 0 && (g_Pad.m_Held & PAD_CROSS) == 0 &&
+        D_800756B4 == 0) {
+      g_Spyro.m_walkingState = 2;
+    }
+    if (g_Spyro.m_airTime == 0 && g_Spyro.m_idleTimer >= 16) {
+      if (g_Spyro.m_slopeAngle >= 23) {
+        func_8003EA68(19);
+        break;
+      }
+      dot =
+          g_Spyro.m_floorPositonOnSlope.x * g_Spyro.m_Physics.m_Acceleration.x +
+          g_Spyro.m_floorPositonOnSlope.y * g_Spyro.m_Physics.m_Acceleration.y +
+          g_Spyro.m_floorPositonOnSlope.z * g_Spyro.m_Physics.m_Acceleration.z;
+      if (dot < 0) {
+        if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
+          int speed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
+          if (speed > 3840) {
+            func_8003EA68(2);
+            break;
+          }
+          if (speed > 1920) {
+            func_8003EA68(21);
+            break;
+          }
+          func_8003EA68(1);
+          break;
+        }
+        if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >= 1920) {
+          func_8003EA68(3);
+          break;
+        }
+        func_8003DFA4();
+        func_8003EA68(0);
+        break;
+      }
+      break;
+    }
+
+    if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+      func_8003EA68(20);
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 8064;
+      break;
+    }
+    if (g_Spyro.m_onSlope == 0 && g_Spyro.m_walkingState == 1 &&
+        g_Spyro.m_isGliding != 0) {
+      if (g_IsFlightLevel != 0 || g_LevelId == 64) {
+        func_8003EA68(32);
+      } else {
+        func_8003EA68(15);
+      }
+      break;
+    }
+    if (g_Spyro.m_Physics.m_TrueVelocity.z < -6400 ||
+        g_Spyro.m_idleTimer > 120) {
+      func_8003EA68(6);
+      break;
+    }
+    break;
+  }
+  case 6: {
+    int i;
+    int ang;
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_CROSS) != 0 && g_Spyro.unk_0x15c != 0 &&
+        g_Spyro.m_idleTimer < 4) {
+      func_8003EA68(5);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_CROSS) != 0 && g_Spyro.m_walkingState == 0) {
+      if (g_IsFlightLevel != 0 || g_LevelId == 64) {
+        if (g_Spyro.m_onSlope == 0 || g_Spyro.m_idleTimer >= 16) {
+          func_8003EA68(32);
+        }
+      } else if (g_Spyro.m_onSlope == 0 || g_Spyro.m_idleTimer > 30) {
+        func_8003EA68(15);
+      }
+      break;
+    }
+    if (g_Spyro.m_Position.z >= D_8006E9A4[g_LevelIndex] &&
+        g_Spyro.m_airTime == 0) {
+      if (g_Spyro.m_slopeAngle >= 23) {
+        if (g_Spyro.m_idleTimer >= 9) {
+          func_8003EA68(19);
+        }
+        break;
+      }
+      if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
+        Vector3D vecA;
+        int speed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
+
+        if (speed > 3840) {
+          func_8003EA68(2);
+        } else if (speed > 1920) {
+          func_8003EA68(21);
+        } else {
+          func_8003EA68(1);
+        }
+        ang = g_Spyro.m_bodyRotation.z;
+        vecA.z = 0;
+
+        for (i = 0; i < 4; i++) {
+          vecA.x = COSINE_8(ang) >> 7;
+          vecA.y = SINE_8(ang) >> 7;
+          g_SpawnParticle(1, 33, &vecA, 0);
+          ang = (ang + 64) & 0xFF;
+        }
+      } else {
+        Vector3D vecB;
+
+        if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 1920) {
+          func_8003DFA4();
+          func_8003EA68(0);
+        } else {
+          func_8003EA68(3);
+        }
+        ang = g_Spyro.m_bodyRotation.z;
+        vecB.z = 0;
+
+        for (i = 0; i < 4; i++) {
+          vecB.x = COSINE_8(ang) >> 7;
+          vecB.y = SINE_8(ang) >> 7;
+          g_SpawnParticle(1, 33, &vecB, 0);
+          ang = (ang + 64) & 0xFF;
+        }
+      }
+      break;
+    }
+    if (g_Spyro.m_idleTimer > 300) {
+      if (g_IsFlightLevel != 0) {
+        D_80075694();
+        g_UpdateMoby();
+      } else {
+        g_SpyroLifeCount++;
+        func_8002C85C();
+      }
+    }
+    break;
+  }
+  case 8:
+    if (HandleSpyroDamage(0xFBF9) != 0) {
+      if (g_Spyro.m_idleTimer > 12) {
+        g_Spyro.m_Physics.m_SpeedAngle.m_RotZ =
+            g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ;
+        g_Spyro.m_Physics.m_SpeedAngle.m_RotX =
+            -g_Spyro.m_Physics.m_SpeedAngle.m_RotX & 0xFFF;
+        g_Spyro.m_Physics.m_SpeedAngle.m_RotY =
+            -g_Spyro.m_Physics.m_SpeedAngle.m_RotY & 0xFFF;
+      }
+      break;
+    }
+    if (g_Spyro.m_idleTimer >= 20) {
+      g_Spyro.m_Physics.m_SpeedAngle.m_RotZ =
+          g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ;
+      g_Spyro.m_Physics.m_SpeedAngle.m_RotX =
+          -g_Spyro.m_Physics.m_SpeedAngle.m_RotX & 0xFFF;
+      g_Spyro.m_Physics.m_SpeedAngle.m_RotY =
+          -g_Spyro.m_Physics.m_SpeedAngle.m_RotY & 0xFFF;
+      if (g_Pad.m_NoMovementButtonPressed != 0) {
+        func_8003EA68(0);
+      } else {
+        func_8003EA68(1);
+        g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 21;
+      }
+    }
+    break;
+  case 9:
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_L1) == 0 && g_Spyro.m_idleTimer > 20) {
+      VecCopy(&g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_Physics.unk_0xe8);
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 0;
+      func_8003EA68(0);
+    }
+    break;
+  case 10:
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_R1) == 0 && g_Spyro.m_idleTimer > 20) {
+      VecCopy(&g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_Physics.unk_0xe8);
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 0;
+      func_8003EA68(0);
+    }
+    break;
+  case 11: {
+    int speed;
+    if (func_80041270() != 0) {
+      break;
+    }
+    if ((g_Pad.m_Held & (PAD_CROSS | PAD_SQUARE)) == (PAD_CROSS | PAD_SQUARE) &&
+        g_Spyro.m_slopeAngle < 12) {
+      func_8003EA68(20);
+      g_Spyro.m_Physics.m_Acceleration.z += 3520;
+      g_Spyro.m_airTime++;
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4) {
+      func_8003EA68(20);
+      break;
+    }
+    if (g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_SQUARE) == 0) {
+      func_8003EA68(2);
+      g_Spyro.m_idleTimer = g_Spyro.unk_0x84 << 1;
+      break;
+    }
+    if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 3200 &&
+        (g_Spyro.m_Physics.m_TrueSpeed << 1) <
+            g_Spyro.m_Physics.m_SpeedAngle.m_Speed &&
+        g_HasLevelTransition == 0) {
+      func_8003EA68(12);
+      break;
+    }
+    if (g_Spyro.m_doingSupercharge != 0) {
+      if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 12288) {
+        func_8003EA68(44);
+        break;
+      }
+      if ((g_Spyro.m_walkingState & 0x80) == 0) {
+        g_Spyro.m_highestFlightPoint = g_Spyro.m_Position.z;
+        speed = VecMagnitude(&g_Spyro.m_Physics.unk_0xe8, 1);
+        if (speed < 8064) {
+          speed = 8064;
+        }
+        g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = speed;
+        g_Spyro.m_walkingState |= 0x80;
+      }
+      break;
+    }
+    g_Spyro.m_walkingState &= ~0x80;
+    break;
+  }
+  case 12:
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if (g_Spyro.m_idleTimer > 16 &&
+        (g_Spyro.m_airTime != 0 || g_Spyro.m_slopeAngle >= 23)) {
+      func_8003EA68(6);
+      break;
+    }
+    if (g_Spyro.m_idleTimer > 24) {
+      func_8003EA68(0);
+    }
+    break;
+  case 13:
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_CROSS) != 0) {
+      func_8003EA68(5);
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+      func_8003EA68(11);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_L1) != 0) {
+      func_8003EA68(9);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_R1) != 0) {
+      func_8003EA68(10);
+      break;
+    }
+    if (g_Camera.unk_0xC0 == 0x80000009) {
+      func_8003EA68(0);
+      break;
+    }
+    if (g_Pad.m_NoMovementButtonPressed == 0) {
+      func_8003EA68(1);
+      break;
+    }
+    if (g_Spyro.m_noGamepadUpdateFrames != 0) {
+      func_8003EA68(0);
+      break;
+    }
+    if (g_Spyro.m_idleTimer > 30 && g_Spyro.m_onEdge == 0) {
+      func_8003EA68(0);
+    }
+    break;
+  case 7:
+    if ((g_Spyro.m_DamageFlags & 0x20) != 0 || g_Spyro.m_idleTimer < 24) {
+      break;
+    }
+    if (g_Spyro.m_health < 0) {
+      func_8003EA68(30);
+      break;
+    }
+    if (g_Spyro.m_airTime == 0) {
+      func_8003EA68(0);
+    } else {
+      func_8003EA68(6);
+    }
+    if (g_Spyro.m_noGamepadUpdateFrames < 12) {
+      g_Spyro.m_noGamepadUpdateFrames = 12;
+    }
+    break;
+  case 14:
+  case 22:
+  case 28:
+    if (g_Spyro.m_idleTimer < 24) {
+      break;
+    }
+    if (g_Spyro.m_health < 0) {
+      func_8003EA68(30);
+      break;
+    }
+    if (g_Spyro.m_airTime == 0) {
+      func_8003EA68(0);
+    } else {
+      func_8003EA68(6);
+    }
+    if (g_Spyro.m_noGamepadUpdateFrames < 12) {
+      g_Spyro.m_noGamepadUpdateFrames = 12;
+    }
+    break;
+  case 27:
+    if (g_Spyro.m_idleTimer < 48) {
+      break;
+    }
+    if (g_Spyro.m_health < 0) {
+      func_8003EA68(30);
+      break;
+    }
+    if (g_Spyro.m_airTime == 0) {
+      func_8003EA68(0);
+    } else {
+      func_8003EA68(6);
+    }
+    if (g_Spyro.m_noGamepadUpdateFrames < 12) {
+      g_Spyro.m_noGamepadUpdateFrames = 12;
+    }
+    break;
+  case 15: {
+    int speed;
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if (g_Spyro.m_airTime == 0) {
+      if (g_Spyro.m_slopeAngle >= 23) {
+        func_8003EA68(6);
+        break;
+      }
+      if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
+        speed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
+        if (speed > 3840) {
+          func_8003EA68(2);
+        } else if (speed > 1920) {
+          func_8003EA68(21);
+        } else {
+          func_8003EA68(1);
+        }
+      } else if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 1920) {
+        func_8003DFA4();
+        func_8003EA68(0);
+      } else {
+        func_8003EA68(3);
+      }
+      break;
+    }
+    if (g_Spyro.m_floorIdleTime == 0 || g_Spyro.m_Physics.m_TrueSpeed < 1024) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+      func_8003EA68(20);
+      break;
+    }
+    if (g_Spyro.m_idleTimer > 16 && (g_Pad.m_Down & PAD_TRIANGLE) != 0) {
+      func_8003EA68(16);
+      break;
+    }
+    if (g_Spyro.m_flyingAbility != 0) {
+      int posZ;
+      if (g_Spyro.m_walkingState == 0) {
+        posZ = g_Spyro.m_Position.z;
+        if (posZ - g_Spyro.m_highestFlightPoint > 512) {
+          func_8003EA68(6);
+        } else if ((g_ActivePad->m_Released & PAD_R1) != 0) {
+          g_Spyro.m_walkingState = 1;
+        } else if ((g_ActivePad->m_Released & PAD_L1) != 0) {
+          g_Spyro.m_walkingState = 2;
+          D_80075700 = posZ;
+        }
+      }
+      break;
+    }
+    if (g_Spyro.m_walkingState == 0 &&
+        g_Spyro.m_highestFlightPoint + 24 < g_Spyro.m_Position.z) {
+      func_8003EA68(6);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 3200 &&
+        g_Spyro.m_idleTimer > 16) {
+      func_8003EA68(23);
+    }
+    break;
+  }
+  case 17:
+    HandleSpyroDamage(0xFFF9);
+    break;
+  case 18:
+  case 36:
+  case 37:
+  case 38:
+  case 39:
+  case 40:
+  case 41:
+  case 42:
+  case 43:
+
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_CROSS) != 0) {
+      func_8003EA68(5);
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+      func_8003EA68(11);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_L1) != 0) {
+      func_8003EA68(9);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_R1) != 0) {
+      func_8003EA68(10);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_TrueSpeed > 1024) {
+      func_8003EA68(3);
+      break;
+    }
+    if (g_Camera.unk_0xC0 == 0x80000009) {
+      func_8003FDC8(0);
+      break;
+    }
+    if (g_Pad.m_NoMovementButtonPressed == 0) {
+      func_8003EA68(1);
+      break;
+    }
+    if (g_Spyro.m_onEdge != 0) {
+      func_8003FDC8(13);
+      break;
+    }
+    if (g_Spyro.m_noGamepadUpdateFrames != 0) {
+      func_8003FDC8(0);
+      break;
+    }
+    if (g_Spyro.m_nextBodyAnimation ==
+            spyro_StateDefaultAnimation[g_Spyro.m_State] &&
+        g_Spyro.m_nextBodyAnimationFrame >=
+            spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_EndFrame -
+                1) {
+      func_8003EA68(0);
+      break;
+    }
+    if (g_Spyro.unk_0x198 == 1) {
+      func_8003FDC8(0);
+    }
+    break;
+  case 16:
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if (g_Spyro.m_Position.z >= D_8006E9A4[g_LevelIndex] &&
+        g_Spyro.m_airTime == 0) {
+      if (g_Spyro.m_idleTimer >= 24 || g_Spyro.m_slopeAngle >= 23) {
+        func_8003EA68(6);
+        g_Spyro.m_idleTimer = g_Spyro.unk_0x84;
+      } else {
+        func_8003EA68(0);
+      }
+      if (g_Spyro.m_noGamepadUpdateFrames < 8) {
+        g_Spyro.m_noGamepadUpdateFrames = 8;
+      }
+      func_8003DFA4();
+    }
+    if ((g_Pad.m_Down & PAD_CROSS) != 0) {
+      if (g_Spyro.m_onSlope == 0 || g_Spyro.m_idleTimer >= 16) {
+        func_8003EA68(15);
+      }
+      break;
+    }
+    if (g_Spyro.m_idleTimer >= 301) {
+      if (g_IsFlightLevel != 0) {
+        D_80075694();
+        g_UpdateMoby();
+      } else {
+        g_SpyroLifeCount++;
+        func_8002C85C();
+      }
+    }
+    break;
+  case 19: {
+    int speed;
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_CROSS) != 0 && g_Spyro.m_idleTimer < 4) {
+      func_8003EA68(5);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_SQUARE) != 0 &&
+        g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 7936) {
+      func_8003EA68(20);
+      break;
+    }
+    if (g_Spyro.m_airTime >= 8) {
+      func_8003EA68(6);
+      break;
+    }
+    if (g_Spyro.m_slopeAngle < 23 &&
+        g_Spyro.m_nextBodyAnimationFrame ==
+            spyro_AnimationDetails[20].m_EndFrame - 1 &&
+        g_Spyro.m_Physics.m_TrueSpeed < 2304) {
+      if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
+        speed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
+        if (speed > 3840) {
+          func_8003EA68(2);
+        } else if (speed > 1920) {
+          func_8003EA68(21);
+        } else {
+          func_8003EA68(1);
+        }
+      } else if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 1920) {
+        func_8003DFA4();
+        func_8003EA68(0);
+      } else {
+        func_8003EA68(3);
+      }
+      break;
+    }
+    if (g_Spyro.m_idleTimer > 300) {
+      if (g_IsFlightLevel != 0) {
+        D_80075694();
+        g_UpdateMoby();
+      } else {
+        g_SpyroLifeCount++;
+        func_8002C85C();
+      }
+    }
+    break;
+  }
+  case 20: {
+    int dot2;
+    if (g_Spyro.m_onSlope == 0 && (g_Pad.m_Down & PAD_CROSS) != 0) {
+      g_Spyro.m_isGliding = 1;
+    }
+    if ((g_Spyro.m_walkingState & 0x40) == 0 && func_80041270() != 0) {
+      break;
+    }
+    if (g_Spyro.m_slopeAngle >= 23 && g_HasLevelTransition == 0) {
+      dot2 =
+          g_Spyro.m_Physics.m_Acceleration.x * g_Spyro.m_floorPositonOnSlope.x +
+          g_Spyro.m_Physics.m_Acceleration.y * g_Spyro.m_floorPositonOnSlope.y;
+      if (dot2 < 0) {
+        func_8003EA68(12);
+        break;
+      }
+    }
+    if (g_Spyro.m_touchingMoby == 0 &&
+        g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 3200 &&
+        (g_Spyro.m_Physics.m_TrueSpeed << 1) <
+            g_Spyro.m_Physics.m_SpeedAngle.m_Speed &&
+        g_HasLevelTransition == 0) {
+      func_8003D978();
+      func_8003EA68(12);
+      break;
+    }
+    if (g_Spyro.m_airTime == 0) {
+      if ((g_Spyro.m_walkingState & 0x40) == 0) {
+        func_8003EA68(11);
+      } else {
+        func_8003EA68(44);
+      }
+    } else if (g_Spyro.m_Physics.m_Acceleration.z < 0 &&
+               g_Spyro.m_isGliding != 0) {
+      if (g_IsFlightLevel != 0 || g_LevelId == 64) {
+        func_8003EA68(32);
+      } else {
+        func_8003EA68(15);
+      }
+    }
+    break;
+  }
+  case 21: {
+    int speed;
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_CROSS) != 0) {
+      func_8003EA68(5);
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+      func_8003EA68(11);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_L1) != 0) {
+      func_8003EA68(9);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_R1) != 0) {
+      func_8003EA68(10);
+      break;
+    }
+    speed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
+    if (speed > 3840) {
+      func_8003EA68(2);
+    } else if (speed < 1600) {
+      func_8003EA68(1);
+    }
+    break;
+  }
+  case 23: {
+    int speed;
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if (g_Spyro.m_airTime == 0) {
+      if (g_Spyro.m_slopeAngle >= 23) {
+        func_8003EA68(6);
+        break;
+      }
+      if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
+        speed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
+        if (speed > 3840) {
+          func_8003EA68(2);
+        } else if (speed > 1920) {
+          func_8003EA68(21);
+        } else {
+          func_8003EA68(1);
+        }
+      } else if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 1920) {
+        func_8003DFA4();
+        func_8003EA68(0);
+      } else {
+        func_8003EA68(3);
+      }
+      break;
+    }
+    if (g_Spyro.m_floorIdleTime == 0 || g_Spyro.m_Physics.m_TrueSpeed < 1024) {
+      func_8003EA68(6);
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+      func_8003EA68(20);
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_TRIANGLE) != 0) {
+      func_8003EA68(16);
+      break;
+    }
+    if (g_Spyro.m_highestFlightPoint + 24 < g_Spyro.m_Position.z) {
+      func_8003EA68(6);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 3200) {
+      if (g_IsFlightLevel != 0 || g_LevelId == 64) {
+        func_8003EA68(32);
+      } else {
+        func_8003EA68(15);
+      }
+    }
+    break;
+  }
+  case 24: {
+    int mag;
+    int ratio;
+    if (g_Spyro.m_idleTimer >= 4) {
+      g_Spyro.unk_0x15c = 0;
+    }
+    if ((g_Pad.m_Held & PAD_CROSS) != 0 && g_Spyro.unk_0x15c != 0) {
+      g_Spyro.unk_0x15c = 0;
+      g_Spyro.m_Physics.m_Acceleration.z += 3520;
+    } else {
+      if ((g_Pad.m_Down & PAD_CROSS) != 0 && g_Spyro.m_onSlope == 0) {
+        g_Spyro.m_isGliding = 1;
+      }
+    }
+    if (g_Spyro.m_slopeAngle >= 23 && g_HasLevelTransition == 0) {
+      mag =
+          g_Spyro.m_Physics.m_Acceleration.x * g_Spyro.m_floorPositonOnSlope.x +
+          g_Spyro.m_Physics.m_Acceleration.y * g_Spyro.m_floorPositonOnSlope.y;
+      if (mag < 0) {
+        func_8003EA68(12);
+        break;
+      }
+    }
+    mag = VecMagnitude(&g_Spyro.m_Physics.m_Acceleration, 1);
+    if (mag == 0) {
+      mag = 1;
+    }
+    ratio = (g_Spyro.m_Physics.m_TrueSpeed << 12) / mag;
+    if (g_Spyro.m_touchingMoby == 0 && ratio < 2048 &&
+        g_HasLevelTransition == 0) {
+      func_8003EA68(12);
+      break;
+    }
+    if (g_Spyro.m_airTime == 0) {
+      func_8003EA68(11);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_Acceleration.z < 0) {
+      if (g_Spyro.m_isGliding == 0) {
+        func_8003EA68(20);
+      } else if (g_IsFlightLevel != 0 || g_LevelId == 64) {
+        func_8003EA68(32);
+      } else {
+        func_8003EA68(15);
+      }
+    }
+    break;
+  }
+  case 25:
+    if ((g_Spyro.m_DamageFlags & 0x10) != 0 || g_Spyro.m_idleTimer < 24) {
+      break;
+    }
+    if (g_Spyro.m_health < 0) {
+      func_8003EA68(30);
+      break;
+    }
+    if (g_Spyro.m_airTime == 0) {
+      func_8003EA68(0);
+    } else {
+      func_8003EA68(6);
+    }
+    if (g_Spyro.m_noGamepadUpdateFrames < 12) {
+      g_Spyro.m_noGamepadUpdateFrames = 12;
+    }
+    break;
+  case 26:
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if ((g_Pad.m_Down & PAD_CROSS) != 0) {
+      func_8003EA68(5);
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed == 0 &&
+        g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed == 0 &&
+        g_Spyro.m_idleTimer >= 16) {
+      func_8003EA68(0);
+    } else {
+      func_8003EA68(1);
+    }
+    break;
+  case 29:
+    if (HandleSpyroDamage(0xFBF9) != 0 || g_Spyro.m_health < 0) {
+      break;
+    }
+    if (g_Spyro.m_idleTimer > 60) {
+      g_Spyro.m_health = -1;
+      g_SpawnMoby(D_8006EA40[D_80075728], nullptr);
+      break;
+    }
+    if (g_Spyro.m_idleTimer >= 16 && (g_Pad.m_Held & PAD_CROSS) != 0) {
+      func_8003EA68(5);
+    }
+    break;
+  case 32: {
+    int speed;
+    int posZ;
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if (g_Spyro.m_airTime == 0) {
+      if (g_Spyro.m_slopeAngle >= 23) {
+        func_8003EA68(6);
+      } else if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
+        speed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
+        if (speed > 3840) {
+          func_8003EA68(2);
+        } else if (speed > 1920) {
+          func_8003EA68(21);
+        } else {
+          func_8003EA68(1);
+        }
+      } else if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >= 1920) {
+        func_8003EA68(3);
+      } else {
+        func_8003DFA4();
+        func_8003EA68(0);
+      }
+    } else if (g_Spyro.m_floorIdleTime == 0) {
+      func_8003EA68(6);
+    } else if (g_Spyro.m_Physics.m_TrueSpeed < 1024) {
+      func_8003EA68(6);
+    } else if (g_Spyro.m_Physics.m_TrueVelocity.z > 2048) {
+      func_8003EA68(33);
+    } else if ((g_Pad.m_Down & PAD_CROSS) != 0) {
+      func_8003EA68(33);
+    } else if (g_Spyro.m_Physics.m_TrueVelocity.z < -4096) {
+      func_8003EA68(34);
+    } else if (g_Spyro.m_walkingState == 0) {
+      posZ = g_Spyro.m_Position.z;
+      if (posZ - g_Spyro.m_highestFlightPoint > 512) {
+        func_8003EA68(6);
+      } else if ((g_ActivePad->m_Released & PAD_R1) != 0) {
+        g_Spyro.m_walkingState = 1;
+      } else if ((g_ActivePad->m_Released & PAD_L1) != 0) {
+        g_Spyro.m_walkingState = 2;
+        D_80075700 = posZ;
+      }
+    }
+
+    if (g_IsFlightLevel == 0) {
+      if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+        func_8003EA68(20);
+      } else if (g_Spyro.m_idleTimer > 16 &&
+                 (g_Pad.m_Down & PAD_TRIANGLE) != 0) {
+        func_8003EA68(16);
+      }
+    }
+    break;
+  }
+  case 33: {
+    int speed;
+    int posZ;
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if (g_Spyro.m_airTime == 0) {
+      if (g_Spyro.m_slopeAngle >= 23) {
+        func_8003EA68(6);
+      } else if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
+        speed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
+        if (speed > 3840) {
+          func_8003EA68(2);
+        } else if (speed > 1920) {
+          func_8003EA68(21);
+        } else {
+          func_8003EA68(1);
+        }
+      } else if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >= 1920) {
+        func_8003EA68(3);
+      } else {
+        func_8003DFA4();
+        func_8003EA68(0);
+      }
+    } else if (g_Spyro.m_floorIdleTime == 0) {
+      func_8003EA68(6);
+    } else if (g_Spyro.m_Physics.m_TrueSpeed < 1024) {
+      func_8003EA68(6);
+    } else if (g_Spyro.m_idleTimer > 30 &&
+               g_Spyro.m_Physics.m_TrueVelocity.z < 1536) {
+      func_8003EA68(32);
+    } else if (g_Spyro.m_walkingState == 0) {
+      posZ = g_Spyro.m_Position.z;
+      if (posZ - g_Spyro.m_highestFlightPoint > 512) {
+        func_8003EA68(6);
+      } else if ((g_ActivePad->m_Released & PAD_R1) != 0) {
+        g_Spyro.m_walkingState = 1;
+      } else if ((g_ActivePad->m_Released & PAD_L1) != 0) {
+        g_Spyro.m_walkingState = 2;
+        D_80075700 = posZ;
+      }
+    }
+
+    if (g_IsFlightLevel == 0) {
+      if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+        func_8003EA68(20);
+      } else if (g_Spyro.m_idleTimer > 16 &&
+                 (g_Pad.m_Down & PAD_TRIANGLE) != 0) {
+        func_8003EA68(16);
+      }
+    }
+    break;
+  }
+  case 34: {
+    int speed;
+    int posZ;
+    if (HandleSpyroDamage(0xFFF9) != 0) {
+      break;
+    }
+    if (g_Spyro.m_airTime == 0) {
+      if (g_Spyro.m_slopeAngle >= 23) {
+        func_8003EA68(6);
+      } else if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
+        speed = g_Spyro.m_Physics.m_SpeedAngle.m_Speed;
+        if (speed > 3840) {
+          func_8003EA68(2);
+        } else if (speed > 1920) {
+          func_8003EA68(21);
+        } else {
+          func_8003EA68(1);
+        }
+      } else if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >= 1920) {
+        func_8003EA68(3);
+      } else {
+        func_8003DFA4();
+        func_8003EA68(0);
+      }
+    } else if (g_Spyro.m_floorIdleTime == 0) {
+      func_8003EA68(6);
+    } else if (g_Spyro.m_Physics.m_TrueSpeed < 1024) {
+      func_8003EA68(6);
+    } else if ((g_Pad.m_Down & PAD_CROSS) != 0) {
+      func_8003EA68(33);
+    } else if (g_Spyro.m_idleTimer > 30 &&
+               g_Spyro.m_Physics.m_TrueVelocity.z > -3072) {
+      func_8003EA68(32);
+    } else if (g_Spyro.m_walkingState == 0) {
+      posZ = g_Spyro.m_Position.z;
+      if (posZ - g_Spyro.m_highestFlightPoint > 512) {
+        func_8003EA68(6);
+      } else if ((g_ActivePad->m_Released & PAD_R1) != 0) {
+        g_Spyro.m_walkingState = 1;
+      } else if ((g_ActivePad->m_Released & PAD_L1) != 0) {
+        g_Spyro.m_walkingState = 2;
+        D_80075700 = posZ;
+      }
+    }
+
+    if (g_IsFlightLevel == 0) {
+      if ((g_Pad.m_Held & PAD_SQUARE) != 0) {
+        func_8003EA68(20);
+      } else if (g_Spyro.m_idleTimer > 16 &&
+                 (g_Pad.m_Down & PAD_TRIANGLE) != 0) {
+        func_8003EA68(16);
+      }
+    }
+    break;
+  }
+  case 35:
+    if (HandleSpyroDamage(0xFFF9) || g_Spyro.m_ControlFlags != 0) {
+      break;
+    }
+    func_8003EA68(0);
+    break;
+  case 44:
+    if (HandleSpyroDamage(0x8400) != 0) {
+      break;
+    }
+    if ((g_Pad.m_Held & PAD_CROSS) != 0) {
+      if (D_80075700 >= 10 || g_Spyro.m_airTime != 0) {
+        func_8003EA68(24);
+        g_Spyro.m_Physics.m_Acceleration.z += 3520;
+        g_Spyro.m_airTime++;
+        g_Spyro.unk_0x15c = 0;
+        break;
+      }
+      D_80075700 += g_DeltaTime;
+    }
+    if ((g_Pad.m_Released & PAD_CROSS) != 0) {
+      func_8003EA68(24);
+      g_Spyro.m_Physics.m_Acceleration.z += 3520;
+      g_Spyro.m_airTime++;
+      g_Spyro.unk_0x15c = 0;
+      break;
+    }
+    if (g_Spyro.m_airTime >= 4) {
+      func_8003EA68(24);
+      g_Spyro.unk_0x15c = 1;
+      break;
+    }
+    if (g_Spyro.m_slopeAngle >= 23) {
+      func_8003EA68(6);
+      break;
+    }
+    if (g_Spyro.m_idleTimer >= 15 && (g_Pad.m_Held & PAD_SQUARE) == 0) {
+      func_8003EA68(11);
+      break;
+    }
+    if (g_Spyro.m_touchingMoby == 0 &&
+        g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 3200 &&
+        (g_Spyro.m_Physics.m_TrueSpeed << 1) <
+            g_Spyro.m_Physics.m_SpeedAngle.m_Speed &&
+        g_HasLevelTransition == 0) {
+      func_8003EA68(12);
+      break;
+    }
+    if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 7680) {
+      func_8003EA68(11);
+    }
+    break;
+  }
+}
 
 extern unsigned char D_8006C6F8[];
 extern signed char D_8006C704[];
