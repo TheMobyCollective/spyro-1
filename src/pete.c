@@ -36,6 +36,12 @@ extern short D_8006C5F0[][13]; // Turn rate lookup table
 
 // Part of this file (gp_rel)
 Moby *D_80075804;
+int D_80075668;
+int D_800756B4;
+int D_80075724;
+int D_8007578C;
+Moby *D_80075790;
+int D_800757F0;
 int D_80075948;
 
 // Spyro g_Spyro;
@@ -1069,7 +1075,664 @@ void func_8003E90C(void) {
   }
 }
 
-INCLUDE_ASM_REORDER_HACK("asm/nonmatchings/pete", func_8003EA68);
+/// @brief Changes Spyro's state
+void func_8003EA68(int pNewState) {
+  switch (g_Spyro.m_State) {
+  case 11:
+  case 15:
+  case 32:
+  case 44:
+    func_800562A4((Moby *)&g_Spyro, 2);
+    break;
+  case 7:
+    g_Spyro.m_colorFilter.m_interpolation = 0;
+  case 14:
+  case 22:
+  case 27:
+  case 28:
+    PlaySound(g_Spu.m_SoundTable->spyroStars, (Moby *)&g_Spyro, 4,
+              &g_Spyro.m_damageSoundChannel);
+    break;
+  case 25:
+    PlaySound(g_Spu.m_SoundTable->spyroUnsquish, (Moby *)&g_Spyro, 4,
+              &g_Spyro.m_damageSoundChannel);
+    break;
+  }
+
+  switch (pNewState) {
+  case 0:
+    g_Spyro.m_walkingState = 0;
+    D_80075788 = D_80075274[rand() & 7] *
+                     spyro_AnimationDetails[0].m_TransitionLastFrame -
+                 2;
+    g_Spyro.m_Physics.m_gravity = -128;
+    g_Spyro.unk_0x15c = 1;
+    break;
+
+  case 1:
+  case 2:
+  case 3:
+  case 21: {
+    int angle;
+    int slope;
+    int along;
+    int across;
+
+    g_Spyro.m_walkingState = 0;
+
+    angle = (Atan2(g_Spyro.m_Physics.m_TrueVelocity.x,
+                   g_Spyro.m_Physics.m_TrueVelocity.y, 1) -
+             g_Spyro.m_Physics.m_SpeedAngle.m_RotZ) &
+            0xFFF;
+    if (angle > 1024 && angle < 3072) {
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 0;
+    } else {
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed =
+          VecMagnitude(&g_Spyro.m_Physics.m_TrueVelocity, 0);
+    }
+
+    if (pNewState == 3 && g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 5120) {
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 5120;
+    }
+
+    g_Spyro.m_Physics.m_gravity = -3072;
+    func_8003E1AC();
+
+    if (g_Spyro.m_slopeAngle != 0) {
+      angle = (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ -
+               Atan2(g_Spyro.m_floorPositonOnSlope.x,
+                     g_Spyro.m_floorPositonOnSlope.y, 1)) &
+              0xFFF;
+      if (angle > 2048) {
+        angle -= 4096;
+      }
+
+      slope = (g_Spyro.m_slopeAngle << 12) / 22;
+      angle = ABS(angle);
+
+      if (angle > 1024) {
+        angle = 2048 - angle;
+        along = D_8006C5C0 + ((slope * (D_8006C5CC - D_8006C5C0)) >> 12);
+      } else {
+        along = D_8006C5B8 + ((slope * (D_8006C5C4 - D_8006C5B8)) >> 12);
+      }
+
+      across = D_8006C5BC + ((slope * (D_8006C5C8 - D_8006C5BC)) >> 12);
+      along = (along * Cos(angle)) >> 12;
+      across = (across * Sin(angle)) >> 12;
+      g_Spyro.m_Physics.unk_0x144 =
+          func_80017A38(along * along + across * across);
+    } else {
+      g_Spyro.m_Physics.unk_0x144 = D_8006C5B8;
+    }
+
+    g_Spyro.unk_0x15c = 1;
+
+    if (g_Spyro.unk_0x194 != 0) {
+      g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = 0;
+      g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ = g_Spyro.m_portalAngle.z
+                                                    << 4;
+    }
+    break;
+  }
+
+  case 4:
+    g_Spyro.m_walkingState = 0;
+    g_Spyro.m_Physics.m_gravity = -3072;
+    func_8003E1AC();
+    g_Spyro.unk_0x15c = 1;
+    break;
+
+  case 5:
+    VecCopy(&g_Spyro.m_Physics.m_Acceleration,
+            &g_Spyro.m_Physics.m_TrueVelocity);
+    g_Spyro.m_Physics.unk_0xe8.z = 3520;
+    g_Spyro.m_Physics.m_gravity = -192;
+    g_Spyro.m_walkingState = 0;
+    g_Spyro.m_isGliding = 0;
+    g_Spyro.unk_0x15c = 0;
+    g_Spyro.m_highestFlightPoint =
+        g_Spyro.m_Position.z + (g_Spyro.m_Physics.m_Acceleration.z >> 6);
+
+    if (g_Spyro.m_State == 29) {
+      D_800756B4 = 1;
+    } else {
+      D_800756B4 = 0;
+    }
+    break;
+
+  case 6:
+    g_Spyro.m_walkingState = 0;
+    VecCopy(&g_Spyro.m_Physics.m_Acceleration,
+            &g_Spyro.m_Physics.m_TrueVelocity);
+
+    if (g_Spyro.m_floorIdleTime == 0 && g_Spyro.m_slopeAngle < 32) {
+      func_8003E90C();
+    }
+
+    g_Spyro.m_Physics.m_gravity = -192;
+    g_Spyro.m_isGliding = 0;
+    g_Spyro.unk_0x15c = 0;
+    break;
+
+  case 16:
+    g_Spyro.m_walkingState = 0;
+    g_Spyro.m_Physics.m_Acceleration.x = 0;
+    g_Spyro.m_Physics.m_Acceleration.y = 0;
+    g_Spyro.m_Physics.m_Acceleration.z = g_Spyro.m_Physics.m_TrueVelocity.z;
+
+    if (g_Spyro.m_floorIdleTime == 0 && g_Spyro.m_slopeAngle < 32) {
+      func_8003E90C();
+    }
+
+    g_Spyro.m_Physics.m_gravity = -192;
+    g_Spyro.m_isGliding = 0;
+    g_Spyro.unk_0x15c = 0;
+    break;
+
+  case 9:
+  case 10:
+    g_Spyro.m_walkingState = 0;
+    VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_TrueVelocity);
+    g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 0;
+    g_Spyro.m_Physics.m_gravity = -3072;
+    func_8003E1AC();
+    g_Spyro.unk_0x15c = 1;
+    break;
+
+  case 11: {
+    Vector3D mobyDelta;
+    Moby *moby;
+    int angle;
+    int absAngle;
+    int mobyAngle;
+    int mobyAbsAngle;
+    int bestScore;
+    int dist;
+
+    VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_TrueVelocity);
+
+    if (g_Spyro.m_doingSupercharge != 0) {
+      if ((g_Spyro.m_walkingState & 0x80) == 0) {
+        int speed;
+
+        g_Spyro.m_highestFlightPoint = g_Spyro.m_Position.z;
+        speed = VecMagnitude(&g_Spyro.m_Physics.unk_0xe8, 1);
+        if (speed < 8064) {
+          speed = 8064;
+        }
+        g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = speed;
+      }
+
+      g_Spyro.m_walkingState = 129;
+    } else {
+      g_Spyro.m_walkingState = 1;
+    }
+
+    g_Spyro.m_Physics.m_TurnMomentum = 0;
+    g_Spyro.m_Physics.m_gravity = -576;
+    func_8003E1AC();
+    ApplySlopeGravity();
+    g_Spyro.unk_0x15c = 1;
+    PlaySound(g_Spu.m_SoundTable->spyroCharge, (Moby *)&g_Spyro, 4,
+              &g_Spyro.m_chargeSoundChannel);
+
+    D_80075790 = nullptr;
+
+    angle =
+        (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ - g_Camera.m_Rotation.z) & 0xFFF;
+    if (angle > 2048) {
+      angle -= 4096;
+    }
+
+    absAngle = ABS(angle);
+    if (absAngle <= 512) {
+      break;
+    }
+
+    bestScore = 30000;
+
+    for (moby = g_LevelMobys; moby < g_DynMobys; moby++) {
+      if (moby->m_State < 127 && moby->m_CollisionGroup != nullptr) {
+        VecSub(&mobyDelta, &moby->m_Position, &g_Spyro.m_Position);
+        mobyAngle = (Atan2(mobyDelta.x, mobyDelta.y, 1) -
+                     g_Spyro.m_Physics.m_SpeedAngle.m_RotZ) &
+                    0xFFF;
+        if (mobyAngle > 2048) {
+          mobyAngle -= 4096;
+        }
+
+        mobyAbsAngle = ABS(mobyAngle);
+        if (mobyAbsAngle < 512) {
+          dist = ABS(mobyDelta.x) + ABS(mobyDelta.y) + ABS(mobyDelta.z);
+
+          if (dist < 16384) {
+            dist = VecMagnitude(&mobyDelta, 1);
+
+            if (dist < 6144) {
+              dist += mobyAbsAngle * 4;
+
+              if (dist < bestScore) {
+                bestScore = dist;
+                D_80075790 = moby;
+              }
+            }
+          }
+        }
+      }
+    }
+    break;
+  }
+
+  case 12: {
+    Vector3D particleOffset;
+    int i;
+    int angle;
+
+    angle = rand() & 63;
+
+    for (i = 0; i < 4; i++) {
+      particleOffset.x = 0;
+      particleOffset.y = COSINE_8(angle) >> 7;
+      particleOffset.z = SINE_8(angle) >> 7;
+      VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &particleOffset,
+                        &particleOffset);
+      g_SpawnParticle(1, 33, &particleOffset, 1);
+      angle = (angle + 64) & 0xFF;
+    }
+
+    g_Spyro.m_walkingState = 0;
+    VecNull(&g_Spyro.m_Physics.unk_0xe8);
+    VecSub(&g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_Physics.unk_0xe8,
+           &g_Spyro.m_Physics.m_Acceleration);
+    VecShiftRight(&g_Spyro.m_Physics.m_Acceleration, 2);
+    g_Spyro.m_Physics.m_gravity = -768;
+    g_Spyro.unk_0x15c = 1;
+
+    if (D_8007584C < 120) {
+      D_8007584C = 120;
+    }
+    if (D_800757D0 < 15) {
+      D_800757D0 = 15;
+    }
+    break;
+  }
+
+  case 13:
+    g_Spyro.m_Physics.m_gravity = -3072;
+    g_Spyro.m_walkingState = 0;
+    g_Spyro.unk_0x15c = 1;
+    break;
+
+  case 7: {
+    int length;
+
+    g_Spyro.m_walkingState = 0;
+    VecNull(&g_Spyro.m_Physics.m_Acceleration);
+    VecSub(&g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_Physics.m_Acceleration,
+           &g_Spyro.m_Physics.m_TrueVelocity);
+
+    length = VecMagnitude(&g_Spyro.m_Physics.m_Acceleration, 1);
+    if (length > 7680) {
+      VecScaleToLength(&g_Spyro.m_Physics.m_Acceleration, length, 7680);
+    }
+
+    g_Spyro.m_Physics.m_gravity = -768;
+    if (g_Spyro.m_airTime == 0) {
+      func_8003E1AC();
+    }
+
+    g_Spyro.unk_0x15c = 1;
+    g_SpawnParticle(5, 10, 0, 0);
+
+    if (D_80075764 < 45) {
+      D_80075764 = 45;
+    }
+    break;
+  }
+
+  case 14: {
+    int length;
+
+    g_Spyro.m_walkingState = 0;
+    VecNull(&g_Spyro.m_Physics.m_Acceleration);
+    VecSub(&g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_Physics.m_Acceleration,
+           &g_Spyro.m_Physics.m_TrueVelocity);
+
+    length = VecMagnitude(&g_Spyro.m_Physics.m_Acceleration, 1);
+    if (length > 7680) {
+      VecScaleToLength(&g_Spyro.m_Physics.m_Acceleration, length, 7680);
+    }
+
+    g_Spyro.m_Physics.m_gravity = -768;
+    if (g_Spyro.m_airTime == 0) {
+      func_8003E1AC();
+    }
+
+    g_Spyro.unk_0x15c = 1;
+    g_SpawnParticle(5, 10, 0, 0);
+
+    if (D_80075904 < 15) {
+      D_80075904 = 15;
+    }
+
+    PlaySound(g_Spu.m_SoundTable->flipImpact, (Moby *)&g_Spyro, 4,
+              &g_Spyro.m_damageSoundChannel);
+    break;
+  }
+
+  case 25:
+    g_Spyro.m_walkingState = 0;
+    VecNull(&g_Spyro.m_Physics.m_Acceleration);
+    g_Spyro.m_Physics.m_Acceleration.z = -3072;
+    g_Spyro.unk_0x15c = 1;
+    g_SpawnParticle(5, 10, 0, 0);
+
+    if (D_80075904 < 15) {
+      D_80075904 = 15;
+    }
+
+    PlaySound(g_Spu.m_SoundTable->splort, (Moby *)&g_Spyro, 4,
+              &g_Spyro.m_damageSoundChannel);
+    break;
+
+  case 27:
+    g_Spyro.m_walkingState = 0;
+    VecNull(&g_Spyro.m_Physics.m_Acceleration);
+    g_Spyro.m_Physics.m_gravity = -768;
+    g_Spyro.unk_0x15c = 1;
+    g_SpawnParticle(5, 10, 0, 0);
+
+    if (D_80075904 < 15) {
+      D_80075904 = 15;
+    }
+    break;
+
+  case 15:
+  case 23:
+  case 32:
+  case 33:
+  case 34:
+    if (g_Spyro.m_State != 15 && g_Spyro.m_State != 23 &&
+        g_Spyro.m_State != 32 && g_Spyro.m_State != 33 &&
+        g_Spyro.m_State != 34) {
+      g_Spyro.m_walkingState = 0;
+      g_Spyro.m_onSlope = 1;
+      g_Spyro.m_Physics.m_TurnMomentum = 0;
+      D_80075960 = 0;
+      D_800758A0 = 0;
+      D_80075700 = 0;
+
+      if (g_Spyro.m_Physics.m_TrueVelocity.z > 0) {
+        g_Spyro.m_Physics.m_TrueVelocity.z = 0;
+      }
+
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed =
+          VecMagnitude(&g_Spyro.m_Physics.m_Acceleration, 0);
+      if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 6400) {
+        g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 6400;
+      }
+      if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 1920) {
+        g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 1920;
+      }
+
+      if (g_Spyro.m_State != 6 || g_IsFlightLevel != 0 ||
+          g_Spyro.m_highestFlightPoint < g_Spyro.m_Position.z) {
+        g_Spyro.m_highestFlightPoint = g_Spyro.m_Position.z;
+      }
+
+      if (g_Spyro.m_Physics.m_SpeedAngle.m_RotY > 1024) {
+        g_Spyro.unk_0x254 = 1;
+      } else {
+        g_Spyro.unk_0x254 = 0;
+      }
+
+      g_Spyro.m_Physics.m_gravity = -128;
+    }
+
+    g_Spyro.unk_0x15c = 0;
+    break;
+
+  case 17:
+    if (g_Spyro.m_mobyInUseBySpyro != nullptr) {
+      int height;
+      int offset;
+      int angle;
+
+      VecNull(&g_Spyro.m_Physics.m_Acceleration);
+      g_Spyro.m_highestFlightPoint = g_Spyro.m_portalEndPos.z;
+      D_8007578C = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
+
+      height = g_Spyro.m_portalEndPos.z - g_Spyro.m_Position.z - 2048;
+      D_80075724 = height;
+      D_80075668 = g_Spyro.m_Position.z;
+
+      offset = ((height << 10) >> 10) + 1024;
+      D_800757F0 = offset;
+
+      angle = ((g_Spyro.m_mobyInUseBySpyro->m_Rotation.z << 4) -
+               g_Spyro.m_Physics.m_SpeedAngle.m_RotZ - offset) &
+              0xFFF;
+      D_800757F0 = angle;
+      if (angle > 2048) {
+        D_800757F0 = angle - 4096;
+      }
+    } else {
+      VecCopy(&g_Spyro.m_Physics.m_Acceleration,
+              &g_Spyro.m_Physics.m_TrueVelocity);
+    }
+
+    g_Spyro.m_Physics.m_gravity = 128;
+    g_Spyro.unk_0x15c = 0;
+    break;
+
+  case 18:
+  case 36:
+  case 37:
+  case 38:
+  case 39:
+  case 40:
+  case 41:
+  case 42:
+  case 43:
+    g_Spyro.m_walkingState = 0;
+    D_80075788 = spyro_AnimationDetails[pNewState].m_TransitionLastFrame * 16;
+    g_Spyro.m_Physics.m_gravity = -3072;
+    break;
+
+  case 19:
+    g_Spyro.m_walkingState = 0;
+    VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_TrueVelocity);
+
+    if (g_Spyro.m_Physics.unk_0xe8.z > 0) {
+      g_Spyro.m_Physics.unk_0xe8.z = 0;
+    }
+
+    g_Spyro.m_Physics.m_gravity = -512;
+    func_8003E1AC();
+    ApplySlopeGravity();
+    g_Spyro.unk_0x15c = 0;
+    break;
+
+  case 20:
+    VecCopy(&g_Spyro.m_Physics.m_Acceleration,
+            &g_Spyro.m_Physics.m_TrueVelocity);
+    VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_TrueVelocity);
+    g_Spyro.m_Physics.m_TurnMomentum = 0;
+
+    if (g_Spyro.m_doingSupercharge != 0) {
+      if ((g_Spyro.m_walkingState & 0x80) == 0) {
+        int speed;
+
+        g_Spyro.m_highestFlightPoint = g_Spyro.m_Position.z;
+        speed = VecMagnitude(&g_Spyro.m_Physics.unk_0xe8, 1);
+        if (speed < 8064) {
+          speed = 8064;
+        }
+        g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = speed;
+      }
+
+      g_Spyro.m_walkingState |= 0x80;
+    } else {
+      g_Spyro.m_walkingState = 0;
+      g_Spyro.m_Physics.m_Acceleration.z = 0;
+      g_Spyro.m_Physics.unk_0xe8.z = 0;
+    }
+
+    g_Spyro.m_Physics.m_gravity = -576;
+    g_Spyro.m_isGliding = 0;
+    g_Spyro.unk_0x15c = 0;
+    break;
+
+  case 24:
+    VecCopy(&g_Spyro.m_Physics.m_Acceleration,
+            &g_Spyro.m_Physics.m_TrueVelocity);
+    VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_TrueVelocity);
+    g_Spyro.m_Physics.m_TurnMomentum = 0;
+    g_Spyro.m_walkingState = 192;
+    g_Spyro.m_Physics.m_gravity = 0;
+    g_Spyro.m_isGliding = 0;
+    break;
+
+  case 26: {
+    int angle;
+
+    g_Spyro.m_walkingState = 0;
+
+    angle = (Atan2(g_Spyro.m_Physics.m_TrueVelocity.x,
+                   g_Spyro.m_Physics.m_TrueVelocity.y, 1) -
+             g_Spyro.m_Physics.m_SpeedAngle.m_RotZ) &
+            0xFFF;
+    if (angle > 1024 && angle < 3072) {
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 0;
+    } else {
+      g_Spyro.m_Physics.m_SpeedAngle.m_Speed =
+          VecMagnitude(&g_Spyro.m_Physics.m_TrueVelocity, 0);
+    }
+
+    g_Spyro.m_Physics.m_gravity = -3072;
+    func_8003E1AC();
+    g_Spyro.m_Physics.unk_0x144 = 640;
+    D_800758A0 = 0;
+    g_Spyro.unk_0x15c = 1;
+    break;
+  }
+
+  case 22:
+  case 28:
+    g_Spyro.m_Physics.m_Acceleration.x = g_Spyro.unk_0x208.x << 6;
+    g_Spyro.m_walkingState = 0;
+    g_Spyro.m_Physics.m_Acceleration.y = g_Spyro.unk_0x208.y << 6;
+
+    if (g_Spyro.unk_0x208.z != 0) {
+      g_Spyro.m_Physics.m_Acceleration.z = g_Spyro.unk_0x208.z << 6;
+    } else {
+      g_Spyro.m_Physics.m_Acceleration.z = g_Spyro.m_Physics.m_TrueVelocity.z;
+    }
+
+    Atan2(g_Spyro.m_Physics.m_Acceleration.x,
+          g_Spyro.m_Physics.m_Acceleration.y, 1);
+    g_Spyro.m_Physics.m_gravity = -768;
+    if (g_Spyro.m_airTime == 0) {
+      func_8003E1AC();
+    }
+
+    g_Spyro.unk_0x15c = 1;
+    g_SpawnParticle(5, 10, 0, 0);
+    PlaySound(g_Spu.m_SoundTable->flipImpact, (Moby *)&g_Spyro, 4,
+              &g_Spyro.m_damageSoundChannel);
+
+    if (D_80075904 < 15) {
+      D_80075904 = 15;
+    }
+    break;
+
+  case 29:
+    g_Spyro.m_walkingState = 0;
+    g_Spyro.m_Physics.m_gravity = -128;
+    g_Spyro.unk_0x15c = 1;
+
+    if (g_Spyro.m_invulverabilityTimer == 0) {
+      g_SpawnParticle(5, 10, 0, 0);
+    }
+
+    g_SpawnMoby(D_8006EA34[D_80075728], nullptr);
+    PlaySound(g_Spu.m_SoundTable->waterSplash, (Moby *)&g_Spyro, 4,
+              &g_Spyro.m_damageSoundChannel);
+    PlaySound(g_Spu.m_SoundTable->spyroStars, (Moby *)&g_Spyro, 4,
+              &g_Spyro.m_damageSoundChannel);
+
+    if (D_80075904 < 15) {
+      D_80075904 = 15;
+    }
+    break;
+
+  case 30:
+    g_Spyro.m_walkingState = 0;
+    VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_TrueVelocity);
+    g_Spyro.m_Physics.m_gravity = -768;
+    if (g_Spyro.m_airTime == 0) {
+      func_8003E1AC();
+    }
+    g_Spyro.unk_0x15c = 1;
+    break;
+
+  case 31:
+    g_Spyro.m_walkingState = 0;
+    VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_TrueVelocity);
+    g_Spyro.m_Physics.m_gravity = -768;
+    if (g_Spyro.m_airTime == 0) {
+      func_8003E1AC();
+    }
+    g_Spyro.unk_0x15c = 1;
+    g_SpawnParticle(5, 10, 0, 0);
+    break;
+
+  case 35:
+    g_Spyro.m_Physics.m_gravity = -128;
+    g_Spyro.m_walkingState = 0;
+    g_Spyro.unk_0x15c = 1;
+    break;
+
+  case 8:
+    g_Spyro.m_walkingState = 0;
+    g_Spyro.unk_0x15c = 1;
+    break;
+
+  case 44: {
+    int speed;
+
+    VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_TrueVelocity);
+
+    if ((g_Spyro.m_walkingState & 0x80) == 0) {
+      g_Spyro.m_highestFlightPoint = g_Spyro.m_Position.z;
+      speed = VecMagnitude(&g_Spyro.m_Physics.unk_0xe8, 1);
+      if (speed < 8064) {
+        speed = 8064;
+      }
+      g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = speed;
+    }
+
+    g_Spyro.m_walkingState = 192;
+    g_Spyro.m_Physics.m_TurnMomentum = 0;
+    g_Spyro.m_Physics.m_gravity = -576;
+    func_8003E1AC();
+    ApplySlopeGravity();
+    g_Spyro.unk_0x15c = 1;
+    D_80075700 = 0;
+    PlaySound(g_Spu.m_SoundTable->superCharge, (Moby *)&g_Spyro, 4,
+              &g_Spyro.m_chargeSoundChannel);
+    break;
+  }
+  }
+
+  g_Spyro.m_State = pNewState;
+  g_Spyro.unk_0x84 = g_Spyro.m_idleTimer;
+  g_Spyro.m_idleTimer = 0;
+  g_Spyro.m_bodyAnimationSpeed =
+      spyro_AnimationDetails[spyro_StateDefaultAnimation[g_Spyro.m_State]]
+          .m_FrameRate;
+}
 
 /// @brief Forces state to and resets animation
 void func_8003FDC8(int pNewState) {
