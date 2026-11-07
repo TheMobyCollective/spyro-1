@@ -34,10 +34,7 @@
 extern unsigned int strlen(char *);
 
 // HAS to be local to this file.
-struct {
-  int post;
-  int pre;
-} D_80075950;
+D_80075950_t D_80075950;
 
 extern char D_8006F304[1];             // "GAMEOVER"
 extern u_short g_GrayscalePalette[32]; // 32 colors

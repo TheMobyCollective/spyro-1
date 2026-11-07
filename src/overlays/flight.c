@@ -28,11 +28,6 @@
 extern unsigned int strlen(char *);
 extern char *strcpy(char *, const char *);
 
-extern struct {
-  int post;
-  int pre;
-} D_80075950;
-
 // Used in the pause menu as well
 extern int D_80075720; // Selected menu item index
 extern int D_80075744; // The index of the current page of the inventory screen

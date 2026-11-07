@@ -31,6 +31,13 @@ typedef struct {
 /// for camera and mobys. Loaded from level data in LoadCutscene().
 extern CutsceneLayout *g_CutsceneLayout;
 
+typedef struct {
+  int m_CurrentTick;
+  int m_EntryOffset;
+  int m_Duration;
+  CutsceneCameraData m_CameraData[1];
+} CreditsLayout;
+
 /// Temporary sound definition buffer used for cutscene audio.
 /// Assigned to g_Spu.m_SoundDefinitions during cutscene playback.
 extern SoundDefinition g_CutsceneSoundDef;
@@ -67,12 +74,12 @@ extern int g_CreditsTotalEntries;
 
 /// Pointer to the current credits data structure.
 /// Accessed at offsets 0x0 and 0x4 during credits rendering.
-extern int g_CreditsDataPtr;
+extern CreditsLayout *g_CreditsDataPtr;
 
 /// Buffer pointer for credits rendering.
 /// Set to overlay space + 0x2800 during credits initialization.
 /// Used for Memcpy operations and image data during credits display.
-extern int g_CreditsBuffer;
+extern u_char *g_CreditsBuffer;
 
 /// Timer that accumulates delta time during credits.
 /// Used for fade transitions (stored to g_Fade) and HUD moby animation.

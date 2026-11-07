@@ -91,4 +91,11 @@ void GamestateDraw(void);
 extern int g_ScreenBorderEnabled; // Is the screen border enabled
 extern int D_800756C0;            // Border size
 
+typedef struct {
+  int post;
+  int pre;
+} D_80075950_t;
+
+extern D_80075950_t D_80075950;
+
 #endif // !__GAMESTATE_DRAW_H

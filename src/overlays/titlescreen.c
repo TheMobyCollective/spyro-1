@@ -27,11 +27,6 @@
 #include "spu.h"
 #include "spyro.h"
 
-extern struct {
-  int post;
-  int pre;
-} D_80075950;
-
 extern void CrashDemoLaunch(void);
 
 static const char s_SaveFileName[20] = "BASCUS-94228SPYRO";
