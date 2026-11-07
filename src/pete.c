@@ -41,15 +41,9 @@ int D_80075668;
 int D_800756B4;
 int D_80075724;
 int D_8007578C;
-Moby* D_80075790;
-int D_800757F0;
-Moby *D_80075804;
-int D_80075668;
-int D_800756B4;
-int D_80075724;
-int D_8007578C;
 Moby *D_80075790;
 int D_800757F0;
+Moby *D_80075804;
 int D_80075948;
 
 // Spyro g_Spyro;
@@ -4002,7 +3996,8 @@ void func_80043FE4(int pDeltaTimeIndex) {
   case 26: {
     Vector3D orbit;
     Moby225Props *props = (Moby225Props *)g_Spyro.m_mobyInUseBySpyro->m_Props;
-    Moby225Props *rideProps = (Moby225Props *)g_Spyro.m_mobyInUseBySpyro->m_Props;
+    Moby225Props *rideProps =
+        (Moby225Props *)g_Spyro.m_mobyInUseBySpyro->m_Props;
     int dz;
     int dist;
 
