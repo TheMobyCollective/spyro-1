@@ -29,6 +29,7 @@
 
 extern void CrashDemoLaunch(void);
 
+// Needs to be a char array to match padding to 20
 static const char s_SaveFileName[20] = "BASCUS-94228SPYRO";
 
 #define SWAP_MENU_SELECTION                                                    \

@@ -25,7 +25,7 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
   switch (g_Environment.m_SurfaceData[surfaceIdx]->m_Type) {
   case 0:
     if (arg1 == 1) {
-      if ((g_Spyro.m_Position.z - g_Spyro.m_surfaceBelowSpyro) > 512) {
+      if ((g_Spyro.m_Position.z - g_Spyro.m_FloorHeight) > 512) {
         g_Spyro.m_SurfaceProximityState = arg1;
         return;
       }
@@ -35,7 +35,7 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
       g_Spyro.m_DamageFlags = (g_Spyro.m_DamageFlags & 0x3FF) | 0x400;
       g_Spyro.m_floorFlagsPointer = surfaceFlags;
       D_80075728 = surfaceFlags[1];
-      g_Spyro.m_damagingFloorIndex = g_Spyro.m_surfaceBelowSpyro;
+      g_Spyro.m_damagingFloorIndex = g_Spyro.m_FloorHeight;
       return;
     }
 
@@ -47,7 +47,7 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
     break;
 
   case 2: // Used by the High Caves Spiders
-    if (arg1 < 2 && g_Spyro.m_Position.z - g_Spyro.m_surfaceBelowSpyro <= 400) {
+    if (arg1 < 2 && g_Spyro.m_Position.z - g_Spyro.m_FloorHeight <= 400) {
       surfaceFlags[0] = 1;
     }
     break;

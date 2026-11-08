@@ -427,7 +427,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
 
   if (g_Checkpoint.m_StoodOnCheckpoint) {
     VecCopy(&g_Spyro.m_Position, &g_Checkpoint.m_StartingPosition);
-    g_Spyro.m_bodyRotation.z = g_Checkpoint.m_StartingRotation >> 4;
+    g_Spyro.m_BodyRotation.z = g_Checkpoint.m_StartingRotation >> 4;
   } else if (g_PortalLevelId == 0) {
     setXYZ(&g_Checkpoint.m_StartingPosition,
            ((LevelSceneHeader *)data)->m_StartingPosition.x,
@@ -441,10 +441,10 @@ void LoadLevelScene(int pAnimationsAndSparx) {
       if (g_Gamestate == 5 && (g_LevelId >= 40 && g_LevelId < 60) &&
           D_8006F218[g_PreviousLevelId - 18].x != 0) {
         VecCopy(&g_Spyro.m_Position, &D_8006F218[g_PreviousLevelId - 18]);
-        g_Spyro.m_bodyRotation.z = D_8006F2A8[g_PreviousLevelId - 18];
+        g_Spyro.m_BodyRotation.z = D_8006F2A8[g_PreviousLevelId - 18];
       } else {
         VecCopy(&g_Spyro.m_Position, &g_Checkpoint.m_StartingPosition);
-        g_Spyro.m_bodyRotation.z = g_Checkpoint.m_StartingRotation;
+        g_Spyro.m_BodyRotation.z = g_Checkpoint.m_StartingRotation;
       }
     }
   }
@@ -468,8 +468,8 @@ void LoadLevelScene(int pAnimationsAndSparx) {
 
     if (g_HasLevelTransition == 0) {
       g_Spyro.m_walkingState = 0;
-      g_Spyro.m_bodyRotation.x = 0;
-      g_Spyro.m_bodyRotation.y = 0;
+      g_Spyro.m_BodyRotation.x = 0;
+      g_Spyro.m_BodyRotation.y = 0;
       g_Spyro.m_Physics.m_SpeedAngle.m_RotY = 0;
       g_Spyro.m_Physics.m_SpeedAngle.m_RotX = 0;
       D_80075960 = 0;
@@ -531,7 +531,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
   COMPONENT_ADVANCE(data, sizeof(Tiledef));
 
   // Clear Spyro's shadow, and.. set the Moby shadow texture
-  Memset(&D_8007AA10, 0, sizeof(D_8007AA10));
+  Memset(&g_SpyroShadow, 0, sizeof(g_SpyroShadow));
 
   g_MobyShadows.shadow.uv0 = ((Tiledef *)data)->uv0;
   g_MobyShadows.shadow.uv1 = ((Tiledef *)data)->uv1;
@@ -677,8 +677,8 @@ void LoadLevelScene(int pAnimationsAndSparx) {
     g_Spyro.m_Position.x = g_DemoStartPositions[g_DemoIndex][0];
     g_Spyro.m_Position.y = g_DemoStartPositions[g_DemoIndex][1];
     g_Spyro.m_Position.z = g_DemoStartPositions[g_DemoIndex][2];
-    g_Spyro.m_bodyRotation.z = g_DemoStartPositions[g_DemoIndex][3];
-    g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z << 4;
+    g_Spyro.m_BodyRotation.z = g_DemoStartPositions[g_DemoIndex][3];
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_BodyRotation.z << 4;
     D_80075784 = 1; // Enable the extra demo mode vsync
 
     if (g_DemoMode == DEMO_MODE_PLAY) {
@@ -1621,7 +1621,7 @@ void LoadLevel(int pArg) {
       }
 
     } else { // Otherwise
-      int dist = g_Spyro.m_bodyRotation.z - g_Spyro.m_portalAngle.z & 0xff;
+      int dist = g_Spyro.m_BodyRotation.z - g_Spyro.m_portalAngle.z & 0xff;
 
       if (dist > 128)
         dist -= 256;
@@ -1673,12 +1673,12 @@ void LoadLevel(int pArg) {
             g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
 
         VecCopy(&g_Spyro.m_Position, &g_Checkpoint.m_StartingPosition);
-        g_Spyro.m_bodyRotation.z = g_Checkpoint.m_StartingRotation;
+        g_Spyro.m_BodyRotation.z = g_Checkpoint.m_StartingRotation;
 
-        g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z * 16;
+        g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_BodyRotation.z * 16;
 
         g_Camera.m_Sphere = g_Camera.m_Simulation;
-        g_Camera.m_Sphere.m_Coords.azimuth += -g_Spyro.m_bodyRotation.z * 16;
+        g_Camera.m_Sphere.m_Coords.azimuth += -g_Spyro.m_BodyRotation.z * 16;
 
         func_80034204(&g_Camera.m_Position);
         VecAdd(&g_Camera.m_Position, &g_Camera.m_Position, &g_Spyro.m_Position);
@@ -1700,7 +1700,7 @@ void LoadLevel(int pArg) {
               MobyPortalPathProps *pathData;
               int rotZ;
 
-              rotZ = g_Spyro.m_bodyRotation.z;
+              rotZ = g_Spyro.m_BodyRotation.z;
               pathData = g_LevelMobys[g_Portals[i]->m_PathMoby].m_Props;
 
               func_8003EA68(15); // Set Spyro's state to glide
@@ -1719,7 +1719,7 @@ void LoadLevel(int pArg) {
                 VecCopy(&g_Spyro.m_portalEndPos,
                         &pathData->m_Path->m_Nodes[1].m_Position);
 
-                g_Spyro.m_bodyRotation.z =
+                g_Spyro.m_BodyRotation.z =
                     Atan2(pathData->m_Path->m_Nodes[1].m_Position.x -
                               pathData->m_Path->m_Nodes[0].m_Position.x,
                           pathData->m_Path->m_Nodes[1].m_Position.y -
@@ -1731,7 +1731,7 @@ void LoadLevel(int pArg) {
                 VecCopy(&g_Spyro.m_portalEndPos,
                         &pathData->m_Path->m_Nodes[0].m_Position);
 
-                g_Spyro.m_bodyRotation.z =
+                g_Spyro.m_BodyRotation.z =
                     Atan2(pathData->m_Path->m_Nodes[0].m_Position.x -
                               pathData->m_Path->m_Nodes[1].m_Position.x,
                           pathData->m_Path->m_Nodes[0].m_Position.y -
@@ -1741,23 +1741,23 @@ void LoadLevel(int pArg) {
 
               // Instantly rotate Spyro and the camera
               g_Spyro.m_Physics.m_SpeedAngle.m_RotZ =
-                  g_Spyro.m_bodyRotation.z * 16;
+                  g_Spyro.m_BodyRotation.z * 16;
 
               g_Camera.m_Sphere = g_Camera.m_Simulation;
               g_Camera.m_Sphere.m_Coords.azimuth +=
-                  -g_Spyro.m_bodyRotation.z * 16;
+                  -g_Spyro.m_BodyRotation.z * 16;
 
               func_80034204(&g_Camera.m_Position); // Sphere -> pos
               VecAdd(&g_Camera.m_Position, &g_Camera.m_Position,
                      &g_Spyro.m_Position);
               func_800342F8(); // Update camera rotation
 
-              g_Spyro.m_sortingDepth = 127; // Sort Spyro over the portal
+              g_Spyro.m_DepthSortOffset = 127; // Sort Spyro over the portal
 
               // Align the portal rotation with the skybox that was visible
               // during the transition
               D_800758FC = 0;
-              D_80075858 = (rotZ - g_Spyro.m_bodyRotation.z) * 16;
+              D_80075858 = (rotZ - g_Spyro.m_BodyRotation.z) * 16;
 
               break;
             }
@@ -1773,11 +1773,11 @@ void LoadLevel(int pArg) {
 
           g_Camera.m_Simulation.m_Coords.azimuth +=
               g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
-          g_Spyro.m_bodyRotation.z = g_Checkpoint.m_StartingRotation;
-          g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z * 16;
+          g_Spyro.m_BodyRotation.z = g_Checkpoint.m_StartingRotation;
+          g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_BodyRotation.z * 16;
 
           g_Camera.m_Sphere = g_Camera.m_Simulation;
-          g_Camera.m_Sphere.m_Coords.azimuth += -g_Spyro.m_bodyRotation.z * 16;
+          g_Camera.m_Sphere.m_Coords.azimuth += -g_Spyro.m_BodyRotation.z * 16;
 
           VecCopy(&g_Spyro.m_Position, &g_Checkpoint.m_StartingPosition);
           func_80034204(&g_Camera.m_Position);
@@ -1791,10 +1791,10 @@ void LoadLevel(int pArg) {
             g_Spyro.m_Position.z -= 0x1600; // 5.5M
 
             g_Spyro.m_Position.x -=
-                (COSINE_8(g_Spyro.m_bodyRotation.z) * 5 >> 1); // * 2.5
+                (COSINE_8(g_Spyro.m_BodyRotation.z) * 5 >> 1); // * 2.5
 
             g_Spyro.m_Position.y -=
-                (SINE_8(g_Spyro.m_bodyRotation.z) * 5 >> 1); // * 2.5
+                (SINE_8(g_Spyro.m_BodyRotation.z) * 5 >> 1); // * 2.5
 
             VecAdd(&g_Camera.m_Position, &g_Camera.m_Position,
                    &g_Spyro.m_Position);
@@ -1803,7 +1803,7 @@ void LoadLevel(int pArg) {
 
             g_Gamestate = GS_Playing;
             g_Spyro.m_walkingState = 11;
-            g_Spyro.m_sortingDepth = 4;
+            g_Spyro.m_DepthSortOffset = 4;
           } else {
             VecAdd(&g_Camera.m_Position, &g_Camera.m_Position,
                    &g_Spyro.m_Position);

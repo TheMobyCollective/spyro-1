@@ -302,5 +302,5 @@ dlabel D_8007AA00
 /* Total size from 8007AA00 to 8007AA10 */ .space 0x10
 
 /* Spyro's shadow struct */
-dlabel D_8007AA10
+dlabel g_SpyroShadow
 /* 6A958 8007AA10 */ .space 0x28

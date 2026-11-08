@@ -633,9 +633,9 @@ void func_8002EDF0(void) {
     func_8004AC24(1);
 
     // Reset Spyro's stats and clear the checkpoint state.
-    g_Spyro.m_bodyAnimation = 16;
-    g_Spyro.m_nextBodyAnimation = 16;
-    g_Spyro.m_nextBodyAnimationFrame = 1;
+    g_Spyro.m_BodyAnimation = 16;
+    g_Spyro.m_NextBodyAnimation = 16;
+    g_Spyro.m_NextBodyAnimationFrame = 1;
     g_SpyroLifeCount = 4;
     g_LifeOrbCount = 0;
     g_Spyro.m_health = 3;
@@ -673,46 +673,46 @@ void func_8002EDF0(void) {
       g_Spyro.m_Position.y = (Sin(angle) * radius >> 12) + 3072;
       g_Spyro.m_Position.z = 2884 - (((relTicks << 1) + relTicks) << 1);
 
-      g_Spyro.m_bodyRotation.z = (angle + 1024) >> 4;
-      g_Spyro.m_bodyRotation.y = 0;
-      g_Spyro.m_bodyRotation.x = relTicks / 12 - 32;
+      g_Spyro.m_BodyRotation.z = (angle + 1024) >> 4;
+      g_Spyro.m_BodyRotation.y = 0;
+      g_Spyro.m_BodyRotation.x = relTicks / 12 - 32;
 
       if (g_GameOverTicks < 356) {
-        func_8003CB24(3);
+        SpyroBodyAnimationAdvance(3);
       } else {
         // Tail end of the spiral: ease Spyro into the landing animation.
         landTicks = g_GameOverTicks - 356;
-        g_Spyro.m_nextBodyAnimation = 14;
-        g_Spyro.m_nextBodyAnimationFrame = 0;
-        g_Spyro.m_bodyFrameProgress = g_GameOverTicks - 100;
-        g_Spyro.m_bodyRotation.y =
+        g_Spyro.m_NextBodyAnimation = 14;
+        g_Spyro.m_NextBodyAnimationFrame = 0;
+        g_Spyro.m_BodyFrameProgress = g_GameOverTicks - 100;
+        g_Spyro.m_BodyRotation.y =
             -((((landTicks << 2) + landTicks) << 1) / 16);
-        g_Spyro.m_bodyRotation.x = g_GameOverTicks - 116;
+        g_Spyro.m_BodyRotation.x = g_GameOverTicks - 116;
       }
-      func_80049660();
-      func_80049E8C();
+      SpyroUpdateHeadAnimation();
+      SpyroUpdateTailAnimation();
     }
 
     if (g_GameOverTicks >= 372) {
       if (g_GameOverTicks == 372) {
         // Snap into the seated landing animation exactly once.
-        g_Spyro.m_bodyAnimation = 14;
-        g_Spyro.m_nextBodyAnimation = 14;
-        g_Spyro.m_bodyAnimationFrame = 0;
-        g_Spyro.m_nextBodyAnimationFrame = 1;
-        g_Spyro.m_bodyFrameProgress = 0;
+        g_Spyro.m_BodyAnimation = 14;
+        g_Spyro.m_NextBodyAnimation = 14;
+        g_Spyro.m_BodyAnimationFrame = 0;
+        g_Spyro.m_NextBodyAnimationFrame = 1;
+        g_Spyro.m_BodyFrameProgress = 0;
       }
 
       // Hold the final landing pose.
       g_Spyro.m_Position.x = 9976;
       g_Spyro.m_Position.y = 2304;
       g_Spyro.m_Position.z = 1732;
-      g_Spyro.m_bodyRotation.y = 246;
-      g_Spyro.m_bodyRotation.x = 0;
-      g_Spyro.m_bodyRotation.z = 224;
-      func_8003CB24(3);
-      func_80049660();
-      func_80049E8C();
+      g_Spyro.m_BodyRotation.y = 246;
+      g_Spyro.m_BodyRotation.x = 0;
+      g_Spyro.m_BodyRotation.z = 224;
+      SpyroBodyAnimationAdvance(3);
+      SpyroUpdateHeadAnimation();
+      SpyroUpdateTailAnimation();
     }
 
     if (g_LoadStage < 11) {
@@ -845,11 +845,11 @@ void func_8002F3E4(void) {
 
       g_SavedFairyKissTimer = g_SpyroFlame.m_FairyKissTimer;
       func_8004AC24(1);
-      g_Spyro.m_bodyAnimation = 1;
-      g_Spyro.m_nextBodyAnimation = 1;
-      g_Spyro.m_nextBodyAnimationFrame = 1;
-      g_Spyro.m_bodyAnimationFrame = 0;
-      g_Spyro.m_bodyFrameProgress = 0;
+      g_Spyro.m_BodyAnimation = 1;
+      g_Spyro.m_NextBodyAnimation = 1;
+      g_Spyro.m_NextBodyAnimationFrame = 1;
+      g_Spyro.m_BodyAnimationFrame = 0;
+      g_Spyro.m_BodyFrameProgress = 0;
 
       g_ParticleAllocPtr = g_Particles;
       g_Particles->m_RenderType = 0xFF;
@@ -938,22 +938,22 @@ void func_8002F3E4(void) {
       VecSub(&delta, &g_Spyro.m_Position, &delta);
 
       facing = Atan2(delta.x, delta.y, 0);
-      if (func_80017908(facing, g_Spyro.m_bodyRotation.z) >= 4) {
-        if (((facing - g_Spyro.m_bodyRotation.z) & 0xFF) <= 128) {
-          g_Spyro.m_bodyRotation.z +=
-              func_80017908(facing, g_Spyro.m_bodyRotation.z) >> 2;
+      if (func_80017908(facing, g_Spyro.m_BodyRotation.z) >= 4) {
+        if (((facing - g_Spyro.m_BodyRotation.z) & 0xFF) <= 128) {
+          g_Spyro.m_BodyRotation.z +=
+              func_80017908(facing, g_Spyro.m_BodyRotation.z) >> 2;
         } else {
-          g_Spyro.m_bodyRotation.z -=
-              func_80017908(facing, g_Spyro.m_bodyRotation.z) >> 2;
+          g_Spyro.m_BodyRotation.z -=
+              func_80017908(facing, g_Spyro.m_BodyRotation.z) >> 2;
         }
       }
 
-      g_Spyro.m_bodyAnimationSpeed = VecMagnitude(&delta, 0) >> 1;
-      if (g_Spyro.m_bodyAnimationSpeed < 4) {
-        g_Spyro.m_bodyAnimationSpeed = 4;
+      g_Spyro.m_BodyAnimationSpeed = VecMagnitude(&delta, 0) >> 1;
+      if (g_Spyro.m_BodyAnimationSpeed < 4) {
+        g_Spyro.m_BodyAnimationSpeed = 4;
       }
-      if (g_Spyro.m_bodyAnimationSpeed > 16) {
-        g_Spyro.m_bodyAnimationSpeed = 16;
+      if (g_Spyro.m_BodyAnimationSpeed > 16) {
+        g_Spyro.m_BodyAnimationSpeed = 16;
       }
 
       if (((g_DragonCutscene.unk_0x7C - g_DragonCutscene.unk_0x70) & 0xFFF) <=
@@ -988,11 +988,11 @@ void func_8002F3E4(void) {
       if (g_DragonCutscene.m_CutsceneTicks >= g_DragonCutscene.unk_0x40 - 16 &&
           g_DragonCutscene.m_CutsceneTicks - g_DeltaTime <
               g_DragonCutscene.unk_0x40 - 16) {
-        g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
-        g_Spyro.m_nextBodyAnimation = 3;
-        g_Spyro.m_nextBodyAnimationFrame = 0;
-        g_Spyro.m_bodyFrameProgress = 0;
-        g_Spyro.m_bodyAnimationSpeed = 12;
+        g_Spyro.m_BodyAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
+        g_Spyro.m_NextBodyAnimation = 3;
+        g_Spyro.m_NextBodyAnimationFrame = 0;
+        g_Spyro.m_BodyFrameProgress = 0;
+        g_Spyro.m_BodyAnimationSpeed = 12;
       }
     } else if (g_DragonCutscene.m_CutsceneTicks <
                g_DragonCutscene.unk_0x40 + 32) {
@@ -1004,7 +1004,7 @@ void func_8002F3E4(void) {
         g_Spyro.m_Position.y =
             g_DragonCutscene.m_RescuedDragonMoby->m_Position.y +
             (Sin(g_DragonCutscene.unk_0x68) * g_DragonCutscene.unk_0x6C >> 12);
-        g_DragonCutscene.unk_0x60 = g_Spyro.m_bodyRotation.z * 16;
+        g_DragonCutscene.unk_0x60 = g_Spyro.m_BodyRotation.z * 16;
         g_DragonCutscene.unk_0x68 = (g_DragonCutscene.unk_0x68 + 2048) & 0xFFF;
         props = g_DragonCutscene.m_RescuedDragonMoby->m_Props;
         VecCopy(&g_Camera.m_Position, &props->m_CameraPosition);
@@ -1026,16 +1026,16 @@ void func_8002F3E4(void) {
              (g_DragonCutscene.m_CutsceneTicks - g_DragonCutscene.unk_0x40) /
              32);
       }
-      g_Spyro.m_bodyRotation.z = angle >> 4;
-      g_Spyro.m_bodyAnimationSpeed = 8;
+      g_Spyro.m_BodyRotation.z = angle >> 4;
+      g_Spyro.m_BodyAnimationSpeed = 8;
     } else {
       g_DragonCutscene.m_State = 2;
-      g_Spyro.m_bodyFrameProgress = 4;
+      g_Spyro.m_BodyFrameProgress = 4;
       g_DragonCutscene.m_CutsceneTicks = 0;
-      g_Spyro.m_nextBodyAnimation = 0;
-      g_Spyro.m_nextBodyAnimationFrame = 0;
-      g_Spyro.m_bodyAnimationSpeed = 4;
-      g_Spyro.m_bodyRotation.z = g_DragonCutscene.unk_0x68 >> 4;
+      g_Spyro.m_NextBodyAnimation = 0;
+      g_Spyro.m_NextBodyAnimationFrame = 0;
+      g_Spyro.m_BodyAnimationSpeed = 4;
+      g_Spyro.m_BodyRotation.z = g_DragonCutscene.unk_0x68 >> 4;
     }
 
     if (g_DragonCutscene.m_State == 1) {
@@ -1103,27 +1103,27 @@ void func_8002F3E4(void) {
     }
 
     delta.x =
-        (g_Spyro.m_floorPositonOnSlope.x * Cos(g_Spyro.m_bodyRotation.z * 16) +
+        (g_Spyro.m_floorPositonOnSlope.x * Cos(g_Spyro.m_BodyRotation.z * 16) +
          g_Spyro.m_floorPositonOnSlope.y *
-             Sin(g_Spyro.m_bodyRotation.z * 16)) >>
+             Sin(g_Spyro.m_BodyRotation.z * 16)) >>
         12;
     delta.y =
-        (g_Spyro.m_floorPositonOnSlope.y * Cos(g_Spyro.m_bodyRotation.z * 16) -
+        (g_Spyro.m_floorPositonOnSlope.y * Cos(g_Spyro.m_BodyRotation.z * 16) -
          g_Spyro.m_floorPositonOnSlope.x *
-             Sin(g_Spyro.m_bodyRotation.z * 16)) >>
+             Sin(g_Spyro.m_BodyRotation.z * 16)) >>
         12;
     delta.z = g_Spyro.m_floorPositonOnSlope.z;
-    g_Spyro.m_bodyRotation.x = -Atan2(
+    g_Spyro.m_BodyRotation.x = -Atan2(
         func_80017A38(delta.x * delta.x + delta.z * delta.z), delta.y, 1);
-    g_Spyro.m_bodyRotation.y = -Atan2(delta.z, delta.x, 1);
+    g_Spyro.m_BodyRotation.y = -Atan2(delta.z, delta.x, 1);
 
-    func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
-    func_80049660();
-    func_80049E8C();
+    SpyroBodyAnimationAdvance(g_Spyro.m_BodyAnimationSpeed);
+    SpyroUpdateHeadAnimation();
+    SpyroUpdateTailAnimation();
 
     g_Spyro.m_Position.z += 1024;
-    g_Spyro.m_surfaceBelowSpyro = func_8004DF24(&g_Spyro.m_Position);
-    g_Spyro.m_Position.z = g_Spyro.m_surfaceBelowSpyro + 356;
+    g_Spyro.m_FloorHeight = func_8004DF24(&g_Spyro.m_Position);
+    g_Spyro.m_Position.z = g_Spyro.m_FloorHeight + 356;
     func_80049FAC(0);
     break;
   }
@@ -1146,9 +1146,9 @@ void func_8002F3E4(void) {
                 g_DragonCutscene.m_RescuedDragonMoby);
 
     if (g_DragonCutscene.m_CutsceneTicks < 16 || g_DragonCutscene.m_Stage < 3) {
-      func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
-      func_80049660();
-      func_80049E8C();
+      SpyroBodyAnimationAdvance(g_Spyro.m_BodyAnimationSpeed);
+      SpyroUpdateHeadAnimation();
+      SpyroUpdateTailAnimation();
     } else {
       g_DragonCutscene.m_State = 3;
       g_DragonCutscene.m_CutsceneTicks = 0;
@@ -1215,9 +1215,9 @@ void func_8002F3E4(void) {
               ->m_Angle.z >>
           4;
       g_DragonCutscene.m_CutsceneDragon->m_ScaleOverride = 0;
-      g_DragonCutscene.m_CutsceneSpyro->m_Rotation.x = g_Spyro.m_bodyRotation.x;
-      g_DragonCutscene.m_CutsceneSpyro->m_Rotation.y = g_Spyro.m_bodyRotation.y;
-      g_DragonCutscene.m_CutsceneSpyro->m_Rotation.z = g_Spyro.m_bodyRotation.z;
+      g_DragonCutscene.m_CutsceneSpyro->m_Rotation.x = g_Spyro.m_BodyRotation.x;
+      g_DragonCutscene.m_CutsceneSpyro->m_Rotation.y = g_Spyro.m_BodyRotation.y;
+      g_DragonCutscene.m_CutsceneSpyro->m_Rotation.z = g_Spyro.m_BodyRotation.z;
     }
     break;
 
@@ -1385,14 +1385,14 @@ void func_8002F3E4(void) {
           1;
       g_DragonCutscene.m_CutsceneSpyro->m_AnimationState.m_FrameProgress = 0;
 
-      g_Spyro.m_bodyAnimation = 0;
-      g_Spyro.m_nextBodyAnimation = 0;
-      g_Spyro.m_bodyAnimationFrame = 0;
-      g_Spyro.m_nextBodyAnimationFrame = 1;
-      g_Spyro.m_bodyFrameProgress = 0;
-      g_Spyro.m_bodyAnimationSpeed = 4;
-      func_80049660();
-      func_80049E8C();
+      g_Spyro.m_BodyAnimation = 0;
+      g_Spyro.m_NextBodyAnimation = 0;
+      g_Spyro.m_BodyAnimationFrame = 0;
+      g_Spyro.m_NextBodyAnimationFrame = 1;
+      g_Spyro.m_BodyFrameProgress = 0;
+      g_Spyro.m_BodyAnimationSpeed = 4;
+      SpyroUpdateHeadAnimation();
+      SpyroUpdateTailAnimation();
 
       StopSound(g_DragonCutscene.m_SoundVoice, 2);
       SpuUpdate();
@@ -1432,9 +1432,9 @@ void func_8002F3E4(void) {
                     0xFFFFFF, 512);
     }
 
-    func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
-    func_80049660();
-    func_80049E8C();
+    SpyroBodyAnimationAdvance(g_Spyro.m_BodyAnimationSpeed);
+    SpyroUpdateHeadAnimation();
+    SpyroUpdateTailAnimation();
 
     for (i = 0; i < 3; i++) {
       VecCopy(&g_Hud.m_Mobys[5 + i].m_Position, &D_8006F3F0[i]);
@@ -1466,9 +1466,9 @@ void func_8002F3E4(void) {
   }
 
   case 6:
-    func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
-    func_80049660();
-    func_80049E8C();
+    SpyroBodyAnimationAdvance(g_Spyro.m_BodyAnimationSpeed);
+    SpyroUpdateHeadAnimation();
+    SpyroUpdateTailAnimation();
 
     if (g_Hud.m_DragonCount != g_DragonTotal || g_Hud.m_DragonProgress != 0) {
       g_Hud.m_DragonProgress += 16;
@@ -1498,9 +1498,9 @@ void func_8002F3E4(void) {
     int fade;
     int i;
 
-    func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
-    func_80049660();
-    func_80049E8C();
+    SpyroBodyAnimationAdvance(g_Spyro.m_BodyAnimationSpeed);
+    SpyroUpdateHeadAnimation();
+    SpyroUpdateTailAnimation();
 
     if (g_DragonCutscene.m_CutsceneTicks < 16) {
       for (i = 0; i < 3; i++) {
@@ -1541,6 +1541,7 @@ void func_8002F3E4(void) {
   }
 }
 
+// Needs to be a char array to match padding to 20
 static const char s_SaveFileName[20] = "BASCUS-94228SPYRO";
 
 /// @brief Gamestate 11 (Fairy)
@@ -1711,7 +1712,7 @@ void func_800314B4(void) {
       if (((g_FairyCutscene.m_AngleToDragonPad -
             g_FairyCutscene.m_unused_SavedSpyroRotZ) &
            0xFFF) <= 2048) {
-        g_Spyro.m_bodyRotation.z =
+        g_Spyro.m_BodyRotation.z =
             (g_FairyCutscene.m_unused_SavedSpyroRotZ +
              (FIXED_MUL(func_80017928(g_FairyCutscene.m_AngleToDragonPad,
                                       g_FairyCutscene.m_unused_SavedSpyroRotZ),
@@ -1719,7 +1720,7 @@ void func_800314B4(void) {
               1)) >>
             4;
       } else {
-        g_Spyro.m_bodyRotation.z =
+        g_Spyro.m_BodyRotation.z =
             (g_FairyCutscene.m_unused_SavedSpyroRotZ -
              (FIXED_MUL(func_80017928(g_FairyCutscene.m_AngleToDragonPad,
                                       g_FairyCutscene.m_unused_SavedSpyroRotZ),
@@ -1728,13 +1729,13 @@ void func_800314B4(void) {
             4;
       }
 
-      RotVec8ToMatrix(&g_Spyro.m_bodyRotation, &g_Spyro.m_RotationMatrix,
+      RotVec8ToMatrix(&g_Spyro.m_BodyRotation, &g_Spyro.m_RotationMatrix,
                       nullptr);
-      g_Spyro.m_headRotation.y = FIXED_MUL(sineProgress, 8);
+      g_Spyro.m_HeadRotation.y = FIXED_MUL(sineProgress, 8);
 
-      func_8003CB24(16);
-      func_80049660();
-      func_80049E8C();
+      SpyroBodyAnimationAdvance(16);
+      SpyroUpdateHeadAnimation();
+      SpyroUpdateTailAnimation();
       func_80048D10(g_DeltaTime);
       g_UpdateParticle(g_DeltaTime);
     } else {
@@ -1770,11 +1771,11 @@ void func_800314B4(void) {
                                         g_FairyCutscene.m_CameraViewDistance);
       g_Camera.m_Position.z = g_FairyCutscene.m_CameraViewZ;
 
-      g_Spyro.m_bodyFrameProgress = 4;
-      g_Spyro.m_nextBodyAnimation = 0;
-      g_Spyro.m_nextBodyAnimationFrame = 0;
-      g_Spyro.m_bodyAnimationSpeed = 4;
-      g_Spyro.m_bodyRotation.z = g_FairyCutscene.m_AngleToDragonPad >> 4;
+      g_Spyro.m_BodyFrameProgress = 4;
+      g_Spyro.m_NextBodyAnimation = 0;
+      g_Spyro.m_NextBodyAnimationFrame = 0;
+      g_Spyro.m_BodyAnimationSpeed = 4;
+      g_Spyro.m_BodyRotation.z = g_FairyCutscene.m_AngleToDragonPad >> 4;
 
       g_FairyCutscene.m_State = 1;
       g_FairyCutscene.m_AnimationTimer = 0;
@@ -1782,9 +1783,9 @@ void func_800314B4(void) {
     break;
 
   case 1:
-    func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
-    func_80049660();
-    func_80049E8C();
+    SpyroBodyAnimationAdvance(g_Spyro.m_BodyAnimationSpeed);
+    SpyroUpdateHeadAnimation();
+    SpyroUpdateTailAnimation();
     g_GameTick++;
     g_UpdateParticle(g_DeltaTime);
 
@@ -1861,9 +1862,9 @@ void func_800314B4(void) {
         }
 
         if (g_FairyCutscene.unk_0x28 == 0 || g_FairyCutscene.unk_0x28 == 3) {
-          MemCardReadFile(g_FairyCutscene.m_MemoryCardSlot, s_SaveFileName,
-                          (u_long *)((u_char *)g_Buffers.m_HudOTStart - 0x600),
-                          0, 0x80);
+          MemCardReadFile(
+              g_FairyCutscene.m_MemoryCardSlot, (char *)s_SaveFileName,
+              (u_long *)((u_char *)g_Buffers.m_HudOTStart - 0x600), 0, 0x80);
           g_FairyCutscene.m_MenuSelectedOption = 2;
           break;
         }
@@ -1874,8 +1875,8 @@ void func_800314B4(void) {
         }
         g_FairyCutscene.m_AnimationTimer = 0;
       } else if (g_FairyCutscene.m_MenuSelectedOption == 2) {
-        if (MemCardSync(1, (u_long *)&g_FairyCutscene.unk_0x24,
-                        (u_long *)&g_FairyCutscene.unk_0x28) == 0) {
+        if (MemCardSync(1, (void *)&g_FairyCutscene.unk_0x24,
+                        (void *)&g_FairyCutscene.unk_0x28) == 0) {
           break;
         }
 
@@ -1887,7 +1888,7 @@ void func_800314B4(void) {
           } else {
             SaveCreate((SaveFile *)((u_char *)g_Buffers.m_HudOTStart - 0x600));
             MemCardWriteFile(
-                g_FairyCutscene.m_MemoryCardSlot, s_SaveFileName,
+                g_FairyCutscene.m_MemoryCardSlot, (char *)s_SaveFileName,
                 (u_long *)((u_char *)g_Buffers.m_HudOTStart - 0x600),
                 g_FairyCutscene.unk_0x1c * 0x600 + 0x200, 0x600);
             g_FairyCutscene.m_MenuSelectedOption = 3;
@@ -1900,8 +1901,8 @@ void func_800314B4(void) {
         }
         g_FairyCutscene.m_AnimationTimer = 0;
       } else if (g_FairyCutscene.m_MenuSelectedOption == 3) {
-        if (MemCardSync(1, (u_long *)&g_FairyCutscene.unk_0x24,
-                        (u_long *)&g_FairyCutscene.unk_0x28) == 0) {
+        if (MemCardSync(1, (void *)&g_FairyCutscene.unk_0x24,
+                        (void *)&g_FairyCutscene.unk_0x28) == 0) {
           break;
         }
 
@@ -1909,14 +1910,15 @@ void func_800314B4(void) {
           g_FairyCutscene.m_MenuDialoguePage = 5;
           g_FairyCutscene.m_AnimationTimer = 0;
         } else {
-          MemCardReadFile(g_FairyCutscene.m_MemoryCardSlot, s_SaveFileName,
+          MemCardReadFile(g_FairyCutscene.m_MemoryCardSlot,
+                          (char *)s_SaveFileName,
                           (u_long *)((u_char *)g_Buffers.m_HudOTStart - 0x600),
                           g_FairyCutscene.unk_0x1c * 0x600 + 0x200, 0x600);
           g_FairyCutscene.m_MenuSelectedOption = 4;
         }
       } else {
-        if (MemCardSync(1, (u_long *)&g_FairyCutscene.unk_0x24,
-                        (u_long *)&g_FairyCutscene.unk_0x28) == 0) {
+        if (MemCardSync(1, (void *)&g_FairyCutscene.unk_0x24,
+                        (void *)&g_FairyCutscene.unk_0x28) == 0) {
           break;
         }
 
@@ -2098,7 +2100,7 @@ void func_800324D8(void) {
       // Drop Spyro onto the balloon, slightly above it.
       VecCopy(&g_Spyro.m_Position, &D_800777E8.m_BalloonMoby->m_Position);
       g_Spyro.m_Position.z += 724;
-      g_Spyro.m_bodyRotation.z = D_800777E8.m_BalloonMoby->m_Rotation.z + 128;
+      g_Spyro.m_BodyRotation.z = D_800777E8.m_BalloonMoby->m_Rotation.z + 128;
 
       // Place the camera on the orbit at a fixed start angle/radius.
       D_800777E8.unk_0x50 =
@@ -2131,9 +2133,9 @@ void func_800324D8(void) {
     (*D_8007574C)();
   }
 
-  func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
-  func_80049660();
-  func_80049E8C();
+  SpyroBodyAnimationAdvance(g_Spyro.m_BodyAnimationSpeed);
+  SpyroUpdateHeadAnimation();
+  SpyroUpdateTailAnimation();
 }
 
 //
@@ -2270,12 +2272,12 @@ void GamestateCutsceneTransition(void) {
     g_Spyro.m_Position.x = 0x2780;
     g_Spyro.m_Position.y = 0xF00;
     g_Spyro.m_Position.z = 0x29A0;
-    g_Spyro.m_bodyAnimation = 16;
-    g_Spyro.m_nextBodyAnimation = 16;
-    g_Spyro.m_bodyRotation.x = 0;
-    g_Spyro.m_bodyRotation.y = 0;
-    g_Spyro.m_bodyRotation.z = 0;
-    g_Spyro.m_nextBodyAnimationFrame = 1;
+    g_Spyro.m_BodyAnimation = 16;
+    g_Spyro.m_NextBodyAnimation = 16;
+    g_Spyro.m_BodyRotation.x = 0;
+    g_Spyro.m_BodyRotation.y = 0;
+    g_Spyro.m_BodyRotation.z = 0;
+    g_Spyro.m_NextBodyAnimationFrame = 1;
 
   } else if (g_TitlescreenState.m_State == TSS_Loading) {
     // Loading phase
@@ -2340,13 +2342,13 @@ void GamestateCutsceneTransition(void) {
 
     // Calculate look-at angles from movement delta
     VecSub(&tempPos, &g_Spyro.m_Position, &tempPos);
-    g_Spyro.m_bodyRotation.y = Atan2(VecMagnitude(&tempPos, 0), tempPos.z, 0);
-    g_Spyro.m_bodyRotation.z = Atan2(tempPos.x, tempPos.y, 0);
+    g_Spyro.m_BodyRotation.y = Atan2(VecMagnitude(&tempPos, 0), tempPos.z, 0);
+    g_Spyro.m_BodyRotation.z = Atan2(tempPos.x, tempPos.y, 0);
 
     // Advance Spyro's animations at 3x speed for dramatic flyby effect
-    func_8003CB24(3); // Advances body animation by 3 ticks
-    func_80049660();  // Head animation state machine
-    func_80049E8C();  // Tail follows body animation
+    SpyroBodyAnimationAdvance(3); // Advances body animation by 3 ticks
+    SpyroUpdateHeadAnimation();   // Head animation state machine
+    SpyroUpdateTailAnimation();   // Tail follows body animation
 
     if (g_TitlescreenState.m_DemoType == TSD_Cutscene) {
       // Cutscene path

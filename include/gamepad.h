@@ -119,7 +119,7 @@ extern PadBuffer
     g_PadBufferSecondController; // Backup buffer while inputs are disabled
 
 /// @brief Copies the gamepad over, then resets the input gamepad
-void func_80053708(Gamepad *in, Gamepad *out);
+void PadSwap(Gamepad *in, Gamepad *out);
 
 /// @brief Resets a gamepad
 /// @param pad Gamepad to reset

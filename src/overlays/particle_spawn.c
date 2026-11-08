@@ -785,7 +785,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass,
                     (Vector3D *)spawnParam);
       particle->m_Data.m_RotatedQuad.m_Size = ((extraParam >> 16) * 6) + 12;
       particle->m_Data.m_RotatedQuad.m_Rotation =
-          g_Spyro.m_bodyRotation.z + (rand() & 7) + 29;
+          g_Spyro.m_BodyRotation.z + (rand() & 7) + 29;
       particle->m_Data.m_RotatedQuad.m_Color.r = (extraParam & 0xFFFF) * 8;
       particle->m_Data.m_RotatedQuad.m_Color.g = (extraParam & 0xFFFF) * 8;
       particle->m_Data.m_RotatedQuad.m_Color.b = (extraParam & 0xFFFF) * 8;
@@ -930,7 +930,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass,
         VecAdd(&spyroPosition, &spyroPosition, &g_Spyro.m_Position);
       } else {
         VecCopy(&spyroPosition, &g_Spyro.m_Position);
-        spyroPosition.z = g_Spyro.m_surfaceBelowSpyro;
+        spyroPosition.z = g_Spyro.m_FloorHeight;
         spyroPosition.x += (rand() & 0x3E) - 0x1F;
         spyroPosition.y += (rand() & 0x3E) - 0x1F;
       }

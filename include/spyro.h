@@ -10,11 +10,8 @@
 #include <moby.h>
 #include <vector.h>
 
-// This is literally the largest structure in the game
-// a massive pain to document and figure out
-
 /// @brief Body animation transition types
-/// Used by UpdateBodyAnimationState to control animation blending
+/// Used by SpyroUpdateBodyAnimation to control animation blending
 typedef enum {
   TRANSITION_NONE = 0,            // Normal playback, no transition
   TRANSITION_SLOW_BLEND = 1,      // Slow blend from frame 0 (+2/tick)
@@ -66,67 +63,67 @@ typedef struct {
   Vector3D m_Position;
 
   /// @brief The rotation of the body
-  Vector3D8 m_bodyRotation;
+  Vector3D8 m_BodyRotation;
   u_char m_bodyRotPad;
 
   /// @brief The rotation of the head
-  Vector3D8 m_headRotation;
+  Vector3D8 m_HeadRotation;
   u_char m_headRotPad;
 
   /// @brief The rotation of the tail
-  Vector3D8 m_tailRotation;
+  Vector3D8 m_TailRotation;
   u_char m_tailRotPad;
 
   /// @brief The animation the body is playing
-  u_char m_bodyAnimation;
+  u_char m_BodyAnimation;
 
   /// @brief The next animation the body will play, used for interpolation
-  u_char m_nextBodyAnimation;
+  u_char m_NextBodyAnimation;
 
   /// @brief The animation the head is playing
-  u_char m_headAnimation;
+  u_char m_HeadAnimation;
 
   /// @brief The next animation the head will play, used for interpolation
-  u_char m_nextHeadAnimation;
+  u_char m_NextHeadAnimation;
 
   /// @brief The animation the tail is playing
-  u_char m_tailAnimation;
+  u_char m_TailAnimation;
 
   /// @brief The next animation the tail will play, used for interpolation
-  u_char m_nextTailAnimation;
+  u_char m_NextTailAnimation;
 
   /// @brief The current frame of the body
-  u_char m_bodyAnimationFrame;
+  u_char m_BodyAnimationFrame;
 
   /// @brief The next frame of the body, used for interpolation
-  u_char m_nextBodyAnimationFrame;
+  u_char m_NextBodyAnimationFrame;
 
   /// @brief The current frame of the head
-  u_char m_headAnimationFrame;
+  u_char m_HeadAnimationFrame;
 
   /// @brief The next frame of the head, used for interpolation
-  u_char m_nextHeadAnimationFrame;
+  u_char m_NextHeadAnimationFrame;
 
   /// @brief The current frame of the tail
-  u_char m_tailAnimationFrame;
+  u_char m_TailAnimationFrame;
 
   /// @brief The next frame of the tail, used for interpolation
-  u_char m_nextTailAnimationFrame;
+  u_char m_NextTailAnimationFrame;
 
   // The progress of the current frame used for interpolation,
   // 0 - 4096 (0.0 - 1.0)
 
   /// @brief The progress of the body frame
-  u_char m_bodyFrameProgress;
+  u_char m_BodyFrameProgress;
 
   /// @brief The progress of the head frame
-  u_char m_headFrameProgress;
+  u_char m_HeadFrameProgress;
 
   /// @brief The progress of the tail frame
-  u_char m_tailFrameProgress;
+  u_char m_TailFrameProgress;
 
   /// @brief Subtracted from Spyro's Z depth, unsigned though (usually 4)
-  u_char m_sortingDepth;
+  u_char m_DepthSortOffset;
 
   /// @brief Interpolated with vertex colours, used by Fairy Kiss effect
   struct {
@@ -147,9 +144,9 @@ typedef struct {
 
   /// @brief Current body animation transition type (0=normal, 1-8=various
   /// blends)
-  int m_bodyTransitionType;
+  int m_BodyTransitionType;
 
-  int m_bodyAnimationSpeed;
+  int m_BodyAnimationSpeed;
 
   /// @brief Previous animation state, used as "from" in transition lookup table
   int m_lastAnimationState;
@@ -163,11 +160,11 @@ typedef struct {
   int m_walkingState;
   int m_idleTimer;
   int unk_0x84;
-  int m_touchingMoby;
-  Vector3D m_previousPosition; // 0x8c - Position before movement update
-  int m_floorIdleTime;         // 0x98
-  int m_airTime;               // 0x9c
-  int m_surfaceBelowSpyro;
+  int m_TouchingMoby;
+  Vector3D m_PreviousPosition; // 0x8c - Position before movement update
+  int m_FloorIdleTime;         // 0x98
+  int m_AirTime;               // 0x9c
+  int m_FloorHeight;
   Vector3D m_floorPositonOnSlope;
   int m_slopeAngle;
   int m_againstWall;
@@ -215,7 +212,7 @@ typedef struct {
   int unk_0x1c4;
   MATRIX
   m_headRotationMatrix; // 0x1c8 - Combined body+head rotation for rendering
-  int m_seperateTailAnimation; // Whether the tail is animated seperately from
+  int m_SeperateTailAnimation; // Whether the tail is animated seperately from
                                // the body, otherwise it copies the body
   int m_flameableFrames; // How many frames have we been able to flame? Not used
                          // for anything, isn't reset either, useless
@@ -368,14 +365,14 @@ extern FlameFrame D_8006DDA8[128];
 
 typedef struct {
   u_char unk_00[8];
-  u_char unk_08[8];
+  u_char m_NoFloor[8];
   Vector3D m_Position;
-  int unk_1c;
-  int unk_20;
+  int m_DepthSortOffset;
+  int m_SampleIdx;
   int m_IsSpyroOverWater;
 } SpyroShadow;
 
-extern SpyroShadow D_8007AA10;
+extern SpyroShadow g_SpyroShadow;
 
 /// @brief Resets Spyro
 void func_8004AC24(int pKeepPosition);
@@ -390,7 +387,7 @@ void func_8004A200(void);
 void UpdateSpyroReturnHome(void);
 
 /// @brief Handles the state transition for Spyro's body animation
-void func_8003CCE4(void);
+void SpyroBodyAnimationSetupTransition(void);
 
 void func_8003DFA4(void);
 
@@ -399,7 +396,7 @@ void func_8003EA68(int pNewState);
 
 /// @brief Increments the body animation
 /// @param pDeltaTime The delta time
-void func_8003CB24(int pDeltaTime);
+void SpyroBodyAnimationAdvance(int pDeltaTime);
 
 /// @brief Creates the target speed and angle based on the stick
 void func_8003D3B8(int speed);
@@ -415,7 +412,7 @@ void func_8003E90C(void);
 int func_8003FE40(void);
 
 void ApplySlopeGravity(void);
-void AdjustAirCollision(void);
+void SpyroFloorCollisionUpdate(void);
 void CheckWallCollision(void);
 void UpdateSlopeFloorCollision(void);
 
@@ -432,10 +429,10 @@ void func_80048D10(int pDeltaTime);
 void func_80043FE4(int pDeltaTimeIndex);
 
 /// @brief Update the head animation
-void func_80049660(void);
+void SpyroUpdateHeadAnimation(void);
 
 /// @brief Update the tail animation
-void func_80049E8C(void);
+void SpyroUpdateTailAnimation(void);
 
 /// @brief Update Spyro's shadow
 void func_80049FAC(int pArg);

@@ -94,7 +94,7 @@
 - [x] func_8002B4AC
 - [x] func_8002B9CC
 - [x] PadReset
-- [x] func_80053708
+- [x] PadSwap
 - [x] PadCaliReset
 - [x] PadCaliInit
 - [x] PadApplyCali
@@ -211,10 +211,10 @@
 - [x] CDMusicUpdate
 - [x] func_8002BFE0
 - [x] SetOverlayPointers
-- [x] func_8003CB24
-- [x] func_8003CBB8
-- [x] func_8003CCE4
-- [x] UpdateBodyAnimationState
+- [x] SpyroBodyAnimationAdvance
+- [x] SpyroBodyAnimationAdvanceTransition
+- [x] SpyroBodyAnimationSetupTransition
+- [x] SpyroUpdateBodyAnimation
 - [x] func_8003D3B8
 - [x] func_8003D52C
 - [x] UpdateSpyroTurnMomentum
@@ -232,7 +232,7 @@
 - [x] CheckWallCollision
 - [x] UpdateSlopeFloorCollision
 - [x] func_8003E628
-- [x] AdjustAirCollision
+- [x] SpyroFloorCollisionUpdate
 - [x] func_8003E90C
 - [x] func_8003EA68
 - [x] func_8003FDC8
@@ -247,11 +247,11 @@
 - [x] UpdateSpyroPhysicsAndSurfaces
 - [x] func_80048D10
 - [x] func_800495D8
-- [x] func_80049660
+- [x] SpyroUpdateHeadAnimation
 - [x] func_80049880
-- [x] func_800499C0
+- [x] SpyroUpdateFlame
 - [x] func_80049DFC
-- [x] func_80049E8C
+- [x] SpyroUpdateTailAnimation
 - [x] func_80049F3C
 - [x] func_80049FAC
 - [x] func_8004A200

@@ -409,14 +409,14 @@ void InitFairyCutscene(Moby *pMoby) {
   PlaySound(g_Spu.m_SoundTable->menuSound, nullptr, 0x10, nullptr);
   func_8004AC24(1); // Reset Spyro, keeping position
 
-  pSpyroBodyAnimation = &g_Spyro.m_bodyAnimation;
+  pSpyroBodyAnimation = &g_Spyro.m_BodyAnimation;
 
   // Set Spyro to idle animation
-  g_Spyro.m_bodyAnimation = 1;
-  g_Spyro.m_nextBodyAnimation = 1;
-  g_Spyro.m_bodyAnimationFrame = 0;
-  g_Spyro.m_nextBodyAnimationFrame = 1;
-  g_Spyro.m_bodyFrameProgress = 0;
+  g_Spyro.m_BodyAnimation = 1;
+  g_Spyro.m_NextBodyAnimation = 1;
+  g_Spyro.m_BodyAnimationFrame = 0;
+  g_Spyro.m_NextBodyAnimationFrame = 1;
+  g_Spyro.m_BodyFrameProgress = 0;
 
   g_FairyCutscene.m_unused_SavedSpyroRotZ =
       g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
@@ -505,7 +505,7 @@ void func_8002D02C(void) {
   // reset spyro
   func_8004AC24(1);
   g_Spyro.unk_0x1b4 = 256;
-  g_Spyro.m_headRotation.y = 16;
+  g_Spyro.m_HeadRotation.y = 16;
   g_Spyro.m_noGamepadUpdateFrames = 8;
 
   // put camera on spyro

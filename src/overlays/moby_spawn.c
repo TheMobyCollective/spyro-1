@@ -593,7 +593,7 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     props->m_0x04 = 200;
     props->m_0x08 = 350;
     props->m_0x00 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                     g_Spyro.m_bodyRotation.z, 40, 64);
+                                     g_Spyro.m_BodyRotation.z, 40, 64);
     props->m_0x0c = 120;
 
     break;
@@ -1075,8 +1075,7 @@ Moby *NAME_OVERLAY_FUNCTION(SpawnMoby)(int pClass, Moby *pParent) {
     moby->m_Rotation.z = pParent->m_Rotation.z + angle;
 
     angle = DISTANCE_TO_SPYRO(moby);
-    angle = Atan2(angle,
-                  0x164 + g_Spyro.m_surfaceBelowSpyro - moby->m_Position.z, 0);
+    angle = Atan2(angle, 0x164 + g_Spyro.m_FloorHeight - moby->m_Position.z, 0);
     angle = (angle - pParent->m_Rotation.y) & 0xFF;
 
     if (angle > 0x80) {

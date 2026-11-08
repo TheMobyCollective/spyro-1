@@ -569,7 +569,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             // Sparx is alive, and not chasing something already
             if (sparxProps->m_Target == nullptr) {
               // Set him to chase us
-              if (AngleSignedDistance(g_Spyro.m_bodyRotation.z,
+              if (AngleSignedDistance(g_Spyro.m_BodyRotation.z,
                                       ANGLE_FROM_SPYRO(moby->m_Position)) < 0) {
                 butterflyProps->m_0x00 = 1;
               } else {
@@ -783,7 +783,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
            (MOBY_DAMAGE_FLAME | MOBY_DAMAGE_CHARGE | MOBY_DAMAGE_SUPER)) != 0 &&
           moby->m_State != 4 && moby->m_State != 5 && moby->m_State != 9) {
         props->m_0x10 = AngleClampDistance(ANGLE_FROM_SPYRO(moby->m_Position),
-                                           g_Spyro.m_bodyRotation.z, 32);
+                                           g_Spyro.m_BodyRotation.z, 32);
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
         MobyMarkKilled(moby);
         props->m_0x18 = 2;
@@ -852,12 +852,12 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         case 0: {
           int angle;
           if (TICK_TIMER(props->m_0x0c)) {
-            props->m_0x10 = g_Spyro.m_bodyRotation.z;
+            props->m_0x10 = g_Spyro.m_BodyRotation.z;
             props->m_0x0c = 0x1E;
           }
           angle = ANGLE_TO_SPYRO(moby->m_Position);
           MobyRotateToAngle(moby, angle, 4, 0x1E, 1);
-          if (func_80017908(g_Spyro.m_bodyRotation.z,
+          if (func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) >= 0x31) {
             if (props->m_0x1c != 0) {
               if (TICK_TIMER(props->m_0x1c)) {
@@ -1081,7 +1081,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           props->m_0x0c = 170;
           props->m_0x10 =
               AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                               g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                               g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         }
 
         moby->m_DamageFlags = 0;
@@ -1337,7 +1337,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           props->m_0x20 = 225;
         }
         props->m_0x1c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         if (moby->m_DropMoby == 0xFF) {
           moby->m_DropMoby = 15; // Life orb
           MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
@@ -2043,15 +2043,15 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
           VecCopy(&vec_38, &g_Spyro.m_Position);
 
-          xCos = Cos(g_Spyro.m_bodyRotation.z * 16);
-          xSin = Sin(g_Spyro.m_bodyRotation.z * 16);
+          xCos = Cos(g_Spyro.m_BodyRotation.z * 16);
+          xSin = Sin(g_Spyro.m_BodyRotation.z * 16);
           // Should this just be xCos * 724?
           xCos = (xCos * 181) * 4;
           xSin = (xSin * 181) * 4;
           vec_38.x += (xCos + xSin) >> 12;
 
-          ySin = Sin(g_Spyro.m_bodyRotation.z * 16);
-          yCos = Cos(g_Spyro.m_bodyRotation.z * 16);
+          ySin = Sin(g_Spyro.m_BodyRotation.z * 16);
+          yCos = Cos(g_Spyro.m_BodyRotation.z * 16);
           ySin = (ySin * 181) * 4;
           yCos = (yCos * 181) * 4;
           vec_38.y += (ySin - yCos) >> 12;
@@ -2093,13 +2093,13 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
           VecCopy(&vec_68, &g_Spyro.m_Position);
 
-          vec_68.x += Cos(g_Spyro.m_bodyRotation.z * 0x10) >> 3;
-          vec_68.y += Sin(g_Spyro.m_bodyRotation.z * 0x10) >> 3;
+          vec_68.x += Cos(g_Spyro.m_BodyRotation.z * 0x10) >> 3;
+          vec_68.y += Sin(g_Spyro.m_BodyRotation.z * 0x10) >> 3;
           vec_68.z += 0x300;
 
           func_80017BFC(&eggProps->m_0x04, &vec_68);
 
-          eggProps->m_0x13 = (g_Spyro.m_bodyRotation.z - 64);
+          eggProps->m_0x13 = (g_Spyro.m_BodyRotation.z - 64);
           eggProps->m_0x10 = 0x200;
           eggProps->m_0x12 = 0;
           moby->m_State++;
@@ -2188,7 +2188,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         props->m_0x14 = 0xE6;
         props->m_0x10 = 300;
         props->m_0x0c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         moby->m_DamageFlags = 0;
         props->m_0x2c = RandRangeSigned(6, 0xA);
         props->m_0x2e = RandRangeSigned(6, 0xA);
@@ -2749,7 +2749,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         props->m_0x08 = 0x190;
         props->m_0x0c = 170;
         props->m_0x14 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         moby->m_DamageFlags = 0;
         if (props->m_0x44 != 0) {
           MobySpawnDrop(moby, DROP_MODE_HOMING, nullptr, nullptr);
@@ -2774,7 +2774,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         TICK_TIMER(props->m_0x48);
         if (props->m_0x48 == 0 && distance < 0x2000 && moby->m_Class == 46 &&
             props->m_0x04 != 0 &&
-            func_80017908(g_Spyro.m_bodyRotation.z,
+            func_80017908(g_Spyro.m_BodyRotation.z,
                           ANGLE_FROM_SPYRO(moby->m_Position)) < 0x26 &&
             func_80017908(g_Camera.m_Rotation.z >> 4,
                           ANGLE_FROM(g_Camera.m_Position, moby->m_Position)) <
@@ -2833,7 +2833,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           break;
         }
         if (TICK_TIMER(props->m_0x34)) {
-          props->m_0x14 = g_Spyro.m_bodyRotation.z;
+          props->m_0x14 = g_Spyro.m_BodyRotation.z;
           props->m_0x34 = 0x1E;
         }
         if (MobyRotateToAngle(moby, ANGLE_TO_SPYRO(moby->m_Position), 4, 0x1E,
@@ -2844,7 +2844,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             break;
           }
         }
-        if (func_80017908(g_Spyro.m_bodyRotation.z,
+        if (func_80017908(g_Spyro.m_BodyRotation.z,
                           ANGLE_FROM_SPYRO(moby->m_Position)) >= 0x31) {
           if (props->m_0x30 != 0) {
             if (TICK_TIMER(props->m_0x30)) {
@@ -3476,7 +3476,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
         if (TICK_TIMER(props->m_0x0c) && DISTANCE_TO_SPYRO(moby) < 0x1800 &&
             ABS2(SPYRO_BASE_Z_DELTA(moby) + 0x164) < 0x200 &&
-            g_Spyro.m_airTime == 0 && g_Spyro.m_State != 0xB &&
+            g_Spyro.m_AirTime == 0 && g_Spyro.m_State != 0xB &&
             g_Spyro.m_State != 0x14 && *props->m_0x10 == 0) {
           angle = ANGLE_TO_SPYRO(moby->m_Position);
           if (func_80017908(moby->m_Rotation.z, angle) < 0x20) {
@@ -3679,7 +3679,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
         props->m_0x30 = 0;
         props->m_0x28 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
         MobyMarkKilled(moby);
         moby->m_State = 3;
@@ -3797,7 +3797,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       if ((moby->m_DamageFlags & (MOBY_DAMAGE_FLAME | MOBY_DAMAGE_SUPER)) &&
           moby->m_State != 2) {
         props->m_0x08 = 0xF0;
-        props->m_0x04 = g_Spyro.m_bodyRotation.z;
+        props->m_0x04 = g_Spyro.m_BodyRotation.z;
         MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
         MobyMarkKilled(moby);
         moby->m_State = 2;
@@ -3952,7 +3952,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         props->m_0x00 = 0x190;
         props->m_0x04 = 0x8C;
         props->m_0x08 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x28, 0x80);
+                                         g_Spyro.m_BodyRotation.z, 0x28, 0x80);
         moby->m_State = 2;
         MOBY_ANIM_CHANGE(moby, 2);
         continue;
@@ -4303,7 +4303,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
            (MOBY_DAMAGE_FLAME | MOBY_DAMAGE_CHARGE | MOBY_DAMAGE_SUPER)) &&
           moby->m_State != 4) {
         props->m_0x10 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         if (moby->m_DamageFlags & MOBY_DAMAGE_SUPER) {
           props->m_0x14 = (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >> 6) + 450;
           props->m_0x18 = 0x50;
@@ -4535,7 +4535,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               0 &&
           moby->m_State != 5) {
         props->m_0x04 = 200;
-        props->m_0x08 = g_Spyro.m_bodyRotation.z;
+        props->m_0x08 = g_Spyro.m_BodyRotation.z;
         props->m_0x14 = 0;
         moby->m_DamageFlags = 0;
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
@@ -4936,7 +4936,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             VecAdd(&vector, &vector, &moby->m_Position);
             attackAngle = ANGLE_FROM_SPYRO(vector);
             if (props->m_0x10 == 0 &&
-                func_80017908(attackAngle, g_Spyro.m_bodyRotation.z) < 0x30) {
+                func_80017908(attackAngle, g_Spyro.m_BodyRotation.z) < 0x30) {
               moby->m_State = 1;
               continue;
             }
@@ -4945,7 +4945,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           props->m_0x18 = 0;
           if (DISTANCE_TO_SPYRO(moby) < range) {
             angleA = AngleSignedDistance(moby->m_Rotation.z,
-                                         g_Spyro.m_bodyRotation.z);
+                                         g_Spyro.m_BodyRotation.z);
             angleAbs = ABS2(angleA);
             if (angleAbs > 0x40 - angleWindow &&
                 angleAbs < angleWindow + 0x40) {
@@ -5219,7 +5219,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           }
           props->m_0x04 =
               AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                               g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                               g_Spyro.m_BodyRotation.z, 0x20, 0x40);
           moby->m_DamageFlags = 0;
           props->m_0x54 = RandRangeSigned(8, 0xE);
           moby->m_Substate = 0;
@@ -5516,7 +5516,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             }
             props->m_0x30 =
                 AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                 g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                 g_Spyro.m_BodyRotation.z, 0x20, 0x40);
             if (moby->m_State != 43) {
               props->m_0x3c = 0x1E;
             }
@@ -6013,7 +6013,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           props->m_0x30 = 0xF0;
           props->m_0x2c =
               AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                               g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                               g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         }
         if (moby->m_State != 43) {
           props->m_0x34 = 0x1E;
@@ -6214,7 +6214,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
         if (moby->m_Substate) {
           if (DISTANCE_TO_SPYRO(moby) < (props->m_0x74[props->m_0x70] << 10) &&
-              func_80017908(g_Spyro.m_bodyRotation.z,
+              func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) < 0x30 &&
               moby->m_WasDrawn && MobyCanSeeSpyro(&moby->m_Position)) {
 
@@ -6683,7 +6683,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
            (MOBY_DAMAGE_FLAME | MOBY_DAMAGE_CHARGE | MOBY_DAMAGE_SUPER)) != 0 &&
           moby->m_State != 2) {
         props->m_0x10 = AngleClampDistance(ANGLE_FROM_SPYRO(moby->m_Position),
-                                           g_Spyro.m_bodyRotation.z, 32);
+                                           g_Spyro.m_BodyRotation.z, 32);
 
         if ((moby->m_DamageFlags & MOBY_DAMAGE_FLAME) != 0) {
           props->m_0x14 = 0xFA;
@@ -6744,7 +6744,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         MOBY_ANIM_CHANGE_CLEAR_FINISHED(moby, 1);
 
         if (TICK_TIMER(props->m_0x1c)) {
-          props->m_0x10 = g_Spyro.m_bodyRotation.z;
+          props->m_0x10 = g_Spyro.m_BodyRotation.z;
           props->m_0x1c = 0x1E;
         }
 
@@ -6759,7 +6759,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             continue;
           }
 
-          if (func_80017908(g_Spyro.m_bodyRotation.z,
+          if (func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) >= 0x31 ||
               OctDistance(&moby->m_Position, &props->m_0x00) > 0x2800) {
             *props->m_0x30 = 0;
@@ -7178,7 +7178,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           int zDist = g_Spyro.m_Position.z - pickupHeight;
 
           if (ABS2(zDist) < 512 && g_Sparx != nullptr &&
-              g_Spyro.m_airTime == 0 &&
+              g_Spyro.m_AirTime == 0 &&
               // Check added after Tabloid/E3
               func_80033E40(&g_Sparx->m_Position, &moby->m_Position)) {
             MobySparxProps *sparxProps = g_Sparx->m_Props;
@@ -7323,7 +7323,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           int zDist = g_Spyro.m_Position.z - pickupHeight;
 
           if (ABS2(zDist) < 512) {
-            if (g_Sparx != nullptr && g_Spyro.m_airTime == 0 &&
+            if (g_Sparx != nullptr && g_Spyro.m_AirTime == 0 &&
                 collectableProps->m_RotX < 3) {
 
               MobySparxProps *sparxProps = g_Sparx->m_Props;
@@ -7567,7 +7567,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       switch (props->m_0x00 & 3) {
       case 0:
         if ((props->m_0x00 & 0x80) != 0) {
-          if (g_Spyro.m_airTime != 0) {
+          if (g_Spyro.m_AirTime != 0) {
             g_Spyro.m_ControlFlags = 0x80000200;
             if (g_Spyro.m_State == 8) {
               D_80078668.m_Coords.azimuth =
@@ -7602,7 +7602,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           }
           VecAdd(&g_Spyro.m_portalEndPos, &targetPosition, &g_Spyro.m_Position);
 
-          angle = (moby->m_Rotation.z - g_Spyro.m_bodyRotation.z) & 0xFF;
+          angle = (moby->m_Rotation.z - g_Spyro.m_BodyRotation.z) & 0xFF;
           if (angle > 0x80) {
             angle -= 0x100;
           }
@@ -7612,7 +7612,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           if (angle > 4) {
             angle = 4;
           }
-          g_Spyro.m_portalAngle.z = g_Spyro.m_bodyRotation.z + angle;
+          g_Spyro.m_portalAngle.z = g_Spyro.m_BodyRotation.z + angle;
           g_Spyro.m_fallingState = 0x11;
           g_Spyro.unk_0x21c = &g_Spyro.m_Position;
           g_Spyro.m_mobyInUseBySpyro = 0;
@@ -7630,7 +7630,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           g_Spyro.m_ControlFlags = 0x80000327;
           VecCopy(&g_Spyro.m_portalEndPos, &g_Spyro.m_Position);
 
-          angle = (moby->m_Rotation.z - g_Spyro.m_bodyRotation.z) & 0xFF;
+          angle = (moby->m_Rotation.z - g_Spyro.m_BodyRotation.z) & 0xFF;
           if (angle > 0x80) {
             angle -= 0x100;
           }
@@ -7640,7 +7640,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           if (angle > 3) {
             angle = 3;
           }
-          g_Spyro.m_portalAngle.z = g_Spyro.m_bodyRotation.z + angle;
+          g_Spyro.m_portalAngle.z = g_Spyro.m_BodyRotation.z + angle;
           g_Spyro.m_fallingState = 0x11;
           g_Spyro.unk_0x21c = &g_Spyro.m_Position;
           g_Spyro.m_mobyInUseBySpyro = 0;
@@ -8329,7 +8329,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
            (MOBY_DAMAGE_FLAME | MOBY_DAMAGE_CHARGE | MOBY_DAMAGE_SUPER)) != 0 &&
           moby->m_State != 7) {
         props->m_0x08 = AngleClampDistance(ANGLE_FROM_SPYRO(moby->m_Position),
-                                           g_Spyro.m_bodyRotation.z, 32);
+                                           g_Spyro.m_BodyRotation.z, 32);
         props->m_0x0c = 0x190;
 
         if ((moby->m_DamageFlags & MOBY_DAMAGE_CHARGE) != 0) {
@@ -8526,7 +8526,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           props->m_0x14 = 0x46;
           props->m_0x0c =
               AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                               g_Spyro.m_bodyRotation.z, 0x28, 0x80);
+                               g_Spyro.m_BodyRotation.z, 0x28, 0x80);
           moby->m_State = 8;
           MOBY_ANIM_CHANGE(moby, 8);
           continue;
@@ -8537,7 +8537,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         props->m_0x14 = 0xB4;
         props->m_0x10 = 0x118;
         props->m_0x0c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         moby->m_State = 7;
         MOBY_ANIM_CHANGE(moby, 7);
         continue;
@@ -8864,7 +8864,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           moby->m_State != 6) {
         // Prepare knockback values
         props->m_KnockbackSpeed = 0xF0;
-        props->m_KnockbackAngle = g_Spyro.m_bodyRotation.z;
+        props->m_KnockbackAngle = g_Spyro.m_BodyRotation.z;
         moby->m_DamageFlags = 0;
 
         MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
@@ -9300,7 +9300,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             sparxPosition.z = -32;
           moby->m_Rotation.x = 0;
           moby->m_Rotation.y = sparxPosition.z;
-          MobyRotateToAngle(moby, g_Spyro.m_bodyRotation.z, 4, 0, 0);
+          MobyRotateToAngle(moby, g_Spyro.m_BodyRotation.z, 4, 0, 0);
         }
 
         switch (g_Spyro.m_health) {
@@ -9791,7 +9791,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           }
           props->m_0x04 =
               AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                               g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                               g_Spyro.m_BodyRotation.z, 0x20, 0x40);
           moby->m_DamageFlags = 0;
           moby->m_CollisionRange = 0xFF;
           props->m_0x5c = RandRangeSigned(8, 0xE);
@@ -10074,7 +10074,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
         props->m_0x04 = 350;
         props->m_0x00 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x08 = 0x8C;
         props->m_0x28 = 0x3C;
         moby->m_DamageFlags = 0;
@@ -10476,7 +10476,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               0 &&
           moby->m_State != 2) {
         props->m_0x20 = AngleClampDistance(ANGLE_FROM_SPYRO(moby->m_Position),
-                                           g_Spyro.m_bodyRotation.z, 32);
+                                           g_Spyro.m_BodyRotation.z, 32);
         props->m_0x24 = 0xFA;
         props->m_0x28 = 0;
         if (moby->m_State != 0) {
@@ -10595,7 +10595,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         }
 
         if (props->m_0x2c == 0 && *props->m_0x40 == 0 &&
-            g_Spyro.m_airTime == 0) {
+            g_Spyro.m_AirTime == 0) {
           if (SPYRO_BASE_Z_DISTANCE(moby) < 800) {
             if (OctDistance(activationPos, &g_Spyro.m_Position) <
                 (props->m_0x14 << 10)) {
@@ -10652,7 +10652,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             }
 
             if (TICK_TIMER(props->m_0x2c)) {
-              props->m_0x20 = g_Spyro.m_bodyRotation.z;
+              props->m_0x20 = g_Spyro.m_BodyRotation.z;
               props->m_0x2c = 0x1E;
             }
 
@@ -10679,7 +10679,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                 continue;
               }
 
-              if (func_80017908(g_Spyro.m_bodyRotation.z,
+              if (func_80017908(g_Spyro.m_BodyRotation.z,
                                 ANGLE_FROM_SPYRO(moby->m_Position)) >= 0x3D ||
                   OctDistance(&moby->m_Position, &props->m_0x04) > 0x4000) {
                 *props->m_0x40 = 0;
@@ -10853,7 +10853,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           break;
         }
         if (SPYRO_BASE_Z_DISTANCE(moby) < 2000 &&
-            func_80017908(g_Spyro.m_bodyRotation.z,
+            func_80017908(g_Spyro.m_BodyRotation.z,
                           ANGLE_FROM_SPYRO(moby->m_Position)) < 0x1E) {
           props->m_0x0c = 0x4B;
           moby->m_Substate = 0;
@@ -10869,8 +10869,8 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
         MobyRotateToSpyro(moby, 4, 0, 0);
         VecCopy(&targetPosition, &g_Spyro.m_Position);
-        targetPosition.x += FIXED_MUL(COSINE_8(g_Spyro.m_bodyRotation.z), 900);
-        targetPosition.y += FIXED_MUL(SINE_8(g_Spyro.m_bodyRotation.z), 900);
+        targetPosition.x += FIXED_MUL(COSINE_8(g_Spyro.m_BodyRotation.z), 900);
+        targetPosition.y += FIXED_MUL(SINE_8(g_Spyro.m_BodyRotation.z), 900);
         targetPosition.z -= 380;
 
         g_ScreenBorderEnabled = 1;
@@ -10879,14 +10879,14 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         g_Spyro.m_ControlFlags = 0x80002000;
 
         VecCopy(&props->m_0x10, &g_Spyro.m_Position);
-        props->m_0x10.x += FIXED_MUL(COSINE_8(g_Spyro.m_bodyRotation.z), 300);
-        props->m_0x10.y += FIXED_MUL(SINE_8(g_Spyro.m_bodyRotation.z), 300);
+        props->m_0x10.x += FIXED_MUL(COSINE_8(g_Spyro.m_BodyRotation.z), 300);
+        props->m_0x10.y += FIXED_MUL(SINE_8(g_Spyro.m_BodyRotation.z), 300);
         props->m_0x10.z += 100;
 
         g_Spyro.m_ControlFlags |= 0x80000200;
         g_Spyro.unk_0x21c = &props->m_0x10;
         g_Spyro.unk_0x220 = &D_80078668;
-        D_80078668.m_Coords.azimuth = -(g_Spyro.m_bodyRotation.z + 0x40) << 4;
+        D_80078668.m_Coords.azimuth = -(g_Spyro.m_BodyRotation.z + 0x40) << 4;
         D_80078668.m_Coords.elevation = 0;
         D_80078668.m_Coords.radius = 0x400;
         D_80078668.m_Offset.azimuth = 0;
@@ -10936,9 +10936,9 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               }
               VecCopy(&targetPosition, &g_Spyro.m_Position);
               targetPosition.x +=
-                  FIXED_MUL(offset, COSINE_8(g_Spyro.m_bodyRotation.z));
+                  FIXED_MUL(offset, COSINE_8(g_Spyro.m_BodyRotation.z));
               targetPosition.y +=
-                  FIXED_MUL(offset, SINE_8(g_Spyro.m_bodyRotation.z));
+                  FIXED_MUL(offset, SINE_8(g_Spyro.m_BodyRotation.z));
               g_SpawnParticle(1, 31, &targetPosition, 0);
               props->m_0x24 = 0;
             }
@@ -11115,7 +11115,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         }
         props->m_0x0c = 0x82;
         props->m_0x08 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         moby->m_DamageFlags = 0;
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -11315,7 +11315,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         props->m_0x08 = 200;
         props->m_0x10 = 260;
         props->m_0x0c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         moby->m_DamageFlags = 0;
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -11517,7 +11517,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         props->m_0x04 = 300;
         props->m_0x0c = 260;
         props->m_0x08 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         moby->m_DamageFlags = 0;
         if (props->m_0x38 != 0 && props->m_0x38 != (Moby *)-1 &&
             props->m_0x38->m_Class == 176 && props->m_0x38->m_Substate == 0 &&
@@ -12116,7 +12116,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           props->m_0x18 = 0x145;
         }
         props->m_0x14 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x1c = 0x28;
         moby->m_State = 2;
         MOBY_ANIM_CHANGE(moby, 2);
@@ -12273,7 +12273,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
         props->m_KnockbackAngle =
             AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                             g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                             g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         // This condition can never be fulfilled, as the damage flags were
         // reset already
         if (moby->m_DamageFlags & MOBY_DAMAGE_FLAME) {
@@ -12374,7 +12374,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
       if (props->m_0xbc != -1) {
         if (g_LevelMobys[props->m_0xbc].m_Substate != 0 &&
-            func_80017908(g_Spyro.m_bodyRotation.z,
+            func_80017908(g_Spyro.m_BodyRotation.z,
                           ANGLE_FROM_SPYRO(moby->m_Position)) < 0x28 &&
             (DISTANCE_TO_SPYRO(moby) < 7000 || props->m_0x68 >= 4)) {
           props->m_0xbc = -1;
@@ -12383,7 +12383,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         }
       }
 
-      if (props->m_0xc4 == 0 && g_Spyro.m_airTime == 0) {
+      if (props->m_0xc4 == 0 && g_Spyro.m_AirTime == 0) {
         if (func_80038C4C(&g_Spyro.m_Position, &props->m_0x70) != 0 ||
             func_80038C4C(&g_Spyro.m_Position, &props->m_0xa0) != 0) {
           props->m_0xc4 = 1;
@@ -12421,7 +12421,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       if (moby->m_State == 8 || moby->m_State == 9) {
         PathData *path;
         int cameraAngle;
-        cameraAngle = (g_Spyro.m_bodyRotation.z + 0x40) & 0xFF;
+        cameraAngle = (g_Spyro.m_BodyRotation.z + 0x40) & 0xFF;
         VecAdd(&PATH_NODE_POS(props->m_0x00, 0), &moby->m_Position,
                &g_Spyro.m_Position);
         VecShiftRight(&PATH_NODE_POS(props->m_0x00, 0), 1);
@@ -12733,9 +12733,9 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           spawnedProps = spawned->m_Props;
           spawnedProps->m_Target = moby;
           VecCopy(&spawned->m_Position, &g_Spyro.m_Position);
-          spawned->m_Rotation.x = g_Spyro.m_bodyRotation.x;
-          spawned->m_Rotation.y = g_Spyro.m_bodyRotation.y;
-          spawned->m_Rotation.z = g_Spyro.m_bodyRotation.z;
+          spawned->m_Rotation.x = g_Spyro.m_BodyRotation.x;
+          spawned->m_Rotation.y = g_Spyro.m_BodyRotation.y;
+          spawned->m_Rotation.z = g_Spyro.m_BodyRotation.z;
           g_IsSpyroHidden = 1;
         }
         if (g_AnimationFinished) {
@@ -12829,7 +12829,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         }
         MobyRotateToSpyro(moby, 4, 0, 0);
         if (props->m_0x60 == 0 && distance >= 3600 && distance < 9400 &&
-            g_Spyro.m_airTime == 0) {
+            g_Spyro.m_AirTime == 0) {
           props->m_0x68 = 0;
           moby->m_State = 2;
           continue;
@@ -12910,7 +12910,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         angle = ANGLE_FROM_SPYRO(moby->m_Position);
 
         props->m_0x2c =
-            AngleLerpClamped(angle, g_Spyro.m_bodyRotation.z, 0x28, 0x40);
+            AngleLerpClamped(angle, g_Spyro.m_BodyRotation.z, 0x28, 0x40);
 
         for (i = 0; i < 3 && DYN_MOBY_FREE_COUNT > 20; i++) {
           g_SpawnMoby(359, moby);
@@ -13032,7 +13032,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         props->m_0x18 = 100;
         props->m_0x20 = 350;
         props->m_0x1c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x28, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x28, 0x40);
         MobyPlaySound(moby, 0, 0);
         g_SpawnMoby(232, moby);
         moby->m_State = 1;
@@ -13095,7 +13095,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
           angle = ANGLE_FROM_SPYRO(moby->m_Position);
           props->m_0x0c =
-              AngleLerpClamped(angle, g_Spyro.m_bodyRotation.z, 32, 64);
+              AngleLerpClamped(angle, g_Spyro.m_BodyRotation.z, 32, 64);
 
           props->m_0x1c = 0x10 - (rand() & 0x1f);
           props->m_0x1e = 0x10 - (rand() & 0x1f);
@@ -13179,7 +13179,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             MobyRotateToSpyro(moby, 4, 0, 0);
 
             if (DISTANCE_TO_SPYRO(moby) < 0x2000 &&
-                SPYRO_BASE_Z_DELTA(moby) < 0 && g_Spyro.m_airTime == 0) {
+                SPYRO_BASE_Z_DELTA(moby) < 0 && g_Spyro.m_AirTime == 0) {
               linkedProps = (Moby165Props *)g_LevelMobys[props->m_0x28].m_Props;
               props->m_0x24 = 1;
               linkedProps->m_0x08 = RandRange(0, 0xf);
@@ -13811,7 +13811,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
              g_Spyro.m_State == 0x15 || g_Spyro.m_State == 2) &&
             DISTANCE_TO_SPYRO(moby) < 0x600 &&
             SPYRO_BASE_Z_DISTANCE(moby) < 0x200) {
-          if (func_80017908(g_Spyro.m_bodyRotation.z,
+          if (func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) < 0x30) {
             if (func_80017908(moby->m_Rotation.z,
                               ANGLE_TO_SPYRO(moby->m_Position)) < 0x30) {
@@ -13830,7 +13830,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
               keyMoby->m_Rotation.x = 0;
               keyMoby->m_Rotation.y = 0;
-              keyMoby->m_Rotation.z = g_Spyro.m_bodyRotation.z + 0x80;
+              keyMoby->m_Rotation.z = g_Spyro.m_BodyRotation.z + 0x80;
             }
           }
         }
@@ -13870,19 +13870,19 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           if (props->m_0x04 < 0x40) {
             int rotTemp;
             keyMoby->m_Rotation.y = -props->m_0x04;
-            rotTemp = g_Spyro.m_bodyRotation.z + 0x80;
+            rotTemp = g_Spyro.m_BodyRotation.z + 0x80;
             keyMoby->m_Rotation.z = rotTemp + props->m_0x04 * 4;
           } else if (props->m_0x04 < 0x80) {
             int rotTemp;
             keyMoby->m_Rotation.y = 0xc0;
-            rotTemp = g_Spyro.m_bodyRotation.z + 0x80;
+            rotTemp = g_Spyro.m_BodyRotation.z + 0x80;
             keyMoby->m_Rotation.z = rotTemp + (props->m_0x04 - 0x40) * 3;
           } else {
             int rotTemp;
             int angleDelta;
             angleDelta = func_80017908(
-                moby->m_Rotation.z, (g_Spyro.m_bodyRotation.z + 0x40) & 0xff);
-            rotTemp = g_Spyro.m_bodyRotation.z + 0x40;
+                moby->m_Rotation.z, (g_Spyro.m_BodyRotation.z + 0x40) & 0xff);
+            rotTemp = g_Spyro.m_BodyRotation.z + 0x40;
             keyMoby->m_Rotation.z =
                 rotTemp + ((angleDelta * (props->m_0x04 - 0x80)) / 0x40);
           }
@@ -14059,7 +14059,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         props->m_0x18 = 350;
 
         props->m_0x14 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x28, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x28, 0x40);
 
         for (i = 0; i < 3 && DYN_MOBY_FREE_COUNT > 20; i++) {
           g_SpawnMoby(481, moby);
@@ -14341,7 +14341,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             D_80078668.m_Coords.radius = 0xC00;
             D_80078668.m_Coords.elevation = 0x80;
             D_80078668.m_Coords.azimuth =
-                ROTDEG12(180) - (g_Spyro.m_bodyRotation.z << 4);
+                ROTDEG12(180) - (g_Spyro.m_BodyRotation.z << 4);
             D_80078668.m_Offset.azimuth = 0;
             D_80078668.m_Offset.elevation = -0x100;
             D_80078668.m_Offset.radius = 0;
@@ -14424,7 +14424,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         }
 
         props->m_0x14 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
 
         props->m_0x10 = 0x80;
 
@@ -14797,7 +14797,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             func_80038C4C(&g_Spyro.m_Position, &props->m_0x08)) {
           angle = ANGLE_FROM_SPYRO(g_LevelMobys[props->m_0x28].m_Position);
 
-          if (func_80017908(g_Spyro.m_bodyRotation.z, angle) < 0x30) {
+          if (func_80017908(g_Spyro.m_BodyRotation.z, angle) < 0x30) {
             g_Spyro.m_ControlFlags = 0x80002000;
             func_8003DFA4();
             VecNull(&g_Spyro.m_HeadLookTarget);
@@ -14805,7 +14805,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             moby->m_Substate = 2;
             moby->m_Rotation.x = 0;
             moby->m_Rotation.y = 0;
-            moby->m_Rotation.z = g_Spyro.m_bodyRotation.z + 0x80;
+            moby->m_Rotation.z = g_Spyro.m_BodyRotation.z + 0x80;
             moby->m_WasDrawn = 1;
             moby->m_RenderRadius = 0x18;
 
@@ -14818,9 +14818,9 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
                 angleDiff =
                     func_80017908(g_LevelMobys[props->m_0x28].m_Rotation.z,
-                                  (g_Spyro.m_bodyRotation.z + 0x40) & 0xFF);
+                                  (g_Spyro.m_BodyRotation.z + 0x40) & 0xFF);
                 moby->m_Rotation.y = 0xC0;
-                angle = g_Spyro.m_bodyRotation.z + 0x40;
+                angle = g_Spyro.m_BodyRotation.z + 0x40;
                 moby->m_Rotation.z =
                     angle + (angleDiff * (props->m_0x00 - 0x80) / 0x40);
               } else {
@@ -14867,23 +14867,23 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             int temp;
             moby->m_Rotation.y = -props->m_0x00;
 
-            temp = g_Spyro.m_bodyRotation.z + 0x80;
+            temp = g_Spyro.m_BodyRotation.z + 0x80;
             temp += props->m_0x00 << 2;
             moby->m_Rotation.z = temp;
           } else if (props->m_0x00 < 0x80) {
             int temp;
             moby->m_Rotation.y = 0xC0;
 
-            temp = g_Spyro.m_bodyRotation.z + 0x80;
+            temp = g_Spyro.m_BodyRotation.z + 0x80;
             temp += (props->m_0x00 - 0x40) * 3;
             moby->m_Rotation.z = temp;
           } else {
             int temp;
             angleDiff = func_80017908(g_LevelMobys[props->m_0x28].m_Rotation.z,
-                                      (g_Spyro.m_bodyRotation.z + 0x40) & 0xFF);
+                                      (g_Spyro.m_BodyRotation.z + 0x40) & 0xFF);
 
             temp = angleDiff * (props->m_0x00 - 0x80);
-            angle = g_Spyro.m_bodyRotation.z + 0x40;
+            angle = g_Spyro.m_BodyRotation.z + 0x40;
 
             moby->m_Rotation.z = angle + (temp / 0x40);
           }
@@ -14957,7 +14957,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               0 &&
           moby->m_State != 6) {
         props->m_0x0c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x10 = 0xFA;
         MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -15086,7 +15086,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             MOBY_ANIM_RESTART(spawned, 4);
           }
           spawned->m_State = 4;
-          spawnedProps->m_0x04 = g_Spyro.m_bodyRotation.z;
+          spawnedProps->m_0x04 = g_Spyro.m_BodyRotation.z;
           spawnedProps->m_0x00 = 300;
           spawned->m_Rotation.z = moby->m_Rotation.z;
 
@@ -15135,7 +15135,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           props->m_0x20 = 0x118;
         }
         props->m_0x1c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x2c = 0x1E;
         moby->m_DamageFlags = 0;
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
@@ -15426,7 +15426,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                   g_Spyro.m_State == 21 || g_Spyro.m_State == 2 ||
                   g_Spyro.m_State == 11) &&
                  DISTANCE_TO_SPYRO(moby) < 0x780 &&
-                 func_80017908(g_Spyro.m_bodyRotation.z,
+                 func_80017908(g_Spyro.m_BodyRotation.z,
                                ANGLE_FROM_SPYRO(moby->m_Position)) < 0x20 &&
                  func_80017908(moby->m_Rotation.z,
                                ANGLE_TO_SPYRO(moby->m_Position)) < 0x28) {
@@ -15466,7 +15466,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                   g_Spyro.m_State == 21 || g_Spyro.m_State == 2 ||
                   g_Spyro.m_State == 11) &&
                  DISTANCE_TO_SPYRO(moby) < 0x780 &&
-                 func_80017908(g_Spyro.m_bodyRotation.z,
+                 func_80017908(g_Spyro.m_BodyRotation.z,
                                ANGLE_FROM_SPYRO(moby->m_Position)) < 0x20 &&
                  func_80017908(moby->m_Rotation.z,
                                ANGLE_TO_SPYRO(moby->m_Position)) < 0x28) {
@@ -15507,7 +15507,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                   g_Spyro.m_State == 21 || g_Spyro.m_State == 2 ||
                   g_Spyro.m_State == 11) &&
                  DISTANCE_TO_SPYRO(moby) < 0x780 &&
-                 func_80017908(g_Spyro.m_bodyRotation.z,
+                 func_80017908(g_Spyro.m_BodyRotation.z,
                                ANGLE_FROM_SPYRO(moby->m_Position)) < 0x20 &&
                  func_80017908(moby->m_Rotation.z,
                                ANGLE_TO_SPYRO(moby->m_Position)) < 0x28) {
@@ -15549,7 +15549,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                   g_Spyro.m_State == 21 || g_Spyro.m_State == 2 ||
                   g_Spyro.m_State == 11) &&
                  DISTANCE_TO_SPYRO(moby) < 0x780 &&
-                 func_80017908(g_Spyro.m_bodyRotation.z,
+                 func_80017908(g_Spyro.m_BodyRotation.z,
                                ANGLE_FROM_SPYRO(moby->m_Position)) < 0x20 &&
                  func_80017908(moby->m_Rotation.z,
                                ANGLE_TO_SPYRO(moby->m_Position)) < 0x28) {
@@ -15592,7 +15592,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                   g_Spyro.m_State == 0x15 || g_Spyro.m_State == 2 ||
                   g_Spyro.m_State == 0xB) &&
                  DISTANCE_TO_SPYRO(moby) < 0x780 &&
-                 func_80017908(g_Spyro.m_bodyRotation.z,
+                 func_80017908(g_Spyro.m_BodyRotation.z,
                                ANGLE_FROM_SPYRO(moby->m_Position)) < 0x20 &&
                  func_80017908(moby->m_Rotation.z,
                                ANGLE_TO_SPYRO(moby->m_Position)) < 0x28) {
@@ -15636,7 +15636,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                   g_Spyro.m_State == 21 || g_Spyro.m_State == 2 ||
                   g_Spyro.m_State == 11) &&
                  DISTANCE_TO_SPYRO(moby) < 1920 &&
-                 func_80017908(g_Spyro.m_bodyRotation.z,
+                 func_80017908(g_Spyro.m_BodyRotation.z,
                                ANGLE_FROM_SPYRO(moby->m_Position)) < 0x20 &&
                  func_80017908(moby->m_Rotation.z,
                                ANGLE_TO_SPYRO(moby->m_Position)) < 0x28) {
@@ -15663,7 +15663,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         moby->m_DamageFlags = 0;
         props->m_KnockbackAngle =
             AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                             g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                             g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         if ((moby->m_DamageFlags & MOBY_DAMAGE_FLAME) != 0) {
           props->m_KnockbackSpeed = 200;
         } else {
@@ -15868,7 +15868,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           moby->m_State != 6) {
         // Prepare knockback values
         props->m_KnockbackSpeed = 0xF0;
-        props->m_KnockbackAngle = g_Spyro.m_bodyRotation.z;
+        props->m_KnockbackAngle = g_Spyro.m_BodyRotation.z;
         moby->m_DamageFlags = 0;
         MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -16019,7 +16019,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         ((int *)g_LevelMobys[props->m_0x00].m_Props)[4] = -1;
         props->m_0x00 = -1;
         props->m_0x08 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x10 = 120;
         if (moby->m_DamageFlags & MOBY_DAMAGE_CHARGE) {
           props->m_0x0c = 240;
@@ -16102,7 +16102,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       if ((moby->m_DamageFlags & (MOBY_DAMAGE_FLAME | MOBY_DAMAGE_SUPER)) &&
           moby->m_State != 3) {
         props->m_0x0c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x14 = 0x3C;
         props->m_0x10 = 0x78;
         MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
@@ -16201,7 +16201,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       if (moby->m_State >= 6 && moby->m_State <= 10 &&
           (moby->m_DamageFlags & MOBY_DAMAGE_FLAME)) {
         props->m_0x0c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x14 = 0x3C;
         props->m_0x10 = 0x78;
         MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
@@ -16592,7 +16592,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           Moby *fragment;
           MobyFragmentProps *fragmentProps;
 
-          moby->m_Rotation.y = g_Spyro.m_bodyRotation.z;
+          moby->m_Rotation.y = g_Spyro.m_BodyRotation.z;
           if (i == 2) {
             moby->m_Rotation.y += 20;
           } else if (i == 3) {
@@ -16739,7 +16739,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       case 3: {
         int attackDistance = 2800;
 
-        if (func_80017908(g_Spyro.m_bodyRotation.z,
+        if (func_80017908(g_Spyro.m_BodyRotation.z,
                           ANGLE_FROM_SPYRO(moby->m_Position)) >= ROTDEG8(100)) {
           attackDistance = 2000;
         }
@@ -16799,7 +16799,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           props->m_0x108 = 380;
         }
         props->m_0x104 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                          g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                          g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x10c = 40;
         moby->m_State = 4;
         MOBY_ANIM_CHANGE(moby, 4);
@@ -17079,7 +17079,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         if (props->m_0x10 < 0 || g_LevelMobys[props->m_0x10].m_Class != 201) {
           props->m_0x08 =
               AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                               g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                               g_Spyro.m_BodyRotation.z, 0x20, 0x40);
           props->m_0x0c = 0x80;
           props->m_0x00 = 0;
           moby->m_Substate = 0;
@@ -17432,7 +17432,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           moby->m_State != 3) {
         angle = ANGLE_FROM_SPYRO(moby->m_Position);
         props->m_0x1c =
-            AngleLerpClamped(angle, g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+            AngleLerpClamped(angle, g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x20 = 0xB4;
         if ((moby->m_DamageFlags & MOBY_DAMAGE_CHARGE) != 0) {
           props->m_0x20 = 300;
@@ -17743,7 +17743,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         if (moby->m_State != 11 || moby->m_RenderRadius != 0) {
           props->m_0x54 =
               AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                               g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                               g_Spyro.m_BodyRotation.z, 0x20, 0x40);
           props->m_0x58 = 0xFA;
 
           if (props->m_0x24 == 2 || props->m_0x24 == 3 || props->m_0x24 == 8) {
@@ -18260,7 +18260,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         }
 
         if (moby->m_AnimationState.m_Animation == 17) {
-          if (func_80017908(g_Spyro.m_bodyRotation.z,
+          if (func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) >= 0x17 ||
               props->m_0x60 != 0) {
             if (g_AnimFrameFinished != 0 &&
@@ -18283,7 +18283,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             }
           }
         } else if (g_AnimationFinished) {
-          if (func_80017908(g_Spyro.m_bodyRotation.z,
+          if (func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) >= 23 ||
               props->m_0x60 != 0) {
             if (moby->m_AnimationState.m_Animation != 17) {
@@ -18399,7 +18399,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
       if ((moby->m_DamageFlags & MOBY_DAMAGE_FLAME) != 0) {
         distance = DISTANCE_TO_SPYRO(moby);
-        angle = func_80017908(g_Spyro.m_bodyRotation.z,
+        angle = func_80017908(g_Spyro.m_BodyRotation.z,
                               ANGLE_FROM_SPYRO(moby->m_Position));
         moby->m_DamageFlags = 0;
 
@@ -18584,7 +18584,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             VecAdd(&vector, &vector, &moby->m_Position);
 
             if (func_80017908(ANGLE_FROM_SPYRO(vector),
-                              g_Spyro.m_bodyRotation.z) < 0x30) {
+                              g_Spyro.m_BodyRotation.z) < 0x30) {
               moby->m_State = 1;
               continue;
             }
@@ -18594,7 +18594,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
           if (DISTANCE_TO_SPYRO(moby) < range) {
             angleA = AngleSignedDistance(moby->m_Rotation.z,
-                                         g_Spyro.m_bodyRotation.z);
+                                         g_Spyro.m_BodyRotation.z);
             angleAbs = ABS2(angleA);
 
             if (angleAbs > 0x40 - angleWindow &&
@@ -18803,7 +18803,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         props->m_0x08 = 0x190;
         props->m_0x0c = 170;
         props->m_0x14 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         moby->m_DamageFlags = 0;
         moby->m_CollisionRange = 100;
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
@@ -18972,7 +18972,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               0 &&
           moby->m_State != 7) {
         props->m_0x04 = 0xF0;
-        props->m_0x00 = g_Spyro.m_bodyRotation.z;
+        props->m_0x00 = g_Spyro.m_BodyRotation.z;
         moby->m_DamageFlags = 0;
         MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -19211,7 +19211,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         int i;
 
         props->m_0x04 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x00 = 300;
 
         if (moby->m_State != 0) {
@@ -19269,7 +19269,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           vec.y += SINE_8(moby->m_Rotation.z) >> 2;
 
           if (moby->m_WasDrawn &&
-              func_80017908(g_Spyro.m_bodyRotation.z,
+              func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) < 0x19 &&
               func_80017908(moby->m_Rotation.z,
                             ANGLE_TO_SPYRO(moby->m_Position)) < 0x30 &&
@@ -19402,7 +19402,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           continue;
         }
 
-        if (func_80017908(g_Spyro.m_bodyRotation.z,
+        if (func_80017908(g_Spyro.m_BodyRotation.z,
                           ANGLE_FROM_SPYRO(moby->m_Position)) > 0x50 &&
             !moby->m_WasDrawn) {
           *props->m_0x30 = 0;
@@ -19556,7 +19556,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
       if ((moby->m_DamageFlags & (MOBY_DAMAGE_CHARGE | MOBY_DAMAGE_SUPER)) &&
           moby->m_State != 6) {
-        props->m_KnockbackAngle = g_Spyro.m_bodyRotation.z;
+        props->m_KnockbackAngle = g_Spyro.m_BodyRotation.z;
         props->m_FallKnockbackSpeed = 0x80;
         // Set as knockback speed for use in Knockback state 5
         props->m_Scratch = 0x80;
@@ -19796,7 +19796,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
            (MOBY_DAMAGE_FLAME | MOBY_DAMAGE_CHARGE | MOBY_DAMAGE_SUPER)) &&
           moby->m_State != 1) {
         props->m_0x24 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         if (moby->m_DamageFlags & MOBY_DAMAGE_FLAME) {
           props->m_0x20 = 200;
         } else {
@@ -19940,7 +19940,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
            (MOBY_DAMAGE_FLAME | MOBY_DAMAGE_CHARGE | MOBY_DAMAGE_SUPER)) != 0 &&
           moby->m_State != 5 && moby->m_State != 6) {
         props->m_0x24 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
 
         if ((moby->m_DamageFlags & MOBY_DAMAGE_FLAME) == 0) {
           props->m_0x20 = 0x190;
@@ -20107,7 +20107,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                 VecNull(&g_Spyro.m_HeadLookTarget);
                 g_Spyro.m_ControlFlags =
                     0x80000000 | 0x2000 | 0x100 | 0x40 | 0x4 | 0x2 | 0x1;
-                if (g_Spyro.m_airTime != 0) {
+                if (g_Spyro.m_AirTime != 0) {
                   g_Spyro.m_fallingState = 6;
                   g_Spyro.unk_0x208.x = g_Spyro.m_Physics.m_TrueVelocity.x >> 8;
                   g_Spyro.unk_0x208.y = g_Spyro.m_Physics.m_TrueVelocity.y >> 8;
@@ -20151,7 +20151,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         moby->m_DamageFlags = 0;
         props->m_0x18 = 150;
         props->m_0x1c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         StopSound(moby->m_SoundChannel, 4);
         MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -20214,7 +20214,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               MOBY_ANIM_ADVANCE(moby, 2);
             }
             if (TICK_TIMER(props->m_0x30) && DISTANCE_TO_SPYRO(moby) < 0x2800 &&
-                g_Spyro.m_airTime == 0 &&
+                g_Spyro.m_AirTime == 0 &&
                 g_Spyro.m_Position.z - PATH_NODE_POS(props->m_0x0c, 0).z > 0) {
               moby->m_State = 11;
               continue;
@@ -20679,7 +20679,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           moby->m_State != 3) {
         props->m_0x38 = 0xFA;
         props->m_0x3c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         StopSound(moby->m_SoundChannel, 4);
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -20692,7 +20692,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           moby->m_State != 3) {
         props->m_0x38 = 0xFA;
         props->m_0x3c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         StopSound(moby->m_SoundChannel, 4);
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -20723,13 +20723,13 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         if (distance < (props->m_0x2c << 10) &&
             (props->m_0x30 || envAnimState2 >= 2) && g_Spyro.m_State != 0xB &&
             g_Spyro.m_State != 0x14 &&
-            func_80017908(g_Spyro.m_bodyRotation.z,
+            func_80017908(g_Spyro.m_BodyRotation.z,
                           ANGLE_FROM_SPYRO(moby->m_Position)) < 0x20) {
           g_Spyro.m_ControlFlags = 0x80000200;
           g_Spyro.unk_0x21c = &g_Spyro.m_Position;
           g_Spyro.unk_0x220 = &D_80078668;
           D_80078668.m_Coords.azimuth =
-              ROTDEG12(180) - (g_Spyro.m_bodyRotation.z << 4);
+              ROTDEG12(180) - (g_Spyro.m_BodyRotation.z << 4);
           D_80078668.m_Coords.radius = 0xC00;
           D_80078668.m_Coords.elevation = 0x80;
           D_80078668.m_Offset.elevation = -0xB0;
@@ -21038,7 +21038,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
         props->m_0x18 = 450;
         props->m_0x1c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 32, 64);
+                                         g_Spyro.m_BodyRotation.z, 32, 64);
         props->m_0x20 = 140;
         moby->m_DamageFlags = 0;
         spawned =
@@ -21163,7 +21163,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           } else {
             MOBY_ANIM_CHANGE_CLEAR_FINISHED(moby, 5);
             if (DISTANCE_TO_SPYRO(moby) < (props->m_0x48 << 10) &&
-                g_Spyro.m_airTime == 0 &&
+                g_Spyro.m_AirTime == 0 &&
                 g_Spyro.m_Position.z - PATH_NODE_POS(props->m_0x00, 0).z > 0) {
               Moby *linkedMoby = &g_LevelMobys[props->m_0x24];
               linkedMoby->m_State = 10;
@@ -21250,7 +21250,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
         case 9: {
           MobyRotateToSpyro(moby, 4, 0, 0);
-          if (g_Spyro.m_airTime == 0) {
+          if (g_Spyro.m_AirTime == 0) {
             if (SPYRO_BASE_Z_DISTANCE(moby) < 800 &&
                 DISTANCE_TO_SPYRO(moby) < 0x2000) {
               moby->m_State = 2;
@@ -21349,7 +21349,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           int side = props->m_0x34;
 
           if (side != 0 &&
-              func_80017908(g_Spyro.m_bodyRotation.z,
+              func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) >= 0x41) {
             side = 3 - side;
           }
@@ -21357,20 +21357,20 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           VecCopy(&targetPosition, &g_Spyro.m_Position);
           if (side == 1) {
             targetPosition.x +=
-                COSINE_8(AngleAdd(g_Spyro.m_bodyRotation.z, -0x40)) >> 3;
+                COSINE_8(AngleAdd(g_Spyro.m_BodyRotation.z, -0x40)) >> 3;
             targetPosition.y +=
-                SINE_8(AngleAdd(g_Spyro.m_bodyRotation.z, -0x40)) >> 3;
+                SINE_8(AngleAdd(g_Spyro.m_BodyRotation.z, -0x40)) >> 3;
           } else if (side == 2) {
             targetPosition.x +=
-                COSINE_8(AngleAdd(g_Spyro.m_bodyRotation.z, 0x40)) >> 3;
+                COSINE_8(AngleAdd(g_Spyro.m_BodyRotation.z, 0x40)) >> 3;
             targetPosition.y +=
-                SINE_8(AngleAdd(g_Spyro.m_bodyRotation.z, 0x40)) >> 3;
+                SINE_8(AngleAdd(g_Spyro.m_BodyRotation.z, 0x40)) >> 3;
           }
 
           angle = ANGLE_FROM(moby->m_Position, targetPosition);
           if (TICK_TIMER(props->m_0x2c)) {
             if (MobyRotateToAngle(moby, angle, 6, 0x14, 1) &&
-                func_80017908(g_Spyro.m_bodyRotation.z,
+                func_80017908(g_Spyro.m_BodyRotation.z,
                               ANGLE_FROM_SPYRO(moby->m_Position)) < 0x32 &&
                 func_80039398(moby, 0x32, 300, 500, 0x17)) {
               moby->m_State = 100;
@@ -21379,7 +21379,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           }
 
           if (props->m_0x14 == 2 &&
-              func_80017908(g_Spyro.m_bodyRotation.z,
+              func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) >= 0x41) {
             moby->m_State = 100;
             continue;
@@ -21403,9 +21403,9 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           }
 
           if (TICK_TIMER(props->m_0x2c) &&
-              func_80017908(g_Spyro.m_bodyRotation.z,
+              func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) < 0x32 &&
-              DISTANCE_TO_SPYRO(moby) < closeRange && g_Spyro.m_airTime == 0) {
+              DISTANCE_TO_SPYRO(moby) < closeRange && g_Spyro.m_AirTime == 0) {
             if (SPYRO_BASE_Z_DELTA(moby) < 200 &&
                 SPYRO_BASE_Z_DISTANCE(moby) < 1000) {
               moby->m_State = 4;
@@ -21421,7 +21421,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             if (!TICK_TIMER(props->m_0x2c)) {
               break;
             }
-            if (func_80017908(g_Spyro.m_bodyRotation.z,
+            if (func_80017908(g_Spyro.m_BodyRotation.z,
                               ANGLE_FROM_SPYRO(moby->m_Position)) < 0x32 &&
                 func_80039398(moby, 0x32, 0, 500, 0x37)) {
               moby->m_State = 100;
@@ -21433,7 +21433,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             continue;
           }
           if (TICK_TIMER(props->m_0x2c) &&
-              func_80017908(g_Spyro.m_bodyRotation.z,
+              func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) < 0x32 &&
               DISTANCE_TO_SPYRO(moby) < closeRange) {
             if (SPYRO_BASE_Z_DELTA(moby) < 200 &&
@@ -21447,7 +21447,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
         case 9:
           if (MobyRotateToSpyro(moby, 6, 0x14, 1) &&
-              func_80017908(g_Spyro.m_bodyRotation.z,
+              func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) < 0x32 &&
               func_80039398(moby, 0x32, 300, 500, 0x15)) {
             moby->m_State = 100;
@@ -21458,7 +21458,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             continue;
           }
           if (TICK_TIMER(props->m_0x2c) &&
-              func_80017908(g_Spyro.m_bodyRotation.z,
+              func_80017908(g_Spyro.m_BodyRotation.z,
                             ANGLE_FROM_SPYRO(moby->m_Position)) < 0x32 &&
               DISTANCE_TO_SPYRO(moby) < closeRange) {
             if (SPYRO_BASE_Z_DELTA(moby) < 200) {
@@ -21684,7 +21684,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           props->m_0x20 = 0xDC;
           props->m_0x24 =
               AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                               g_Spyro.m_bodyRotation.z, 0x20, 0x60);
+                               g_Spyro.m_BodyRotation.z, 0x20, 0x60);
           if ((moby->m_DamageFlags & MOBY_DAMAGE_CHARGE) != 0) {
             props->m_0x20 += 0x8C;
           }
@@ -21824,7 +21824,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           moby->m_State < 5) {
         props->m_0x00 = 350;
         props->m_0x04 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         moby->m_DamageFlags = 0;
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -22032,7 +22032,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           moby->m_State < 6) {
         props->m_0x1c = (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >> 6) + 450;
         props->m_0x20 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x24 = 0x50;
 
         if ((moby->m_DamageFlags & MOBY_DAMAGE_FLAME) != 0) {
@@ -22072,7 +22072,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               int zDelta = SPYRO_ORIGIN_Z_DELTA(moby);
               int angle;
 
-              if (g_Spyro.m_airTime == 0 && ABS2(zDelta) < 0x200) {
+              if (g_Spyro.m_AirTime == 0 && ABS2(zDelta) < 0x200) {
                 if ((props->m_0x10 & 1) != 0) {
                   moby->m_State = 3;
                   MOBY_ANIM_CHANGE(moby, 3);
@@ -22551,7 +22551,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         }
         props->m_0x14 = 0x3C;
         props->m_0x10 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
         MobyMarkKilled(moby);
         moby->m_State = 2;
@@ -22640,7 +22640,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
       controlResult = 1;
       if (props->m_0x20 != 0) {
-        if (g_Spyro.m_airTime == 0) {
+        if (g_Spyro.m_AirTime == 0) {
           controlResult = TICK_TIMER(props->m_0x20);
           props->m_0x64 = 1;
         }
@@ -22787,7 +22787,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         MobyRotateToSpyro(moby, 4, 0, 0);
         if (DISTANCE_TO_SPYRO(moby) < props->m_0x28) {
           angle = ANGLE_FROM_SPYRO(moby->m_Position);
-          if (func_80017908(g_Spyro.m_bodyRotation.z, angle) < 0x20) {
+          if (func_80017908(g_Spyro.m_BodyRotation.z, angle) < 0x20) {
             props->m_0x04 = props->m_0x08;
             props->m_0x04->m_CurrentNode = 0;
             props->m_0x14 = 0;
@@ -23102,7 +23102,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           g_LevelMobys[props->m_0x00].m_DamageFlags |= moby->m_DamageFlags;
           props->m_0x04 = (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >> 6) + 450;
           props->m_0x0c = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                           g_Spyro.m_bodyRotation.z, 32, 64);
+                                           g_Spyro.m_BodyRotation.z, 32, 64);
           props->m_0x08 = 0x50;
           MobySpawnDrop(moby, DROP_MODE_HOMING, nullptr, nullptr);
           MobyMarkKilled(moby);
@@ -23775,7 +23775,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         props->m_0x10 |= 0x10;
       }
 
-      if (g_Spyro.m_airTime == 0) {
+      if (g_Spyro.m_AirTime == 0) {
         if (ABS2(SPYRO_ORIGIN_Z_DELTA(moby) + 0x164) < 0x140 &&
             DISTANCE_TO_SPYRO(moby) < props->m_0x30) {
           props->m_0x10 |= 8;
@@ -24077,7 +24077,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         angle = ANGLE_FROM_SPYRO(moby->m_Position);
 
         props->m_0x18 =
-            AngleLerpClamped(angle, g_Spyro.m_bodyRotation.z, 0x28, 0x40);
+            AngleLerpClamped(angle, g_Spyro.m_BodyRotation.z, 0x28, 0x40);
 
         for (i = 0; i < 3 && DYN_MOBY_FREE_COUNT > 20; i++) {
           g_SpawnMoby(481, moby);
@@ -24813,7 +24813,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         }
 
         if (props->m_0x10 == 1) {
-          if (DISTANCE_TO_SPYRO(moby) < 0x2800 && g_Spyro.m_airTime == 0 &&
+          if (DISTANCE_TO_SPYRO(moby) < 0x2800 && g_Spyro.m_AirTime == 0 &&
               moby->m_AnimationState.m_NextAnimation != 7) {
             moby->m_State = 10;
             continue;
@@ -25277,7 +25277,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           props->m_0x50 = 0xE6;
           angle = ANGLE_FROM_SPYRO(moby->m_Position);
           props->m_0x4c =
-              AngleLerpClamped(angle, g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+              AngleLerpClamped(angle, g_Spyro.m_BodyRotation.z, 0x20, 0x40);
           props->m_0x54 = 0x14;
           moby->m_State = 4;
           continue;
@@ -25628,7 +25628,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           props->m_0x04 = 0x118;
           props->m_0x00 =
               AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                               g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                               g_Spyro.m_BodyRotation.z, 0x20, 0x40);
           moby->m_State = 5;
           MOBY_ANIM_RESTART(moby, 5);
           continue;
@@ -25917,7 +25917,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           moby->m_State != 7) {
         MobyPodSetSubstate(moby, 1);
         props->m_0x08 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x0c = 0x190;
 
         if (moby->m_DamageFlags & MOBY_DAMAGE_CHARGE) {
@@ -26607,7 +26607,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                           ANGLE_TO_SPYRO(moby->m_Position)) >= ROTDEG8(120)) {
           props->m_0x10 = 350;
           props->m_0x08 = 0xA0;
-          props->m_0x0c = g_Spyro.m_bodyRotation.z;
+          props->m_0x0c = g_Spyro.m_BodyRotation.z;
           moby->m_DamageFlags = 0;
           MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
           MobyMarkKilled(moby);
@@ -27382,7 +27382,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       if ((moby->m_DamageFlags & (MOBY_DAMAGE_FLAME | MOBY_DAMAGE_SUPER)) &&
           moby->m_State != 7) {
         props->m_0x04 = 0xF0;
-        props->m_0x00 = g_Spyro.m_bodyRotation.z;
+        props->m_0x00 = g_Spyro.m_BodyRotation.z;
         moby->m_DamageFlags = 0;
         MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -28015,7 +28015,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         g_Spyro.unk_0x240 = props->m_Path;
         g_Spyro.unk_0x244 = 0x60;
         g_Spyro.m_fallingState = 5;
-        g_Spyro.m_sortingDepth = 0x7F;
+        g_Spyro.m_DepthSortOffset = 127;
 
         p = props->m_Path;
         VecAdd(&vortexPathMidpoint, &PATH_NODE_POS(p, 0), &PATH_NODE_POS(p, 1));
@@ -28057,9 +28057,9 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
 
           g_Spyro.m_Physics.m_SpeedAngle.m_RotZ += D_80075858;
-          g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
+          g_Spyro.m_BodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
           g_Camera.m_Sphere = g_Camera.m_Simulation;
-          g_Camera.m_Sphere.m_Coords.azimuth -= (g_Spyro.m_bodyRotation.z) << 4;
+          g_Camera.m_Sphere.m_Coords.azimuth -= (g_Spyro.m_BodyRotation.z) << 4;
           func_80034204(&g_Camera.m_Position);
           VecAdd(&g_Camera.m_Position, &g_Camera.m_Position,
                  &g_Spyro.m_Position);
@@ -28078,9 +28078,9 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       case 2: {
         g_Spyro.m_ControlFlags = 0x80000000 | 0x4000 | 0x2000 | 0x100;
         g_Spyro.unk_0x240 = props->m_Path;
-        g_Spyro.unk_0x244 = 0x60;
-        g_Spyro.m_fallingState = 0xF;
-        g_Spyro.m_sortingDepth = 0x7F;
+        g_Spyro.unk_0x244 = 96;
+        g_Spyro.m_fallingState = 15;
+        g_Spyro.m_DepthSortOffset = 127;
 
         if (ColSphere(&g_Camera.m_Position, 0x300, 0x300) != 0 &&
             (g_SurfaceBelowFlags & 0x3F) < 0x3F &&
@@ -28098,9 +28098,9 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               g_Spyro.m_Physics.m_SpeedAngle.m_RotZ;
 
           g_Spyro.m_Physics.m_SpeedAngle.m_RotZ += D_80075858;
-          g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
+          g_Spyro.m_BodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
           g_Camera.m_Sphere = g_Camera.m_Simulation;
-          g_Camera.m_Sphere.m_Coords.azimuth -= g_Spyro.m_bodyRotation.z << 4;
+          g_Camera.m_Sphere.m_Coords.azimuth -= g_Spyro.m_BodyRotation.z << 4;
           func_80034204(&g_Camera.m_Position);
           VecAdd(&g_Camera.m_Position, &g_Camera.m_Position,
                  &g_Spyro.m_Position);
@@ -28347,7 +28347,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         moby->m_DamageFlags = 0;
         props->m_0x38 = 0x50;
         props->m_0x08 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x10 = 100;
 
         if ((moby->m_DamageFlags & MOBY_DAMAGE_FLAME) != 0) {
@@ -28709,7 +28709,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         angle = ANGLE_FROM_SPYRO(moby->m_Position);
 
         props->m_0x24 =
-            AngleLerpClamped(angle, g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+            AngleLerpClamped(angle, g_Spyro.m_BodyRotation.z, 0x20, 0x40);
 
         if (moby->m_DamageFlags & MOBY_DAMAGE_FLAME) {
           props->m_0x28 = 150;
@@ -28778,7 +28778,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           g_SpawnMoby(502, moby);
         }
         props->m_0x24 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x20 = 0xFA;
         MobySpawnDrop(moby, DROP_MODE_SCATTER_OR_HOMING, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -29093,7 +29093,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         } else {
           props->m_0x10 =
               AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                               g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                               g_Spyro.m_BodyRotation.z, 0x20, 0x40);
           props->m_0x14 = 200;
           props->m_0x18 = 0x32;
           if ((moby->m_DamageFlags & MOBY_DAMAGE_CHARGE) != 0) {
@@ -29185,7 +29185,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       }
 
       case 10: {
-        if (g_Spyro.m_airTime == 0) {
+        if (g_Spyro.m_AirTime == 0) {
           MOBY_ANIM_CHANGE_CLEAR_FINISHED(moby, 1);
           if (func_80039E94(moby, props->m_0x0c, 0x100, 0x78, 0, 8, 0x28, 0xFF,
                             5) == 0x100) {
@@ -29277,7 +29277,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           moby->m_State != 3 && moby->m_State != 4) {
         moby->m_DamageFlags = 0;
         props->m_0x10 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x18 = 0x46;
         props->m_0x1c = 0x32;
         if ((moby->m_DamageFlags & MOBY_DAMAGE_FLAME) != 0) {
@@ -29383,7 +29383,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         } else {
           props->m_0x10 =
               AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                               g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                               g_Spyro.m_BodyRotation.z, 0x20, 0x40);
           props->m_0x14 = 200;
           props->m_0x18 = 0x32;
           if ((moby->m_DamageFlags & MOBY_DAMAGE_CHARGE) != 0) {
@@ -29515,7 +29515,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       }
 
       case 10: {
-        if (g_Spyro.m_airTime == 0) {
+        if (g_Spyro.m_AirTime == 0) {
           MOBY_ANIM_CHANGE_CLEAR_FINISHED(moby, 1);
           if (func_80039E94(moby, props->m_0x0c, 0x100, 0x78, 0, 8, 0x28, 0xFF,
                             5) == 0x100) {
@@ -29547,7 +29547,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               0 &&
           DISTANCE_TO_SPYRO(moby) < 3600 && moby->m_State != 6) {
         props->m_0x20 = 0xF0;
-        props->m_0x1c = g_Spyro.m_bodyRotation.z;
+        props->m_0x1c = g_Spyro.m_BodyRotation.z;
         moby->m_DamageFlags = 0;
         MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);
         MobyMarkKilled(moby);
@@ -29897,7 +29897,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         }
 
         props->m_0x20 = AngleLerpClamped(ANGLE_FROM_SPYRO(moby->m_Position),
-                                         g_Spyro.m_bodyRotation.z, 0x20, 0x40);
+                                         g_Spyro.m_BodyRotation.z, 0x20, 0x40);
         props->m_0x28 = 0xF0;
 
         if (moby->m_State != 0) {
@@ -30112,8 +30112,8 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           g_Spyro.m_Position.x = moby->m_Position.x;
           g_Spyro.m_Position.y = moby->m_Position.y;
           g_IsSpyroHidden = 1;
-          g_Spyro.m_bodyRotation.z = moby->m_Rotation.z + 0x80;
-          g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z << 4;
+          g_Spyro.m_BodyRotation.z = moby->m_Rotation.z + 0x80;
+          g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_BodyRotation.z << 4;
 
           if (g_Spyro.m_health == 0) {
             g_Spyro.m_DamageFlags |= 7;
@@ -30705,7 +30705,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         MobyRotateToSpyro(moby, 8, 0x10, 1);
         angle = ANGLE_FROM_SPYRO(moby->m_Position);
 
-        if (func_80017908(g_Spyro.m_bodyRotation.z, angle) < 0x30 &&
+        if (func_80017908(g_Spyro.m_BodyRotation.z, angle) < 0x30 &&
             moby->m_AnimationState.m_Animation == 5 &&
             moby->m_AnimationState.m_Frame >= 6 && props->m_0x48 == 0) {
           VecCopy(&vec3, &moby->m_Position);
@@ -30778,7 +30778,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         MobyRotateToSpyro(moby, 8, 0x10, 1);
         angle = ANGLE_FROM_SPYRO(moby->m_Position);
 
-        if (func_80017908(g_Spyro.m_bodyRotation.z, angle) < 0x30 &&
+        if (func_80017908(g_Spyro.m_BodyRotation.z, angle) < 0x30 &&
             moby->m_AnimationState.m_Animation == 5 &&
             moby->m_AnimationState.m_Frame >= 6 && props->m_0x48 == 0) {
           VecCopy(&vec3, &moby->m_Position);

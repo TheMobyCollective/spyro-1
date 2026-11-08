@@ -19,9 +19,6 @@ PYTHON   = python3
 
 MASPSX          = "./tools/maspsx/maspsx.py"
 REMOVE_SECTIONS = "./tools/remove_sections.py"
-FIX_JTBL_ALIGN  = "./tools/fix_jtbl_align.py"
-FIX_STR_ALIGN   = "./tools/fix_str_align.py"
-FIX_STR_ALIGN_CMD = $(PYTHON) $(FIX_STR_ALIGN) |
 
 # -------------------------------
 # Compilation Flags
@@ -83,10 +80,6 @@ MASPSX_COMMAND = $(if ${MODERN_COMPILER},,$(PYTHON) $(MASPSX) -G4 --aspsx-versio
 # Overlay Specific Flags (-G0)
 build/src/overlays/%.o: C_FLAGS := $(subst -G8,-G0,$(C_FLAGS))
 
-
-# For the padding garbage, skip the align (it's handled in the LD instead)
-build/src/overlays/LEVEL_%.o: FIX_STR_ALIGN_CMD :=
-
 # Strip overlay functions based on the classes they're configured to include
 build/src/overlays/%/moby_spawn.o     build/src/overlays/%/moby_update.o:     STRIP_CLASSES = moby
 build/src/overlays/%/particle_spawn.o build/src/overlays/%/particle_update.o: STRIP_CLASSES = particle
@@ -106,9 +99,7 @@ build/src/overlays/%/$(1).o: src/overlays/$(1).c $(OVERLAY_YAML_$(1))
 		$$(OVERLAY_STRIP) \
 		$$(CC) $$(C_FLAGS) | \
 		$$(MASPSX_COMMAND) \
-		$$(FIX_STR_ALIGN_CMD) \
 		$$(PYTHON) $$(REMOVE_SECTIONS) | \
-		$$(PYTHON) $$(FIX_JTBL_ALIGN) | \
 		$$(AS) $$(AS_FLAGS) -o $$@
 endef
 
@@ -121,8 +112,6 @@ build/src/%.o: src/%.c
 		$(CC) $(C_FLAGS) |\
 		$(MASPSX_COMMAND) \
 		$(PYTHON) $(REMOVE_SECTIONS) | \
-		$(FIX_STR_ALIGN_CMD) \
-		$(PYTHON) $(FIX_JTBL_ALIGN) | \
 		$(AS) $(AS_FLAGS) -o $@
 
 build/asm/%.o: asm/%.s

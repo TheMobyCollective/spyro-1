@@ -23,25 +23,17 @@ SECTIONS
         FILL(0x00000000);
         main_RODATA_START = .;
         build/src/strings.o(.rodata);
-        build/src/strings.o(.rodata.jtbl);
         build/src/loaders.o(.rodata);
-        build/src/loaders.o(.rodata.jtbl);
         build/src/gamestates/draw.o(.rodata);
-        build/src/gamestates/draw.o(.rodata.jtbl);
         build/src/crash_demo.o(.rodata);
-        build/src/crash_demo.o(.rodata.jtbl);
         build/src/gamestates/update.o(.rodata);
-        build/src/gamestates/update.o(.rodata.jtbl);
         build/src/pete.o(.rodata);
-        build/src/pete.o(.rodata.jtbl);
         build/src/special_surfaces.o(.rodata);
-        build/src/special_surfaces.o(.rodata.jtbl);
 
         /* Putting overlay_pointer's .sdata here is cleaner than */
         /* Having the pointer in a seperate assembly file */
         build/src/overlay_pointers.o(.sdata);
         build/src/overlay_pointers.o(.rodata);
-        build/src/overlay_pointers.o(.rodata.jtbl);
 
         #ifndef NEW_PSYQ
 
@@ -66,82 +58,45 @@ SECTIONS
         #endif
 
         build/src/main.o(.rodata);
-        build/src/main.o(.rodata.jtbl);
         build/src/initialization.o(.rodata);
-        build/src/initialization.o(.rodata.jtbl);
         build/src/cd.o(.rodata);
-        build/src/cd.o(.rodata.jtbl);
         build/asm/order_table.o(.rodata);
-        build/asm/order_table.o(.rodata.jtbl);
         build/asm/memory.o(.rodata);
-        build/asm/memory.o(.rodata.jtbl);
         build/asm/math.o(.rodata);
-        build/asm/math.o(.rodata.jtbl);
         build/asm/images.o(.rodata);
-        build/asm/images.o(.rodata.jtbl);
         
         build/asm/system_time.o(.rodata);
-        build/asm/system_time.o(.rodata.jtbl);
 
         build/asm/renderers/r_moby.o(.rodata);
-        build/asm/renderers/r_moby.o(.rodata.jtbl);
         build/asm/renderers/r_pete.o(.rodata);
-        build/asm/renderers/r_pete.o(.rodata.jtbl);
         build/asm/renderers/r_environment.o(.rodata);
-        build/asm/renderers/r_environment.o(.rodata.jtbl);
 
         build/src/environment.o(.rodata);
-        build/src/environment.o(.rodata.jtbl);
         build/src/completion.o(.rodata);
-        build/src/completion.o(.rodata.jtbl);
         build/src/music.o(.rodata);
-        build/src/music.o(.rodata.jtbl);
         build/src/cutscene.o(.rodata);
-        build/src/cutscene.o(.rodata.jtbl);
         build/src/gamestates/init.o(.rodata);
-        build/src/gamestates/init.o(.rodata.jtbl);
         build/src/cheats.o(.rodata);
-        build/src/cheats.o(.rodata.jtbl);
         build/src/camera.o(.rodata);
-        build/src/camera.o(.rodata.jtbl);
         build/src/moby_interpolation_check.o(.rodata);
-        build/src/moby_interpolation_check.o(.rodata.jtbl);
         build/src/rand.o(.rodata);
-        build/src/rand.o(.rodata.jtbl);
         build/src/moby_helpers.o(.rodata);
-        build/src/moby_helpers.o(.rodata.jtbl);
         build/asm/collision.o(.rodata);
-        build/asm/collision.o(.rodata.jtbl);
         build/asm/renderers/r_cyclorama.o(.rodata);
-        build/asm/renderers/r_cyclorama.o(.rodata.jtbl);
         build/src/cyclorama.o(.rodata);
-        build/src/cyclorama.o(.rodata.jtbl);
         build/asm/moby_lists.o(.rodata);
-        build/asm/moby_lists.o(.rodata.jtbl);
         build/asm/42CC4.o(.rodata);
-        build/asm/42CC4.o(.rodata.jtbl);
         build/asm/particle_alloc.o(.rodata);
-        build/asm/particle_alloc.o(.rodata.jtbl);
         build/src/gamepad.o(.rodata);
-        build/src/gamepad.o(.rodata.jtbl);
         build/src/hud.o(.rodata);
-        build/src/hud.o(.rodata.jtbl);
         build/src/spu.o(.rodata);
-        build/src/spu.o(.rodata.jtbl);
         build/asm/renderers/r_particles.o(.rodata);
-        build/asm/renderers/r_particles.o(.rodata.jtbl);
         build/src/specular_and_metal.o(.rodata);
-        build/src/specular_and_metal.o(.rodata.jtbl);
         build/asm/renderers/r_flame.o(.rodata);
-        build/asm/renderers/r_flame.o(.rodata.jtbl);
         build/src/checkpoint.o(.rodata);
-        build/src/checkpoint.o(.rodata.jtbl);
         build/src/save_file.o(.rodata);
-        build/src/save_file.o(.rodata.jtbl);
         build/asm/renderers/r_shadows.o(.rodata);
-        build/asm/renderers/r_shadows.o(.rodata.jtbl);
         build/src/4BEF8.o(.rodata);
-        build/src/4BEF8.o(.rodata.jtbl);
         . = ALIGN(., 4);
         main_RODATA_END = .;
         main_RODATA_SIZE = ABSOLUTE(main_RODATA_END - main_RODATA_START);

@@ -50,49 +50,49 @@ int D_80075948;
 
 /// @brief Increments the body animation
 /// @param pDeltaTime The delta time
-void func_8003CB24(int pDeltaTime) {
-  g_Spyro.m_bodyFrameProgress += pDeltaTime;
+void SpyroBodyAnimationAdvance(int pDeltaTime) {
+  g_Spyro.m_BodyFrameProgress += pDeltaTime;
 
-  if (g_Spyro.m_bodyFrameProgress >= 16) {
-    g_Spyro.m_bodyFrameProgress -= 16;
+  if (g_Spyro.m_BodyFrameProgress >= 16) {
+    g_Spyro.m_BodyFrameProgress -= 16;
 
-    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
-    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+    g_Spyro.m_BodyAnimation = g_Spyro.m_NextBodyAnimation;
+    g_Spyro.m_BodyAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
 
-    g_Spyro.m_nextBodyAnimationFrame++;
+    g_Spyro.m_NextBodyAnimationFrame++;
 
-    if (spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_EndFrame <=
-        g_Spyro.m_nextBodyAnimationFrame) {
-      g_Spyro.m_nextBodyAnimationFrame =
-          spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_StartFrame;
+    if (spyro_AnimationDetails[g_Spyro.m_NextBodyAnimation].m_EndFrame <=
+        g_Spyro.m_NextBodyAnimationFrame) {
+      g_Spyro.m_NextBodyAnimationFrame =
+          spyro_AnimationDetails[g_Spyro.m_NextBodyAnimation].m_StartFrame;
     }
   }
 }
 
 // / @brief Increments the body animation and handles state transitions
-int func_8003CBB8(int pDeltaTime) {
-  g_Spyro.m_bodyFrameProgress += pDeltaTime;
+int SpyroBodyAnimationAdvanceTransition(int pDeltaTime) {
+  g_Spyro.m_BodyFrameProgress += pDeltaTime;
 
-  if (g_Spyro.m_bodyFrameProgress >= 16) {
-    g_Spyro.m_bodyFrameProgress -= 16;
+  if (g_Spyro.m_BodyFrameProgress >= 16) {
+    g_Spyro.m_BodyFrameProgress -= 16;
 
-    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
-    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+    g_Spyro.m_BodyAnimation = g_Spyro.m_NextBodyAnimation;
+    g_Spyro.m_BodyAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
 
-    g_Spyro.m_nextBodyAnimationFrame++;
+    g_Spyro.m_NextBodyAnimationFrame++;
 
-    if (spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation]
-            .m_TransitionLastFrame <= g_Spyro.m_nextBodyAnimationFrame) {
-      g_Spyro.m_nextBodyAnimation =
+    if (spyro_AnimationDetails[g_Spyro.m_NextBodyAnimation]
+            .m_TransitionLastFrame <= g_Spyro.m_NextBodyAnimationFrame) {
+      g_Spyro.m_NextBodyAnimation =
           spyro_StateDefaultAnimation[g_Spyro.m_State];
 
       if (D_8006BC84[g_Spyro.m_lastAnimationState][g_Spyro.m_State] == 10) {
-        g_Spyro.m_nextBodyAnimationFrame =
+        g_Spyro.m_NextBodyAnimationFrame =
             spyro_AnimationDetails[spyro_StateDefaultAnimation[g_Spyro.m_State]]
                 .m_StartFrame;
       } else {
-        g_Spyro.m_nextBodyAnimationFrame = 1;
-        g_Spyro.m_bodyFrameProgress = 4;
+        g_Spyro.m_NextBodyAnimationFrame = 1;
+        g_Spyro.m_BodyFrameProgress = 4;
       }
       g_Spyro.m_lastAnimationState = g_Spyro.m_State;
       return 1;
@@ -102,132 +102,132 @@ int func_8003CBB8(int pDeltaTime) {
   return 0;
 }
 
-/// @brief Handles the state transition for Spyro's body animation
-void func_8003CCE4(void) {
+/// @brief Sets up a body animation transition for Spyro
+void SpyroBodyAnimationSetupTransition(void) {
   switch (D_8006BC84[g_Spyro.m_lastAnimationState][g_Spyro.m_State]) {
   case 1:
-    g_Spyro.m_bodyTransitionType = TRANSITION_SLOW_BLEND;
-    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
-    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+    g_Spyro.m_BodyTransitionType = TRANSITION_SLOW_BLEND;
+    g_Spyro.m_BodyAnimation = g_Spyro.m_NextBodyAnimation;
+    g_Spyro.m_BodyAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
 
-    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
-    g_Spyro.m_nextBodyAnimationFrame = 0;
-    g_Spyro.m_bodyFrameProgress = 2;
+    g_Spyro.m_NextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_NextBodyAnimationFrame = 0;
+    g_Spyro.m_BodyFrameProgress = 2;
 
     g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
   case 8:
-    g_Spyro.m_bodyTransitionType = TRANSITION_FAST_FROM_ZERO;
-    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
-    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+    g_Spyro.m_BodyTransitionType = TRANSITION_FAST_FROM_ZERO;
+    g_Spyro.m_BodyAnimation = g_Spyro.m_NextBodyAnimation;
+    g_Spyro.m_BodyAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
 
-    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
-    g_Spyro.m_nextBodyAnimationFrame = 0;
-    g_Spyro.m_bodyFrameProgress = 4;
+    g_Spyro.m_NextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_NextBodyAnimationFrame = 0;
+    g_Spyro.m_BodyFrameProgress = 4;
 
     g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
   case 2:
-    if (g_Spyro.m_nextBodyAnimationFrame >=
-        spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_EndFrame) {
-      g_Spyro.m_bodyTransitionType = TRANSITION_SLOW_AT_END;
-      g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
-      g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
-      g_Spyro.m_nextBodyAnimationFrame =
-          spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_StartFrame;
-      g_Spyro.m_bodyFrameProgress = 2;
+    if (g_Spyro.m_NextBodyAnimationFrame >=
+        spyro_AnimationDetails[g_Spyro.m_NextBodyAnimation].m_EndFrame) {
+      g_Spyro.m_BodyTransitionType = TRANSITION_SLOW_AT_END;
+      g_Spyro.m_BodyAnimation = g_Spyro.m_NextBodyAnimation;
+      g_Spyro.m_BodyAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
+      g_Spyro.m_NextBodyAnimationFrame =
+          spyro_AnimationDetails[g_Spyro.m_NextBodyAnimation].m_StartFrame;
+      g_Spyro.m_BodyFrameProgress = 2;
     } else {
-      g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+      g_Spyro.m_BodyTransitionType = TRANSITION_NONE;
     }
     break;
 
   case 5:
-    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
-    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+    g_Spyro.m_BodyAnimation = g_Spyro.m_NextBodyAnimation;
+    g_Spyro.m_BodyAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
 
-    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
-    g_Spyro.m_nextBodyAnimationFrame++;
+    g_Spyro.m_NextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_NextBodyAnimationFrame++;
 
-    if (g_Spyro.m_nextBodyAnimationFrame >=
-        spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_EndFrame) {
-      g_Spyro.m_nextBodyAnimationFrame =
-          spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_StartFrame;
+    if (g_Spyro.m_NextBodyAnimationFrame >=
+        spyro_AnimationDetails[g_Spyro.m_NextBodyAnimation].m_EndFrame) {
+      g_Spyro.m_NextBodyAnimationFrame =
+          spyro_AnimationDetails[g_Spyro.m_NextBodyAnimation].m_StartFrame;
     }
 
-    g_Spyro.m_bodyFrameProgress = 4;
-    g_Spyro.m_bodyTransitionType = TRANSITION_FAST_BLEND;
+    g_Spyro.m_BodyFrameProgress = 4;
+    g_Spyro.m_BodyTransitionType = TRANSITION_FAST_BLEND;
     g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
   case 3:
   case 10:
-    g_Spyro.m_bodyTransitionType = TRANSITION_SPECIAL;
+    g_Spyro.m_BodyTransitionType = TRANSITION_SPECIAL;
     break;
 
   case 4:
-    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
-    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+    g_Spyro.m_BodyAnimation = g_Spyro.m_NextBodyAnimation;
+    g_Spyro.m_BodyAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
 
     if (g_Spyro.m_lastAnimationState == 6 && g_Spyro.unk_0x84 < 24) {
-      g_Spyro.m_bodyTransitionType = TRANSITION_SLOW_BLEND;
-      g_Spyro.m_nextBodyAnimation =
+      g_Spyro.m_BodyTransitionType = TRANSITION_SLOW_BLEND;
+      g_Spyro.m_NextBodyAnimation =
           spyro_StateDefaultAnimation[g_Spyro.m_State];
-      g_Spyro.m_nextBodyAnimationFrame = 0;
-      g_Spyro.m_bodyFrameProgress = 2;
+      g_Spyro.m_NextBodyAnimationFrame = 0;
+      g_Spyro.m_BodyFrameProgress = 2;
       g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     } else {
-      g_Spyro.m_nextBodyAnimationFrame =
-          spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_EndFrame;
-      g_Spyro.m_bodyFrameProgress = 4;
-      g_Spyro.m_bodyTransitionType = TRANSITION_HOLD_END;
+      g_Spyro.m_NextBodyAnimationFrame =
+          spyro_AnimationDetails[g_Spyro.m_NextBodyAnimation].m_EndFrame;
+      g_Spyro.m_BodyFrameProgress = 4;
+      g_Spyro.m_BodyTransitionType = TRANSITION_HOLD_END;
 
       if (g_Spyro.m_lastAnimationState == 6) {
-        D_8007584C = 0xA0;
-        if (D_800757D0 < 0xF) {
-          D_800757D0 = 0xF;
+        D_8007584C = 160;
+        if (D_800757D0 < 15) {
+          D_800757D0 = 15;
         }
       }
     }
     break;
 
   case 6:
-    g_Spyro.m_bodyTransitionType = TRANSITION_SLOW_FROM_START;
-    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
-    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
+    g_Spyro.m_BodyTransitionType = TRANSITION_SLOW_FROM_START;
+    g_Spyro.m_BodyAnimation = g_Spyro.m_NextBodyAnimation;
+    g_Spyro.m_BodyAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
 
-    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
-    g_Spyro.m_nextBodyAnimationFrame =
-        spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_StartFrame;
-    g_Spyro.m_bodyFrameProgress = 2;
+    g_Spyro.m_NextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_NextBodyAnimationFrame =
+        spyro_AnimationDetails[g_Spyro.m_NextBodyAnimation].m_StartFrame;
+    g_Spyro.m_BodyFrameProgress = 2;
 
     g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
   case 7:
-    g_Spyro.m_bodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
-    g_Spyro.m_bodyAnimationFrame = 0;
+    g_Spyro.m_BodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_BodyAnimationFrame = 0;
 
-    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
-    g_Spyro.m_nextBodyAnimationFrame = 1;
+    g_Spyro.m_NextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_NextBodyAnimationFrame = 1;
 
-    g_Spyro.m_bodyFrameProgress = 0;
-    g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+    g_Spyro.m_BodyFrameProgress = 0;
+    g_Spyro.m_BodyTransitionType = TRANSITION_NONE;
     g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
   case 11:
-    g_Spyro.m_bodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
-    g_Spyro.m_bodyAnimationFrame =
-        spyro_AnimationDetails[g_Spyro.m_bodyAnimation].m_StartFrame;
+    g_Spyro.m_BodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_BodyAnimationFrame =
+        spyro_AnimationDetails[g_Spyro.m_BodyAnimation].m_StartFrame;
 
-    g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
-    g_Spyro.m_nextBodyAnimationFrame =
-        spyro_AnimationDetails[g_Spyro.m_bodyAnimation].m_StartFrame + 1;
+    g_Spyro.m_NextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+    g_Spyro.m_NextBodyAnimationFrame =
+        spyro_AnimationDetails[g_Spyro.m_BodyAnimation].m_StartFrame + 1;
 
-    g_Spyro.m_bodyFrameProgress = 0;
-    g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+    g_Spyro.m_BodyFrameProgress = 0;
+    g_Spyro.m_BodyTransitionType = TRANSITION_NONE;
     g_Spyro.m_lastAnimationState = g_Spyro.m_State;
     break;
 
@@ -240,37 +240,37 @@ void func_8003CCE4(void) {
 }
 
 /// @brief Handles Spyro's body animation state machine
-void UpdateBodyAnimationState(void) {
-  switch (g_Spyro.m_bodyTransitionType) {
+void SpyroUpdateBodyAnimation(void) {
+  switch (g_Spyro.m_BodyTransitionType) {
   case TRANSITION_NONE:
     if (g_Spyro.m_State == g_Spyro.m_lastAnimationState) {
-      func_8003CB24(g_Spyro.m_bodyAnimationSpeed);
+      SpyroBodyAnimationAdvance(g_Spyro.m_BodyAnimationSpeed);
     } else {
-      func_8003CCE4();
+      SpyroBodyAnimationSetupTransition();
     }
     break;
 
   case TRANSITION_SLOW_BLEND:
   case TRANSITION_SLOW_AT_END:
   case TRANSITION_SLOW_FROM_START:
-    g_Spyro.m_bodyFrameProgress += 2;
-    if (g_Spyro.m_bodyFrameProgress < 16)
+    g_Spyro.m_BodyFrameProgress += 2;
+    if (g_Spyro.m_BodyFrameProgress < 16)
       break;
-    func_8003CB24(0);
-    g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+    SpyroBodyAnimationAdvance(0);
+    g_Spyro.m_BodyTransitionType = TRANSITION_NONE;
     break;
 
   case TRANSITION_FAST_BLEND:
-    g_Spyro.m_bodyFrameProgress += 4;
-    if (g_Spyro.m_bodyFrameProgress < 16)
+    g_Spyro.m_BodyFrameProgress += 4;
+    if (g_Spyro.m_BodyFrameProgress < 16)
       break;
-    func_8003CB24(0);
-    g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+    SpyroBodyAnimationAdvance(0);
+    g_Spyro.m_BodyTransitionType = TRANSITION_NONE;
     break;
 
   case TRANSITION_FAST_FROM_ZERO:
-    func_8003CB24(2);
-    g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+    SpyroBodyAnimationAdvance(2);
+    g_Spyro.m_BodyTransitionType = TRANSITION_NONE;
     break;
 
   case TRANSITION_SPECIAL:
@@ -278,29 +278,29 @@ void UpdateBodyAnimationState(void) {
     u_char transType =
         D_8006BC84[g_Spyro.m_lastAnimationState][g_Spyro.m_State];
     if (transType != 3 && transType != 10 && transType != 4) {
-      func_8003CCE4();
+      SpyroBodyAnimationSetupTransition();
       break;
     }
-    if (func_8003CBB8(
-            spyro_AnimationDetails[g_Spyro.m_bodyAnimation].m_FrameRate)) {
-      if (g_Spyro.m_bodyAnimation == 0x1A) {
+    if (SpyroBodyAnimationAdvanceTransition(
+            spyro_AnimationDetails[g_Spyro.m_BodyAnimation].m_FrameRate)) {
+      if (g_Spyro.m_BodyAnimation == 0x1A) {
         PlaySound(g_Spu.m_SoundTable->spyroStars, (Moby *)&g_Spyro, 0x10,
                   nullptr);
       }
-      g_Spyro.m_bodyTransitionType = TRANSITION_NONE;
+      g_Spyro.m_BodyTransitionType = TRANSITION_NONE;
     }
     break;
   }
 
   case TRANSITION_HOLD_END:
-    g_Spyro.m_bodyFrameProgress += g_Spyro.m_bodyAnimationSpeed;
-    if (g_Spyro.m_bodyFrameProgress < 16)
+    g_Spyro.m_BodyFrameProgress += g_Spyro.m_BodyAnimationSpeed;
+    if (g_Spyro.m_BodyFrameProgress < 16)
       break;
-    g_Spyro.m_bodyFrameProgress = 0;
-    g_Spyro.m_bodyTransitionType = TRANSITION_SPECIAL;
-    g_Spyro.m_bodyAnimation = g_Spyro.m_nextBodyAnimation;
-    g_Spyro.m_bodyAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
-    g_Spyro.m_nextBodyAnimationFrame++;
+    g_Spyro.m_BodyFrameProgress = 0;
+    g_Spyro.m_BodyTransitionType = TRANSITION_SPECIAL;
+    g_Spyro.m_BodyAnimation = g_Spyro.m_NextBodyAnimation;
+    g_Spyro.m_BodyAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
+    g_Spyro.m_NextBodyAnimationFrame++;
     break;
   }
 }
@@ -341,7 +341,7 @@ void func_8003D3B8(int speed) {
       g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed = 0;
       g_Spyro.m_Physics.m_TurnMomentum = 0;
       g_Spyro.m_Physics.m_TargetSpeedAngle.m_RotZ =
-          g_Spyro.m_bodyRotation.z * 0x10;
+          g_Spyro.m_BodyRotation.z * 0x10;
     }
   }
 }
@@ -369,15 +369,15 @@ void func_8003D52C(int pUnknown) {
 
   g_Spyro.m_Physics.m_SpeedAngle.m_RotX =
       (g_Spyro.m_Physics.m_SpeedAngle.m_RotX + tempVec.x) & 0xfff;
-  g_Spyro.m_bodyRotation.x = (g_Spyro.m_Physics.m_SpeedAngle.m_RotX >> 4);
+  g_Spyro.m_BodyRotation.x = (g_Spyro.m_Physics.m_SpeedAngle.m_RotX >> 4);
 
   g_Spyro.m_Physics.m_SpeedAngle.m_RotY =
       (g_Spyro.m_Physics.m_SpeedAngle.m_RotY + tempVec.y) & 0xfff;
-  g_Spyro.m_bodyRotation.y = (g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4);
+  g_Spyro.m_BodyRotation.y = (g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4);
 
   g_Spyro.m_Physics.m_SpeedAngle.m_RotZ =
       (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ + tempVec.z) & 0xfff;
-  g_Spyro.m_bodyRotation.z = (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4);
+  g_Spyro.m_BodyRotation.z = (g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4);
 }
 
 /// @brief Updates Spyro's turn momentum and applies rotation based on angular
@@ -625,8 +625,8 @@ void func_8003DAE4(void) {
     g_Spyro.m_Physics.m_SpeedAngle.m_RotY -= 4096;
   }
 
-  if (g_Spyro.m_bodyRotation.x >= 32 && g_Spyro.m_bodyRotation.x <= 224 ||
-      g_Spyro.m_bodyRotation.y >= 32 && g_Spyro.m_bodyRotation.y <= 224) {
+  if (g_Spyro.m_BodyRotation.x >= 32 && g_Spyro.m_BodyRotation.x <= 224 ||
+      g_Spyro.m_BodyRotation.y >= 32 && g_Spyro.m_BodyRotation.y <= 224) {
     return;
   }
 
@@ -634,7 +634,7 @@ void func_8003DAE4(void) {
   t.x = FIXED_MUL(-Sin(rot.y), 372);
   t.z = FIXED_MUL((8192 - Cos(rot.x) - Cos(rot.y)), 372);
 
-  RotVec8ToMatrix(&g_Spyro.m_bodyRotation, &g_Spyro.m_RotationMatrix, nullptr);
+  RotVec8ToMatrix(&g_Spyro.m_BodyRotation, &g_Spyro.m_RotationMatrix, nullptr);
   VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &t, &t);
   VecAdd(&g_Spyro.m_Position, &g_Spyro.m_Position, &t);
 }
@@ -680,7 +680,7 @@ void RotateSpyroToAcceleration(void) {
 
 /// Unused function
 void func_8003DF60(void) {
-  VecCopy(&g_Spyro.m_Position, &g_Spyro.m_previousPosition);
+  VecCopy(&g_Spyro.m_Position, &g_Spyro.m_PreviousPosition);
   VecNull(&g_Spyro.m_Physics.m_TrueVelocity);
   g_Spyro.m_Physics.m_TrueSpeed = 0;
 }
@@ -702,7 +702,7 @@ void TurnBodyToVelocity(int pMaxTurnSpeed, int pDeadzone) {
 
   angleDiff = (targetAngle = Atan2(g_Spyro.m_Physics.m_TrueVelocity.x,
                                    g_Spyro.m_Physics.m_TrueVelocity.y, 0)) -
-              (currentAngle = g_Spyro.m_bodyRotation.z);
+              (currentAngle = g_Spyro.m_BodyRotation.z);
 
   angleDiff &= 0xFF;
 
@@ -713,14 +713,14 @@ void TurnBodyToVelocity(int pMaxTurnSpeed, int pDeadzone) {
     return;
 
   if (!(pMaxTurnSpeed < angleDiff) || !(angleDiff < 256 - pMaxTurnSpeed)) {
-    g_Spyro.m_bodyRotation.z = targetAngle;
+    g_Spyro.m_BodyRotation.z = targetAngle;
   } else if ((u_int)angleDiff < 0x80u) {
-    g_Spyro.m_bodyRotation.z = currentAngle + pMaxTurnSpeed;
+    g_Spyro.m_BodyRotation.z = currentAngle + pMaxTurnSpeed;
   } else {
-    g_Spyro.m_bodyRotation.z = currentAngle - pMaxTurnSpeed;
+    g_Spyro.m_BodyRotation.z = currentAngle - pMaxTurnSpeed;
   }
 
-  g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z << 4;
+  g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_BodyRotation.z << 4;
 }
 
 /// @brief Applies slope-based gravity adjustment
@@ -818,8 +818,8 @@ void CheckWallCollision(void) {
  *    verify the surface is truly walkable. If this fails, sets m_onEdge = 1
  *    to trigger edge behavior (e.g., teetering animation).
  *
- * 3. **Fallback axis-aligned check**: If m_airTime is non-zero and
- *    m_floorIdleTime is zero, performs a simpler vertical collision check
+ * 3. **Fallback axis-aligned check**: If m_AirTime is non-zero and
+ *    m_FloorIdleTime is zero, performs a simpler vertical collision check
  *    without rotation transforms (useful when Spyro is stationary on a slope).
  *
  * Slope angle thresholds:
@@ -833,7 +833,7 @@ void UpdateSlopeFloorCollision(void) {
   int angle;
 
   // Increment air time counter (reset to 0 when grounded)
-  g_Spyro.m_airTime++;
+  g_Spyro.m_AirTime++;
 
   // Initialize floor position to default "pointing up" vector
   VecNull(&g_Spyro.m_floorPositonOnSlope);
@@ -854,8 +854,8 @@ void UpdateSlopeFloorCollision(void) {
   vec2.x = 0;
   vec1.y = 0;
   vec2.y = 0;
-  vec1.z = -0x104; // 260 units below origin
-  vec2.z = -0x1C4; // 452 units below origin
+  vec1.z = -260;
+  vec2.z = -452;
 
   // Rotate start point by Spyro's body rotation matrix
   VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec1, &vec1);
@@ -892,16 +892,16 @@ void UpdateSlopeFloorCollision(void) {
     // Check if slope is walkable (< 33 degrees)
     if (g_Spyro.m_slopeAngle < 33) {
       g_Spyro.m_onSlope = (g_Spyro.m_slopeAngle < 23) ^ 1;
-      g_Spyro.m_airTime = 0;
+      g_Spyro.m_AirTime = 0;
 
       // === REVERSE VERIFICATION CHECK ===
       // Cast ray with offset to detect edges/cliffs behind Spyro
-      vec1.x = 0x104; // Offset forward
+      vec1.x = 260; // Offset forward
       vec1.y = 0;
-      vec1.z = -0x104;
-      vec2.x = 0x1C4; // Larger offset forward
+      vec1.z = -260;
+      vec2.x = 452; // Larger offset forward
       vec2.y = 0;
-      vec2.z = -0x1C4;
+      vec2.z = -452;
 
       VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec1, &vec1);
       VecAdd(&vec1, &vec1, &g_Spyro.m_Position);
@@ -922,14 +922,14 @@ void UpdateSlopeFloorCollision(void) {
   // === FALLBACK VERTICAL CHECK ===
   // When airborne and not idle, try a simple vertical raycast
   // This catches cases where the rotated ray missed but floor exists
-  if (g_Spyro.m_airTime != 0 && g_Spyro.m_floorIdleTime == 0) {
+  if (g_Spyro.m_AirTime != 0 && g_Spyro.m_FloorIdleTime == 0) {
     // Axis-aligned vertical ray (no rotation)
-    vec1.z = -0x104;
+    vec1.z = -260;
     vec1.x = 0;
     vec1.y = 0;
     vec2.x = 0;
     vec2.y = 0;
-    vec2.z = -0x1C4;
+    vec2.z = -452;
 
     // Add position directly (no rotation transform)
     VecAdd(&vec1, &vec1, &g_Spyro.m_Position);
@@ -952,7 +952,7 @@ void UpdateSlopeFloorCollision(void) {
 
       // If walkable, mark as grounded and set slope flag
       if (g_Spyro.m_slopeAngle < 33) {
-        g_Spyro.m_airTime = 0;
+        g_Spyro.m_AirTime = 0;
         g_Spyro.m_onSlope = (g_Spyro.m_slopeAngle < 23) ^ 1;
       }
     }
@@ -993,19 +993,19 @@ void func_8003E628(void) {
   }
 }
 
-/// @brief Adjusts Spyro's position based on ground collision during air time
-void AdjustAirCollision(void) {
+/// @brief Snaps Spyro to the floor, and updates airtime if there is none
+void SpyroFloorCollisionUpdate(void) {
   Vector3D vec2, vec3, vec1;
 
   vec2.x = 0;
   vec2.y = 0;
-  vec2.z = -0x164;
+  vec2.z = -356;
 
   VecCopy(&vec1, &vec2);
-  vec1.z -= 0x80;
+  vec1.z -= 128;
 
   VecCopy(&vec3, &vec2);
-  vec3.z += 0x80;
+  vec3.z += 128;
 
   VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &vec1, &vec1);
   VecAdd(&vec1, &g_Spyro.m_Position, &vec1);
@@ -1032,9 +1032,9 @@ void AdjustAirCollision(void) {
     }
 
     VecAdd(&g_Spyro.m_Position, &g_Spyro.m_Position, &vec2);
-    g_Spyro.m_airTime = 0;
+    g_Spyro.m_AirTime = 0;
   } else {
-    g_Spyro.m_airTime++;
+    g_Spyro.m_AirTime++;
   }
 }
 
@@ -1208,7 +1208,7 @@ void func_8003EA68(int pNewState) {
     VecCopy(&g_Spyro.m_Physics.m_Acceleration,
             &g_Spyro.m_Physics.m_TrueVelocity);
 
-    if (g_Spyro.m_floorIdleTime == 0 && g_Spyro.m_slopeAngle < 32) {
+    if (g_Spyro.m_FloorIdleTime == 0 && g_Spyro.m_slopeAngle < 32) {
       func_8003E90C();
     }
 
@@ -1223,7 +1223,7 @@ void func_8003EA68(int pNewState) {
     g_Spyro.m_Physics.m_Acceleration.y = 0;
     g_Spyro.m_Physics.m_Acceleration.z = g_Spyro.m_Physics.m_TrueVelocity.z;
 
-    if (g_Spyro.m_floorIdleTime == 0 && g_Spyro.m_slopeAngle < 32) {
+    if (g_Spyro.m_FloorIdleTime == 0 && g_Spyro.m_slopeAngle < 32) {
       func_8003E90C();
     }
 
@@ -1380,7 +1380,7 @@ void func_8003EA68(int pNewState) {
     }
 
     g_Spyro.m_Physics.m_gravity = -768;
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       func_8003E1AC();
     }
 
@@ -1407,7 +1407,7 @@ void func_8003EA68(int pNewState) {
     }
 
     g_Spyro.m_Physics.m_gravity = -768;
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       func_8003E1AC();
     }
 
@@ -1635,7 +1635,7 @@ void func_8003EA68(int pNewState) {
     Atan2(g_Spyro.m_Physics.m_Acceleration.x,
           g_Spyro.m_Physics.m_Acceleration.y, 1);
     g_Spyro.m_Physics.m_gravity = -768;
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       func_8003E1AC();
     }
 
@@ -1673,7 +1673,7 @@ void func_8003EA68(int pNewState) {
     g_Spyro.m_walkingState = 0;
     VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_TrueVelocity);
     g_Spyro.m_Physics.m_gravity = -768;
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       func_8003E1AC();
     }
     g_Spyro.unk_0x15c = 1;
@@ -1683,7 +1683,7 @@ void func_8003EA68(int pNewState) {
     g_Spyro.m_walkingState = 0;
     VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_TrueVelocity);
     g_Spyro.m_Physics.m_gravity = -768;
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       func_8003E1AC();
     }
     g_Spyro.unk_0x15c = 1;
@@ -1731,7 +1731,7 @@ void func_8003EA68(int pNewState) {
   g_Spyro.m_State = pNewState;
   g_Spyro.unk_0x84 = g_Spyro.m_idleTimer;
   g_Spyro.m_idleTimer = 0;
-  g_Spyro.m_bodyAnimationSpeed =
+  g_Spyro.m_BodyAnimationSpeed =
       spyro_AnimationDetails[spyro_StateDefaultAnimation[g_Spyro.m_State]]
           .m_FrameRate;
 }
@@ -1739,12 +1739,12 @@ void func_8003EA68(int pNewState) {
 /// @brief Forces state to and resets animation
 void func_8003FDC8(int pNewState) {
   func_8003EA68(pNewState);
-  g_Spyro.m_bodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
-  g_Spyro.m_bodyAnimationFrame = 0;
-  g_Spyro.m_nextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
-  g_Spyro.m_nextBodyAnimationFrame = 1;
-  g_Spyro.m_bodyFrameProgress = 0;
-  g_Spyro.m_bodyTransitionType = 0;
+  g_Spyro.m_BodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+  g_Spyro.m_BodyAnimationFrame = 0;
+  g_Spyro.m_NextBodyAnimation = spyro_StateDefaultAnimation[g_Spyro.m_State];
+  g_Spyro.m_NextBodyAnimationFrame = 1;
+  g_Spyro.m_BodyFrameProgress = 0;
+  g_Spyro.m_BodyTransitionType = 0;
   g_Spyro.m_lastAnimationState = g_Spyro.m_State;
 }
 
@@ -1753,8 +1753,8 @@ int func_8003FE40(void) {
   Vector3D dir;
   Vector3D stepStart;
 
-  g_Spyro.m_floorIdleTime++;
-  g_Spyro.m_touchingMoby = 0;
+  g_Spyro.m_FloorIdleTime++;
+  g_Spyro.m_TouchingMoby = 0;
   g_Spyro.m_touchingSurface = 0xFF;
   g_Spyro.m_againstWall = 0;
   VecNull(&g_Spyro.m_wallAgainstSpyro);
@@ -1762,13 +1762,13 @@ int func_8003FE40(void) {
   VecAdd(&g_Spyro.m_Position, &g_Spyro.m_Position,
          &g_Spyro.m_Physics.m_CollisionMovement);
   VecNull(&g_Spyro.m_Physics.m_CollisionMovement);
-  VecCopy(&g_Spyro.m_previousPosition, &g_Spyro.m_Position);
+  VecCopy(&g_Spyro.m_PreviousPosition, &g_Spyro.m_Position);
 
   if (g_Spyro.m_ControlFlags & 0x80000000) {
     if ((g_Spyro.m_ControlFlags & 0x100) && g_Spyro.m_health >= 0 &&
         g_Spyro.m_State != g_Spyro.m_fallingState) {
       func_8003EA68(g_Spyro.m_fallingState);
-      g_Spyro.m_airTime = 1;
+      g_Spyro.m_AirTime = 1;
     }
 
     if ((g_Spyro.m_ControlFlags & (0x1 | 0x2 | 0x4)) != 0) {
@@ -1815,15 +1815,15 @@ int func_8003FE40(void) {
     }
 
     if (g_Spyro.m_ControlFlags & 0x8) {
-      g_Spyro.m_bodyRotation.x = g_Spyro.m_portalAngle.x;
+      g_Spyro.m_BodyRotation.x = g_Spyro.m_portalAngle.x;
       g_Spyro.m_Physics.m_SpeedAngle.m_RotX = g_Spyro.m_portalAngle.x << 4;
     }
     if (g_Spyro.m_ControlFlags & 0x10) {
-      g_Spyro.m_bodyRotation.y = g_Spyro.m_portalAngle.y;
+      g_Spyro.m_BodyRotation.y = g_Spyro.m_portalAngle.y;
       g_Spyro.m_Physics.m_SpeedAngle.m_RotY = g_Spyro.m_portalAngle.y << 4;
     }
     if (g_Spyro.m_ControlFlags & 0x20) {
-      g_Spyro.m_bodyRotation.z = g_Spyro.m_portalAngle.z;
+      g_Spyro.m_BodyRotation.z = g_Spyro.m_portalAngle.z;
       g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_portalAngle.z << 4;
     }
 
@@ -2033,7 +2033,7 @@ int func_8003FE40(void) {
 
         if (hit != nullptr) {
           D_80075804 = hit;
-          g_Spyro.m_touchingMoby = 1;
+          g_Spyro.m_TouchingMoby = 1;
 
           VecSub(&offset, &g_Spyro.m_Position,
                  &g_Spyro.m_Physics.m_TrueVelocity);
@@ -2056,18 +2056,18 @@ int func_8003FE40(void) {
             func_80017330(&offset, 256);
 
             if (offset.z < -200) {
-              g_Spyro.m_floorIdleTime = 0;
+              g_Spyro.m_FloorIdleTime = 0;
             } else {
               VecCopy(&dir, &g_Spyro.m_Physics.m_Velocity);
               func_80017330(&dir, 256);
               length =
                   (offset.x * dir.x + offset.y * dir.y + offset.z * dir.z) >> 8;
               if (length >= 225) {
-                g_Spyro.m_floorIdleTime = 0;
+                g_Spyro.m_FloorIdleTime = 0;
               }
             }
           } else {
-            g_Spyro.m_floorIdleTime = 0;
+            g_Spyro.m_FloorIdleTime = 0;
           }
 
           if ((signed char)Atan2(g_CollisionNormal.z,
@@ -2120,18 +2120,18 @@ int func_8003FE40(void) {
             func_80017330(&offset, 256);
 
             if (offset.z < -200) {
-              g_Spyro.m_floorIdleTime = 0;
+              g_Spyro.m_FloorIdleTime = 0;
             } else {
               VecCopy(&dir, &g_Spyro.m_Physics.m_Velocity);
               func_80017330(&dir, 256);
               length =
                   (offset.x * dir.x + offset.y * dir.y + offset.z * dir.z) >> 8;
               if (length >= 225) {
-                g_Spyro.m_floorIdleTime = 0;
+                g_Spyro.m_FloorIdleTime = 0;
               }
             }
           } else {
-            g_Spyro.m_floorIdleTime = 0;
+            g_Spyro.m_FloorIdleTime = 0;
           }
 
           if ((signed char)Atan2(g_CollisionNormal.z,
@@ -2173,7 +2173,7 @@ int func_8003FE40(void) {
   }
 
   VecSub(&g_Spyro.m_Physics.m_TrueVelocity, &g_Spyro.m_Position,
-         &g_Spyro.m_previousPosition);
+         &g_Spyro.m_PreviousPosition);
   VecShiftLeft(&g_Spyro.m_Physics.m_TrueVelocity, 6);
   g_Spyro.m_Physics.m_TrueVelocity.x /= g_DeltaTime;
   g_Spyro.m_Physics.m_TrueVelocity.y /= g_DeltaTime;
@@ -2476,7 +2476,7 @@ void func_80041670(void) {
       func_8003EA68(5);
       break;
     }
-    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+    if (g_Spyro.m_AirTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
       func_8003EA68(6);
       break;
     }
@@ -2524,7 +2524,7 @@ void func_80041670(void) {
       func_8003EA68(5);
       break;
     }
-    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+    if (g_Spyro.m_AirTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
       func_8003EA68(6);
       break;
     }
@@ -2564,7 +2564,7 @@ void func_80041670(void) {
       func_8003EA68(5);
       break;
     }
-    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+    if (g_Spyro.m_AirTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
       func_8003EA68(6);
       break;
     }
@@ -2618,7 +2618,7 @@ void func_80041670(void) {
       func_8003EA68(5);
       break;
     }
-    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+    if (g_Spyro.m_AirTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
       func_8003EA68(6);
       break;
     }
@@ -2662,7 +2662,7 @@ void func_80041670(void) {
     if (HandleSpyroDamage(0xFFF9) != 0) {
       break;
     }
-    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+    if (g_Spyro.m_AirTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
       func_8003EA68(6);
       break;
     }
@@ -2690,7 +2690,7 @@ void func_80041670(void) {
         D_800756B4 == 0) {
       g_Spyro.m_walkingState = 2;
     }
-    if (g_Spyro.m_airTime == 0 && g_Spyro.m_idleTimer >= 16) {
+    if (g_Spyro.m_AirTime == 0 && g_Spyro.m_idleTimer >= 16) {
       if (g_Spyro.m_slopeAngle >= 23) {
         func_8003EA68(19);
         break;
@@ -2767,7 +2767,7 @@ void func_80041670(void) {
       break;
     }
     if (g_Spyro.m_Position.z >= D_8006E9A4[g_LevelIndex] &&
-        g_Spyro.m_airTime == 0) {
+        g_Spyro.m_AirTime == 0) {
       if (g_Spyro.m_slopeAngle >= 23) {
         if (g_Spyro.m_idleTimer >= 9) {
           func_8003EA68(19);
@@ -2785,7 +2785,7 @@ void func_80041670(void) {
         } else {
           func_8003EA68(1);
         }
-        ang = g_Spyro.m_bodyRotation.z;
+        ang = g_Spyro.m_BodyRotation.z;
         vecA.z = 0;
 
         for (i = 0; i < 4; i++) {
@@ -2803,7 +2803,7 @@ void func_80041670(void) {
         } else {
           func_8003EA68(3);
         }
-        ang = g_Spyro.m_bodyRotation.z;
+        ang = g_Spyro.m_BodyRotation.z;
         vecB.z = 0;
 
         for (i = 0; i < 4; i++) {
@@ -2857,7 +2857,7 @@ void func_80041670(void) {
     if (HandleSpyroDamage(0xFFF9) != 0) {
       break;
     }
-    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+    if (g_Spyro.m_AirTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
       func_8003EA68(6);
       break;
     }
@@ -2871,7 +2871,7 @@ void func_80041670(void) {
     if (HandleSpyroDamage(0xFFF9) != 0) {
       break;
     }
-    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+    if (g_Spyro.m_AirTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
       func_8003EA68(6);
       break;
     }
@@ -2890,10 +2890,10 @@ void func_80041670(void) {
         g_Spyro.m_slopeAngle < 12) {
       func_8003EA68(20);
       g_Spyro.m_Physics.m_Acceleration.z += 3520;
-      g_Spyro.m_airTime++;
+      g_Spyro.m_AirTime++;
       break;
     }
-    if (g_Spyro.m_airTime >= 4) {
+    if (g_Spyro.m_AirTime >= 4) {
       func_8003EA68(20);
       break;
     }
@@ -2937,7 +2937,7 @@ void func_80041670(void) {
       break;
     }
     if (g_Spyro.m_idleTimer > 16 &&
-        (g_Spyro.m_airTime != 0 || g_Spyro.m_slopeAngle >= 23)) {
+        (g_Spyro.m_AirTime != 0 || g_Spyro.m_slopeAngle >= 23)) {
       func_8003EA68(6);
       break;
     }
@@ -2953,7 +2953,7 @@ void func_80041670(void) {
       func_8003EA68(5);
       break;
     }
-    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+    if (g_Spyro.m_AirTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
       func_8003EA68(6);
       break;
     }
@@ -2993,7 +2993,7 @@ void func_80041670(void) {
       func_8003EA68(30);
       break;
     }
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       func_8003EA68(0);
     } else {
       func_8003EA68(6);
@@ -3012,7 +3012,7 @@ void func_80041670(void) {
       func_8003EA68(30);
       break;
     }
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       func_8003EA68(0);
     } else {
       func_8003EA68(6);
@@ -3029,7 +3029,7 @@ void func_80041670(void) {
       func_8003EA68(30);
       break;
     }
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       func_8003EA68(0);
     } else {
       func_8003EA68(6);
@@ -3043,7 +3043,7 @@ void func_80041670(void) {
     if (HandleSpyroDamage(0xFFF9) != 0) {
       break;
     }
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       if (g_Spyro.m_slopeAngle >= 23) {
         func_8003EA68(6);
         break;
@@ -3065,7 +3065,7 @@ void func_80041670(void) {
       }
       break;
     }
-    if (g_Spyro.m_floorIdleTime == 0 || g_Spyro.m_Physics.m_TrueSpeed < 1024) {
+    if (g_Spyro.m_FloorIdleTime == 0 || g_Spyro.m_Physics.m_TrueSpeed < 1024) {
       func_8003EA68(6);
       break;
     }
@@ -3123,7 +3123,7 @@ void func_80041670(void) {
       func_8003EA68(5);
       break;
     }
-    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+    if (g_Spyro.m_AirTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
       func_8003EA68(6);
       break;
     }
@@ -3159,10 +3159,10 @@ void func_80041670(void) {
       func_8003FDC8(0);
       break;
     }
-    if (g_Spyro.m_nextBodyAnimation ==
+    if (g_Spyro.m_NextBodyAnimation ==
             spyro_StateDefaultAnimation[g_Spyro.m_State] &&
-        g_Spyro.m_nextBodyAnimationFrame >=
-            spyro_AnimationDetails[g_Spyro.m_nextBodyAnimation].m_EndFrame -
+        g_Spyro.m_NextBodyAnimationFrame >=
+            spyro_AnimationDetails[g_Spyro.m_NextBodyAnimation].m_EndFrame -
                 1) {
       func_8003EA68(0);
       break;
@@ -3176,7 +3176,7 @@ void func_80041670(void) {
       break;
     }
     if (g_Spyro.m_Position.z >= D_8006E9A4[g_LevelIndex] &&
-        g_Spyro.m_airTime == 0) {
+        g_Spyro.m_AirTime == 0) {
       if (g_Spyro.m_idleTimer >= 24 || g_Spyro.m_slopeAngle >= 23) {
         func_8003EA68(6);
         g_Spyro.m_idleTimer = g_Spyro.unk_0x84;
@@ -3218,12 +3218,12 @@ void func_80041670(void) {
       func_8003EA68(20);
       break;
     }
-    if (g_Spyro.m_airTime >= 8) {
+    if (g_Spyro.m_AirTime >= 8) {
       func_8003EA68(6);
       break;
     }
     if (g_Spyro.m_slopeAngle < 23 &&
-        g_Spyro.m_nextBodyAnimationFrame ==
+        g_Spyro.m_NextBodyAnimationFrame ==
             spyro_AnimationDetails[20].m_EndFrame - 1 &&
         g_Spyro.m_Physics.m_TrueSpeed < 2304) {
       if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
@@ -3271,7 +3271,7 @@ void func_80041670(void) {
         break;
       }
     }
-    if (g_Spyro.m_touchingMoby == 0 &&
+    if (g_Spyro.m_TouchingMoby == 0 &&
         g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 3200 &&
         (g_Spyro.m_Physics.m_TrueSpeed << 1) <
             g_Spyro.m_Physics.m_SpeedAngle.m_Speed &&
@@ -3280,7 +3280,7 @@ void func_80041670(void) {
       func_8003EA68(12);
       break;
     }
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       if ((g_Spyro.m_walkingState & 0x40) == 0) {
         func_8003EA68(11);
       } else {
@@ -3305,7 +3305,7 @@ void func_80041670(void) {
       func_8003EA68(5);
       break;
     }
-    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+    if (g_Spyro.m_AirTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
       func_8003EA68(6);
       break;
     }
@@ -3334,7 +3334,7 @@ void func_80041670(void) {
     if (HandleSpyroDamage(0xFFF9) != 0) {
       break;
     }
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       if (g_Spyro.m_slopeAngle >= 23) {
         func_8003EA68(6);
         break;
@@ -3356,7 +3356,7 @@ void func_80041670(void) {
       }
       break;
     }
-    if (g_Spyro.m_floorIdleTime == 0 || g_Spyro.m_Physics.m_TrueSpeed < 1024) {
+    if (g_Spyro.m_FloorIdleTime == 0 || g_Spyro.m_Physics.m_TrueSpeed < 1024) {
       func_8003EA68(6);
       break;
     }
@@ -3409,12 +3409,12 @@ void func_80041670(void) {
       mag = 1;
     }
     ratio = (g_Spyro.m_Physics.m_TrueSpeed << 12) / mag;
-    if (g_Spyro.m_touchingMoby == 0 && ratio < 2048 &&
+    if (g_Spyro.m_TouchingMoby == 0 && ratio < 2048 &&
         g_HasLevelTransition == 0) {
       func_8003EA68(12);
       break;
     }
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       func_8003EA68(11);
       break;
     }
@@ -3437,7 +3437,7 @@ void func_80041670(void) {
       func_8003EA68(30);
       break;
     }
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       func_8003EA68(0);
     } else {
       func_8003EA68(6);
@@ -3454,7 +3454,7 @@ void func_80041670(void) {
       func_8003EA68(5);
       break;
     }
-    if (g_Spyro.m_airTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
+    if (g_Spyro.m_AirTime >= 4 || g_Spyro.m_slopeAngle >= 23) {
       func_8003EA68(6);
       break;
     }
@@ -3485,7 +3485,7 @@ void func_80041670(void) {
     if (HandleSpyroDamage(0xFFF9) != 0) {
       break;
     }
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       if (g_Spyro.m_slopeAngle >= 23) {
         func_8003EA68(6);
       } else if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
@@ -3503,7 +3503,7 @@ void func_80041670(void) {
         func_8003DFA4();
         func_8003EA68(0);
       }
-    } else if (g_Spyro.m_floorIdleTime == 0) {
+    } else if (g_Spyro.m_FloorIdleTime == 0) {
       func_8003EA68(6);
     } else if (g_Spyro.m_Physics.m_TrueSpeed < 1024) {
       func_8003EA68(6);
@@ -3541,7 +3541,7 @@ void func_80041670(void) {
     if (HandleSpyroDamage(0xFFF9) != 0) {
       break;
     }
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       if (g_Spyro.m_slopeAngle >= 23) {
         func_8003EA68(6);
       } else if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
@@ -3559,7 +3559,7 @@ void func_80041670(void) {
         func_8003DFA4();
         func_8003EA68(0);
       }
-    } else if (g_Spyro.m_floorIdleTime == 0) {
+    } else if (g_Spyro.m_FloorIdleTime == 0) {
       func_8003EA68(6);
     } else if (g_Spyro.m_Physics.m_TrueSpeed < 1024) {
       func_8003EA68(6);
@@ -3594,7 +3594,7 @@ void func_80041670(void) {
     if (HandleSpyroDamage(0xFFF9) != 0) {
       break;
     }
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       if (g_Spyro.m_slopeAngle >= 23) {
         func_8003EA68(6);
       } else if (g_Spyro.m_Physics.m_TargetSpeedAngle.m_Speed > 0) {
@@ -3612,7 +3612,7 @@ void func_80041670(void) {
         func_8003DFA4();
         func_8003EA68(0);
       }
-    } else if (g_Spyro.m_floorIdleTime == 0) {
+    } else if (g_Spyro.m_FloorIdleTime == 0) {
       func_8003EA68(6);
     } else if (g_Spyro.m_Physics.m_TrueSpeed < 1024) {
       func_8003EA68(6);
@@ -3654,10 +3654,10 @@ void func_80041670(void) {
       break;
     }
     if ((g_Pad.m_Held & PAD_CROSS) != 0) {
-      if (D_80075700 >= 10 || g_Spyro.m_airTime != 0) {
+      if (D_80075700 >= 10 || g_Spyro.m_AirTime != 0) {
         func_8003EA68(24);
         g_Spyro.m_Physics.m_Acceleration.z += 3520;
-        g_Spyro.m_airTime++;
+        g_Spyro.m_AirTime++;
         g_Spyro.unk_0x15c = 0;
         break;
       }
@@ -3666,11 +3666,11 @@ void func_80041670(void) {
     if ((g_Pad.m_Released & PAD_CROSS) != 0) {
       func_8003EA68(24);
       g_Spyro.m_Physics.m_Acceleration.z += 3520;
-      g_Spyro.m_airTime++;
+      g_Spyro.m_AirTime++;
       g_Spyro.unk_0x15c = 0;
       break;
     }
-    if (g_Spyro.m_airTime >= 4) {
+    if (g_Spyro.m_AirTime >= 4) {
       func_8003EA68(24);
       g_Spyro.unk_0x15c = 1;
       break;
@@ -3683,7 +3683,7 @@ void func_80041670(void) {
       func_8003EA68(11);
       break;
     }
-    if (g_Spyro.m_touchingMoby == 0 &&
+    if (g_Spyro.m_TouchingMoby == 0 &&
         g_Spyro.m_Physics.m_SpeedAngle.m_Speed > 3200 &&
         (g_Spyro.m_Physics.m_TrueSpeed << 1) <
             g_Spyro.m_Physics.m_SpeedAngle.m_Speed &&
@@ -3723,7 +3723,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
   g_ActivePad = (Gamepad *)&g_Pad.m_BufferedInputs[pDeltaTimeIndex];
   idleFrames = g_Spyro.m_idleTimer + pDeltaTimeIndex;
 
-  if (g_Gamestate == 0 && g_LevelId == 64 && g_Spyro.m_airTime == 0) {
+  if (g_Gamestate == 0 && g_LevelId == 64 && g_Spyro.m_AirTime == 0) {
     g_Spyro.m_flyingAbility = 1;
   }
 
@@ -3814,7 +3814,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
             VecMagnitude(&g_Spyro.m_Physics.m_Acceleration, 1);
       }
     }
-    if (g_Spyro.m_onEdge != 0 || g_Spyro.m_airTime != 0) {
+    if (g_Spyro.m_onEdge != 0 || g_Spyro.m_AirTime != 0) {
       g_Spyro.m_Physics.m_Acceleration.z =
           g_Spyro.m_Physics.m_TrueVelocity.z - 192;
       break;
@@ -3913,7 +3913,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
             VecMagnitude(&g_Spyro.m_Physics.m_Acceleration, 1);
       }
     }
-    if (g_Spyro.m_airTime != 0) {
+    if (g_Spyro.m_AirTime != 0) {
       g_Spyro.m_Physics.m_Acceleration.z =
           g_Spyro.m_Physics.m_TrueVelocity.z - 192;
       break;
@@ -4017,7 +4017,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
     drag.z = g_Spyro.m_Physics.m_gravity;
     VecAdd(&g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_Physics.m_Acceleration,
            &drag);
-    if (g_Spyro.m_floorIdleTime == 0 && g_Spyro.m_slopeAngle < 32) {
+    if (g_Spyro.m_FloorIdleTime == 0 && g_Spyro.m_slopeAngle < 32) {
       func_8003E90C();
     }
     if (g_Spyro.m_Physics.m_Acceleration.z < -8960) {
@@ -4067,7 +4067,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
     g_Spyro.m_Physics.unk_0xe8.z -= g_Spyro.m_Physics.unk_0xe8.z >> 4;
     VecAdd(&g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_Physics.m_Acceleration,
            &g_Spyro.m_Physics.unk_0xe8);
-    if (g_Spyro.m_onEdge != 0 || g_Spyro.m_airTime != 0) {
+    if (g_Spyro.m_onEdge != 0 || g_Spyro.m_AirTime != 0) {
       g_Spyro.m_Physics.m_Acceleration.z =
           g_Spyro.m_Physics.m_TrueVelocity.z - 192;
       break;
@@ -4244,7 +4244,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
     break;
 
   case 25:
-    if (g_Spyro.m_airTime != 0) {
+    if (g_Spyro.m_AirTime != 0) {
       g_Spyro.m_Physics.m_Acceleration.z -= 1536;
       if (g_Spyro.m_Physics.m_Acceleration.z < -8960) {
         g_Spyro.m_Physics.m_Acceleration.z = -8960;
@@ -4255,7 +4255,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
     break;
 
   case 27:
-    if (g_Spyro.m_airTime != 0) {
+    if (g_Spyro.m_AirTime != 0) {
       g_Spyro.m_Physics.m_Acceleration.z -= 1536;
       if (g_Spyro.m_Physics.m_Acceleration.z < -8960) {
         g_Spyro.m_Physics.m_Acceleration.z = -8960;
@@ -4693,20 +4693,20 @@ void func_80043FE4(int pDeltaTimeIndex) {
         if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed < 1920) {
           g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 1920;
         }
-        g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
+        g_Spyro.m_BodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
         dz = 30;
         if (g_Spyro.unk_0x254 != 0) {
           if (g_Spyro.m_Physics.m_SpeedAngle.m_RotY > -256) {
             g_Spyro.m_walkingState = 0;
             g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
-            g_Spyro.m_sortingDepth = 4;
+            g_Spyro.m_DepthSortOffset = 4;
           }
         } else if (g_Spyro.m_Physics.m_SpeedAngle.m_RotY < 0) {
           g_Spyro.unk_0x254 = 1;
         }
         g_Spyro.m_Physics.m_SpeedAngle.m_RotY =
             (g_Spyro.m_Physics.m_SpeedAngle.m_RotY + dz) & 0xFFF;
-        g_Spyro.m_bodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
+        g_Spyro.m_BodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
         if (g_Spyro.m_Physics.m_SpeedAngle.m_RotY > 2048) {
           g_Spyro.m_Physics.m_SpeedAngle.m_RotY -= 4096;
         }
@@ -4730,7 +4730,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
         break;
       }
       if (g_Spyro.m_SurfaceProximityState != 0 &&
-          g_Spyro.m_Position.z - g_Spyro.m_surfaceBelowSpyro <= 3072) {
+          g_Spyro.m_Position.z - g_Spyro.m_FloorHeight <= 3072) {
         idx = (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >> 11) + 2;
         if (g_Spyro.m_Physics.m_Velocity.x == 0 &&
             g_Spyro.m_Physics.m_Velocity.y == 0) {
@@ -4740,7 +4740,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
         VecShiftRight(&splashPos, 6);
         splashPos.x += g_Spyro.m_Position.x;
         splashPos.y += g_Spyro.m_Position.y;
-        splashPos.z = g_Spyro.m_surfaceBelowSpyro;
+        splashPos.z = g_Spyro.m_FloorHeight;
         g_SpawnParticle(1, 27, &splashPos, idx);
       }
       moving = (g_Spyro.m_Physics.m_Velocity.x != 0 ||
@@ -4757,17 +4757,17 @@ void func_80043FE4(int pDeltaTimeIndex) {
       if (count <= 0) {
         count = 1;
       }
-      blend = g_Spyro.m_bodyFrameProgress;
+      blend = g_Spyro.m_BodyFrameProgress;
       if (moving != 0 && blend < 13) {
         blend += 4;
       }
       for (i = 0; i < 2; i++) {
         cls = 9 + i * 91;
-        func_80052F38(cls, &partPos, g_Spyro.m_bodyAnimation,
-                      g_Spyro.m_bodyAnimationFrame);
+        func_80052F38(cls, &partPos, g_Spyro.m_BodyAnimation,
+                      g_Spyro.m_BodyAnimationFrame);
         if (blend != 0) {
-          func_80052F38(cls, &partVel, g_Spyro.m_nextBodyAnimation,
-                        g_Spyro.m_nextBodyAnimationFrame);
+          func_80052F38(cls, &partVel, g_Spyro.m_NextBodyAnimation,
+                        g_Spyro.m_NextBodyAnimationFrame);
           func_80017894(&partPos, &partPos, &partVel, blend << 8);
         }
         VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &partPos, &partPos);
@@ -4827,7 +4827,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
     }
     g_Spyro.m_Physics.m_TurnMomentum = (cosV * 20) >> 7;
     g_Spyro.m_Physics.m_SpeedAngle.m_RotZ += g_Spyro.m_Physics.m_TurnMomentum;
-    g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
+    g_Spyro.m_BodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
     if (g_Spyro.m_walkingState == 8) {
       if (g_PortalLevelId == 0) {
         g_Spyro.m_Physics.m_TurnMomentum =
@@ -4859,7 +4859,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
       if (OctDistance(&g_Spyro.m_Position, &g_Spyro.m_portalEndPos) < 768) {
         g_Spyro.m_walkingState = 0;
         g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
-        g_Spyro.m_sortingDepth = 4;
+        g_Spyro.m_DepthSortOffset = 4;
       }
       g_Spyro.m_Physics.m_SpeedAngle.m_RotY = 0;
     } else if (g_Spyro.m_walkingState == 11) {
@@ -4882,7 +4882,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
         if (g_Spyro.unk_0x254 != 0 && g_Spyro.m_Position.z - dz < 512) {
           g_Spyro.m_walkingState = 0;
           g_Camera.unk_0xC0 = D_8006C588[g_Spyro.m_State];
-          g_Spyro.m_sortingDepth = 4;
+          g_Spyro.m_DepthSortOffset = 4;
         } else if (g_Spyro.unk_0x254 != 0 && g_Spyro.m_Position.z - dz < 2048) {
           dz = (-256 - g_Spyro.m_Physics.m_SpeedAngle.m_RotY) & 0xFFF;
           if (dz > 2048) {
@@ -4925,7 +4925,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
       }
       g_Spyro.m_Physics.m_SpeedAngle.m_RotY =
           (g_Spyro.m_Physics.m_SpeedAngle.m_RotY + dz) & 0xFFF;
-      g_Spyro.m_bodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
+      g_Spyro.m_BodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
       if (g_Spyro.m_Physics.m_SpeedAngle.m_RotY > 2048) {
         g_Spyro.m_Physics.m_SpeedAngle.m_RotY -= 4096;
       }
@@ -5280,7 +5280,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
 
     VecNull(&brake);
     VecSub(&brake, &brake, &g_Spyro.m_Physics.m_Acceleration);
-    if (g_Spyro.m_airTime != 0) {
+    if (g_Spyro.m_AirTime != 0) {
       int drag;
 
       brake.z = 0;
@@ -5317,7 +5317,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
     g_Spyro.m_Physics.unk_0xe8.y -= g_Spyro.m_Physics.unk_0xe8.y >> 4;
     g_Spyro.m_Physics.unk_0xe8.z -= g_Spyro.m_Physics.unk_0xe8.z >> 4;
     VecCopy(&g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_Physics.unk_0xe8);
-    if (g_Spyro.m_onEdge != 0 || g_Spyro.m_airTime != 0) {
+    if (g_Spyro.m_onEdge != 0 || g_Spyro.m_AirTime != 0) {
       g_Spyro.m_Physics.m_Acceleration.z =
           g_Spyro.m_Physics.m_TrueVelocity.z - 192;
       break;
@@ -5388,7 +5388,7 @@ void func_80043FE4(int pDeltaTimeIndex) {
     }
     func_8003D978();
     VecCopy(&g_Spyro.m_Physics.unk_0xe8, &g_Spyro.m_Physics.m_Acceleration);
-    if (g_Spyro.m_airTime == 0) {
+    if (g_Spyro.m_AirTime == 0) {
       VecAdd(&g_Spyro.m_Physics.m_Acceleration,
              &g_Spyro.m_Physics.m_Acceleration, &g_Spyro.m_Physics.unk_0xdc);
     }
@@ -5407,9 +5407,9 @@ void func_80043FE4(int pDeltaTimeIndex) {
   }
   VecAdd(&g_Spyro.m_Physics.m_Velocity, &g_Spyro.m_Physics.m_Velocity,
          &g_Spyro.m_Physics.m_Acceleration);
-  g_Spyro.m_bodyRotation.x = g_Spyro.m_Physics.m_SpeedAngle.m_RotX >> 4;
-  g_Spyro.m_bodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
-  g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
+  g_Spyro.m_BodyRotation.x = g_Spyro.m_Physics.m_SpeedAngle.m_RotX >> 4;
+  g_Spyro.m_BodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
+  g_Spyro.m_BodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
 }
 
 /// @brief Per-frame state dispatch for Spyro
@@ -5447,7 +5447,7 @@ void func_80047B60(void) {
     UpdateSlopeFloorCollision();
 
     if (g_Spyro.m_ControlFlags == 0) {
-      AdjustAirCollision();
+      SpyroFloorCollisionUpdate();
     }
     break;
 
@@ -5520,10 +5520,10 @@ void func_80047B60(void) {
     func_8003E1AC();
 
     // Electric damage flashing
-    if (g_Spyro.m_nextBodyAnimationFrame < 10) {
+    if (g_Spyro.m_NextBodyAnimationFrame < 10) {
       g_Spyro.m_colorFilter.m_interpolation = 255;
 
-      if (g_Spyro.m_nextBodyAnimationFrame & 1) {
+      if (g_Spyro.m_NextBodyAnimationFrame & 1) {
         g_Spyro.m_colorFilter.m_blue = 255;
         g_Spyro.m_colorFilter.m_green = 255;
         g_Spyro.m_colorFilter.m_red = 255;
@@ -5585,7 +5585,7 @@ void func_80047B60(void) {
         }
 
         if (g_Spyro.m_highestFlightPoint > D_800758C0 &&
-            g_Spyro.m_floorIdleTime != 0) {
+            g_Spyro.m_FloorIdleTime != 0) {
           D_800758C0 = g_Spyro.m_highestFlightPoint;
         }
 
@@ -5634,7 +5634,7 @@ void func_80047B60(void) {
         }
 
         if (g_Spyro.m_highestFlightPoint > D_800758C0 &&
-            g_Spyro.m_floorIdleTime != 0) {
+            g_Spyro.m_FloorIdleTime != 0) {
           D_800758C0 = g_Spyro.m_highestFlightPoint;
         }
 
@@ -5687,7 +5687,7 @@ void func_80047B60(void) {
         }
 
         if (g_Spyro.m_highestFlightPoint > D_800758C0 &&
-            g_Spyro.m_floorIdleTime != 0) {
+            g_Spyro.m_FloorIdleTime != 0) {
           D_800758C0 = g_Spyro.m_highestFlightPoint;
         }
 
@@ -5723,7 +5723,7 @@ void func_80047B60(void) {
       }
 
       if (g_Spyro.m_highestFlightPoint > D_800758C0 &&
-          g_Spyro.m_floorIdleTime != 0) {
+          g_Spyro.m_FloorIdleTime != 0) {
         D_800758C0 = g_Spyro.m_highestFlightPoint;
       }
 
@@ -5738,7 +5738,7 @@ void func_80047B60(void) {
 
     if ((g_Spyro.m_ControlFlags & CTRL_SKIP_SURFACE_CHECK) &&
         g_Spyro.m_walkingState == 9) {
-      g_Spyro.m_surfaceBelowSpyro = ColFindFloor(&g_Spyro.m_Position, 0x10000);
+      g_Spyro.m_FloorHeight = ColFindFloor(&g_Spyro.m_Position, 0x10000);
     }
     break;
 
@@ -5746,7 +5746,7 @@ void func_80047B60(void) {
     func_8003E628();
     func_8003FE40();
     UpdateSlopeFloorCollision();
-    AdjustAirCollision();
+    SpyroFloorCollisionUpdate();
     break;
 
   case 11:
@@ -5754,7 +5754,7 @@ void func_80047B60(void) {
     UpdateSlopeFloorCollision();
     func_8003E1AC();
     ApplySlopeGravity();
-    AdjustAirCollision();
+    SpyroFloorCollisionUpdate();
 
     if (g_Spyro.m_againstWall == 0) {
       CheckWallCollision();
@@ -5817,7 +5817,7 @@ void func_80047B60(void) {
 
     func_8003FE40();
     UpdateSlopeFloorCollision();
-    AdjustAirCollision();
+    SpyroFloorCollisionUpdate();
     break;
 
   case 44: {
@@ -5843,8 +5843,8 @@ void func_80047B60(void) {
   if (g_Spyro.m_State == 29) {
     g_Spyro.m_Position.z -= g_Spyro.m_drowningOffset;
 
-    if (g_Spyro.m_surfaceBelowSpyro != 0) {
-      g_Spyro.m_FloorDistance = g_Spyro.m_surfaceBelowSpyro;
+    if (g_Spyro.m_FloorHeight != 0) {
+      g_Spyro.m_FloorDistance = g_Spyro.m_FloorHeight;
     } else {
       VecCopy(&floorProbe, &g_Spyro.m_Position);
       floorProbe.z += 2048;
@@ -5869,22 +5869,22 @@ void func_8004888C(void) {
     if (g_Spyro.m_Physics.m_SpeedAngle.m_Speed != 0) {
 
       if (g_Spyro.m_againstWall != 0) {
-        g_Spyro.m_bodyAnimationSpeed = 4;
+        g_Spyro.m_BodyAnimationSpeed = 4;
       } else {
-        g_Spyro.m_bodyAnimationSpeed =
+        g_Spyro.m_BodyAnimationSpeed =
             g_Spyro.m_Physics.m_SpeedAngle.m_Speed >> 7;
       }
 
-      if (g_Spyro.m_bodyAnimationSpeed < 1) {
-        g_Spyro.m_bodyAnimationSpeed = 1;
+      if (g_Spyro.m_BodyAnimationSpeed < 1) {
+        g_Spyro.m_BodyAnimationSpeed = 1;
       }
 
-      if (g_Spyro.m_bodyAnimationSpeed > 16) {
-        g_Spyro.m_bodyAnimationSpeed = 16;
+      if (g_Spyro.m_BodyAnimationSpeed > 16) {
+        g_Spyro.m_BodyAnimationSpeed = 16;
       }
 
     } else {
-      g_Spyro.m_bodyAnimationSpeed = 4;
+      g_Spyro.m_BodyAnimationSpeed = 4;
       if (D_80075914 & 0x10 && !(g_Camera.unk_0xC0 & 0x80000000)) {
         g_Camera.unk_0xC0 = 0x80000000;
       }
@@ -5892,39 +5892,39 @@ void func_8004888C(void) {
     break;
   case 5:
     func_8003DAE4();
-    if (g_Spyro.m_bodyTransitionType == 0) {
+    if (g_Spyro.m_BodyTransitionType == 0) {
       if (g_Spyro.m_walkingState == 0) {
-        if (g_Spyro.m_nextBodyAnimationFrame < 3) {
-          g_Spyro.m_bodyAnimationSpeed = 4;
-        } else if (g_Spyro.m_nextBodyAnimationFrame < 6) {
-          g_Spyro.m_bodyAnimationSpeed = 2;
+        if (g_Spyro.m_NextBodyAnimationFrame < 3) {
+          g_Spyro.m_BodyAnimationSpeed = 4;
+        } else if (g_Spyro.m_NextBodyAnimationFrame < 6) {
+          g_Spyro.m_BodyAnimationSpeed = 2;
         } else {
-          g_Spyro.m_bodyAnimationSpeed = 0;
+          g_Spyro.m_BodyAnimationSpeed = 0;
         }
-      } else if (g_Spyro.m_nextBodyAnimationFrame < 8) {
-        g_Spyro.m_bodyAnimationSpeed = 2;
+      } else if (g_Spyro.m_NextBodyAnimationFrame < 8) {
+        g_Spyro.m_BodyAnimationSpeed = 2;
       } else {
-        g_Spyro.m_bodyAnimationSpeed = 0;
+        g_Spyro.m_BodyAnimationSpeed = 0;
       }
     }
     break;
   case 11:
     func_8003DAE4();
-    if ((g_Spyro.m_walkingState & 1) && g_Spyro.m_touchingMoby != 0) {
+    if ((g_Spyro.m_walkingState & 1) && g_Spyro.m_TouchingMoby != 0) {
       g_Spyro.m_Physics.m_SpeedAngle.m_Speed = 2560;
     }
     break;
   case 19:
     func_8003DAE4();
-    g_Spyro.m_bodyAnimationSpeed =
+    g_Spyro.m_BodyAnimationSpeed =
         (g_Spyro.m_Physics.m_SpeedAngle.m_Speed >> 11) + 3;
 
-    if (g_Spyro.m_bodyAnimationSpeed < 4) {
-      g_Spyro.m_bodyAnimationSpeed = 4;
+    if (g_Spyro.m_BodyAnimationSpeed < 4) {
+      g_Spyro.m_BodyAnimationSpeed = 4;
     }
 
-    if (g_Spyro.m_bodyAnimationSpeed > 12) {
-      g_Spyro.m_bodyAnimationSpeed = 12;
+    if (g_Spyro.m_BodyAnimationSpeed > 12) {
+      g_Spyro.m_BodyAnimationSpeed = 12;
     }
     break;
   case 20:
@@ -5932,17 +5932,17 @@ void func_8004888C(void) {
     break;
   case 21:
     func_8003DAE4();
-    g_Spyro.m_bodyAnimationSpeed =
+    g_Spyro.m_BodyAnimationSpeed =
         ((g_Spyro.m_Physics.m_SpeedAngle.m_Speed - 0x640) >> 9) + 6;
-    if (g_Spyro.m_bodyAnimationSpeed < 6) {
-      g_Spyro.m_bodyAnimationSpeed = 6;
+    if (g_Spyro.m_BodyAnimationSpeed < 6) {
+      g_Spyro.m_BodyAnimationSpeed = 6;
     }
-    if (g_Spyro.m_bodyAnimationSpeed > 16) {
-      g_Spyro.m_bodyAnimationSpeed = 16;
+    if (g_Spyro.m_BodyAnimationSpeed > 16) {
+      g_Spyro.m_BodyAnimationSpeed = 16;
     }
     break;
   case 44:
-    if (g_Spyro.m_airTime != 0) {
+    if (g_Spyro.m_AirTime != 0) {
       break;
     }
     /* fallthrough */
@@ -6004,7 +6004,7 @@ void func_8004888C(void) {
  * 5. Handling special surface interactions via ApplySpecialSurfaceEffects
  *
  * Surface interaction priority (handled in order):
- * - If grounded (m_airTime == 0) and close to surface below: mode 2
+ * - If grounded (m_AirTime == 0) and close to surface below: mode 2
  * - If touching a special surface (m_touchingSurface): mode 0
  * - If surface exists below Spyro: mode 1
  *
@@ -6040,12 +6040,12 @@ void UpdateSpyroPhysicsAndSurfaces(void) {
 
   // Query the surface height below Spyro (max search depth 0x10000)
   surfaceBelow = ColFindFloor(&g_Spyro.m_Position, 0x10000);
-  g_Spyro.m_surfaceBelowSpyro = surfaceBelow;
+  g_Spyro.m_FloorHeight = surfaceBelow;
   g_Spyro.m_SurfaceProximityState = 0;
 
   // Grounded and close to special surface below
   // If Spyro is grounded and within 512 units of the surface, trigger mode 2
-  if (g_Spyro.m_airTime == 0) {
+  if (g_Spyro.m_AirTime == 0) {
     surfaceFlag = g_SurfaceBelowFlags & 0x3F;
     if (surfaceFlag != 0x3F && g_Spyro.m_Position.z - surfaceBelow <= 512) {
       ApplySpecialSurfaceEffects(surfaceFlag, 2);
@@ -6062,7 +6062,7 @@ void UpdateSpyroPhysicsAndSurfaces(void) {
   }
 
   // Surface exists below Spyro (surfaceBelow > 0)
-  if (g_Spyro.m_surfaceBelowSpyro <= 0) {
+  if (g_Spyro.m_FloorHeight <= 0) {
     return;
   }
 
@@ -6126,8 +6126,8 @@ void func_80048D10(int pDeltaTime) {
   }
 
   if (g_SpyroFlame.m_IsFlameActive) {
-    if (g_Spyro.m_airTime == 0 && g_Spyro.m_bodyRotation.y > 128) {
-      g_Spyro.m_HeadLookTarget.y = (256 - g_Spyro.m_bodyRotation.y) * 8;
+    if (g_Spyro.m_AirTime == 0 && g_Spyro.m_BodyRotation.y > 128) {
+      g_Spyro.m_HeadLookTarget.y = (256 - g_Spyro.m_BodyRotation.y) * 8;
     } else {
       g_Spyro.m_HeadLookTarget.y = 0;
     }
@@ -6146,20 +6146,20 @@ void func_80048D10(int pDeltaTime) {
       g_SpyroFlame.unk_99[0]++;
     }
 
-    if (g_SpyroFlame.unk_99[0] < 30 && g_Spyro.m_headAnimation == 7 &&
-        g_Spyro.m_nextHeadAnimation == 7 && g_Spyro.m_headAnimationFrame == 4) {
-      g_Spyro.m_headFrameProgress = 0;
+    if (g_SpyroFlame.unk_99[0] < 30 && g_Spyro.m_HeadAnimation == 7 &&
+        g_Spyro.m_NextHeadAnimation == 7 && g_Spyro.m_HeadAnimationFrame == 4) {
+      g_Spyro.m_HeadFrameProgress = 0;
     }
 
     if (g_SpyroFlame.unk_99[1] != 0) {
-      g_SpyroFlame.m_Rotation.x = g_Spyro.m_bodyRotation.x;
-      g_SpyroFlame.m_Rotation.y = g_Spyro.m_bodyRotation.y;
-      g_SpyroFlame.m_Rotation.z = g_Spyro.m_bodyRotation.z;
+      g_SpyroFlame.m_Rotation.x = g_Spyro.m_BodyRotation.x;
+      g_SpyroFlame.m_Rotation.y = g_Spyro.m_BodyRotation.y;
+      g_SpyroFlame.m_Rotation.z = g_Spyro.m_BodyRotation.z;
       Memcpy(&g_SpyroFlame.m_HeadMatrix, &g_Spyro.m_headRotationMatrix, 20);
 
       frame = &((SpyroAnimationFrame *)SPYRO_MODEL
-                    ->m_Animations[g_Spyro.m_bodyAnimation]
-                    ->m_Frames)[g_Spyro.m_bodyAnimationFrame];
+                    ->m_Animations[g_Spyro.m_BodyAnimation]
+                    ->m_Frames)[g_Spyro.m_BodyAnimationFrame];
       j = *(int *)(frame->m_Props.frameDataOffset * 2 + 16);
       offset.x = j >> 21;
       offset.y = (j << 11) >> 21;
@@ -6288,20 +6288,20 @@ void func_80048D10(int pDeltaTime) {
 
 /// @brief Increments the head animation
 void func_800495D8(int pDeltaTime) {
-  g_Spyro.m_headFrameProgress += pDeltaTime;
+  g_Spyro.m_HeadFrameProgress += pDeltaTime;
 
-  if (g_Spyro.m_headFrameProgress >= 16) {
-    g_Spyro.m_headFrameProgress -= 16;
+  if (g_Spyro.m_HeadFrameProgress >= 16) {
+    g_Spyro.m_HeadFrameProgress -= 16;
 
-    g_Spyro.m_headAnimation = g_Spyro.m_nextHeadAnimation;
-    g_Spyro.m_headAnimationFrame = g_Spyro.m_nextHeadAnimationFrame;
+    g_Spyro.m_HeadAnimation = g_Spyro.m_NextHeadAnimation;
+    g_Spyro.m_HeadAnimationFrame = g_Spyro.m_NextHeadAnimationFrame;
 
-    g_Spyro.m_nextHeadAnimationFrame++;
+    g_Spyro.m_NextHeadAnimationFrame++;
 
-    if (spyro_AnimationDetails[g_Spyro.m_nextHeadAnimation]
-            .m_TransitionLastFrame <= g_Spyro.m_nextHeadAnimationFrame) {
-      g_Spyro.m_nextHeadAnimationFrame =
-          spyro_AnimationDetails[g_Spyro.m_nextHeadAnimation]
+    if (spyro_AnimationDetails[g_Spyro.m_NextHeadAnimation]
+            .m_TransitionLastFrame <= g_Spyro.m_NextHeadAnimationFrame) {
+      g_Spyro.m_NextHeadAnimationFrame =
+          spyro_AnimationDetails[g_Spyro.m_NextHeadAnimation]
               .m_TransitionLastFrame -
           1;
     }
@@ -6313,16 +6313,16 @@ extern u_char D_80075268[4];
 
 /// @brief Update the head animation, handling mismatched body and head
 /// animations
-void func_80049660(void) {
+void SpyroUpdateHeadAnimation(void) {
   switch (g_Spyro.unk_0x60) {
   case 0:
     if (g_Spyro.unk_0x198 == g_Spyro.unk_0x68) {
       if (g_Spyro.unk_0x198 == 0) {
-        g_Spyro.m_headAnimation = g_Spyro.m_bodyAnimation;
-        g_Spyro.m_headAnimationFrame = g_Spyro.m_bodyAnimationFrame;
-        g_Spyro.m_nextHeadAnimation = g_Spyro.m_nextBodyAnimation;
-        g_Spyro.m_nextHeadAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
-        g_Spyro.m_headFrameProgress = g_Spyro.m_bodyFrameProgress;
+        g_Spyro.m_HeadAnimation = g_Spyro.m_BodyAnimation;
+        g_Spyro.m_HeadAnimationFrame = g_Spyro.m_BodyAnimationFrame;
+        g_Spyro.m_NextHeadAnimation = g_Spyro.m_NextBodyAnimation;
+        g_Spyro.m_NextHeadAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
+        g_Spyro.m_HeadFrameProgress = g_Spyro.m_BodyFrameProgress;
         return;
       }
       func_800495D8(g_Spyro.m_headAnimationSpeed);
@@ -6332,34 +6332,34 @@ void func_80049660(void) {
     switch (D_80075264[g_Spyro.unk_0x68][g_Spyro.unk_0x198]) {
     case 2:
       g_Spyro.unk_0x60 = D_80075264[g_Spyro.unk_0x68][g_Spyro.unk_0x198];
-      g_Spyro.m_headAnimation = g_Spyro.m_nextHeadAnimation;
-      g_Spyro.m_headAnimationFrame = g_Spyro.m_nextHeadAnimationFrame;
-      g_Spyro.m_nextHeadAnimation = D_80075268[g_Spyro.unk_0x198];
-      g_Spyro.m_nextHeadAnimationFrame = 0;
-      g_Spyro.m_headFrameProgress = 4;
+      g_Spyro.m_HeadAnimation = g_Spyro.m_NextHeadAnimation;
+      g_Spyro.m_HeadAnimationFrame = g_Spyro.m_NextHeadAnimationFrame;
+      g_Spyro.m_NextHeadAnimation = D_80075268[g_Spyro.unk_0x198];
+      g_Spyro.m_NextHeadAnimationFrame = 0;
+      g_Spyro.m_HeadFrameProgress = 4;
       g_Spyro.unk_0x68 = g_Spyro.unk_0x198;
       return;
     case 1:
       g_Spyro.unk_0x60 = D_80075264[g_Spyro.unk_0x68][g_Spyro.unk_0x198];
-      g_Spyro.m_headAnimation = g_Spyro.m_nextHeadAnimation;
-      g_Spyro.m_headAnimationFrame = g_Spyro.m_nextHeadAnimationFrame;
-      g_Spyro.m_nextHeadAnimation = g_Spyro.m_nextBodyAnimation;
-      g_Spyro.m_nextHeadAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
-      g_Spyro.m_headFrameProgress = 2;
+      g_Spyro.m_HeadAnimation = g_Spyro.m_NextHeadAnimation;
+      g_Spyro.m_HeadAnimationFrame = g_Spyro.m_NextHeadAnimationFrame;
+      g_Spyro.m_NextHeadAnimation = g_Spyro.m_NextBodyAnimation;
+      g_Spyro.m_NextHeadAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
+      g_Spyro.m_HeadFrameProgress = 2;
       g_Spyro.unk_0x68 = g_Spyro.unk_0x198;
       return;
     }
     break;
   case 2:
-    g_Spyro.m_headFrameProgress += 4;
-    if (g_Spyro.m_headFrameProgress >= 16) {
+    g_Spyro.m_HeadFrameProgress += 4;
+    if (g_Spyro.m_HeadFrameProgress >= 16) {
       func_800495D8(0);
       g_Spyro.unk_0x60 = 0;
     }
     break;
   case 1:
-    g_Spyro.m_headFrameProgress += 2;
-    if (g_Spyro.m_headFrameProgress >= 16) {
+    g_Spyro.m_HeadFrameProgress += 2;
+    if (g_Spyro.m_HeadFrameProgress >= 16) {
       func_800495D8(0);
       g_Spyro.unk_0x60 = 0;
     }
@@ -6368,8 +6368,8 @@ void func_80049660(void) {
 
 /// @brief Eases Spyro's head rotation toward m_HeadLookTarget using a per-axis
 /// spring-damper. The smoothed result is written to the real head rotation,
-/// which lives at m_bodyRotation + 4 (one padding byte ahead of the struct's
-/// m_headRotation), the same location consumed by the head rotation matrix.
+/// which lives at m_BodyRotation + 4 (one padding byte ahead of the struct's
+/// m_HeadRotation), the same location consumed by the head rotation matrix.
 void func_80049880(void) {
   int delta;
 
@@ -6399,16 +6399,16 @@ void func_80049880(void) {
   g_Spyro.unk_0x1b8 += g_Spyro.unk_0x1c4 >> 6;
 
   // The rotation bytes are the current angles scaled down by 16.
-  g_Spyro.m_headRotation.x = g_Spyro.unk_0x1b0 >> 4;
-  g_Spyro.m_headRotation.y = g_Spyro.unk_0x1b4 >> 4;
-  g_Spyro.m_headRotation.z = g_Spyro.unk_0x1b8 >> 4;
+  g_Spyro.m_HeadRotation.x = g_Spyro.unk_0x1b0 >> 4;
+  g_Spyro.m_HeadRotation.y = g_Spyro.unk_0x1b4 >> 4;
+  g_Spyro.m_HeadRotation.z = g_Spyro.unk_0x1b8 >> 4;
 }
 
 // Particle direction vector, start offset and end offset for flame particles
 extern Vector3D D_8006E238[4];
 
 /// @brief Update flame
-void func_800499C0(void) {
+void SpyroUpdateFlame(void) {
   if (spyro_FlameBlockedInAnimation
           [spyro_StateDefaultAnimation[g_Spyro.m_State]]) {
     g_Spyro.unk_0x198 = 0;
@@ -6479,8 +6479,8 @@ void func_800499C0(void) {
     } else if ((g_Pad.m_Down & PAD_CIRCLE) && g_Spyro.unk_0x1a0 >= 44) {
       g_Spyro.unk_0x1a0 = -1;
       g_Spyro.unk_0x60 = 2;
-      g_Spyro.m_headFrameProgress = 4;
-      g_Spyro.m_nextHeadAnimationFrame = 0;
+      g_Spyro.m_HeadFrameProgress = 4;
+      g_Spyro.m_NextHeadAnimationFrame = 0;
       g_SpyroFlame.m_IsFlameActive = 1;
       g_SpyroFlame.unk_99[0] = 0;
       g_SpyroFlame.unk_99[1] = 1;
@@ -6516,47 +6516,47 @@ void func_800499C0(void) {
 
 /// @brief Updates the tail animation
 void func_80049DFC(int pAnimationSpeed) {
-  g_Spyro.m_tailFrameProgress += pAnimationSpeed;
+  g_Spyro.m_TailFrameProgress += pAnimationSpeed;
 
-  if (g_Spyro.m_tailFrameProgress >= 16) {
-    g_Spyro.m_tailFrameProgress -= 16;
+  if (g_Spyro.m_TailFrameProgress >= 16) {
+    g_Spyro.m_TailFrameProgress -= 16;
 
-    g_Spyro.m_tailAnimation = g_Spyro.m_nextTailAnimation;
-    g_Spyro.m_tailAnimationFrame = g_Spyro.m_nextTailAnimationFrame;
+    g_Spyro.m_TailAnimation = g_Spyro.m_NextTailAnimation;
+    g_Spyro.m_TailAnimationFrame = g_Spyro.m_NextTailAnimationFrame;
 
-    g_Spyro.m_nextTailAnimationFrame++;
+    g_Spyro.m_NextTailAnimationFrame++;
 
     // SKELETON: This should be a >=, not a ==
-    if (g_Spyro.m_nextTailAnimationFrame ==
-        spyro_AnimationDetails[g_Spyro.m_nextTailAnimation].m_EndFrame) {
-      g_Spyro.m_nextTailAnimationFrame =
-          spyro_AnimationDetails[g_Spyro.m_nextTailAnimation].m_StartFrame;
+    if (g_Spyro.m_NextTailAnimationFrame ==
+        spyro_AnimationDetails[g_Spyro.m_NextTailAnimation].m_EndFrame) {
+      g_Spyro.m_NextTailAnimationFrame =
+          spyro_AnimationDetails[g_Spyro.m_NextTailAnimation].m_StartFrame;
     }
   }
 }
 
 /// @brief Update the tail animation
-void func_80049E8C(void) {
-  if (g_Spyro.unk_0x6C || g_Spyro.m_seperateTailAnimation != g_Spyro.unk_0x74)
+void SpyroUpdateTailAnimation(void) {
+  if (g_Spyro.unk_0x6C || g_Spyro.m_SeperateTailAnimation != g_Spyro.unk_0x74)
     return;
 
-  if (g_Spyro.m_seperateTailAnimation == 0) {
+  if (g_Spyro.m_SeperateTailAnimation == 0) {
     // Copy the body
-    g_Spyro.m_tailAnimation = g_Spyro.m_bodyAnimation;
-    g_Spyro.m_tailAnimationFrame = g_Spyro.m_bodyAnimationFrame;
-    g_Spyro.m_nextTailAnimation = g_Spyro.m_nextBodyAnimation;
-    g_Spyro.m_nextTailAnimationFrame = g_Spyro.m_nextBodyAnimationFrame;
-    g_Spyro.m_tailFrameProgress = g_Spyro.m_bodyFrameProgress;
+    g_Spyro.m_TailAnimation = g_Spyro.m_BodyAnimation;
+    g_Spyro.m_TailAnimationFrame = g_Spyro.m_BodyAnimationFrame;
+    g_Spyro.m_NextTailAnimation = g_Spyro.m_NextBodyAnimation;
+    g_Spyro.m_NextTailAnimationFrame = g_Spyro.m_NextBodyAnimationFrame;
+    g_Spyro.m_TailFrameProgress = g_Spyro.m_BodyFrameProgress;
   } else {
     func_80049DFC(g_Spyro.m_tailAnimationSpeed);
   }
 }
 
 void func_80049F3C(void) {
-  if (spyro_FlameBlockedInAnimation[g_Spyro.m_bodyAnimation] ||
-      spyro_FlameBlockedInAnimation[g_Spyro.m_nextBodyAnimation]) {
+  if (spyro_FlameBlockedInAnimation[g_Spyro.m_BodyAnimation] ||
+      spyro_FlameBlockedInAnimation[g_Spyro.m_NextBodyAnimation]) {
     // I assume this is here to make it so flaming unblocks the animation
-    g_Spyro.m_seperateTailAnimation = 0;
+    g_Spyro.m_SeperateTailAnimation = 0;
 
   } else {
     // SKELETON: Unused variable, never read, also never resets, so it's kinda
@@ -6575,40 +6575,40 @@ void func_80049FAC(int pArg) {
   setXYZ(&v, 0, 0, -356);
   VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &v, &v);
   VecAdd(&v, &v, &g_Spyro.m_Position);
-  VecCopy(&D_8007AA10.m_Position, &v);
+  VecCopy(&g_SpyroShadow.m_Position, &v);
 
-  D_8007AA10.m_Position.z = g_Spyro.m_surfaceBelowSpyro;
-  if (g_Spyro.m_sortingDepth < 127)
-    g_Spyro.m_sortingDepth = 5;
+  g_SpyroShadow.m_Position.z = g_Spyro.m_FloorHeight;
+  if (g_Spyro.m_DepthSortOffset < 127)
+    g_Spyro.m_DepthSortOffset = 5;
 
-  D_8007AA10.unk_1c = 3;
-  if (g_Spyro.m_Position.z - g_Spyro.m_surfaceBelowSpyro > 868)
-    D_8007AA10.unk_1c = 5;
+  g_SpyroShadow.m_DepthSortOffset = 3;
+  if (g_Spyro.m_Position.z - g_Spyro.m_FloorHeight > 868)
+    g_SpyroShadow.m_DepthSortOffset = 5;
 
-  D_8007AA10.m_IsSpyroOverWater = 0;
-  if (g_Spyro.m_surfaceBelowSpyro <= D_8006E9A4[g_LevelIndex] ||
+  g_SpyroShadow.m_IsSpyroOverWater = 0;
+  if (g_Spyro.m_FloorHeight <= D_8006E9A4[g_LevelIndex] ||
       g_Spyro.m_SurfaceProximityState)
-    D_8007AA10.m_IsSpyroOverWater = 1;
+    g_SpyroShadow.m_IsSpyroOverWater = 1;
 
-  D_8007AA10.unk_20 = (D_8007AA10.unk_20 + 1) & 7;
+  g_SpyroShadow.m_SampleIdx = (g_SpyroShadow.m_SampleIdx + 1) & 7;
   if (pArg) {
-    VecRotateByMatrix(&g_Spyro.m_RotationMatrix, &D_8006E2A8[D_8007AA10.unk_20],
-                      &v);
+    VecRotateByMatrix(&g_Spyro.m_RotationMatrix,
+                      &D_8006E2A8[g_SpyroShadow.m_SampleIdx], &v);
     VecAdd(&v, &v, &g_Spyro.m_Position);
     v.z += 512;
     z = ColFindFloor(&v, 1024);
     v.z -= 512;
     if ((v.z - z) < -128 || (v.z - z) >= 128) {
-      D_8007AA10.unk_08[D_8007AA10.unk_20] = 1;
-      D_8007AA10.unk_00[D_8007AA10.unk_20] = 0;
+      g_SpyroShadow.m_NoFloor[g_SpyroShadow.m_SampleIdx] = 1;
+      g_SpyroShadow.unk_00[g_SpyroShadow.m_SampleIdx] = 0;
     } else {
-      D_8007AA10.unk_08[D_8007AA10.unk_20] = 0;
-      D_8007AA10.unk_00[D_8007AA10.unk_20] =
-          (D_8007AA10.m_Position.z - z) * 194 / 512;
+      g_SpyroShadow.m_NoFloor[g_SpyroShadow.m_SampleIdx] = 0;
+      g_SpyroShadow.unk_00[g_SpyroShadow.m_SampleIdx] =
+          (g_SpyroShadow.m_Position.z - z) * 194 / 512;
     }
   } else {
-    D_8007AA10.unk_08[D_8007AA10.unk_20] = 0;
-    D_8007AA10.unk_00[D_8007AA10.unk_20] = 0;
+    g_SpyroShadow.m_NoFloor[g_SpyroShadow.m_SampleIdx] = 0;
+    g_SpyroShadow.unk_00[g_SpyroShadow.m_SampleIdx] = 0;
   }
 }
 
@@ -6628,7 +6628,7 @@ void func_8004A200(void) {
   g_PadSwapFlag = 0;
 
   if (g_Spyro.m_noGamepadUpdateFrames != 0) {
-    func_80053708(&g_Pad, &g_PadBackup);
+    PadSwap(&g_Pad, &g_PadBackup);
     g_Spyro.m_noGamepadUpdateFrames--;
   }
 
@@ -6647,19 +6647,19 @@ void func_8004A200(void) {
   }
 
   for (i = 0; i < g_DeltaTime; i++) {
-    UpdateBodyAnimationState();
-    func_800499C0();
-    func_80049660();
+    SpyroUpdateBodyAnimation();
+    SpyroUpdateFlame();
+    SpyroUpdateHeadAnimation();
     func_80049F3C();
-    func_80049E8C();
+    SpyroUpdateTailAnimation();
   }
 
-  g_Spyro.m_bodyRotation.x = g_Spyro.m_Physics.m_SpeedAngle.m_RotX >> 4;
-  g_Spyro.m_bodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
-  g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
+  g_Spyro.m_BodyRotation.x = g_Spyro.m_Physics.m_SpeedAngle.m_RotX >> 4;
+  g_Spyro.m_BodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
+  g_Spyro.m_BodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
 
-  RotVec8ToMatrix(&g_Spyro.m_bodyRotation, &g_Spyro.m_RotationMatrix, nullptr);
-  RotVec8ToMatrix(&g_Spyro.m_headRotation, &g_Spyro.m_headRotationMatrix,
+  RotVec8ToMatrix(&g_Spyro.m_BodyRotation, &g_Spyro.m_RotationMatrix, nullptr);
+  RotVec8ToMatrix(&g_Spyro.m_HeadRotation, &g_Spyro.m_headRotationMatrix,
                   nullptr);
   MulMatrix0(&g_Spyro.m_RotationMatrix, &g_Spyro.m_headRotationMatrix,
              &g_Spyro.m_headRotationMatrix);
@@ -6729,40 +6729,40 @@ void func_8004A200(void) {
 
   // Body
   soundId[0] =
-      SPYRO_FRAME(g_Spyro.m_bodyAnimation, g_Spyro.m_bodyAnimationFrame)
+      SPYRO_FRAME(g_Spyro.m_BodyAnimation, g_Spyro.m_BodyAnimationFrame)
           .m_Props.soundForFrame;
 
   if (soundId[0] != 0xFF) {
     if (g_Spyro.m_LastBodyFrameData !=
-        SPYRO_FRAME(g_Spyro.m_bodyAnimation, g_Spyro.m_bodyAnimationFrame)
+        SPYRO_FRAME(g_Spyro.m_BodyAnimation, g_Spyro.m_BodyAnimationFrame)
             .m_Data) {
       PlaySound(soundId[0], (Moby *)&g_Spyro, 4, &g_Spyro.m_damageSoundChannel);
     }
   }
 
   g_Spyro.m_LastBodyFrameData =
-      SPYRO_FRAME(g_Spyro.m_bodyAnimation, g_Spyro.m_bodyAnimationFrame).m_Data;
+      SPYRO_FRAME(g_Spyro.m_BodyAnimation, g_Spyro.m_BodyAnimationFrame).m_Data;
 
   // Head
   soundId[1] =
-      SPYRO_FRAME(g_Spyro.m_headAnimation, g_Spyro.m_headAnimationFrame)
+      SPYRO_FRAME(g_Spyro.m_HeadAnimation, g_Spyro.m_HeadAnimationFrame)
           .m_Props.soundForFrame;
 
   if (soundId[1] != 0xFF && soundId[0] != soundId[1]) {
     if (g_Spyro.m_LastHeadFrameData !=
-        SPYRO_FRAME(g_Spyro.m_headAnimation, g_Spyro.m_headAnimationFrame)
+        SPYRO_FRAME(g_Spyro.m_HeadAnimation, g_Spyro.m_HeadAnimationFrame)
             .m_Data) {
       PlaySound(soundId[1], (Moby *)&g_Spyro, 4, &g_Spyro.m_damageSoundChannel);
     }
   }
 
   g_Spyro.m_LastHeadFrameData =
-      SPYRO_FRAME(g_Spyro.m_headAnimation, g_Spyro.m_headAnimationFrame).m_Data;
+      SPYRO_FRAME(g_Spyro.m_HeadAnimation, g_Spyro.m_HeadAnimationFrame).m_Data;
 
   g_Spyro.m_ControlFlags &= 0x7FFFFFFF;
 
   if (g_PadSwapFlag) {
-    func_80053708(&g_PadBackup, &g_Pad);
+    PadSwap(&g_PadBackup, &g_Pad);
   }
 
 #undef SPYRO_FRAME
@@ -6794,7 +6794,7 @@ void UpdateSpyroEnterReturnHome(void) {
 
   // Swap gamepad states
   g_PadSwapFlag = 0;
-  func_80053708(&g_Pad, &g_PadBackup);
+  PadSwap(&g_Pad, &g_PadBackup);
 
   // Force state to 15 (gliding) if not already there
   if (g_Spyro.m_State != 15) {
@@ -6821,7 +6821,7 @@ void UpdateSpyroEnterReturnHome(void) {
   VecShiftRight(&g_Spyro.m_Physics.m_Velocity, 6);
 
   // Save current position before movement
-  VecCopy(&g_Spyro.m_previousPosition, &g_Spyro.m_Position);
+  VecCopy(&g_Spyro.m_PreviousPosition, &g_Spyro.m_Position);
 
   // Add velocity to position
   VecAdd(&g_Spyro.m_Position, &g_Spyro.m_Position,
@@ -6834,26 +6834,26 @@ void UpdateSpyroEnterReturnHome(void) {
 
   // Run animation update loop
   for (i = 0; i < g_DeltaTime; i++) {
-    UpdateBodyAnimationState();
-    func_800499C0();
-    func_80049660();
+    SpyroUpdateBodyAnimation();
+    SpyroUpdateFlame();
+    SpyroUpdateHeadAnimation();
     func_80049F3C();
-    func_80049E8C();
+    SpyroUpdateTailAnimation();
   }
 
   // Cache pointers for matrix operations
-  bodyRot = &g_Spyro.m_bodyRotation;
+  bodyRot = &g_Spyro.m_BodyRotation;
   rotMatrix = &g_Spyro.m_RotationMatrix;
 
   // Update body rotation from speed angles
   bodyRot->x = g_Spyro.m_Physics.m_SpeedAngle.m_RotX >> 4;
-  g_Spyro.m_bodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
-  g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
+  g_Spyro.m_BodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
+  g_Spyro.m_BodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
 
   // Create rotation matrix from body rotation
   RotVec8ToMatrix(bodyRot, rotMatrix, nullptr);
 
-  // Create head rotation matrix from m_headRotation
+  // Create head rotation matrix from m_HeadRotation
   RotVec8ToMatrix((Vector3D8 *)((u_char *)bodyRot + 4),
                   &g_Spyro.m_headRotationMatrix, nullptr);
 
@@ -6865,7 +6865,7 @@ void UpdateSpyroEnterReturnHome(void) {
   g_Spyro.m_ControlFlags = 0;
 
   // Swap gamepad states back
-  func_80053708(&g_PadBackup, &g_Pad);
+  PadSwap(&g_PadBackup, &g_Pad);
 }
 
 /**
@@ -6896,7 +6896,7 @@ void UpdateSpyroReturnHome(void) {
 
   // Swap gamepad states
   g_PadSwapFlag = 0;
-  func_80053708(&g_Pad, &g_PadBackup);
+  PadSwap(&g_Pad, &g_PadBackup);
 
   // If state is 15 (gliding), set walking state to 8
   if (g_Spyro.m_State == 0xF) {
@@ -6920,7 +6920,7 @@ void UpdateSpyroReturnHome(void) {
   VecShiftRight(&g_Spyro.m_Physics.m_Velocity, 6);
 
   // Save current position before movement
-  VecCopy(&g_Spyro.m_previousPosition, &g_Spyro.m_Position);
+  VecCopy(&g_Spyro.m_PreviousPosition, &g_Spyro.m_Position);
 
   // Add velocity to position
   VecAdd(&g_Spyro.m_Position, &g_Spyro.m_Position,
@@ -6933,26 +6933,26 @@ void UpdateSpyroReturnHome(void) {
 
   // Run animation update loop
   for (i = 0; i < g_DeltaTime; i++) {
-    UpdateBodyAnimationState();
-    func_800499C0();
-    func_80049660();
+    SpyroUpdateBodyAnimation();
+    SpyroUpdateFlame();
+    SpyroUpdateHeadAnimation();
     func_80049F3C();
-    func_80049E8C();
+    SpyroUpdateTailAnimation();
   }
 
   // Cache pointers for matrix operations
-  bodyRot = &g_Spyro.m_bodyRotation;
+  bodyRot = &g_Spyro.m_BodyRotation;
   rotMatrix = &g_Spyro.m_RotationMatrix;
 
   // Update body rotation from speed angles
   bodyRot->x = g_Spyro.m_Physics.m_SpeedAngle.m_RotX >> 4;
-  g_Spyro.m_bodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
-  g_Spyro.m_bodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
+  g_Spyro.m_BodyRotation.y = g_Spyro.m_Physics.m_SpeedAngle.m_RotY >> 4;
+  g_Spyro.m_BodyRotation.z = g_Spyro.m_Physics.m_SpeedAngle.m_RotZ >> 4;
 
   // Create rotation matrix from body rotation
   RotVec8ToMatrix(bodyRot, rotMatrix, nullptr);
 
-  // Create head rotation matrix from m_headRotation (bodyRot + 4 for padding)
+  // Create head rotation matrix from m_HeadRotation (bodyRot + 4 for padding)
   RotVec8ToMatrix((Vector3D8 *)((u_char *)bodyRot + 4),
                   &g_Spyro.m_headRotationMatrix, nullptr);
 
@@ -6964,7 +6964,7 @@ void UpdateSpyroReturnHome(void) {
   g_Spyro.m_ControlFlags = 0;
 
   // Swap gamepad states back
-  func_80053708(&g_PadBackup, &g_Pad);
+  PadSwap(&g_PadBackup, &g_Pad);
 }
 
 void func_8004AC24(int pKeepPosition) {
@@ -6990,22 +6990,22 @@ void func_8004AC24(int pKeepPosition) {
 
     // Create backups of some values before wiping the entire spyro struct
     VecCopy(&posBackup, &g_Spyro.m_Position);
-    rotationBackup.x = g_Spyro.m_bodyRotation.x;
-    rotationBackup.y = g_Spyro.m_bodyRotation.y;
-    rotationBackup.z = g_Spyro.m_bodyRotation.z;
+    rotationBackup.x = g_Spyro.m_BodyRotation.x;
+    rotationBackup.y = g_Spyro.m_BodyRotation.y;
+    rotationBackup.z = g_Spyro.m_BodyRotation.z;
     healthBackup = g_Spyro.m_health;
 
     Memset(&g_Spyro, 0, sizeof(g_Spyro));
 
     VecCopy(&g_Spyro.m_Position, &posBackup);
 
-    g_Spyro.m_bodyRotation.x = rotationBackup.x;
-    g_Spyro.m_bodyRotation.y = rotationBackup.y;
-    g_Spyro.m_bodyRotation.z = rotationBackup.z;
+    g_Spyro.m_BodyRotation.x = rotationBackup.x;
+    g_Spyro.m_BodyRotation.y = rotationBackup.y;
+    g_Spyro.m_BodyRotation.z = rotationBackup.z;
     g_Spyro.m_health = healthBackup;
 
-    g_Spyro.m_sortingDepth = 4;
-    g_Spyro.m_nextBodyAnimationFrame = 1;
+    g_Spyro.m_DepthSortOffset = 4;
+    g_Spyro.m_NextBodyAnimationFrame = 1;
     g_Spyro.m_CollisionTriangleIndex = -1;
 
     g_Spyro.m_Physics.m_SpeedAngle.m_RotX = rotationBackup.x * 0x10;
@@ -7030,8 +7030,8 @@ void func_8004AC24(int pKeepPosition) {
     g_Spyro.m_drowningOffset = 0;
     g_SpyroFlame.m_FairyKissTimer = 0;
 
-    g_Spyro.m_Physics.m_SpeedAngle.m_RotX = g_Spyro.m_bodyRotation.x * 0x10;
-    g_Spyro.m_Physics.m_SpeedAngle.m_RotY = g_Spyro.m_bodyRotation.y * 0x10;
-    g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_bodyRotation.z * 0x10;
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotX = g_Spyro.m_BodyRotation.x * 0x10;
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotY = g_Spyro.m_BodyRotation.y * 0x10;
+    g_Spyro.m_Physics.m_SpeedAngle.m_RotZ = g_Spyro.m_BodyRotation.z * 0x10;
   }
 }

@@ -394,11 +394,11 @@ void func_80034480(void) {
 
     D_800756B8 = 0;
 
-    if (g_Spyro.m_sortingDepth < 127) {
-      g_Spyro.m_sortingDepth = 2;
+    if (g_Spyro.m_DepthSortOffset < 127) {
+      g_Spyro.m_DepthSortOffset = 2;
     }
 
-    D_8007AA10.unk_1c = 0;
+    g_SpyroShadow.m_DepthSortOffset = 0;
     g_Camera.m_SpyroOffCenterFrames++;
 
     if (g_Camera.m_SpyroOffCenterFrames > 30) {
@@ -2013,7 +2013,7 @@ void func_800377A8(void) {
       VecSub(&tempVector, &g_Camera.m_Position, &g_Spyro.m_Position);
       spyroCameraDistance = VecMagnitude(&tempVector, 1);
 
-      VecSub(&tempVector, &g_Camera.m_Position, &g_Spyro.m_previousPosition);
+      VecSub(&tempVector, &g_Camera.m_Position, &g_Spyro.m_PreviousPosition);
 
       if (spyroCameraDistance > g_Camera.unk_0xEC->unk_0x34 &&
           spyroCameraDistance > VecMagnitude(&tempVector, 1)) {
@@ -2130,7 +2130,7 @@ void CameraUpdate(void) {
   g_PadSwapFlag = 0;
 
   if (g_Spyro.m_noGamepadUpdateFrames != 0) {
-    func_80053708(&g_Pad, &g_PadBackup);
+    PadSwap(&g_Pad, &g_PadBackup);
   }
 
   if (g_Spyro.unk_0x194 != 0) {
@@ -2187,6 +2187,6 @@ void CameraUpdate(void) {
   }
 
   if (g_PadSwapFlag != 0) {
-    func_80053708(&g_PadBackup, &g_Pad);
+    PadSwap(&g_PadBackup, &g_Pad);
   }
 }
