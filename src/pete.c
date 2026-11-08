@@ -1147,17 +1147,20 @@ void SpyroSetState(int pNewState) {
 
       if (angle > 1024) {
         angle = 2048 - angle;
-        along = D_8006C5C0 + ((slope * (D_8006C5CC - D_8006C5C0)) >> 12);
+        along = D_8006C5B8[0][2] +
+                ((slope * (D_8006C5B8[1][2] - D_8006C5B8[0][2])) >> 12);
       } else {
-        along = D_8006C5B8 + ((slope * (D_8006C5C4 - D_8006C5B8)) >> 12);
+        along = D_8006C5B8[0][0] +
+                ((slope * (D_8006C5B8[1][0] - D_8006C5B8[0][0])) >> 12);
       }
 
-      across = D_8006C5BC + ((slope * (D_8006C5C8 - D_8006C5BC)) >> 12);
+      across = D_8006C5B8[0][1] +
+               ((slope * (D_8006C5B8[1][1] - D_8006C5B8[0][1])) >> 12);
       along = (along * Cos(angle)) >> 12;
       across = (across * Sin(angle)) >> 12;
       g_Spyro.m_Physics.unk_0x144 = SquareRoot(along * along + across * across);
     } else {
-      g_Spyro.m_Physics.unk_0x144 = D_8006C5B8;
+      g_Spyro.m_Physics.unk_0x144 = D_8006C5B8[0][0];
     }
 
     g_Spyro.unk_0x15c = 1;
@@ -5462,17 +5465,20 @@ void func_80047B60(void) {
 
       if (angle > 1024) {
         angle = 2048 - angle;
-        along = D_8006C5C0 + ((slope * (D_8006C5CC - D_8006C5C0)) >> 12);
+        along = D_8006C5B8[0][2] +
+                ((slope * (D_8006C5B8[1][2] - D_8006C5B8[0][2])) >> 12);
       } else {
-        along = D_8006C5B8 + ((slope * (D_8006C5C4 - D_8006C5B8)) >> 12);
+        along = D_8006C5B8[0][0] +
+                ((slope * (D_8006C5B8[1][0] - D_8006C5B8[0][0])) >> 12);
       }
 
-      across = D_8006C5BC + ((slope * (D_8006C5C8 - D_8006C5BC)) >> 12);
+      across = D_8006C5B8[0][1] +
+               ((slope * (D_8006C5B8[1][1] - D_8006C5B8[0][1])) >> 12);
       along = (along * Cos(angle)) >> 12;
       across = (across * Sin(angle)) >> 12;
       g_Spyro.m_Physics.unk_0x144 = SquareRoot(along * along + across * across);
     } else {
-      g_Spyro.m_Physics.unk_0x144 = D_8006C5B8;
+      g_Spyro.m_Physics.unk_0x144 = D_8006C5B8[0][0];
     }
 
     if (g_Spyro.m_State == 3) {

@@ -83,7 +83,7 @@ SECTIONS
         FILL(0x00000000);
         main_RODATA_START = .;
 
-        DEFINE_SECTIONS(.rodata)
+        DEFINE_SECTIONS(.rodata*)
 
         #ifndef NEW_PSYQ
 
@@ -111,7 +111,7 @@ SECTIONS
         main_RODATA_END = .;
         main_RODATA_SIZE = ABSOLUTE(main_RODATA_END - main_RODATA_START);
         main_TEXT_START = .;
-        DEFINE_SECTIONS(.text)
+        DEFINE_SECTIONS(.text*)
 
         #ifndef NEW_PSYQ
 

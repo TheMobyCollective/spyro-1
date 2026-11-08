@@ -292,12 +292,7 @@ extern int D_800758A0;
 extern int D_80075700;
 
 // Tweaking parameters in .data for some reason
-extern int D_8006C5B8;
-extern int D_8006C5BC;
-extern int D_8006C5C0;
-extern int D_8006C5C4;
-extern int D_8006C5C8;
-extern int D_8006C5CC;
+extern int D_8006C5B8[2][3];
 
 typedef struct {
   Vector3D m_Position;
