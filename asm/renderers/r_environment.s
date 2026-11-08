@@ -58,8 +58,8 @@ glabel func_800258F0
 /* 16178 80025978 03C11800 */  sra        $t8, $t8, 4
 /* 1617C 8002597C 03C91900 */  sra        $t9, $t9, 4
 
-/* 16180 80025980 0780143C */  lui        $s4, %hi(D_800771C8)
-/* 16184 80025984 C8719426 */  addiu      $s4, $s4, %lo(D_800771C8)
+/* 16180 80025980 0780143C */  lui        $s4, %hi(g_EnvSectorDrawn)
+/* 16184 80025984 C8719426 */  addiu      $s4, $s4, %lo(g_EnvSectorDrawn)
 /* 16188 80025988 00008122 */  addi       $at, $s4, 0x0 /* handwritten instruction */
 /* 1618C 8002598C 00018222 */  addi       $v0, $s4, 0x100 /* handwritten instruction */
 .L80025990:

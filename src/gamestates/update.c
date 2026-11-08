@@ -139,8 +139,8 @@ void func_8002DF9C(void) {
 
 /// @brief Gamestate 9
 void func_8002E000(void) {
-  func_8004A200(); // Spyro update
-  CameraUpdate();  // Camera update
+  SpyroUpdate();  // Spyro update
+  CameraUpdate(); // Camera update
 
   g_Camera.m_Rotation.y &= 0xFFF;
 
@@ -172,7 +172,7 @@ void func_8002E084(void) {
 
   } else {
     if (D_8007568C == 16 && D_800758B8 == 0) {
-      func_8003EA68(15); // Set state to gliding
+      SpyroSetState(15); // Set state to gliding
     }
   }
 }
@@ -630,7 +630,7 @@ void func_8002EDF0(void) {
     g_Camera.m_Position.z = 2048;
     g_Camera.m_Rotation.y = g_GameOverRotY;
     g_Camera.m_Rotation.z = g_GameOverRotZ;
-    func_8004AC24(1);
+    SpyroReset(1);
 
     // Reset Spyro's stats and clear the checkpoint state.
     g_Spyro.m_BodyAnimation = 16;
@@ -764,13 +764,13 @@ void func_8002F3E4(void) {
 
     g_GameTick++;
     g_UpdateMoby();
-    func_8004A200();
+    SpyroUpdate();
     CameraUpdate();
 
-    D_80076248.unk_0x0 = 1;
-    D_80076248.unk_0x2b = g_DragonCutscene.m_CutsceneTicks * 4 + 64;
-    D_80076248.unk_0x24 = g_DragonCutscene.m_CutsceneTicks * 16;
-    D_80076248.vec_0x28.z +=
+    g_DragonCutsceneFlash.unk_0x0 = 1;
+    g_DragonCutsceneFlash.unk_0x2b = g_DragonCutscene.m_CutsceneTicks * 4 + 64;
+    g_DragonCutsceneFlash.unk_0x24 = g_DragonCutscene.m_CutsceneTicks * 16;
+    g_DragonCutsceneFlash.vec_0x28.z +=
         ((g_DragonCutscene.m_CutsceneTicks >> 4) + 2) * g_DeltaTime;
 
     if (g_DragonCutscene.m_CutsceneTicks > 32) {
@@ -844,7 +844,7 @@ void func_8002F3E4(void) {
       }
 
       g_SavedFairyKissTimer = g_SpyroFlame.m_FairyKissTimer;
-      func_8004AC24(1);
+      SpyroReset(1);
       g_Spyro.m_BodyAnimation = 1;
       g_Spyro.m_NextBodyAnimation = 1;
       g_Spyro.m_NextBodyAnimationFrame = 1;
@@ -872,12 +872,12 @@ void func_8002F3E4(void) {
 
     if (g_DragonCutscene.m_CutsceneTicks < 32) {
       remaining = 32 - g_DragonCutscene.m_CutsceneTicks;
-      D_80076248.unk_0x0 = 1;
-      D_80076248.unk_0x2b = remaining * 4 + 64;
-      D_80076248.unk_0x24 = remaining * 16;
-      D_80076248.vec_0x28.z += ((remaining >> 4) + 2) * g_DeltaTime;
+      g_DragonCutsceneFlash.unk_0x0 = 1;
+      g_DragonCutsceneFlash.unk_0x2b = remaining * 4 + 64;
+      g_DragonCutsceneFlash.unk_0x24 = remaining * 16;
+      g_DragonCutsceneFlash.vec_0x28.z += ((remaining >> 4) + 2) * g_DeltaTime;
     } else {
-      D_80076248.unk_0x0 = 0;
+      g_DragonCutsceneFlash.unk_0x0 = 0;
     }
 
     if (g_DragonCutscene.m_CutsceneTicks < 8) {
@@ -1102,19 +1102,15 @@ void func_8002F3E4(void) {
       }
     }
 
-    delta.x =
-        (g_Spyro.m_floorPositonOnSlope.x * Cos(g_Spyro.m_BodyRotation.z * 16) +
-         g_Spyro.m_floorPositonOnSlope.y *
-             Sin(g_Spyro.m_BodyRotation.z * 16)) >>
-        12;
-    delta.y =
-        (g_Spyro.m_floorPositonOnSlope.y * Cos(g_Spyro.m_BodyRotation.z * 16) -
-         g_Spyro.m_floorPositonOnSlope.x *
-             Sin(g_Spyro.m_BodyRotation.z * 16)) >>
-        12;
-    delta.z = g_Spyro.m_floorPositonOnSlope.z;
-    g_Spyro.m_BodyRotation.x = -Atan2(
-        func_80017A38(delta.x * delta.x + delta.z * delta.z), delta.y, 1);
+    delta.x = (g_Spyro.m_FloorNormal.x * Cos(g_Spyro.m_BodyRotation.z * 16) +
+               g_Spyro.m_FloorNormal.y * Sin(g_Spyro.m_BodyRotation.z * 16)) >>
+              12;
+    delta.y = (g_Spyro.m_FloorNormal.y * Cos(g_Spyro.m_BodyRotation.z * 16) -
+               g_Spyro.m_FloorNormal.x * Sin(g_Spyro.m_BodyRotation.z * 16)) >>
+              12;
+    delta.z = g_Spyro.m_FloorNormal.z;
+    g_Spyro.m_BodyRotation.x =
+        -Atan2(SquareRoot(delta.x * delta.x + delta.z * delta.z), delta.y, 1);
     g_Spyro.m_BodyRotation.y = -Atan2(delta.z, delta.x, 1);
 
     SpyroBodyAnimationAdvance(g_Spyro.m_BodyAnimationSpeed);
@@ -1456,7 +1452,7 @@ void func_8002F3E4(void) {
       VecCopy(&pos, &g_DragonCutscene.m_CutsceneDragon->m_Position);
       pos.z += 64;
       g_SpawnParticle(32, 24, &pos, 0);
-      VecCopy(&D_80076248.vec_0x04, &pos);
+      VecCopy(&g_DragonCutsceneFlash.vec_0x04, &pos);
       MobyFree(g_DragonCutscene.m_CutsceneDragon);
       MobyFree(g_DragonCutscene.m_CutsceneSpyro);
       PlaySound(g_Spu.m_SoundTable->dragonCounter, nullptr, 16,
@@ -1516,12 +1512,12 @@ void func_8002F3E4(void) {
     }
 
     g_DragonCutscene.m_Fade = fade * 16 - 1;
-    D_80076248.unk_0x0 = 1;
-    D_80076248.unk_0x2b = fade * 8 + 64;
-    D_80076248.unk_0x24 = fade * 80;
-    D_80076248.vec_0x28.z += 8;
+    g_DragonCutsceneFlash.unk_0x0 = 1;
+    g_DragonCutsceneFlash.unk_0x2b = fade * 8 + 64;
+    g_DragonCutsceneFlash.unk_0x24 = fade * 80;
+    g_DragonCutsceneFlash.vec_0x28.z += 8;
     if (g_DragonCutscene.m_CutsceneTicks >= 32) {
-      D_80076248.unk_0x0 = 0;
+      g_DragonCutsceneFlash.unk_0x0 = 0;
       func_8002CB6C();
     }
     break;
@@ -1983,9 +1979,9 @@ void func_800314B4(void) {
 
 /*
  * The Balloonist ride/cutscene state. The bulk of the per-state logic lives in
- * the level overlay reached through D_8007574C. This routine only handles the
- * "in flight to the destination homeworld" phase (m_State == 4) directly,
- * dispatching to the overlay code for every other state.
+ * the level overlay reached through g_BalloonistUpdate. This routine only
+ * handles the "in flight to the destination homeworld" phase (m_State == 4)
+ * directly, dispatching to the overlay code for every other state.
  *
  * For m_State == 4 it:
  *   - keeps streaming the destination level in (LoadLevel) until it has caught
@@ -2012,53 +2008,54 @@ void func_800324D8(void) {
   int orbitRadius;
   int balloonSpin;
 
-  D_800777E8.unk_0x04 += g_DeltaTime;
+  g_Balloonist.unk_0x04 += g_DeltaTime;
   SpecularUpdate(3);
 
-  if (D_800777E8.m_State == 4) {
+  if (g_Balloonist.m_State == 4) {
     // Keep pulling the destination level in until it is fully streamed.
     if (g_LoadStage < 10) {
       LoadLevel(1);
     }
 
-    if (D_800777E8.unk_0x04 < 256) {
+    if (g_Balloonist.unk_0x04 < 256) {
       // Sin-shaped ease (0 -> 0x1000) over the orbit.
-      sineProgress = Sin(((D_800777E8.unk_0x04 << 11) >> 8) - 1024) + 4096;
+      sineProgress = Sin(((g_Balloonist.unk_0x04 << 11) >> 8) - 1024) + 4096;
 
       // Interpolate the orbit azimuth, taking the short way around the circle.
-      if (((D_800777E8.unk_0x50 - D_800777E8.unk_0x38) & 0xFFF) <= 2048) {
-        orbitAngle =
-            D_800777E8.unk_0x38 +
-            (FIXED_MUL(func_80017928(D_800777E8.unk_0x50, D_800777E8.unk_0x38),
-                       sineProgress) >>
-             1);
+      if (((g_Balloonist.unk_0x50 - g_Balloonist.unk_0x38) & 0xFFF) <= 2048) {
+        orbitAngle = g_Balloonist.unk_0x38 +
+                     (FIXED_MUL(func_80017928(g_Balloonist.unk_0x50,
+                                              g_Balloonist.unk_0x38),
+                                sineProgress) >>
+                      1);
       } else {
-        orbitAngle =
-            D_800777E8.unk_0x38 -
-            (FIXED_MUL(func_80017928(D_800777E8.unk_0x50, D_800777E8.unk_0x38),
-                       sineProgress) >>
-             1);
+        orbitAngle = g_Balloonist.unk_0x38 -
+                     (FIXED_MUL(func_80017928(g_Balloonist.unk_0x50,
+                                              g_Balloonist.unk_0x38),
+                                sineProgress) >>
+                      1);
       }
 
-      orbitRadius =
-          D_800777E8.unk_0x3c +
-          (FIXED_MUL(D_800777E8.unk_0x54 - D_800777E8.unk_0x3c, sineProgress) >>
-           1);
+      orbitRadius = g_Balloonist.unk_0x3c +
+                    (FIXED_MUL(g_Balloonist.unk_0x54 - g_Balloonist.unk_0x3c,
+                               sineProgress) >>
+                     1);
 
-      g_Camera.m_Position.x = D_800777E8.m_BalloonMoby->m_Position.x +
+      g_Camera.m_Position.x = g_Balloonist.m_BalloonMoby->m_Position.x +
                               FIXED_MUL(Cos(orbitAngle), orbitRadius);
-      g_Camera.m_Position.y = D_800777E8.m_BalloonMoby->m_Position.y +
+      g_Camera.m_Position.y = g_Balloonist.m_BalloonMoby->m_Position.y +
                               FIXED_MUL(Sin(orbitAngle), orbitRadius);
       g_Camera.m_Position.z =
-          D_800777E8.unk_0x40 +
-          (FIXED_MUL(D_800777E8.unk_0x58 - D_800777E8.unk_0x40, sineProgress) >>
+          g_Balloonist.unk_0x40 +
+          (FIXED_MUL(g_Balloonist.unk_0x58 - g_Balloonist.unk_0x40,
+                     sineProgress) >>
            1);
 
-      VecSub(&toCamera, &D_800777E8.m_BalloonMoby->m_Position,
+      VecSub(&toCamera, &g_Balloonist.m_BalloonMoby->m_Position,
              &g_Camera.m_Position);
       toCamera.z += 512;
 
-      if (D_800777E8.unk_0x04 < 64) {
+      if (g_Balloonist.unk_0x04 < 64) {
         // Ease the look direction toward the balloon over the first frames.
         targetRot.x = 0;
         targetRot.y = Atan2(VecMagnitude(&toCamera, 0), -toCamera.z, 1);
@@ -2066,13 +2063,13 @@ void func_800324D8(void) {
         g_Camera.m_Rotation.y =
             (g_Camera.m_Rotation.y +
              (func_8001796C(targetRot.y, g_Camera.m_Rotation.y) *
-                  D_800777E8.unk_0x04 >>
+                  g_Balloonist.unk_0x04 >>
               6)) &
             0xFFF;
         g_Camera.m_Rotation.z =
             (g_Camera.m_Rotation.z +
              (func_8001796C(targetRot.z, g_Camera.m_Rotation.z) *
-                  D_800777E8.unk_0x04 >>
+                  g_Balloonist.unk_0x04 >>
               6)) &
             0xFFF;
       } else {
@@ -2087,34 +2084,34 @@ void func_800324D8(void) {
       int *pArrivalRotation;
 
       g_Cyclorama = g_NewCyclorama;
-      D_800777E8.m_State = 5;
-      D_800777E8.unk_0x04 = 0;
+      g_Balloonist.m_State = 5;
+      g_Balloonist.unk_0x04 = 0;
 
       // Reposition/orient the balloonist moby at the arrival point.
-      VecCopy(&D_800777E8.m_BalloonMoby->m_Position,
-              &D_8006EA4C[D_800777E8.m_Homeworld].m_Position);
+      VecCopy(&g_Balloonist.m_BalloonMoby->m_Position,
+              &D_8006EA4C[g_Balloonist.m_Homeworld].m_Position);
 
-      pArrivalRotation = &D_8006EA4C[D_800777E8.m_Homeworld].m_Rotation;
-      D_800777E8.m_BalloonMoby->m_Rotation.z = *pArrivalRotation;
+      pArrivalRotation = &D_8006EA4C[g_Balloonist.m_Homeworld].m_Rotation;
+      g_Balloonist.m_BalloonMoby->m_Rotation.z = *pArrivalRotation;
 
       // Drop Spyro onto the balloon, slightly above it.
-      VecCopy(&g_Spyro.m_Position, &D_800777E8.m_BalloonMoby->m_Position);
+      VecCopy(&g_Spyro.m_Position, &g_Balloonist.m_BalloonMoby->m_Position);
       g_Spyro.m_Position.z += 724;
-      g_Spyro.m_BodyRotation.z = D_800777E8.m_BalloonMoby->m_Rotation.z + 128;
+      g_Spyro.m_BodyRotation.z = g_Balloonist.m_BalloonMoby->m_Rotation.z + 128;
 
       // Place the camera on the orbit at a fixed start angle/radius.
-      D_800777E8.unk_0x50 =
-          (D_800777E8.m_BalloonMoby->m_Rotation.z * 16 + 912) & 0xFFF;
+      g_Balloonist.unk_0x50 =
+          (g_Balloonist.m_BalloonMoby->m_Rotation.z * 16 + 912) & 0xFFF;
 
       g_Camera.m_Position.x =
-          D_800777E8.m_BalloonMoby->m_Position.x +
-          FIXED_MUL(Cos(D_800777E8.unk_0x50), D_800777E8.unk_0x54);
+          g_Balloonist.m_BalloonMoby->m_Position.x +
+          FIXED_MUL(Cos(g_Balloonist.unk_0x50), g_Balloonist.unk_0x54);
       g_Camera.m_Position.y =
-          D_800777E8.m_BalloonMoby->m_Position.y +
-          FIXED_MUL(Sin(D_800777E8.unk_0x50), D_800777E8.unk_0x54);
-      g_Camera.m_Position.z = D_800777E8.m_BalloonMoby->m_Position.z + 512;
+          g_Balloonist.m_BalloonMoby->m_Position.y +
+          FIXED_MUL(Sin(g_Balloonist.unk_0x50), g_Balloonist.unk_0x54);
+      g_Camera.m_Position.z = g_Balloonist.m_BalloonMoby->m_Position.z + 512;
 
-      VecSub(&arrivalVec, &D_800777E8.m_BalloonMoby->m_Position,
+      VecSub(&arrivalVec, &g_Balloonist.m_BalloonMoby->m_Position,
              &g_Camera.m_Position);
       arrivalVec.z += 512;
       g_Camera.m_Rotation.y =
@@ -2123,14 +2120,14 @@ void func_800324D8(void) {
 
       // Seed the orbit parameters for the m_State == 5 descent.
       balloonSpin =
-          (D_800777E8.m_BalloonMoby->m_Rotation.z * 16 + 2976) & 0xFFF;
-      D_800777E8.unk_0x58 = g_Camera.m_Position.z;
-      D_800777E8.unk_0x40 = g_Camera.m_Position.z - 4046;
-      D_800777E8.unk_0x38 = balloonSpin;
+          (g_Balloonist.m_BalloonMoby->m_Rotation.z * 16 + 2976) & 0xFFF;
+      g_Balloonist.unk_0x58 = g_Camera.m_Position.z;
+      g_Balloonist.unk_0x40 = g_Camera.m_Position.z - 4046;
+      g_Balloonist.unk_0x38 = balloonSpin;
     }
   } else {
     // All other states are handled by the level overlay's camera code.
-    (*D_8007574C)();
+    (*g_BalloonistUpdate)();
   }
 
   SpyroBodyAnimationAdvance(g_Spyro.m_BodyAnimationSpeed);
@@ -2268,7 +2265,7 @@ void GamestateCutsceneTransition(void) {
     g_Camera.m_Position.z = 0x2000;
 
     // Reset Spyro physics (full reset) and set initial flyby position
-    func_8004AC24(1); // Clears state machine and velocities
+    SpyroReset(1); // Clears state machine and velocities
     g_Spyro.m_Position.x = 0x2780;
     g_Spyro.m_Position.y = 0xF00;
     g_Spyro.m_Position.z = 0x29A0;
@@ -2384,7 +2381,7 @@ void GamestateCutsceneTransition(void) {
           g_DemoMode = DEMO_MODE_PLAY;
           g_DemoFadeTimer = 0;
         }
-        func_8004AC24(1); // Reset Spyro for actual gameplay
+        SpyroReset(1); // Reset Spyro for actual gameplay
         LoadLevel(1);
         return;
       }
@@ -2716,7 +2713,7 @@ void GamestateUpdate(void) {
     return;
   }
 
-  func_8004A200(); // Main Spyro update (physics, state machine, animation)
+  SpyroUpdate(); // Main Spyro update (physics, state machine, animation)
 
   // Skip remaining updates during respawn/death states
   if (g_Gamestate == GS_Respawn || g_Gamestate == GS_GameOver ||

@@ -1,3 +1,63 @@
+
+#define DEFINE_SECTIONS(sec) \
+    build/asm/data/game.data.o(sec); \
+    build/asm/data/math.data.o(sec); \
+    build/asm/data/save_header.o(sec); \
+    build/asm/data/game.sdata.o(sec); \
+    build/src/strings.o(sec); \
+    build/asm/data/titlescreen_data.o(sec); \
+    build/asm/data/pad_act_align.o(sec); \
+    build/asm/data/unknown_data.o(sec); \
+    build/asm/data/sony_text.o(sec); \
+    build/asm/data/game.sbss.o(sec); \
+    build/asm/data/game.bss.o(sec); \
+    build/src/main.o(sec); \
+    build/src/initialization.o(sec); \
+    build/src/loaders.o(sec); \
+    build/src/cd.o(sec); \
+    build/asm/order_table.o(sec); \
+    build/asm/memory.o(sec); \
+    build/asm/math.o(sec); \
+    build/asm/images.o(sec); \
+    build/asm/system_time.o(sec); \
+    build/src/gamestates/draw.o(sec); \
+    build/asm/renderers/r_moby.o(sec); \
+    build/asm/renderers/r_pete.o(sec); \
+    build/asm/renderers/r_environment.o(sec); \
+    build/src/environment.o(sec); \
+    build/src/crash_demo.o(sec); \
+    build/src/completion.o(sec); \
+    build/src/music.o(sec); \
+    build/src/cutscene.o(sec); \
+    build/src/gamestates/init.o(sec); \
+    build/src/cheats.o(sec); \
+    build/asm/data/entrance_stones.o(sec); \
+    build/src/gamestates/update.o(sec); \
+    build/src/camera.o(sec); \
+    build/src/moby_interpolation_check.o(sec); \
+    build/src/rand.o(sec); \
+    build/src/moby_helpers.o(sec); \
+    build/src/pete.o(sec); \
+    build/asm/collision.o(sec); \
+    build/asm/renderers/r_cyclorama.o(sec); \
+    build/src/cyclorama.o(sec); \
+    build/asm/moby_lists.o(sec); \
+    build/asm/42CC4.o(sec); \
+    build/asm/particle_alloc.o(sec); \
+    build/src/gamepad.o(sec); \
+    build/src/hud.o(sec); \
+    build/src/spu.o(sec); \
+    build/src/special_surfaces.o(sec); \
+    build/asm/renderers/r_particles.o(sec); \
+    build/src/specular_and_metal.o(sec); \
+    build/asm/renderers/r_flame.o(sec); \
+    build/src/checkpoint.o(sec); \
+    build/src/save_file.o(sec); \
+    build/asm/renderers/r_shadows.o(sec); \
+    build/asm/overlay_space_pointer.o(sec); \
+    build/src/overlay_pointers.o(sec); \
+    build/src/4BEF8.o(sec);
+
 SECTIONS
 {
     /****************************************************************************************
@@ -22,18 +82,8 @@ SECTIONS
     {
         FILL(0x00000000);
         main_RODATA_START = .;
-        build/src/strings.o(.rodata);
-        build/src/loaders.o(.rodata);
-        build/src/gamestates/draw.o(.rodata);
-        build/src/crash_demo.o(.rodata);
-        build/src/gamestates/update.o(.rodata);
-        build/src/pete.o(.rodata);
-        build/src/special_surfaces.o(.rodata);
 
-        /* Putting overlay_pointer's .sdata here is cleaner than */
-        /* Having the pointer in a seperate assembly file */
-        build/src/overlay_pointers.o(.sdata);
-        build/src/overlay_pointers.o(.rodata);
+        DEFINE_SECTIONS(.rodata)
 
         #ifndef NEW_PSYQ
 
@@ -57,99 +107,11 @@ SECTIONS
         
         #endif
 
-        build/src/main.o(.rodata);
-        build/src/initialization.o(.rodata);
-        build/src/cd.o(.rodata);
-        build/asm/order_table.o(.rodata);
-        build/asm/memory.o(.rodata);
-        build/asm/math.o(.rodata);
-        build/asm/images.o(.rodata);
-        
-        build/asm/system_time.o(.rodata);
-
-        build/asm/renderers/r_moby.o(.rodata);
-        build/asm/renderers/r_pete.o(.rodata);
-        build/asm/renderers/r_environment.o(.rodata);
-
-        build/src/environment.o(.rodata);
-        build/src/completion.o(.rodata);
-        build/src/music.o(.rodata);
-        build/src/cutscene.o(.rodata);
-        build/src/gamestates/init.o(.rodata);
-        build/src/cheats.o(.rodata);
-        build/src/camera.o(.rodata);
-        build/src/moby_interpolation_check.o(.rodata);
-        build/src/rand.o(.rodata);
-        build/src/moby_helpers.o(.rodata);
-        build/asm/collision.o(.rodata);
-        build/asm/renderers/r_cyclorama.o(.rodata);
-        build/src/cyclorama.o(.rodata);
-        build/asm/moby_lists.o(.rodata);
-        build/asm/42CC4.o(.rodata);
-        build/asm/particle_alloc.o(.rodata);
-        build/src/gamepad.o(.rodata);
-        build/src/hud.o(.rodata);
-        build/src/spu.o(.rodata);
-        build/asm/renderers/r_particles.o(.rodata);
-        build/src/specular_and_metal.o(.rodata);
-        build/asm/renderers/r_flame.o(.rodata);
-        build/src/checkpoint.o(.rodata);
-        build/src/save_file.o(.rodata);
-        build/asm/renderers/r_shadows.o(.rodata);
-        build/src/4BEF8.o(.rodata);
         . = ALIGN(., 4);
         main_RODATA_END = .;
         main_RODATA_SIZE = ABSOLUTE(main_RODATA_END - main_RODATA_START);
         main_TEXT_START = .;
-        build/src/main.o(.text*);
-        build/src/initialization.o(.text);
-        build/src/loaders.o(.text);
-        build/src/cd.o(.text);
-
-        build/asm/order_table.o(.text);
-        build/asm/memory.o(.text);
-        build/asm/math.o(.text);
-        build/asm/images.o(.text);
-
-        build/asm/system_time.o(.text);
-
-        build/src/gamestates/draw.o(.text);
-
-        build/asm/renderers/r_moby.o(.text);
-        build/asm/renderers/r_pete.o(.text);
-        build/asm/renderers/r_environment.o(.text);
-
-        build/src/environment.o(.text);
-        build/src/crash_demo.o(.text);
-        build/src/completion.o(.text);
-        build/src/music.o(.text);
-        build/src/cutscene.o(.text);
-        build/src/gamestates/init.o(.text);
-        build/src/cheats.o(.text);
-        build/src/gamestates/update.o(.text);
-        build/src/camera.o(.text);
-        build/src/moby_interpolation_check.o(.text);
-        build/src/rand.o(.text);
-        build/src/moby_helpers.o(.text);
-        build/src/pete.o(.text);
-        build/asm/collision.o(.text);
-        build/asm/renderers/r_cyclorama.o(.text);
-        build/src/cyclorama.o(.text);
-        build/asm/moby_lists.o(.text);
-        build/asm/42CC4.o(.text);
-        build/asm/particle_alloc.o(.text);
-        build/src/gamepad.o(.text);
-        build/src/hud.o(.text);
-        build/src/spu.o(.text);
-        build/src/special_surfaces.o(.text);
-        build/asm/renderers/r_particles.o(.text);
-        build/src/specular_and_metal.o(.text);
-        build/asm/renderers/r_flame.o(.text);
-        build/src/checkpoint.o(.text);
-        build/src/save_file.o(.text);
-        build/asm/renderers/r_shadows.o(.text);
-        build/src/overlay_pointers.o(.text);
-        build/src/4BEF8.o(.text);
+        DEFINE_SECTIONS(.text)
 
         #ifndef NEW_PSYQ
 
@@ -178,58 +140,7 @@ SECTIONS
         main_TEXT_END = .;
         main_TEXT_SIZE = ABSOLUTE(main_TEXT_END - main_TEXT_START);
         main_DATA_START = .;
-        build/asm/data/game.data.o(.data);
-        build/asm/data/math.data.o(.data);
-        build/asm/data/save_header.o(.data);
-        build/asm/images.o(.data);
-
-        build/asm/system_time.o(.data);
-
-        build/asm/renderers/r_moby.o(.data);
-        build/asm/renderers/r_pete.o(.data);
-        build/asm/renderers/r_environment.o(.data);
-
-        build/src/environment.o(.data);
-        build/src/completion.o(.data);
-        build/src/music.o(.data);
-        build/src/cutscene.o(.data);
-        build/src/gamestates/init.o(.data);
-        build/src/strings.o(.data);
-        build/asm/data/titlescreen_data.o(.data);
-        build/asm/data/pad_act_align.o(.data);
-        build/asm/data/unknown_data.o(.data);
-        build/src/loaders.o(.data);
-        build/src/gamestates/draw.o(.data);
-        build/src/crash_demo.o(.data);
-        build/src/gamestates/update.o(.data);
-        build/src/pete.o(.data);
-        build/src/special_surfaces.o(.data);
-        build/src/overlay_pointers.o(.data);
-        build/asm/data/sony_text.o(.data);
-        build/src/cheats.o(.data);
-        build/asm/data/entrance_stones.o(.data);
-        build/src/camera.o(.data);
-        build/src/moby_interpolation_check.o(.data);
-        build/src/rand.o(.data);
-        build/src/moby_helpers.o(.data);
-        build/asm/collision.o(.data);
-        build/asm/renderers/r_cyclorama.o(.data);
-        build/src/cyclorama.o(.data);
-        build/asm/moby_lists.o(.data);
-        build/asm/42CC4.o(.data);
-        build/asm/particle_alloc.o(.data);
-        build/src/gamepad.o(.data);
-        build/src/hud.o(.data);
-        build/src/spu.o(.data);
-        build/asm/renderers/r_particles.o(.data);
-        build/src/specular_and_metal.o(.data);
-        build/asm/renderers/r_flame.o(.data);
-        build/src/checkpoint.o(.data);
-        build/src/save_file.o(.data);
-        build/asm/renderers/r_shadows.o(.data);
-        build/src/4BEF8.o(.data);
-
-        psyq_data = .;
+        DEFINE_SECTIONS(.data)
 
         #ifndef NEW_PSYQ
 
@@ -239,7 +150,6 @@ SECTIONS
         #else
 
         /* for new psyq */
-        build/asm/data/psyq.sqrt_tbl.o(.data);
         *libapi.a:*(.data .data.*)
         *libgte.a:*(.data .data.*)
         *libspu.a:*(.data .data.*)
@@ -254,12 +164,6 @@ SECTIONS
 
         #endif
 
-
-        build/src/main.o(.data);
-        build/src/initialization.o(.data);
-        build/src/cd.o(.data);
-        build/asm/order_table.o(.data);
-        build/asm/memory.o(.data);
         . = ALIGN(., 4);
         main_DATA_END = .;
         main_DATA_SIZE = ABSOLUTE(main_DATA_END - main_DATA_START);
@@ -269,10 +173,7 @@ SECTIONS
         /* But that's not what most developers did */
         _gp = .;
 
-        build/asm/data/game.sdata.o(.sdata);
-        build/src/strings.o(.sdata);
-        build/asm/data/initialization.sdata.o(.sdata);
-        build/src/gamestates/draw.o(.sdata);
+        DEFINE_SECTIONS(.sdata)
         . = ALIGN(., 4);
         main_SDATA_END = .;
         main_SDATA_SIZE = ABSOLUTE(main_SDATA_END - main_SDATA_START);
@@ -309,19 +210,12 @@ SECTIONS
 
         #endif
 
-        build/asm/data/game.sbss.o(.sbss);
+        DEFINE_SECTIONS(.sbss)
+
         . = ALIGN(., 4);
         main_SBSS_END = .;
         main_SBSS_SIZE = ABSOLUTE(main_SBSS_END - main_SBSS_START);
         main_BSS_START = .;
-        build/src/strings.o(.bss);
-        build/src/loaders.o(.bss);
-        build/src/gamestates/draw.o(.bss);
-        build/src/crash_demo.o(.bss);
-        build/src/gamestates/update.o(.bss);
-        build/src/pete.o(.bss);
-        build/src/special_surfaces.o(.bss);
-        build/src/overlay_pointers.o(.bss);
 
         #ifndef NEW_PSYQ
 
@@ -345,45 +239,8 @@ SECTIONS
 
         #endif
 
-
-        build/src/main.o(.bss);
-        build/src/initialization.o(.bss);
-        build/src/cd.o(.bss);
-        build/asm/order_table.o(.bss);
-        build/asm/memory.o(.bss);
-        build/asm/math.o(.bss);
-        build/asm/images.o(.bss);
-        build/asm/system_time.o(.bss);
-        build/asm/renderers/r_moby.o(.bss);
-        build/asm/renderers/r_pete.o(.bss);
-        build/asm/renderers/r_environment.o(.bss);
-        build/src/environment.o(.bss);
-        build/src/completion.o(.bss);
-        build/src/music.o(.bss);
-        build/src/cutscene.o(.bss);
-        build/src/gamestates/init.o(.bss);
-        build/src/cheats.o(.bss);
-        build/src/camera.o(.bss);
-        build/src/moby_interpolation_check.o(.bss);
-        build/src/rand.o(.bss);
-        build/src/moby_helpers.o(.bss);
-        build/asm/collision.o(.bss);
-        build/asm/renderers/r_cyclorama.o(.bss);
-        build/src/cyclorama.o(.bss);
-        build/asm/moby_lists.o(.bss);
-        build/asm/42CC4.o(.bss);
-        build/asm/particle_alloc.o(.bss);
-        build/src/gamepad.o(.bss);
-        build/src/hud.o(.bss);
-        build/src/spu.o(.bss);
-        build/asm/renderers/r_particles.o(.bss);
-        build/src/specular_and_metal.o(.bss);
-        build/asm/renderers/r_flame.o(.bss);
-        build/src/checkpoint.o(.bss);
-        build/src/save_file.o(.bss);
-        build/asm/renderers/r_shadows.o(.bss);
-        build/src/4BEF8.o(.bss);
-        build/asm/data/game.bss.o(.bss);
+        DEFINE_SECTIONS(.bss)
+        
         . = ALIGN(., 4);
         main_BSS_END = .;
         main_BSS_SIZE = ABSOLUTE(main_BSS_END - main_BSS_START);
@@ -398,51 +255,52 @@ SECTIONS
     /* overlays.ld gets generated by make using tools/overlays/generate_overlay_ld.py */
 #include "overlays.ld"
 
-    /* Symbols for unused cut levels */
-    func_level_0_80082068 = 0x80082068;
-    func_level_0_80080548 = 0x80080548;
-    func_level_0_8007D8E0 = 0x8007D8E0;
-    func_level_0_80081568 = 0x80081568;
-    func_level_0_80080A0C = 0x80080A0C;
-    func_level_0_8007ADB8 = 0x8007ADB8;
-    func_level_0_8007AEF4 = 0x8007AEF4;
-    func_level_0_8007AF38 = 0x8007AF38;
-    func_level_0_8007CED8 = 0x8007CED8;
-    func_level_1_8007BFF0 = 0x8007BFF0;
-    func_level_1_8007B070 = 0x8007B070;
-    func_level_1_8007AC8C = 0x8007AC8C;
-    func_level_1_8007B8AC = 0x8007B8AC;
-    func_level_1_8007B144 = 0x8007B144;
-    func_level_2_8007F490 = 0x8007F490;
-    func_level_2_8007D970 = 0x8007D970;
-    func_level_2_8007AD08 = 0x8007AD08;
-    func_level_2_8007E990 = 0x8007E990;
-    func_level_2_8007DE34 = 0x8007DE34;
-    func_level_3_8007C7B0 = 0x8007C7B0;
-    func_level_3_8007B0AC = 0x8007B0AC;
-    func_level_3_8007ACC8 = 0x8007ACC8;
-    func_level_3_8007BC50 = 0x8007BC50;
-    func_level_3_8007B180 = 0x8007B180;
-    func_level_4_8007C204 = 0x8007C204;
-    func_level_4_8007B08C = 0x8007B08C;
-    func_level_4_8007ACA8 = 0x8007ACA8;
-    func_level_4_8007B9F0 = 0x8007B9F0;
-    func_level_4_8007B160 = 0x8007B160;
-    func_level_7_8007F2F4 = 0x8007F2F4;
-    func_level_7_8007D970 = 0x8007D970;
-    func_level_7_8007AD08 = 0x8007AD08;
-    func_level_7_8007E8E4 = 0x8007E8E4;
-    func_level_7_8007DE34 = 0x8007DE34;
-    func_level_9_8007C204 = 0x8007C204;
-    func_level_9_8007B08C = 0x8007B08C;
-    func_level_9_8007ACA8 = 0x8007ACA8;
-    func_level_9_8007B9F0 = 0x8007B9F0;
-    func_level_9_8007B160 = 0x8007B160;
-    func_level_99_8007C654 = 0x8007C654;
-    func_level_99_8007B0C0 = 0x8007B0C0;
-    func_level_99_8007ACDC = 0x8007ACDC;
-    func_level_99_8007BC44 = 0x8007BC44;
-    func_level_99_8007B194 = 0x8007B194;
+    /* Symbols for test levels that weren't included on the disc */
+    /* So we can't really match them either ¯\_(ツ)_/¯ */
+    Terminator_LEVEL_0 = 0x80082068;
+    SpawnMoby_LEVEL_0 = 0x80080548;
+    UpdateMoby_LEVEL_0 = 0x8007D8E0;
+    SpawnParticle_LEVEL_0 = 0x80081568;
+    UpdateParticle_LEVEL_0 = 0x80080A0C;
+    BalloonistEnter_LEVEL_0 = 0x8007ADB8;
+    BalloonistExit_LEVEL_0 = 0x8007AEF4;
+    BalloonistUpdate_LEVEL_0 = 0x8007AF38;
+    BalloonistDraw_LEVEL_0 = 0x8007CED8;
+    Terminator_LEVEL_1 = 0x8007BFF0;
+    SpawnMoby_LEVEL_1 = 0x8007B070;
+    UpdateMoby_LEVEL_1 = 0x8007AC8C;
+    SpawnParticle_LEVEL_1 = 0x8007B8AC;
+    UpdateParticle_LEVEL_1 = 0x8007B144;
+    Terminator_LEVEL_2 = 0x8007F490;
+    SpawnMoby_LEVEL_2 = 0x8007D970;
+    UpdateMoby_LEVEL_2 = 0x8007AD08;
+    SpawnParticle_LEVEL_2 = 0x8007E990;
+    UpdateParticle_LEVEL_2 = 0x8007DE34;
+    Terminator_LEVEL_3 = 0x8007C7B0;
+    SpawnMoby_LEVEL_3 = 0x8007B0AC;
+    UpdateMoby_LEVEL_3 = 0x8007ACC8;
+    SpawnParticle_LEVEL_3 = 0x8007BC50;
+    UpdateParticle_LEVEL_3 = 0x8007B180;
+    Terminator_LEVEL_4 = 0x8007C204;
+    SpawnMoby_LEVEL_4 = 0x8007B08C;
+    UpdateMoby_LEVEL_4 = 0x8007ACA8;
+    SpawnParticle_LEVEL_4 = 0x8007B9F0;
+    UpdateParticle_LEVEL_4 = 0x8007B160;
+    Terminator_LEVEL_7 = 0x8007F2F4;
+    SpawnMoby_LEVEL_7 = 0x8007D970;
+    UpdateMoby_LEVEL_7 = 0x8007AD08;
+    SpawnParticle_LEVEL_7 = 0x8007E8E4;
+    UpdateParticle_LEVEL_7 = 0x8007DE34;
+    Terminator_LEVEL_9 = 0x8007C204;
+    SpawnMoby_LEVEL_9 = 0x8007B08C;
+    UpdateMoby_LEVEL_9 = 0x8007ACA8;
+    SpawnParticle_LEVEL_9 = 0x8007B9F0;
+    UpdateParticle_LEVEL_9 = 0x8007B160;
+    Terminator_LEVEL_99 = 0x8007C654;
+    SpawnMoby_LEVEL_99 = 0x8007B0C0;
+    UpdateMoby_LEVEL_99 = 0x8007ACDC;
+    SpawnParticle_LEVEL_99 = 0x8007BC44;
+    UpdateParticle_LEVEL_99 = 0x8007B194;
 
     /* /DISCARD/ :
     {

@@ -173,7 +173,7 @@ dlabel D_80075744
 dlabel D_80075748
 /* 65F20 80075748 */ .space 0x04
 
-dlabel D_8007574C
+dlabel g_BalloonistUpdate
 /* 65F24 8007574C */ .space 0x04
 
 dlabel g_DragonTotal
@@ -233,7 +233,7 @@ dlabel D_80075798
 dlabel g_StateSwitch
 /* 65F74 8007579C */ .space 0x04
 
-dlabel D_800757A0
+dlabel g_BalloonistEnter
 /* 65F78 800757A0 */ .space 0x04
 
 dlabel g_ActEnabled
@@ -429,7 +429,7 @@ dlabel D_800758A0
 dlabel g_SavedFairyKissTimer
 /* 6607C 800758A4 */ .space 0x04
 
-dlabel D_800758A8
+dlabel g_BalloonistExit
 /* 66080 800758A8 */ .space 0x04
 
 dlabel g_PortalLevelId
@@ -477,7 +477,7 @@ dlabel D_800758D4
 dlabel D_800758D5
 /* 660AD 800758D5 */ .space 0x03
 
-dlabel D_800758D8
+dlabel g_BalloonistDraw
 /* 660B0 800758D8 */ .space 0x04
 
 dlabel D_800758DC

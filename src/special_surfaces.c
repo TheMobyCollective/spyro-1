@@ -129,7 +129,7 @@ void ApplySpecialSurfaceEffects(int surfaceIdx, u_int arg1) {
     }
     break;
   case 7: // Electric floor
-    if (arg1 == 2 && D_800777C0[surfaceFlags[0]] != 0) {
+    if (arg1 == 2 && g_ZapFloorActive[surfaceFlags[0]] != 0) {
       g_Spyro.m_DamageFlags = (g_Spyro.m_DamageFlags & 0x3FF) | 0x26;
     }
     break;

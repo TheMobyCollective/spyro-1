@@ -13,6 +13,9 @@ int g_StateSwitch;
 int g_DeltaTime;
 int g_UnprocessedFrames;
 
+int _stacksize = 0x800;
+int _ramsize = 0x200000;
+
 void main(void) {
   Initialize();
 
@@ -36,4 +39,3 @@ void main(void) {
     }
   }
 }
-

@@ -148,8 +148,8 @@ glabel func_800521C0
 /* 429D4 800521D4 00244420 */  addi       $a0, $v0, 0x2400 /* handwritten instruction */
 /* 429D8 800521D8 00224320 */  addi       $v1, $v0, 0x2200 /* handwritten instruction */
 /* 429DC 800521DC 00004220 */  addi       $v0, $v0, 0x0 /* handwritten instruction */
-/* 429E0 800521E0 0780053C */  lui        $a1, %hi(D_800771C8)
-/* 429E4 800521E4 C871A524 */  addiu      $a1, $a1, %lo(D_800771C8)
+/* 429E0 800521E0 0780053C */  lui        $a1, %hi(g_EnvSectorDrawn)
+/* 429E4 800521E4 C871A524 */  addiu      $a1, $a1, %lo(g_EnvSectorDrawn)
 /* 429E8 800521E8 4800278C */  lw         $a3, 0x48($at)
 /* 429EC 800521EC FF000620 */  addi       $a2, $zero, 0xFF /* handwritten instruction */
 /* 429F0 800521F0 A8FF2120 */  addi       $at, $at, -0x58 /* handwritten instruction */

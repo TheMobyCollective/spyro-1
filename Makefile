@@ -41,7 +41,7 @@ OVERLAY_LD  = build/overlays.ld
 TARGET_OVERLAYS = $(patsubst %, build/wad/%.ovl, $(OVERLAYS))
 
 SRC_C  = $(wildcard src/*.c) $(wildcard src/gamestates/*.c)
-SRC_S  = $(shell find asm -type f -name '*.s' | grep -v asm/nonmatchings)
+SRC_S  = $(shell find asm -type f -name '*.s')
 
 OBJ_C  = $(SRC_C:src/%.c=build/src/%.o)
 OBJ_S  = $(SRC_S:asm/%.s=build/asm/%.o)
@@ -107,7 +107,7 @@ $(foreach src,$(basename $(notdir $(wildcard src/overlays/*.c))),$(eval $(call O
 
 build/src/%.o: src/%.c
 	@echo "\e[0;36m[Compiling] $<\e[0m"
-		
+
 	@$(GCC) $(MODERN_COMPILER_FLAG) $(NEW_PSYQ_FLAG) $(DEBUG_FLAG) $(NON_MATCHING_FLAG) -Iinclude -Ipsyq/include -ffreestanding -MT $@ -MMD -MP -MF $@.d $< | \
 		$(CC) $(C_FLAGS) |\
 		$(MASPSX_COMMAND) \

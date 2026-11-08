@@ -1946,7 +1946,7 @@ void MobyMarkCollected(int pGemValue, Moby *pMoby) {
   // 2D array, 32 ints per level
   arrayIndex = mobyIndex >> 5;
   mobyIndex &= 31;
-  D_80077908[g_LevelIndex][arrayIndex] |= 1 << mobyIndex;
+  g_GemCollectionMask[g_LevelIndex][arrayIndex] |= 1 << mobyIndex;
 
   PlaySound(g_Spu.m_SoundTable->gemPickup, pMoby, 16, nullptr);
 }

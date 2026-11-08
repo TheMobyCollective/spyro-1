@@ -28,9 +28,6 @@ int D_800756B8;
 // Used in func_80035FB4
 int D_80075938;
 
-// Temporary vector used in func_80035FB4
-extern Vector3D D_80076ED0;
-
 /// @brief Creates the Camera's view and projection matrices
 void CameraUpdateMatrices(void) {
   // If it wasn't for the projection part, this function could've
@@ -1504,9 +1501,9 @@ void func_80035FB4(void) {
     int j;
     int offsetMagnitude;
 
-    if (g_Camera.m_Focus != &D_80077798) {
-      VecCopy(&D_80077798, g_Camera.m_Focus);
-      g_Camera.m_Focus = &D_80077798;
+    if (g_Camera.m_Focus != &g_CamFocusTemp) {
+      VecCopy(&g_CamFocusTemp, g_Camera.m_Focus);
+      g_Camera.m_Focus = &g_CamFocusTemp;
     }
 
     D_80075924 = 0;
@@ -1702,12 +1699,12 @@ void func_80035FB4(void) {
     Moby *moby;
 
     g_Camera.m_SphericalPreset = &D_8006CB5C;
-    g_Camera.m_Focus = &D_80076ED0;
+    g_Camera.m_Focus = &g_CamFocusTemp2;
     moby = g_Spyro.m_mobyInUseBySpyro;
 
-    D_80076ED0.x = moby->m_Position.x;
-    D_80076ED0.y = moby->m_Position.y;
-    D_80076ED0.z = g_Spyro.m_Position.z;
+    g_CamFocusTemp2.x = moby->m_Position.x;
+    g_CamFocusTemp2.y = moby->m_Position.y;
+    g_CamFocusTemp2.z = g_Spyro.m_Position.z;
 
     g_Camera.m_FocusRotation = moby->m_Rotation.z << 4;
 
@@ -1920,7 +1917,7 @@ void func_8003740C(void) {
                &g_Spyro.unk_0x240->m_Nodes[activePathNode - 1].m_Position);
       }
 
-      func_80017330(&nodeNodeDifference, 4096);
+      VecNormalizeToSize(&nodeNodeDifference, 4096);
 
       // SKELETON: Holy shit, this literally makes the compiler output dead
       // code the ABS is useless, and the < 0 that follows it more so

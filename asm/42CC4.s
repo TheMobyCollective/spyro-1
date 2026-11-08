@@ -1075,8 +1075,8 @@ glabel MobyUpdateShadow
 .L80053444:
 /* 43C44 80053444 C0FF0821 */  addi       $t0, $t0, -0x40 /* handwritten instruction */
 /* 43C48 80053448 40400800 */  sll        $t0, $t0, 1
-/* 43C4C 8005344C 0780073C */  lui        $a3, %hi(D_80074B84)
-/* 43C50 80053450 844BE724 */  addiu      $a3, $a3, %lo(D_80074B84)
+/* 43C4C 8005344C 0780073C */  lui        $a3, %hi(SQRT)
+/* 43C50 80053450 844BE724 */  addiu      $a3, $a3, %lo(SQRT)
 /* 43C54 80053454 2038E800 */  add        $a3, $a3, $t0 /* handwritten instruction */
 /* 43C58 80053458 0000E784 */  lh         $a3, 0x0($a3)
 /* 43C5C 8005345C 00000000 */  nop

@@ -230,7 +230,7 @@ void CheatProcessLevelWarp(void) {
         g_PortalLevelId = 0; // Reset portal level id
         D_8007576C = -1;     // Reset loading part
 
-        func_8004AC24(0);  // Reset Spyro
+        SpyroReset(0);     // Reset Spyro
         func_8003FDC8(15); // Reset Spyro to gliding state
 
         // Set level transition flags

@@ -69,7 +69,7 @@ int func_80017428(Vector3D *pIn, Vector3D *pNormal, Vector3D *pOut);
 void VecScaleToLength(Vector3D *pVec, int pCurrentLength, int pTargetLength);
 
 /// @brief Normalizes a vector, then multiplies it by a distance
-void func_80017330(Vector3D *pVec, int pNormalizedDistance);
+void VecNormalizeToSize(Vector3D *pVec, int pNormalizedDistance);
 
 /// @brief Calculates the magnitude of a vector
 /// @param pVec The vector to calculate the magnitude of

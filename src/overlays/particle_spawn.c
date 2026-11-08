@@ -303,7 +303,7 @@ void NAME_OVERLAY_FUNCTION(SpawnParticle)(int pCount, int pClass,
       VecSub(&position, &position, &((Moby *)spawnParam)->m_Position);
       position.z -= 900;
 
-      func_80017330(&position, 0x80);
+      VecNormalizeToSize(&position, 0x80);
 
       func_80017BFC((Vector3D16 *)&particle->m_Data.m_Raw[20], &position);
 

@@ -714,8 +714,8 @@ glabel func_8004F4BC
 /* 3FDEC 8004F5EC 0000DC23 */  addi       $gp, $fp, 0x0 /* handwritten instruction */
 /* 3FDF0 8004F5F0 FCFFDD23 */  addi       $sp, $fp, -0x4 /* handwritten instruction */
 /* 3FDF4 8004F5F4 00001920 */  addi       $t9, $zero, 0x0 /* handwritten instruction */
-/* 3FDF8 8004F5F8 0880033C */  lui        $v1, %hi(D_8007AA00)
-/* 3FDFC 8004F5FC 00AA6324 */  addiu      $v1, $v1, %lo(D_8007AA00)
+/* 3FDF8 8004F5F8 0880033C */  lui        $v1, %hi(g_PortalScreenRect)
+/* 3FDFC 8004F5FC 00AA6324 */  addiu      $v1, $v1, %lo(g_PortalScreenRect)
 /* 3FE00 8004F600 0000678C */  lw         $a3, 0x0($v1)
 /* 3FE04 8004F604 0400688C */  lw         $t0, 0x4($v1)
 /* 3FE08 8004F608 0800698C */  lw         $t1, 0x8($v1)
@@ -839,8 +839,8 @@ glabel func_8004F4BC
 /* 3FFC4 8004F7C4 43090100 */  sra        $at, $at, 5
 /* 3FFC8 8004F7C8 43110200 */  sra        $v0, $v0, 5
 /* 3FFCC 8004F7CC 43190300 */  sra        $v1, $v1, 5
-/* 3FFD0 8004F7D0 07800A3C */  lui        $t2, %hi(D_80077EA0)
-/* 3FFD4 8004F7D4 A07E4A25 */  addiu      $t2, $t2, %lo(D_80077EA0)
+/* 3FFD0 8004F7D0 07800A3C */  lui        $t2, %hi(g_PortalEdges)
+/* 3FFD4 8004F7D4 A07E4A25 */  addiu      $t2, $t2, %lo(g_PortalEdges)
 /* 3FFD8 8004F7D8 FA3D010C */  jal        func_8004F7E8
 /* 3FFDC 8004F7DC 00000000 */   nop
 /* 3FFE0 8004F7E0 D53D0108 */  j          .L8004F754
@@ -1345,8 +1345,8 @@ glabel func_8004FEA0
 /* 4073C 8004FF3C 04006D8D */  lw         $t5, 0x4($t3)
 /* 40740 8004FF40 08006E8D */  lw         $t6, 0x8($t3)
 /* 40744 8004FF44 0C006B21 */  addi       $t3, $t3, 0xC /* handwritten instruction */
-/* 40748 8004FF48 07800A3C */  lui        $t2, %hi(D_80077EA0)
-/* 4074C 8004FF4C A07E4A25 */  addiu      $t2, $t2, %lo(D_80077EA0)
+/* 40748 8004FF48 07800A3C */  lui        $t2, %hi(g_PortalEdges)
+/* 4074C 8004FF4C A07E4A25 */  addiu      $t2, $t2, %lo(g_PortalEdges)
 /* 40750 8004FF50 E43F010C */  jal        func_8004FF90
 /* 40754 8004FF54 FFFFEF21 */   addi      $t7, $t7, -0x1 /* handwritten instruction */
 /* 40758 8004FF58 CD3F0108 */  j          .L8004FF34
@@ -1637,8 +1637,8 @@ glabel func_80050240
 /* 40B70 80050370 0000DC23 */  addi       $gp, $fp, 0x0 /* handwritten instruction */
 /* 40B74 80050374 FCFFDD23 */  addi       $sp, $fp, -0x4 /* handwritten instruction */
 /* 40B78 80050378 00001920 */  addi       $t9, $zero, 0x0 /* handwritten instruction */
-/* 40B7C 8005037C 0880033C */  lui        $v1, %hi(D_8007AA00)
-/* 40B80 80050380 00AA6324 */  addiu      $v1, $v1, %lo(D_8007AA00)
+/* 40B7C 8005037C 0880033C */  lui        $v1, %hi(g_PortalScreenRect)
+/* 40B80 80050380 00AA6324 */  addiu      $v1, $v1, %lo(g_PortalScreenRect)
 /* 40B84 80050384 0000678C */  lw         $a3, 0x0($v1)
 /* 40B88 80050388 0400688C */  lw         $t0, 0x4($v1)
 /* 40B8C 8005038C 0800698C */  lw         $t1, 0x8($v1)
@@ -1803,8 +1803,8 @@ glabel func_80050240
 /* 40DE8 800505E8 43090100 */  sra        $at, $at, 5
 /* 40DEC 800505EC 43110200 */  sra        $v0, $v0, 5
 /* 40DF0 800505F0 43190300 */  sra        $v1, $v1, 5
-/* 40DF4 800505F4 07800A3C */  lui        $t2, %hi(D_80077EA0)
-/* 40DF8 800505F8 A07E4A25 */  addiu      $t2, $t2, %lo(D_80077EA0)
+/* 40DF4 800505F4 07800A3C */  lui        $t2, %hi(g_PortalEdges)
+/* 40DF8 800505F8 A07E4A25 */  addiu      $t2, $t2, %lo(g_PortalEdges)
 /* 40DFC 800505FC 8341010C */  jal        func_8005060C
 /* 40E00 80050600 00000000 */   nop
 /* 40E04 80050604 5E410108 */  j          .L80050578

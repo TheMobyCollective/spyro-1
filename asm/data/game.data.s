@@ -1101,23 +1101,17 @@ dlabel D_8006C704
 /* 5CF07 8006C707 */ .byte 0xF4
 /* 5CF08 8006C708 */ .byte 0xF8
 /* 5CF09 8006C709 */ .byte 0xFC
-.size D_8006C704, . - D_8006C704
-
-dlabel D_8006C70A
 /* 5CF0A 8006C70A */ .byte 0x00
 /* 5CF0B 8006C70B */ .byte 0x04
 /* 5CF0C 8006C70C */ .byte 0x08
 /* 5CF0D 8006C70D */ .byte 0x0C
 /* 5CF0E 8006C70E */ .byte 0x10
 /* 5CF0F 8006C70F */ .byte 0x14
-.size D_8006C70A, . - D_8006C70A
-
-dlabel D_8006C710
 /* 5CF10 8006C710 */ .byte 0x18
 /* 5CF11 8006C711 */ .byte 0x00
 /* 5CF12 8006C712 */ .byte 0x00
 /* 5CF13 8006C713 */ .byte 0x00
-.size D_8006C710, . - D_8006C710
+.size D_8006C704, . - D_8006C704
 
 dlabel D_8006C714
 /* 5CF14 8006C714 FFFFFFFF */ .word 0xFFFFFFFF
@@ -1627,14 +1621,13 @@ dlabel D_8006CBCC
 /* 5D3E6 8006CBE6 */ .short 0x00E4
 /* 5D3E8 8006CBE8 */ .short 0x038E
 /* 5D3EA 8006CBEA */ .short 0x0072
+.size D_8006CBCC, . - D_8006CBCC
 
 dlabel D_8006CBEC
 /* 5D3EC 8006CBEC */ .short 0x0052
-
-dlabel D_8006CBEE
 /* 5D3EE 8006CBEE */ .short 0x02A4
 /* 5D3F0 8006CBF0 */ .short 0x0099
 /* 5D3F2 8006CBF2 */ .short 0x0152
 /* 5D3F4 8006CBF4 */ .short 0x00E1
 /* 5D3F6 8006CBF6 */ .short 0x0000
-.size D_8006CBCC, . - D_8006CBCC
+.size D_8006CBEC, . - D_8006CBEC

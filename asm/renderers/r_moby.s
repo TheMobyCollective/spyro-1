@@ -3160,8 +3160,8 @@ glabel func_80020F34
 .L80021EEC:
 /* 126EC 80021EEC C0FF0821 */  addi       $t0, $t0, -0x40 /* handwritten instruction */
 /* 126F0 80021EF0 40400800 */  sll        $t0, $t0, 1
-/* 126F4 80021EF4 0780073C */  lui        $a3, %hi(D_80074B84)
-/* 126F8 80021EF8 844BE724 */  addiu      $a3, $a3, %lo(D_80074B84)
+/* 126F4 80021EF4 0780073C */  lui        $a3, %hi(SQRT)
+/* 126F8 80021EF8 844BE724 */  addiu      $a3, $a3, %lo(SQRT)
 /* 126FC 80021EFC 2038E800 */  add        $a3, $a3, $t0 /* handwritten instruction */
 /* 12700 80021F00 0000E784 */  lh         $a3, 0x0($a3)
 /* 12704 80021F04 00000000 */  nop
@@ -3171,8 +3171,8 @@ glabel func_80020F34
 /* 12710 80021F10 82340E00 */  srl        $a2, $t6, 18
 /* 12714 80021F14 80330600 */  sll        $a2, $a2, 14
 /* 12718 80021F18 1A00C500 */  div        $zero, $a2, $a1
-/* 1271C 80021F1C 0780073C */  lui        $a3, %hi(D_800770C8)
-/* 12720 80021F20 C870E724 */  addiu      $a3, $a3, %lo(D_800770C8)
+/* 1271C 80021F1C 0780073C */  lui        $a3, %hi(g_RenderEffects)
+/* 12720 80021F20 C870E724 */  addiu      $a3, $a3, %lo(g_RenderEffects)
 /* 12724 80021F24 0C00E58C */  lw         $a1, 0xC($a3)
 /* 12728 80021F28 1000E68C */  lw         $a2, 0x10($a3)
 /* 1272C 80021F2C 1400E78C */  lw         $a3, 0x14($a3)
@@ -3492,8 +3492,8 @@ glabel D_80022180
 .L800223B0:
 /* 12BB0 800223B0 C0FF0821 */  addi       $t0, $t0, -0x40 /* handwritten instruction */
 /* 12BB4 800223B4 40400800 */  sll        $t0, $t0, 1
-/* 12BB8 800223B8 0780073C */  lui        $a3, %hi(D_80074B84)
-/* 12BBC 800223BC 844BE724 */  addiu      $a3, $a3, %lo(D_80074B84)
+/* 12BB8 800223B8 0780073C */  lui        $a3, %hi(SQRT)
+/* 12BBC 800223BC 844BE724 */  addiu      $a3, $a3, %lo(SQRT)
 /* 12BC0 800223C0 2038E800 */  add        $a3, $a3, $t0 /* handwritten instruction */
 /* 12BC4 800223C4 0000E784 */  lh         $a3, 0x0($a3)
 /* 12BC8 800223C8 12400000 */  mflo       $t0
@@ -3729,8 +3729,8 @@ glabel D_80022180
 /* 12F0C 8002270C 00FF013C */   lui       $at, (0xFF000000 >> 16)
 /* 12F10 80022710 25400101 */  or         $t0, $t0, $at
 .L80022714:
-/* 12F14 80022714 0780013C */  lui        $at, %hi(D_800770C8)
-/* 12F18 80022718 C8702124 */  addiu      $at, $at, %lo(D_800770C8)
+/* 12F14 80022714 0780013C */  lui        $at, %hi(g_RenderEffects)
+/* 12F18 80022718 C8702124 */  addiu      $at, $at, %lo(g_RenderEffects)
 /* 12F1C 8002271C 1800228C */  lw         $v0, 0x18($at)
 /* 12F20 80022720 1C00238C */  lw         $v1, 0x1C($at)
 /* 12F24 80022724 2000248C */  lw         $a0, 0x20($at)
@@ -3996,8 +3996,8 @@ glabel func_80022A2C
 /* 132BC 80022ABC F40387AF */  sw         $a3, 0x3F4($gp)
 /* 132C0 80022AC0 F80388AF */  sw         $t0, 0x3F8($gp)
 /* 132C4 80022AC4 FC0389AF */  sw         $t1, 0x3FC($gp)
-/* 132C8 80022AC8 0780033C */  lui        $v1, %hi(D_800770C8)
-/* 132CC 80022ACC C8706324 */  addiu      $v1, $v1, %lo(D_800770C8)
+/* 132C8 80022AC8 0780033C */  lui        $v1, %hi(g_RenderEffects)
+/* 132CC 80022ACC C8706324 */  addiu      $v1, $v1, %lo(g_RenderEffects)
 /* 132D0 80022AD0 0000648C */  lw         $a0, 0x0($v1)
 /* 132D4 80022AD4 0400658C */  lw         $a1, 0x4($v1)
 /* 132D8 80022AD8 0800668C */  lw         $a2, 0x8($v1)

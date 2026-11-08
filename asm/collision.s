@@ -1900,8 +1900,8 @@ glabel D_8004C820
 .L8004C9F4:
 /* 3D1F4 8004C9F4 C0FF4A21 */  addi       $t2, $t2, -0x40 /* handwritten instruction */
 /* 3D1F8 8004C9F8 40500A00 */  sll        $t2, $t2, 1
-/* 3D1FC 8004C9FC 07800B3C */  lui        $t3, %hi(D_80074B84)
-/* 3D200 8004CA00 844B6B25 */  addiu      $t3, $t3, %lo(D_80074B84)
+/* 3D1FC 8004C9FC 07800B3C */  lui        $t3, %hi(SQRT)
+/* 3D200 8004CA00 844B6B25 */  addiu      $t3, $t3, %lo(SQRT)
 /* 3D204 8004CA04 20586A01 */  add        $t3, $t3, $t2 /* handwritten instruction */
 /* 3D208 8004CA08 00006B85 */  lh         $t3, 0x0($t3)
 /* 3D20C 8004CA0C 00000000 */  nop
@@ -2618,8 +2618,8 @@ glabel D_8004D2E0
 .L8004D4A0:
 /* 3DCA0 8004D4A0 C0FF4A21 */  addi       $t2, $t2, -0x40 /* handwritten instruction */
 /* 3DCA4 8004D4A4 40500A00 */  sll        $t2, $t2, 1
-/* 3DCA8 8004D4A8 07800B3C */  lui        $t3, %hi(D_80074B84)
-/* 3DCAC 8004D4AC 844B6B25 */  addiu      $t3, $t3, %lo(D_80074B84)
+/* 3DCA8 8004D4A8 07800B3C */  lui        $t3, %hi(SQRT)
+/* 3DCAC 8004D4AC 844B6B25 */  addiu      $t3, $t3, %lo(SQRT)
 /* 3DCB0 8004D4B0 20586A01 */  add        $t3, $t3, $t2 /* handwritten instruction */
 /* 3DCB4 8004D4B4 00006B85 */  lh         $t3, 0x0($t3)
 /* 3DCB8 8004D4B8 00000000 */  nop
@@ -4108,8 +4108,8 @@ glabel D_8004E5B8
 .L8004EA74:
 /* 3F274 8004EA74 C0FF4A21 */  addi       $t2, $t2, -0x40 /* handwritten instruction */
 /* 3F278 8004EA78 40500A00 */  sll        $t2, $t2, 1
-/* 3F27C 8004EA7C 07800B3C */  lui        $t3, %hi(D_80074B84)
-/* 3F280 8004EA80 844B6B25 */  addiu      $t3, $t3, %lo(D_80074B84)
+/* 3F27C 8004EA7C 07800B3C */  lui        $t3, %hi(SQRT)
+/* 3F280 8004EA80 844B6B25 */  addiu      $t3, $t3, %lo(SQRT)
 /* 3F284 8004EA84 20586A01 */  add        $t3, $t3, $t2 /* handwritten instruction */
 /* 3F288 8004EA88 00006B85 */  lh         $t3, 0x0($t3)
 /* 3F28C 8004EA8C 00000000 */  nop

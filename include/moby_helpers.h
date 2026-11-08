@@ -337,4 +337,8 @@ extern int g_FlightObjectiveActiveSlots[4];
 /// @brief Flight level objective counters
 extern int g_FlightObjectiveCounters[4];
 
+/// @brief Flight level objective counters last update
+/// used to track updates to g_FlightObjectiveCounters
+extern int g_FlightObjectiveCountersLast[4];
+
 #endif

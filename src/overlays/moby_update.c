@@ -72,7 +72,6 @@ extern int D_800758F4;
 extern int D_800758F8;
 extern int D_80075900;
 extern int D_80075908;
-extern int D_800770F8[4];
 
 void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
@@ -223,7 +222,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                 g_NextLevelId = (g_LevelId / 10) * 10;
                 g_Camera.unk_0xC0 = 0x80000012;
                 g_Spyro.m_ControlFlags = 0;
-                func_8004AC24(0);
+                SpyroReset(0);
                 g_Spyro.m_flyingAbility = 0;
                 g_SpyroFlame.m_FairyKissTimer = 0;
               }
@@ -715,7 +714,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
     }
     case 18: { // Sunny Flight entrance stones
       Moby18Props *props = moby->m_Props;
-      int active = ((u_int *)D_80077908)[30 * 4] & 1;
+      int active = ((u_int *)g_GemCollectionMask)[30 * 4] & 1;
 
       switch (moby->m_Substate) {
       case 0: {
@@ -6915,7 +6914,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       if (props->m_Lifetime > 0 && moby->m_WasDrawn) {
         if (ColSphere(&moby->m_Position, 0x100, 0x100)) {
           int dot;
-          func_80017330(&g_CollisionNormal, 0x1000);
+          VecNormalizeToSize(&g_CollisionNormal, 0x1000);
           dot = (props->m_Velocity.x * g_CollisionNormal.x +
                  props->m_Velocity.y * g_CollisionNormal.y +
                  props->m_Velocity.z * g_CollisionNormal.z) >>
@@ -7103,10 +7102,10 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         VecCopy(&vec, &moby->m_Position);
         vec.z += 0x400;
         ColFindFloor(&vec, 0x10000);
-        collectableProps->m_RotY = -Atan2Fast(
-            func_80017A38((g_CollisionNormal.x * g_CollisionNormal.x) +
-                          (g_CollisionNormal.z * g_CollisionNormal.z)),
-            g_CollisionNormal.y);
+        collectableProps->m_RotY =
+            -Atan2Fast(SquareRoot((g_CollisionNormal.x * g_CollisionNormal.x) +
+                                  (g_CollisionNormal.z * g_CollisionNormal.z)),
+                       g_CollisionNormal.y);
         collectableProps->m_RotZ =
             -Atan2Fast(g_CollisionNormal.z, g_CollisionNormal.x);
 
@@ -7129,8 +7128,8 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             MobyUpdateShadow(moby); // Set shadow
             if (moby->m_Class >= 83) {
               collectableProps->m_RotY = -Atan2Fast(
-                  func_80017A38((g_CollisionNormal.x * g_CollisionNormal.x) +
-                                (g_CollisionNormal.z * g_CollisionNormal.z)),
+                  SquareRoot((g_CollisionNormal.x * g_CollisionNormal.x) +
+                             (g_CollisionNormal.z * g_CollisionNormal.z)),
                   g_CollisionNormal.y);
               collectableProps->m_RotZ =
                   -Atan2Fast(g_CollisionNormal.z, g_CollisionNormal.x);
@@ -7263,10 +7262,10 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                 if (moby->m_Class != 15) {
 
                   collectableProps->m_RotY =
-                      -Atan2Fast(func_80017A38((collectableSurfaceNormal.x *
-                                                collectableSurfaceNormal.x) +
-                                               (collectableSurfaceNormal.z *
-                                                collectableSurfaceNormal.z)),
+                      -Atan2Fast(SquareRoot((collectableSurfaceNormal.x *
+                                             collectableSurfaceNormal.x) +
+                                            (collectableSurfaceNormal.z *
+                                             collectableSurfaceNormal.z)),
                                  collectableSurfaceNormal.y);
                   collectableProps->m_RotZ = -Atan2Fast(
                       collectableSurfaceNormal.z, collectableSurfaceNormal.x);
@@ -12348,7 +12347,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             props->m_0x18 = 0xD2;
             props->m_0x14 = ANGLE_FROM_SPYRO(moby->m_Position);
             if (moby->m_DropMoby != 0xFF) {
-              D_80077908[30][0] &= ~1;
+              g_GemCollectionMask[30][0] &= ~1;
             }
             MobySpawnDrop(moby, DROP_MODE_HOMING, nullptr, nullptr);
             moby->m_State = 8;
@@ -15434,25 +15433,25 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         g_Spyro.m_ControlFlags = 0x80002000;
         func_8003DFA4();
         VecNull(&g_Spyro.m_HeadLookTarget);
-        D_800757A0(moby);
+        g_BalloonistEnter(moby);
 
         if (g_DragonTotal < 10) {
           if (D_800758D0[1] == 0) {
-            D_800777E8.m_DialogueId = 0;
+            g_Balloonist.m_DialogueId = 0;
             D_800758D0[1] = 1;
           } else {
-            D_800777E8.m_DialogueId = 2;
+            g_Balloonist.m_DialogueId = 2;
           }
         } else if (D_800758D0[1] < 2) {
           if (D_800758D0[1] == 0) {
-            D_800777E8.m_DialogueId = 3;
+            g_Balloonist.m_DialogueId = 3;
           } else {
-            D_800777E8.m_DialogueId = 4;
+            g_Balloonist.m_DialogueId = 4;
           }
           D_800758D0[1] = 2;
         } else {
-          D_800777E8.m_DialogueId = 30;
-          D_800777E8.m_DialogueTopStr = rand() % 3;
+          g_Balloonist.m_DialogueId = 30;
+          g_Balloonist.m_DialogueTopStr = rand() % 3;
         }
       }
       break;
@@ -15474,26 +15473,26 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         g_Spyro.m_ControlFlags = 0x80002000;
         func_8003DFA4();
         VecNull(&g_Spyro.m_HeadLookTarget);
-        D_800757A0(moby);
+        g_BalloonistEnter(moby);
         D_800758D0[1] = 2;
 
         if (g_GemTotal < 1200) {
           if (D_800758D0[2] == 0) {
-            D_800777E8.m_DialogueId = 6;
+            g_Balloonist.m_DialogueId = 6;
             D_800758D0[2] = 1;
           } else {
-            D_800777E8.m_DialogueId = 8;
+            g_Balloonist.m_DialogueId = 8;
           }
         } else if (D_800758D0[2] < 2) {
           if (D_800758D0[2] == 0) {
-            D_800777E8.m_DialogueId = 9;
+            g_Balloonist.m_DialogueId = 9;
           } else {
-            D_800777E8.m_DialogueId = 10;
+            g_Balloonist.m_DialogueId = 10;
           }
           D_800758D0[2] = 2;
         } else {
-          D_800777E8.m_DialogueId = 30;
-          D_800777E8.m_DialogueTopStr = rand() % 3;
+          g_Balloonist.m_DialogueId = 30;
+          g_Balloonist.m_DialogueTopStr = rand() % 3;
         }
       }
       break;
@@ -15515,27 +15514,27 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         g_Spyro.m_ControlFlags = 0x80002000;
         func_8003DFA4();
         VecNull(&g_Spyro.m_HeadLookTarget);
-        D_800757A0(moby);
+        g_BalloonistEnter(moby);
         D_800758D0[1] = 2;
         D_800758D0[2] = 2;
 
         if (g_EggTotal < 5) {
           if (D_800758D0[3] == 0) {
-            D_800777E8.m_DialogueId = 12;
+            g_Balloonist.m_DialogueId = 12;
             D_800758D0[3] = 1;
           } else {
-            D_800777E8.m_DialogueId = 14;
+            g_Balloonist.m_DialogueId = 14;
           }
         } else if (D_800758D0[3] < 2) {
           if (D_800758D0[3] == 0) {
-            D_800777E8.m_DialogueId = 15;
+            g_Balloonist.m_DialogueId = 15;
           } else {
-            D_800777E8.m_DialogueId = 16;
+            g_Balloonist.m_DialogueId = 16;
           }
           D_800758D0[3] = 2;
         } else {
-          D_800777E8.m_DialogueId = 30;
-          D_800777E8.m_DialogueTopStr = rand() % 3;
+          g_Balloonist.m_DialogueId = 30;
+          g_Balloonist.m_DialogueTopStr = rand() % 3;
         }
       }
       break;
@@ -15557,28 +15556,28 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         g_Spyro.m_ControlFlags = 0x80002000;
         func_8003DFA4();
         VecNull(&g_Spyro.m_HeadLookTarget);
-        D_800757A0(moby);
+        g_BalloonistEnter(moby);
         D_800758D0[1] = 2;
         D_800758D0[2] = 2;
         D_800758D0[3] = 2;
 
         if (g_DragonTotal < 50) {
           if (D_800758D0[4] == 0) {
-            D_800777E8.m_DialogueId = 18;
+            g_Balloonist.m_DialogueId = 18;
             D_800758D0[4] = 1;
           } else {
-            D_800777E8.m_DialogueId = 20;
+            g_Balloonist.m_DialogueId = 20;
           }
         } else if (D_800758D0[4] < 2) {
           if (D_800758D0[4] == 0) {
-            D_800777E8.m_DialogueId = 21;
+            g_Balloonist.m_DialogueId = 21;
           } else {
-            D_800777E8.m_DialogueId = 22;
+            g_Balloonist.m_DialogueId = 22;
           }
           D_800758D0[4] = 2;
         } else {
-          D_800777E8.m_DialogueId = 30;
-          D_800777E8.m_DialogueTopStr = rand() % 3;
+          g_Balloonist.m_DialogueId = 30;
+          g_Balloonist.m_DialogueTopStr = rand() % 3;
         }
       }
       break;
@@ -15600,7 +15599,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         g_Spyro.m_ControlFlags = 0x80002000;
         func_8003DFA4();
         VecNull(&g_Spyro.m_HeadLookTarget);
-        D_800757A0(moby);
+        g_BalloonistEnter(moby);
         D_800758D0[1] = 2;
         D_800758D0[2] = 2;
         D_800758D0[3] = 2;
@@ -15608,21 +15607,21 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
         if (g_GemTotal < 6000) {
           if (D_800758D0[5] == 0) {
-            D_800777E8.m_DialogueId = 24;
+            g_Balloonist.m_DialogueId = 24;
             D_800758D0[5] = 1;
           } else {
-            D_800777E8.m_DialogueId = 26;
+            g_Balloonist.m_DialogueId = 26;
           }
         } else if (D_800758D0[5] < 2) {
           if (D_800758D0[5] == 0) {
-            D_800777E8.m_DialogueId = 27;
+            g_Balloonist.m_DialogueId = 27;
           } else {
-            D_800777E8.m_DialogueId = 28;
+            g_Balloonist.m_DialogueId = 28;
           }
           D_800758D0[5] = 2;
         } else {
-          D_800777E8.m_DialogueId = 30;
-          D_800777E8.m_DialogueTopStr = rand() % 3;
+          g_Balloonist.m_DialogueId = 30;
+          g_Balloonist.m_DialogueTopStr = rand() % 3;
         }
       }
       break;
@@ -15644,8 +15643,8 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         g_Spyro.m_ControlFlags = 0x80000000 | 0x2000;
         func_8003DFA4();
         VecNull(&g_Spyro.m_HeadLookTarget);
-        D_800757A0(moby);
-        D_800777E8.m_DialogueId = 30;
+        g_BalloonistEnter(moby);
+        g_Balloonist.m_DialogueId = 30;
         D_800758D0[1] = 2;
         D_800758D0[2] = 2;
         D_800758D0[3] = 2;
@@ -16646,7 +16645,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
                 PATH_NODE_POS(props->m_0x0c, 0).y;
         lineY = PATH_NODE_POS(props->m_0x0c, 0).x -
                 PATH_NODE_POS(props->m_0x0c, 1).x;
-        lineLength = func_80017A38(lineX * lineX + lineY * lineY);
+        lineLength = SquareRoot(lineX * lineX + lineY * lineY);
 
         pathStart.x = PATH_NODE_POS(props->m_0x0c, 0).x;
         pathStart.y = PATH_NODE_POS(props->m_0x0c, 0).y;
@@ -18765,7 +18764,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
             if (bestScore >= 0x11 && bestScore <= 0xFFFFF) {
               int root;
 
-              root = func_80017A38(bestScore);
+              root = SquareRoot(bestScore);
               bestScore = root << 4;
               root <<= 9;
               root += bestScore;
@@ -20598,7 +20597,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               moby->m_Position.y = g_CollisionPoint.y;
               moby->m_Position.z = g_CollisionPoint.z;
 
-              func_80017330(&g_CollisionNormal, 0x1000);
+              VecNormalizeToSize(&g_CollisionNormal, 0x1000);
 
               dot = (digitProps->m_Velocity.x * g_CollisionNormal.x +
                      digitProps->m_Velocity.y * g_CollisionNormal.y +
@@ -24199,7 +24198,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       if (physicsProps->m_Lifetime > 0 && moby->m_WasDrawn) {
         value = ColSphere(&moby->m_Position, 0x100, 0x100);
         if (value != 0) {
-          func_80017330(&g_CollisionNormal, 0x1000);
+          VecNormalizeToSize(&g_CollisionNormal, 0x1000);
           dot = (physicsProps->m_Velocity.x * g_CollisionNormal.x +
                  physicsProps->m_Velocity.y * g_CollisionNormal.y +
                  physicsProps->m_Velocity.z * g_CollisionNormal.z);
@@ -26240,13 +26239,13 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         D_80075840 = props->m_0x00;
         D_800758F4 = 0;
         D_80075900 = 0;
-        D_800770F8[0] = 0;
+        g_FlightObjectiveCountersLast[0] = 0;
         g_FlightObjectiveCounters[0] = 0;
-        D_800770F8[1] = 0;
+        g_FlightObjectiveCountersLast[1] = 0;
         g_FlightObjectiveCounters[1] = 0;
-        D_800770F8[2] = 0;
+        g_FlightObjectiveCountersLast[2] = 0;
         g_FlightObjectiveCounters[2] = 0;
-        D_800770F8[3] = 0;
+        g_FlightObjectiveCountersLast[3] = 0;
         g_FlightObjectiveCounters[3] = 0;
         g_FlightObjectiveActiveSlots[3] = -1;
         g_FlightObjectiveActiveSlots[2] = -1;
@@ -26351,7 +26350,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
           D_800758F4 = 10 * 60 * 60 - 1;  // 9 Minutes 59.98 seconds
         }
       } else {
-        func_8003EA68(0x20);
+        SpyroSetState(32);
         g_Spyro.m_walkingState = 3;
         g_Spyro.m_ControlFlags = 0x80004000;
       }
@@ -26464,7 +26463,8 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         if (g_FlightObjectiveActiveSlots[0] >= 0) {
           D_800758F8 = g_FlightObjectiveActiveSlots[0];
 
-          if (g_FlightObjectiveCounters[D_800758F8] != D_800770F8[D_800758F8]) {
+          if (g_FlightObjectiveCounters[D_800758F8] !=
+              g_FlightObjectiveCountersLast[D_800758F8]) {
             for (i = 0; i < 8; i++) {
               props->m_0x24[i]->m_Class =
                   props->m_0x64.fields.m_ObjectiveClasses[D_800758F8];
@@ -26483,7 +26483,8 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
               }
             }
 
-            D_800770F8[D_800758F8] = g_FlightObjectiveCounters[D_800758F8];
+            g_FlightObjectiveCountersLast[D_800758F8] =
+                g_FlightObjectiveCounters[D_800758F8];
 
             if (g_FlightObjectiveCounters[D_800758F8] == 8) {
               for (i = 0; i < 8; i++) {
@@ -26555,7 +26556,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         if (ColSphere(&moby->m_Position, 0x200, 0x200)) {
           int dot;
 
-          func_80017330(&g_CollisionNormal, 0x1000);
+          VecNormalizeToSize(&g_CollisionNormal, 0x1000);
           dot = (props->m_Velocity.x * g_CollisionNormal.x +
                  props->m_Velocity.y * g_CollisionNormal.y +
                  props->m_Velocity.z * g_CollisionNormal.z) >>
@@ -29241,7 +29242,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       if (props->m_Lifetime > 0 && moby->m_WasDrawn) {
         if (ColSphere(&moby->m_Position, 0x100, 0x100)) {
           int dot;
-          func_80017330(&g_CollisionNormal, 0x1000);
+          VecNormalizeToSize(&g_CollisionNormal, 0x1000);
           dot = (props->m_Velocity.x * g_CollisionNormal.x +
                  props->m_Velocity.y * g_CollisionNormal.y +
                  props->m_Velocity.z * g_CollisionNormal.z) >>
@@ -29302,7 +29303,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
       if (props->m_0x08 == 0) {
         if (ENV_ANIM_FRAME(EnvAnimGetState(props->m_0x00)) < 2) {
-          D_800777C0[props->m_0x00] = 0;
+          g_ZapFloorActive[props->m_0x00] = 0;
         }
       }
 
@@ -29325,7 +29326,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
         if (moby->m_AnimationState.m_NextFrame >= 6 && props->m_0x08 == 0) {
           EnvAnimSetFlags(props->m_0x00, ENV_ANIM_FLAG_UNPAUSE, 0);
           props->m_0x08 = 100;
-          D_800777C0[props->m_0x00] = 1;
+          g_ZapFloorActive[props->m_0x00] = 1;
           PlaySound(g_Models[moby->m_Class]->m_Sounds[1], moby, 8,
                     &props->m_0x24);
         }
@@ -29407,7 +29408,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
 
       moby->m_DamageFlags = 0;
 
-      if (props->m_0x28 != -1 && D_800777C0[props->m_0x28] != 0 &&
+      if (props->m_0x28 != -1 && g_ZapFloorActive[props->m_0x28] != 0 &&
           moby->m_State != 3 && moby->m_State != 4 &&
           func_80038C4C(&moby->m_Position, &props->m_0x2c) != 0) {
         moby->m_State = 4;
@@ -29489,7 +29490,7 @@ void NAME_OVERLAY_FUNCTION(UpdateMoby)(void) {
       }
 
       case 4: {
-        if (D_800777C0[props->m_0x28] == 0) {
+        if (g_ZapFloorActive[props->m_0x28] == 0) {
           props->m_0x14 = 0;
           props->m_0x18 = 0;
           MobySpawnDrop(moby, DROP_MODE_SCATTER, nullptr, nullptr);

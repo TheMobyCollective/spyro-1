@@ -7,7 +7,6 @@
 
 extern int g_PortalLevelId; // Portal level id
 extern int g_LoadStage;     // Load stage
-extern int g_CutsceneIdx;   // Cutscene type
 
 /// @brief Flag indicating active level transition (1 = transitioning, 0 = not)
 extern int g_HasLevelTransition;

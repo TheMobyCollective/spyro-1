@@ -67,11 +67,11 @@ extern Portal *g_Portals[6]; // Pointers for each possible portal
 extern int g_PortalCount;    // Portal count
 
 extern u_char *D_80075798;
-extern PortalEdge D_80077EA0[11]; // Outline edges of the portal being drawn
-extern Vector3D D_80078DD8[10];   // Portal points projected to the screen
+extern PortalEdge g_PortalEdges[11]; // Outline edges of the portal being drawn
+extern Vector3D D_80078DD8[10];      // Portal points projected to the screen
 
 // Screen rectangle of the portal being drawn (min y, max y, max x, min x)
-extern int D_8007AA00[4];
+extern int g_PortalScreenRect[4];
 
 extern int D_80075910; // Transition skybox yaw
 

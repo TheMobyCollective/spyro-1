@@ -65,8 +65,8 @@ glabel func_800573C8
 /* 47C98 80057498 00FCEF21 */  addi       $t7, $t7, -0x400 /* handwritten instruction */
 /* 47C9C 8005749C 0780103C */  lui        $s0, %hi(D_8006CBF8)
 /* 47CA0 800574A0 F8CB1026 */  addiu      $s0, $s0, %lo(D_8006CBF8)
-/* 47CA4 800574A4 0780113C */  lui        $s1, %hi(D_80076278)
-/* 47CA8 800574A8 78623126 */  addiu      $s1, $s1, %lo(D_80076278)
+/* 47CA4 800574A4 0780113C */  lui        $s1, %hi(g_ParticleTextures)
+/* 47CA8 800574A8 78623126 */  addiu      $s1, $s1, %lo(g_ParticleTextures)
 /* 47CAC 800574AC 01001220 */  addi       $s2, $zero, 0x1 /* handwritten instruction */
 /* 47CB0 800574B0 02001320 */  addi       $s3, $zero, 0x2 /* handwritten instruction */
 /* 47CB4 800574B4 0100143C */  lui        $s4, (0x10000 >> 16)
@@ -1402,8 +1402,8 @@ glabel func_8005882C
 
 /* Handwritten function */
 glabel func_80058864
-/* 49064 80058864 07800D3C */  lui        $t5, %hi(D_80076248)
-/* 49068 80058868 4862AD25 */  addiu      $t5, $t5, %lo(D_80076248)
+/* 49064 80058864 07800D3C */  lui        $t5, %hi(g_DragonCutsceneFlash)
+/* 49068 80058868 4862AD25 */  addiu      $t5, $t5, %lo(g_DragonCutsceneFlash)
 /* 4906C 8005886C 0780073C */  lui        $a3, %hi(g_Camera)
 /* 49070 80058870 D06DE724 */  addiu      $a3, $a3, %lo(g_Camera)
 /* 49074 80058874 0000E18C */  lw         $at, 0x0($a3)

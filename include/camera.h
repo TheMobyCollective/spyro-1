@@ -53,14 +53,9 @@ extern u_char D_8007527C;
 
 extern int D_8007592C;
 
-// Only xref is in Spyro code, but not gp_rel
-// and in a section related to the camera,
-// so likely part of Camera.
-// Only increments, never read
-extern int D_800777A0;
-
-/* Temporary focus position */
-extern Vector3D D_80077798;
+/* Temporary focus positions */
+extern Vector3D g_CamFocusTemp;
+extern Vector3D g_CamFocusTemp2;
 
 /* Spherical-coordinate smoothing parameters */
 /* Spring coefficients */

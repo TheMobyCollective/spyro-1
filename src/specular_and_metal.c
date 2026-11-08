@@ -13,38 +13,38 @@ void MetalBuildMatrix(void) {
   VecNull(&temp);
   temp.x = 4096;
   VecRotateByCam(&temp, &temp); // [4096, 0, 0] * Camera matrix
-  VecToShortVec((Vector3D16 *)D_800770C8.m_metalmatrix.m[0], &temp);
+  VecToShortVec((Vector3D16 *)g_RenderEffects.m_MetalMatrix.m[0], &temp);
 
   // Matrix middle row: [0, 4096, 0] * Camera matrix
   VecNull(&temp);
   temp.y = 4096;
   VecRotateByCam(&temp, &temp); // [0, 4096, 0] * Camera matrix
-  VecToShortVec((Vector3D16 *)D_800770C8.m_metalmatrix.m[1], &temp);
+  VecToShortVec((Vector3D16 *)g_RenderEffects.m_MetalMatrix.m[1], &temp);
 
   // Matrix bottom row: [0, 0, -4096] * Camera matrix
   VecNull(&temp);
   temp.z = -4096;
   VecRotateByCam(&temp, &temp); // [0, 0, -4096] * Camera matrix
-  VecToShortVec((Vector3D16 *)D_800770C8.m_metalmatrix.m[2], &temp);
+  VecToShortVec((Vector3D16 *)g_RenderEffects.m_MetalMatrix.m[2], &temp);
 };
 
 /// @brief Resets the specular lights to their defaults after they have been
 /// rotated
 void SpecularReset(void) {
-  setXYZ(&D_800770C8.m_specularLightDirection, -2517, -2458, -2848);
-  setXYZ(&D_800770C8.m_specularLightDirectionMoby, -2517, -2458, -2848);
+  setXYZ(&g_RenderEffects.m_SpecularLightDirection, -2517, -2458, -2848);
+  setXYZ(&g_RenderEffects.m_SpecularLightDirectionMoby, -2517, -2458, -2848);
 };
 
 /// @brief Updates the rotation of the specular light, used on menus for example
 /// @param deltaTime How much time has passed since the processed last frame
 void SpecularUpdate(int deltaTime) {
-  D_800770C8.m_specularTime = (D_800770C8.m_specularTime + deltaTime) & 0xff;
+  g_RenderEffects.m_SpecularTime =
+      (g_RenderEffects.m_SpecularTime + deltaTime) & 0xff;
 
   // We have to do bitshifts to match, we also have to pretend sine and cosine
   // are two separate tables otherwise the compiler inserts a random scope for
   // no reason
-  setXYZ(&D_800770C8.m_specularLightDirection,
-         FIXED_MUL(COSINE_8(D_800770C8.m_specularTime), 3966),
-         FIXED_MUL(SINE_8(D_800770C8.m_specularTime), 6345), -1024);
+  setXYZ(&g_RenderEffects.m_SpecularLightDirection,
+         FIXED_MUL(COSINE_8(g_RenderEffects.m_SpecularTime), 3966),
+         FIXED_MUL(SINE_8(g_RenderEffects.m_SpecularTime), 6345), -1024);
 }
-

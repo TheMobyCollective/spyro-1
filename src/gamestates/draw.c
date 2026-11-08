@@ -146,10 +146,10 @@ void func_8001844C(int pX0, int pY0, int pX1, int pY1) {
   setcode(line, PRIM_LINE_G2);
   setXY2(line, pX0, pY0, pX1, pY1);
   intensity = 128 - (u_char)func_80017908(Atan2Fast(pX0 - 256, pY0 - 120),
-                                          D_800770C8.m_specularTime);
+                                          g_RenderEffects.m_SpecularTime);
   setRGB0(line, intensity + 96, intensity + 96, intensity);
   intensity = 128 - (u_char)func_80017908(Atan2Fast(pX1 - 256, pY1 - 120),
-                                          D_800770C8.m_specularTime);
+                                          g_RenderEffects.m_SpecularTime);
   setRGB1(line, intensity + 96, intensity + 96, intensity);
   // Link Prim
   func_800168DC(line);
@@ -332,7 +332,7 @@ void func_800189F0(void) {
         delta.y = temp;
 
         magnitude = delta.x * delta.x + delta.y * delta.y;
-        magnitude = func_80017A38(magnitude);
+        magnitude = SquareRoot(magnitude);
 
         if (magnitude == 0 || tracer_ptr[j].ScreenPos.z == 0) {
           delta.x = 0;
@@ -578,7 +578,8 @@ void func_80019300(void) {
     ColorInt col;
     for (i = 0; i < g_Hud.m_LifeOrbCount; i++) {
       col.r =
-          (COSINE_8((D_800770C8.m_specularTime - i * 256 / 20) & 0xff) >> 7) +
+          (COSINE_8((g_RenderEffects.m_SpecularTime - i * 256 / 20) & 0xff) >>
+           7) +
           128;
       col.g = col.r;
       col.b = col.r;
@@ -1795,8 +1796,9 @@ void func_8001CA38(void) {
 void func_8001CFDC(void) {
   char _[16];
 
-  if (D_80076248.unk_0x0 != 0) {
-    RotVec8ToMatrix(&D_80076248.vec_0x28, (MATRIX *)&D_80076248.mat_0x10,
+  if (g_DragonCutsceneFlash.unk_0x0 != 0) {
+    RotVec8ToMatrix(&g_DragonCutsceneFlash.vec_0x28,
+                    (MATRIX *)&g_DragonCutsceneFlash.mat_0x10,
                     (MATRIX *)&g_Camera.m_ProjectionMatrix);
     func_80058864();
   }
@@ -2347,19 +2349,19 @@ void func_8001E24C(void) {
   Vector3D spacing;
   char buf[64];
 
-  if (D_800777E8.m_State >= 4) {
+  if (g_Balloonist.m_State >= 4) {
 
-    if (D_800777E8.m_State < 6) {
+    if (g_Balloonist.m_State < 6) {
       Moby **mobyQueue = (void *)g_SonyImage.u.m_Buf;
 
-      *(mobyQueue++) = D_800777E8.m_BalloonMoby;
+      *(mobyQueue++) = g_Balloonist.m_BalloonMoby;
       *(mobyQueue++) = (void *)0;
 
-      if (D_800777E8.m_Homeworld < 5) {
+      if (g_Balloonist.m_Homeworld < 5) {
         // Minus one is due to the homeworlds starting at 10
         int homeworld = g_NextLevelId / 10;
         sprintf(buf, "ENTERING %s WORLD", g_HomeworldNames[homeworld - 1]);
-      } else if (D_800777E8.m_Homeworld == 5) {
+      } else if (g_Balloonist.m_Homeworld == 5) {
         // Exception for Gnasty's World so it doesn't display
         // GNASTY'S WORLD WORLD (like in July)
         int homeworld = g_NextLevelId / 10;
@@ -2387,7 +2389,7 @@ void func_8001E24C(void) {
       rotOff = 0;
       while ((int)(--curMoby) >= (int)g_HudMobys) {
         curMoby->m_Rotation.z =
-            COSINE_8(((D_800777E8.unk_0x04 * 2) + rotOff) & 0xFF) >> 7;
+            COSINE_8(((g_Balloonist.unk_0x04 * 2) + rotOff) & 0xFF) >> 7;
         rotOff += 12;
       }
 
@@ -2400,13 +2402,13 @@ void func_8001E24C(void) {
       func_80022A2C(); // Draw Shaded Mobys
       func_80023AC4(); // Draw Spyro
 
-      if (D_800777E8.m_State < 6) {
+      if (g_Balloonist.m_State < 6) {
         D_800757D4 = 0x401010;
 
-        if (D_800777E8.m_State == 4) {
-          D_8007575C = D_800777E8.unk_0x04 * 16;
+        if (g_Balloonist.m_State == 4) {
+          D_8007575C = g_Balloonist.unk_0x04 * 16;
         } else {
-          D_8007575C = (0x100 - D_800777E8.unk_0x04) * 16;
+          D_8007575C = (0x100 - g_Balloonist.unk_0x04) * 16;
         }
 
         if (D_8007575C < 0)
@@ -2427,10 +2429,10 @@ void func_8001E24C(void) {
         }
       }
     } else {
-      D_800758D8();
+      g_BalloonistDraw();
     }
   } else {
-    D_800758D8();
+    g_BalloonistDraw();
   }
 
   func_80018F30();

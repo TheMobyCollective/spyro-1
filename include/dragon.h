@@ -59,7 +59,7 @@ extern struct {
   int unk_0x24;
   Vector3D8 vec_0x28;
   u_char unk_0x2b;
-} D_80076248;
+} g_DragonCutsceneFlash;
 
 extern short D_8006F3C0[24];
 

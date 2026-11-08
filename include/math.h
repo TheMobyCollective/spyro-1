@@ -133,7 +133,7 @@ int func_800179F0(int pTargetAngle, int pAngle, int pSpeed, int pMinStep);
 int OctDistance(Vector3D *pPos1, Vector3D *pPos2);
 
 /// @brief Squareroot approximation
-int func_80017A38(int pVal);
+int SquareRoot(int pVal);
 
 /// @brief Projects a vector onto the screen
 void func_80017AA4(Vector3D *, Vector3D *);
@@ -147,8 +147,8 @@ void ColTriUnpack(int pIndex, Vector3D *pOut);
 /// @brief Returns the leading bit count
 int func_80016D08(int pVal);
 
-void func_80017614(Vector3D*, int, int);
+void func_80017614(Vector3D *, int, int);
 
-void func_80017894(Vector3D*, Vector3D*, Vector3D*, int);
+void func_80017894(Vector3D *, Vector3D *, Vector3D *, int);
 
 #endif // !__MATH_H

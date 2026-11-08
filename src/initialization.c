@@ -214,7 +214,7 @@ void func_80012604(void) {
   Memset(&g_Checkpoint, 0, sizeof(g_Checkpoint));
 
   /* Size doesn't match what's allocated */
-  Memset(&D_80077908, 0, TOTAL_LEVEL_COUNT * 32);
+  Memset(&g_GemCollectionMask, 0, TOTAL_LEVEL_COUNT * 32);
 }
 
 void func_8001277C(void) {

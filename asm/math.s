@@ -662,8 +662,8 @@ glabel VecMagnitude
 .L80017274:
 /* 7A74 80017274 C0FFE720 */  addi       $a3, $a3, -0x40 /* handwritten instruction */
 /* 7A78 80017278 40380700 */  sll        $a3, $a3, 1
-/* 7A7C 8001727C 0780083C */  lui        $t0, %hi(D_80074B84)
-/* 7A80 80017280 844B0825 */  addiu      $t0, $t0, %lo(D_80074B84)
+/* 7A7C 8001727C 0780083C */  lui        $t0, %hi(SQRT)
+/* 7A80 80017280 844B0825 */  addiu      $t0, $t0, %lo(SQRT)
 /* 7A84 80017284 20400701 */  add        $t0, $t0, $a3 /* handwritten instruction */
 /* 7A88 80017288 00000885 */  lh         $t0, 0x0($t0)
 /* 7A8C 8001728C 00000000 */  nop
@@ -717,7 +717,7 @@ glabel VecRefineMagnitude
 .size VecRefineMagnitude, . - VecRefineMagnitude
 
 /* Handwritten function */
-glabel func_80017330
+glabel VecNormalizeToSize
 /* 7B30 80017330 0000818C */  lw         $at, 0x0($a0)
 /* 7B34 80017334 0400828C */  lw         $v0, 0x4($a0)
 /* 7B38 80017338 0800838C */  lw         $v1, 0x8($a0)
@@ -753,8 +753,8 @@ glabel func_80017330
 .L800173AC:
 /* 7BAC 800173AC C0FF8C21 */  addi       $t4, $t4, -0x40 /* handwritten instruction */
 /* 7BB0 800173B0 40600C00 */  sll        $t4, $t4, 1
-/* 7BB4 800173B4 07800D3C */  lui        $t5, %hi(D_80074B84)
-/* 7BB8 800173B8 844BAD25 */  addiu      $t5, $t5, %lo(D_80074B84)
+/* 7BB4 800173B4 07800D3C */  lui        $t5, %hi(SQRT)
+/* 7BB8 800173B8 844BAD25 */  addiu      $t5, $t5, %lo(SQRT)
 /* 7BBC 800173BC 2068AC01 */  add        $t5, $t5, $t4 /* handwritten instruction */
 /* 7BC0 800173C0 0000AD85 */  lh         $t5, 0x0($t5)
 /* 7BC4 800173C4 00000000 */  nop
@@ -783,7 +783,7 @@ glabel func_80017330
 /* 7C1C 8001741C 040080AC */  sw         $zero, 0x4($a0)
 /* 7C20 80017420 0800E003 */  jr         $ra
 /* 7C24 80017424 080080AC */   sw        $zero, 0x8($a0)
-.size func_80017330, . - func_80017330
+.size VecNormalizeToSize, . - VecNormalizeToSize
 
 /* Handwritten function */
 glabel func_80017428
@@ -1271,7 +1271,7 @@ glabel func_800179F0
 .size func_800179F0, . - func_800179F0
 
 /* Handwritten function */
-glabel func_80017A38
+glabel SquareRoot
 /* 8238 80017A38 00F08448 */  mtc2       $a0, C2_LZCS /* handwritten instruction */
 /* 823C 80017A3C 17008010 */  beqz       $a0, .L80017A9C
 /* 8240 80017A40 00000820 */   addi      $t0, $zero, 0x0 /* handwritten instruction */
@@ -1293,8 +1293,8 @@ glabel func_80017A38
 .L80017A7C:
 /* 827C 80017A7C C0FFE720 */  addi       $a3, $a3, -0x40 /* handwritten instruction */
 /* 8280 80017A80 40380700 */  sll        $a3, $a3, 1
-/* 8284 80017A84 0780083C */  lui        $t0, %hi(D_80074B84)
-/* 8288 80017A88 844B0825 */  addiu      $t0, $t0, %lo(D_80074B84)
+/* 8284 80017A84 0780083C */  lui        $t0, %hi(SQRT)
+/* 8288 80017A88 844B0825 */  addiu      $t0, $t0, %lo(SQRT)
 /* 828C 80017A8C 20400701 */  add        $t0, $t0, $a3 /* handwritten instruction */
 /* 8290 80017A90 00000885 */  lh         $t0, 0x0($t0)
 /* 8294 80017A94 00000000 */  nop
@@ -1302,7 +1302,7 @@ glabel func_80017A38
 .L80017A9C:
 /* 829C 80017A9C 0800E003 */  jr         $ra
 /* 82A0 80017AA0 02130800 */   srl       $v0, $t0, 12
-.size func_80017A38, . - func_80017A38
+.size SquareRoot, . - SquareRoot
 
 /* Handwritten function */
 glabel func_80017AA4

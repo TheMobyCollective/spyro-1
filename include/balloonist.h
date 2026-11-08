@@ -27,6 +27,6 @@ extern struct {
   int unk_0x5C[2];
   Moby *m_BalloonistMoby;
   Moby *m_BalloonMoby;
-} D_800777E8;
+} g_Balloonist;
 
 #endif

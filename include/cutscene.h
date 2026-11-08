@@ -38,6 +38,8 @@ typedef struct {
   CutsceneCameraData m_CameraData[1];
 } CreditsLayout;
 
+extern int g_CutsceneIdx; // Cutscene type
+
 /// Temporary sound definition buffer used for cutscene audio.
 /// Assigned to g_Spu.m_SoundDefinitions during cutscene playback.
 extern SoundDefinition g_CutsceneSoundDef;

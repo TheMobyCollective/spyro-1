@@ -61,10 +61,8 @@ void SetNewSoundTable(char *pData, int pPatchAddressesInTable) {
 #define COMPONENT_START(x) READ_COMPONENT_HEADER(x), COMPONENT_ADVANCE(x, 4)
 #define COMPONENT_END(x) x = ((char *)componentStart + *(int *)componentStart)
 
-// TODO: Creates warnings, but I haven't been able to figure out a cleaner
-// solution that still matches
 #define PATCH_POINTER_RELATIVE_TO_COMPONENT(dest)                              \
-  PATCH_POINTER(*(int *)dest, componentStart + 4), dest += 4
+  PATCH_POINTER(*(void **)dest, componentStart + 4), dest += 4
 
 /// @brief Loads the level data
 /// (We used to refer to this as scene data)
@@ -126,7 +124,7 @@ void *LoadLevelData(char *pData, int pCutscene) {
 
       // Fix up cyclorama occlusion group pointers
       for (i = 0; i < g_NewCyclorama.m_OcclusionGroupsCount; i++) {
-        PATCH_POINTER(*(int *)pData,
+        PATCH_POINTER(*(void **)pData,
                       componentStart + *(int *)(componentStart + 4) + 4);
         pData += 4;
       }
@@ -215,7 +213,7 @@ void *LoadLevelData(char *pData, int pCutscene) {
 
   // The read is the particle count
   for (i = READ_I32(pData); i > 0; i--) {
-    D_80076278[*(short *)pData] = (ParticleTexture *)pData;
+    g_ParticleTextures[*(short *)pData] = (ParticleTexture *)pData;
     pData = pData + *(short *)(pData + 2) + 4;
   }
 
@@ -453,7 +451,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
 
   if (g_Gamestate != 12) {
     // reset spyro
-    func_8004AC24(0);
+    SpyroReset(0);
     g_Spyro.m_noGamepadUpdateFrames = 12;
   }
 
@@ -464,7 +462,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
     g_Spyro.m_highestFlightPoint = g_Checkpoint.m_StartingPosition.z;
 
     // change spyro state
-    func_8003EA68(32);
+    SpyroSetState(32);
 
     if (g_HasLevelTransition == 0) {
       g_Spyro.m_walkingState = 0;
@@ -665,7 +663,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
 
   COMPONENT_START(data); // Moby pointers
   for (i = 0; i < *(int *)componentStart;) {
-    int *ptr = (int *)(sceneBase + *(int *)data);
+    void **ptr = (void **)(sceneBase + *(int *)data);
     i++;
     PATCH_POINTER2(ptr[0], sceneBase); // Yep.. Relative to sceneBase
     COMPONENT_ADVANCE(data, 4);
@@ -713,7 +711,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
       index = i >> 5;
       bit = i & 0x1f;
       if (((g_Checkpoint.m_KilledMobysSaved[index] & (1 << bit)) == 0) ||
-          ((D_80077908[g_LevelIndex][index] & (1 << bit)) == 0))
+          ((g_GemCollectionMask[g_LevelIndex][index] & (1 << bit)) == 0))
         pendingDrops |= 1 << (g_LevelMobys[i].m_DroppedFlag);
     }
   }
@@ -723,7 +721,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
     index = (i >> 5);
     bit = (i & 0x1f);
 
-    if ((D_80077908[g_LevelIndex][index] & (1 << bit)) != 0) {
+    if ((g_GemCollectionMask[g_LevelIndex][index] & (1 << bit)) != 0) {
       if ((g_Checkpoint.m_KilledMobysSaved[index] & (1 << bit)) == 0) {
         if ((g_LevelMobys[i].m_DroppedFlag & 0x7F) == 0x7D) {
           MobyFree(&g_LevelMobys[i]); // Free the Moby
@@ -756,7 +754,7 @@ void LoadLevelScene(int pAnimationsAndSparx) {
 
   // Clear the zapped floors
   for (i = 0; i < 10; i++) {
-    D_800777C0[i] = 0;
+    g_ZapFloorActive[i] = 0;
   }
 
   g_Particles = g_Buffers.m_ParticleSpaceStart;
@@ -1049,8 +1047,9 @@ void LoadDragonCutscene(void) {
 
       // Set camera data pointer and node count
       g_DragonCutscene.unk_0x48 =
-          (char *)g_Buffers.m_ModelData +
-          g_DragonCutscene.m_Header.m_CameraData.m_Offset;
+          (CutsceneCameraData *)((char *)g_Buffers.m_ModelData +
+                                 g_DragonCutscene.m_Header.m_CameraData
+                                     .m_Offset);
 
       g_DragonCutscene.unk_0x4C =
           g_DragonCutscene.m_Header.m_CameraData.m_Length / 24;
@@ -1176,11 +1175,12 @@ void LoadDragonCutscene(void) {
     // g_Buffers.m_ModelData + g_DragonCutscene.m_Header.m_CameraData.m_Offset
     // - g_DragonCutscene.m_Header.m_DragonModel.m_Offset Would be equivalent
     g_DragonCutscene.unk_0x48 =
-        (((char *)g_Buffers.m_ModelData -
-          g_DragonCutscene.m_Header.m_DragonModel.m_Offset) +
-         g_DragonCutscene.m_Header.m_CameraData.m_Offset +
-         g_DragonCutscene.m_Header.m_DragonModel.m_Offset) -
-        g_DragonCutscene.m_Header.m_DragonModel.m_Offset;
+        (CutsceneCameraData
+             *)((((char *)g_Buffers.m_ModelData -
+                  g_DragonCutscene.m_Header.m_DragonModel.m_Offset) +
+                 g_DragonCutscene.m_Header.m_CameraData.m_Offset +
+                 g_DragonCutscene.m_Header.m_DragonModel.m_Offset) -
+                g_DragonCutscene.m_Header.m_DragonModel.m_Offset);
 
     g_DragonCutscene.unk_0x4C =
         g_DragonCutscene.m_Header.m_CameraData.m_Length / 24;
@@ -1276,14 +1276,13 @@ void LoadDragonCutscene(void) {
   }
 }
 
-// Only used here (see usage below)
-extern int D_80075670; // Unused [0]
-extern int D_80075674; // Unused [1]
-extern int D_8007577C; // Unused
-extern int D_80075850; // Unused [0]
-extern int D_80075854; // Unused [1]
-extern int D_80075870; // Unused [0]
-extern int D_80075874; // Unused [1]
+extern int D_80075670;
+extern int D_80075674;
+extern int D_8007577C;
+extern int D_80075850;
+extern int D_80075854;
+extern int D_80075870;
+extern int D_80075874;
 
 // Set up level overlay pointers
 extern void SetOverlayPointers(void);
@@ -1703,7 +1702,7 @@ void LoadLevel(int pArg) {
               rotZ = g_Spyro.m_BodyRotation.z;
               pathData = g_LevelMobys[g_Portals[i]->m_PathMoby].m_Props;
 
-              func_8003EA68(15); // Set Spyro's state to glide
+              SpyroSetState(15); // Set Spyro's state to glide
               g_Spyro.m_walkingState = 9;
 
               func_80033F08(&g_Camera.m_Position);
@@ -1766,7 +1765,7 @@ void LoadLevel(int pArg) {
         } else {
 
           // Non-portal entrance
-          func_8003EA68(0xF); // Set Spyro's state to glide
+          SpyroSetState(0xF); // Set Spyro's state to glide
 
           func_80033F08(
               &g_Camera.m_Position); // Set spherical coords to match pos
@@ -1822,7 +1821,7 @@ void LoadLevel(int pArg) {
       } else {
 
         if (g_Gamestate != GS_Balloonist) { // Skip if balloon transition
-          func_8003EA68(0);                 // Set Spyro state to 0 (idle)
+          SpyroSetState(0);                 // Set Spyro state to 0 (idle)
         }
       }
     }

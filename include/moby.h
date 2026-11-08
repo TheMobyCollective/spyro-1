@@ -1517,7 +1517,7 @@ typedef struct {
   int m_0x34;
 } Moby186Props;
 
-// Used by 187-192 in Balloonist1 func
+// Used by 187-192 in BalloonistEnter func
 typedef struct {
   int m_BalloonMobyIdx;
 } Moby187Props;

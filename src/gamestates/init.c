@@ -126,8 +126,8 @@ void func_8002C618(void) {
   D_8007568C = 0;             // Pause menu no button ticks
   D_800758B8 = 0;             // Pause menu text rotation ticks
 
-  func_8004AC24(0); // Reset spyro
-  func_8003EA68(0); // Set state to idle
+  SpyroReset(0);    // Reset spyro
+  SpyroSetState(0); // Set state to idle
 }
 
 /// @brief Return home, sets gamestate to 1
@@ -296,9 +296,9 @@ void func_8002C924(Moby *pMoby) {
     g_LevelMobys[props->m_DragonPadLink].m_AnimationState.m_Animation = 1;
   }
 
-  VecCopy(&D_80076248.vec_0x04, &pMoby->m_Position);
+  VecCopy(&g_DragonCutsceneFlash.vec_0x04, &pMoby->m_Position);
 
-  D_80076248.vec_0x04.z += 64;
+  g_DragonCutsceneFlash.vec_0x04.z += 64;
 
   // SKELETON: Pointer to a pointer where a pointer is expected, oopsie
   PlaySound(g_Spu.m_SoundTable->rescueingSound,
@@ -327,7 +327,7 @@ void func_8002CB6C(void) {
   }
 
   // Reset spyro
-  func_8004AC24(1);
+  SpyroReset(1);
 
   g_Spyro.m_noGamepadUpdateFrames = 12;
 
@@ -407,7 +407,7 @@ void InitFairyCutscene(Moby *pMoby) {
   g_FairyCutscene.m_CutsceneFairy = pMoby;
   g_SavedFairyKissTimer = g_SpyroFlame.m_FairyKissTimer;
   PlaySound(g_Spu.m_SoundTable->menuSound, nullptr, 0x10, nullptr);
-  func_8004AC24(1); // Reset Spyro, keeping position
+  SpyroReset(1); // Reset Spyro, keeping position
 
   pSpyroBodyAnimation = &g_Spyro.m_BodyAnimation;
 
@@ -503,7 +503,7 @@ void func_8002D02C(void) {
   VecNull(&g_Spyro.m_HeadLookTarget);
 
   // reset spyro
-  func_8004AC24(1);
+  SpyroReset(1);
   g_Spyro.unk_0x1b4 = 256;
   g_Spyro.m_HeadRotation.y = 16;
   g_Spyro.m_noGamepadUpdateFrames = 8;
@@ -611,7 +611,7 @@ void InitCreditsSequence(int pLoadSharedModels) {
   }
 
   // Reset Spyro's state machine with full reset (preserves position/rotation)
-  func_8004AC24(1);
+  SpyroReset(1);
 
   // Cache credits type before resetting state variables
   // g_CreditsSequence: 0 = short credits, 10 = full credits

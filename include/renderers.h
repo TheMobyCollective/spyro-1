@@ -29,7 +29,7 @@ typedef struct {
   } uv2;
 } ParticleTexture;
 
-extern ParticleTexture *D_80076278[32];
+extern ParticleTexture *g_ParticleTextures[32];
 
 // 20 bytes
 typedef struct {

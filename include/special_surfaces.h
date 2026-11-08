@@ -3,7 +3,7 @@
 
 #include <sys/types.h>
 
-extern int D_800777C0[10]; // Zapped floors
+extern int g_ZapFloorActive[10]; // Zapped floors
 
 typedef enum {
   SURFACE_TYPE_NONE = -1,

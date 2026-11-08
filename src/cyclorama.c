@@ -79,7 +79,7 @@ void func_80050BD0(void) {
   for (portalIndex = 0; portalIndex < g_PortalCount; portalIndex++) {
     // Skip portals in environment sectors that weren't rendered
     if (g_Portals[portalIndex]->m_WorldSector >= 0 &&
-        D_800771C8[g_Portals[portalIndex]->m_WorldSector] == 0) {
+        g_EnvSectorDrawn[g_Portals[portalIndex]->m_WorldSector] == 0) {
       continue;
     }
 
@@ -213,16 +213,16 @@ void func_80050BD0(void) {
           thinY = 0;
         }
 
-        D_80077EA0[edgeCount].m_Active = 1;
-        D_80077EA0[edgeCount].m_Start =
+        g_PortalEdges[edgeCount].m_Active = 1;
+        g_PortalEdges[edgeCount].m_Start =
             (D_80078DD8[i].y << 16) | (D_80078DD8[i].x & 0xFFFF);
-        D_80077EA0[edgeCount].m_End =
+        g_PortalEdges[edgeCount].m_End =
             (D_80078DD8[next].y << 16) | (D_80078DD8[next].x & 0xFFFF);
-        D_80077EA0[edgeCount].m_A = D_80078DD8[i].y - D_80078DD8[next].y;
-        D_80077EA0[edgeCount].m_B = D_80078DD8[next].x - D_80078DD8[i].x;
-        D_80077EA0[edgeCount].m_C =
-            -D_80077EA0[edgeCount].m_A * D_80078DD8[i].x -
-            D_80077EA0[edgeCount].m_B * D_80078DD8[i].y;
+        g_PortalEdges[edgeCount].m_A = D_80078DD8[i].y - D_80078DD8[next].y;
+        g_PortalEdges[edgeCount].m_B = D_80078DD8[next].x - D_80078DD8[i].x;
+        g_PortalEdges[edgeCount].m_C =
+            -g_PortalEdges[edgeCount].m_A * D_80078DD8[i].x -
+            g_PortalEdges[edgeCount].m_B * D_80078DD8[i].y;
         edgeCount++;
       }
     }
@@ -296,11 +296,11 @@ void func_80050BD0(void) {
         maxY = 240;
       }
 
-      D_8007AA00[0] = minY << 16;
-      D_8007AA00[1] = maxY << 16;
-      D_8007AA00[2] = maxX << 16;
-      D_8007AA00[3] = minX << 16;
-      D_80077EA0[edgeCount].m_Active = 0;
+      g_PortalScreenRect[0] = minY << 16;
+      g_PortalScreenRect[1] = maxY << 16;
+      g_PortalScreenRect[2] = maxX << 16;
+      g_PortalScreenRect[3] = minX << 16;
+      g_PortalEdges[edgeCount].m_Active = 0;
 
       if (distance < (16 * 1024)) {
         if (distance > (12 * 1024)) {
@@ -384,16 +384,16 @@ void func_80050BD0(void) {
           (D_80078DD8[i].x > 0 || D_80078DD8[next].x > 0) &&
           (D_80078DD8[i].y < 240 || D_80078DD8[next].y < 240) &&
           (D_80078DD8[i].y > 0 || D_80078DD8[next].y > 0)) {
-        D_80077EA0[edgeCount].m_Active = 1;
-        D_80077EA0[edgeCount].m_Start =
+        g_PortalEdges[edgeCount].m_Active = 1;
+        g_PortalEdges[edgeCount].m_Start =
             (D_80078DD8[i].y << 16) | (D_80078DD8[i].x & 0xFFFF);
-        D_80077EA0[edgeCount].m_End =
+        g_PortalEdges[edgeCount].m_End =
             (D_80078DD8[next].y << 16) | (D_80078DD8[next].x & 0xFFFF);
-        D_80077EA0[edgeCount].m_A = D_80078DD8[i].y - D_80078DD8[next].y;
-        D_80077EA0[edgeCount].m_B = D_80078DD8[next].x - D_80078DD8[i].x;
-        D_80077EA0[edgeCount].m_C =
-            -D_80077EA0[edgeCount].m_A * D_80078DD8[i].x -
-            D_80077EA0[edgeCount].m_B * D_80078DD8[i].y;
+        g_PortalEdges[edgeCount].m_A = D_80078DD8[i].y - D_80078DD8[next].y;
+        g_PortalEdges[edgeCount].m_B = D_80078DD8[next].x - D_80078DD8[i].x;
+        g_PortalEdges[edgeCount].m_C =
+            -g_PortalEdges[edgeCount].m_A * D_80078DD8[i].x -
+            g_PortalEdges[edgeCount].m_B * D_80078DD8[i].y;
         edgeCount++;
       }
     }
@@ -451,11 +451,11 @@ void func_80050BD0(void) {
       maxY = 240;
     }
 
-    D_8007AA00[0] = minY << 16;
-    D_8007AA00[1] = maxY << 16;
-    D_8007AA00[2] = maxX << 16;
-    D_8007AA00[3] = minX << 16;
-    D_80077EA0[edgeCount].m_Active = 0;
+    g_PortalScreenRect[0] = minY << 16;
+    g_PortalScreenRect[1] = maxY << 16;
+    g_PortalScreenRect[2] = maxX << 16;
+    g_PortalScreenRect[3] = minX << 16;
+    g_PortalEdges[edgeCount].m_Active = 0;
 
     // Between 12 and 16M, the portal's contents fade away
     if (distance > (12 * 1024)) {

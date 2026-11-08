@@ -165,7 +165,7 @@ typedef struct {
   int m_FloorIdleTime;         // 0x98
   int m_AirTime;               // 0x9c
   int m_FloorHeight;
-  Vector3D m_floorPositonOnSlope;
+  Vector3D m_FloorNormal;
   int m_slopeAngle;
   int m_againstWall;
   Vector3D m_wallAgainstSpyro;
@@ -244,11 +244,11 @@ typedef struct {
   int m_flyingAbility; // Used in flying levels and gnasty's loot
   int m_doingSupercharge;
   int unk_0x254;
-  int m_RotXAccumulator; // Spring-damper accumulator for smooth RotX
-                         // transitions
-  int m_RotYAccumulator; // Spring-damper accumulator for smooth RotY
-                         // transitions
-  int unk_0x260;         // No XREFS
+  int m_RotXSmooth; // Spring-damper accumulator for smooth RotX
+                    // transitions
+  int m_RotYSmooth; // Spring-damper accumulator for smooth RotY
+                    // transitions
+  int unk_0x260;    // No XREFS
   int m_LastBodyFrameData;
   int m_LastHeadFrameData;
   int unk_0x26c; // No XREFS
@@ -375,14 +375,14 @@ typedef struct {
 extern SpyroShadow g_SpyroShadow;
 
 /// @brief Resets Spyro
-void func_8004AC24(int pKeepPosition);
+void SpyroReset(int pKeepPosition);
 
 /// @brief Forces state to and resets animation
 void func_8003FDC8(int pNewState);
 
 void UpdateSpyroEnterReturnHome(void);
 
-void func_8004A200(void);
+void SpyroUpdate(void);
 
 void UpdateSpyroReturnHome(void);
 
@@ -392,7 +392,7 @@ void SpyroBodyAnimationSetupTransition(void);
 void func_8003DFA4(void);
 
 /// @brief Changes Spyro's state
-void func_8003EA68(int pNewState);
+void SpyroSetState(int pNewState);
 
 /// @brief Increments the body animation
 /// @param pDeltaTime The delta time

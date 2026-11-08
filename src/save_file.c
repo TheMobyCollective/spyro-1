@@ -91,7 +91,7 @@ int SaveLoad(SaveFile *pSaveFile) {
     D_800758D0[i] = pSaveFile->m_UnlockedHomeworlds[i];
   }
 
-  Memcpy(D_80077908, pSaveFile->m_GemCollectionMask,
+  Memcpy(g_GemCollectionMask, pSaveFile->m_GemCollectionMask,
          sizeof(pSaveFile->m_GemCollectionMask));
 
   return pSaveFile->m_Checksum == SaveChecksum(saveFilePtr);
@@ -144,7 +144,7 @@ void SaveCreate(SaveFile *pSaveFile) {
     pSaveFile->m_UnlockedHomeworlds[i] = D_800758D0[i];
   }
 
-  Memcpy(pSaveFile->m_GemCollectionMask, D_80077908,
+  Memcpy(pSaveFile->m_GemCollectionMask, g_GemCollectionMask,
          sizeof(pSaveFile->m_GemCollectionMask));
 
   pSaveFile->m_Checksum = SaveChecksum(saveFilePtr);
